@@ -11,14 +11,32 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Toaster, toast } from "sonner";
 import { Plus, Trash2, Edit2, Target, Award, Circle, Play, BookOpen, Eye, Star, Zap, Users } from "lucide-react";
-import { getAikidoAnimation } from "@/components/AikidoAnimations";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
-// Animated Aikido technique illustrations - Black & White Silhouettes
-const TechniqueIllustration = ({ technique, size = 100 }) => {
-  return getAikidoAnimation(technique, size);
+// Default GIF for techniques without specific images
+const DEFAULT_GIF = "https://media.tenor.com/P22Z3iyIhQAAAAAM/aikido-master.gif";
+
+// Realistic Aikido GIF illustration component
+const TechniqueIllustration = ({ technique, imageUrl, size = 100 }) => {
+  const gifUrl = imageUrl || DEFAULT_GIF;
+  
+  return (
+    <div 
+      className="relative rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center"
+      style={{ width: size, height: size }}
+    >
+      <img
+        src={gifUrl}
+        alt={technique}
+        className="w-full h-full object-cover"
+        onError={(e) => {
+          e.target.src = DEFAULT_GIF;
+        }}
+      />
+    </div>
+  );
 };
 
 // Mastery levels
