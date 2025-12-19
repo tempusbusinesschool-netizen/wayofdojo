@@ -366,9 +366,9 @@ function App() {
                           
                           return (
                             <div key={technique.id} className="bg-slate-50 rounded-xl p-3 border hover:shadow-md transition-shadow group">
-                              {/* Illustration */}
+                              {/* Illustration GIF */}
                               <div className="flex justify-center py-2 mb-2 rounded-lg" style={{ backgroundColor: `${beltColor.bg}` }}>
-                                <TechniqueIllustration technique={technique.name} size={70} />
+                                <TechniqueIllustration technique={technique.name} imageUrl={technique.image_url} size={80} />
                               </div>
                               
                               {/* Content */}
