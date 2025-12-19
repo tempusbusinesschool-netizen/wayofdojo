@@ -292,21 +292,143 @@ async def seed_data():
     if existing > 0:
         return {"message": "Data already seeded", "count": existing}
     
-    # Programme officiel UFA/FAA - Nomenclature des techniques d'Aikido
-    # Basé sur les documents "Les grades en Aikido" et "Nomenclature pour passage de grades"
+    # Programme officiel FFAAA - Check-list de préparation aux grades Aïkido
+    # Basé sur la nomenclature UFA/FAA et le référentiel de travail FFAAA
     initial_data = [
+        # ═══════════════════════════════════════════════════════════════
+        # 🔰 GRADES KYŪ (6e → 1er kyū)
+        # ═══════════════════════════════════════════════════════════════
+        {
+            "name": "6e kyu",
+            "order": 6,
+            "color": "#f1f5f9",  # Blanc
+            "techniques": [
+                # BASES FONDAMENTALES
+                {"name": "Tai no henko (kihon)", "description": "BASE - Exercice fondamental de déplacement, pivotement et connexion avec le partenaire - forme basique"},
+                {"name": "Déplacements (irimi/tenkan)", "description": "BASE - Apprentissage des déplacements fondamentaux : irimi (entrée directe) et tenkan (pivot)"},
+                {"name": "Ukemi (chutes avant/arrière)", "description": "BASE - Apprentissage des chutes : mae ukemi (avant) et ushiro ukemi (arrière) - protéger son corps"},
+                # TACHIWAZA
+                {"name": "Katatedori ikkyo (omote)", "description": "TACHIWAZA - Première immobilisation depuis saisie du poignet - forme directe (omote)"},
+                {"name": "Shomenuchi ikkyo (omote)", "description": "TACHIWAZA - Première immobilisation depuis frappe verticale à la tête - forme directe"},
+                # BUKIWAZA initiation
+                {"name": "Tenue du bokken", "description": "BUKIWAZA - Apprentissage de la tenue correcte du sabre en bois (bokken) - position des mains et posture"},
+                {"name": "Tenue du jo", "description": "BUKIWAZA - Apprentissage de la tenue et des déplacements de base avec le bâton (jo)"}
+            ]
+        },
         {
             "name": "5e kyu",
             "order": 5,
-            "color": "#fbbf24",
+            "color": "#fbbf24",  # Jaune
             "techniques": [
-                # TACHIWAZA - Techniques debout
-                {"name": "Shomenuchi ikkyo (omote)", "description": "TACHIWAZA - Première immobilisation depuis coup de face à la tête avec le tranchant de la main - forme directe"},
-                {"name": "Katatedori ikkyo (omote)", "description": "TACHIWAZA - Première immobilisation depuis prise d'un poignet correspondant à une main - forme directe"},
-                {"name": "Katatedori shihonage (ura)", "description": "TACHIWAZA - Projection dans les quatre directions depuis prise du poignet - forme inversée"},
-                # BUKIWAZA - Techniques avec armes
-                {"name": "Suburi ken 1 à 7", "description": "BUKIWAZA - 7 exercices fondamentaux de coupes au sabre (bokken)"},
-                {"name": "Roku no jo", "description": "BUKIWAZA - Kata de 6 mouvements au bâton (jo)"}
+                # TACHIWAZA
+                {"name": "Tai no henko (kihon/ki no nagare)", "description": "TACHIWAZA - Exercice de connexion - formes basique (kihon) et fluide (ki no nagare)"},
+                {"name": "Morote dori kokyu ho", "description": "TACHIWAZA - Exercice de respiration depuis saisie du poignet à deux mains - développer le kokyu"},
+                {"name": "Katatedori ikkyo (omote/ura)", "description": "TACHIWAZA - Première immobilisation depuis saisie poignet - formes directe et inversée"},
+                {"name": "Shomenuchi ikkyo (omote/ura)", "description": "TACHIWAZA - Première immobilisation depuis frappe verticale - formes directe et inversée"},
+                {"name": "Katatedori shiho nage", "description": "TACHIWAZA - Projection dans les quatre directions depuis saisie du poignet"},
+                # SUWARIWAZA bases
+                {"name": "Suwari waza ikkyo (omote)", "description": "SUWARIWAZA - Première immobilisation à genoux (shikko) - travail des hanches"},
+                # BUKIWAZA
+                {"name": "Suburi bokken (shomen/yokomen)", "description": "BUKIWAZA - Coupes fondamentales au sabre : shomen uchi (verticale) et yokomen uchi (diagonale)"},
+                {"name": "Jo suburi simples", "description": "BUKIWAZA - Exercices de base au bâton - postures et frappes fondamentales"},
+                {"name": "Distance et vigilance (ma-ai)", "description": "BUKIWAZA - Apprentissage du ma-ai : distance correcte et vigilance martiale"}
+            ]
+        },
+        {
+            "name": "4e kyu",
+            "order": 4,
+            "color": "#f97316",  # Orange
+            "techniques": [
+                # TACHIWAZA
+                {"name": "Katatedori nikyo (omote/ura)", "description": "TACHIWAZA - Deuxième immobilisation (contrôle du poignet en rotation) depuis saisie - omote et ura"},
+                {"name": "Shomenuchi nikyo (omote/ura)", "description": "TACHIWAZA - Deuxième immobilisation depuis frappe verticale - formes directe et inversée"},
+                {"name": "Katatedori irimi nage", "description": "TACHIWAZA - Projection en entrant depuis saisie du poignet - contrôle de la tête d'uke"},
+                {"name": "Shomenuchi irimi nage", "description": "TACHIWAZA - Projection en entrant depuis frappe verticale"},
+                {"name": "Katatedori kote gaeshi", "description": "TACHIWAZA - Retournement du poignet depuis saisie - projection par torsion externe"},
+                # SUWARIWAZA
+                {"name": "Suwari waza nikyo (omote/ura)", "description": "SUWARIWAZA - Deuxième immobilisation à genoux - travail en seiza et shikko"},
+                {"name": "Suwari waza kokyu ho", "description": "SUWARIWAZA - Exercice de respiration à genoux depuis ryote dori - développement du centre"},
+                # BUKIWAZA
+                {"name": "Suburi bokken 1-5", "description": "BUKIWAZA - 5 premiers suburi fondamentaux au sabre - coupes et postures"},
+                {"name": "Déplacements jo", "description": "BUKIWAZA - Déplacements cohérents avec le jo - irimi et tenkan avec l'arme"}
+            ]
+        },
+        {
+            "name": "3e kyu",
+            "order": 3,
+            "color": "#22c55e",  # Vert
+            "techniques": [
+                # TACHIWAZA
+                {"name": "Shomenuchi sankyo (omote/ura)", "description": "TACHIWAZA - Troisième immobilisation (torsion poignet extérieur) depuis frappe verticale"},
+                {"name": "Katatedori sankyo (omote/ura)", "description": "TACHIWAZA - Troisième immobilisation depuis saisie du poignet - contrôle en spirale"},
+                {"name": "Yokomenuchi shiho nage", "description": "TACHIWAZA - Projection quatre directions depuis frappe diagonale à la tête"},
+                {"name": "Ryotedori shiho nage", "description": "TACHIWAZA - Projection quatre directions depuis saisie des deux poignets"},
+                {"name": "Tsuki kote gaeshi", "description": "TACHIWAZA - Retournement du poignet depuis coup de poing (chudan ou jodan tsuki)"},
+                {"name": "Shomenuchi kote gaeshi", "description": "TACHIWAZA - Retournement du poignet depuis frappe verticale"},
+                {"name": "Katatedori kaiten nage", "description": "TACHIWAZA - Projection rotative depuis saisie - uchi kaiten ou soto kaiten"},
+                # SUWARIWAZA
+                {"name": "Suwari waza sankyo (omote/ura)", "description": "SUWARIWAZA - Troisième immobilisation à genoux"},
+                {"name": "Suwari waza shomenuchi ikkyo à sankyo", "description": "SUWARIWAZA - Enchaînement des trois premières immobilisations à genoux"},
+                # HANMI HANDACHI
+                {"name": "Hanmi handachi katatedori shiho nage", "description": "HANMI HANDACHI - Projection quatre directions, tori à genoux contre uke debout"},
+                # BUKIWAZA
+                {"name": "Suburi bokken complets (5-7)", "description": "BUKIWAZA - Ensemble des suburi fondamentaux au sabre selon la ligue (5 à 7)"},
+                {"name": "Awase bokken simples", "description": "BUKIWAZA - Exercices d'harmonisation au sabre avec partenaire - go no awase"},
+                {"name": "Jo suburi de base", "description": "BUKIWAZA - Exercices fondamentaux au bâton - tsuki, uchikomi, kaeshi"}
+            ]
+        },
+        {
+            "name": "2e kyu",
+            "order": 2,
+            "color": "#3b82f6",  # Bleu
+            "techniques": [
+                # TACHIWAZA
+                {"name": "Shomenuchi yonkyo (omote/ura)", "description": "TACHIWAZA - Quatrième immobilisation (pression point nerveux) depuis frappe verticale"},
+                {"name": "Katatedori yonkyo (omote/ura)", "description": "TACHIWAZA - Quatrième immobilisation depuis saisie du poignet"},
+                {"name": "Yokomenuchi ikkyo à yonkyo", "description": "TACHIWAZA - Immobilisations 1 à 4 depuis frappe diagonale - enchaînement fluide"},
+                {"name": "Yokomenuchi irimi nage", "description": "TACHIWAZA - Projection en entrant depuis frappe latérale à la tête"},
+                {"name": "Yokomenuchi kote gaeshi", "description": "TACHIWAZA - Retournement du poignet depuis frappe diagonale"},
+                {"name": "Ushiro ryotedori ikkyo", "description": "USHIROWAZA - Première immobilisation depuis saisie arrière des deux poignets"},
+                {"name": "Ushiro ryotedori shiho nage", "description": "USHIROWAZA - Projection quatre directions depuis saisie arrière"},
+                # SUWARIWAZA
+                {"name": "Suwari waza yonkyo", "description": "SUWARIWAZA - Quatrième immobilisation à genoux"},
+                {"name": "Suwari waza yokomenuchi ikkyo à yonkyo", "description": "SUWARIWAZA - Immobilisations depuis frappe diagonale à genoux"},
+                # HANMI HANDACHI
+                {"name": "Hanmi handachi katatedori irimi nage", "description": "HANMI HANDACHI - Projection en entrant, tori à genoux"},
+                {"name": "Hanmi handachi katatedori kaiten nage", "description": "HANMI HANDACHI - Projection rotative, tori à genoux"},
+                # BUKIWAZA
+                {"name": "Suburi jo 1-13", "description": "BUKIWAZA - 13 exercices de base au bâton"},
+                {"name": "Awase jo simples", "description": "BUKIWAZA - Exercices d'harmonisation au jo avec partenaire"}
+            ]
+        },
+        {
+            "name": "1er kyu",
+            "order": 1,
+            "color": "#7c3aed",  # Violet/Marron
+            "techniques": [
+                # TACHIWAZA avancé
+                {"name": "Yokomenuchi gokyo", "description": "TACHIWAZA - Cinquième immobilisation (contrôle du couteau) depuis frappe diagonale"},
+                {"name": "Katadori menuchi ikkyo à sankyo", "description": "TACHIWAZA - Immobilisations depuis saisie épaule + frappe simultanée"},
+                {"name": "Ryotedori tenchi nage", "description": "TACHIWAZA - Projection ciel-terre depuis saisie des deux poignets"},
+                {"name": "Katatedori koshi nage", "description": "TACHIWAZA - Projection de hanche depuis saisie du poignet"},
+                {"name": "Katatedori sumi otoshi", "description": "TACHIWAZA - Projection par le coin depuis saisie"},
+                {"name": "Aihanmi katatedori kokyu nage", "description": "TACHIWAZA - Projection par la respiration depuis saisie opposée"},
+                # USHIROWAZA complet
+                {"name": "Ushiro ryotedori sankyo", "description": "USHIROWAZA - Troisième immobilisation depuis saisie arrière des poignets"},
+                {"name": "Ushiro ryotedori kote gaeshi", "description": "USHIROWAZA - Retournement du poignet depuis saisie arrière"},
+                {"name": "Ushiro ryokatadori ikkyo à sankyo", "description": "USHIROWAZA - Immobilisations depuis saisie arrière des épaules"},
+                {"name": "Ushiro katatedori kubishime koshi nage", "description": "USHIROWAZA - Projection de hanche depuis saisie poignet + étranglement"},
+                # BUKIDORI
+                {"name": "Tachi dori (bokken)", "description": "BUKIDORI - Désarmement du sabre - 2-3 formes"},
+                {"name": "Jo dori", "description": "BUKIDORI - Désarmement du bâton - 2-3 formes"},
+                {"name": "Tanken dori (tanto)", "description": "BUKIDORI - Désarmement du couteau - techniques de base"},
+                # RANDORI
+                {"name": "Jiyu waza simple", "description": "RANDORI - Technique libre simple - réponses spontanées à diverses attaques"},
+                {"name": "Ninin dori (2 attaquants)", "description": "RANDORI - Travail contre 2 attaquants - gestion de l'espace et timing"},
+                # BUKIWAZA
+                {"name": "Suburi jo 1-20", "description": "BUKIWAZA - 20 exercices de base au bâton"},
+                {"name": "Kumitachi de base (1-3)", "description": "BUKIWAZA - Premiers kata au sabre avec partenaire"},
+                {"name": "Kata jo simples", "description": "BUKIWAZA - Katas de jo : roku no jo, shi no jo"}
             ]
         },
         {
