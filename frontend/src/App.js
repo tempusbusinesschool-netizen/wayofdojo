@@ -17,17 +17,16 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
 // Use the animated illustrations from AikidoAnimations component
+// Animated Aikido technique illustrations
 const TechniqueIllustration = ({ technique, size = 100 }) => {
   return getAikidoAnimation(technique, size);
 };
 
-// Legacy static illustration (fallback)
-const StaticIllustration = ({ technique, color = "#3b82f6", size = 100 }) => {
-  const name = technique.toLowerCase();
-  
-  // Determine which illustration to show based on technique name
-  if (name.includes('ikkyo')) {
-    return (
+// Placeholder for removed static illustrations
+const REMOVED_STATIC = true; // Flag to indicate old code was removed
+
+// Keep this for backwards compatibility - start of removed section
+const _unusedStart = (name) => name.includes('ikkyo') && (
       <svg viewBox="0 0 100 100" width={size} height={size}>
         <defs>
           <linearGradient id={`grad-ikkyo-${color.replace('#','')}`} x1="0%" y1="0%" x2="100%" y2="100%">
