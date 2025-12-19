@@ -14,7 +14,7 @@ import { Plus, Trash2, Edit2, Target, Award, Circle, Play, BookOpen, Eye, Star, 
 import { getAikidoAnimation } from "@/components/AikidoAnimations";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = \`\${BACKEND_URL}/api\`;
+const API = `${BACKEND_URL}/api`;
 
 // Animated Aikido technique illustrations - Black & White Silhouettes
 const TechniqueIllustration = ({ technique, size = 100 }) => {
