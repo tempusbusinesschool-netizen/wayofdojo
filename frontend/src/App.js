@@ -328,41 +328,67 @@ function App() {
       </header>
 
       {/* Main */}
-      <main className="max-w-6xl mx-auto px-4 py-6">
+      <main className="max-w-6xl mx-auto px-4 py-8 relative z-10">
         {kyuLevels.length === 0 ? (
-          <div className="text-center py-16">
-            <div className="w-24 h-24 mx-auto mb-4 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-full flex items-center justify-center">
-              <Users className="w-12 h-12 text-indigo-500" />
+          <div className="text-center py-20">
+            <div className="w-32 h-32 mx-auto mb-6 bg-gradient-to-br from-pink-400 via-purple-400 to-blue-400 rounded-3xl flex items-center justify-center shadow-2xl animate-bounce">
+              <span className="text-6xl">🥋</span>
             </div>
-            <h2 className="text-xl font-bold text-gray-800 mb-2">Bienvenue ! 🥋</h2>
-            <p className="text-gray-500">Chargez les données du programme officiel</p>
+            <h2 className="text-3xl font-extrabold gradient-text-rainbow mb-3">Bienvenue sur Aikido Tracker !</h2>
+            <p className="text-gray-500 text-lg mb-6">Chargez les données du programme officiel pour commencer</p>
+            <Button onClick={seedData} className="btn-bouncy bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white px-8 py-3 text-lg rounded-xl shadow-lg shadow-purple-500/30">
+              <Zap className="w-5 h-5 mr-2" /> Charger les données
+            </Button>
           </div>
         ) : (
-          <div className="space-y-6">
+          <div className="space-y-8">
             {kyuLevels.map((kyu) => {
               const progress = calculateKyuProgress(kyu.techniques);
               const beltColor = getBeltColor(kyu.order);
+              const isDan = kyu.order <= 0;
               
               return (
-                <Card key={kyu.id} className="overflow-hidden shadow-md border-0" style={{ borderLeft: `4px solid ${beltColor.border}` }}>
-                  <CardHeader className="pb-3" style={{ backgroundColor: beltColor.bg }}>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-lg flex items-center justify-center font-bold text-lg shadow" 
-                             style={{ backgroundColor: beltColor.border, color: beltColor.text === "#ffffff" ? "#fff" : beltColor.text }}>
+                <Card key={kyu.id} className="glass-card overflow-hidden border-0 technique-card-modern" 
+                      style={{ 
+                        borderLeft: `5px solid ${beltColor.border}`,
+                        boxShadow: `0 20px 60px -15px ${beltColor.border}40`
+                      }}>
+                  <CardHeader className="pb-4 relative" style={{ background: `linear-gradient(135deg, ${beltColor.bg}, ${beltColor.bg}80)` }}>
+                    {/* Decorative elements */}
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
+                    <div className="absolute bottom-0 left-1/4 w-24 h-24 bg-white/5 rounded-full -mb-12"></div>
+                    
+                    <div className="flex items-center justify-between relative z-10">
+                      <div className="flex items-center gap-4">
+                        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center font-bold text-xl shadow-lg transform hover:scale-110 transition-transform ${isDan ? 'bg-gradient-to-br from-gray-700 to-gray-900 text-white' : ''}`}
+                             style={!isDan ? { background: `linear-gradient(135deg, ${beltColor.border}, ${beltColor.border}cc)`, color: beltColor.text === "#ffffff" ? "#fff" : beltColor.text } : {}}>
                           {kyu.order}
                         </div>
                         <div>
-                          <CardTitle className="text-lg" style={{ color: beltColor.text }}>{kyu.name}</CardTitle>
-                          <CardDescription style={{ color: `${beltColor.text}99` }}>
-                            {kyu.techniques?.length || 0} techniques • {progress}% maîtrisé
+                          <CardTitle className="text-xl font-bold" style={{ color: isDan ? '#fff' : beltColor.text }}>
+                            {isDan && <span className="mr-2">🥇</span>}
+                            {kyu.name}
+                          </CardTitle>
+                          <CardDescription className="flex items-center gap-2" style={{ color: isDan ? 'rgba(255,255,255,0.8)' : `${beltColor.text}99` }}>
+                            <span className="font-medium">{kyu.techniques?.length || 0} techniques</span>
+                            <span>•</span>
+                            <span className="flex items-center gap-1">
+                              <span className="text-lg">✨</span> {progress}% maîtrisé
+                            </span>
                           </CardDescription>
                         </div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        {/* Progress bar */}
-                        <div className="w-20 h-2 bg-white/50 rounded-full overflow-hidden">
-                          <div className="h-full rounded-full" style={{ width: `${progress}%`, backgroundColor: beltColor.text }}></div>
+                      <div className="flex items-center gap-3">
+                        {/* Circular Progress */}
+                        <div className="relative w-14 h-14">
+                          <svg className="w-14 h-14 progress-ring">
+                            <circle cx="28" cy="28" r="24" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="4"/>
+                            <circle cx="28" cy="28" r="24" fill="none" stroke={isDan ? '#fff' : beltColor.text} strokeWidth="4" 
+                                    strokeDasharray="151" strokeDashoffset={151 - (151 * progress / 100)} strokeLinecap="round"/>
+                          </svg>
+                          <span className="absolute inset-0 flex items-center justify-center text-sm font-bold" style={{ color: isDan ? '#fff' : beltColor.text }}>
+                            {progress}%
+                          </span>
                         </div>
                         <Dialog open={techniqueDialogOpen && selectedKyuId === kyu.id} onOpenChange={(open) => { setTechniqueDialogOpen(open); if (open) setSelectedKyuId(kyu.id); }}>
                           <DialogTrigger asChild>
