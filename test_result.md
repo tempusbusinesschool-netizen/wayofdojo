@@ -101,3 +101,122 @@
 #====================================================================================================
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
+
+user_problem_statement: "Application de suivi d'entraînement Aïkido avec GIFs réalistes pour illustrer chaque technique. 10 niveaux (6e kyu à 4e Dan) avec 118 techniques totales."
+
+backend:
+  - task: "API GET /api/kyu-levels - Liste tous les niveaux avec techniques"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "API retourne 10 niveaux avec techniques et URLs de GIFs"
+
+  - task: "API POST /api/seed - Seeding des données avec GIFs"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Seed avec URLs de GIFs Tenor validées (HTTP 200)"
+
+  - task: "API PUT /api/kyu-levels/{id}/techniques/{id} - Mise à jour maîtrise"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Mise à jour du niveau de maîtrise fonctionnelle"
+
+  - task: "API POST /api/kyu-levels/{id}/techniques/{id}/practice - Enregistrer pratique"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: true
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Incrémente le compteur de sessions"
+
+frontend:
+  - task: "Affichage des GIFs réalistes sur les cartes"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/App.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "GIFs Tenor affichés avec fallback vers GIF par défaut"
+
+  - task: "Modal détaillé avec GIF en grand format"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/App.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Modal ouvre avec GIF taille 180px, description et boutons maîtrise"
+
+  - task: "Sélection niveau de maîtrise (4 niveaux)"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/App.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Non démarré, En apprentissage, Pratiqué, Maîtrisé"
+
+  - task: "Affichage des 10 grades (6e kyu à 4e Dan)"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/App.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Tous les grades affichés avec couleurs ceinture appropriées"
+
+metadata:
+  created_by: "main_agent"
+  version: "1.0"
+  test_sequence: 1
+  run_ui: true
+
+test_plan:
+  current_focus:
+    - "Affichage des GIFs réalistes sur les cartes"
+    - "Modal détaillé avec GIF en grand format"
+    - "API GET /api/kyu-levels"
+  stuck_tasks: []
+  test_all: true
+  test_priority: "high_first"
+
+agent_communication:
+  - agent: "main"
+    message: "Remplacement des animations SVG par des GIFs réalistes d'Aïkido (sources Tenor). URLs validées HTTP 200. Composant TechniqueIllustration mis à jour avec fallback. Fichier AikidoAnimations.jsx supprimé. Veuillez tester l'affichage des GIFs et la fonctionnalité du modal."
