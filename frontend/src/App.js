@@ -118,7 +118,7 @@ function App() {
     }
     try {
       await axios.post(`${API}/kyu-levels/${selectedKyuId}/techniques`, newTechnique);
-      setNewTechnique({ name: "", description: "" });
+      setNewTechnique({ name: "", description: "", image_url: "" });
       setTechniqueDialogOpen(false);
       await fetchKyuLevels();
       toast.success("Technique ajoutée avec succès");
