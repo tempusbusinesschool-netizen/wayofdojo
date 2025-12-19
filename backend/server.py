@@ -87,11 +87,13 @@ class TechniqueUpdate(BaseModel):
     name: Optional[str] = None
     description: Optional[str] = None
     mastery_level: Optional[MasteryLevel] = None
+    image_url: Optional[str] = None
 
 class KyuLevelUpdate(BaseModel):
     name: Optional[str] = None
     order: Optional[int] = None
     color: Optional[str] = None
+    image_url: Optional[str] = None
 
 
 # Helper function to serialize datetime
