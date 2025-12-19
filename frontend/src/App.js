@@ -322,7 +322,7 @@ const TechniqueModal = ({ technique, kyu, isOpen, onClose, onPractice, onUpdateM
         <div className="space-y-5 py-3">
           {/* Illustration */}
           <div className="flex justify-center p-6 rounded-xl" style={{ backgroundColor: beltColor.bg }}>
-            <TechniqueIllustration technique={technique.name} color={beltColor.text} size={150} />
+            <TechniqueIllustration technique={technique.name} size={150} />
           </div>
           
           {/* Info cards */}
