@@ -18,22 +18,34 @@ const API = `${BACKEND_URL}/api`;
 // Default GIF for techniques without specific images
 const DEFAULT_GIF = "https://media.tenor.com/P22Z3iyIhQAAAAAM/aikido-master.gif";
 
-// Realistic Aikido GIF illustration component
+// Realistic Aikido GIF illustration component with fallback
 const TechniqueIllustration = ({ technique, imageUrl, size = 100 }) => {
-  const gifUrl = imageUrl || DEFAULT_GIF;
+  const [imgSrc, setImgSrc] = React.useState(imageUrl || DEFAULT_GIF);
+  const [hasError, setHasError] = React.useState(false);
+  
+  React.useEffect(() => {
+    setImgSrc(imageUrl || DEFAULT_GIF);
+    setHasError(false);
+  }, [imageUrl]);
+  
+  const handleError = () => {
+    if (!hasError) {
+      setHasError(true);
+      setImgSrc(DEFAULT_GIF);
+    }
+  };
   
   return (
     <div 
-      className="relative rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center"
+      className="relative rounded-lg overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-inner"
       style={{ width: size, height: size }}
     >
       <img
-        src={gifUrl}
+        src={imgSrc}
         alt={technique}
         className="w-full h-full object-cover"
-        onError={(e) => {
-          e.target.src = DEFAULT_GIF;
-        }}
+        onError={handleError}
+        loading="lazy"
       />
     </div>
   );
