@@ -294,6 +294,46 @@ async def seed_data():
     
     # Programme officiel FFAAA - Check-list de préparation aux grades Aïkido
     # Basé sur la nomenclature UFA/FAA et le référentiel de travail FFAAA
+    # GIFs réalistes libres de droits depuis Tenor et autres sources
+    
+    # URLs des GIFs par catégorie de technique
+    GIF_URLS = {
+        # Techniques de base / déplacements
+        "base": "https://media.tenor.com/P22Z3iyIhQAAAAAM/aikido-master.gif",
+        "deplacement": "https://media.tenor.com/nJGdH1XLWVUAAAAM/aikido.gif",
+        # Immobilisations (ikkyo, nikyo, sankyo, yonkyo, gokyo)
+        "ikkyo": "https://media.tenor.com/jE00NSdUJmAAAAAM/aikido.gif",
+        "nikyo": "https://media.tenor.com/11361382.gif",
+        "sankyo": "https://media.tenor.com/27538067.gif",
+        "yonkyo": "https://media.tenor.com/jE00NSdUJmAAAAAM/aikido.gif",
+        "gokyo": "https://media.tenor.com/jE00NSdUJmAAAAAM/aikido.gif",
+        # Projections
+        "shiho_nage": "https://media.tenor.com/ura8QoKWyw8AAAAM/hiromi-matsuoka.gif",
+        "irimi_nage": "https://media.tenor.com/XWxLzISKkv8AAAAM/aikido-iriminage.gif",
+        "kote_gaeshi": "https://media.tenor.com/pxpU5xS6WVUAAAAM/aikido-kotegaeshi.gif",
+        "kaiten_nage": "https://media.tenor.com/27538041.gif",
+        "tenchi_nage": "https://media.tenor.com/27538204.gif",
+        "koshi_nage": "https://media.tenor.com/11500772.gif",
+        "kokyu_nage": "https://media.tenor.com/P22Z3iyIhQAAAAAM/aikido-master.gif",
+        "sumi_otoshi": "https://media.tenor.com/27343233.gif",
+        # Ukemi (chutes)
+        "ukemi": "https://media.tenor.com/l9bqdh9K0h0AAAAM/aikido-meme.gif",
+        # Suwariwaza (techniques à genoux)
+        "suwari": "https://media.tenor.com/11361202.gif",
+        # Ushirowaza (attaques par l'arrière)
+        "ushiro": "https://media.tenor.com/27538067.gif",
+        # Bukiwaza (armes)
+        "bokken": "https://media.tenor.com/k8Ok5wExDmEAAAAM/aikido.gif",
+        "jo": "https://media.tenor.com/k8Ok5wExDmEAAAAM/aikido.gif",
+        "tanto": "https://media.tenor.com/k8Ok5wExDmEAAAAM/aikido.gif",
+        # Randori / Jiyu waza
+        "randori": "https://media.tenor.com/1698466879726485648.gif",
+        # Hanmi handachi
+        "hanmi_handachi": "https://media.tenor.com/11361382.gif",
+        # Générique aikido
+        "generic": "https://media.tenor.com/P22Z3iyIhQAAAAAM/aikido-master.gif"
+    }
+    
     initial_data = [
         # ═══════════════════════════════════════════════════════════════
         # 🔰 GRADES KYŪ (6e → 1er kyū)
@@ -304,15 +344,15 @@ async def seed_data():
             "color": "#f1f5f9",  # Blanc
             "techniques": [
                 # BASES FONDAMENTALES
-                {"name": "Tai no henko (kihon)", "description": "BASE - Exercice fondamental de déplacement, pivotement et connexion avec le partenaire - forme basique", "image_url": "https://media.tenor.com/P22Z3iyIhQAAAAAM/aikido-master.gif"},
-                {"name": "Déplacements (irimi/tenkan)", "description": "BASE - Apprentissage des déplacements fondamentaux : irimi (entrée directe) et tenkan (pivot)", "image_url": "https://media.tenor.com/P22Z3iyIhQAAAAAM/aikido-master.gif"},
-                {"name": "Ukemi (chutes avant/arrière)", "description": "BASE - Apprentissage des chutes : mae ukemi (avant) et ushiro ukemi (arrière) - protéger son corps", "image_url": "https://media.tenor.com/l9bqdh9K0h0AAAAM/aikido-meme.gif"},
+                {"name": "Tai no henko (kihon)", "description": "BASE - Exercice fondamental de déplacement, pivotement et connexion avec le partenaire - forme basique", "image_url": GIF_URLS["base"]},
+                {"name": "Déplacements (irimi/tenkan)", "description": "BASE - Apprentissage des déplacements fondamentaux : irimi (entrée directe) et tenkan (pivot)", "image_url": GIF_URLS["deplacement"]},
+                {"name": "Ukemi (chutes avant/arrière)", "description": "BASE - Apprentissage des chutes : mae ukemi (avant) et ushiro ukemi (arrière) - protéger son corps", "image_url": GIF_URLS["ukemi"]},
                 # TACHIWAZA
-                {"name": "Katatedori ikkyo (omote)", "description": "TACHIWAZA - Première immobilisation depuis saisie du poignet - forme directe (omote)", "image_url": "https://media.tenor.com/jE00NSdUJmAAAAAM/aikido.gif"},
-                {"name": "Shomenuchi ikkyo (omote)", "description": "TACHIWAZA - Première immobilisation depuis frappe verticale à la tête - forme directe", "image_url": "https://media.tenor.com/jE00NSdUJmAAAAAM/aikido.gif"},
+                {"name": "Katatedori ikkyo (omote)", "description": "TACHIWAZA - Première immobilisation depuis saisie du poignet - forme directe (omote)", "image_url": GIF_URLS["ikkyo"]},
+                {"name": "Shomenuchi ikkyo (omote)", "description": "TACHIWAZA - Première immobilisation depuis frappe verticale à la tête - forme directe", "image_url": GIF_URLS["ikkyo"]},
                 # BUKIWAZA initiation
-                {"name": "Tenue du bokken", "description": "BUKIWAZA - Apprentissage de la tenue correcte du sabre en bois (bokken) - position des mains et posture", "image_url": "https://media.tenor.com/k8Ok5wExDmEAAAAM/aikido.gif"},
-                {"name": "Tenue du jo", "description": "BUKIWAZA - Apprentissage de la tenue et des déplacements de base avec le bâton (jo)", "image_url": "https://media.tenor.com/k8Ok5wExDmEAAAAM/aikido.gif"}
+                {"name": "Tenue du bokken", "description": "BUKIWAZA - Apprentissage de la tenue correcte du sabre en bois (bokken) - position des mains et posture", "image_url": GIF_URLS["bokken"]},
+                {"name": "Tenue du jo", "description": "BUKIWAZA - Apprentissage de la tenue et des déplacements de base avec le bâton (jo)", "image_url": GIF_URLS["jo"]}
             ]
         },
         {
@@ -321,17 +361,17 @@ async def seed_data():
             "color": "#fbbf24",  # Jaune
             "techniques": [
                 # TACHIWAZA
-                {"name": "Tai no henko (kihon/ki no nagare)", "description": "TACHIWAZA - Exercice de connexion - formes basique (kihon) et fluide (ki no nagare)", "image_url": "https://media.tenor.com/P22Z3iyIhQAAAAAM/aikido-master.gif"},
-                {"name": "Morote dori kokyu ho", "description": "TACHIWAZA - Exercice de respiration depuis saisie du poignet à deux mains - développer le kokyu", "image_url": "https://media.tenor.com/P22Z3iyIhQAAAAAM/aikido-master.gif"},
-                {"name": "Katatedori ikkyo (omote/ura)", "description": "TACHIWAZA - Première immobilisation depuis saisie poignet - formes directe et inversée", "image_url": "https://media.tenor.com/jE00NSdUJmAAAAAM/aikido.gif"},
-                {"name": "Shomenuchi ikkyo (omote/ura)", "description": "TACHIWAZA - Première immobilisation depuis frappe verticale - formes directe et inversée", "image_url": "https://media.tenor.com/jE00NSdUJmAAAAAM/aikido.gif"},
-                {"name": "Katatedori shiho nage", "description": "TACHIWAZA - Projection dans les quatre directions depuis saisie du poignet", "image_url": "https://media.tenor.com/ura8QoKWyw8AAAAM/hiromi-matsuoka.gif"},
+                {"name": "Tai no henko (kihon/ki no nagare)", "description": "TACHIWAZA - Exercice de connexion - formes basique (kihon) et fluide (ki no nagare)", "image_url": GIF_URLS["base"]},
+                {"name": "Morote dori kokyu ho", "description": "TACHIWAZA - Exercice de respiration depuis saisie du poignet à deux mains - développer le kokyu", "image_url": GIF_URLS["kokyu_nage"]},
+                {"name": "Katatedori ikkyo (omote/ura)", "description": "TACHIWAZA - Première immobilisation depuis saisie poignet - formes directe et inversée", "image_url": GIF_URLS["ikkyo"]},
+                {"name": "Shomenuchi ikkyo (omote/ura)", "description": "TACHIWAZA - Première immobilisation depuis frappe verticale - formes directe et inversée", "image_url": GIF_URLS["ikkyo"]},
+                {"name": "Katatedori shiho nage", "description": "TACHIWAZA - Projection dans les quatre directions depuis saisie du poignet", "image_url": GIF_URLS["shiho_nage"]},
                 # SUWARIWAZA bases
-                {"name": "Suwari waza ikkyo (omote)", "description": "SUWARIWAZA - Première immobilisation à genoux (shikko) - travail des hanches", "image_url": "https://media.tenor.com/jE00NSdUJmAAAAAM/aikido.gif"},
+                {"name": "Suwari waza ikkyo (omote)", "description": "SUWARIWAZA - Première immobilisation à genoux (shikko) - travail des hanches", "image_url": GIF_URLS["suwari"]},
                 # BUKIWAZA
-                {"name": "Suburi bokken (shomen/yokomen)", "description": "BUKIWAZA - Coupes fondamentales au sabre : shomen uchi (verticale) et yokomen uchi (diagonale)"},
-                {"name": "Jo suburi simples", "description": "BUKIWAZA - Exercices de base au bâton - postures et frappes fondamentales"},
-                {"name": "Distance et vigilance (ma-ai)", "description": "BUKIWAZA - Apprentissage du ma-ai : distance correcte et vigilance martiale"}
+                {"name": "Suburi bokken (shomen/yokomen)", "description": "BUKIWAZA - Coupes fondamentales au sabre : shomen uchi (verticale) et yokomen uchi (diagonale)", "image_url": GIF_URLS["bokken"]},
+                {"name": "Jo suburi simples", "description": "BUKIWAZA - Exercices de base au bâton - postures et frappes fondamentales", "image_url": GIF_URLS["jo"]},
+                {"name": "Distance et vigilance (ma-ai)", "description": "BUKIWAZA - Apprentissage du ma-ai : distance correcte et vigilance martiale", "image_url": GIF_URLS["generic"]}
             ]
         },
         {
@@ -340,17 +380,17 @@ async def seed_data():
             "color": "#f97316",  # Orange
             "techniques": [
                 # TACHIWAZA
-                {"name": "Katatedori nikyo (omote/ura)", "description": "TACHIWAZA - Deuxième immobilisation (contrôle du poignet en rotation) depuis saisie - omote et ura"},
-                {"name": "Shomenuchi nikyo (omote/ura)", "description": "TACHIWAZA - Deuxième immobilisation depuis frappe verticale - formes directe et inversée"},
-                {"name": "Katatedori irimi nage", "description": "TACHIWAZA - Projection en entrant depuis saisie du poignet - contrôle de la tête d'uke"},
-                {"name": "Shomenuchi irimi nage", "description": "TACHIWAZA - Projection en entrant depuis frappe verticale"},
-                {"name": "Katatedori kote gaeshi", "description": "TACHIWAZA - Retournement du poignet depuis saisie - projection par torsion externe"},
+                {"name": "Katatedori nikyo (omote/ura)", "description": "TACHIWAZA - Deuxième immobilisation (contrôle du poignet en rotation) depuis saisie - omote et ura", "image_url": GIF_URLS["nikyo"]},
+                {"name": "Shomenuchi nikyo (omote/ura)", "description": "TACHIWAZA - Deuxième immobilisation depuis frappe verticale - formes directe et inversée", "image_url": GIF_URLS["nikyo"]},
+                {"name": "Katatedori irimi nage", "description": "TACHIWAZA - Projection en entrant depuis saisie du poignet - contrôle de la tête d'uke", "image_url": GIF_URLS["irimi_nage"]},
+                {"name": "Shomenuchi irimi nage", "description": "TACHIWAZA - Projection en entrant depuis frappe verticale", "image_url": GIF_URLS["irimi_nage"]},
+                {"name": "Katatedori kote gaeshi", "description": "TACHIWAZA - Retournement du poignet depuis saisie - projection par torsion externe", "image_url": GIF_URLS["kote_gaeshi"]},
                 # SUWARIWAZA
-                {"name": "Suwari waza nikyo (omote/ura)", "description": "SUWARIWAZA - Deuxième immobilisation à genoux - travail en seiza et shikko"},
-                {"name": "Suwari waza kokyu ho", "description": "SUWARIWAZA - Exercice de respiration à genoux depuis ryote dori - développement du centre"},
+                {"name": "Suwari waza nikyo (omote/ura)", "description": "SUWARIWAZA - Deuxième immobilisation à genoux - travail en seiza et shikko", "image_url": GIF_URLS["suwari"]},
+                {"name": "Suwari waza kokyu ho", "description": "SUWARIWAZA - Exercice de respiration à genoux depuis ryote dori - développement du centre", "image_url": GIF_URLS["suwari"]},
                 # BUKIWAZA
-                {"name": "Suburi bokken 1-5", "description": "BUKIWAZA - 5 premiers suburi fondamentaux au sabre - coupes et postures"},
-                {"name": "Déplacements jo", "description": "BUKIWAZA - Déplacements cohérents avec le jo - irimi et tenkan avec l'arme"}
+                {"name": "Suburi bokken 1-5", "description": "BUKIWAZA - 5 premiers suburi fondamentaux au sabre - coupes et postures", "image_url": GIF_URLS["bokken"]},
+                {"name": "Déplacements jo", "description": "BUKIWAZA - Déplacements cohérents avec le jo - irimi et tenkan avec l'arme", "image_url": GIF_URLS["jo"]}
             ]
         },
         {
@@ -359,22 +399,22 @@ async def seed_data():
             "color": "#22c55e",  # Vert
             "techniques": [
                 # TACHIWAZA
-                {"name": "Shomenuchi sankyo (omote/ura)", "description": "TACHIWAZA - Troisième immobilisation (torsion poignet extérieur) depuis frappe verticale"},
-                {"name": "Katatedori sankyo (omote/ura)", "description": "TACHIWAZA - Troisième immobilisation depuis saisie du poignet - contrôle en spirale"},
-                {"name": "Yokomenuchi shiho nage", "description": "TACHIWAZA - Projection quatre directions depuis frappe diagonale à la tête"},
-                {"name": "Ryotedori shiho nage", "description": "TACHIWAZA - Projection quatre directions depuis saisie des deux poignets"},
-                {"name": "Tsuki kote gaeshi", "description": "TACHIWAZA - Retournement du poignet depuis coup de poing (chudan ou jodan tsuki)"},
-                {"name": "Shomenuchi kote gaeshi", "description": "TACHIWAZA - Retournement du poignet depuis frappe verticale"},
-                {"name": "Katatedori kaiten nage", "description": "TACHIWAZA - Projection rotative depuis saisie - uchi kaiten ou soto kaiten"},
+                {"name": "Shomenuchi sankyo (omote/ura)", "description": "TACHIWAZA - Troisième immobilisation (torsion poignet extérieur) depuis frappe verticale", "image_url": GIF_URLS["sankyo"]},
+                {"name": "Katatedori sankyo (omote/ura)", "description": "TACHIWAZA - Troisième immobilisation depuis saisie du poignet - contrôle en spirale", "image_url": GIF_URLS["sankyo"]},
+                {"name": "Yokomenuchi shiho nage", "description": "TACHIWAZA - Projection quatre directions depuis frappe diagonale à la tête", "image_url": GIF_URLS["shiho_nage"]},
+                {"name": "Ryotedori shiho nage", "description": "TACHIWAZA - Projection quatre directions depuis saisie des deux poignets", "image_url": GIF_URLS["shiho_nage"]},
+                {"name": "Tsuki kote gaeshi", "description": "TACHIWAZA - Retournement du poignet depuis coup de poing (chudan ou jodan tsuki)", "image_url": GIF_URLS["kote_gaeshi"]},
+                {"name": "Shomenuchi kote gaeshi", "description": "TACHIWAZA - Retournement du poignet depuis frappe verticale", "image_url": GIF_URLS["kote_gaeshi"]},
+                {"name": "Katatedori kaiten nage", "description": "TACHIWAZA - Projection rotative depuis saisie - uchi kaiten ou soto kaiten", "image_url": GIF_URLS["kaiten_nage"]},
                 # SUWARIWAZA
-                {"name": "Suwari waza sankyo (omote/ura)", "description": "SUWARIWAZA - Troisième immobilisation à genoux"},
-                {"name": "Suwari waza shomenuchi ikkyo à sankyo", "description": "SUWARIWAZA - Enchaînement des trois premières immobilisations à genoux"},
+                {"name": "Suwari waza sankyo (omote/ura)", "description": "SUWARIWAZA - Troisième immobilisation à genoux", "image_url": GIF_URLS["suwari"]},
+                {"name": "Suwari waza shomenuchi ikkyo à sankyo", "description": "SUWARIWAZA - Enchaînement des trois premières immobilisations à genoux", "image_url": GIF_URLS["suwari"]},
                 # HANMI HANDACHI
-                {"name": "Hanmi handachi katatedori shiho nage", "description": "HANMI HANDACHI - Projection quatre directions, tori à genoux contre uke debout"},
+                {"name": "Hanmi handachi katatedori shiho nage", "description": "HANMI HANDACHI - Projection quatre directions, tori à genoux contre uke debout", "image_url": GIF_URLS["hanmi_handachi"]},
                 # BUKIWAZA
-                {"name": "Suburi bokken complets (5-7)", "description": "BUKIWAZA - Ensemble des suburi fondamentaux au sabre selon la ligue (5 à 7)"},
-                {"name": "Awase bokken simples", "description": "BUKIWAZA - Exercices d'harmonisation au sabre avec partenaire - go no awase"},
-                {"name": "Jo suburi de base", "description": "BUKIWAZA - Exercices fondamentaux au bâton - tsuki, uchikomi, kaeshi"}
+                {"name": "Suburi bokken complets (5-7)", "description": "BUKIWAZA - Ensemble des suburi fondamentaux au sabre selon la ligue (5 à 7)", "image_url": GIF_URLS["bokken"]},
+                {"name": "Awase bokken simples", "description": "BUKIWAZA - Exercices d'harmonisation au sabre avec partenaire - go no awase", "image_url": GIF_URLS["bokken"]},
+                {"name": "Jo suburi de base", "description": "BUKIWAZA - Exercices fondamentaux au bâton - tsuki, uchikomi, kaeshi", "image_url": GIF_URLS["jo"]}
             ]
         },
         {
@@ -383,22 +423,22 @@ async def seed_data():
             "color": "#3b82f6",  # Bleu
             "techniques": [
                 # TACHIWAZA
-                {"name": "Shomenuchi yonkyo (omote/ura)", "description": "TACHIWAZA - Quatrième immobilisation (pression point nerveux) depuis frappe verticale"},
-                {"name": "Katatedori yonkyo (omote/ura)", "description": "TACHIWAZA - Quatrième immobilisation depuis saisie du poignet"},
-                {"name": "Yokomenuchi ikkyo à yonkyo", "description": "TACHIWAZA - Immobilisations 1 à 4 depuis frappe diagonale - enchaînement fluide"},
-                {"name": "Yokomenuchi irimi nage", "description": "TACHIWAZA - Projection en entrant depuis frappe latérale à la tête"},
-                {"name": "Yokomenuchi kote gaeshi", "description": "TACHIWAZA - Retournement du poignet depuis frappe diagonale"},
-                {"name": "Ushiro ryotedori ikkyo", "description": "USHIROWAZA - Première immobilisation depuis saisie arrière des deux poignets"},
-                {"name": "Ushiro ryotedori shiho nage", "description": "USHIROWAZA - Projection quatre directions depuis saisie arrière"},
+                {"name": "Shomenuchi yonkyo (omote/ura)", "description": "TACHIWAZA - Quatrième immobilisation (pression point nerveux) depuis frappe verticale", "image_url": GIF_URLS["yonkyo"]},
+                {"name": "Katatedori yonkyo (omote/ura)", "description": "TACHIWAZA - Quatrième immobilisation depuis saisie du poignet", "image_url": GIF_URLS["yonkyo"]},
+                {"name": "Yokomenuchi ikkyo à yonkyo", "description": "TACHIWAZA - Immobilisations 1 à 4 depuis frappe diagonale - enchaînement fluide", "image_url": GIF_URLS["ikkyo"]},
+                {"name": "Yokomenuchi irimi nage", "description": "TACHIWAZA - Projection en entrant depuis frappe latérale à la tête", "image_url": GIF_URLS["irimi_nage"]},
+                {"name": "Yokomenuchi kote gaeshi", "description": "TACHIWAZA - Retournement du poignet depuis frappe diagonale", "image_url": GIF_URLS["kote_gaeshi"]},
+                {"name": "Ushiro ryotedori ikkyo", "description": "USHIROWAZA - Première immobilisation depuis saisie arrière des deux poignets", "image_url": GIF_URLS["ushiro"]},
+                {"name": "Ushiro ryotedori shiho nage", "description": "USHIROWAZA - Projection quatre directions depuis saisie arrière", "image_url": GIF_URLS["ushiro"]},
                 # SUWARIWAZA
-                {"name": "Suwari waza yonkyo", "description": "SUWARIWAZA - Quatrième immobilisation à genoux"},
-                {"name": "Suwari waza yokomenuchi ikkyo à yonkyo", "description": "SUWARIWAZA - Immobilisations depuis frappe diagonale à genoux"},
+                {"name": "Suwari waza yonkyo", "description": "SUWARIWAZA - Quatrième immobilisation à genoux", "image_url": GIF_URLS["suwari"]},
+                {"name": "Suwari waza yokomenuchi ikkyo à yonkyo", "description": "SUWARIWAZA - Immobilisations depuis frappe diagonale à genoux", "image_url": GIF_URLS["suwari"]},
                 # HANMI HANDACHI
-                {"name": "Hanmi handachi katatedori irimi nage", "description": "HANMI HANDACHI - Projection en entrant, tori à genoux"},
-                {"name": "Hanmi handachi katatedori kaiten nage", "description": "HANMI HANDACHI - Projection rotative, tori à genoux"},
+                {"name": "Hanmi handachi katatedori irimi nage", "description": "HANMI HANDACHI - Projection en entrant, tori à genoux", "image_url": GIF_URLS["hanmi_handachi"]},
+                {"name": "Hanmi handachi katatedori kaiten nage", "description": "HANMI HANDACHI - Projection rotative, tori à genoux", "image_url": GIF_URLS["hanmi_handachi"]},
                 # BUKIWAZA
-                {"name": "Suburi jo 1-13", "description": "BUKIWAZA - 13 exercices de base au bâton"},
-                {"name": "Awase jo simples", "description": "BUKIWAZA - Exercices d'harmonisation au jo avec partenaire"}
+                {"name": "Suburi jo 1-13", "description": "BUKIWAZA - 13 exercices de base au bâton", "image_url": GIF_URLS["jo"]},
+                {"name": "Awase jo simples", "description": "BUKIWAZA - Exercices d'harmonisation au jo avec partenaire", "image_url": GIF_URLS["jo"]}
             ]
         },
         {
@@ -407,28 +447,28 @@ async def seed_data():
             "color": "#7c3aed",  # Violet/Marron
             "techniques": [
                 # TACHIWAZA avancé
-                {"name": "Yokomenuchi gokyo", "description": "TACHIWAZA - Cinquième immobilisation (contrôle du couteau) depuis frappe diagonale"},
-                {"name": "Katadori menuchi ikkyo à sankyo", "description": "TACHIWAZA - Immobilisations depuis saisie épaule + frappe simultanée"},
-                {"name": "Ryotedori tenchi nage", "description": "TACHIWAZA - Projection ciel-terre depuis saisie des deux poignets"},
-                {"name": "Katatedori koshi nage", "description": "TACHIWAZA - Projection de hanche depuis saisie du poignet"},
-                {"name": "Katatedori sumi otoshi", "description": "TACHIWAZA - Projection par le coin depuis saisie"},
-                {"name": "Aihanmi katatedori kokyu nage", "description": "TACHIWAZA - Projection par la respiration depuis saisie opposée"},
+                {"name": "Yokomenuchi gokyo", "description": "TACHIWAZA - Cinquième immobilisation (contrôle du couteau) depuis frappe diagonale", "image_url": GIF_URLS["gokyo"]},
+                {"name": "Katadori menuchi ikkyo à sankyo", "description": "TACHIWAZA - Immobilisations depuis saisie épaule + frappe simultanée", "image_url": GIF_URLS["ikkyo"]},
+                {"name": "Ryotedori tenchi nage", "description": "TACHIWAZA - Projection ciel-terre depuis saisie des deux poignets", "image_url": GIF_URLS["tenchi_nage"]},
+                {"name": "Katatedori koshi nage", "description": "TACHIWAZA - Projection de hanche depuis saisie du poignet", "image_url": GIF_URLS["koshi_nage"]},
+                {"name": "Katatedori sumi otoshi", "description": "TACHIWAZA - Projection par le coin depuis saisie", "image_url": GIF_URLS["sumi_otoshi"]},
+                {"name": "Aihanmi katatedori kokyu nage", "description": "TACHIWAZA - Projection par la respiration depuis saisie opposée", "image_url": GIF_URLS["kokyu_nage"]},
                 # USHIROWAZA complet
-                {"name": "Ushiro ryotedori sankyo", "description": "USHIROWAZA - Troisième immobilisation depuis saisie arrière des poignets"},
-                {"name": "Ushiro ryotedori kote gaeshi", "description": "USHIROWAZA - Retournement du poignet depuis saisie arrière"},
-                {"name": "Ushiro ryokatadori ikkyo à sankyo", "description": "USHIROWAZA - Immobilisations depuis saisie arrière des épaules"},
-                {"name": "Ushiro katatedori kubishime koshi nage", "description": "USHIROWAZA - Projection de hanche depuis saisie poignet + étranglement"},
+                {"name": "Ushiro ryotedori sankyo", "description": "USHIROWAZA - Troisième immobilisation depuis saisie arrière des poignets", "image_url": GIF_URLS["ushiro"]},
+                {"name": "Ushiro ryotedori kote gaeshi", "description": "USHIROWAZA - Retournement du poignet depuis saisie arrière", "image_url": GIF_URLS["ushiro"]},
+                {"name": "Ushiro ryokatadori ikkyo à sankyo", "description": "USHIROWAZA - Immobilisations depuis saisie arrière des épaules", "image_url": GIF_URLS["ushiro"]},
+                {"name": "Ushiro katatedori kubishime koshi nage", "description": "USHIROWAZA - Projection de hanche depuis saisie poignet + étranglement", "image_url": GIF_URLS["koshi_nage"]},
                 # BUKIDORI
-                {"name": "Tachi dori (bokken)", "description": "BUKIDORI - Désarmement du sabre - 2-3 formes"},
-                {"name": "Jo dori", "description": "BUKIDORI - Désarmement du bâton - 2-3 formes"},
-                {"name": "Tanken dori (tanto)", "description": "BUKIDORI - Désarmement du couteau - techniques de base"},
+                {"name": "Tachi dori (bokken)", "description": "BUKIDORI - Désarmement du sabre - 2-3 formes", "image_url": GIF_URLS["bokken"]},
+                {"name": "Jo dori", "description": "BUKIDORI - Désarmement du bâton - 2-3 formes", "image_url": GIF_URLS["jo"]},
+                {"name": "Tanken dori (tanto)", "description": "BUKIDORI - Désarmement du couteau - techniques de base", "image_url": GIF_URLS["tanto"]},
                 # RANDORI
-                {"name": "Jiyu waza simple", "description": "RANDORI - Technique libre simple - réponses spontanées à diverses attaques"},
-                {"name": "Ninin dori (2 attaquants)", "description": "RANDORI - Travail contre 2 attaquants - gestion de l'espace et timing"},
+                {"name": "Jiyu waza simple", "description": "RANDORI - Technique libre simple - réponses spontanées à diverses attaques", "image_url": GIF_URLS["randori"]},
+                {"name": "Ninin dori (2 attaquants)", "description": "RANDORI - Travail contre 2 attaquants - gestion de l'espace et timing", "image_url": GIF_URLS["randori"]},
                 # BUKIWAZA
-                {"name": "Suburi jo 1-20", "description": "BUKIWAZA - 20 exercices de base au bâton"},
-                {"name": "Kumitachi de base (1-3)", "description": "BUKIWAZA - Premiers kata au sabre avec partenaire"},
-                {"name": "Kata jo simples", "description": "BUKIWAZA - Katas de jo : roku no jo, shi no jo"}
+                {"name": "Suburi jo 1-20", "description": "BUKIWAZA - 20 exercices de base au bâton", "image_url": GIF_URLS["jo"]},
+                {"name": "Kumitachi de base (1-3)", "description": "BUKIWAZA - Premiers kata au sabre avec partenaire", "image_url": GIF_URLS["bokken"]},
+                {"name": "Kata jo simples", "description": "BUKIWAZA - Katas de jo : roku no jo, shi no jo", "image_url": GIF_URLS["jo"]}
             ]
         },
         # ═══════════════════════════════════════════════════════════════
@@ -440,22 +480,22 @@ async def seed_data():
             "color": "#1f2937",  # Noir
             "techniques": [
                 # ATTENDUS AIKIDO
-                {"name": "Toutes saisies de base maîtrisées", "description": "ATTENDU - Katate dori, ryote dori, kata dori, muna dori, ushiro - réponses adaptées à chaque saisie"},
-                {"name": "Ikkyo à gokyo (formes maîtrisées)", "description": "ATTENDU - Les 5 immobilisations en omote et ura, contrôles précis et efficaces"},
-                {"name": "Jiyu waza simple", "description": "RANDORI - Technique libre simple - réponses spontanées à diverses attaques avec continuité"},
-                {"name": "Suwari waza complet", "description": "SUWARIWAZA - Shomenuchi/yokomenuchi ikkyo à gokyo, iriminage, kotegaeshi à genoux"},
-                {"name": "Hanmi handachi waza", "description": "HANMI HANDACHI - Katate dori : shihonage, kaitennage, kokyunage - tori à genoux"},
-                {"name": "Continuité et stabilité", "description": "ATTENDU - Enchaînements fluides, équilibre constant, centrage maintenu"},
+                {"name": "Toutes saisies de base maîtrisées", "description": "ATTENDU - Katate dori, ryote dori, kata dori, muna dori, ushiro - réponses adaptées à chaque saisie", "image_url": GIF_URLS["generic"]},
+                {"name": "Ikkyo à gokyo (formes maîtrisées)", "description": "ATTENDU - Les 5 immobilisations en omote et ura, contrôles précis et efficaces", "image_url": GIF_URLS["ikkyo"]},
+                {"name": "Jiyu waza simple", "description": "RANDORI - Technique libre simple - réponses spontanées à diverses attaques avec continuité", "image_url": GIF_URLS["randori"]},
+                {"name": "Suwari waza complet", "description": "SUWARIWAZA - Shomenuchi/yokomenuchi ikkyo à gokyo, iriminage, kotegaeshi à genoux", "image_url": GIF_URLS["suwari"]},
+                {"name": "Hanmi handachi waza", "description": "HANMI HANDACHI - Katate dori : shihonage, kaitennage, kokyunage - tori à genoux", "image_url": GIF_URLS["hanmi_handachi"]},
+                {"name": "Continuité et stabilité", "description": "ATTENDU - Enchaînements fluides, équilibre constant, centrage maintenu", "image_url": GIF_URLS["generic"]},
                 # BUKKEN (Bokken)
-                {"name": "Suburi bokken fondamentaux (5-7)", "description": "BUKIWAZA BOKKEN - 5 à 7 suburi selon la ligue, coupes précises"},
-                {"name": "Awase bokken simples", "description": "BUKIWAZA BOKKEN - Exercices d'harmonisation de base avec partenaire"},
-                {"name": "Kumitachi de base (1-3)", "description": "BUKIWAZA BOKKEN - 1 à 3 premiers kata au sabre avec partenaire"},
-                {"name": "Ma-ai et coupe correcte", "description": "BUKIWAZA BOKKEN - Distance juste, trajectoire et timing de coupe"},
+                {"name": "Suburi bokken fondamentaux (5-7)", "description": "BUKIWAZA BOKKEN - 5 à 7 suburi selon la ligue, coupes précises", "image_url": GIF_URLS["bokken"]},
+                {"name": "Awase bokken simples", "description": "BUKIWAZA BOKKEN - Exercices d'harmonisation de base avec partenaire", "image_url": GIF_URLS["bokken"]},
+                {"name": "Kumitachi de base (1-3)", "description": "BUKIWAZA BOKKEN - 1 à 3 premiers kata au sabre avec partenaire", "image_url": GIF_URLS["bokken"]},
+                {"name": "Ma-ai et coupe correcte", "description": "BUKIWAZA BOKKEN - Distance juste, trajectoire et timing de coupe", "image_url": GIF_URLS["bokken"]},
                 # JO
-                {"name": "Suburi jo de base", "description": "BUKIWAZA JO - Exercices fondamentaux au bâton"},
-                {"name": "Awase jo", "description": "BUKIWAZA JO - Exercices d'harmonisation au jo avec partenaire"},
-                {"name": "Kata jo simples", "description": "BUKIWAZA JO - Roku no jo, premiers kata"},
-                {"name": "Déplacements cohérents jo", "description": "BUKIWAZA JO - Unité corps/arme dans les déplacements"}
+                {"name": "Suburi jo de base", "description": "BUKIWAZA JO - Exercices fondamentaux au bâton", "image_url": GIF_URLS["jo"]},
+                {"name": "Awase jo", "description": "BUKIWAZA JO - Exercices d'harmonisation au jo avec partenaire", "image_url": GIF_URLS["jo"]},
+                {"name": "Kata jo simples", "description": "BUKIWAZA JO - Roku no jo, premiers kata", "image_url": GIF_URLS["jo"]},
+                {"name": "Déplacements cohérents jo", "description": "BUKIWAZA JO - Unité corps/arme dans les déplacements", "image_url": GIF_URLS["jo"]}
             ]
         },
         {
@@ -464,21 +504,21 @@ async def seed_data():
             "color": "#1f2937",  # Noir
             "techniques": [
                 # ATTENDUS AIKIDO
-                {"name": "Jiyu waza fluide", "description": "RANDORI - Technique libre avec fluidité et adaptation, pas de temps mort"},
-                {"name": "Variété des attaques", "description": "ATTENDU - Réponses adaptées à toutes formes d'attaques (saisies, frappes, tsuki)"},
-                {"name": "Déplacements constants", "description": "ATTENDU - Mobilité permanente, pas de positions statiques"},
-                {"name": "Début randori structuré", "description": "RANDORI - Contre plusieurs attaquants, gestion de l'espace et des priorités"},
-                {"name": "Adaptation à uke", "description": "ATTENDU - Ajustement à la morphologie, au niveau et à l'énergie d'uke"},
+                {"name": "Jiyu waza fluide", "description": "RANDORI - Technique libre avec fluidité et adaptation, pas de temps mort", "image_url": GIF_URLS["randori"]},
+                {"name": "Variété des attaques", "description": "ATTENDU - Réponses adaptées à toutes formes d'attaques (saisies, frappes, tsuki)", "image_url": GIF_URLS["generic"]},
+                {"name": "Déplacements constants", "description": "ATTENDU - Mobilité permanente, pas de positions statiques", "image_url": GIF_URLS["deplacement"]},
+                {"name": "Début randori structuré", "description": "RANDORI - Contre plusieurs attaquants, gestion de l'espace et des priorités", "image_url": GIF_URLS["randori"]},
+                {"name": "Adaptation à uke", "description": "ATTENDU - Ajustement à la morphologie, au niveau et à l'énergie d'uke", "image_url": GIF_URLS["generic"]},
                 # BOKKEN
-                {"name": "Ensemble des suburi bokken", "description": "BUKIWAZA BOKKEN - Tous les suburi maîtrisés avec précision"},
-                {"name": "Kumitachi jusqu'à 5", "description": "BUKIWAZA BOKKEN - Kumitachi 1 à 5 selon usage local"},
-                {"name": "Travail de timing bokken", "description": "BUKIWAZA BOKKEN - Synchronisation et lecture du partenaire"},
-                {"name": "Continuité attaque/réponse", "description": "BUKIWAZA BOKKEN - Enchaînements sans rupture de rythme"},
+                {"name": "Ensemble des suburi bokken", "description": "BUKIWAZA BOKKEN - Tous les suburi maîtrisés avec précision", "image_url": GIF_URLS["bokken"]},
+                {"name": "Kumitachi jusqu'à 5", "description": "BUKIWAZA BOKKEN - Kumitachi 1 à 5 selon usage local", "image_url": GIF_URLS["bokken"]},
+                {"name": "Travail de timing bokken", "description": "BUKIWAZA BOKKEN - Synchronisation et lecture du partenaire", "image_url": GIF_URLS["bokken"]},
+                {"name": "Continuité attaque/réponse", "description": "BUKIWAZA BOKKEN - Enchaînements sans rupture de rythme", "image_url": GIF_URLS["bokken"]},
                 # JO
-                {"name": "Suburi jo complets", "description": "BUKIWAZA JO - 20 suburi maîtrisés"},
-                {"name": "Kata jo intermédiaires", "description": "BUKIWAZA JO - San jyu ichi no kata (31), kata avancés"},
-                {"name": "Awase jo en mouvement", "description": "BUKIWAZA JO - Harmonisation dynamique avec déplacements"},
-                {"name": "Relation corps/arme maîtrisée", "description": "BUKIWAZA JO - Unité totale entre taijutsu et bukiwaza"}
+                {"name": "Suburi jo complets", "description": "BUKIWAZA JO - 20 suburi maîtrisés", "image_url": GIF_URLS["jo"]},
+                {"name": "Kata jo intermédiaires", "description": "BUKIWAZA JO - San jyu ichi no kata (31), kata avancés", "image_url": GIF_URLS["jo"]},
+                {"name": "Awase jo en mouvement", "description": "BUKIWAZA JO - Harmonisation dynamique avec déplacements", "image_url": GIF_URLS["jo"]},
+                {"name": "Relation corps/arme maîtrisée", "description": "BUKIWAZA JO - Unité totale entre taijutsu et bukiwaza", "image_url": GIF_URLS["jo"]}
             ]
         },
         {
@@ -487,21 +527,21 @@ async def seed_data():
             "color": "#1f2937",  # Noir
             "techniques": [
                 # ATTENDUS AIKIDO
-                {"name": "Jiyu waza libre", "description": "RANDORI - Technique totalement libre, expression personnelle de l'aikido"},
-                {"name": "Randori lisible", "description": "RANDORI - Contre plusieurs attaquants avec clarté et efficacité"},
-                {"name": "Réponses spontanées", "description": "ATTENDU - Pas de réflexion, action immédiate et adaptée"},
-                {"name": "Lecture immédiate de l'attaque", "description": "ATTENDU - Anticipation et perception de l'intention d'uke"},
-                {"name": "Liberté technique", "description": "ATTENDU - Au-delà des formes, principe intégré, variations personnelles"},
+                {"name": "Jiyu waza libre", "description": "RANDORI - Technique totalement libre, expression personnelle de l'aikido", "image_url": GIF_URLS["randori"]},
+                {"name": "Randori lisible", "description": "RANDORI - Contre plusieurs attaquants avec clarté et efficacité", "image_url": GIF_URLS["randori"]},
+                {"name": "Réponses spontanées", "description": "ATTENDU - Pas de réflexion, action immédiate et adaptée", "image_url": GIF_URLS["generic"]},
+                {"name": "Lecture immédiate de l'attaque", "description": "ATTENDU - Anticipation et perception de l'intention d'uke", "image_url": GIF_URLS["generic"]},
+                {"name": "Liberté technique", "description": "ATTENDU - Au-delà des formes, principe intégré, variations personnelles", "image_url": GIF_URLS["generic"]},
                 # BOKKEN
-                {"name": "Kumitachi complets", "description": "BUKIWAZA BOKKEN - Tous les kumitachi avec variations (henka)"},
-                {"name": "Fluidité sans rupture bokken", "description": "BUKIWAZA BOKKEN - Enchaînements naturels, pas de cassure"},
-                {"name": "Intention martiale claire", "description": "BUKIWAZA BOKKEN - Zanshin, vigilance, présence martiale"},
-                {"name": "Cohérence avec le taijutsu", "description": "BUKIWAZA BOKKEN - Même principes qu'à mains nues"},
+                {"name": "Kumitachi complets", "description": "BUKIWAZA BOKKEN - Tous les kumitachi avec variations (henka)", "image_url": GIF_URLS["bokken"]},
+                {"name": "Fluidité sans rupture bokken", "description": "BUKIWAZA BOKKEN - Enchaînements naturels, pas de cassure", "image_url": GIF_URLS["bokken"]},
+                {"name": "Intention martiale claire", "description": "BUKIWAZA BOKKEN - Zanshin, vigilance, présence martiale", "image_url": GIF_URLS["bokken"]},
+                {"name": "Cohérence avec le taijutsu", "description": "BUKIWAZA BOKKEN - Même principes qu'à mains nues", "image_url": GIF_URLS["bokken"]},
                 # JO
-                {"name": "Kata jo avancés", "description": "BUKIWAZA JO - Tous les kata avec précision et fluidité"},
-                {"name": "Continuité et précision jo", "description": "BUKIWAZA JO - Enchaînements parfaits"},
-                {"name": "Gestion de l'espace jo", "description": "BUKIWAZA JO - Maîtrise des distances et angles"},
-                {"name": "Transposition jo/mains nues", "description": "BUKIWAZA JO - Passage naturel entre arme et taijutsu"}
+                {"name": "Kata jo avancés", "description": "BUKIWAZA JO - Tous les kata avec précision et fluidité", "image_url": GIF_URLS["jo"]},
+                {"name": "Continuité et précision jo", "description": "BUKIWAZA JO - Enchaînements parfaits", "image_url": GIF_URLS["jo"]},
+                {"name": "Gestion de l'espace jo", "description": "BUKIWAZA JO - Maîtrise des distances et angles", "image_url": GIF_URLS["jo"]},
+                {"name": "Transposition jo/mains nues", "description": "BUKIWAZA JO - Passage naturel entre arme et taijutsu", "image_url": GIF_URLS["jo"]}
             ]
         },
         {
@@ -510,16 +550,16 @@ async def seed_data():
             "color": "#1f2937",  # Noir
             "techniques": [
                 # ATTENDUS AIKIDO
-                {"name": "Aucune restriction technique", "description": "ATTENDU - Maîtrise totale du répertoire technique, toutes attaques"},
-                {"name": "Présence et justesse", "description": "ATTENDU - Aura martiale, centrage parfait, timing impeccable"},
-                {"name": "Simplicité et efficacité", "description": "ATTENDU - Économie de mouvement, effet maximum avec minimum d'effort"},
-                {"name": "Capacité démonstrative", "description": "ATTENDU - Capable de montrer clairement sans ostentation"},
-                {"name": "Randori multiple avancé", "description": "RANDORI - Contre 4+ attaquants avec aisance (yonin dori)"},
+                {"name": "Aucune restriction technique", "description": "ATTENDU - Maîtrise totale du répertoire technique, toutes attaques", "image_url": GIF_URLS["generic"]},
+                {"name": "Présence et justesse", "description": "ATTENDU - Aura martiale, centrage parfait, timing impeccable", "image_url": GIF_URLS["generic"]},
+                {"name": "Simplicité et efficacité", "description": "ATTENDU - Économie de mouvement, effet maximum avec minimum d'effort", "image_url": GIF_URLS["generic"]},
+                {"name": "Capacité démonstrative", "description": "ATTENDU - Capable de montrer clairement sans ostentation", "image_url": GIF_URLS["generic"]},
+                {"name": "Randori multiple avancé", "description": "RANDORI - Contre 4+ attaquants avec aisance (yonin dori)", "image_url": GIF_URLS["randori"]},
                 # ARMES (JO & BOKKEN)
-                {"name": "Maîtrise complète armes", "description": "BUKIWAZA - Jo et bokken totalement intégrés à la pratique"},
-                {"name": "Absence de démonstration scolaire", "description": "BUKIWAZA - Au-delà des formes, expression naturelle"},
-                {"name": "Armes intégrées naturellement", "description": "BUKIWAZA - Passage main nue/arme invisible"},
-                {"name": "Transmission implicite", "description": "ATTENDU - Capacité à transmettre par la pratique, sans mots"}
+                {"name": "Maîtrise complète armes", "description": "BUKIWAZA - Jo et bokken totalement intégrés à la pratique", "image_url": GIF_URLS["bokken"]},
+                {"name": "Absence de démonstration scolaire", "description": "BUKIWAZA - Au-delà des formes, expression naturelle", "image_url": GIF_URLS["bokken"]},
+                {"name": "Armes intégrées naturellement", "description": "BUKIWAZA - Passage main nue/arme invisible", "image_url": GIF_URLS["jo"]},
+                {"name": "Transmission implicite", "description": "ATTENDU - Capacité à transmettre par la pratique, sans mots", "image_url": GIF_URLS["generic"]}
             ]
         }
     ]
