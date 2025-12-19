@@ -39,7 +39,7 @@ const KYU_COLORS = [
 function App() {
   const [kyuLevels, setKyuLevels] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [newKyu, setNewKyu] = useState({ name: "", order: "", color: "#6366f1" });
+  const [newKyu, setNewKyu] = useState({ name: "", order: "", color: "#6366f1", image_url: "" });
   const [newTechnique, setNewTechnique] = useState({ name: "", description: "", image_url: "" });
   const [selectedKyuId, setSelectedKyuId] = useState(null);
   const [editingTechnique, setEditingTechnique] = useState(null);
