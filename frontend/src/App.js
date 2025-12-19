@@ -415,39 +415,57 @@ function App() {
                     </div>
                   </CardHeader>
                   
-                  <CardContent className="p-4 bg-white">
+                  <CardContent className="p-5 bg-gradient-to-br from-white to-gray-50/50">
                     {!kyu.techniques?.length ? (
-                      <p className="text-center py-8 text-gray-400">Aucune technique</p>
+                      <div className="text-center py-12">
+                        <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl flex items-center justify-center">
+                          <span className="text-3xl">📝</span>
+                        </div>
+                        <p className="text-gray-400">Aucune technique</p>
+                      </div>
                     ) : (
-                      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                         {kyu.techniques.map((technique) => {
                           const mastery = MASTERY_LEVELS[technique.mastery_level] || MASTERY_LEVELS.not_started;
                           
                           return (
-                            <div key={technique.id} className="bg-slate-50 rounded-xl p-3 border hover:shadow-md transition-shadow group">
-                              {/* Illustration GIF */}
-                              <div className="flex justify-center py-2 mb-2 rounded-lg" style={{ backgroundColor: `${beltColor.bg}` }}>
-                                <TechniqueIllustration technique={technique.name} imageUrl={technique.image_url} size={80} />
+                            <div key={technique.id} 
+                                 className="technique-card-modern bg-white rounded-2xl p-4 border-2 border-gray-100 hover:border-transparent group"
+                                 style={{ 
+                                   boxShadow: '0 4px 20px -5px rgba(0,0,0,0.1)',
+                                 }}>
+                              {/* Illustration GIF with colorful border */}
+                              <div className="relative mb-3">
+                                <div className="absolute inset-0 bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity blur-sm"></div>
+                                <div className="relative flex justify-center py-3 rounded-xl" 
+                                     style={{ background: `linear-gradient(135deg, ${beltColor.bg}, ${beltColor.bg}80)` }}>
+                                  <TechniqueIllustration technique={technique.name} imageUrl={technique.image_url} size={90} />
+                                </div>
                               </div>
                               
                               {/* Content */}
-                              <h4 className="font-medium text-gray-800 text-sm mb-2 line-clamp-2">{technique.name}</h4>
+                              <h4 className="font-semibold text-gray-800 text-sm mb-3 line-clamp-2 group-hover:text-purple-600 transition-colors">
+                                {technique.name}
+                              </h4>
                               
-                              <div className="flex items-center justify-between mb-2">
-                                <Badge variant="outline" className={`${mastery.color} text-xs`}>
+                              <div className="flex items-center justify-between mb-3">
+                                <Badge variant="outline" className={`${mastery.color} text-xs px-3 py-1 mastery-badge`}>
                                   {mastery.emoji} {mastery.label}
                                 </Badge>
-                                <span className="text-xs text-gray-400">{technique.practice_count} sess.</span>
+                                <span className="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded-full">
+                                  {technique.practice_count} 🔥
+                                </span>
                               </div>
                               
-                              {/* Buttons */}
-                              <div className="flex gap-1.5">
-                                <Button size="sm" className="flex-1 h-8 text-xs bg-indigo-500 hover:bg-indigo-600" 
+                              {/* Buttons - Colorful */}
+                              <div className="flex gap-2">
+                                <Button size="sm" className="flex-1 h-9 text-xs btn-bouncy bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 shadow-lg shadow-indigo-500/30" 
                                         onClick={() => setViewTechniqueData({ technique, kyu, isOpen: true })}>
-                                  <Eye className="w-3 h-3 mr-1" /> Voir
+                                  <Eye className="w-3.5 h-3.5 mr-1" /> Voir
                                 </Button>
-                                <Button size="sm" className="h-8 bg-emerald-500 hover:bg-emerald-600" onClick={() => handlePractice(kyu.id, technique.id)}>
-                                  <Play className="w-3 h-3" />
+                                <Button size="sm" className="h-9 px-4 btn-bouncy bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-500 hover:to-teal-600 shadow-lg shadow-emerald-500/30" 
+                                        onClick={() => handlePractice(kyu.id, technique.id)}>
+                                  <Play className="w-3.5 h-3.5" />
                                 </Button>
                                 <Button size="sm" variant="ghost" className="h-8 text-gray-400" onClick={() => { setEditingTechnique({...technique, kyuId: kyu.id}); setEditTechniqueDialogOpen(true); }}>
                                   <Edit2 className="w-3 h-3" />
