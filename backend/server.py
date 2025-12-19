@@ -297,30 +297,30 @@ async def seed_data():
     # GIFs réalistes libres de droits depuis Tenor et autres sources
     
     # URLs des GIFs réalistes par catégorie de technique
-    # Sources: Tenor, Giphy - libres de droits
+    # Sources: Tenor - URLs testées et validées (HTTP 200)
     GIF_URLS = {
         # Techniques de base / déplacements
         "base": "https://media.tenor.com/P22Z3iyIhQAAAAAM/aikido-master.gif",
         "deplacement": "https://media.tenor.com/P22Z3iyIhQAAAAAM/aikido-master.gif",
         # Immobilisations (ikkyo, nikyo, sankyo, yonkyo, gokyo)
-        "ikkyo": "https://media.tenor.com/g3Zt3xAJoKQAAAAM/aikido.gif",
-        "nikyo": "https://media.tenor.com/pxpU5xS6WVUAAAAM/aikido-kotegaeshi.gif",
-        "sankyo": "https://media.tenor.com/g3Zt3xAJoKQAAAAM/aikido.gif",
-        "yonkyo": "https://media.tenor.com/g3Zt3xAJoKQAAAAM/aikido.gif",
-        "gokyo": "https://media.tenor.com/g3Zt3xAJoKQAAAAM/aikido.gif",
+        "ikkyo": "https://media.tenor.com/jE00NSdUJmAAAAAM/aikido.gif",
+        "nikyo": "https://media.tenor.com/jE00NSdUJmAAAAAM/aikido.gif",
+        "sankyo": "https://media.tenor.com/jE00NSdUJmAAAAAM/aikido.gif",
+        "yonkyo": "https://media.tenor.com/jE00NSdUJmAAAAAM/aikido.gif",
+        "gokyo": "https://media.tenor.com/jE00NSdUJmAAAAAM/aikido.gif",
         # Projections
         "shiho_nage": "https://media.tenor.com/ura8QoKWyw8AAAAM/hiromi-matsuoka.gif",
-        "irimi_nage": "https://media.tenor.com/XWxLzISKkv8AAAAM/aikido-iriminage.gif",
-        "kote_gaeshi": "https://media.tenor.com/pxpU5xS6WVUAAAAM/aikido-kotegaeshi.gif",
+        "irimi_nage": "https://media.tenor.com/ura8QoKWyw8AAAAM/hiromi-matsuoka.gif",
+        "kote_gaeshi": "https://media.tenor.com/ura8QoKWyw8AAAAM/hiromi-matsuoka.gif",
         "kaiten_nage": "https://media.tenor.com/ura8QoKWyw8AAAAM/hiromi-matsuoka.gif",
-        "tenchi_nage": "https://media.tenor.com/XWxLzISKkv8AAAAM/aikido-iriminage.gif",
+        "tenchi_nage": "https://media.tenor.com/ura8QoKWyw8AAAAM/hiromi-matsuoka.gif",
         "koshi_nage": "https://media.tenor.com/ura8QoKWyw8AAAAM/hiromi-matsuoka.gif",
         "kokyu_nage": "https://media.tenor.com/P22Z3iyIhQAAAAAM/aikido-master.gif",
-        "sumi_otoshi": "https://media.tenor.com/XWxLzISKkv8AAAAM/aikido-iriminage.gif",
+        "sumi_otoshi": "https://media.tenor.com/ura8QoKWyw8AAAAM/hiromi-matsuoka.gif",
         # Ukemi (chutes)
         "ukemi": "https://media.tenor.com/l9bqdh9K0h0AAAAM/aikido-meme.gif",
         # Suwariwaza (techniques à genoux)
-        "suwari": "https://media.tenor.com/g3Zt3xAJoKQAAAAM/aikido.gif",
+        "suwari": "https://media.tenor.com/jE00NSdUJmAAAAAM/aikido.gif",
         # Ushirowaza (attaques par l'arrière)
         "ushiro": "https://media.tenor.com/P22Z3iyIhQAAAAAM/aikido-master.gif",
         # Bukiwaza (armes)
@@ -330,7 +330,7 @@ async def seed_data():
         # Randori / Jiyu waza
         "randori": "https://media.tenor.com/P22Z3iyIhQAAAAAM/aikido-master.gif",
         # Hanmi handachi
-        "hanmi_handachi": "https://media.tenor.com/g3Zt3xAJoKQAAAAM/aikido.gif",
+        "hanmi_handachi": "https://media.tenor.com/jE00NSdUJmAAAAAM/aikido.gif",
         # Générique aikido
         "generic": "https://media.tenor.com/P22Z3iyIhQAAAAAM/aikido-master.gif"
     }
