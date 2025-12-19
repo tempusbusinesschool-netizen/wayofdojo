@@ -405,7 +405,7 @@ async def seed_data():
         kyu_level = KyuLevel(
             name=kyu_data['name'],
             order=kyu_data['order'],
-            color=kyu_data['color'],
+            color=kyu_data.get('color', '#6366f1'),
             image_url=kyu_data.get('image_url'),
             techniques=[]
         )
