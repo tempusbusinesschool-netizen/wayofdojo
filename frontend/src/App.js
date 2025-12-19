@@ -85,9 +85,10 @@ function App() {
       await axios.post(`${API}/kyu-levels`, {
         name: newKyu.name,
         order: parseInt(newKyu.order),
-        color: newKyu.color
+        color: newKyu.color,
+        image_url: newKyu.image_url || null
       });
-      setNewKyu({ name: "", order: "", color: "#6366f1" });
+      setNewKyu({ name: "", order: "", color: "#6366f1", image_url: "" });
       setKyuDialogOpen(false);
       await fetchKyuLevels();
       toast.success("Niveau kyu créé avec succès");
