@@ -353,6 +353,7 @@ async def seed_data():
             name=kyu_data['name'],
             order=kyu_data['order'],
             color=kyu_data['color'],
+            image_url=kyu_data.get('image_url'),
             techniques=[]
         )
         doc = kyu_level.model_dump()
