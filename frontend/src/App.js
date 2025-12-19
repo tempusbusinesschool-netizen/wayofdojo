@@ -375,6 +375,16 @@ function App() {
                                 data-testid="technique-description-input"
                               />
                             </div>
+                            <div className="space-y-2">
+                              <Label className="text-slate-300">URL de l'image (optionnel)</Label>
+                              <Input
+                                placeholder="https://..."
+                                value={newTechnique.image_url}
+                                onChange={(e) => setNewTechnique({ ...newTechnique, image_url: e.target.value })}
+                                className="bg-slate-700 border-slate-600 text-white"
+                                data-testid="technique-image-input"
+                              />
+                            </div>
                           </div>
                           <DialogFooter>
                             <DialogClose asChild>
