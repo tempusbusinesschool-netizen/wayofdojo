@@ -51,6 +51,7 @@ class StatusCheckCreate(BaseModel):
 class TechniqueBase(BaseModel):
     name: str
     description: Optional[str] = None
+    image_url: Optional[str] = None
 
 class TechniqueCreate(TechniqueBase):
     pass
