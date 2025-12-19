@@ -321,13 +321,13 @@ async def seed_data():
             "color": "#fbbf24",  # Jaune
             "techniques": [
                 # TACHIWAZA
-                {"name": "Tai no henko (kihon/ki no nagare)", "description": "TACHIWAZA - Exercice de connexion - formes basique (kihon) et fluide (ki no nagare)"},
-                {"name": "Morote dori kokyu ho", "description": "TACHIWAZA - Exercice de respiration depuis saisie du poignet à deux mains - développer le kokyu"},
-                {"name": "Katatedori ikkyo (omote/ura)", "description": "TACHIWAZA - Première immobilisation depuis saisie poignet - formes directe et inversée"},
-                {"name": "Shomenuchi ikkyo (omote/ura)", "description": "TACHIWAZA - Première immobilisation depuis frappe verticale - formes directe et inversée"},
-                {"name": "Katatedori shiho nage", "description": "TACHIWAZA - Projection dans les quatre directions depuis saisie du poignet"},
+                {"name": "Tai no henko (kihon/ki no nagare)", "description": "TACHIWAZA - Exercice de connexion - formes basique (kihon) et fluide (ki no nagare)", "image_url": "https://media.tenor.com/P22Z3iyIhQAAAAAM/aikido-master.gif"},
+                {"name": "Morote dori kokyu ho", "description": "TACHIWAZA - Exercice de respiration depuis saisie du poignet à deux mains - développer le kokyu", "image_url": "https://media.tenor.com/P22Z3iyIhQAAAAAM/aikido-master.gif"},
+                {"name": "Katatedori ikkyo (omote/ura)", "description": "TACHIWAZA - Première immobilisation depuis saisie poignet - formes directe et inversée", "image_url": "https://media.tenor.com/jE00NSdUJmAAAAAM/aikido.gif"},
+                {"name": "Shomenuchi ikkyo (omote/ura)", "description": "TACHIWAZA - Première immobilisation depuis frappe verticale - formes directe et inversée", "image_url": "https://media.tenor.com/jE00NSdUJmAAAAAM/aikido.gif"},
+                {"name": "Katatedori shiho nage", "description": "TACHIWAZA - Projection dans les quatre directions depuis saisie du poignet", "image_url": "https://media.tenor.com/ura8QoKWyw8AAAAM/hiromi-matsuoka.gif"},
                 # SUWARIWAZA bases
-                {"name": "Suwari waza ikkyo (omote)", "description": "SUWARIWAZA - Première immobilisation à genoux (shikko) - travail des hanches"},
+                {"name": "Suwari waza ikkyo (omote)", "description": "SUWARIWAZA - Première immobilisation à genoux (shikko) - travail des hanches", "image_url": "https://media.tenor.com/jE00NSdUJmAAAAAM/aikido.gif"},
                 # BUKIWAZA
                 {"name": "Suburi bokken (shomen/yokomen)", "description": "BUKIWAZA - Coupes fondamentales au sabre : shomen uchi (verticale) et yokomen uchi (diagonale)"},
                 {"name": "Jo suburi simples", "description": "BUKIWAZA - Exercices de base au bâton - postures et frappes fondamentales"},
