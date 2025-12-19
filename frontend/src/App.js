@@ -86,9 +86,9 @@ const TechniqueModal = ({ technique, kyu, isOpen, onClose, onPractice, onUpdateM
         </DialogHeader>
         
         <div className="space-y-5 py-3">
-          {/* Illustration */}
+          {/* Illustration GIF */}
           <div className="flex justify-center p-6 rounded-xl" style={{ backgroundColor: beltColor.bg }}>
-            <TechniqueIllustration technique={technique.name} size={150} />
+            <TechniqueIllustration technique={technique.name} imageUrl={technique.image_url} size={180} />
           </div>
           
           {/* Info cards */}
