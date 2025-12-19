@@ -256,26 +256,47 @@ function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center">
-        <div className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
+      <div className="min-h-screen bg-animated-gradient flex items-center justify-center">
+        <div className="relative">
+          <div className="w-20 h-20 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
+          <div className="absolute inset-0 flex items-center justify-center">
+            <span className="text-2xl">🥋</span>
+          </div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-indigo-50">
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Animated Background */}
+      <div className="fixed inset-0 bg-animated-gradient opacity-30 -z-10"></div>
+      <div className="fixed inset-0 bg-gradient-to-br from-white/80 via-white/60 to-transparent -z-10"></div>
+      
+      {/* Floating Orbs */}
+      <div className="floating-orb w-96 h-96 bg-pink-400 top-10 -left-48" style={{animationDelay: '0s'}}></div>
+      <div className="floating-orb w-80 h-80 bg-blue-400 top-1/3 -right-40" style={{animationDelay: '-5s'}}></div>
+      <div className="floating-orb w-72 h-72 bg-yellow-400 bottom-20 left-1/4" style={{animationDelay: '-10s'}}></div>
+      <div className="floating-orb w-64 h-64 bg-purple-400 bottom-1/4 right-1/3" style={{animationDelay: '-15s'}}></div>
+      
       <Toaster position="top-right" richColors />
       
-      {/* Header */}
-      <header className="bg-white border-b shadow-sm sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-orange-500 rounded-xl flex items-center justify-center shadow-lg">
-              <span className="text-white font-bold text-xl">合</span>
+      {/* Header - Glassmorphism */}
+      <header className="glass-header sticky top-0 z-50 shadow-lg">
+        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="relative">
+              <div className="w-14 h-14 bg-gradient-to-br from-red-500 via-orange-500 to-yellow-500 rounded-2xl flex items-center justify-center shadow-lg shadow-orange-500/30 animate-pulse">
+                <span className="text-white font-bold text-2xl">合</span>
+              </div>
+              <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white animate-bounce"></div>
             </div>
             <div>
-              <h1 className="text-xl font-bold text-gray-800">Aikido Tracker</h1>
-              <p className="text-xs text-gray-500">Programme officiel des grades</p>
+              <h1 className="text-2xl font-extrabold gradient-text-rainbow">Aikido Tracker</h1>
+              <p className="text-sm text-gray-500 flex items-center gap-1">
+                <span className="inline-block w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+                Programme officiel des grades
+              </p>
             </div>
           </div>
           <div className="flex gap-2">
