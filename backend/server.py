@@ -70,6 +70,7 @@ class KyuLevelBase(BaseModel):
     name: str
     order: int  # For sorting (6 for 6e kyu, 5 for 5e kyu, etc.)
     color: Optional[str] = "#6366f1"  # Default indigo color
+    image_url: Optional[str] = None
 
 class KyuLevelCreate(KyuLevelBase):
     pass
