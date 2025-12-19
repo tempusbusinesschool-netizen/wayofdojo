@@ -280,6 +280,16 @@ function App() {
                         </SelectContent>
                       </Select>
                     </div>
+                    <div className="space-y-2">
+                      <Label className="text-slate-300">URL de l'image (optionnel)</Label>
+                      <Input
+                        placeholder="https://..."
+                        value={newKyu.image_url}
+                        onChange={(e) => setNewKyu({ ...newKyu, image_url: e.target.value })}
+                        className="bg-slate-700 border-slate-600 text-white"
+                        data-testid="kyu-image-input"
+                      />
+                    </div>
                   </div>
                   <DialogFooter>
                     <DialogClose asChild>
