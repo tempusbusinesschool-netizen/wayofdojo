@@ -307,11 +307,22 @@ function App() {
           <div className="space-y-6" data-testid="kyu-levels-container">
             {kyuLevels.map((kyu) => (
               <Card key={kyu.id} className="bg-slate-800/50 border-slate-700 overflow-hidden" data-testid={`kyu-card-${kyu.id}`}>
-                <CardHeader className="border-b border-slate-700" style={{ borderLeftWidth: '4px', borderLeftColor: kyu.color }}>
+                {/* Kyu Level Header with Image */}
+                {kyu.image_url && (
+                  <div className="relative h-32 overflow-hidden">
+                    <img 
+                      src={kyu.image_url} 
+                      alt={kyu.name}
+                      className="w-full h-full object-cover opacity-40"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-r from-slate-900/90 to-transparent" />
+                  </div>
+                )}
+                <CardHeader className={`border-b border-slate-700 ${kyu.image_url ? '-mt-16 relative z-10' : ''}`} style={{ borderLeftWidth: '4px', borderLeftColor: kyu.color }}>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-4">
                       <div
-                        className="w-12 h-12 rounded-lg flex items-center justify-center text-white font-bold text-lg"
+                        className="w-14 h-14 rounded-lg flex items-center justify-center text-white font-bold text-xl shadow-lg"
                         style={{ backgroundColor: kyu.color }}
                       >
                         {kyu.order}
