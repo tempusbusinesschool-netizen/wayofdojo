@@ -304,15 +304,15 @@ async def seed_data():
             "color": "#f1f5f9",  # Blanc
             "techniques": [
                 # BASES FONDAMENTALES
-                {"name": "Tai no henko (kihon)", "description": "BASE - Exercice fondamental de déplacement, pivotement et connexion avec le partenaire - forme basique"},
-                {"name": "Déplacements (irimi/tenkan)", "description": "BASE - Apprentissage des déplacements fondamentaux : irimi (entrée directe) et tenkan (pivot)"},
-                {"name": "Ukemi (chutes avant/arrière)", "description": "BASE - Apprentissage des chutes : mae ukemi (avant) et ushiro ukemi (arrière) - protéger son corps"},
+                {"name": "Tai no henko (kihon)", "description": "BASE - Exercice fondamental de déplacement, pivotement et connexion avec le partenaire - forme basique", "image_url": "https://media.tenor.com/P22Z3iyIhQAAAAAM/aikido-master.gif"},
+                {"name": "Déplacements (irimi/tenkan)", "description": "BASE - Apprentissage des déplacements fondamentaux : irimi (entrée directe) et tenkan (pivot)", "image_url": "https://media.tenor.com/P22Z3iyIhQAAAAAM/aikido-master.gif"},
+                {"name": "Ukemi (chutes avant/arrière)", "description": "BASE - Apprentissage des chutes : mae ukemi (avant) et ushiro ukemi (arrière) - protéger son corps", "image_url": "https://media.tenor.com/l9bqdh9K0h0AAAAM/aikido-meme.gif"},
                 # TACHIWAZA
-                {"name": "Katatedori ikkyo (omote)", "description": "TACHIWAZA - Première immobilisation depuis saisie du poignet - forme directe (omote)"},
-                {"name": "Shomenuchi ikkyo (omote)", "description": "TACHIWAZA - Première immobilisation depuis frappe verticale à la tête - forme directe"},
+                {"name": "Katatedori ikkyo (omote)", "description": "TACHIWAZA - Première immobilisation depuis saisie du poignet - forme directe (omote)", "image_url": "https://media.tenor.com/jE00NSdUJmAAAAAM/aikido.gif"},
+                {"name": "Shomenuchi ikkyo (omote)", "description": "TACHIWAZA - Première immobilisation depuis frappe verticale à la tête - forme directe", "image_url": "https://media.tenor.com/jE00NSdUJmAAAAAM/aikido.gif"},
                 # BUKIWAZA initiation
-                {"name": "Tenue du bokken", "description": "BUKIWAZA - Apprentissage de la tenue correcte du sabre en bois (bokken) - position des mains et posture"},
-                {"name": "Tenue du jo", "description": "BUKIWAZA - Apprentissage de la tenue et des déplacements de base avec le bâton (jo)"}
+                {"name": "Tenue du bokken", "description": "BUKIWAZA - Apprentissage de la tenue correcte du sabre en bois (bokken) - position des mains et posture", "image_url": "https://media.tenor.com/k8Ok5wExDmEAAAAM/aikido.gif"},
+                {"name": "Tenue du jo", "description": "BUKIWAZA - Apprentissage de la tenue et des déplacements de base avec le bâton (jo)", "image_url": "https://media.tenor.com/k8Ok5wExDmEAAAAM/aikido.gif"}
             ]
         },
         {
