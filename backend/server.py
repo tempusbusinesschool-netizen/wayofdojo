@@ -297,20 +297,46 @@ async def seed_data():
             "name": "6e kyu",
             "order": 6,
             "color": "#f97316",  # Orange
+            "image_url": "https://images.unsplash.com/photo-1564022204277-ac855b05b5e5?w=800&q=80",
             "techniques": [
-                {"name": "Ai hanmi katate dori – ikkyo", "description": "Première immobilisation depuis saisie au poignet en position miroir"},
-                {"name": "Katate dori – nikyo", "description": "Deuxième immobilisation depuis saisie au poignet"},
-                {"name": "Shomen uchi – ikkyo", "description": "Première immobilisation depuis frappe verticale à la tête"}
+                {
+                    "name": "Ai hanmi katate dori – ikkyo", 
+                    "description": "Première immobilisation depuis saisie au poignet en position miroir",
+                    "image_url": "https://images.unsplash.com/photo-1618676156034-df5979d43c7a?w=400&q=80"
+                },
+                {
+                    "name": "Katate dori – nikyo", 
+                    "description": "Deuxième immobilisation depuis saisie au poignet",
+                    "image_url": "https://images.unsplash.com/photo-1723046633477-a53a4e56dbdc?w=400&q=80"
+                },
+                {
+                    "name": "Shomen uchi – ikkyo", 
+                    "description": "Première immobilisation depuis frappe verticale à la tête",
+                    "image_url": "https://images.unsplash.com/photo-1514134470719-ad067844ecf9?w=400&q=80"
+                }
             ]
         },
         {
             "name": "5e kyu",
             "order": 5,
             "color": "#eab308",  # Yellow
+            "image_url": "https://images.unsplash.com/photo-1759310707368-e36f321b3187?w=800&q=80",
             "techniques": [
-                {"name": "Katate dori – sankyo", "description": "Troisième immobilisation depuis saisie au poignet"},
-                {"name": "Yokomen uchi – ikkyo", "description": "Première immobilisation depuis frappe latérale à la tête"},
-                {"name": "Ryote dori – tenchinage", "description": "Projection ciel-terre depuis saisie des deux poignets"}
+                {
+                    "name": "Katate dori – sankyo", 
+                    "description": "Troisième immobilisation depuis saisie au poignet",
+                    "image_url": "https://images.unsplash.com/photo-1514134177582-fec97bd28b7b?w=400&q=80"
+                },
+                {
+                    "name": "Yokomen uchi – ikkyo", 
+                    "description": "Première immobilisation depuis frappe latérale à la tête",
+                    "image_url": "https://images.unsplash.com/photo-1514134584095-ddbbb1e87164?w=400&q=80"
+                },
+                {
+                    "name": "Ryote dori – tenchinage", 
+                    "description": "Projection ciel-terre depuis saisie des deux poignets",
+                    "image_url": "https://images.unsplash.com/photo-1731530338283-eb0d9371e463?w=400&q=80"
+                }
             ]
         }
     ]
