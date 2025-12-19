@@ -40,7 +40,7 @@ function App() {
   const [kyuLevels, setKyuLevels] = useState([]);
   const [loading, setLoading] = useState(true);
   const [newKyu, setNewKyu] = useState({ name: "", order: "", color: "#6366f1" });
-  const [newTechnique, setNewTechnique] = useState({ name: "", description: "" });
+  const [newTechnique, setNewTechnique] = useState({ name: "", description: "", image_url: "" });
   const [selectedKyuId, setSelectedKyuId] = useState(null);
   const [editingTechnique, setEditingTechnique] = useState(null);
   const [kyuDialogOpen, setKyuDialogOpen] = useState(false);
