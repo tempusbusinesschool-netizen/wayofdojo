@@ -407,18 +407,29 @@ function App() {
                         return (
                           <div
                             key={technique.id}
-                            className="bg-slate-700/50 rounded-lg p-4 flex items-center justify-between hover:bg-slate-700/70 transition-colors"
+                            className="bg-slate-700/50 rounded-lg overflow-hidden flex hover:bg-slate-700/70 transition-colors"
                             data-testid={`technique-card-${technique.id}`}
                           >
-                            <div className="flex items-center gap-4 flex-1">
-                              <div className={`w-10 h-10 rounded-full flex items-center justify-center ${mastery.color}`}>
-                                <MasteryIcon className="w-5 h-5" />
+                            {/* Technique Image */}
+                            {technique.image_url && (
+                              <div className="w-24 h-24 flex-shrink-0">
+                                <img 
+                                  src={technique.image_url} 
+                                  alt={technique.name}
+                                  className="w-full h-full object-cover"
+                                />
                               </div>
-                              <div className="flex-1">
-                                <h4 className="text-white font-medium" data-testid={`technique-name-${technique.id}`}>{technique.name}</h4>
-                                {technique.description && (
-                                  <p className="text-slate-400 text-sm mt-1">{technique.description}</p>
-                                )}
+                            )}
+                            <div className="flex items-center justify-between flex-1 p-4">
+                              <div className="flex items-center gap-4 flex-1">
+                                <div className={`w-10 h-10 rounded-full flex items-center justify-center ${mastery.color}`}>
+                                  <MasteryIcon className="w-5 h-5" />
+                                </div>
+                                <div className="flex-1">
+                                  <h4 className="text-white font-medium" data-testid={`technique-name-${technique.id}`}>{technique.name}</h4>
+                                  {technique.description && (
+                                    <p className="text-slate-400 text-sm mt-1">{technique.description}</p>
+                                  )}
                                 <div className="flex items-center gap-4 mt-2">
                                   <Badge variant="outline" className={mastery.color} data-testid={`technique-mastery-${technique.id}`}>
                                     {mastery.label}
