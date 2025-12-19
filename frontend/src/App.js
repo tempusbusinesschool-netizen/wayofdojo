@@ -10,13 +10,19 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Toaster, toast } from "sonner";
-import { Plus, Trash2, Edit2, Target, Award, Circle, Play, BookOpen, Eye, Star, Zap, Users, Swords } from "lucide-react";
+import { Plus, Trash2, Edit2, Target, Award, Circle, Play, BookOpen, Eye, Star, Zap, Users } from "lucide-react";
+import { getAikidoAnimation } from "@/components/AikidoAnimations";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
-// Professional Aikido technique illustrations - cleaner silhouette style
-const TechniqueIllustration = ({ technique, color = "#3b82f6", size = 100 }) => {
+// Use the animated illustrations from AikidoAnimations component
+const TechniqueIllustration = ({ technique, size = 100 }) => {
+  return getAikidoAnimation(technique, size);
+};
+
+// Legacy static illustration (fallback)
+const StaticIllustration = ({ technique, color = "#3b82f6", size = 100 }) => {
   const name = technique.toLowerCase();
   
   // Determine which illustration to show based on technique name
