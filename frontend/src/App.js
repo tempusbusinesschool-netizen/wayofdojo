@@ -721,67 +721,47 @@ function App() {
       </header>
 
       {/* Main */}
-      <main className="max-w-6xl mx-auto px-4 py-8 relative z-10">
+      <main className="max-w-6xl mx-auto px-4 py-8">
         {kyuLevels.length === 0 ? (
-          <div className="text-center py-20">
-            <div className="w-32 h-32 mx-auto mb-6 bg-gradient-to-br from-pink-400 via-purple-400 to-blue-400 rounded-3xl flex items-center justify-center shadow-2xl animate-bounce">
-              <span className="text-6xl">🥋</span>
+          <div className="text-center py-16">
+            <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-amber-500 to-amber-700 rounded-2xl flex items-center justify-center shadow-lg">
+              <span className="text-4xl text-white kanji-icon">合</span>
             </div>
-            <h2 className="text-3xl font-extrabold gradient-text-rainbow mb-3">Bienvenue sur Aikido Tracker !</h2>
-            <p className="text-gray-500 text-lg mb-6">Chargez les données du programme officiel pour commencer</p>
-            <Button onClick={seedData} className="btn-bouncy bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white px-8 py-3 text-lg rounded-xl shadow-lg shadow-purple-500/30">
-              <Zap className="w-5 h-5 mr-2" /> Charger les données
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">Bienvenue sur Aikido Tracker</h2>
+            <p className="text-gray-500 mb-6">Chargez les données du programme officiel FFAAA pour commencer</p>
+            <Button onClick={seedData} className="bg-gray-800 hover:bg-gray-900 text-white px-6 py-2">
+              <Zap className="w-4 h-4 mr-2" /> Charger les données
             </Button>
           </div>
         ) : (
-          <div className="space-y-8">
+          <div className="space-y-6">
             {kyuLevels.map((kyu) => {
               const progress = calculateKyuProgress(kyu.techniques);
               const beltColor = getBeltColor(kyu.order);
               const isDan = kyu.order <= 0;
               
               return (
-                <Card key={kyu.id} className="glass-card overflow-hidden border-0 technique-card-modern" 
-                      style={{ 
-                        borderLeft: `5px solid ${beltColor.border}`,
-                        boxShadow: `0 20px 60px -15px ${beltColor.border}40`
-                      }}>
-                  <CardHeader className="pb-4 relative" style={{ background: `linear-gradient(135deg, ${beltColor.bg}, ${beltColor.bg}80)` }}>
-                    {/* Decorative elements */}
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -mr-16 -mt-16"></div>
-                    <div className="absolute bottom-0 left-1/4 w-24 h-24 bg-white/5 rounded-full -mb-12"></div>
-                    
-                    <div className="flex items-center justify-between relative z-10">
-                      <div className="flex items-center gap-4">
-                        <div className={`w-14 h-14 rounded-2xl flex items-center justify-center font-bold text-xl shadow-lg transform hover:scale-110 transition-transform ${isDan ? 'bg-gradient-to-br from-gray-700 to-gray-900 text-white' : ''}`}
-                             style={!isDan ? { background: `linear-gradient(135deg, ${beltColor.border}, ${beltColor.border}cc)`, color: beltColor.text === "#ffffff" ? "#fff" : beltColor.text } : {}}>
-                          {kyu.order}
+                <Card key={kyu.id} className="card-japanese overflow-hidden" style={{ '--belt-color': beltColor.border }}>
+                  <CardHeader className="pb-3" style={{ backgroundColor: beltColor.bg }}>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <div className={`w-12 h-12 rounded-lg flex items-center justify-center font-bold text-lg shadow ${isDan ? 'bg-gray-800 text-white' : ''}`}
+                             style={!isDan ? { backgroundColor: beltColor.border, color: '#fff' } : {}}>
+                          {isDan ? '段' : kyu.order}
                         </div>
                         <div>
-                          <CardTitle className="text-xl font-bold" style={{ color: isDan ? '#fff' : beltColor.text }}>
-                            {isDan && <span className="mr-2">🥇</span>}
+                          <CardTitle className="text-lg font-bold" style={{ color: isDan ? '#fff' : beltColor.text }}>
                             {kyu.name}
                           </CardTitle>
-                          <CardDescription className="flex items-center gap-2" style={{ color: isDan ? 'rgba(255,255,255,0.8)' : `${beltColor.text}99` }}>
-                            <span className="font-medium">{kyu.techniques?.length || 0} techniques</span>
-                            <span>•</span>
-                            <span className="flex items-center gap-1">
-                              <span className="text-lg">✨</span> {progress}% maîtrisé
-                            </span>
+                          <CardDescription style={{ color: isDan ? 'rgba(255,255,255,0.7)' : `${beltColor.text}90` }}>
+                            {kyu.techniques?.length || 0} techniques • {progress}% maîtrisé
                           </CardDescription>
                         </div>
                       </div>
-                      <div className="flex items-center gap-3">
-                        {/* Circular Progress */}
-                        <div className="relative w-14 h-14">
-                          <svg className="w-14 h-14 progress-ring">
-                            <circle cx="28" cy="28" r="24" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="4"/>
-                            <circle cx="28" cy="28" r="24" fill="none" stroke={isDan ? '#fff' : beltColor.text} strokeWidth="4" 
-                                    strokeDasharray="151" strokeDashoffset={151 - (151 * progress / 100)} strokeLinecap="round"/>
-                          </svg>
-                          <span className="absolute inset-0 flex items-center justify-center text-sm font-bold" style={{ color: isDan ? '#fff' : beltColor.text }}>
-                            {progress}%
-                          </span>
+                      <div className="flex items-center gap-2">
+                        {/* Progress bar */}
+                        <div className="w-24 h-2 progress-traditional rounded">
+                          <div className="progress-traditional-fill" style={{ width: `${progress}%` }}></div>
                         </div>
                         <Dialog open={techniqueDialogOpen && selectedKyuId === kyu.id} onOpenChange={(open) => { setTechniqueDialogOpen(open); if (open) setSelectedKyuId(kyu.id); }}>
                           <DialogTrigger asChild>
@@ -808,57 +788,45 @@ function App() {
                     </div>
                   </CardHeader>
                   
-                  <CardContent className="p-5 bg-gradient-to-br from-white to-gray-50/50">
+                  <CardContent className="p-4 bg-white">
                     {!kyu.techniques?.length ? (
-                      <div className="text-center py-12">
-                        <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl flex items-center justify-center">
-                          <span className="text-3xl">📝</span>
-                        </div>
-                        <p className="text-gray-400">Aucune technique</p>
-                      </div>
+                      <p className="text-center py-8 text-gray-400">Aucune technique</p>
                     ) : (
-                      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                         {kyu.techniques.map((technique) => {
                           const mastery = MASTERY_LEVELS[technique.mastery_level] || MASTERY_LEVELS.not_started;
                           
                           return (
-                            <div key={technique.id} 
-                                 className="technique-card-modern bg-white rounded-2xl p-4 border-2 border-gray-100 hover:border-transparent group"
-                                 style={{ 
-                                   boxShadow: '0 4px 20px -5px rgba(0,0,0,0.1)',
-                                 }}>
-                              {/* GIF Illustration */}
-                              <div className="relative mb-3">
-                                <div className="absolute inset-0 bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity blur-sm"></div>
-                                <div className="relative flex justify-center py-2 rounded-xl" 
-                                     style={{ background: `linear-gradient(135deg, ${beltColor.bg}, ${beltColor.bg}80)` }}>
-                                  <TechniqueIllustration technique={technique.name} size={85} />
-                                </div>
+                            <div key={technique.id} className="technique-card p-3 group">
+                              {/* Illustration */}
+                              <div className="flex justify-center py-2 mb-2 rounded-lg bg-gray-50 border">
+                                <TechniqueIllustration technique={technique.name} size={70} />
                               </div>
                               
-                              {/* Technique name */}
-                              <h4 className="font-semibold text-gray-800 text-sm mb-3 line-clamp-2 group-hover:text-purple-600 transition-colors">
-                                {technique.name}
-                              </h4>
+                              {/* Nom */}
+                              <h4 className="font-medium text-gray-800 text-sm mb-2 line-clamp-2">{technique.name}</h4>
                               
-                              <div className="flex items-center justify-between mb-3">
-                                <Badge variant="outline" className={`${mastery.color} text-xs px-3 py-1 mastery-badge`}>
+                              {/* Badge et sessions */}
+                              <div className="flex items-center justify-between mb-2">
+                                <span className={`text-xs px-2 py-1 rounded-full ${
+                                  technique.mastery_level === 'mastered' ? 'mastery-mastered' :
+                                  technique.mastery_level === 'practiced' ? 'mastery-practiced' :
+                                  technique.mastery_level === 'learning' ? 'mastery-learning' :
+                                  'mastery-not-started'
+                                }`}>
                                   {mastery.emoji} {mastery.label}
-                                </Badge>
-                                <span className="text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded-full">
-                                  {technique.practice_count} 🔥
                                 </span>
+                                <span className="text-xs text-gray-400">{technique.practice_count} sess.</span>
                               </div>
                               
-                              {/* Buttons - Colorful */}
-                              <div className="flex gap-2">
-                                <Button size="sm" className="flex-1 h-9 text-xs btn-bouncy bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 shadow-lg shadow-indigo-500/30" 
+                              {/* Boutons */}
+                              <div className="flex gap-1.5">
+                                <Button size="sm" className="flex-1 h-8 text-xs bg-gray-800 hover:bg-gray-900" 
                                         onClick={() => setViewTechniqueData({ technique, kyu, isOpen: true })}>
-                                  <Eye className="w-3.5 h-3.5 mr-1" /> Voir
+                                  <Eye className="w-3 h-3 mr-1" /> Voir
                                 </Button>
-                                <Button size="sm" className="h-9 px-4 btn-bouncy bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-500 hover:to-teal-600 shadow-lg shadow-emerald-500/30" 
-                                        onClick={() => handlePractice(kyu.id, technique.id)}>
-                                  <Play className="w-3.5 h-3.5" />
+                                <Button size="sm" className="h-8 bg-amber-600 hover:bg-amber-700" onClick={() => handlePractice(kyu.id, technique.id)}>
+                                  <Play className="w-3 h-3" />
                                 </Button>
                                 <Button size="sm" variant="ghost" className="h-8 text-gray-400" onClick={() => { setEditingTechnique({...technique, kyuId: kyu.id}); setEditTechniqueDialogOpen(true); }}>
                                   <Edit2 className="w-3 h-3" />
