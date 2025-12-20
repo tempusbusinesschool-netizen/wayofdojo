@@ -554,7 +554,7 @@ const TechniqueModal = ({ technique, kyu, isOpen, onClose, onPractice, onUpdateM
           <DialogClose asChild>
             <Button variant="outline">Fermer</Button>
           </DialogClose>
-          <Button onClick={onPractice} className="bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white shadow-md">
+          <Button onClick={onPractice} className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white shadow-md">
             <Play className="w-4 h-4 mr-2" /> Pratiquer
           </Button>
         </DialogFooter>
