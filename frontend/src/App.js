@@ -515,13 +515,19 @@ function App() {
                                  style={{ 
                                    boxShadow: '0 4px 20px -5px rgba(0,0,0,0.1)',
                                  }}>
-                              {/* Technique name with colored accent */}
-                              <div className="mb-3">
-                                <div className="w-full h-1 rounded-full mb-3" style={{ background: `linear-gradient(90deg, ${beltColor.border}, ${beltColor.border}40)` }}></div>
-                                <h4 className="font-semibold text-gray-800 group-hover:text-purple-600 transition-colors">
-                                  {technique.name}
-                                </h4>
+                              {/* GIF Illustration */}
+                              <div className="relative mb-3">
+                                <div className="absolute inset-0 bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity blur-sm"></div>
+                                <div className="relative flex justify-center py-2 rounded-xl" 
+                                     style={{ background: `linear-gradient(135deg, ${beltColor.bg}, ${beltColor.bg}80)` }}>
+                                  <TechniqueIllustration technique={technique.name} size={85} />
+                                </div>
                               </div>
+                              
+                              {/* Technique name */}
+                              <h4 className="font-semibold text-gray-800 text-sm mb-3 line-clamp-2 group-hover:text-purple-600 transition-colors">
+                                {technique.name}
+                              </h4>
                               
                               <div className="flex items-center justify-between mb-3">
                                 <Badge variant="outline" className={`${mastery.color} text-xs px-3 py-1 mastery-badge`}>
