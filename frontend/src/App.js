@@ -15,9 +15,100 @@ import { Plus, Trash2, Edit2, Target, Award, Circle, Play, BookOpen, Eye, Star, 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
-// Simple technique card without image
+// GIF URLs spécifiques pour chaque technique d'Aïkido
+const TECHNIQUE_GIFS = {
+  // Immobilisations
+  ikkyo: "https://media1.tenor.com/m/UdXfj2-5-A8AAAAC/aikido-ikkyo.gif",
+  nikyo: "https://media1.tenor.com/m/KjU55HS9JzsAAAAC/aikido-martial-arts.gif",
+  sankyo: "https://media1.tenor.com/m/7IxgCtkV_BkAAAAC/aikido-practice.gif",
+  yonkyo: "https://media1.tenor.com/m/45SRKg96GfIAAAAC/aikido-self-defense.gif",
+  gokyo: "https://media1.tenor.com/m/UdXfj2-5-A8AAAAC/aikido-ikkyo.gif",
+  // Projections
+  shiho_nage: "https://media1.tenor.com/m/vZLFU2Ka1qYAAAAC/aikido-irimi.gif",
+  irimi_nage: "https://media1.tenor.com/m/00RXyFKgL84AAAAC/aikido-iriminage.gif",
+  kote_gaeshi: "https://media1.tenor.com/m/9eFDGfNFtsEAAAAC/aikido-kotegaeshi.gif",
+  kaiten_nage: "https://media1.tenor.com/m/-Z8MZpyAOk4AAAAC/aikido-demonstration.gif",
+  tenchi_nage: "https://media1.tenor.com/m/ura8QoKWyw8AAAAC/hiromi-matsuoka.gif",
+  koshi_nage: "https://media1.tenor.com/m/mtfaedxpSqwAAAAC/hiromi-matsuoka-aikido.gif",
+  kokyu_nage: "https://media1.tenor.com/m/-Z8MZpyAOk4AAAAC/aikido-demonstration.gif",
+  // Chutes
+  ukemi: "https://media1.tenor.com/m/ZsA_bhxAIIIAAAAC/aikido-ukemi.gif",
+  // Suwariwaza
+  suwari: "https://media1.tenor.com/m/7IxgCtkV_BkAAAAC/aikido-practice.gif",
+  // Ushirowaza
+  ushiro: "https://media1.tenor.com/m/45SRKg96GfIAAAAC/aikido-self-defense.gif",
+  // Armes
+  bokken: "https://media1.tenor.com/m/MbcjGPiCM2gAAAAC/aikido-aikikai.gif",
+  jo: "https://media1.tenor.com/m/MbcjGPiCM2gAAAAC/aikido-aikikai.gif",
+  tanto: "https://media1.tenor.com/m/MbcjGPiCM2gAAAAC/aikido-aikikai.gif",
+  // Autres
+  randori: "https://media1.tenor.com/m/-Z8MZpyAOk4AAAAC/aikido-demonstration.gif",
+  hanmi_handachi: "https://media1.tenor.com/m/7vT3ws9hti8AAAAC/aikido-aiki.gif",
+  base: "https://media1.tenor.com/m/7IxgCtkV_BkAAAAC/aikido-practice.gif",
+  generic: "https://media1.tenor.com/m/ura8QoKWyw8AAAAC/hiromi-matsuoka.gif"
+};
+
+// Fonction pour trouver le bon GIF selon le nom de la technique
+const getGifForTechnique = (techniqueName) => {
+  const name = techniqueName.toLowerCase();
+  
+  // Immobilisations
+  if (name.includes("ikkyo")) return TECHNIQUE_GIFS.ikkyo;
+  if (name.includes("nikyo")) return TECHNIQUE_GIFS.nikyo;
+  if (name.includes("sankyo")) return TECHNIQUE_GIFS.sankyo;
+  if (name.includes("yonkyo")) return TECHNIQUE_GIFS.yonkyo;
+  if (name.includes("gokyo")) return TECHNIQUE_GIFS.gokyo;
+  
+  // Projections
+  if (name.includes("shiho") || name.includes("shihonage")) return TECHNIQUE_GIFS.shiho_nage;
+  if (name.includes("irimi") && name.includes("nage")) return TECHNIQUE_GIFS.irimi_nage;
+  if (name.includes("kote") || name.includes("kotegaeshi")) return TECHNIQUE_GIFS.kote_gaeshi;
+  if (name.includes("kaiten")) return TECHNIQUE_GIFS.kaiten_nage;
+  if (name.includes("tenchi")) return TECHNIQUE_GIFS.tenchi_nage;
+  if (name.includes("koshi")) return TECHNIQUE_GIFS.koshi_nage;
+  if (name.includes("kokyu") && name.includes("nage")) return TECHNIQUE_GIFS.kokyu_nage;
+  if (name.includes("sumi")) return TECHNIQUE_GIFS.kaiten_nage;
+  
+  // Chutes
+  if (name.includes("ukemi") || name.includes("chute")) return TECHNIQUE_GIFS.ukemi;
+  
+  // Suwariwaza
+  if (name.includes("suwari") || name.includes("seiza")) return TECHNIQUE_GIFS.suwari;
+  
+  // Ushirowaza
+  if (name.includes("ushiro")) return TECHNIQUE_GIFS.ushiro;
+  
+  // Armes
+  if (name.includes("bokken") || name.includes("ken") || name.includes("tachi") || name.includes("kumitachi")) return TECHNIQUE_GIFS.bokken;
+  if (name.includes("jo") || name.includes("bâton")) return TECHNIQUE_GIFS.jo;
+  if (name.includes("tanto") || name.includes("tanken") || name.includes("couteau")) return TECHNIQUE_GIFS.tanto;
+  
+  // Autres
+  if (name.includes("randori") || name.includes("jiyu")) return TECHNIQUE_GIFS.randori;
+  if (name.includes("hanmi handachi")) return TECHNIQUE_GIFS.hanmi_handachi;
+  if (name.includes("tai no henko") || name.includes("déplacement") || name.includes("irimi") || name.includes("tenkan")) return TECHNIQUE_GIFS.base;
+  if (name.includes("kokyu ho") || name.includes("kokyu")) return TECHNIQUE_GIFS.base;
+  
+  return TECHNIQUE_GIFS.generic;
+};
+
+// Composant illustration GIF
 const TechniqueIllustration = ({ technique, size = 100 }) => {
-  return null; // No illustration
+  const gifUrl = getGifForTechnique(technique);
+  
+  return (
+    <div 
+      className="relative rounded-xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-lg"
+      style={{ width: size, height: size }}
+    >
+      <img
+        src={gifUrl}
+        alt={technique}
+        className="w-full h-full object-cover"
+        loading="lazy"
+      />
+    </div>
+  );
 };
 
 // Mastery levels
