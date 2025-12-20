@@ -669,8 +669,8 @@ function App() {
     return (
       <div className="min-h-screen aikido-bg flex items-center justify-center">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-gray-300 border-t-amber-600 rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600">Chargement...</p>
+          <div className="w-16 h-16 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-purple-600 font-medium">Chargement...</p>
         </div>
       </div>
     );
@@ -680,16 +680,16 @@ function App() {
     <div className="min-h-screen aikido-bg">
       <Toaster position="top-right" richColors />
       
-      {/* Header traditionnel */}
-      <header className="header-traditional sticky top-0 z-50 shadow-lg">
+      {/* Header vibrant */}
+      <header className="header-traditional sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-700 rounded-lg flex items-center justify-center shadow-lg">
+            <div className="w-12 h-12 bg-white/20 backdrop-blur rounded-xl flex items-center justify-center shadow-lg animate-glow">
               <span className="text-white font-bold text-2xl kanji-icon">合</span>
             </div>
             <div>
               <h1 className="text-xl font-bold text-white">Aikido Tracker</h1>
-              <p className="text-sm text-gray-400">Programme officiel FFAAA</p>
+              <p className="text-sm text-white/70">Programme officiel FFAAA</p>
             </div>
           </div>
           <div className="flex gap-2">
