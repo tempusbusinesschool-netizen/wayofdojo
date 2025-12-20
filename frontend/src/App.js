@@ -724,12 +724,12 @@ function App() {
       <main className="max-w-6xl mx-auto px-4 py-8">
         {kyuLevels.length === 0 ? (
           <div className="text-center py-16">
-            <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-purple-500 via-pink-500 to-rose-500 rounded-2xl flex items-center justify-center shadow-xl animate-glow">
+            <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-orange-500 via-orange-600 to-red-500 rounded-2xl flex items-center justify-center shadow-xl animate-glow">
               <span className="text-4xl text-white kanji-icon">合</span>
             </div>
             <h2 className="text-2xl font-bold text-gray-800 mb-2">Bienvenue sur Aikido Tracker</h2>
             <p className="text-gray-500 mb-6">Chargez les données du programme officiel FFAAA pour commencer</p>
-            <Button onClick={seedData} className="bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 text-white px-6 py-2 shadow-lg">
+            <Button onClick={seedData} className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-6 py-2 shadow-lg">
               <Zap className="w-4 h-4 mr-2" /> Charger les données
             </Button>
           </div>
