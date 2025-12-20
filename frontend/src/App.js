@@ -437,7 +437,7 @@ const getBeltColor = (order) => {
   return { bg: "#1f2937", text: "#ffffff", border: "#374151" }; // Black (Dan)
 };
 
-// Technique Modal - Modern & Colorful avec GIF
+// Technique Modal - Style traditionnel avec points clés et conseils
 const TechniqueModal = ({ technique, kyu, isOpen, onClose, onPractice, onUpdateMastery }) => {
   if (!technique) return null;
   const mastery = MASTERY_LEVELS[technique.mastery_level] || MASTERY_LEVELS.not_started;
@@ -446,90 +446,115 @@ const TechniqueModal = ({ technique, kyu, isOpen, onClose, onPractice, onUpdateM
   
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="bg-white max-w-xl overflow-hidden modal-content border-0 shadow-2xl">
-        {/* Colorful Header */}
-        <div className="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500"></div>
+      <DialogContent className="bg-white max-w-2xl overflow-hidden border-0 shadow-2xl modal-japanese max-h-[90vh] overflow-y-auto">
+        {/* Header avec bande dorée */}
+        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-600 via-yellow-500 to-amber-600"></div>
         
-        <DialogHeader className="pt-4">
+        <DialogHeader className="pt-4 pb-2">
           <DialogTitle className="text-xl font-bold text-gray-800 flex items-center gap-3">
-            <span className="text-3xl animate-bounce">{mastery.emoji}</span>
-            <span className="gradient-text-rainbow">{technique.name}</span>
+            <span className="text-2xl">{mastery.emoji}</span>
+            <span>{technique.name}</span>
           </DialogTitle>
+          <p className="text-sm text-gray-500">{kyu?.name}</p>
         </DialogHeader>
         
-        <div className="space-y-5 py-3">
-          {/* GIF Illustration */}
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 rounded-2xl blur-lg opacity-30"></div>
-            <div className="relative flex justify-center p-4 rounded-2xl" 
-                 style={{ background: `linear-gradient(135deg, ${beltColor.bg}, ${beltColor.bg}80)` }}>
-              <TechniqueIllustration technique={technique.name} size={180} />
-            </div>
-          </div>
-          
-          {/* Stats Cards - Colorful */}
-          <div className="grid grid-cols-2 gap-4">
-            <div className="stats-card rounded-2xl p-4 border-2 transform hover:scale-105 transition-transform"
-                 style={{ borderColor: beltColor.border, background: `linear-gradient(135deg, ${beltColor.bg}, white)` }}>
-              <p className="text-xs text-gray-500 mb-1 uppercase tracking-wide">Sessions</p>
-              <p className="text-3xl font-extrabold flex items-center gap-2" style={{ color: beltColor.text }}>
-                {technique.practice_count}
-                <span className="text-xl">🔥</span>
-              </p>
-            </div>
-            <div className="stats-card rounded-2xl p-4 border-2 transform hover:scale-105 transition-transform"
-                 style={{ borderColor: beltColor.border, background: `linear-gradient(135deg, ${beltColor.bg}, white)` }}>
-              <p className="text-xs text-gray-500 mb-1 uppercase tracking-wide">Grade</p>
-              <p className="text-3xl font-extrabold flex items-center gap-2" style={{ color: beltColor.text }}>
-                {isDan ? '🥇' : '🥋'}
-                <span className="text-lg">{kyu?.name}</span>
-              </p>
-            </div>
-          </div>
-          
-          {/* Description - Enhanced */}
-          {technique.description && (
-            <div className="relative">
-              <div className="absolute -left-2 top-0 bottom-0 w-1 bg-gradient-to-b from-purple-500 to-pink-500 rounded-full"></div>
-              <div className="bg-gradient-to-r from-gray-50 to-white rounded-xl p-4 border-l-0 ml-2">
-                <p className="text-sm text-gray-600 leading-relaxed">{technique.description}</p>
+        <div className="space-y-4 py-2">
+          {/* Illustration et Stats */}
+          <div className="flex gap-4">
+            <div className="flex-shrink-0">
+              <div className="p-3 rounded-lg border-2" style={{ borderColor: beltColor.border, backgroundColor: beltColor.bg }}>
+                <TechniqueIllustration technique={technique.name} size={120} />
               </div>
+            </div>
+            <div className="flex-1 space-y-3">
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-gray-50 rounded-lg p-3 border">
+                  <p className="text-xs text-gray-500 uppercase tracking-wide">Sessions</p>
+                  <p className="text-2xl font-bold text-gray-800">{technique.practice_count}</p>
+                </div>
+                <div className="bg-gray-50 rounded-lg p-3 border">
+                  <p className="text-xs text-gray-500 uppercase tracking-wide">Niveau</p>
+                  <p className="text-lg font-bold text-gray-800">{mastery.label}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Description */}
+          {technique.description && (
+            <div className="bg-gray-50 rounded-lg p-4 border-l-4 border-gray-400">
+              <p className="text-sm text-gray-700 leading-relaxed">{technique.description}</p>
             </div>
           )}
           
-          {/* Mastery selector - Colorful buttons */}
-          <div className="grid grid-cols-2 gap-3">
+          {/* Points clés d'exécution */}
+          {technique.key_points && technique.key_points.length > 0 && (
+            <div className="info-section key-points">
+              <h4 className="font-semibold text-blue-800 mb-2 flex items-center gap-2">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+                Points clés d'exécution
+              </h4>
+              <ul className="space-y-1.5">
+                {technique.key_points.map((point, idx) => (
+                  <li key={idx} className="text-sm text-gray-700 flex items-start gap-2">
+                    <span className="text-blue-600 mt-1">•</span>
+                    <span>{point}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          
+          {/* Conseils de pratique */}
+          {technique.practice_tips && technique.practice_tips.length > 0 && (
+            <div className="info-section practice-tips">
+              <h4 className="font-semibold text-green-800 mb-2 flex items-center gap-2">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                Conseils de pratique
+              </h4>
+              <ul className="space-y-1.5">
+                {technique.practice_tips.map((tip, idx) => (
+                  <li key={idx} className="text-sm text-gray-700 flex items-start gap-2">
+                    <span className="text-green-600 mt-1">✓</span>
+                    <span>{tip}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          
+          {/* Sélecteur de maîtrise */}
+          <div className="divider-japanese"></div>
+          <div className="grid grid-cols-2 gap-2">
             {Object.entries(MASTERY_LEVELS).map(([key, level]) => {
               const isSelected = technique.mastery_level === key;
-              const colors = {
-                not_started: 'from-gray-400 to-gray-500',
-                learning: 'from-blue-400 to-blue-600',
-                practiced: 'from-amber-400 to-orange-500',
-                mastered: 'from-emerald-400 to-green-600'
-              };
               return (
                 <button
                   key={key}
                   onClick={() => onUpdateMastery(key)}
-                  className={`p-3 rounded-xl border-2 flex items-center gap-3 transition-all btn-bouncy ${
+                  className={`p-3 rounded-lg border-2 flex items-center gap-2 transition-all ${
                     isSelected 
-                      ? `bg-gradient-to-r ${colors[key]} text-white border-transparent shadow-lg` 
-                      : 'border-gray-200 hover:border-gray-300 bg-white hover:shadow-md'
+                      ? 'border-gray-800 bg-gray-800 text-white shadow-md' 
+                      : 'border-gray-200 hover:border-gray-300 bg-white'
                   }`}
                 >
-                  <span className="text-2xl">{level.emoji}</span>
-                  <span className={`text-sm font-semibold ${isSelected ? 'text-white' : 'text-gray-700'}`}>{level.label}</span>
+                  <span className="text-xl">{level.emoji}</span>
+                  <span className={`text-sm font-medium ${isSelected ? 'text-white' : 'text-gray-700'}`}>{level.label}</span>
                 </button>
               );
             })}
           </div>
         </div>
         
-        <DialogFooter className="gap-3">
+        <DialogFooter className="gap-2 pt-2">
           <DialogClose asChild>
-            <Button variant="outline" className="btn-bouncy px-6">Fermer</Button>
+            <Button variant="outline">Fermer</Button>
           </DialogClose>
-          <Button onClick={onPractice} className="btn-bouncy bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-500 hover:to-teal-600 shadow-lg shadow-emerald-500/30 px-6">
+          <Button onClick={onPractice} className="bg-amber-600 hover:bg-amber-700 text-white">
             <Play className="w-4 h-4 mr-2" /> Pratiquer
           </Button>
         </DialogFooter>
