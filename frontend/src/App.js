@@ -50,7 +50,7 @@ const getBeltColor = (order) => {
   return { bg: "#1f2937", text: "#ffffff", border: "#374151" }; // Black (Dan)
 };
 
-// Technique Modal - Modern & Colorful
+// Technique Modal - Modern & Colorful (sans image)
 const TechniqueModal = ({ technique, kyu, isOpen, onClose, onPractice, onUpdateMastery }) => {
   if (!technique) return null;
   const mastery = MASTERY_LEVELS[technique.mastery_level] || MASTERY_LEVELS.not_started;
@@ -71,15 +71,6 @@ const TechniqueModal = ({ technique, kyu, isOpen, onClose, onPractice, onUpdateM
         </DialogHeader>
         
         <div className="space-y-5 py-3">
-          {/* Illustration GIF with glowing border */}
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400 rounded-2xl blur-lg opacity-30"></div>
-            <div className="relative flex justify-center p-6 rounded-2xl" 
-                 style={{ background: `linear-gradient(135deg, ${beltColor.bg}, ${beltColor.bg}80)` }}>
-              <TechniqueIllustration technique={technique.name} imageUrl={technique.image_url} size={200} />
-            </div>
-          </div>
-          
           {/* Stats Cards - Colorful */}
           <div className="grid grid-cols-2 gap-4">
             <div className="stats-card rounded-2xl p-4 border-2 transform hover:scale-105 transition-transform"
