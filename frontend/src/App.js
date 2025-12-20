@@ -667,47 +667,29 @@ function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-animated-gradient flex items-center justify-center">
-        <div className="relative">
-          <div className="w-20 h-20 border-4 border-white/30 border-t-white rounded-full animate-spin"></div>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <span className="text-2xl">🥋</span>
-          </div>
+      <div className="min-h-screen aikido-bg flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-gray-300 border-t-amber-600 rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-600">Chargement...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen relative overflow-hidden">
-      {/* Animated Background */}
-      <div className="fixed inset-0 bg-animated-gradient opacity-30 -z-10"></div>
-      <div className="fixed inset-0 bg-gradient-to-br from-white/80 via-white/60 to-transparent -z-10"></div>
-      
-      {/* Floating Orbs */}
-      <div className="floating-orb w-96 h-96 bg-pink-400 top-10 -left-48" style={{animationDelay: '0s'}}></div>
-      <div className="floating-orb w-80 h-80 bg-blue-400 top-1/3 -right-40" style={{animationDelay: '-5s'}}></div>
-      <div className="floating-orb w-72 h-72 bg-yellow-400 bottom-20 left-1/4" style={{animationDelay: '-10s'}}></div>
-      <div className="floating-orb w-64 h-64 bg-purple-400 bottom-1/4 right-1/3" style={{animationDelay: '-15s'}}></div>
-      
+    <div className="min-h-screen aikido-bg">
       <Toaster position="top-right" richColors />
       
-      {/* Header - Glassmorphism */}
-      <header className="glass-header sticky top-0 z-50 shadow-lg">
+      {/* Header traditionnel */}
+      <header className="header-traditional sticky top-0 z-50 shadow-lg">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="relative">
-              <div className="w-14 h-14 bg-gradient-to-br from-red-500 via-orange-500 to-yellow-500 rounded-2xl flex items-center justify-center shadow-lg shadow-orange-500/30 animate-pulse">
-                <span className="text-white font-bold text-2xl">合</span>
-              </div>
-              <div className="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white animate-bounce"></div>
+            <div className="w-12 h-12 bg-gradient-to-br from-amber-500 to-amber-700 rounded-lg flex items-center justify-center shadow-lg">
+              <span className="text-white font-bold text-2xl kanji-icon">合</span>
             </div>
             <div>
-              <h1 className="text-2xl font-extrabold gradient-text-rainbow">Aikido Tracker</h1>
-              <p className="text-sm text-gray-500 flex items-center gap-1">
-                <span className="inline-block w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-                Programme officiel des grades
-              </p>
+              <h1 className="text-xl font-bold text-white">Aikido Tracker</h1>
+              <p className="text-sm text-gray-400">Programme officiel FFAAA</p>
             </div>
           </div>
           <div className="flex gap-2">
