@@ -344,18 +344,114 @@ async def seed_data():
         {
             "name": "6e kyu",
             "order": 6,
-            "color": "#f1f5f9",  # Blanc
+            "color": "#e2e8f0",  # Blanc/Gris clair
             "techniques": [
                 # BASES FONDAMENTALES
-                {"name": "Tai no henko (kihon)", "description": "BASE - Exercice fondamental de déplacement, pivotement et connexion avec le partenaire - forme basique", "image_url": GIF_URLS["base"]},
-                {"name": "Déplacements (irimi/tenkan)", "description": "BASE - Apprentissage des déplacements fondamentaux : irimi (entrée directe) et tenkan (pivot)", "image_url": GIF_URLS["deplacement"]},
-                {"name": "Ukemi (chutes avant/arrière)", "description": "BASE - Apprentissage des chutes : mae ukemi (avant) et ushiro ukemi (arrière) - protéger son corps", "image_url": GIF_URLS["ukemi"]},
-                # TACHIWAZA
-                {"name": "Katatedori ikkyo (omote)", "description": "TACHIWAZA - Première immobilisation depuis saisie du poignet - forme directe (omote)", "image_url": GIF_URLS["ikkyo"]},
-                {"name": "Shomenuchi ikkyo (omote)", "description": "TACHIWAZA - Première immobilisation depuis frappe verticale à la tête - forme directe", "image_url": GIF_URLS["ikkyo"]},
-                # BUKIWAZA initiation
-                {"name": "Tenue du bokken", "description": "BUKIWAZA - Apprentissage de la tenue correcte du sabre en bois (bokken) - position des mains et posture", "image_url": GIF_URLS["bokken"]},
-                {"name": "Tenue du jo", "description": "BUKIWAZA - Apprentissage de la tenue et des déplacements de base avec le bâton (jo)", "image_url": GIF_URLS["jo"]}
+                {
+                    "name": "Tai no henko (kihon)", 
+                    "description": "Exercice fondamental de déplacement, pivotement et connexion avec le partenaire - forme basique",
+                    "key_points": [
+                        "Garder le centre (hara) stable pendant le pivot",
+                        "Main avant reste connectée au poignet d'uke",
+                        "Rotation des hanches à 180° (tenkan)",
+                        "Terminer aligné avec uke, épaule contre épaule"
+                    ],
+                    "practice_tips": [
+                        "Pratiquer lentement pour sentir la connexion",
+                        "Ne pas tirer avec les bras, utiliser les hanches",
+                        "Respirer naturellement pendant le mouvement"
+                    ]
+                },
+                {
+                    "name": "Déplacements (irimi/tenkan)", 
+                    "description": "Apprentissage des déplacements fondamentaux : irimi (entrée directe) et tenkan (pivot)",
+                    "key_points": [
+                        "Irimi : entrer en diagonale vers l'extérieur d'uke",
+                        "Tenkan : pivoter sur le pied avant à 180°",
+                        "Garder les genoux légèrement fléchis",
+                        "Maintenir la posture droite (shisei)"
+                    ],
+                    "practice_tips": [
+                        "S'entraîner seul face à un miroir",
+                        "Visualiser un partenaire pendant la pratique solo",
+                        "Varier la vitesse : lent puis rapide"
+                    ]
+                },
+                {
+                    "name": "Ukemi (chutes avant/arrière)", 
+                    "description": "Apprentissage des chutes : mae ukemi (avant) et ushiro ukemi (arrière) - protéger son corps",
+                    "key_points": [
+                        "Rentrer le menton vers la poitrine",
+                        "Arrondir le dos pour rouler",
+                        "Frapper le tatami avec le bras pour absorber",
+                        "Ne jamais poser la main à plat au sol"
+                    ],
+                    "practice_tips": [
+                        "Commencer depuis la position accroupie",
+                        "Progresser vers la position debout",
+                        "Pratiquer des deux côtés également"
+                    ]
+                },
+                {
+                    "name": "Katatedori ikkyo (omote)", 
+                    "description": "Première immobilisation depuis saisie du poignet - forme directe (omote)",
+                    "key_points": [
+                        "Contrôler le coude d'uke avec la main extérieure",
+                        "Guider le bras vers le bas et l'avant",
+                        "Avancer en irimi pour déséquilibrer",
+                        "Immobiliser au sol : coude plié, pression sur l'épaule"
+                    ],
+                    "practice_tips": [
+                        "Ne pas forcer avec les bras",
+                        "Utiliser le poids du corps en avançant",
+                        "Garder uke déséquilibré tout au long"
+                    ]
+                },
+                {
+                    "name": "Shomenuchi ikkyo (omote)", 
+                    "description": "Première immobilisation depuis frappe verticale à la tête - forme directe",
+                    "key_points": [
+                        "Entrer au moment où uke lève le bras",
+                        "Bloquer/guider le bras au niveau du coude",
+                        "Couper vers le bas comme avec un sabre",
+                        "Contrôle final identique à katatedori ikkyo"
+                    ],
+                    "practice_tips": [
+                        "Timing crucial : ni trop tôt, ni trop tard",
+                        "Pratiquer le timing avec attaques lentes",
+                        "Sensation de 'couper' avec tout le corps"
+                    ]
+                },
+                {
+                    "name": "Tenue du bokken", 
+                    "description": "Apprentissage de la tenue correcte du sabre en bois (bokken) - position des mains et posture",
+                    "key_points": [
+                        "Main droite près de la garde (tsuba)",
+                        "Main gauche à l'extrémité de la poignée",
+                        "Petit doigt et annulaire serrent, autres doigts souples",
+                        "Pointe (kissaki) dirigée vers la gorge de l'adversaire"
+                    ],
+                    "practice_tips": [
+                        "Vérifier régulièrement la position des mains",
+                        "Pratiquer les suburi pour renforcer la prise",
+                        "Garder les épaules détendues"
+                    ]
+                },
+                {
+                    "name": "Tenue du jo", 
+                    "description": "Apprentissage de la tenue et des déplacements de base avec le bâton (jo)",
+                    "key_points": [
+                        "Tenue à deux mains, écartées d'environ 30cm",
+                        "Mains peuvent glisser selon la technique",
+                        "Jo parallèle au sol ou pointe vers le bas",
+                        "Posture stable, pieds écartés largeur d'épaules"
+                    ],
+                    "practice_tips": [
+                        "Commencer par les postures de base (kamae)",
+                        "S'habituer au poids et à la longueur",
+                        "Pratiquer les déplacements avec le jo"
+                    ]
+                }
             ]
         },
         {
@@ -363,18 +459,141 @@ async def seed_data():
             "order": 5,
             "color": "#fbbf24",  # Jaune
             "techniques": [
-                # TACHIWAZA
-                {"name": "Tai no henko (kihon/ki no nagare)", "description": "TACHIWAZA - Exercice de connexion - formes basique (kihon) et fluide (ki no nagare)", "image_url": GIF_URLS["base"]},
-                {"name": "Morote dori kokyu ho", "description": "TACHIWAZA - Exercice de respiration depuis saisie du poignet à deux mains - développer le kokyu", "image_url": GIF_URLS["kokyu_nage"]},
-                {"name": "Katatedori ikkyo (omote/ura)", "description": "TACHIWAZA - Première immobilisation depuis saisie poignet - formes directe et inversée", "image_url": GIF_URLS["ikkyo"]},
-                {"name": "Shomenuchi ikkyo (omote/ura)", "description": "TACHIWAZA - Première immobilisation depuis frappe verticale - formes directe et inversée", "image_url": GIF_URLS["ikkyo"]},
-                {"name": "Katatedori shiho nage", "description": "TACHIWAZA - Projection dans les quatre directions depuis saisie du poignet", "image_url": GIF_URLS["shiho_nage"]},
-                # SUWARIWAZA bases
-                {"name": "Suwari waza ikkyo (omote)", "description": "SUWARIWAZA - Première immobilisation à genoux (shikko) - travail des hanches", "image_url": GIF_URLS["suwari"]},
-                # BUKIWAZA
-                {"name": "Suburi bokken (shomen/yokomen)", "description": "BUKIWAZA - Coupes fondamentales au sabre : shomen uchi (verticale) et yokomen uchi (diagonale)", "image_url": GIF_URLS["bokken"]},
-                {"name": "Jo suburi simples", "description": "BUKIWAZA - Exercices de base au bâton - postures et frappes fondamentales", "image_url": GIF_URLS["jo"]},
-                {"name": "Distance et vigilance (ma-ai)", "description": "BUKIWAZA - Apprentissage du ma-ai : distance correcte et vigilance martiale", "image_url": GIF_URLS["generic"]}
+                {
+                    "name": "Tai no henko (kihon/ki no nagare)", 
+                    "description": "Exercice de connexion - formes basique (kihon) et fluide (ki no nagare)",
+                    "key_points": [
+                        "Kihon : uke saisit fermement, tori pivote",
+                        "Ki no nagare : mouvement continu sans pause",
+                        "Maintenir la connexion tout au long",
+                        "Finir avec extension vers l'avant"
+                    ],
+                    "practice_tips": [
+                        "Alterner entre les deux formes",
+                        "Ki no nagare demande plus de timing",
+                        "Chercher la fluidité, pas la force"
+                    ]
+                },
+                {
+                    "name": "Morote dori kokyu ho", 
+                    "description": "Exercice de respiration depuis saisie du poignet à deux mains - développer le kokyu",
+                    "key_points": [
+                        "Uke saisit un poignet à deux mains",
+                        "Lever le bras en arc de cercle",
+                        "Utiliser la respiration (kokyu) pas la force musculaire",
+                        "Projeter ou déséquilibrer uke vers l'arrière"
+                    ],
+                    "practice_tips": [
+                        "Inspirer en levant, expirer en projetant",
+                        "Garder le coude légèrement plié",
+                        "Sentir l'énergie partir du centre (hara)"
+                    ]
+                },
+                {
+                    "name": "Katatedori ikkyo (omote/ura)", 
+                    "description": "Première immobilisation depuis saisie poignet - formes directe et inversée",
+                    "key_points": [
+                        "Omote : entrer devant uke",
+                        "Ura : pivoter derrière uke (tenkan)",
+                        "Même contrôle du coude dans les deux cas",
+                        "Ura : tourner uke autour de son propre axe"
+                    ],
+                    "practice_tips": [
+                        "Maîtriser omote avant de passer à ura",
+                        "En ura, ne pas reculer mais tourner",
+                        "Pratiquer les deux côtés"
+                    ]
+                },
+                {
+                    "name": "Shomenuchi ikkyo (omote/ura)", 
+                    "description": "Première immobilisation depuis frappe verticale - formes directe et inversée",
+                    "key_points": [
+                        "Intercepter la frappe au point haut",
+                        "Omote : avancer en coupant vers le bas",
+                        "Ura : pivoter en guidant le bras",
+                        "Immobilisation identique au sol"
+                    ],
+                    "practice_tips": [
+                        "Le timing est essentiel",
+                        "Pratiquer d'abord avec attaques lentes",
+                        "Visualiser une coupe de sabre"
+                    ]
+                },
+                {
+                    "name": "Katatedori shiho nage", 
+                    "description": "Projection dans les quatre directions depuis saisie du poignet",
+                    "key_points": [
+                        "Lever le bras d'uke comme un sabre",
+                        "Passer sous le bras en pivotant",
+                        "Couper vers le bas en direction des 4 coins",
+                        "Garder le poignet d'uke près de votre épaule"
+                    ],
+                    "practice_tips": [
+                        "Ne pas tordre le poignet d'uke excessivement",
+                        "Le mouvement est circulaire et continu",
+                        "Uke doit apprendre à chuter correctement"
+                    ]
+                },
+                {
+                    "name": "Suwari waza ikkyo (omote)", 
+                    "description": "Première immobilisation à genoux (shikko) - travail des hanches",
+                    "key_points": [
+                        "Position seiza puis shikko (déplacement à genoux)",
+                        "Hanches basses et stables",
+                        "Même principe qu'en tachi waza",
+                        "Plus de travail des hanches car pas de jambes"
+                    ],
+                    "practice_tips": [
+                        "Pratiquer le shikko séparément",
+                        "Renforcer les genoux progressivement",
+                        "Protéger les genoux avec des genouillères"
+                    ]
+                },
+                {
+                    "name": "Suburi bokken (shomen/yokomen)", 
+                    "description": "Coupes fondamentales au sabre : shomen uchi (verticale) et yokomen uchi (diagonale)",
+                    "key_points": [
+                        "Shomen : coupe verticale du haut vers le bas",
+                        "Yokomen : coupe diagonale (45°) vers le cou",
+                        "Lever le sabre au-dessus de la tête",
+                        "Couper avec les hanches, pas seulement les bras"
+                    ],
+                    "practice_tips": [
+                        "Répéter chaque suburi 50-100 fois",
+                        "Garder le rythme régulier",
+                        "Finir chaque coupe avec extension"
+                    ]
+                },
+                {
+                    "name": "Jo suburi simples", 
+                    "description": "Exercices de base au bâton - postures et frappes fondamentales",
+                    "key_points": [
+                        "Choku tsuki : frappe directe vers l'avant",
+                        "Kaeshi tsuki : frappe en retournant le jo",
+                        "Uchi komi : frappe vers le bas",
+                        "Coordination des mains et des hanches"
+                    ],
+                    "practice_tips": [
+                        "Commencer très lentement",
+                        "Vérifier la trajectoire du jo",
+                        "Pratiquer face à un miroir"
+                    ]
+                },
+                {
+                    "name": "Distance et vigilance (ma-ai)", 
+                    "description": "Apprentissage du ma-ai : distance correcte et vigilance martiale",
+                    "key_points": [
+                        "Ma-ai : distance où une attaque peut toucher",
+                        "Trop proche = danger, trop loin = inefficace",
+                        "Vigilance constante (zanshin)",
+                        "Observer les mouvements du partenaire"
+                    ],
+                    "practice_tips": [
+                        "Pratiquer avec différents partenaires",
+                        "Adapter la distance à la taille de chacun",
+                        "Rester alerte même après la technique"
+                    ]
+                }
             ]
         },
         {
@@ -382,18 +601,141 @@ async def seed_data():
             "order": 4,
             "color": "#f97316",  # Orange
             "techniques": [
-                # TACHIWAZA
-                {"name": "Katatedori nikyo (omote/ura)", "description": "TACHIWAZA - Deuxième immobilisation (contrôle du poignet en rotation) depuis saisie - omote et ura", "image_url": GIF_URLS["nikyo"]},
-                {"name": "Shomenuchi nikyo (omote/ura)", "description": "TACHIWAZA - Deuxième immobilisation depuis frappe verticale - formes directe et inversée", "image_url": GIF_URLS["nikyo"]},
-                {"name": "Katatedori irimi nage", "description": "TACHIWAZA - Projection en entrant depuis saisie du poignet - contrôle de la tête d'uke", "image_url": GIF_URLS["irimi_nage"]},
-                {"name": "Shomenuchi irimi nage", "description": "TACHIWAZA - Projection en entrant depuis frappe verticale", "image_url": GIF_URLS["irimi_nage"]},
-                {"name": "Katatedori kote gaeshi", "description": "TACHIWAZA - Retournement du poignet depuis saisie - projection par torsion externe", "image_url": GIF_URLS["kote_gaeshi"]},
-                # SUWARIWAZA
-                {"name": "Suwari waza nikyo (omote/ura)", "description": "SUWARIWAZA - Deuxième immobilisation à genoux - travail en seiza et shikko", "image_url": GIF_URLS["suwari"]},
-                {"name": "Suwari waza kokyu ho", "description": "SUWARIWAZA - Exercice de respiration à genoux depuis ryote dori - développement du centre", "image_url": GIF_URLS["suwari"]},
-                # BUKIWAZA
-                {"name": "Suburi bokken 1-5", "description": "BUKIWAZA - 5 premiers suburi fondamentaux au sabre - coupes et postures", "image_url": GIF_URLS["bokken"]},
-                {"name": "Déplacements jo", "description": "BUKIWAZA - Déplacements cohérents avec le jo - irimi et tenkan avec l'arme", "image_url": GIF_URLS["jo"]}
+                {
+                    "name": "Katatedori nikyo (omote/ura)", 
+                    "description": "Deuxième immobilisation (contrôle du poignet en rotation) depuis saisie - omote et ura",
+                    "key_points": [
+                        "Saisir le poignet d'uke avec les deux mains",
+                        "Appliquer une rotation vers l'extérieur",
+                        "Coude d'uke plié à 90°",
+                        "Pression sur le poignet, pas sur le bras"
+                    ],
+                    "practice_tips": [
+                        "Contrôle précis, pas de force excessive",
+                        "Uke doit signaler si trop douloureux",
+                        "Pratiquer la clé lentement d'abord"
+                    ]
+                },
+                {
+                    "name": "Shomenuchi nikyo (omote/ura)", 
+                    "description": "Deuxième immobilisation depuis frappe verticale - formes directe et inversée",
+                    "key_points": [
+                        "Intercepter comme pour ikkyo",
+                        "Transition vers la saisie nikyo",
+                        "Guider uke vers le bas avec la rotation",
+                        "Immobilisation finale avec contrôle du poignet"
+                    ],
+                    "practice_tips": [
+                        "La transition ikkyo→nikyo doit être fluide",
+                        "Ne pas perdre le contrôle pendant la transition",
+                        "Pratiquer la clé isolément d'abord"
+                    ]
+                },
+                {
+                    "name": "Katatedori irimi nage", 
+                    "description": "Projection en entrant depuis saisie du poignet - contrôle de la tête d'uke",
+                    "key_points": [
+                        "Entrer profondément derrière uke (irimi)",
+                        "Contrôler la tête/nuque d'uke avec le bras",
+                        "Étendre vers l'avant et le bas pour projeter",
+                        "Uke tombe vers l'arrière"
+                    ],
+                    "practice_tips": [
+                        "L'entrée (irimi) est la clé",
+                        "Ne pas pousser mais étendre",
+                        "Garder le contact avec uke tout au long"
+                    ]
+                },
+                {
+                    "name": "Shomenuchi irimi nage", 
+                    "description": "Projection en entrant depuis frappe verticale",
+                    "key_points": [
+                        "Esquiver la frappe en entrant",
+                        "Se placer derrière uke",
+                        "Même finale qu'avec katatedori",
+                        "Timing crucial pour l'entrée"
+                    ],
+                    "practice_tips": [
+                        "Ne pas bloquer la frappe, l'accompagner",
+                        "Entrer au moment où uke est engagé",
+                        "Fluidité du début à la fin"
+                    ]
+                },
+                {
+                    "name": "Katatedori kote gaeshi", 
+                    "description": "Retournement du poignet depuis saisie - projection par torsion externe",
+                    "key_points": [
+                        "Saisir la main d'uke (pas le poignet)",
+                        "Appliquer une rotation externe du poignet",
+                        "Le pouce d'uke pointe vers lui-même",
+                        "Projeter vers le bas et l'extérieur"
+                    ],
+                    "practice_tips": [
+                        "Contrôle précis de la main, pas du bras",
+                        "Uke doit chuter pour protéger son poignet",
+                        "Pratiquer la saisie correcte"
+                    ]
+                },
+                {
+                    "name": "Suwari waza nikyo (omote/ura)", 
+                    "description": "Deuxième immobilisation à genoux - travail en seiza et shikko",
+                    "key_points": [
+                        "Mêmes principes qu'en tachi waza",
+                        "Déplacement en shikko",
+                        "Hanches stables et basses",
+                        "Contrôle du poignet identique"
+                    ],
+                    "practice_tips": [
+                        "Le travail à genoux renforce les hanches",
+                        "Protéger les genoux",
+                        "Pratiquer le shikko régulièrement"
+                    ]
+                },
+                {
+                    "name": "Suwari waza kokyu ho", 
+                    "description": "Exercice de respiration à genoux depuis ryote dori - développement du centre",
+                    "key_points": [
+                        "Uke saisit les deux poignets",
+                        "Lever les bras en utilisant le centre",
+                        "Projeter uke vers l'arrière",
+                        "Exercice fondamental du kokyu"
+                    ],
+                    "practice_tips": [
+                        "Ne pas utiliser la force des bras",
+                        "Respiration coordonnée avec le mouvement",
+                        "Pratiquer à chaque entraînement"
+                    ]
+                },
+                {
+                    "name": "Suburi bokken 1-5", 
+                    "description": "5 premiers suburi fondamentaux au sabre - coupes et postures",
+                    "key_points": [
+                        "Suburi 1-2 : coupes shomen",
+                        "Suburi 3-4 : coupes avec pas",
+                        "Suburi 5 : coupe avec pivot",
+                        "Chaque suburi a un rythme spécifique"
+                    ],
+                    "practice_tips": [
+                        "Mémoriser la séquence exacte",
+                        "Pratiquer chaque suburi séparément",
+                        "Puis enchaîner les 5"
+                    ]
+                },
+                {
+                    "name": "Déplacements jo", 
+                    "description": "Déplacements cohérents avec le jo - irimi et tenkan avec l'arme",
+                    "key_points": [
+                        "Le jo est une extension du corps",
+                        "Déplacements identiques à mains nues",
+                        "Garder le jo dans l'axe central",
+                        "Coordination corps-arme"
+                    ],
+                    "practice_tips": [
+                        "Pratiquer les déplacements sans technique",
+                        "Puis ajouter des frappes simples",
+                        "Garder les épaules détendues"
+                    ]
+                }
             ]
         },
         {
