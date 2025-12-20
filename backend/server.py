@@ -52,6 +52,8 @@ class TechniqueBase(BaseModel):
     name: str
     description: Optional[str] = None
     image_url: Optional[str] = None
+    key_points: Optional[List[str]] = None  # Points clés d'exécution
+    practice_tips: Optional[List[str]] = None  # Conseils de pratique
 
 class TechniqueCreate(TechniqueBase):
     pass
