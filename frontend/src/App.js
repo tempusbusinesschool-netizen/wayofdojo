@@ -821,11 +821,11 @@ function App() {
                               
                               {/* Boutons */}
                               <div className="flex gap-1.5">
-                                <Button size="sm" className="flex-1 h-8 text-xs bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 shadow-md" 
+                                <Button size="sm" className="flex-1 h-8 text-xs bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 shadow-md" 
                                         onClick={() => setViewTechniqueData({ technique, kyu, isOpen: true })}>
                                   <Eye className="w-3 h-3 mr-1" /> Voir
                                 </Button>
-                                <Button size="sm" className="h-8 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 shadow-md" onClick={() => handlePractice(kyu.id, technique.id)}>
+                                <Button size="sm" className="h-8 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 shadow-md" onClick={() => handlePractice(kyu.id, technique.id)}>
                                   <Play className="w-3 h-3" />
                                 </Button>
                                 <Button size="sm" variant="ghost" className="h-8 text-gray-400" onClick={() => { setEditingTechnique({...technique, kyuId: kyu.id}); setEditTechniqueDialogOpen(true); }}>
