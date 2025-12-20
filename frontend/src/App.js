@@ -15,98 +15,394 @@ import { Plus, Trash2, Edit2, Target, Award, Circle, Play, BookOpen, Eye, Star, 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
-// GIF URLs spécifiques pour chaque technique d'Aïkido
-const TECHNIQUE_GIFS = {
-  // Immobilisations
-  ikkyo: "https://media1.tenor.com/m/UdXfj2-5-A8AAAAC/aikido-ikkyo.gif",
-  nikyo: "https://media1.tenor.com/m/KjU55HS9JzsAAAAC/aikido-martial-arts.gif",
-  sankyo: "https://media1.tenor.com/m/7IxgCtkV_BkAAAAC/aikido-practice.gif",
-  yonkyo: "https://media1.tenor.com/m/45SRKg96GfIAAAAC/aikido-self-defense.gif",
-  gokyo: "https://media1.tenor.com/m/UdXfj2-5-A8AAAAC/aikido-ikkyo.gif",
-  // Projections
-  shiho_nage: "https://media1.tenor.com/m/vZLFU2Ka1qYAAAAC/aikido-irimi.gif",
-  irimi_nage: "https://media1.tenor.com/m/00RXyFKgL84AAAAC/aikido-iriminage.gif",
-  kote_gaeshi: "https://media1.tenor.com/m/9eFDGfNFtsEAAAAC/aikido-kotegaeshi.gif",
-  kaiten_nage: "https://media1.tenor.com/m/-Z8MZpyAOk4AAAAC/aikido-demonstration.gif",
-  tenchi_nage: "https://media1.tenor.com/m/ura8QoKWyw8AAAAC/hiromi-matsuoka.gif",
-  koshi_nage: "https://media1.tenor.com/m/mtfaedxpSqwAAAAC/hiromi-matsuoka-aikido.gif",
-  kokyu_nage: "https://media1.tenor.com/m/-Z8MZpyAOk4AAAAC/aikido-demonstration.gif",
-  // Chutes
-  ukemi: "https://media1.tenor.com/m/ZsA_bhxAIIIAAAAC/aikido-ukemi.gif",
-  // Suwariwaza
-  suwari: "https://media1.tenor.com/m/7IxgCtkV_BkAAAAC/aikido-practice.gif",
-  // Ushirowaza
-  ushiro: "https://media1.tenor.com/m/45SRKg96GfIAAAAC/aikido-self-defense.gif",
-  // Armes
-  bokken: "https://media1.tenor.com/m/MbcjGPiCM2gAAAAC/aikido-aikikai.gif",
-  jo: "https://media1.tenor.com/m/MbcjGPiCM2gAAAAC/aikido-aikikai.gif",
-  tanto: "https://media1.tenor.com/m/MbcjGPiCM2gAAAAC/aikido-aikikai.gif",
-  // Autres
-  randori: "https://media1.tenor.com/m/-Z8MZpyAOk4AAAAC/aikido-demonstration.gif",
-  hanmi_handachi: "https://media1.tenor.com/m/7vT3ws9hti8AAAAC/aikido-aiki.gif",
-  base: "https://media1.tenor.com/m/7IxgCtkV_BkAAAAC/aikido-practice.gif",
-  generic: "https://media1.tenor.com/m/ura8QoKWyw8AAAAC/hiromi-matsuoka.gif"
+// Illustrations SVG noir et blanc pour chaque technique d'Aïkido
+const AikidoIllustrations = {
+  // Ikkyo - Première immobilisation (contrôle du coude)
+  ikkyo: () => (
+    <svg viewBox="0 0 100 100" className="w-full h-full">
+      <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        {/* Tori (celui qui fait la technique) */}
+        <circle cx="30" cy="25" r="8" fill="currentColor" opacity="0.1"/>
+        <line x1="30" y1="33" x2="30" y2="55"/>
+        <line x1="30" y1="40" x2="50" y2="35"/>
+        <line x1="30" y1="40" x2="15" y2="50"/>
+        <line x1="30" y1="55" x2="20" y2="75"/>
+        <line x1="30" y1="55" x2="40" y2="75"/>
+        {/* Uke (celui qui reçoit) - au sol */}
+        <circle cx="70" cy="60" r="7" fill="currentColor" opacity="0.1"/>
+        <path d="M70 67 Q75 80 85 85"/>
+        <line x1="70" y1="67" x2="55" y2="75"/>
+        <line x1="55" y1="75" x2="50" y2="35"/>
+        {/* Flèche direction */}
+        <path d="M50 30 L55 25 L50 20" strokeWidth="1.5"/>
+      </g>
+    </svg>
+  ),
+  
+  // Nikyo - Deuxième immobilisation (torsion du poignet)
+  nikyo: () => (
+    <svg viewBox="0 0 100 100" className="w-full h-full">
+      <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="35" cy="25" r="8" fill="currentColor" opacity="0.1"/>
+        <line x1="35" y1="33" x2="35" y2="55"/>
+        <line x1="35" y1="42" x2="55" y2="38"/>
+        <line x1="35" y1="42" x2="20" y2="48"/>
+        <line x1="35" y1="55" x2="25" y2="75"/>
+        <line x1="35" y1="55" x2="45" y2="75"/>
+        {/* Uke agenouillé */}
+        <circle cx="65" cy="50" r="7" fill="currentColor" opacity="0.1"/>
+        <line x1="65" y1="57" x2="65" y2="70"/>
+        <line x1="55" y1="38" x2="65" y2="57"/>
+        <path d="M65 70 Q70 80 75 82"/>
+        {/* Spirale poignet */}
+        <path d="M55 38 Q58 35 55 32" strokeWidth="1.5"/>
+      </g>
+    </svg>
+  ),
+  
+  // Sankyo - Troisième immobilisation
+  sankyo: () => (
+    <svg viewBox="0 0 100 100" className="w-full h-full">
+      <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="40" cy="28" r="8" fill="currentColor" opacity="0.1"/>
+        <line x1="40" y1="36" x2="40" y2="58"/>
+        <line x1="40" y1="44" x2="60" y2="40"/>
+        <line x1="40" y1="44" x2="25" y2="52"/>
+        <line x1="40" y1="58" x2="30" y2="78"/>
+        <line x1="40" y1="58" x2="50" y2="78"/>
+        {/* Uke plié */}
+        <circle cx="70" cy="55" r="7" fill="currentColor" opacity="0.1"/>
+        <path d="M70 62 Q75 75 70 85"/>
+        <line x1="60" y1="40" x2="70" y2="55"/>
+        {/* Rotation */}
+        <path d="M60 35 A8 8 0 0 1 65 42" strokeWidth="1.5"/>
+      </g>
+    </svg>
+  ),
+  
+  // Shiho nage - Projection quatre directions
+  shiho_nage: () => (
+    <svg viewBox="0 0 100 100" className="w-full h-full">
+      <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        {/* Tori debout, bras levés */}
+        <circle cx="35" cy="22" r="8" fill="currentColor" opacity="0.1"/>
+        <line x1="35" y1="30" x2="35" y2="55"/>
+        <line x1="35" y1="38" x2="55" y2="25"/>
+        <line x1="35" y1="38" x2="20" y2="45"/>
+        <line x1="35" y1="55" x2="25" y2="78"/>
+        <line x1="35" y1="55" x2="45" y2="78"/>
+        {/* Uke en chute arrière */}
+        <circle cx="68" cy="45" r="7" fill="currentColor" opacity="0.1"/>
+        <path d="M68 52 Q80 65 85 80"/>
+        <line x1="55" y1="25" x2="68" y2="45"/>
+        <line x1="68" y1="52" x2="60" y2="65"/>
+        {/* Flèches quatre directions */}
+        <path d="M75 20 L80 15 M80 15 L85 20 M80 15 L80 10" strokeWidth="1"/>
+      </g>
+    </svg>
+  ),
+  
+  // Irimi nage - Projection en entrant
+  irimi_nage: () => (
+    <svg viewBox="0 0 100 100" className="w-full h-full">
+      <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        {/* Tori entrant */}
+        <circle cx="30" cy="30" r="8" fill="currentColor" opacity="0.1"/>
+        <line x1="30" y1="38" x2="30" y2="60"/>
+        <line x1="30" y1="45" x2="50" y2="35"/>
+        <line x1="30" y1="45" x2="15" y2="50"/>
+        <line x1="30" y1="60" x2="22" y2="80"/>
+        <line x1="30" y1="60" x2="38" y2="80"/>
+        {/* Uke projeté en arrière */}
+        <circle cx="60" cy="40" r="7" fill="currentColor" opacity="0.1"/>
+        <path d="M60 47 Q70 60 80 75"/>
+        <line x1="50" y1="35" x2="55" y2="40"/>
+        <line x1="60" y1="47" x2="50" y2="55"/>
+        {/* Mouvement entrant */}
+        <path d="M40 30 L48 28" strokeWidth="1.5" markerEnd="url(#arrow)"/>
+      </g>
+    </svg>
+  ),
+  
+  // Kote gaeshi - Retournement du poignet
+  kote_gaeshi: () => (
+    <svg viewBox="0 0 100 100" className="w-full h-full">
+      <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        {/* Tori */}
+        <circle cx="30" cy="35" r="8" fill="currentColor" opacity="0.1"/>
+        <line x1="30" y1="43" x2="30" y2="65"/>
+        <line x1="30" y1="50" x2="50" y2="45"/>
+        <line x1="30" y1="50" x2="15" y2="55"/>
+        <line x1="30" y1="65" x2="22" y2="85"/>
+        <line x1="30" y1="65" x2="38" y2="85"/>
+        {/* Uke en rotation/chute */}
+        <circle cx="65" cy="50" r="7" fill="currentColor" opacity="0.1"/>
+        <path d="M65 57 Q75 70 70 85"/>
+        <line x1="50" y1="45" x2="58" y2="50"/>
+        <line x1="65" y1="57" x2="80" y2="60"/>
+        {/* Spirale poignet */}
+        <circle cx="54" cy="45" r="6" strokeWidth="1" strokeDasharray="2,2"/>
+      </g>
+    </svg>
+  ),
+  
+  // Kaiten nage - Projection rotative
+  kaiten_nage: () => (
+    <svg viewBox="0 0 100 100" className="w-full h-full">
+      <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="35" cy="30" r="8" fill="currentColor" opacity="0.1"/>
+        <line x1="35" y1="38" x2="35" y2="60"/>
+        <line x1="35" y1="45" x2="55" y2="40"/>
+        <line x1="35" y1="45" x2="20" y2="50"/>
+        <line x1="35" y1="60" x2="27" y2="80"/>
+        <line x1="35" y1="60" x2="43" y2="80"/>
+        {/* Uke en rotation avant */}
+        <circle cx="65" cy="55" r="7" fill="currentColor" opacity="0.1"/>
+        <path d="M65 62 Q55 75 50 85"/>
+        <line x1="55" y1="40" x2="60" y2="55"/>
+        {/* Arc de rotation */}
+        <path d="M70 45 A15 15 0 0 1 55 65" strokeWidth="1" strokeDasharray="3,2"/>
+      </g>
+    </svg>
+  ),
+  
+  // Tenchi nage - Projection ciel-terre
+  tenchi_nage: () => (
+    <svg viewBox="0 0 100 100" className="w-full h-full">
+      <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        {/* Tori bras écartés haut/bas */}
+        <circle cx="40" cy="30" r="8" fill="currentColor" opacity="0.1"/>
+        <line x1="40" y1="38" x2="40" y2="60"/>
+        <line x1="40" y1="45" x2="60" y2="25"/>
+        <line x1="40" y1="45" x2="25" y2="60"/>
+        <line x1="40" y1="60" x2="32" y2="80"/>
+        <line x1="40" y1="60" x2="48" y2="80"/>
+        {/* Uke déséquilibré */}
+        <circle cx="70" cy="45" r="7" fill="currentColor" opacity="0.1"/>
+        <path d="M70 52 Q80 65 85 80"/>
+        {/* Flèches ciel/terre */}
+        <path d="M62 20 L60 15" strokeWidth="1.5"/>
+        <path d="M23 65 L20 70" strokeWidth="1.5"/>
+      </g>
+    </svg>
+  ),
+  
+  // Ukemi - Chutes
+  ukemi: () => (
+    <svg viewBox="0 0 100 100" className="w-full h-full">
+      <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        {/* Personne en roulade */}
+        <circle cx="45" cy="40" r="8" fill="currentColor" opacity="0.1"/>
+        <path d="M45 48 Q55 55 60 65"/>
+        <path d="M45 48 Q35 55 30 65"/>
+        <line x1="60" y1="65" x2="70" y2="75"/>
+        <line x1="30" y1="65" x2="25" y2="55"/>
+        {/* Arc de roulade */}
+        <path d="M30 35 Q45 20 65 35 Q80 50 75 70" strokeWidth="1" strokeDasharray="3,2"/>
+        {/* Sol */}
+        <line x1="15" y1="85" x2="85" y2="85" strokeWidth="1"/>
+      </g>
+    </svg>
+  ),
+  
+  // Suwari waza - Techniques à genoux
+  suwari: () => (
+    <svg viewBox="0 0 100 100" className="w-full h-full">
+      <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        {/* Tori à genoux */}
+        <circle cx="30" cy="40" r="7" fill="currentColor" opacity="0.1"/>
+        <line x1="30" y1="47" x2="30" y2="60"/>
+        <line x1="30" y1="52" x2="45" y2="48"/>
+        <line x1="30" y1="52" x2="18" y2="55"/>
+        <path d="M30 60 Q25 70 20 75"/>
+        <path d="M30 60 Q35 70 40 75"/>
+        {/* Uke à genoux */}
+        <circle cx="60" cy="45" r="6" fill="currentColor" opacity="0.1"/>
+        <line x1="60" y1="51" x2="60" y2="62"/>
+        <line x1="45" y1="48" x2="55" y2="50"/>
+        <path d="M60 62 Q55 72 50 77"/>
+        <path d="M60 62 Q65 72 70 77"/>
+        {/* Sol tatami */}
+        <line x1="10" y1="80" x2="90" y2="80" strokeWidth="1"/>
+      </g>
+    </svg>
+  ),
+  
+  // Ushiro waza - Attaques par l'arrière
+  ushiro: () => (
+    <svg viewBox="0 0 100 100" className="w-full h-full">
+      <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        {/* Tori de face */}
+        <circle cx="45" cy="30" r="8" fill="currentColor" opacity="0.1"/>
+        <line x1="45" y1="38" x2="45" y2="60"/>
+        <line x1="45" y1="45" x2="60" y2="50"/>
+        <line x1="45" y1="45" x2="30" y2="50"/>
+        <line x1="45" y1="60" x2="37" y2="80"/>
+        <line x1="45" y1="60" x2="53" y2="80"/>
+        {/* Uke derrière */}
+        <circle cx="65" cy="35" r="6" fill="currentColor" opacity="0.1" strokeDasharray="2,2"/>
+        <line x1="65" y1="41" x2="65" y2="55" strokeDasharray="2,2"/>
+        <line x1="60" y1="50" x2="65" y2="48"/>
+        {/* Flèche arrière */}
+        <path d="M75 35 L80 35 L77 40" strokeWidth="1"/>
+      </g>
+    </svg>
+  ),
+  
+  // Bokken - Sabre en bois
+  bokken: () => (
+    <svg viewBox="0 0 100 100" className="w-full h-full">
+      <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        {/* Personne avec bokken levé */}
+        <circle cx="40" cy="25" r="8" fill="currentColor" opacity="0.1"/>
+        <line x1="40" y1="33" x2="40" y2="58"/>
+        <line x1="40" y1="40" x2="55" y2="20"/>
+        <line x1="40" y1="40" x2="25" y2="45"/>
+        <line x1="40" y1="58" x2="32" y2="80"/>
+        <line x1="40" y1="58" x2="48" y2="80"/>
+        {/* Bokken */}
+        <line x1="55" y1="20" x2="75" y2="8" strokeWidth="3"/>
+        <line x1="52" y1="22" x2="55" y2="20" strokeWidth="4"/>
+      </g>
+    </svg>
+  ),
+  
+  // Jo - Bâton
+  jo: () => (
+    <svg viewBox="0 0 100 100" className="w-full h-full">
+      <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        {/* Personne avec jo */}
+        <circle cx="45" cy="28" r="8" fill="currentColor" opacity="0.1"/>
+        <line x1="45" y1="36" x2="45" y2="60"/>
+        <line x1="45" y1="43" x2="60" y2="38"/>
+        <line x1="45" y1="43" x2="30" y2="48"/>
+        <line x1="45" y1="60" x2="37" y2="82"/>
+        <line x1="45" y1="60" x2="53" y2="82"/>
+        {/* Jo (bâton long) */}
+        <line x1="20" y1="65" x2="80" y2="25" strokeWidth="3"/>
+      </g>
+    </svg>
+  ),
+  
+  // Randori - Combat libre
+  randori: () => (
+    <svg viewBox="0 0 100 100" className="w-full h-full">
+      <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        {/* Tori central */}
+        <circle cx="50" cy="35" r="7" fill="currentColor" opacity="0.1"/>
+        <line x1="50" y1="42" x2="50" y2="60"/>
+        <line x1="50" y1="48" x2="65" y2="45"/>
+        <line x1="50" y1="48" x2="35" y2="45"/>
+        <line x1="50" y1="60" x2="43" y2="78"/>
+        <line x1="50" y1="60" x2="57" y2="78"/>
+        {/* Attaquants multiples */}
+        <circle cx="25" cy="40" r="5" fill="currentColor" opacity="0.05"/>
+        <circle cx="75" cy="40" r="5" fill="currentColor" opacity="0.05"/>
+        <circle cx="50" cy="15" r="5" fill="currentColor" opacity="0.05"/>
+        {/* Flèches d'attaque */}
+        <path d="M30 42 L38 44" strokeWidth="1"/>
+        <path d="M70 42 L62 44" strokeWidth="1"/>
+      </g>
+    </svg>
+  ),
+  
+  // Base / Déplacements
+  base: () => (
+    <svg viewBox="0 0 100 100" className="w-full h-full">
+      <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        {/* Deux personnes face à face */}
+        <circle cx="30" cy="35" r="7" fill="currentColor" opacity="0.1"/>
+        <line x1="30" y1="42" x2="30" y2="60"/>
+        <line x1="30" y1="48" x2="42" y2="45"/>
+        <line x1="30" y1="48" x2="18" y2="50"/>
+        <line x1="30" y1="60" x2="24" y2="78"/>
+        <line x1="30" y1="60" x2="36" y2="78"/>
+        
+        <circle cx="70" cy="35" r="7" fill="currentColor" opacity="0.1"/>
+        <line x1="70" y1="42" x2="70" y2="60"/>
+        <line x1="70" y1="48" x2="58" y2="45"/>
+        <line x1="70" y1="48" x2="82" y2="50"/>
+        <line x1="70" y1="60" x2="64" y2="78"/>
+        <line x1="70" y1="60" x2="76" y2="78"/>
+        {/* Connexion */}
+        <line x1="42" y1="45" x2="58" y2="45" strokeDasharray="3,2"/>
+      </g>
+    </svg>
+  ),
+  
+  // Générique
+  generic: () => (
+    <svg viewBox="0 0 100 100" className="w-full h-full">
+      <g fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        {/* Personne en garde */}
+        <circle cx="50" cy="25" r="9" fill="currentColor" opacity="0.1"/>
+        <line x1="50" y1="34" x2="50" y2="58"/>
+        <line x1="50" y1="42" x2="68" y2="38"/>
+        <line x1="50" y1="42" x2="32" y2="46"/>
+        <line x1="50" y1="58" x2="40" y2="82"/>
+        <line x1="50" y1="58" x2="60" y2="82"/>
+        {/* Cercle harmonie */}
+        <circle cx="50" cy="50" r="35" strokeWidth="1" strokeDasharray="4,3" opacity="0.3"/>
+      </g>
+    </svg>
+  )
 };
 
-// Fonction pour trouver le bon GIF selon le nom de la technique
-const getGifForTechnique = (techniqueName) => {
+// Fonction pour trouver la bonne illustration selon le nom de la technique
+const getIllustrationForTechnique = (techniqueName) => {
   const name = techniqueName.toLowerCase();
   
   // Immobilisations
-  if (name.includes("ikkyo")) return TECHNIQUE_GIFS.ikkyo;
-  if (name.includes("nikyo")) return TECHNIQUE_GIFS.nikyo;
-  if (name.includes("sankyo")) return TECHNIQUE_GIFS.sankyo;
-  if (name.includes("yonkyo")) return TECHNIQUE_GIFS.yonkyo;
-  if (name.includes("gokyo")) return TECHNIQUE_GIFS.gokyo;
+  if (name.includes("ikkyo")) return AikidoIllustrations.ikkyo;
+  if (name.includes("nikyo")) return AikidoIllustrations.nikyo;
+  if (name.includes("sankyo")) return AikidoIllustrations.sankyo;
+  if (name.includes("yonkyo")) return AikidoIllustrations.nikyo;
+  if (name.includes("gokyo")) return AikidoIllustrations.ikkyo;
   
   // Projections
-  if (name.includes("shiho") || name.includes("shihonage")) return TECHNIQUE_GIFS.shiho_nage;
-  if (name.includes("irimi") && name.includes("nage")) return TECHNIQUE_GIFS.irimi_nage;
-  if (name.includes("kote") || name.includes("kotegaeshi")) return TECHNIQUE_GIFS.kote_gaeshi;
-  if (name.includes("kaiten")) return TECHNIQUE_GIFS.kaiten_nage;
-  if (name.includes("tenchi")) return TECHNIQUE_GIFS.tenchi_nage;
-  if (name.includes("koshi")) return TECHNIQUE_GIFS.koshi_nage;
-  if (name.includes("kokyu") && name.includes("nage")) return TECHNIQUE_GIFS.kokyu_nage;
-  if (name.includes("sumi")) return TECHNIQUE_GIFS.kaiten_nage;
+  if (name.includes("shiho") || name.includes("shihonage")) return AikidoIllustrations.shiho_nage;
+  if (name.includes("irimi") && name.includes("nage")) return AikidoIllustrations.irimi_nage;
+  if (name.includes("kote") || name.includes("kotegaeshi")) return AikidoIllustrations.kote_gaeshi;
+  if (name.includes("kaiten")) return AikidoIllustrations.kaiten_nage;
+  if (name.includes("tenchi")) return AikidoIllustrations.tenchi_nage;
+  if (name.includes("koshi")) return AikidoIllustrations.kaiten_nage;
+  if (name.includes("kokyu") && name.includes("nage")) return AikidoIllustrations.irimi_nage;
+  if (name.includes("sumi")) return AikidoIllustrations.kaiten_nage;
   
   // Chutes
-  if (name.includes("ukemi") || name.includes("chute")) return TECHNIQUE_GIFS.ukemi;
+  if (name.includes("ukemi") || name.includes("chute")) return AikidoIllustrations.ukemi;
   
   // Suwariwaza
-  if (name.includes("suwari") || name.includes("seiza")) return TECHNIQUE_GIFS.suwari;
+  if (name.includes("suwari") || name.includes("seiza")) return AikidoIllustrations.suwari;
   
   // Ushirowaza
-  if (name.includes("ushiro")) return TECHNIQUE_GIFS.ushiro;
+  if (name.includes("ushiro")) return AikidoIllustrations.ushiro;
   
   // Armes
-  if (name.includes("bokken") || name.includes("ken") || name.includes("tachi") || name.includes("kumitachi")) return TECHNIQUE_GIFS.bokken;
-  if (name.includes("jo") || name.includes("bâton")) return TECHNIQUE_GIFS.jo;
-  if (name.includes("tanto") || name.includes("tanken") || name.includes("couteau")) return TECHNIQUE_GIFS.tanto;
+  if (name.includes("bokken") || name.includes("ken") || name.includes("tachi") || name.includes("kumitachi") || name.includes("suburi bokken")) return AikidoIllustrations.bokken;
+  if (name.includes("jo") || name.includes("bâton") || name.includes("suburi jo")) return AikidoIllustrations.jo;
+  if (name.includes("tanto") || name.includes("tanken") || name.includes("couteau")) return AikidoIllustrations.bokken;
   
   // Autres
-  if (name.includes("randori") || name.includes("jiyu")) return TECHNIQUE_GIFS.randori;
-  if (name.includes("hanmi handachi")) return TECHNIQUE_GIFS.hanmi_handachi;
-  if (name.includes("tai no henko") || name.includes("déplacement") || name.includes("irimi") || name.includes("tenkan")) return TECHNIQUE_GIFS.base;
-  if (name.includes("kokyu ho") || name.includes("kokyu")) return TECHNIQUE_GIFS.base;
+  if (name.includes("randori") || name.includes("jiyu")) return AikidoIllustrations.randori;
+  if (name.includes("hanmi handachi")) return AikidoIllustrations.suwari;
+  if (name.includes("tai no henko") || name.includes("déplacement") || name.includes("tenkan")) return AikidoIllustrations.base;
+  if (name.includes("kokyu ho") || name.includes("kokyu")) return AikidoIllustrations.base;
+  if (name.includes("morote")) return AikidoIllustrations.base;
   
-  return TECHNIQUE_GIFS.generic;
+  return AikidoIllustrations.generic;
 };
 
-// Composant illustration GIF
+// Composant illustration SVG noir et blanc
 const TechniqueIllustration = ({ technique, size = 100 }) => {
-  const gifUrl = getGifForTechnique(technique);
+  const Illustration = getIllustrationForTechnique(technique);
   
   return (
     <div 
-      className="relative rounded-xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center shadow-lg"
+      className="relative rounded-xl overflow-hidden bg-white flex items-center justify-center p-2 text-gray-700"
       style={{ width: size, height: size }}
     >
-      <img
-        src={gifUrl}
-        alt={technique}
-        className="w-full h-full object-cover"
-        loading="lazy"
-      />
+      <Illustration />
     </div>
   );
 };
