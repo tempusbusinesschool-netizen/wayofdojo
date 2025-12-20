@@ -669,8 +669,8 @@ function App() {
     return (
       <div className="min-h-screen aikido-bg flex items-center justify-center">
         <div className="text-center">
-          <div className="w-16 h-16 border-4 border-purple-200 border-t-purple-600 rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-purple-600 font-medium">Chargement...</p>
+          <div className="w-16 h-16 border-4 border-orange-200 border-t-orange-600 rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-orange-600 font-medium">Chargement...</p>
         </div>
       </div>
     );
@@ -680,7 +680,7 @@ function App() {
     <div className="min-h-screen aikido-bg">
       <Toaster position="top-right" richColors />
       
-      {/* Header vibrant */}
+      {/* Header orange */}
       <header className="header-traditional sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
