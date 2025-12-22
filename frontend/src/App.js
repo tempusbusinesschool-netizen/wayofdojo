@@ -864,7 +864,7 @@ function MemberRegistrationForm({ onSuccess, onCancel, registrationType = 'child
 // ═══════════════════════════════════════════════════════════════════════════════════
 // MEMBER CARD COMPONENT
 // ═══════════════════════════════════════════════════════════════════════════════════
-function MemberCard({ member, onValidate, onDelete, onValidateChild, isChild = false, parentInfo = null }) {
+function MemberCard({ member, onValidate, onDelete, onValidateChild, onDeleteChild, isChild = false, parentInfo = null }) {
   const getStatusBadge = (status) => {
     const config = {
       pending: { label: "En attente", color: "bg-amber-500" },
@@ -913,7 +913,7 @@ function MemberCard({ member, onValidate, onDelete, onValidateChild, isChild = f
                 )}
               </div>
             </div>
-            <div className="flex gap-2 ml-2">
+            <div className="flex flex-col gap-2 ml-2">
               {childStatus === 'pending' && (
                 <Button
                   size="sm"
@@ -924,6 +924,15 @@ function MemberCard({ member, onValidate, onDelete, onValidateChild, isChild = f
                   <CheckCircle2 className="w-4 h-4" />
                 </Button>
               )}
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={() => onDeleteChild && onDeleteChild(parentInfo?.id, member.id, `${member.first_name} ${member.last_name}`)}
+                className="text-red-400 hover:text-red-300 hover:bg-red-900/20"
+                title="Supprimer l'inscription"
+              >
+                <Trash2 className="w-4 h-4" />
+              </Button>
             </div>
           </div>
         </CardContent>
