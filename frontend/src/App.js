@@ -596,6 +596,12 @@ function AppContent() {
           />
         </DialogContent>
       </Dialog>
+
+      {/* CGU Dialog */}
+      <CGUDialog
+        isOpen={showCGU}
+        onClose={() => setShowCGU(false)}
+      />
       
       {/* Footer */}
       <footer className="border-t border-slate-800 mt-12 py-6">
@@ -609,6 +615,12 @@ function AppContent() {
           <p className="text-slate-600 text-xs mt-3">
             © humanknowledge.fr - 2025
           </p>
+          <button 
+            onClick={() => setShowCGU(true)}
+            className="text-cyan-500 hover:text-cyan-400 text-xs mt-2 underline"
+          >
+            Conditions Générales d'Utilisation (CGU)
+          </button>
         </div>
       </footer>
     </div>
