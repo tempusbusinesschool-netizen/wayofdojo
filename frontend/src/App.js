@@ -844,10 +844,137 @@ function MemberRegistrationForm({ onSuccess, onCancel }) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════════
-// MEMBERS LIST COMPONENT
+// MEMBER CARD COMPONENT
+// ═══════════════════════════════════════════════════════════════════════════════════
+function MemberCard({ member, onValidate, onDelete, isChild = false, parentInfo = null }) {
+  const getStatusBadge = (status) => {
+    const config = {
+      pending: { label: "En attente", color: "bg-amber-500" },
+      active: { label: "Actif", color: "bg-emerald-500" },
+      inactive: { label: "Inactif", color: "bg-slate-500" }
+    };
+    const { label, color } = config[status] || config.pending;
+    return <Badge className={`${color} text-white text-xs`}>{label}</Badge>;
+  };
+
+  if (isChild) {
+    // Card for a child
+    return (
+      <Card className="bg-slate-700/50 border-slate-600">
+        <CardContent className="p-4">
+          <div className="flex items-start justify-between">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2 flex-wrap">
+                {parentInfo?.member_id && (
+                  <Badge className="bg-slate-600 text-cyan-300 text-xs font-mono">
+                    {parentInfo.member_id}
+                  </Badge>
+                )}
+                <span className="font-semibold text-white flex items-center gap-2">
+                  <Baby className="w-4 h-4 text-purple-400" />
+                  {member.first_name} {member.last_name}
+                </span>
+                {getStatusBadge(parentInfo?.status)}
+              </div>
+              {member.birth_date && (
+                <p className="text-sm text-slate-400">
+                  Né(e) le : {new Date(member.birth_date).toLocaleDateString('fr-FR')}
+                </p>
+              )}
+              <div className="text-xs text-slate-500 mt-2 p-2 bg-slate-800/50 rounded">
+                <p className="font-medium text-slate-400">Responsable :</p>
+                <p className="text-slate-300">{parentInfo?.parent_first_name} {parentInfo?.parent_last_name}</p>
+                <p className="flex items-center gap-1 mt-1">
+                  <Phone className="w-3 h-3" /> {parentInfo?.phone}
+                </p>
+                {parentInfo?.emergency_contact && (
+                  <p className="flex items-center gap-1 text-orange-400">
+                    <AlertTriangle className="w-3 h-3" /> Urgence: {parentInfo.emergency_contact}
+                  </p>
+                )}
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  // Card for an adult member
+  return (
+    <Card className="bg-slate-700/50 border-slate-600">
+      <CardContent className="p-4">
+        <div className="flex items-start justify-between">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2 flex-wrap">
+              {member.member_id && (
+                <Badge className="bg-slate-600 text-cyan-300 text-xs font-mono">
+                  {member.member_id}
+                </Badge>
+              )}
+              <span className="font-semibold text-white flex items-center gap-2">
+                <User className="w-4 h-4 text-cyan-400" />
+                {member.parent_first_name} {member.parent_last_name}
+              </span>
+              {getStatusBadge(member.status)}
+              <Badge className="bg-cyan-600 text-white text-xs">Adulte adhérent</Badge>
+            </div>
+            <div className="flex items-center gap-4 text-sm text-slate-400 flex-wrap">
+              <span className="flex items-center gap-1">
+                <Mail className="w-3 h-3" /> {member.email}
+              </span>
+              <span className="flex items-center gap-1">
+                <Phone className="w-3 h-3" /> {member.phone}
+              </span>
+            </div>
+            {(member.address || member.city || member.postal_code) && (
+              <div className="flex items-center gap-1 text-sm text-slate-400">
+                <MapPin className="w-3 h-3" />
+                {[member.address, member.postal_code, member.city].filter(Boolean).join(', ')}
+              </div>
+            )}
+            {member.emergency_contact && (
+              <div className="flex items-center gap-1 text-sm text-orange-400">
+                <AlertTriangle className="w-3 h-3" />
+                Urgence: {member.emergency_contact}
+              </div>
+            )}
+            {member.reglement_signed_date && (
+              <p className="text-xs text-emerald-400">
+                ✓ Règlement signé le {new Date(member.reglement_signed_date).toLocaleDateString('fr-FR')}
+              </p>
+            )}
+          </div>
+          <div className="flex gap-2">
+            {member.status === 'pending' && (
+              <Button
+                size="sm"
+                onClick={() => onValidate(member.id)}
+                className="bg-emerald-600 hover:bg-emerald-500"
+              >
+                <CheckCircle2 className="w-4 h-4" />
+              </Button>
+            )}
+            <Button
+              size="sm"
+              variant="ghost"
+              onClick={() => onDelete(member.id)}
+              className="text-red-400 hover:text-red-300 hover:bg-red-900/20"
+            >
+              <Trash2 className="w-4 h-4" />
+            </Button>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════════
+// MEMBERS LIST COMPONENT (avec onglets Enfants/Adultes)
 // ═══════════════════════════════════════════════════════════════════════════════════
 function MembersList({ members, onRefresh }) {
-  const [selectedMember, setSelectedMember] = useState(null);
+  const [activeTab, setActiveTab] = useState("children");
 
   const handleValidate = async (memberId) => {
     try {
@@ -870,15 +997,20 @@ function MembersList({ members, onRefresh }) {
     }
   };
 
-  const getStatusBadge = (status) => {
-    const config = {
-      pending: { label: "En attente", color: "bg-amber-500" },
-      active: { label: "Actif", color: "bg-emerald-500" },
-      inactive: { label: "Inactif", color: "bg-slate-500" }
-    };
-    const { label, color } = config[status] || config.pending;
-    return <Badge className={`${color} text-white text-xs`}>{label}</Badge>;
-  };
+  // Extract all children from all members
+  const allChildren = members.flatMap(member => 
+    (member.children || []).map(child => ({
+      ...child,
+      parentInfo: member
+    }))
+  );
+
+  // Filter adult members (those who are adult_member themselves)
+  const adultMembers = members.filter(member => member.is_adult_member);
+
+  // Count stats
+  const childrenCount = allChildren.length;
+  const adultsCount = adultMembers.length;
 
   if (members.length === 0) {
     return (
@@ -890,81 +1022,91 @@ function MembersList({ members, onRefresh }) {
   }
 
   return (
-    <div className="space-y-3">
-      {members.map((member) => (
-        <Card key={member.id} className="bg-slate-700/50 border-slate-600">
-          <CardContent className="p-4">
-            <div className="flex items-start justify-between">
-              <div className="space-y-1">
-                <div className="flex items-center gap-2 flex-wrap">
-                  {member.member_id && (
-                    <Badge className="bg-slate-600 text-cyan-300 text-xs font-mono">
-                      {member.member_id}
-                    </Badge>
-                  )}
-                  <span className="font-semibold text-white">
-                    {member.parent_first_name} {member.parent_last_name}
-                  </span>
-                  {getStatusBadge(member.status)}
-                  {member.is_adult_member && (
-                    <Badge className="bg-cyan-600 text-white text-xs">Adulte adhérent</Badge>
-                  )}
-                </div>
-                <div className="flex items-center gap-4 text-sm text-slate-400 flex-wrap">
-                  <span className="flex items-center gap-1">
-                    <Mail className="w-3 h-3" /> {member.email}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <Phone className="w-3 h-3" /> {member.phone}
-                  </span>
-                </div>
-                {(member.address || member.city || member.postal_code) && (
-                  <div className="flex items-center gap-1 text-sm text-slate-400">
-                    <MapPin className="w-3 h-3" />
-                    {[member.address, member.postal_code, member.city].filter(Boolean).join(', ')}
-                  </div>
-                )}
-                {member.emergency_contact && (
-                  <div className="flex items-center gap-1 text-sm text-orange-400">
-                    <AlertTriangle className="w-3 h-3" />
-                    Urgence: {member.emergency_contact}
-                  </div>
-                )}
-                {member.children && member.children.length > 0 && (
-                  <div className="flex items-center gap-1 text-sm text-slate-400">
-                    <Baby className="w-3 h-3" />
-                    {member.children.map(c => `${c.first_name} ${c.last_name}`).join(', ')}
-                  </div>
-                )}
-                {member.reglement_signed_date && (
-                  <p className="text-xs text-emerald-400">
-                    ✓ Règlement signé le {new Date(member.reglement_signed_date).toLocaleDateString('fr-FR')}
-                  </p>
-                )}
-              </div>
-              <div className="flex gap-2">
-                {member.status === 'pending' && (
-                  <Button
-                    size="sm"
-                    onClick={() => handleValidate(member.id)}
-                    className="bg-emerald-600 hover:bg-emerald-500"
-                  >
-                    <CheckCircle2 className="w-4 h-4" />
-                  </Button>
-                )}
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={() => handleDelete(member.id)}
-                  className="text-red-400 hover:text-red-300 hover:bg-red-900/20"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </Button>
-              </div>
+    <div className="space-y-4">
+      {/* Tabs for Children and Adults */}
+      <Tabs value={activeTab} onValueChange={setActiveTab}>
+        <TabsList className="bg-slate-800 border-slate-700 w-full grid grid-cols-2">
+          <TabsTrigger 
+            value="children" 
+            className="data-[state=active]:bg-purple-600 data-[state=active]:text-white"
+          >
+            <Baby className="w-4 h-4 mr-2" />
+            Enfants ({childrenCount})
+          </TabsTrigger>
+          <TabsTrigger 
+            value="adults" 
+            className="data-[state=active]:bg-cyan-600 data-[state=active]:text-white"
+          >
+            <User className="w-4 h-4 mr-2" />
+            Adultes ({adultsCount})
+          </TabsTrigger>
+        </TabsList>
+
+        {/* Children Tab */}
+        <TabsContent value="children" className="mt-4">
+          {childrenCount === 0 ? (
+            <div className="text-center py-8 text-slate-400">
+              <Baby className="w-12 h-12 mx-auto mb-3 opacity-50" />
+              <p>Aucun enfant inscrit</p>
             </div>
-          </CardContent>
-        </Card>
-      ))}
+          ) : (
+            <div className="space-y-3">
+              {allChildren.map((child, idx) => (
+                <MemberCard
+                  key={`child-${idx}`}
+                  member={child}
+                  isChild={true}
+                  parentInfo={child.parentInfo}
+                  onValidate={handleValidate}
+                  onDelete={handleDelete}
+                />
+              ))}
+            </div>
+          )}
+        </TabsContent>
+
+        {/* Adults Tab */}
+        <TabsContent value="adults" className="mt-4">
+          {adultsCount === 0 ? (
+            <div className="text-center py-8 text-slate-400">
+              <User className="w-12 h-12 mx-auto mb-3 opacity-50" />
+              <p>Aucun adulte adhérent</p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {adultMembers.map((member) => (
+                <MemberCard
+                  key={member.id}
+                  member={member}
+                  isChild={false}
+                  onValidate={handleValidate}
+                  onDelete={handleDelete}
+                />
+              ))}
+            </div>
+          )}
+        </TabsContent>
+      </Tabs>
+
+      {/* Summary Card */}
+      <Card className="bg-slate-800/50 border-slate-700 mt-4">
+        <CardContent className="p-4">
+          <div className="flex items-center justify-between text-sm">
+            <span className="text-slate-400">Résumé des inscriptions</span>
+            <div className="flex gap-4">
+              <span className="flex items-center gap-1 text-purple-400">
+                <Baby className="w-4 h-4" /> {childrenCount} enfant(s)
+              </span>
+              <span className="flex items-center gap-1 text-cyan-400">
+                <User className="w-4 h-4" /> {adultsCount} adulte(s)
+              </span>
+              <span className="flex items-center gap-1 text-slate-300 font-semibold">
+                Total: {childrenCount + adultsCount} adhérent(s)
+              </span>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
