@@ -606,6 +606,18 @@ function AppContent() {
         isOpen={showCGU}
         onClose={() => setShowCGU(false)}
       />
+
+      {/* Mentions Légales Dialog */}
+      <MentionsLegalesDialog
+        isOpen={showMentionsLegales}
+        onClose={() => setShowMentionsLegales(false)}
+      />
+
+      {/* Politique de Confidentialité Dialog */}
+      <PolitiqueConfidentialiteDialog
+        isOpen={showPolitiqueConfidentialite}
+        onClose={() => setShowPolitiqueConfidentialite(false)}
+      />
       
       {/* Footer */}
       <footer className="border-t border-slate-800 mt-12 py-6">
@@ -619,12 +631,28 @@ function AppContent() {
           <p className="text-slate-600 text-xs mt-3">
             © humanknowledge.fr - 2025
           </p>
-          <button 
-            onClick={() => setShowCGU(true)}
-            className="text-cyan-500 hover:text-cyan-400 text-xs mt-2 underline"
-          >
-            Conditions Générales d'Utilisation (CGU)
-          </button>
+          <div className="flex justify-center gap-4 mt-3 flex-wrap">
+            <button 
+              onClick={() => setShowCGU(true)}
+              className="text-cyan-500 hover:text-cyan-400 text-xs underline"
+            >
+              Conditions Générales d'Utilisation
+            </button>
+            <span className="text-slate-600 text-xs">•</span>
+            <button 
+              onClick={() => setShowMentionsLegales(true)}
+              className="text-cyan-500 hover:text-cyan-400 text-xs underline"
+            >
+              Mentions Légales
+            </button>
+            <span className="text-slate-600 text-xs">•</span>
+            <button 
+              onClick={() => setShowPolitiqueConfidentialite(true)}
+              className="text-cyan-500 hover:text-cyan-400 text-xs underline"
+            >
+              Politique de Confidentialité
+            </button>
+          </div>
         </div>
       </footer>
     </div>
