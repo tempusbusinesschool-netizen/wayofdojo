@@ -810,8 +810,8 @@ function App() {
                 <Swords className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-white">Aikido Tracker</h1>
-                <p className="text-xs text-slate-400">Programme officiel</p>
+                <h1 className="text-xl font-bold text-white">Aikido La Rivière</h1>
+                <p className="text-xs text-slate-400">Club affilié FFAAA • Programme officiel</p>
               </div>
             </div>
             <div className="flex items-center gap-2">
