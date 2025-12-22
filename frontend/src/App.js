@@ -274,7 +274,10 @@ function DeplacementsSection() {
 
   return (
     <Card className="mb-6 bg-gradient-to-br from-slate-800 to-slate-900 border-slate-700">
-      <CardHeader>
+      <CardHeader 
+        className="cursor-pointer hover:bg-slate-800/50 transition-colors rounded-t-lg"
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="p-2 rounded-lg bg-gradient-to-br from-orange-500 to-amber-600">
@@ -285,13 +288,9 @@ function DeplacementsSection() {
               <CardDescription className="text-slate-400">{DEPLACEMENTS_DATA.subtitle}</CardDescription>
             </div>
           </div>
-          <Button
-            variant="ghost"
-            onClick={() => setIsExpanded(!isExpanded)}
-            className="text-slate-400 hover:text-white hover:bg-slate-700"
-          >
+          <div className="text-slate-400">
             {isExpanded ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
-          </Button>
+          </div>
         </div>
       </CardHeader>
 
