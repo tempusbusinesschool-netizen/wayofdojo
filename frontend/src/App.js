@@ -48,6 +48,8 @@ function AppContent() {
   const [activeTab, setActiveTab] = useState("techniques");
   const [showAuthDialog, setShowAuthDialog] = useState(false);
   const [showCGU, setShowCGU] = useState(false);
+  const [showMentionsLegales, setShowMentionsLegales] = useState(false);
+  const [showPolitiqueConfidentialite, setShowPolitiqueConfidentialite] = useState(false);
   
   // Admin state
   const [isAdmin, setIsAdmin] = useState(() => {
