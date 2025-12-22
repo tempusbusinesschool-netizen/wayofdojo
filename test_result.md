@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Application de suivi d'entraînement Aïkido avec GIFs réalistes pour illustrer chaque technique. 10 niveaux (6e kyu à 4e Dan) avec 118 techniques totales."
+user_problem_statement: "Application Aikido La Rivière - Club FFAAA avec gestion des adhérents protégée par mot de passe admin"
 
 backend:
   - task: "API GET /api/kyu-levels - Liste tous les niveaux avec techniques"
@@ -111,112 +111,111 @@ backend:
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: true
         agent: "main"
-        comment: "API retourne 10 niveaux avec techniques et URLs de GIFs"
+        comment: "API retourne 10 niveaux avec techniques"
 
-  - task: "API POST /api/seed - Seeding des données avec GIFs"
+  - task: "API GET /api/members - Liste des adhérents"
     implemented: true
     working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: true
         agent: "main"
-        comment: "Seed avec URLs de GIFs Tenor validées (HTTP 200)"
+        comment: "API retourne la liste des adhérents avec member_id, address, etc."
 
-  - task: "API PUT /api/kyu-levels/{id}/techniques/{id} - Mise à jour maîtrise"
+  - task: "API POST /api/members - Création adhérent avec member_id auto"
     implemented: true
     working: true
     file: "/app/backend/server.py"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: true
         agent: "main"
-        comment: "Mise à jour du niveau de maîtrise fonctionnelle"
+        comment: "Génère automatiquement member_id (AR-001, AR-002, etc.)"
 
-  - task: "API POST /api/kyu-levels/{id}/techniques/{id}/practice - Enregistrer pratique"
+  - task: "Modèle Member avec nouveaux champs"
     implemented: true
     working: true
     file: "/app/backend/server.py"
     stuck_count: 0
-    priority: "medium"
-    needs_retesting: true
+    priority: "high"
+    needs_retesting: false
     status_history:
       - working: true
         agent: "main"
-        comment: "Incrémente le compteur de sessions"
+        comment: "Ajout emergency_contact, member_id aux modèles Pydantic"
 
 frontend:
-  - task: "Affichage des GIFs réalistes sur les cartes"
+  - task: "Section Admin protégée par mot de passe"
     implemented: true
     working: true
     file: "/app/frontend/src/App.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: true
         agent: "main"
-        comment: "GIFs Tenor affichés avec fallback vers GIF par défaut"
+        comment: "Dialogue de connexion admin avec mot de passe aikido2024. L'onglet Adhérents est masqué pour les non-admins."
 
-  - task: "Modal détaillé avec GIF en grand format"
+  - task: "Bouton Admin/Déconnexion dans le header"
     implemented: true
     working: true
     file: "/app/frontend/src/App.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: true
         agent: "main"
-        comment: "Modal ouvre avec GIF taille 180px, description et boutons maîtrise"
+        comment: "Bouton Déconnexion visible après login admin"
 
-  - task: "Sélection niveau de maîtrise (4 niveaux)"
+  - task: "Formulaire inscription avec champ Numéro d'urgence"
     implemented: true
     working: true
     file: "/app/frontend/src/App.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: true
         agent: "main"
-        comment: "Non démarré, En apprentissage, Pratiqué, Maîtrisé"
+        comment: "Champ emergency_contact ajouté au formulaire"
 
-  - task: "Affichage des 10 grades (6e kyu à 4e Dan)"
+  - task: "Liste adhérents avec member_id et adresse"
     implemented: true
     working: true
     file: "/app/frontend/src/App.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: true
         agent: "main"
-        comment: "Tous les grades affichés avec couleurs ceinture appropriées"
+        comment: "Affiche member_id (AR-001), adresse complète, numéro d'urgence"
 
 metadata:
   created_by: "main_agent"
-  version: "1.0"
-  test_sequence: 1
+  version: "1.1"
+  test_sequence: 2
   run_ui: true
 
 test_plan:
   current_focus:
-    - "Affichage des GIFs réalistes sur les cartes"
-    - "Modal détaillé avec GIF en grand format"
-    - "API GET /api/kyu-levels"
+    - "Section Admin protégée par mot de passe"
+    - "Formulaire inscription avec champ Numéro d'urgence"
   stuck_tasks: []
-  test_all: true
+  test_all: false
   test_priority: "high_first"
 
 agent_communication:
   - agent: "main"
-    message: "Remplacement des animations SVG par des GIFs réalistes d'Aïkido (sources Tenor). URLs validées HTTP 200. Composant TechniqueIllustration mis à jour avec fallback. Fichier AikidoAnimations.jsx supprimé. Veuillez tester l'affichage des GIFs et la fonctionnalité du modal."
+    message: "Implémentation complète de l'espace admin protégé et des nouveaux champs adhérents. Tests manuels effectués avec screenshots : 1) Bouton Administrateur visible, 2) Dialog connexion, 3) Après login l'onglet Adhérents apparaît, 4) Liste montre member_id, adresse, numéro urgence. Mot de passe admin: aikido2024"
