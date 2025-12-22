@@ -551,7 +551,7 @@ function TechniqueModal({ technique, kyuName, kyuColor, isOpen, onClose, onUpdat
             <div className="bg-cyan-900/20 rounded-lg p-4 border border-cyan-800/50">
               <h4 className="text-cyan-400 font-semibold text-sm mb-2 flex items-center gap-2">
                 <Target className="w-4 h-4" />
-                Points clés d'exécution
+                Points clés d&apos;exécution
               </h4>
               <ul className="space-y-1.5">
                 {technique.key_points.map((point, idx) => (
