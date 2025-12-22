@@ -11,10 +11,17 @@ import { toast } from "sonner";
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
-function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterClick, activeFilter, isAdmin, onMembersClick, kyuLevels }) {
+function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterClick, activeFilter, isAdmin, onMembersClick, kyuLevels, userEmail }) {
   const [showEmailDialog, setShowEmailDialog] = useState(false);
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState(userEmail || '');
   const [sending, setSending] = useState(false);
+
+  // Update email when userEmail prop changes
+  React.useEffect(() => {
+    if (userEmail) {
+      setEmail(userEmail);
+    }
+  }, [userEmail]);
 
   if (!statistics) return null;
 
