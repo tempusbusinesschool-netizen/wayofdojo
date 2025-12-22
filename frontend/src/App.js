@@ -223,20 +223,29 @@ function App() {
           onAdminClick={() => setShowAdminLogin(true)}
         />
         
+        {/* Title Section */}
+        <div className="text-center mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold text-white flex items-center justify-center gap-3">
+            <Swords className="w-8 h-8 text-cyan-400" />
+            Les différentes techniques en Aïkido
+          </h1>
+          <div className="w-24 h-1 bg-gradient-to-r from-cyan-500 to-blue-500 mx-auto mt-4 rounded-full"></div>
+        </div>
+
         {/* Tabs for Techniques and Members */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
-          <TabsList className="bg-slate-800 border-slate-700 h-auto">
-            <TabsTrigger value="techniques" className="data-[state=active]:bg-slate-700 text-base py-3 px-4">
-              <Swords className="w-5 h-5 mr-2" />
-              Les différentes techniques en Aïkido
-            </TabsTrigger>
-            {isAdmin && (
+          {isAdmin && (
+            <TabsList className="bg-slate-800 border-slate-700">
+              <TabsTrigger value="techniques" className="data-[state=active]:bg-slate-700">
+                <Swords className="w-4 h-4 mr-2" />
+                Techniques
+              </TabsTrigger>
               <TabsTrigger value="members" className="data-[state=active]:bg-slate-700">
                 <Users className="w-4 h-4 mr-2" />
                 Adhérents ({members.length})
               </TabsTrigger>
-            )}
-          </TabsList>
+            </TabsList>
+          )}
           
           <TabsContent value="techniques" className="mt-6">
             {/* Filter indicator */}
