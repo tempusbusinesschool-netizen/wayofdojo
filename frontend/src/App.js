@@ -1693,6 +1693,40 @@ function App() {
     setSelectedTechnique(technique);
   };
   
+  // Filter state for technique filtering
+  const [techniqueFilter, setTechniqueFilter] = useState('all');
+  
+  const handleFilterClick = (filter) => {
+    setTechniqueFilter(techniqueFilter === filter ? 'all' : filter);
+    if (filter !== 'all') {
+      toast.info(getFilterMessage(filter));
+    }
+  };
+  
+  const getFilterMessage = (filter) => {
+    const messages = {
+      mastered: `${statistics?.mastered_techniques || 0} technique(s) maîtrisée(s)`,
+      in_progress: `${statistics?.in_progress_techniques || 0} technique(s) en cours`,
+      practiced: `Techniques avec sessions de pratique`
+    };
+    return messages[filter] || '';
+  };
+  
+  // Filter techniques based on current filter
+  const filterTechniques = (techniques) => {
+    if (techniqueFilter === 'all') return techniques;
+    if (techniqueFilter === 'mastered') {
+      return techniques.filter(t => t.mastery_level === 'mastered');
+    }
+    if (techniqueFilter === 'in_progress') {
+      return techniques.filter(t => t.mastery_level === 'learning' || t.mastery_level === 'practiced');
+    }
+    if (techniqueFilter === 'practiced') {
+      return techniques.filter(t => t.practice_count > 0);
+    }
+    return techniques;
+  };
+  
   if (loading) {
     return (
       <div className="min-h-screen bg-slate-950 flex items-center justify-center">
