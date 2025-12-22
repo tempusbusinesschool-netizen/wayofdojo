@@ -1507,7 +1507,11 @@ function App() {
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 py-6">
         {/* Règlement Intérieur - EN HAUT */}
-        <ReglementInterieur onRegister={fetchData} />
+        <ReglementInterieur 
+          onRegister={fetchData} 
+          isAdmin={isAdmin}
+          onAdminClick={() => setShowAdminLogin(true)}
+        />
         
         {/* Tabs for Techniques and Members */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
