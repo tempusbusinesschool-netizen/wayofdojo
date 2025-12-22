@@ -510,6 +510,16 @@ function AppContent() {
               </Card>
             </TabsContent>
           )}
+
+          {isAdmin && (
+            <TabsContent value="reglement" className="mt-6">
+              <ReglementInterieur 
+                onRegister={fetchData} 
+                isAdmin={isAdmin}
+                onAdminClick={() => {}}
+              />
+            </TabsContent>
+          )}
         </Tabs>
       </main>
       
