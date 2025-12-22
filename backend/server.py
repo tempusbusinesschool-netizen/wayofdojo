@@ -428,6 +428,132 @@ async def get_statistics():
     }
 
 
+# ═══════════════════════════════════════════════════════════════════════════════════
+# ADHÉRENTS API ROUTES
+# ═══════════════════════════════════════════════════════════════════════════════════
+
+@api_router.get("/members", response_model=List[Member])
+async def get_members():
+    """Get all members"""
+    members = await db.members.find({}, {"_id": 0}).sort("created_at", -1).to_list(1000)
+    for member in members:
+        deserialize_doc(member)
+    return members
+
+@api_router.get("/members/{member_id}", response_model=Member)
+async def get_member(member_id: str):
+    """Get a specific member"""
+    member = await db.members.find_one({"id": member_id}, {"_id": 0})
+    if not member:
+        raise HTTPException(status_code=404, detail="Member not found")
+    deserialize_doc(member)
+    return member
+
+@api_router.post("/members", response_model=Member)
+async def create_member(input: MemberCreate):
+    """Create a new member with signed règlement"""
+    # Check if email already exists
+    existing = await db.members.find_one({"email": input.email})
+    if existing:
+        raise HTTPException(status_code=400, detail="Un adhérent avec cet email existe déjà")
+    
+    member_data = input.model_dump()
+    member_obj = Member(**member_data)
+    
+    # Set signature date if règlement accepted
+    if input.reglement_accepted and input.signature_data:
+        member_obj.reglement_signed_date = datetime.now(timezone.utc).isoformat()
+    
+    doc = member_obj.model_dump()
+    serialize_doc(doc)
+    
+    # Convert children list to dict format for MongoDB
+    if doc.get('children'):
+        doc['children'] = [child if isinstance(child, dict) else child.model_dump() for child in doc['children']]
+    
+    await db.members.insert_one(doc)
+    return member_obj
+
+@api_router.put("/members/{member_id}", response_model=Member)
+async def update_member(member_id: str, input: MemberUpdate):
+    """Update a member"""
+    update_data = {k: v for k, v in input.model_dump().items() if v is not None}
+    if not update_data:
+        raise HTTPException(status_code=400, detail="No data to update")
+    
+    update_data['updated_at'] = datetime.now(timezone.utc).isoformat()
+    
+    # Handle children update
+    if 'children' in update_data and update_data['children']:
+        update_data['children'] = [
+            child if isinstance(child, dict) else child.model_dump() 
+            for child in update_data['children']
+        ]
+    
+    result = await db.members.update_one({"id": member_id}, {"$set": update_data})
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Member not found")
+    
+    member = await db.members.find_one({"id": member_id}, {"_id": 0})
+    deserialize_doc(member)
+    return Member(**member)
+
+@api_router.delete("/members/{member_id}")
+async def delete_member(member_id: str):
+    """Delete a member"""
+    result = await db.members.delete_one({"id": member_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Member not found")
+    return {"message": "Member deleted successfully"}
+
+@api_router.post("/members/{member_id}/validate")
+async def validate_member(member_id: str, club_signature: str = None):
+    """Validate a member (club signature)"""
+    update_data = {
+        "status": MemberStatus.ACTIVE.value,
+        "club_signed_date": datetime.now(timezone.utc).isoformat(),
+        "updated_at": datetime.now(timezone.utc).isoformat()
+    }
+    if club_signature:
+        update_data["club_signature"] = club_signature
+    
+    result = await db.members.update_one({"id": member_id}, {"$set": update_data})
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Member not found")
+    
+    member = await db.members.find_one({"id": member_id}, {"_id": 0})
+    deserialize_doc(member)
+    return Member(**member)
+
+@api_router.get("/members-stats")
+async def get_members_stats():
+    """Get members statistics"""
+    total = await db.members.count_documents({})
+    pending = await db.members.count_documents({"status": "pending"})
+    active = await db.members.count_documents({"status": "active"})
+    inactive = await db.members.count_documents({"status": "inactive"})
+    
+    # Count children
+    pipeline = [
+        {"$project": {"children_count": {"$size": {"$ifNull": ["$children", []]}}}},
+        {"$group": {"_id": None, "total_children": {"$sum": "$children_count"}}}
+    ]
+    result = await db.members.aggregate(pipeline).to_list(1)
+    total_children = result[0]["total_children"] if result else 0
+    
+    # Count adult members
+    adult_members = await db.members.count_documents({"is_adult_member": True})
+    
+    return {
+        "total_members": total,
+        "pending": pending,
+        "active": active,
+        "inactive": inactive,
+        "total_children": total_children,
+        "adult_members": adult_members
+    }
+
+
 # Clear and reseed data
 @api_router.post("/reseed")
 async def reseed_data():
