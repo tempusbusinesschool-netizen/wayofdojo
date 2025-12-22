@@ -1546,22 +1546,24 @@ function App() {
             </div>
           </TabsContent>
           
-          <TabsContent value="members" className="mt-6">
-            <Card className="bg-slate-900/50 border-slate-700">
-              <CardHeader>
-                <CardTitle className="text-white flex items-center gap-2">
-                  <Users className="w-5 h-5 text-cyan-400" />
-                  Liste des adhérents
-                </CardTitle>
-                <CardDescription className="text-slate-400">
-                  {membersStats?.active || 0} actifs • {membersStats?.pending || 0} en attente de validation
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <MembersList members={members} onRefresh={fetchData} />
-              </CardContent>
-            </Card>
-          </TabsContent>
+          {isAdmin && (
+            <TabsContent value="members" className="mt-6">
+              <Card className="bg-slate-900/50 border-slate-700">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center gap-2">
+                    <Users className="w-5 h-5 text-cyan-400" />
+                    Liste des adhérents
+                  </CardTitle>
+                  <CardDescription className="text-slate-400">
+                    {membersStats?.active || 0} actifs • {membersStats?.pending || 0} en attente de validation
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <MembersList members={members} onRefresh={fetchData} />
+                </CardContent>
+              </Card>
+            </TabsContent>
+          )}
         </Tabs>
       </main>
       
