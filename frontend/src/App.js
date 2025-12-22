@@ -397,20 +397,6 @@ function AppContent() {
           <div className="w-24 h-1 bg-gradient-to-r from-cyan-500 to-blue-500 mx-auto mt-4 rounded-full"></div>
         </div>
 
-        {/* Admin access button for non-admin users */}
-        {!isAdmin && (
-          <div className="flex justify-center mb-6">
-            <Button
-              variant="outline"
-              onClick={() => setShowAdminLogin(true)}
-              className="border-slate-600 text-slate-400 hover:bg-slate-800 hover:text-white"
-            >
-              <Lock className="w-4 h-4 mr-2" />
-              Espace Administrateur
-            </Button>
-          </div>
-        )}
-
         {/* Tabs for Techniques and Members */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
           {isAdmin && (
