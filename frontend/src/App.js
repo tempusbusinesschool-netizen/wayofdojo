@@ -1750,6 +1750,9 @@ function App() {
           onAdminClick={() => setShowAdminLogin(true)}
         />
         
+        {/* Section Déplacements */}
+        <DeplacementsSection />
+        
         {/* Tabs for Techniques and Members */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
           <TabsList className="bg-slate-800 border-slate-700">
@@ -1767,18 +1770,25 @@ function App() {
           
           <TabsContent value="techniques" className="mt-6">
             {/* Statistics Dashboard */}
-            {showStats && <StatisticsDashboard statistics={statistics} membersStats={membersStats} />}
+            {showStats && (
+              <StatisticsDashboard 
+                statistics={statistics} 
+                membersStats={membersStats}
+                onGradeClick={handleGradeClick}
+              />
+            )}
             
             {/* Grade Sections */}
             <div className="space-y-2">
               {kyuLevels.map((kyu) => (
-                <GradeSection
-                  key={kyu.id}
-                  kyu={kyu}
-                  onViewTechnique={(technique) => handleViewTechnique(kyu, technique)}
-                  onUpdateMastery={(techniqueId, level) => handleUpdateMastery(kyu.id, techniqueId, level)}
-                  onPractice={(techniqueId) => handlePractice(kyu.id, techniqueId)}
-                />
+                <div key={kyu.id} ref={el => gradeSectionRefs.current[kyu.id] = el}>
+                  <GradeSection
+                    kyu={kyu}
+                    onViewTechnique={(technique) => handleViewTechnique(kyu, technique)}
+                    onUpdateMastery={(techniqueId, level) => handleUpdateMastery(kyu.id, techniqueId, level)}
+                    onPractice={(techniqueId) => handlePractice(kyu.id, techniqueId)}
+                  />
+                </div>
               ))}
             </div>
           </TabsContent>
