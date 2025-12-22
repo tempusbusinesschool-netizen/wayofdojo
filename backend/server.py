@@ -5,7 +5,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
 from pathlib import Path
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import BaseModel, Field, ConfigDict, EmailStr
 from typing import List, Optional
 import uuid
 from datetime import datetime, timezone
@@ -33,6 +33,77 @@ class MasteryLevel(str, Enum):
     LEARNING = "learning"
     PRACTICED = "practiced"
     MASTERED = "mastered"
+
+class MemberStatus(str, Enum):
+    PENDING = "pending"  # En attente de validation
+    ACTIVE = "active"    # Adhérent actif
+    INACTIVE = "inactive"  # Adhérent inactif
+
+
+# ═══════════════════════════════════════════════════════════════════════════════════
+# ADHÉRENTS MODELS
+# ═══════════════════════════════════════════════════════════════════════════════════
+
+class ChildInfo(BaseModel):
+    """Information sur un enfant adhérent"""
+    first_name: str
+    last_name: str
+    birth_date: Optional[str] = None
+
+class MemberBase(BaseModel):
+    """Modèle de base pour un adhérent"""
+    # Informations parent/adulte
+    parent_first_name: str
+    parent_last_name: str
+    email: str
+    phone: str
+    
+    # Informations enfants (optionnel si adulte seul)
+    children: Optional[List[ChildInfo]] = []
+    
+    # Type d'adhérent
+    is_adult_member: bool = False  # True si l'adulte est lui-même adhérent
+    
+    # Adresse (optionnel)
+    address: Optional[str] = None
+    city: Optional[str] = None
+    postal_code: Optional[str] = None
+
+class MemberCreate(MemberBase):
+    """Modèle pour créer un nouvel adhérent"""
+    reglement_accepted: bool = False
+    signature_data: Optional[str] = None  # Base64 de la signature
+
+class Member(MemberBase):
+    """Modèle complet d'un adhérent"""
+    model_config = ConfigDict(extra="ignore")
+    
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    status: MemberStatus = MemberStatus.PENDING
+    reglement_accepted: bool = False
+    reglement_signed_date: Optional[str] = None
+    signature_data: Optional[str] = None  # Base64 de la signature
+    club_signature: Optional[str] = None  # Signature du club (validation)
+    club_signed_date: Optional[str] = None
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    updated_at: Optional[datetime] = None
+    notes: Optional[str] = None
+
+class MemberUpdate(BaseModel):
+    """Modèle pour mettre à jour un adhérent"""
+    parent_first_name: Optional[str] = None
+    parent_last_name: Optional[str] = None
+    email: Optional[str] = None
+    phone: Optional[str] = None
+    children: Optional[List[ChildInfo]] = None
+    is_adult_member: Optional[bool] = None
+    address: Optional[str] = None
+    city: Optional[str] = None
+    postal_code: Optional[str] = None
+    status: Optional[MemberStatus] = None
+    club_signature: Optional[str] = None
+    club_signed_date: Optional[str] = None
+    notes: Optional[str] = None
 
 
 # Define Models
