@@ -22,11 +22,162 @@ mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
+# Resend configuration
+resend.api_key = os.environ.get('RESEND_API_KEY', '')
+SENDER_EMAIL = os.environ.get('SENDER_EMAIL', 'onboarding@resend.dev')
+
+# Logger
+logger = logging.getLogger(__name__)
+
 # Create the main app without a prefix
 app = FastAPI()
 
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
+
+
+# ═══════════════════════════════════════════════════════════════════════════════════
+# EMAIL FUNCTIONS
+# ═══════════════════════════════════════════════════════════════════════════════════
+
+async def send_confirmation_email(member: dict, is_adult: bool = False):
+    """Send confirmation email to new member"""
+    if not resend.api_key or resend.api_key == 're_your_api_key_here':
+        logger.warning("Resend API key not configured, skipping email")
+        return None
+    
+    member_name = f"{member.get('parent_first_name', '')} {member.get('parent_last_name', '')}"
+    member_id = member.get('member_id', 'N/A')
+    email = member.get('email', '')
+    
+    # Build children list for email
+    children_html = ""
+    if member.get('children') and len(member['children']) > 0:
+        children_items = "".join([
+            f"<li>{child.get('first_name', '')} {child.get('last_name', '')}</li>"
+            for child in member['children']
+        ])
+        children_html = f"""
+        <tr>
+            <td style="padding: 10px 0; border-bottom: 1px solid #eee;">
+                <strong>Enfant(s) inscrit(s) :</strong><br>
+                <ul style="margin: 5px 0 0 20px; padding: 0;">{children_items}</ul>
+            </td>
+        </tr>
+        """
+    
+    adult_mention = ""
+    if is_adult:
+        adult_mention = """
+        <tr>
+            <td style="padding: 10px 0; border-bottom: 1px solid #eee;">
+                <strong>Inscription adulte :</strong> Oui
+            </td>
+        </tr>
+        """
+    
+    html_content = f"""
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto;">
+        <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #1e293b; padding: 20px;">
+            <tr>
+                <td style="text-align: center;">
+                    <h1 style="color: #f59e0b; margin: 0;">Aikido La Rivière</h1>
+                    <p style="color: #94a3b8; margin: 5px 0 0 0;">Club affilié FFAAA</p>
+                </td>
+            </tr>
+        </table>
+        
+        <table width="100%" cellpadding="20" cellspacing="0" style="background-color: #f8fafc;">
+            <tr>
+                <td>
+                    <h2 style="color: #1e293b; margin-top: 0;">Confirmation d'inscription</h2>
+                    
+                    <p>Bonjour <strong>{member_name}</strong>,</p>
+                    
+                    <p>Nous avons bien reçu votre demande d'inscription au club <strong>Aikido La Rivière</strong>.</p>
+                    
+                    <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #fff; border: 1px solid #e2e8f0; border-radius: 8px; margin: 20px 0;">
+                        <tr>
+                            <td style="padding: 15px; background-color: #1e293b; color: #fff; border-radius: 8px 8px 0 0;">
+                                <strong>Récapitulatif de votre inscription</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 15px;">
+                                <table width="100%" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td style="padding: 10px 0; border-bottom: 1px solid #eee;">
+                                            <strong>Numéro d'adhérent :</strong> {member_id}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 10px 0; border-bottom: 1px solid #eee;">
+                                            <strong>Nom :</strong> {member_name}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 10px 0; border-bottom: 1px solid #eee;">
+                                            <strong>Email :</strong> {email}
+                                        </td>
+                                    </tr>
+                                    {adult_mention}
+                                    {children_html}
+                                    <tr>
+                                        <td style="padding: 10px 0;">
+                                            <strong>Statut :</strong> 
+                                            <span style="background-color: #fef3c7; color: #92400e; padding: 2px 8px; border-radius: 4px;">En attente de validation</span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    <p>Votre inscription sera validée par un responsable du club dans les plus brefs délais.</p>
+                    
+                    <p>En attendant, n'hésitez pas à consulter notre programme d'entraînement sur notre application.</p>
+                    
+                    <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 20px 0;">
+                    
+                    <p style="color: #64748b; font-size: 14px;">
+                        <strong>Aikido La Rivière</strong><br>
+                        68, rue du Docteur Schweitzer<br>
+                        97421 SAINT-LOUIS - RÉUNION
+                    </p>
+                </td>
+            </tr>
+        </table>
+        
+        <table width="100%" cellpadding="15" cellspacing="0" style="background-color: #1e293b;">
+            <tr>
+                <td style="text-align: center; color: #94a3b8; font-size: 12px;">
+                    © 2024 Aikido La Rivière - Club affilié FFAAA
+                </td>
+            </tr>
+        </table>
+    </body>
+    </html>
+    """
+    
+    params = {
+        "from": SENDER_EMAIL,
+        "to": [email],
+        "subject": f"Confirmation d'inscription - Aikido La Rivière ({member_id})",
+        "html": html_content
+    }
+    
+    try:
+        email_response = await asyncio.to_thread(resend.Emails.send, params)
+        logger.info(f"Confirmation email sent to {email}")
+        return email_response
+    except Exception as e:
+        logger.error(f"Failed to send confirmation email: {str(e)}")
+        return None
 
 
 # Enums
