@@ -2164,6 +2164,7 @@ function App() {
                     window.dispatchEvent(event);
                   }, 100);
                 }}
+                kyuLevels={kyuLevels}
               />
             )}
             
