@@ -18,7 +18,8 @@ import {
   MembersList,
   MemberRegistrationForm,
   ReglementInterieur,
-  StatisticsDashboard
+  StatisticsDashboard,
+  CGUDialog
 } from "@/components";
 
 // Import Auth Context
