@@ -1941,7 +1941,7 @@ function App() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <img 
-                src="/images/logo-aikido.jpeg" 
+                src="/images/logo-aikido.png" 
                 alt="Logo Aikido La Rivière" 
                 className="h-14 w-auto object-contain"
               />
