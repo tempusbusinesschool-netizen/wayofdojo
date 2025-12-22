@@ -553,6 +553,26 @@ async def validate_child(member_id: str, child_id: str):
     )
     return {"message": "Child validated successfully"}
 
+@api_router.delete("/members/{member_id}/delete-child/{child_id}")
+async def delete_child(member_id: str, child_id: str):
+    """Delete a specific child from a member"""
+    member = await db.members.find_one({"id": member_id}, {"_id": 0})
+    if not member:
+        raise HTTPException(status_code=404, detail="Member not found")
+    
+    children = member.get("children", [])
+    original_count = len(children)
+    children = [c for c in children if c.get("id") != child_id]
+    
+    if len(children) == original_count:
+        raise HTTPException(status_code=404, detail="Child not found")
+    
+    await db.members.update_one(
+        {"id": member_id},
+        {"$set": {"children": children, "updated_at": datetime.now(timezone.utc).isoformat()}}
+    )
+    return {"message": "Child deleted successfully"}
+
 @api_router.post("/members/{member_id}/validate")
 async def validate_member(member_id: str, club_signature: str = None):
     """Validate a member (club signature)"""
