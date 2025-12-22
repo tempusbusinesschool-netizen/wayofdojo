@@ -561,9 +561,11 @@ function AdminLoginDialog({ isOpen, onClose, onSuccess }) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════════
-// MEMBRE REGISTRATION FORM
+// MEMBRE REGISTRATION FORM (Enfant ou Adulte)
 // ═══════════════════════════════════════════════════════════════════════════════════
-function MemberRegistrationForm({ onSuccess, onCancel }) {
+function MemberRegistrationForm({ onSuccess, onCancel, registrationType = 'child' }) {
+  const isChildRegistration = registrationType === 'child';
+  
   const [formData, setFormData] = useState({
     parent_first_name: '',
     parent_last_name: '',
@@ -573,7 +575,7 @@ function MemberRegistrationForm({ onSuccess, onCancel }) {
     city: '',
     postal_code: '',
     emergency_contact: '',
-    is_adult_member: false,
+    is_adult_member: !isChildRegistration,
     children: [],
     reglement_accepted: false,
     signature_data: null
@@ -589,7 +591,7 @@ function MemberRegistrationForm({ onSuccess, onCancel }) {
     if (newChild.first_name && newChild.last_name) {
       setFormData(prev => ({
         ...prev,
-        children: [...prev.children, { ...newChild }]
+        children: [...prev.children, { ...newChild, id: `child-${Date.now()}`, status: 'pending' }]
       }));
       setNewChild({ first_name: '', last_name: '', birth_date: '' });
     }
@@ -615,8 +617,8 @@ function MemberRegistrationForm({ onSuccess, onCancel }) {
       return;
     }
     
-    if (!formData.is_adult_member && formData.children.length === 0) {
-      toast.error("Veuillez ajouter au moins un enfant ou cocher 'Adulte adhérent'");
+    if (isChildRegistration && formData.children.length === 0) {
+      toast.error("Veuillez ajouter au moins un enfant");
       return;
     }
     
