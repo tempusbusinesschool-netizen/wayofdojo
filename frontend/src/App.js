@@ -1362,6 +1362,235 @@ function ReglementInterieur({ onRegister, isAdmin, onAdminClick }) {
 function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterClick, activeFilter, isAdmin, onMembersClick, kyuLevels, onExport }) {
   if (!statistics) return null;
   
+  // Export progression to PDF with graphics
+  const exportToPDF = async () => {
+    if (!kyuLevels || kyuLevels.length === 0) {
+      toast.error("Aucune donnée à exporter");
+      return;
+    }
+
+    toast.info("Génération du PDF en cours...");
+
+    try {
+      // Dynamic import of jspdf
+      const { jsPDF } = await import('jspdf');
+      const { default: autoTable } = await import('jspdf-autotable');
+      
+      const doc = new jsPDF('p', 'mm', 'a4');
+      const pageWidth = doc.internal.pageSize.getWidth();
+      const pageHeight = doc.internal.pageSize.getHeight();
+      const margin = 15;
+      let yPos = 20;
+
+      // Header
+      doc.setFillColor(30, 41, 59); // slate-800
+      doc.rect(0, 0, pageWidth, 45, 'F');
+      
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(22);
+      doc.setFont('helvetica', 'bold');
+      doc.text('AIKIDO LA RIVIÈRE', pageWidth / 2, 18, { align: 'center' });
+      
+      doc.setFontSize(10);
+      doc.setFont('helvetica', 'normal');
+      doc.text('68, rue du Docteur Schweitzer 97421 SAINT-LOUIS - RÉUNION', pageWidth / 2, 26, { align: 'center' });
+      
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.text('SUIVI DE PROGRESSION', pageWidth / 2, 38, { align: 'center' });
+      
+      yPos = 55;
+      
+      // Date
+      const today = new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+      doc.setTextColor(100, 100, 100);
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'normal');
+      doc.text(`Document généré le ${today}`, pageWidth - margin, yPos, { align: 'right' });
+      
+      yPos += 10;
+
+      // Global Statistics Box
+      doc.setFillColor(241, 245, 249); // slate-100
+      doc.roundedRect(margin, yPos, pageWidth - 2 * margin, 35, 3, 3, 'F');
+      
+      doc.setTextColor(30, 41, 59);
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.text('RÉSUMÉ GLOBAL', margin + 5, yPos + 8);
+      
+      // Stats in boxes
+      const statsData = [
+        { label: 'Techniques', value: statistics.total_techniques, color: [100, 116, 139] },
+        { label: 'Maîtrisées', value: statistics.mastered_techniques, color: [34, 197, 94] },
+        { label: 'En cours', value: statistics.in_progress_techniques, color: [245, 158, 11] },
+        { label: 'Sessions', value: statistics.total_practice_sessions, color: [239, 68, 68] },
+        { label: 'Progression', value: `${statistics.overall_progress}%`, color: [6, 182, 212] }
+      ];
+      
+      const boxWidth = (pageWidth - 2 * margin - 40) / 5;
+      statsData.forEach((stat, idx) => {
+        const xPos = margin + 5 + idx * (boxWidth + 5);
+        doc.setFillColor(...stat.color);
+        doc.roundedRect(xPos, yPos + 12, boxWidth, 18, 2, 2, 'F');
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(14);
+        doc.setFont('helvetica', 'bold');
+        doc.text(String(stat.value), xPos + boxWidth / 2, yPos + 22, { align: 'center' });
+        doc.setFontSize(7);
+        doc.setFont('helvetica', 'normal');
+        doc.text(stat.label, xPos + boxWidth / 2, yPos + 27, { align: 'center' });
+      });
+      
+      yPos += 45;
+
+      // Progress bar visualization
+      doc.setTextColor(30, 41, 59);
+      doc.setFontSize(12);
+      doc.setFont('helvetica', 'bold');
+      doc.text('PROGRESSION PAR GRADE', margin, yPos);
+      yPos += 8;
+
+      // Draw progress bars for each grade
+      kyuLevels.forEach((kyu, index) => {
+        if (yPos > pageHeight - 40) {
+          doc.addPage();
+          yPos = 20;
+        }
+
+        const masteredCount = kyu.techniques.filter(t => t.mastery_level === 'mastered').length;
+        const inProgressCount = kyu.techniques.filter(t => t.mastery_level === 'learning' || t.mastery_level === 'practiced').length;
+        const progressPercent = kyu.techniques.length > 0 
+          ? Math.round((masteredCount / kyu.techniques.length) * 100) 
+          : 0;
+        
+        // Grade name
+        doc.setFontSize(9);
+        doc.setFont('helvetica', 'bold');
+        doc.setTextColor(30, 41, 59);
+        doc.text(kyu.name, margin, yPos + 4);
+        
+        // Stats text
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(8);
+        doc.setTextColor(100, 116, 139);
+        doc.text(`${masteredCount}/${kyu.techniques.length} (${progressPercent}%)`, pageWidth - margin, yPos + 4, { align: 'right' });
+        
+        // Progress bar background
+        const barX = margin + 35;
+        const barWidth = pageWidth - 2 * margin - 70;
+        const barHeight = 6;
+        
+        doc.setFillColor(226, 232, 240); // slate-200
+        doc.roundedRect(barX, yPos, barWidth, barHeight, 2, 2, 'F');
+        
+        // Progress bar fill (mastered in green)
+        if (progressPercent > 0) {
+          // Parse kyu color or use default
+          let r = 34, g = 197, b = 94; // default green
+          if (kyu.color) {
+            const hex = kyu.color.replace('#', '');
+            r = parseInt(hex.substr(0, 2), 16);
+            g = parseInt(hex.substr(2, 2), 16);
+            b = parseInt(hex.substr(4, 2), 16);
+          }
+          doc.setFillColor(r, g, b);
+          doc.roundedRect(barX, yPos, barWidth * (progressPercent / 100), barHeight, 2, 2, 'F');
+        }
+        
+        yPos += 12;
+      });
+
+      yPos += 10;
+
+      // Detailed techniques table
+      doc.addPage();
+      yPos = 20;
+      
+      doc.setFillColor(30, 41, 59);
+      doc.rect(0, 0, pageWidth, 25, 'F');
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(14);
+      doc.setFont('helvetica', 'bold');
+      doc.text('DÉTAIL DES TECHNIQUES', pageWidth / 2, 15, { align: 'center' });
+      
+      yPos = 35;
+
+      // Create table data
+      kyuLevels.forEach((kyu) => {
+        if (yPos > pageHeight - 50) {
+          doc.addPage();
+          yPos = 20;
+        }
+
+        const masteredCount = kyu.techniques.filter(t => t.mastery_level === 'mastered').length;
+        const progressPercent = kyu.techniques.length > 0 
+          ? Math.round((masteredCount / kyu.techniques.length) * 100) 
+          : 0;
+
+        // Grade header
+        doc.setFillColor(51, 65, 85); // slate-700
+        doc.rect(margin, yPos, pageWidth - 2 * margin, 8, 'F');
+        doc.setTextColor(255, 255, 255);
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'bold');
+        doc.text(`${kyu.name} - ${masteredCount}/${kyu.techniques.length} maîtrisées (${progressPercent}%)`, margin + 3, yPos + 6);
+        
+        yPos += 12;
+
+        // Techniques table
+        const tableData = kyu.techniques.map((tech, idx) => {
+          const masteryLabels = {
+            'not_started': '○ Non commencé',
+            'learning': '◐ En apprentissage', 
+            'practiced': '◑ Pratiqué',
+            'mastered': '● Maîtrisé'
+          };
+          return [
+            (idx + 1).toString(),
+            tech.name,
+            masteryLabels[tech.mastery_level] || '○ Non commencé',
+            (tech.practice_count || 0).toString()
+          ];
+        });
+
+        autoTable(doc, {
+          startY: yPos,
+          head: [['#', 'Technique', 'Niveau', 'Sessions']],
+          body: tableData,
+          margin: { left: margin, right: margin },
+          styles: { fontSize: 8, cellPadding: 2 },
+          headStyles: { fillColor: [100, 116, 139], textColor: 255 },
+          columnStyles: {
+            0: { cellWidth: 8 },
+            1: { cellWidth: 'auto' },
+            2: { cellWidth: 35 },
+            3: { cellWidth: 18 }
+          },
+          alternateRowStyles: { fillColor: [248, 250, 252] },
+          didDrawPage: function(data) {
+            yPos = data.cursor.y;
+          }
+        });
+        
+        yPos = doc.lastAutoTable.finalY + 10;
+      });
+
+      // Footer on last page
+      doc.setFontSize(8);
+      doc.setTextColor(150, 150, 150);
+      doc.text('Aikido La Rivière - Club affilié FFAAA', pageWidth / 2, pageHeight - 10, { align: 'center' });
+
+      // Save the PDF
+      doc.save(`progression_aikido_${today.replace(/\//g, '-').replace(/ /g, '_')}.pdf`);
+      
+      toast.success("PDF généré avec succès !");
+    } catch (error) {
+      console.error('PDF generation error:', error);
+      toast.error("Erreur lors de la génération du PDF");
+    }
+  };
+
   // Export progression to CSV
   const exportToCSV = () => {
     if (!kyuLevels || kyuLevels.length === 0) {
@@ -1399,71 +1628,19 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
     toast.success("Progression exportée avec succès !");
   };
 
-  // Export progression to PDF (text format)
-  const exportToPDF = () => {
-    if (!kyuLevels || kyuLevels.length === 0) {
-      toast.error("Aucune donnée à exporter");
-      return;
-    }
-
-    const today = new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
-    const masteryLabels = {
-      'not_started': '⬜ Non commencé',
-      'learning': '🟡 En apprentissage', 
-      'practiced': '🟠 Pratiqué',
-      'mastered': '✅ Maîtrisé'
-    };
-
-    let content = `AIKIDO LA RIVIÈRE - SUIVI DE PROGRESSION
-==========================================
-Date d'export: ${today}
-
-RÉSUMÉ GLOBAL
--------------
-Total techniques: ${statistics.total_techniques}
-Maîtrisées: ${statistics.mastered_techniques} (${statistics.overall_progress}%)
-En cours: ${statistics.in_progress_techniques}
-Sessions totales: ${statistics.total_practice_sessions}
-
-`;
-
-    kyuLevels.forEach(kyu => {
-      const masteredCount = kyu.techniques.filter(t => t.mastery_level === 'mastered').length;
-      const progressPercent = kyu.techniques.length > 0 
-        ? Math.round((masteredCount / kyu.techniques.length) * 100) 
-        : 0;
-      
-      content += `\n${'═'.repeat(50)}\n`;
-      content += `${kyu.name.toUpperCase()} - ${masteredCount}/${kyu.techniques.length} maîtrisées (${progressPercent}%)\n`;
-      content += `${'═'.repeat(50)}\n\n`;
-      
-      kyu.techniques.forEach(tech => {
-        const mastery = masteryLabels[tech.mastery_level] || '⬜ Non commencé';
-        const sessions = tech.practice_count || 0;
-        
-        content += `${mastery} ${tech.name}\n`;
-        if (sessions > 0) {
-          content += `   → ${sessions} session(s) de pratique\n`;
-        }
-      });
-    });
-
-    content += `\n\n${'─'.repeat(50)}\nDocument généré automatiquement par Aikido La Rivière\n`;
-
-    // Create and download file
-    const blob = new Blob([content], { type: 'text/plain;charset=utf-8;' });
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = `progression_aikido_${today.replace(/\//g, '-').replace(/ /g, '_')}.txt`;
-    link.click();
-    
-    toast.success("Progression exportée avec succès !");
-  };
-
   return (
     <div className="mb-8 animate-fadeIn">
-      {/* Export Button */}
+      {/* Export Buttons */}
       <div className="flex justify-end mb-4 gap-2">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={exportToPDF}
+          className="border-cyan-600 text-cyan-400 hover:bg-cyan-900/30 hover:text-cyan-300"
+        >
+          <FileText className="w-4 h-4 mr-2" />
+          Export PDF
+        </Button>
         <Button
           variant="outline"
           size="sm"
@@ -1472,15 +1649,6 @@ Sessions totales: ${statistics.total_practice_sessions}
         >
           <Download className="w-4 h-4 mr-2" />
           Export CSV
-        </Button>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={exportToPDF}
-          className="border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-white"
-        >
-          <FileText className="w-4 h-4 mr-2" />
-          Export TXT
         </Button>
       </div>
       
