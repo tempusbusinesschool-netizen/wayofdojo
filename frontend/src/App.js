@@ -1334,50 +1334,6 @@ function ReglementInterieur({ onRegister, isAdmin, onAdminClick }) {
                 </Card>
               );
             })}
-            
-            {/* Signature Section */}
-            <div className="border-t border-slate-700 pt-6 mt-6">
-              <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
-                <PenTool className="w-5 h-5 text-cyan-400" />
-                Zone de signature
-              </h3>
-              
-              <div className="grid md:grid-cols-2 gap-6">
-                {/* Adhérent Signature */}
-                <div className="bg-slate-700/50 p-4 rounded-lg">
-                  <h4 className="font-medium text-white mb-2">Signature de l&apos;adhérent / Représentant légal</h4>
-                  <p className="text-slate-400 text-sm mb-3">
-                    Je soussigné(e) déclare avoir pris connaissance du règlement intérieur et m&apos;engage à le respecter.
-                  </p>
-                  <div className="border-2 border-dashed border-slate-500 rounded-lg h-24 flex items-center justify-center text-slate-500">
-                    <span className="text-sm">Utilisez le formulaire d&apos;inscription</span>
-                  </div>
-                  <p className="text-xs text-slate-500 mt-2">Fait à _____________, le {today}</p>
-                </div>
-                
-                {/* Club Signature */}
-                <div className="bg-slate-700/50 p-4 rounded-lg">
-                  <h4 className="font-medium text-white mb-2">Signature du club</h4>
-                  <p className="text-slate-400 text-sm mb-3">
-                    Pour le club {REGLEMENT_INTERIEUR.clubName}
-                  </p>
-                  <div className="border-2 border-dashed border-slate-500 rounded-lg h-24 flex items-center justify-center text-slate-500">
-                    <span className="text-sm">Cachet et signature du responsable</span>
-                  </div>
-                  <p className="text-xs text-slate-500 mt-2">Validé le ____________</p>
-                </div>
-              </div>
-              
-              <div className="mt-6 text-center">
-                <Button
-                  onClick={() => setShowRegistration(true)}
-                  className="bg-emerald-600 hover:bg-emerald-500"
-                >
-                  <UserPlus className="w-4 h-4 mr-2" />
-                  S&apos;inscrire et signer le règlement
-                </Button>
-              </div>
-            </div>
           </CardContent>
         )}
       </Card>
