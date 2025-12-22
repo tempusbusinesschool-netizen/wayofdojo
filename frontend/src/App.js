@@ -1943,7 +1943,7 @@ function App() {
               <img 
                 src="/images/logo-aikido.jpeg" 
                 alt="Logo Aikido La Rivière" 
-                className="w-12 h-12 rounded-xl object-cover"
+                className="h-14 w-auto object-contain"
               />
               <div>
                 <h1 className="text-xl font-bold text-white">Aikido La Rivière</h1>
