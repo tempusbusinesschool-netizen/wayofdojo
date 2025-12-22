@@ -1091,6 +1091,15 @@ function MembersList({ members, onRefresh, onRegisterChild, onRegisterAdult }) {
 
         {/* Adults Tab */}
         <TabsContent value="adults" className="mt-4">
+          <div className="flex justify-end mb-4">
+            <Button
+              onClick={onRegisterAdult}
+              className="bg-cyan-600 hover:bg-cyan-500"
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Inscrire un adulte
+            </Button>
+          </div>
           {adultsCount === 0 ? (
             <div className="text-center py-8 text-slate-400">
               <User className="w-12 h-12 mx-auto mb-3 opacity-50" />
