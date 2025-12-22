@@ -2036,9 +2036,6 @@ function App() {
           onAdminClick={() => setShowAdminLogin(true)}
         />
         
-        {/* Section Déplacements */}
-        <DeplacementsSection />
-        
         {/* Tabs for Techniques and Members */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
           <TabsList className="bg-slate-800 border-slate-700">
