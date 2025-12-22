@@ -839,6 +839,9 @@ function App() {
         {/* Statistics Dashboard */}
         {showStats && <StatisticsDashboard statistics={statistics} />}
         
+        {/* Règlement Intérieur */}
+        <ReglementInterieur />
+        
         {/* Grade Sections */}
         <div className="space-y-2">
           {kyuLevels.map((kyu) => (
