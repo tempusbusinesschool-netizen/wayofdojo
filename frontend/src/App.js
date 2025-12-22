@@ -846,7 +846,7 @@ function MemberRegistrationForm({ onSuccess, onCancel }) {
 // ═══════════════════════════════════════════════════════════════════════════════════
 // MEMBER CARD COMPONENT
 // ═══════════════════════════════════════════════════════════════════════════════════
-function MemberCard({ member, onValidate, onDelete, isChild = false, parentInfo = null }) {
+function MemberCard({ member, onValidate, onDelete, onValidateChild, isChild = false, parentInfo = null }) {
   const getStatusBadge = (status) => {
     const config = {
       pending: { label: "En attente", color: "bg-amber-500" },
@@ -858,12 +858,13 @@ function MemberCard({ member, onValidate, onDelete, isChild = false, parentInfo 
   };
 
   if (isChild) {
+    const childStatus = member.status || 'pending';
     // Card for a child
     return (
       <Card className="bg-slate-700/50 border-slate-600">
         <CardContent className="p-4">
           <div className="flex items-start justify-between">
-            <div className="space-y-1">
+            <div className="space-y-1 flex-1">
               <div className="flex items-center gap-2 flex-wrap">
                 {parentInfo?.member_id && (
                   <Badge className="bg-slate-600 text-cyan-300 text-xs font-mono">
@@ -874,7 +875,7 @@ function MemberCard({ member, onValidate, onDelete, isChild = false, parentInfo 
                   <Baby className="w-4 h-4 text-purple-400" />
                   {member.first_name} {member.last_name}
                 </span>
-                {getStatusBadge(parentInfo?.status)}
+                {getStatusBadge(childStatus)}
               </div>
               {member.birth_date && (
                 <p className="text-sm text-slate-400">
@@ -893,6 +894,18 @@ function MemberCard({ member, onValidate, onDelete, isChild = false, parentInfo 
                   </p>
                 )}
               </div>
+            </div>
+            <div className="flex gap-2 ml-2">
+              {childStatus === 'pending' && (
+                <Button
+                  size="sm"
+                  onClick={() => onValidateChild && onValidateChild(parentInfo?.id, member.id)}
+                  className="bg-emerald-600 hover:bg-emerald-500"
+                  title="Valider l'inscription"
+                >
+                  <CheckCircle2 className="w-4 h-4" />
+                </Button>
+              )}
             </div>
           </div>
         </CardContent>
