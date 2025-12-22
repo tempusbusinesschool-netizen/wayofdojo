@@ -1474,6 +1474,17 @@ function App() {
               </div>
             </div>
             <div className="flex items-center gap-2">
+              {isAdmin && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleAdminLogout}
+                  className="text-red-400 hover:text-red-300 hover:bg-red-900/20"
+                >
+                  <LogOut className="w-4 h-4 mr-1" />
+                  Déconnexion
+                </Button>
+              )}
               <Button
                 variant="ghost"
                 size="sm"
