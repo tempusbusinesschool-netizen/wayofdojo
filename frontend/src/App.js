@@ -6,11 +6,12 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { Swords, Users, BarChart3, LogOut, Baby, User } from "lucide-react";
+import { Swords, Users, BarChart3, LogOut, Baby, User, LogIn } from "lucide-react";
 
 // Import custom components
 import {
   AdminLoginDialog,
+  AuthDialog,
   DeplacementsSection,
   TechniqueModal,
   GradeSection,
@@ -20,14 +21,20 @@ import {
   StatisticsDashboard
 } from "@/components";
 
+// Import Auth Context
+import { AuthProvider, useAuth } from "@/contexts/AuthContext";
+
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
 // ═══════════════════════════════════════════════════════════════════════════════════
-// MAIN APP COMPONENT
+// MAIN APP CONTENT (with auth)
 // ═══════════════════════════════════════════════════════════════════════════════════
-function App() {
+function AppContent() {
+  const { user, isAuthenticated, logout, loading: authLoading } = useAuth();
+  
   const [kyuLevels, setKyuLevels] = useState([]);
+  const [userProgression, setUserProgression] = useState({});
   const [statistics, setStatistics] = useState(null);
   const [membersStats, setMembersStats] = useState(null);
   const [members, setMembers] = useState([]);
@@ -36,6 +43,7 @@ function App() {
   const [selectedKyu, setSelectedKyu] = useState(null);
   const [showStats, setShowStats] = useState(true);
   const [activeTab, setActiveTab] = useState("techniques");
+  const [showAuthDialog, setShowAuthDialog] = useState(false);
   
   // Admin state
   const [isAdmin, setIsAdmin] = useState(() => {
@@ -51,7 +59,7 @@ function App() {
     sessionStorage.removeItem('aikido_admin');
     setIsAdmin(false);
     setActiveTab("techniques");
-    toast.success("Déconnexion réussie");
+    toast.success("Déconnexion admin réussie");
   };
   
   // Refs for grade sections to enable scrolling
@@ -69,34 +77,82 @@ function App() {
   
   const fetchData = useCallback(async () => {
     try {
-      const [kyuResponse, statsResponse, membersStatsResponse, membersResponse] = await Promise.all([
+      const requests = [
         axios.get(`${API}/kyu-levels`),
         axios.get(`${API}/statistics`),
         axios.get(`${API}/members-stats`),
         axios.get(`${API}/members`)
-      ]);
-      setKyuLevels(kyuResponse.data);
-      setStatistics(statsResponse.data);
-      setMembersStats(membersStatsResponse.data);
-      setMembers(membersResponse.data);
+      ];
+      
+      // If authenticated, also fetch user progression
+      if (isAuthenticated) {
+        requests.push(axios.get(`${API}/auth/progression`));
+      }
+      
+      const responses = await Promise.all(requests);
+      
+      let kyuData = responses[0].data;
+      const statsData = responses[1].data;
+      const membersStatsData = responses[2].data;
+      const membersData = responses[3].data;
+      
+      // If user is authenticated, merge their progression
+      if (isAuthenticated && responses[4]) {
+        const progression = responses[4].data;
+        setUserProgression(progression);
+        
+        // Merge user progression into kyu levels
+        kyuData = kyuData.map(kyu => ({
+          ...kyu,
+          techniques: kyu.techniques.map(tech => {
+            const userProgress = progression[tech.id];
+            if (userProgress) {
+              return {
+                ...tech,
+                mastery_level: userProgress.mastery_level || tech.mastery_level,
+                practice_count: userProgress.practice_count || tech.practice_count,
+                last_practiced: userProgress.last_practiced || tech.last_practiced
+              };
+            }
+            return tech;
+          })
+        }));
+      }
+      
+      setKyuLevels(kyuData);
+      setStatistics(statsData);
+      setMembersStats(membersStatsData);
+      setMembers(membersData);
     } catch (error) {
       console.error("Error fetching data:", error);
       toast.error("Erreur lors du chargement des données");
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [isAuthenticated]);
   
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    if (!authLoading) {
+      fetchData();
+    }
+  }, [fetchData, authLoading, isAuthenticated]);
   
   const handleUpdateMastery = async (kyuId, techniqueId, masteryLevel) => {
     try {
-      await axios.put(`${API}/kyu-levels/${kyuId}/techniques/${techniqueId}`, {
-        mastery_level: masteryLevel
-      });
-      toast.success("Niveau de maîtrise mis à jour");
+      if (isAuthenticated) {
+        // Save to user's personal progression
+        await axios.put(`${API}/auth/progression/${techniqueId}`, {
+          technique_id: techniqueId,
+          mastery_level: masteryLevel
+        });
+        toast.success("Progression sauvegardée !");
+      } else {
+        // Old behavior - update global
+        await axios.put(`${API}/kyu-levels/${kyuId}/techniques/${techniqueId}`, {
+          mastery_level: masteryLevel
+        });
+        toast.success("Niveau de maîtrise mis à jour");
+      }
       fetchData();
     } catch (error) {
       toast.error("Erreur lors de la mise à jour");
@@ -105,8 +161,15 @@ function App() {
   
   const handlePractice = async (kyuId, techniqueId) => {
     try {
-      await axios.post(`${API}/kyu-levels/${kyuId}/techniques/${techniqueId}/practice`);
-      toast.success("Session de pratique enregistrée !");
+      if (isAuthenticated) {
+        // Save to user's personal progression
+        await axios.post(`${API}/auth/progression/${techniqueId}/practice`);
+        toast.success("Session enregistrée !");
+      } else {
+        // Old behavior - update global
+        await axios.post(`${API}/kyu-levels/${kyuId}/techniques/${techniqueId}/practice`);
+        toast.success("Session de pratique enregistrée !");
+      }
       fetchData();
     } catch (error) {
       toast.error("Erreur lors de l'enregistrement");
@@ -155,8 +218,52 @@ function App() {
     }
     return techniques;
   };
+
+  // Calculate user-specific statistics
+  const getUserStatistics = () => {
+    if (!isAuthenticated || !kyuLevels.length) return statistics;
+    
+    let totalTechniques = 0;
+    let masteredTechniques = 0;
+    let inProgressTechniques = 0;
+    let totalPracticeSessions = 0;
+    
+    kyuLevels.forEach(kyu => {
+      kyu.techniques.forEach(tech => {
+        totalTechniques++;
+        if (tech.mastery_level === 'mastered') masteredTechniques++;
+        if (tech.mastery_level === 'learning' || tech.mastery_level === 'practiced') inProgressTechniques++;
+        totalPracticeSessions += tech.practice_count || 0;
+      });
+    });
+    
+    const overallProgress = totalTechniques > 0 
+      ? Math.round((masteredTechniques / totalTechniques) * 100) 
+      : 0;
+    
+    return {
+      ...statistics,
+      total_techniques: totalTechniques,
+      mastered_techniques: masteredTechniques,
+      in_progress_techniques: inProgressTechniques,
+      total_practice_sessions: totalPracticeSessions,
+      overall_progress: overallProgress,
+      techniques_by_level: kyuLevels.map(kyu => {
+        const mastered = kyu.techniques.filter(t => t.mastery_level === 'mastered').length;
+        return {
+          name: kyu.name,
+          color: kyu.color,
+          total: kyu.techniques.length,
+          mastered: mastered,
+          progress_percentage: kyu.techniques.length > 0 
+            ? Math.round((mastered / kyu.techniques.length) * 100) 
+            : 0
+        };
+      })
+    };
+  };
   
-  if (loading) {
+  if (loading || authLoading) {
     return (
       <div className="min-h-screen bg-slate-950 flex items-center justify-center">
         <div className="text-center">
@@ -166,6 +273,8 @@ function App() {
       </div>
     );
   }
+
+  const displayStatistics = isAuthenticated ? getUserStatistics() : statistics;
   
   return (
     <div className="min-h-screen bg-slate-950">
@@ -181,9 +290,38 @@ function App() {
                 alt="Logo Aikido La Rivière" 
                 className="h-14 w-auto object-contain"
               />
-              <p className="text-xs text-slate-400">68, rue du Docteur Schweitzer 97421 SAINT-LOUIS - RÉUNION</p>
+              <p className="text-xs text-slate-400 hidden sm:block">68, rue du Docteur Schweitzer 97421 SAINT-LOUIS - RÉUNION</p>
             </div>
             <div className="flex items-center gap-2">
+              {/* User Auth Button */}
+              {isAuthenticated ? (
+                <div className="flex items-center gap-2">
+                  <Badge className="bg-emerald-600 text-white hidden sm:flex">
+                    <User className="w-3 h-3 mr-1" />
+                    {user?.first_name}
+                  </Badge>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={logout}
+                    className="text-slate-400 hover:text-white hover:bg-slate-700"
+                  >
+                    <LogOut className="w-4 h-4 mr-1" />
+                    <span className="hidden sm:inline">Déconnexion</span>
+                  </Button>
+                </div>
+              ) : (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowAuthDialog(true)}
+                  className="border-cyan-600 text-cyan-400 hover:bg-cyan-900/30"
+                >
+                  <LogIn className="w-4 h-4 mr-1" />
+                  Connexion
+                </Button>
+              )}
+              
               {isAdmin && (
                 <Button
                   variant="ghost"
@@ -192,7 +330,7 @@ function App() {
                   className="text-red-400 hover:text-red-300 hover:bg-red-900/20"
                 >
                   <LogOut className="w-4 h-4 mr-1" />
-                  Déconnexion
+                  <span className="hidden sm:inline">Admin</span>
                 </Button>
               )}
               <Button
@@ -202,17 +340,39 @@ function App() {
                 className={`text-slate-400 hover:text-white ${showStats ? 'bg-slate-800' : ''}`}
               >
                 <BarChart3 className="w-4 h-4 mr-1" />
-                Stats
+                <span className="hidden sm:inline">Stats</span>
               </Button>
-              {statistics && (
+              {displayStatistics && (
                 <Badge className="bg-cyan-600 text-white">
-                  {statistics.overall_progress}%
+                  {displayStatistics.overall_progress}%
                 </Badge>
               )}
             </div>
           </div>
         </div>
       </header>
+
+      {/* User welcome banner */}
+      {isAuthenticated && (
+        <div className="bg-gradient-to-r from-emerald-900/50 to-cyan-900/50 border-b border-emerald-700/50">
+          <div className="max-w-7xl mx-auto px-4 py-3">
+            <p className="text-sm text-emerald-300 text-center">
+              👋 Bienvenue <strong>{user?.first_name} {user?.last_name}</strong> ! Votre progression est automatiquement sauvegardée.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Non-authenticated banner */}
+      {!isAuthenticated && (
+        <div className="bg-gradient-to-r from-amber-900/30 to-orange-900/30 border-b border-amber-700/30">
+          <div className="max-w-7xl mx-auto px-4 py-3">
+            <p className="text-sm text-amber-300 text-center">
+              💡 <button onClick={() => setShowAuthDialog(true)} className="underline hover:text-amber-200">Créez un compte</button> pour sauvegarder votre progression personnelle !
+            </p>
+          </div>
+        </div>
+      )}
       
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 py-6">
@@ -272,7 +432,7 @@ function App() {
             {/* Statistics Dashboard */}
             {showStats && (
               <StatisticsDashboard 
-                statistics={statistics} 
+                statistics={displayStatistics} 
                 membersStats={membersStats}
                 onGradeClick={handleGradeClick}
                 onFilterClick={handleFilterClick}
@@ -286,6 +446,7 @@ function App() {
                   }, 100);
                 }}
                 kyuLevels={kyuLevels}
+                userEmail={user?.email}
               />
             )}
             
@@ -362,6 +523,12 @@ function App() {
         onClose={() => setShowAdminLogin(false)}
         onSuccess={handleAdminLogin}
       />
+
+      {/* Auth Dialog */}
+      <AuthDialog
+        isOpen={showAuthDialog}
+        onClose={() => setShowAuthDialog(false)}
+      />
       
       {/* Child Registration Dialog */}
       <Dialog open={showChildRegistration} onOpenChange={setShowChildRegistration}>
@@ -413,7 +580,7 @@ function App() {
       <footer className="border-t border-slate-800 mt-12 py-6">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <p className="text-slate-500 text-sm">
-            Aikido La Rivière • Club affilié FFAAA • {statistics?.total_techniques || 0} techniques
+            Aikido La Rivière • Club affilié FFAAA • {displayStatistics?.total_techniques || 0} techniques
           </p>
           <p className="text-slate-600 text-xs mt-1">
             Instructeurs : Céline ROSETTE (3e Dan) • Yeza LUCAS (2e Dan)
@@ -424,6 +591,17 @@ function App() {
         </div>
       </footer>
     </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════════
+// APP WRAPPER WITH AUTH PROVIDER
+// ═══════════════════════════════════════════════════════════════════════════════════
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
 
