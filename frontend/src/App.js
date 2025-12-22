@@ -1814,27 +1814,59 @@ function App() {
           </TabsList>
           
           <TabsContent value="techniques" className="mt-6">
+            {/* Filter indicator */}
+            {techniqueFilter !== 'all' && (
+              <div className="mb-4 flex items-center justify-between bg-slate-800/50 rounded-lg p-3 border border-slate-700">
+                <span className="text-sm text-slate-300">
+                  Filtre actif : <span className="font-semibold text-cyan-400">
+                    {techniqueFilter === 'mastered' && 'Techniques maîtrisées'}
+                    {techniqueFilter === 'in_progress' && 'Techniques en cours'}
+                    {techniqueFilter === 'practiced' && 'Techniques pratiquées'}
+                  </span>
+                </span>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => setTechniqueFilter('all')}
+                  className="text-slate-400 hover:text-white"
+                >
+                  Effacer le filtre
+                </Button>
+              </div>
+            )}
+            
             {/* Statistics Dashboard */}
             {showStats && (
               <StatisticsDashboard 
                 statistics={statistics} 
                 membersStats={membersStats}
                 onGradeClick={handleGradeClick}
+                onFilterClick={handleFilterClick}
+                activeFilter={techniqueFilter}
               />
             )}
             
             {/* Grade Sections */}
             <div className="space-y-2">
-              {kyuLevels.map((kyu) => (
-                <div key={kyu.id} ref={el => gradeSectionRefs.current[kyu.id] = el}>
-                  <GradeSection
-                    kyu={kyu}
-                    onViewTechnique={(technique) => handleViewTechnique(kyu, technique)}
-                    onUpdateMastery={(techniqueId, level) => handleUpdateMastery(kyu.id, techniqueId, level)}
-                    onPractice={(techniqueId) => handlePractice(kyu.id, techniqueId)}
-                  />
-                </div>
-              ))}
+              {kyuLevels.map((kyu) => {
+                const filteredTechniques = filterTechniques(kyu.techniques);
+                // Skip empty grades when filter is active
+                if (techniqueFilter !== 'all' && filteredTechniques.length === 0) {
+                  return null;
+                }
+                return (
+                  <div key={kyu.id} ref={el => gradeSectionRefs.current[kyu.id] = el}>
+                    <GradeSection
+                      kyu={{...kyu, techniques: filteredTechniques}}
+                      onViewTechnique={(technique) => handleViewTechnique(kyu, technique)}
+                      onUpdateMastery={(techniqueId, level) => handleUpdateMastery(kyu.id, techniqueId, level)}
+                      onPractice={(techniqueId) => handlePractice(kyu.id, techniqueId)}
+                      isFiltered={techniqueFilter !== 'all'}
+                      originalCount={kyu.techniques.length}
+                    />
+                  </div>
+                );
+              })}
             </div>
           </TabsContent>
           
