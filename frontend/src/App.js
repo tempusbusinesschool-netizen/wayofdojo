@@ -1520,10 +1520,12 @@ function App() {
               <Swords className="w-4 h-4 mr-2" />
               Techniques
             </TabsTrigger>
-            <TabsTrigger value="members" className="data-[state=active]:bg-slate-700">
-              <Users className="w-4 h-4 mr-2" />
-              Adhérents ({members.length})
-            </TabsTrigger>
+            {isAdmin && (
+              <TabsTrigger value="members" className="data-[state=active]:bg-slate-700">
+                <Users className="w-4 h-4 mr-2" />
+                Adhérents ({members.length})
+              </TabsTrigger>
+            )}
           </TabsList>
           
           <TabsContent value="techniques" className="mt-6">
