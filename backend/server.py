@@ -345,6 +345,147 @@ class MemberStatus(str, Enum):
 
 
 # ═══════════════════════════════════════════════════════════════════════════════════
+# USER AUTHENTICATION MODELS
+# ═══════════════════════════════════════════════════════════════════════════════════
+
+class UserRegister(BaseModel):
+    first_name: str
+    last_name: str
+    email: EmailStr
+    password: str
+
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str
+
+class UserResponse(BaseModel):
+    id: str
+    first_name: str
+    last_name: str
+    email: str
+    created_at: str
+
+class UserProgressionUpdate(BaseModel):
+    technique_id: str
+    mastery_level: str
+    practice_count: Optional[int] = None
+
+
+# ═══════════════════════════════════════════════════════════════════════════════════
+# AUTHENTICATION ENDPOINTS
+# ═══════════════════════════════════════════════════════════════════════════════════
+
+@api_router.post("/auth/register")
+async def register(data: UserRegister):
+    """Créer un nouveau compte utilisateur"""
+    # Check if email already exists
+    existing = await db.users.find_one({"email": data.email.lower()})
+    if existing:
+        raise HTTPException(status_code=400, detail="Un compte avec cet email existe déjà")
+    
+    # Create user
+    user = {
+        "id": str(uuid.uuid4()),
+        "first_name": data.first_name,
+        "last_name": data.last_name,
+        "email": data.email.lower(),
+        "password_hash": hash_password(data.password),
+        "created_at": datetime.now(timezone.utc).isoformat(),
+        "progression": {}  # Will store technique_id -> {mastery_level, practice_count, last_practiced}
+    }
+    
+    await db.users.insert_one(user)
+    
+    # Generate token
+    token = create_token(user["id"], user["email"])
+    
+    logger.info(f"New user registered: {user['email']}")
+    
+    return {
+        "token": token,
+        "user": {
+            "id": user["id"],
+            "first_name": user["first_name"],
+            "last_name": user["last_name"],
+            "email": user["email"]
+        }
+    }
+
+@api_router.post("/auth/login")
+async def login(data: UserLogin):
+    """Connexion utilisateur"""
+    user = await db.users.find_one({"email": data.email.lower()}, {"_id": 0})
+    
+    if not user or not verify_password(data.password, user["password_hash"]):
+        raise HTTPException(status_code=401, detail="Email ou mot de passe incorrect")
+    
+    token = create_token(user["id"], user["email"])
+    
+    logger.info(f"User logged in: {user['email']}")
+    
+    return {
+        "token": token,
+        "user": {
+            "id": user["id"],
+            "first_name": user["first_name"],
+            "last_name": user["last_name"],
+            "email": user["email"]
+        }
+    }
+
+@api_router.get("/auth/me")
+async def get_me(user: dict = Depends(require_auth)):
+    """Récupérer les informations de l'utilisateur connecté"""
+    return {
+        "id": user["id"],
+        "first_name": user["first_name"],
+        "last_name": user["last_name"],
+        "email": user["email"],
+        "created_at": user.get("created_at")
+    }
+
+@api_router.put("/auth/progression/{technique_id}")
+async def update_user_progression(technique_id: str, data: UserProgressionUpdate, user: dict = Depends(require_auth)):
+    """Mettre à jour la progression d'un utilisateur pour une technique"""
+    progression_key = f"progression.{technique_id}"
+    
+    update_data = {
+        f"{progression_key}.mastery_level": data.mastery_level,
+        f"{progression_key}.last_updated": datetime.now(timezone.utc).isoformat()
+    }
+    
+    if data.practice_count is not None:
+        update_data[f"{progression_key}.practice_count"] = data.practice_count
+    
+    await db.users.update_one(
+        {"id": user["id"]},
+        {"$set": update_data}
+    )
+    
+    return {"success": True}
+
+@api_router.post("/auth/progression/{technique_id}/practice")
+async def add_practice_session(technique_id: str, user: dict = Depends(require_auth)):
+    """Ajouter une session de pratique pour une technique"""
+    progression_key = f"progression.{technique_id}"
+    
+    await db.users.update_one(
+        {"id": user["id"]},
+        {
+            "$inc": {f"{progression_key}.practice_count": 1},
+            "$set": {f"{progression_key}.last_practiced": datetime.now(timezone.utc).isoformat()}
+        }
+    )
+    
+    return {"success": True}
+
+@api_router.get("/auth/progression")
+async def get_user_progression(user: dict = Depends(require_auth)):
+    """Récupérer la progression complète de l'utilisateur"""
+    return user.get("progression", {})
+
+
+# ═══════════════════════════════════════════════════════════════════════════════════
 # ADHÉRENTS MODELS
 # ═══════════════════════════════════════════════════════════════════════════════════
 
