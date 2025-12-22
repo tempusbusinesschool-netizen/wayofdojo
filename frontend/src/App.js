@@ -986,7 +986,7 @@ function MemberCard({ member, onValidate, onDelete, onValidateChild, isChild = f
 // ═══════════════════════════════════════════════════════════════════════════════════
 // MEMBERS LIST COMPONENT (avec onglets Enfants/Adultes)
 // ═══════════════════════════════════════════════════════════════════════════════════
-function MembersList({ members, onRefresh }) {
+function MembersList({ members, onRefresh, onRegisterChild, onRegisterAdult }) {
   const [activeTab, setActiveTab] = useState("children");
 
   const handleValidate = async (memberId) => {
@@ -996,6 +996,16 @@ function MembersList({ members, onRefresh }) {
       onRefresh();
     } catch (error) {
       toast.error("Erreur lors de la validation");
+    }
+  };
+
+  const handleValidateChild = async (memberId, childId) => {
+    try {
+      await axios.post(`${API}/members/${memberId}/validate-child/${childId}`);
+      toast.success("Enfant validé !");
+      onRefresh();
+    } catch (error) {
+      toast.error("Erreur lors de la validation de l'enfant");
     }
   };
 
@@ -1025,15 +1035,6 @@ function MembersList({ members, onRefresh }) {
   const childrenCount = allChildren.length;
   const adultsCount = adultMembers.length;
 
-  if (members.length === 0) {
-    return (
-      <div className="text-center py-8 text-slate-400">
-        <Users className="w-12 h-12 mx-auto mb-3 opacity-50" />
-        <p>Aucun adhérent enregistré</p>
-      </div>
-    );
-  }
-
   return (
     <div className="space-y-4">
       {/* Tabs for Children and Adults */}
@@ -1057,6 +1058,15 @@ function MembersList({ members, onRefresh }) {
 
         {/* Children Tab */}
         <TabsContent value="children" className="mt-4">
+          <div className="flex justify-end mb-4">
+            <Button
+              onClick={onRegisterChild}
+              className="bg-purple-600 hover:bg-purple-500"
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Inscrire un enfant
+            </Button>
+          </div>
           {childrenCount === 0 ? (
             <div className="text-center py-8 text-slate-400">
               <Baby className="w-12 h-12 mx-auto mb-3 opacity-50" />
@@ -1066,11 +1076,12 @@ function MembersList({ members, onRefresh }) {
             <div className="space-y-3">
               {allChildren.map((child, idx) => (
                 <MemberCard
-                  key={`child-${idx}`}
+                  key={`child-${child.id || idx}`}
                   member={child}
                   isChild={true}
                   parentInfo={child.parentInfo}
                   onValidate={handleValidate}
+                  onValidateChild={handleValidateChild}
                   onDelete={handleDelete}
                 />
               ))}
