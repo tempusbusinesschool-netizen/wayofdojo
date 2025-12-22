@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { ScrollText, ChevronDown, ChevronUp, Shield, Heart, Users, Clock, AlertTriangle, UserPlus, Lock } from "lucide-react";
+import { ScrollText, ChevronDown, ChevronUp, Shield, Heart, Users, Clock, AlertTriangle, UserPlus } from "lucide-react";
 import { REGLEMENT_INTERIEUR } from "@/constants";
 import MemberRegistrationForm from "./MemberRegistrationForm";
 
-function ReglementInterieur({ onRegister, isAdmin, onAdminClick }) {
-  const [isExpanded, setIsExpanded] = useState(false);
+function ReglementInterieur({ onRegister, isAdmin }) {
+  const [isExpanded, setIsExpanded] = useState(true);
   const [expandedArticles, setExpandedArticles] = useState(new Set());
   const [showRegistration, setShowRegistration] = useState(false);
 
@@ -30,14 +30,6 @@ function ReglementInterieur({ onRegister, isAdmin, onAdminClick }) {
     return icons[iconName] || ScrollText;
   };
 
-  const handleNewInscription = () => {
-    if (isAdmin) {
-      setShowRegistration(true);
-    } else {
-      onAdminClick();
-    }
-  };
-
   return (
     <>
       <Card className="mb-8 bg-gradient-to-br from-slate-800 to-slate-900 border-slate-700">
@@ -54,20 +46,12 @@ function ReglementInterieur({ onRegister, isAdmin, onAdminClick }) {
             </div>
             <div className="flex items-center gap-2">
               <Button
-                onClick={handleNewInscription}
-                className={isAdmin ? "bg-emerald-600 hover:bg-emerald-500" : "bg-slate-600 hover:bg-slate-500"}
+                onClick={() => setShowRegistration(true)}
+                className="bg-emerald-600 hover:bg-emerald-500"
               >
-                {isAdmin ? (
-                  <>
-                    <UserPlus className="w-4 h-4 mr-2" />
-                    Nouvelle inscription
-                  </>
-                ) : (
-                  <>
-                    <Lock className="w-4 h-4 mr-2" />
-                    Administrateur
-                  </>
-                )}
+                <UserPlus className="w-4 h-4 mr-2" />
+                Nouvelle inscription
+              </Button>
               </Button>
               <Button
                 variant="ghost"
