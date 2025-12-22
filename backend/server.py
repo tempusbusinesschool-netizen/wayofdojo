@@ -180,6 +180,105 @@ async def send_confirmation_email(member: dict, is_adult: bool = False):
         return None
 
 
+# ═══════════════════════════════════════════════════════════════════════════════════
+# SEND PROGRESSION PDF BY EMAIL
+# ═══════════════════════════════════════════════════════════════════════════════════
+
+class SendProgressionPDFRequest(BaseModel):
+    email: EmailStr
+    pdf_base64: str
+    filename: str = "progression_aikido.pdf"
+
+@api_router.post("/send-progression-pdf")
+async def send_progression_pdf(request: SendProgressionPDFRequest):
+    """Send progression PDF by email"""
+    if not resend.api_key or resend.api_key == 're_your_api_key_here':
+        raise HTTPException(status_code=500, detail="Service email non configuré")
+    
+    import base64
+    
+    try:
+        # Decode base64 PDF
+        pdf_data = base64.b64decode(request.pdf_base64.split(',')[1] if ',' in request.pdf_base64 else request.pdf_base64)
+        
+        today = datetime.now().strftime("%d/%m/%Y")
+        
+        html_content = f"""
+        <!DOCTYPE html>
+        <html>
+        <head><meta charset="UTF-8"></head>
+        <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto;">
+            <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #1e293b; padding: 20px;">
+                <tr>
+                    <td style="text-align: center;">
+                        <h1 style="color: #f59e0b; margin: 0;">Aikido La Rivière</h1>
+                        <p style="color: #94a3b8; margin: 5px 0 0 0;">Club affilié FFAAA</p>
+                    </td>
+                </tr>
+            </table>
+            
+            <table width="100%" cellpadding="20" cellspacing="0" style="background-color: #f8fafc;">
+                <tr>
+                    <td>
+                        <h2 style="color: #1e293b; margin-top: 0;">Votre suivi de progression</h2>
+                        
+                        <p>Bonjour,</p>
+                        
+                        <p>Vous trouverez ci-joint votre <strong>suivi de progression en Aïkido</strong> généré le {today}.</p>
+                        
+                        <p>Ce document récapitule :</p>
+                        <ul>
+                            <li>Votre progression globale</li>
+                            <li>Les techniques maîtrisées par grade</li>
+                            <li>Le détail de vos sessions de pratique</li>
+                        </ul>
+                        
+                        <p>Continuez votre pratique avec assiduité !</p>
+                        
+                        <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 20px 0;">
+                        
+                        <p style="color: #64748b; font-size: 14px;">
+                            <strong>Aikido La Rivière</strong><br>
+                            68, rue du Docteur Schweitzer<br>
+                            97421 SAINT-LOUIS - RÉUNION
+                        </p>
+                    </td>
+                </tr>
+            </table>
+            
+            <table width="100%" cellpadding="15" cellspacing="0" style="background-color: #1e293b;">
+                <tr>
+                    <td style="text-align: center; color: #94a3b8; font-size: 12px;">
+                        © humanknowledge.fr - 2025
+                    </td>
+                </tr>
+            </table>
+        </body>
+        </html>
+        """
+        
+        params = {
+            "from": SENDER_EMAIL,
+            "to": [request.email],
+            "subject": f"Votre progression Aïkido - {today}",
+            "html": html_content,
+            "attachments": [
+                {
+                    "filename": request.filename,
+                    "content": list(pdf_data)
+                }
+            ]
+        }
+        
+        email_response = await asyncio.to_thread(resend.Emails.send, params)
+        logger.info(f"Progression PDF sent to {request.email}")
+        return {"success": True, "message": f"PDF envoyé à {request.email}"}
+        
+    except Exception as e:
+        logger.error(f"Failed to send progression PDF: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Erreur lors de l'envoi: {str(e)}")
+
+
 # Enums
 class MasteryLevel(str, Enum):
     NOT_STARTED = "not_started"
