@@ -341,6 +341,127 @@ function StatisticsDashboard({ statistics }) {
   );
 }
 
+// Règlement Intérieur Component
+function ReglementInterieur() {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [expandedArticles, setExpandedArticles] = useState(new Set());
+
+  const toggleArticle = (articleId) => {
+    const newExpanded = new Set(expandedArticles);
+    if (newExpanded.has(articleId)) {
+      newExpanded.delete(articleId);
+    } else {
+      newExpanded.add(articleId);
+    }
+    setExpandedArticles(newExpanded);
+  };
+
+  const getIconComponent = (iconName) => {
+    const icons = {
+      Shield,
+      Heart,
+      Users,
+      Clock,
+      AlertTriangle,
+      ScrollText
+    };
+    return icons[iconName] || ScrollText;
+  };
+
+  if (!isExpanded) {
+    return (
+      <Card className="mb-8 bg-gradient-to-br from-slate-800 to-slate-900 border-slate-700">
+        <CardContent className="p-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-slate-700">
+                <ScrollText className="w-6 h-6 text-slate-300" />
+              </div>
+              <div>
+                <h2 className="text-xl font-bold text-white">{REGLEMENT_INTERIEUR.title}</h2>
+                <p className="text-sm text-slate-400">{REGLEMENT_INTERIEUR.subtitle}</p>
+              </div>
+            </div>
+            <Button
+              variant="ghost"
+              onClick={() => setIsExpanded(true)}
+              className="text-slate-400 hover:text-white hover:bg-slate-700"
+            >
+              <ChevronDown className="w-5 h-5" />
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  return (
+    <Card className="mb-8 bg-gradient-to-br from-slate-800 to-slate-900 border-slate-700">
+      <CardHeader>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-slate-700">
+              <ScrollText className="w-6 h-6 text-slate-300" />
+            </div>
+            <div>
+              <CardTitle className="text-xl font-bold text-white">{REGLEMENT_INTERIEUR.title}</CardTitle>
+              <CardDescription className="text-slate-400">{REGLEMENT_INTERIEUR.subtitle}</CardDescription>
+            </div>
+          </div>
+          <Button
+            variant="ghost"
+            onClick={() => setIsExpanded(false)}
+            className="text-slate-400 hover:text-white hover:bg-slate-700"
+          >
+            <ChevronUp className="w-5 h-5" />
+          </Button>
+        </div>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        {REGLEMENT_INTERIEUR.articles.map((article) => {
+          const IconComponent = getIconComponent(article.icon);
+          const isArticleExpanded = expandedArticles.has(article.id);
+          
+          return (
+            <Card key={article.id} className="bg-slate-700/50 border-slate-600">
+              <CardContent className="p-4">
+                <div 
+                  className="flex items-center justify-between cursor-pointer"
+                  onClick={() => toggleArticle(article.id)}
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="p-2 rounded-lg bg-slate-600">
+                      <IconComponent className="w-4 h-4 text-slate-300" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-white text-sm">
+                        Article {article.id} - {article.title}
+                      </h3>
+                    </div>
+                  </div>
+                  <div className="text-slate-400">
+                    {isArticleExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                  </div>
+                </div>
+                
+                {isArticleExpanded && (
+                  <div className="mt-4 space-y-2">
+                    {article.content.map((paragraph, idx) => (
+                      <p key={idx} className="text-slate-300 text-sm leading-relaxed">
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          );
+        })}
+      </CardContent>
+    </Card>
+  );
+}
+
 // Technique Card Component
 function TechniqueCard({ technique, kyuName, kyuColor, onView, onUpdateMastery, onPractice }) {
   const mastery = MASTERY_LEVELS[technique.mastery_level] || MASTERY_LEVELS.not_started;
