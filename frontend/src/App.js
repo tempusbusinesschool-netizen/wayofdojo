@@ -1,13 +1,17 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback, useRef } from "react";
 import "@/App.css";
 import axios from "axios";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogClose } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Toaster, toast } from "sonner";
-import { Target, Award, Circle, Eye, TrendingUp, BookOpen, Swords, BarChart3, CheckCircle2, Clock, Flame, ScrollText, ChevronDown, ChevronUp, Shield, Users, Heart, AlertTriangle } from "lucide-react";
+import { Target, Award, Circle, Eye, TrendingUp, BookOpen, Swords, BarChart3, CheckCircle2, Clock, Flame, ScrollText, ChevronDown, ChevronUp, Shield, Users, Heart, AlertTriangle, UserPlus, PenTool, Trash2, Edit, Mail, Phone, MapPin, Baby, User } from "lucide-react";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -24,6 +28,7 @@ const MASTERY_LEVELS = {
 const REGLEMENT_INTERIEUR = {
   title: "Règlement Intérieur",
   subtitle: "Club d'Aïkido affilié à la FFAAA (Fédération Française d'Aïkido, Aïkibudo et Affinitaires)",
+  clubName: "AIKIDO LA RIVIÈRE",
   articles: [
     {
       id: 1,
@@ -129,7 +134,7 @@ const REGLEMENT_INTERIEUR = {
       icon: "Shield",
       content: [
         "8.1 Principes",
-        "Tout manquement au présent règlement, aux statuts ou aux règles fédérales peut entraîner une sanction disciplinaire. Les sanctions sont proportionnées à la gravité des faits et à leur éventuelle répétition.",
+        "Tout manquement au présent règlement, aux statuts ou aux règles fédérales peut entraîner une sanction disciplinaire.",
         "",
         "8.2 Échelle des sanctions",
         "• Rappel à l'ordre verbal ;",
@@ -137,13 +142,8 @@ const REGLEMENT_INTERIEUR = {
         "• Exclusion temporaire des entraînements ;",
         "• Exclusion définitive du club, sans remboursement de la cotisation.",
         "",
-        "Pour les mineurs, les représentants légaux sont systématiquement informés.",
-        "",
         "8.3 Procédure disciplinaire",
-        "Toute sanction supérieure à l'avertissement écrit implique :",
-        "• L'audition de l'adhérent (et de ses représentants légaux pour les mineurs) ;",
-        "• Une décision prise collégialement par le comité directeur ;",
-        "• Le respect du principe du contradictoire."
+        "Toute sanction supérieure à l'avertissement écrit implique l'audition de l'adhérent et une décision prise collégialement par le comité directeur."
       ]
     },
     {
@@ -177,27 +177,13 @@ const REGLEMENT_INTERIEUR = {
       icon: "AlertTriangle",
       content: [
         "12.1 Principe de tolérance zéro",
-        "Le club adopte une politique de tolérance zéro à l'égard de toute forme de violence, d'abus ou de comportement inapproprié (physique, verbal, psychologique, sexuel, moral ou symbolique).",
+        "Le club adopte une politique de tolérance zéro à l'égard de toute forme de violence, d'abus ou de comportement inapproprié.",
         "",
-        "12.2 Champ des comportements prohibés",
-        "Sont strictement interdits :",
-        "• Toute atteinte à l'intégrité physique ou psychologique d'une personne ;",
-        "• Tout comportement à connotation sexuelle non consenti ;",
-        "• Toute situation d'emprise, d'intimidation, de menace ou de pression ;",
-        "• Toute forme de harcèlement, y compris répétée ou insidieuse ;",
-        "• Tout comportement portant atteinte à la dignité ou à la sécurité des mineurs.",
+        "12.2 Obligation de signalement",
+        "Tout membre du club, témoin ou victime, est encouragé à signaler sans délai à un membre du bureau ou à l'enseignant référent.",
         "",
-        "12.3 Obligation de signalement",
-        "Tout membre du club, témoin ou victime, est encouragé à signaler sans délai à un membre du bureau, à l'enseignant référent, ou à toute personne désignée comme référente au sein du club.",
-        "",
-        "12.4 Traitement des signalements",
-        "Tout signalement fait l'objet d'un examen attentif, confidentiel et impartial.",
-        "",
-        "12.5 Protection des mineurs",
-        "Le club reconnaît une obligation renforcée de protection des mineurs.",
-        "",
-        "12.6 Sanctions spécifiques",
-        "Les faits de violence constituent des fautes graves pouvant entraîner une exclusion temporaire ou définitive."
+        "12.3 Protection des mineurs",
+        "Le club reconnaît une obligation renforcée de protection des mineurs."
       ]
     },
     {
@@ -205,14 +191,6 @@ const REGLEMENT_INTERIEUR = {
       title: "Fonctionnement de l'association",
       icon: "Users",
       content: [
-        "Les enseignants :",
-        "Les enseignants non titulaires d'un diplôme d'état ou d'un certificat de qualification professionnelle sont bénévoles, et ne perçoivent aucune rémunération.",
-        "",
-        "Le Conseil d'Administration :",
-        "• Président(e) : dirige et assure le fonctionnement de l'association",
-        "• Trésorier(e) : tient les comptes de l'association",
-        "• Secrétaire : chargé(e) de la correspondance et des procès-verbaux",
-        "",
         "Activité Sportive : Aïkido affilié à la FFAAA - Adultes et Enfants (à partir de 7 ans)",
         "",
         "Instructeurs :",
@@ -223,14 +201,675 @@ const REGLEMENT_INTERIEUR = {
   ]
 };
 
-// Statistics Dashboard Component
-function StatisticsDashboard({ statistics }) {
+// ═══════════════════════════════════════════════════════════════════════════════════
+// SIGNATURE PAD COMPONENT
+// ═══════════════════════════════════════════════════════════════════════════════════
+function SignaturePad({ onSignatureChange, label }) {
+  const canvasRef = useRef(null);
+  const [isDrawing, setIsDrawing] = useState(false);
+  const [hasSignature, setHasSignature] = useState(false);
+
+  const startDrawing = (e) => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    const rect = canvas.getBoundingClientRect();
+    const x = (e.clientX || e.touches?.[0]?.clientX) - rect.left;
+    const y = (e.clientY || e.touches?.[0]?.clientY) - rect.top;
+    
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    setIsDrawing(true);
+  };
+
+  const draw = (e) => {
+    if (!isDrawing) return;
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    const rect = canvas.getBoundingClientRect();
+    const x = (e.clientX || e.touches?.[0]?.clientX) - rect.left;
+    const y = (e.clientY || e.touches?.[0]?.clientY) - rect.top;
+    
+    ctx.lineTo(x, y);
+    ctx.strokeStyle = '#1e293b';
+    ctx.lineWidth = 2;
+    ctx.lineCap = 'round';
+    ctx.stroke();
+    setHasSignature(true);
+  };
+
+  const stopDrawing = () => {
+    if (isDrawing && hasSignature) {
+      const canvas = canvasRef.current;
+      const signatureData = canvas.toDataURL('image/png');
+      onSignatureChange(signatureData);
+    }
+    setIsDrawing(false);
+  };
+
+  const clearSignature = () => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    setHasSignature(false);
+    onSignatureChange(null);
+  };
+
+  return (
+    <div className="space-y-2">
+      <Label className="text-slate-300">{label}</Label>
+      <div className="relative">
+        <canvas
+          ref={canvasRef}
+          width={300}
+          height={100}
+          className="border border-slate-600 rounded-lg bg-white cursor-crosshair w-full"
+          onMouseDown={startDrawing}
+          onMouseMove={draw}
+          onMouseUp={stopDrawing}
+          onMouseLeave={stopDrawing}
+          onTouchStart={startDrawing}
+          onTouchMove={draw}
+          onTouchEnd={stopDrawing}
+        />
+        {hasSignature && (
+          <Button
+            type="button"
+            size="sm"
+            variant="ghost"
+            onClick={clearSignature}
+            className="absolute top-1 right-1 text-slate-500 hover:text-red-500"
+          >
+            <Trash2 className="w-4 h-4" />
+          </Button>
+        )}
+      </div>
+      <p className="text-xs text-slate-500">Signez dans le cadre ci-dessus</p>
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════════
+// MEMBRE REGISTRATION FORM
+// ═══════════════════════════════════════════════════════════════════════════════════
+function MemberRegistrationForm({ onSuccess, onCancel }) {
+  const [formData, setFormData] = useState({
+    parent_first_name: '',
+    parent_last_name: '',
+    email: '',
+    phone: '',
+    address: '',
+    city: '',
+    postal_code: '',
+    is_adult_member: false,
+    children: [],
+    reglement_accepted: false,
+    signature_data: null
+  });
+  const [loading, setLoading] = useState(false);
+  const [newChild, setNewChild] = useState({ first_name: '', last_name: '', birth_date: '' });
+
+  const handleChange = (field, value) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const addChild = () => {
+    if (newChild.first_name && newChild.last_name) {
+      setFormData(prev => ({
+        ...prev,
+        children: [...prev.children, { ...newChild }]
+      }));
+      setNewChild({ first_name: '', last_name: '', birth_date: '' });
+    }
+  };
+
+  const removeChild = (index) => {
+    setFormData(prev => ({
+      ...prev,
+      children: prev.children.filter((_, i) => i !== index)
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!formData.reglement_accepted) {
+      toast.error("Veuillez accepter le règlement intérieur");
+      return;
+    }
+    
+    if (!formData.signature_data) {
+      toast.error("Veuillez signer le formulaire");
+      return;
+    }
+    
+    if (!formData.is_adult_member && formData.children.length === 0) {
+      toast.error("Veuillez ajouter au moins un enfant ou cocher 'Adulte adhérent'");
+      return;
+    }
+    
+    setLoading(true);
+    try {
+      await axios.post(`${API}/members`, formData);
+      toast.success("Inscription enregistrée avec succès !");
+      onSuccess();
+    } catch (error) {
+      toast.error(error.response?.data?.detail || "Erreur lors de l'inscription");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Parent/Adult Info */}
+      <div className="space-y-4">
+        <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+          <User className="w-5 h-5 text-cyan-400" />
+          Informations du responsable / adulte
+        </h3>
+        
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label className="text-slate-300">Prénom *</Label>
+            <Input
+              value={formData.parent_first_name}
+              onChange={(e) => handleChange('parent_first_name', e.target.value)}
+              required
+              className="bg-slate-700 border-slate-600 text-white"
+            />
+          </div>
+          <div>
+            <Label className="text-slate-300">Nom *</Label>
+            <Input
+              value={formData.parent_last_name}
+              onChange={(e) => handleChange('parent_last_name', e.target.value)}
+              required
+              className="bg-slate-700 border-slate-600 text-white"
+            />
+          </div>
+        </div>
+        
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label className="text-slate-300">Email *</Label>
+            <Input
+              type="email"
+              value={formData.email}
+              onChange={(e) => handleChange('email', e.target.value)}
+              required
+              className="bg-slate-700 border-slate-600 text-white"
+            />
+          </div>
+          <div>
+            <Label className="text-slate-300">Téléphone *</Label>
+            <Input
+              type="tel"
+              value={formData.phone}
+              onChange={(e) => handleChange('phone', e.target.value)}
+              required
+              className="bg-slate-700 border-slate-600 text-white"
+            />
+          </div>
+        </div>
+        
+        <div>
+          <Label className="text-slate-300">Adresse</Label>
+          <Input
+            value={formData.address}
+            onChange={(e) => handleChange('address', e.target.value)}
+            className="bg-slate-700 border-slate-600 text-white"
+          />
+        </div>
+        
+        <div className="grid grid-cols-2 gap-4">
+          <div>
+            <Label className="text-slate-300">Ville</Label>
+            <Input
+              value={formData.city}
+              onChange={(e) => handleChange('city', e.target.value)}
+              className="bg-slate-700 border-slate-600 text-white"
+            />
+          </div>
+          <div>
+            <Label className="text-slate-300">Code postal</Label>
+            <Input
+              value={formData.postal_code}
+              onChange={(e) => handleChange('postal_code', e.target.value)}
+              className="bg-slate-700 border-slate-600 text-white"
+            />
+          </div>
+        </div>
+        
+        <div className="flex items-center space-x-2">
+          <Checkbox
+            id="is_adult"
+            checked={formData.is_adult_member}
+            onCheckedChange={(checked) => handleChange('is_adult_member', checked)}
+          />
+          <Label htmlFor="is_adult" className="text-slate-300 cursor-pointer">
+            Je suis moi-même adhérent (adulte pratiquant)
+          </Label>
+        </div>
+      </div>
+      
+      {/* Children Info */}
+      <div className="space-y-4">
+        <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+          <Baby className="w-5 h-5 text-cyan-400" />
+          Enfant(s) inscrit(s)
+        </h3>
+        
+        {formData.children.length > 0 && (
+          <div className="space-y-2">
+            {formData.children.map((child, idx) => (
+              <div key={idx} className="flex items-center justify-between bg-slate-700 p-3 rounded-lg">
+                <span className="text-white">
+                  {child.first_name} {child.last_name}
+                  {child.birth_date && ` (${child.birth_date})`}
+                </span>
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => removeChild(idx)}
+                  className="text-red-400 hover:text-red-300"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </Button>
+              </div>
+            ))}
+          </div>
+        )}
+        
+        <div className="bg-slate-700/50 p-4 rounded-lg space-y-3">
+          <div className="grid grid-cols-2 gap-3">
+            <Input
+              placeholder="Prénom de l'enfant"
+              value={newChild.first_name}
+              onChange={(e) => setNewChild(prev => ({ ...prev, first_name: e.target.value }))}
+              className="bg-slate-600 border-slate-500 text-white"
+            />
+            <Input
+              placeholder="Nom de l'enfant"
+              value={newChild.last_name}
+              onChange={(e) => setNewChild(prev => ({ ...prev, last_name: e.target.value }))}
+              className="bg-slate-600 border-slate-500 text-white"
+            />
+          </div>
+          <div className="flex gap-3">
+            <Input
+              type="date"
+              placeholder="Date de naissance"
+              value={newChild.birth_date}
+              onChange={(e) => setNewChild(prev => ({ ...prev, birth_date: e.target.value }))}
+              className="bg-slate-600 border-slate-500 text-white flex-1"
+            />
+            <Button
+              type="button"
+              onClick={addChild}
+              disabled={!newChild.first_name || !newChild.last_name}
+              className="bg-cyan-600 hover:bg-cyan-500"
+            >
+              <UserPlus className="w-4 h-4 mr-1" />
+              Ajouter
+            </Button>
+          </div>
+        </div>
+      </div>
+      
+      {/* Signature */}
+      <div className="space-y-4 border-t border-slate-700 pt-6">
+        <div className="flex items-center space-x-2">
+          <Checkbox
+            id="accept_reglement"
+            checked={formData.reglement_accepted}
+            onCheckedChange={(checked) => handleChange('reglement_accepted', checked)}
+          />
+          <Label htmlFor="accept_reglement" className="text-slate-300 cursor-pointer">
+            J&apos;ai lu et j&apos;accepte le règlement intérieur du club *
+          </Label>
+        </div>
+        
+        <SignaturePad
+          label="Signature de l'adhérent ou du représentant légal *"
+          onSignatureChange={(sig) => handleChange('signature_data', sig)}
+        />
+      </div>
+      
+      {/* Buttons */}
+      <div className="flex gap-3 pt-4">
+        <Button
+          type="button"
+          variant="outline"
+          onClick={onCancel}
+          className="flex-1 border-slate-600 text-slate-300 hover:bg-slate-700"
+        >
+          Annuler
+        </Button>
+        <Button
+          type="submit"
+          disabled={loading}
+          className="flex-1 bg-emerald-600 hover:bg-emerald-500"
+        >
+          {loading ? "Enregistrement..." : "Valider l'inscription"}
+        </Button>
+      </div>
+    </form>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════════
+// MEMBERS LIST COMPONENT
+// ═══════════════════════════════════════════════════════════════════════════════════
+function MembersList({ members, onRefresh }) {
+  const [selectedMember, setSelectedMember] = useState(null);
+
+  const handleValidate = async (memberId) => {
+    try {
+      await axios.post(`${API}/members/${memberId}/validate`);
+      toast.success("Adhérent validé !");
+      onRefresh();
+    } catch (error) {
+      toast.error("Erreur lors de la validation");
+    }
+  };
+
+  const handleDelete = async (memberId) => {
+    if (!window.confirm("Êtes-vous sûr de vouloir supprimer cet adhérent ?")) return;
+    try {
+      await axios.delete(`${API}/members/${memberId}`);
+      toast.success("Adhérent supprimé");
+      onRefresh();
+    } catch (error) {
+      toast.error("Erreur lors de la suppression");
+    }
+  };
+
+  const getStatusBadge = (status) => {
+    const config = {
+      pending: { label: "En attente", color: "bg-amber-500" },
+      active: { label: "Actif", color: "bg-emerald-500" },
+      inactive: { label: "Inactif", color: "bg-slate-500" }
+    };
+    const { label, color } = config[status] || config.pending;
+    return <Badge className={`${color} text-white text-xs`}>{label}</Badge>;
+  };
+
+  if (members.length === 0) {
+    return (
+      <div className="text-center py-8 text-slate-400">
+        <Users className="w-12 h-12 mx-auto mb-3 opacity-50" />
+        <p>Aucun adhérent enregistré</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-3">
+      {members.map((member) => (
+        <Card key={member.id} className="bg-slate-700/50 border-slate-600">
+          <CardContent className="p-4">
+            <div className="flex items-start justify-between">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <span className="font-semibold text-white">
+                    {member.parent_first_name} {member.parent_last_name}
+                  </span>
+                  {getStatusBadge(member.status)}
+                  {member.is_adult_member && (
+                    <Badge className="bg-cyan-600 text-white text-xs">Adulte adhérent</Badge>
+                  )}
+                </div>
+                <div className="flex items-center gap-4 text-sm text-slate-400">
+                  <span className="flex items-center gap-1">
+                    <Mail className="w-3 h-3" /> {member.email}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Phone className="w-3 h-3" /> {member.phone}
+                  </span>
+                </div>
+                {member.children && member.children.length > 0 && (
+                  <div className="flex items-center gap-1 text-sm text-slate-400">
+                    <Baby className="w-3 h-3" />
+                    {member.children.map(c => `${c.first_name} ${c.last_name}`).join(', ')}
+                  </div>
+                )}
+                {member.reglement_signed_date && (
+                  <p className="text-xs text-emerald-400">
+                    ✓ Règlement signé le {new Date(member.reglement_signed_date).toLocaleDateString('fr-FR')}
+                  </p>
+                )}
+              </div>
+              <div className="flex gap-2">
+                {member.status === 'pending' && (
+                  <Button
+                    size="sm"
+                    onClick={() => handleValidate(member.id)}
+                    className="bg-emerald-600 hover:bg-emerald-500"
+                  >
+                    <CheckCircle2 className="w-4 h-4" />
+                  </Button>
+                )}
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => handleDelete(member.id)}
+                  className="text-red-400 hover:text-red-300 hover:bg-red-900/20"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════════
+// RÈGLEMENT INTÉRIEUR COMPONENT (avec signature)
+// ═══════════════════════════════════════════════════════════════════════════════════
+function ReglementInterieur({ onRegister }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [expandedArticles, setExpandedArticles] = useState(new Set());
+  const [showRegistration, setShowRegistration] = useState(false);
+
+  const toggleArticle = (articleId) => {
+    const newExpanded = new Set(expandedArticles);
+    if (newExpanded.has(articleId)) {
+      newExpanded.delete(articleId);
+    } else {
+      newExpanded.add(articleId);
+    }
+    setExpandedArticles(newExpanded);
+  };
+
+  const expandAll = () => {
+    setExpandedArticles(new Set(REGLEMENT_INTERIEUR.articles.map(a => a.id)));
+  };
+
+  const getIconComponent = (iconName) => {
+    const icons = { Shield, Heart, Users, Clock, AlertTriangle, ScrollText };
+    return icons[iconName] || ScrollText;
+  };
+
+  const today = new Date().toLocaleDateString('fr-FR', { 
+    day: 'numeric', month: 'long', year: 'numeric' 
+  });
+
+  return (
+    <>
+      <Card className="mb-8 bg-gradient-to-br from-slate-800 to-slate-900 border-slate-700">
+        <CardHeader>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600">
+                <ScrollText className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <CardTitle className="text-xl font-bold text-white">{REGLEMENT_INTERIEUR.title}</CardTitle>
+                <CardDescription className="text-slate-400">{REGLEMENT_INTERIEUR.subtitle}</CardDescription>
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button
+                onClick={() => setShowRegistration(true)}
+                className="bg-emerald-600 hover:bg-emerald-500"
+              >
+                <UserPlus className="w-4 h-4 mr-2" />
+                Nouvelle inscription
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={() => setIsExpanded(!isExpanded)}
+                className="text-slate-400 hover:text-white hover:bg-slate-700"
+              >
+                {isExpanded ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
+              </Button>
+            </div>
+          </div>
+        </CardHeader>
+        
+        {isExpanded && (
+          <CardContent className="space-y-4">
+            {/* Club Header */}
+            <div className="text-center py-4 border-b border-slate-700">
+              <h2 className="text-2xl font-bold text-white">{REGLEMENT_INTERIEUR.clubName}</h2>
+              <p className="text-slate-400 text-sm mt-1">{REGLEMENT_INTERIEUR.subtitle}</p>
+              <p className="text-slate-500 text-xs mt-2">Document établi le {today}</p>
+            </div>
+            
+            {/* Expand All Button */}
+            <div className="flex justify-end">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={expandAll}
+                className="text-cyan-400 hover:text-cyan-300"
+              >
+                Tout afficher
+              </Button>
+            </div>
+            
+            {/* Articles */}
+            {REGLEMENT_INTERIEUR.articles.map((article) => {
+              const IconComponent = getIconComponent(article.icon);
+              const isArticleExpanded = expandedArticles.has(article.id);
+              
+              return (
+                <Card key={article.id} className="bg-slate-700/50 border-slate-600">
+                  <CardContent className="p-4">
+                    <div 
+                      className="flex items-center justify-between cursor-pointer"
+                      onClick={() => toggleArticle(article.id)}
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="p-2 rounded-lg bg-slate-600">
+                          <IconComponent className="w-4 h-4 text-cyan-400" />
+                        </div>
+                        <h3 className="font-semibold text-white text-sm">
+                          Article {article.id} - {article.title}
+                        </h3>
+                      </div>
+                      <div className="text-slate-400">
+                        {isArticleExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                      </div>
+                    </div>
+                    
+                    {isArticleExpanded && (
+                      <div className="mt-4 space-y-2 pl-12">
+                        {article.content.map((paragraph, idx) => (
+                          <p key={idx} className={`text-slate-300 text-sm leading-relaxed ${!paragraph ? 'h-2' : ''}`}>
+                            {paragraph}
+                          </p>
+                        ))}
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              );
+            })}
+            
+            {/* Signature Section */}
+            <div className="border-t border-slate-700 pt-6 mt-6">
+              <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                <PenTool className="w-5 h-5 text-cyan-400" />
+                Zone de signature
+              </h3>
+              
+              <div className="grid md:grid-cols-2 gap-6">
+                {/* Adhérent Signature */}
+                <div className="bg-slate-700/50 p-4 rounded-lg">
+                  <h4 className="font-medium text-white mb-2">Signature de l&apos;adhérent / Représentant légal</h4>
+                  <p className="text-slate-400 text-sm mb-3">
+                    Je soussigné(e) déclare avoir pris connaissance du règlement intérieur et m&apos;engage à le respecter.
+                  </p>
+                  <div className="border-2 border-dashed border-slate-500 rounded-lg h-24 flex items-center justify-center text-slate-500">
+                    <span className="text-sm">Utilisez le formulaire d&apos;inscription</span>
+                  </div>
+                  <p className="text-xs text-slate-500 mt-2">Fait à _____________, le {today}</p>
+                </div>
+                
+                {/* Club Signature */}
+                <div className="bg-slate-700/50 p-4 rounded-lg">
+                  <h4 className="font-medium text-white mb-2">Signature du club</h4>
+                  <p className="text-slate-400 text-sm mb-3">
+                    Pour le club {REGLEMENT_INTERIEUR.clubName}
+                  </p>
+                  <div className="border-2 border-dashed border-slate-500 rounded-lg h-24 flex items-center justify-center text-slate-500">
+                    <span className="text-sm">Cachet et signature du responsable</span>
+                  </div>
+                  <p className="text-xs text-slate-500 mt-2">Validé le ____________</p>
+                </div>
+              </div>
+              
+              <div className="mt-6 text-center">
+                <Button
+                  onClick={() => setShowRegistration(true)}
+                  className="bg-emerald-600 hover:bg-emerald-500"
+                >
+                  <UserPlus className="w-4 h-4 mr-2" />
+                  S&apos;inscrire et signer le règlement
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        )}
+      </Card>
+      
+      {/* Registration Dialog */}
+      <Dialog open={showRegistration} onOpenChange={setShowRegistration}>
+        <DialogContent className="max-w-2xl bg-slate-900 border-slate-700 text-white max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-bold flex items-center gap-2">
+              <UserPlus className="w-5 h-5 text-cyan-400" />
+              Nouvelle inscription
+            </DialogTitle>
+          </DialogHeader>
+          <MemberRegistrationForm
+            onSuccess={() => {
+              setShowRegistration(false);
+              if (onRegister) onRegister();
+            }}
+            onCancel={() => setShowRegistration(false)}
+          />
+        </DialogContent>
+      </Dialog>
+    </>
+  );
+}
+
+// ═══════════════════════════════════════════════════════════════════════════════════
+// STATISTICS DASHBOARD COMPONENT
+// ═══════════════════════════════════════════════════════════════════════════════════
+function StatisticsDashboard({ statistics, membersStats }) {
   if (!statistics) return null;
   
   return (
     <div className="mb-8 animate-fadeIn">
       {/* Main Stats */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-6">
         <Card className="bg-gradient-to-br from-slate-800 to-slate-900 border-slate-700">
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
@@ -239,7 +878,7 @@ function StatisticsDashboard({ statistics }) {
               </div>
               <div>
                 <p className="text-2xl font-bold text-white">{statistics.total_techniques}</p>
-                <p className="text-xs text-slate-400">Techniques totales</p>
+                <p className="text-xs text-slate-400">Techniques</p>
               </div>
             </div>
           </CardContent>
@@ -286,6 +925,38 @@ function StatisticsDashboard({ statistics }) {
             </div>
           </CardContent>
         </Card>
+        
+        {membersStats && (
+          <>
+            <Card className="bg-gradient-to-br from-cyan-800 to-cyan-900 border-cyan-700">
+              <CardContent className="p-4">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-cyan-700">
+                    <Users className="w-5 h-5 text-cyan-300" />
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold text-white">{membersStats.total_members}</p>
+                    <p className="text-xs text-cyan-300">Adhérents</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card className="bg-gradient-to-br from-purple-800 to-purple-900 border-purple-700">
+              <CardContent className="p-4">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-purple-700">
+                    <Baby className="w-5 h-5 text-purple-300" />
+                  </div>
+                  <div>
+                    <p className="text-2xl font-bold text-white">{membersStats.total_children}</p>
+                    <p className="text-xs text-purple-300">Enfants</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </>
+        )}
       </div>
       
       {/* Overall Progress Bar */}
@@ -341,129 +1012,10 @@ function StatisticsDashboard({ statistics }) {
   );
 }
 
-// Règlement Intérieur Component
-function ReglementInterieur() {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [expandedArticles, setExpandedArticles] = useState(new Set());
-
-  const toggleArticle = (articleId) => {
-    const newExpanded = new Set(expandedArticles);
-    if (newExpanded.has(articleId)) {
-      newExpanded.delete(articleId);
-    } else {
-      newExpanded.add(articleId);
-    }
-    setExpandedArticles(newExpanded);
-  };
-
-  const getIconComponent = (iconName) => {
-    const icons = {
-      Shield,
-      Heart,
-      Users,
-      Clock,
-      AlertTriangle,
-      ScrollText
-    };
-    return icons[iconName] || ScrollText;
-  };
-
-  if (!isExpanded) {
-    return (
-      <Card className="mb-8 bg-gradient-to-br from-slate-800 to-slate-900 border-slate-700">
-        <CardContent className="p-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="p-2 rounded-lg bg-slate-700">
-                <ScrollText className="w-6 h-6 text-slate-300" />
-              </div>
-              <div>
-                <h2 className="text-xl font-bold text-white">{REGLEMENT_INTERIEUR.title}</h2>
-                <p className="text-sm text-slate-400">{REGLEMENT_INTERIEUR.subtitle}</p>
-              </div>
-            </div>
-            <Button
-              variant="ghost"
-              onClick={() => setIsExpanded(true)}
-              className="text-slate-400 hover:text-white hover:bg-slate-700"
-            >
-              <ChevronDown className="w-5 h-5" />
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-    );
-  }
-
-  return (
-    <Card className="mb-8 bg-gradient-to-br from-slate-800 to-slate-900 border-slate-700">
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-lg bg-slate-700">
-              <ScrollText className="w-6 h-6 text-slate-300" />
-            </div>
-            <div>
-              <CardTitle className="text-xl font-bold text-white">{REGLEMENT_INTERIEUR.title}</CardTitle>
-              <CardDescription className="text-slate-400">{REGLEMENT_INTERIEUR.subtitle}</CardDescription>
-            </div>
-          </div>
-          <Button
-            variant="ghost"
-            onClick={() => setIsExpanded(false)}
-            className="text-slate-400 hover:text-white hover:bg-slate-700"
-          >
-            <ChevronUp className="w-5 h-5" />
-          </Button>
-        </div>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {REGLEMENT_INTERIEUR.articles.map((article) => {
-          const IconComponent = getIconComponent(article.icon);
-          const isArticleExpanded = expandedArticles.has(article.id);
-          
-          return (
-            <Card key={article.id} className="bg-slate-700/50 border-slate-600">
-              <CardContent className="p-4">
-                <div 
-                  className="flex items-center justify-between cursor-pointer"
-                  onClick={() => toggleArticle(article.id)}
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-slate-600">
-                      <IconComponent className="w-4 h-4 text-slate-300" />
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-white text-sm">
-                        Article {article.id} - {article.title}
-                      </h3>
-                    </div>
-                  </div>
-                  <div className="text-slate-400">
-                    {isArticleExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-                  </div>
-                </div>
-                
-                {isArticleExpanded && (
-                  <div className="mt-4 space-y-2">
-                    {article.content.map((paragraph, idx) => (
-                      <p key={idx} className="text-slate-300 text-sm leading-relaxed">
-                        {paragraph}
-                      </p>
-                    ))}
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          );
-        })}
-      </CardContent>
-    </Card>
-  );
-}
-
-// Technique Card Component
-function TechniqueCard({ technique, kyuName, kyuColor, onView, onUpdateMastery, onPractice }) {
+// ═══════════════════════════════════════════════════════════════════════════════════
+// TECHNIQUE CARD COMPONENT
+// ═══════════════════════════════════════════════════════════════════════════════════
+function TechniqueCard({ technique, onView }) {
   const mastery = MASTERY_LEVELS[technique.mastery_level] || MASTERY_LEVELS.not_started;
   const MasteryIcon = mastery.icon;
   
@@ -476,9 +1028,7 @@ function TechniqueCard({ technique, kyuName, kyuColor, onView, onUpdateMastery, 
               {technique.name}
             </h4>
             <div className="flex items-center gap-2">
-              <Badge 
-                className={`${mastery.color} text-white text-xs px-2 py-0`}
-              >
+              <Badge className={`${mastery.color} text-white text-xs px-2 py-0`}>
                 <MasteryIcon className="w-3 h-3 mr-1" />
                 {mastery.label}
               </Badge>
@@ -503,7 +1053,9 @@ function TechniqueCard({ technique, kyuName, kyuColor, onView, onUpdateMastery, 
   );
 }
 
-// Technique Modal Component
+// ═══════════════════════════════════════════════════════════════════════════════════
+// TECHNIQUE MODAL COMPONENT
+// ═══════════════════════════════════════════════════════════════════════════════════
 function TechniqueModal({ technique, kyuName, kyuColor, isOpen, onClose, onUpdateMastery, onPractice }) {
   if (!technique) return null;
   
@@ -525,28 +1077,23 @@ function TechniqueModal({ technique, kyuName, kyuColor, isOpen, onClose, onUpdat
         </DialogHeader>
         
         <div className="space-y-4">
-          {/* Image */}
           {hasImage && (
             <div className="rounded-lg overflow-hidden bg-slate-800 border border-slate-700">
               <img 
                 src={technique.image_url} 
                 alt={technique.name}
                 className="w-full h-auto max-h-64 object-contain"
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                }}
+                onError={(e) => { e.target.style.display = 'none'; }}
               />
             </div>
           )}
           
-          {/* Description */}
           {technique.description && (
             <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
               <p className="text-slate-300 text-sm leading-relaxed">{technique.description}</p>
             </div>
           )}
           
-          {/* Key Points */}
           {technique.key_points && technique.key_points.length > 0 && (
             <div className="bg-cyan-900/20 rounded-lg p-4 border border-cyan-800/50">
               <h4 className="text-cyan-400 font-semibold text-sm mb-2 flex items-center gap-2">
@@ -564,7 +1111,6 @@ function TechniqueModal({ technique, kyuName, kyuColor, isOpen, onClose, onUpdat
             </div>
           )}
           
-          {/* Practice Tips */}
           {technique.practice_tips && technique.practice_tips.length > 0 && (
             <div className="bg-emerald-900/20 rounded-lg p-4 border border-emerald-800/50">
               <h4 className="text-emerald-400 font-semibold text-sm mb-2 flex items-center gap-2">
@@ -582,7 +1128,6 @@ function TechniqueModal({ technique, kyuName, kyuColor, isOpen, onClose, onUpdat
             </div>
           )}
           
-          {/* Mastery Level Selector */}
           <div className="bg-slate-800 rounded-lg p-4 border border-slate-700">
             <h4 className="text-white font-semibold text-sm mb-3">Niveau de maîtrise</h4>
             <Select 
@@ -596,11 +1141,7 @@ function TechniqueModal({ technique, kyuName, kyuColor, isOpen, onClose, onUpdat
                 {Object.entries(MASTERY_LEVELS).map(([key, config]) => {
                   const Icon = config.icon;
                   return (
-                    <SelectItem 
-                      key={key} 
-                      value={key}
-                      className="text-white hover:bg-slate-700"
-                    >
+                    <SelectItem key={key} value={key} className="text-white hover:bg-slate-700">
                       <div className="flex items-center gap-2">
                         <Icon className="w-4 h-4" />
                         {config.label}
@@ -631,7 +1172,9 @@ function TechniqueModal({ technique, kyuName, kyuColor, isOpen, onClose, onUpdat
   );
 }
 
-// Grade Section Component
+// ═══════════════════════════════════════════════════════════════════════════════════
+// GRADE SECTION COMPONENT
+// ═══════════════════════════════════════════════════════════════════════════════════
 function GradeSection({ kyu, onViewTechnique, onUpdateMastery, onPractice }) {
   const [isExpanded, setIsExpanded] = useState(true);
   
@@ -640,10 +1183,9 @@ function GradeSection({ kyu, onViewTechnique, onUpdateMastery, onPractice }) {
     ? Math.round((masteredCount / kyu.techniques.length) * 100) 
     : 0;
   
-  // Group techniques by category
   const groupedTechniques = {};
   kyu.techniques.forEach(tech => {
-    const match = tech.description?.match(/^(SUWARIWAZA|TACHIWAZA|HANMI HANDACHI|USHIRO WAZA|HANMIHANDACHI)/i);
+    const match = tech.description?.match(/^(SUWARIWAZA|TACHIWAZA|HANMI HANDACHI|USHIRO WAZA|HANMIHANDACHI|GÉNÉRAL)/i);
     const category = match ? match[1].toUpperCase() : 'GÉNÉRAL';
     if (!groupedTechniques[category]) groupedTechniques[category] = [];
     groupedTechniques[category].push(tech);
@@ -651,17 +1193,13 @@ function GradeSection({ kyu, onViewTechnique, onUpdateMastery, onPractice }) {
   
   return (
     <div className="mb-8">
-      {/* Grade Header */}
       <div 
-        className="sticky top-0 z-10 bg-slate-900/95 backdrop-blur-sm border-b border-slate-700 py-4 px-4 -mx-4 mb-4 cursor-pointer"
+        className="sticky top-16 z-10 bg-slate-900/95 backdrop-blur-sm border-b border-slate-700 py-4 px-4 -mx-4 mb-4 cursor-pointer"
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div 
-              className="w-3 h-12 rounded-full"
-              style={{ backgroundColor: kyu.color }}
-            />
+            <div className="w-3 h-12 rounded-full" style={{ backgroundColor: kyu.color }} />
             <div>
               <h2 className="text-xl font-bold text-white">{kyu.name}</h2>
               <p className="text-sm text-slate-400">
@@ -677,27 +1215,20 @@ function GradeSection({ kyu, onViewTechnique, onUpdateMastery, onPractice }) {
             </div>
             <svg 
               className={`w-5 h-5 text-slate-400 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} 
-              fill="none" 
-              viewBox="0 0 24 24" 
-              stroke="currentColor"
+              fill="none" viewBox="0 0 24 24" stroke="currentColor"
             >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
             </svg>
           </div>
         </div>
-        {/* Progress bar */}
         <div className="mt-2 w-full h-1.5 bg-slate-700 rounded-full overflow-hidden">
           <div 
             className="h-full rounded-full transition-all duration-500"
-            style={{ 
-              width: `${progressPercent}%`,
-              backgroundColor: kyu.color
-            }}
+            style={{ width: `${progressPercent}%`, backgroundColor: kyu.color }}
           />
         </div>
       </div>
       
-      {/* Techniques Grid */}
       {isExpanded && (
         <div className="space-y-6">
           {Object.entries(groupedTechniques).map(([category, techniques]) => (
@@ -712,11 +1243,7 @@ function GradeSection({ kyu, onViewTechnique, onUpdateMastery, onPractice }) {
                   <TechniqueCard
                     key={technique.id}
                     technique={technique}
-                    kyuName={kyu.name}
-                    kyuColor={kyu.color}
                     onView={onViewTechnique}
-                    onUpdateMastery={onUpdateMastery}
-                    onPractice={onPractice}
                   />
                 ))}
               </div>
@@ -728,23 +1255,32 @@ function GradeSection({ kyu, onViewTechnique, onUpdateMastery, onPractice }) {
   );
 }
 
-// Main App Component
+// ═══════════════════════════════════════════════════════════════════════════════════
+// MAIN APP COMPONENT
+// ═══════════════════════════════════════════════════════════════════════════════════
 function App() {
   const [kyuLevels, setKyuLevels] = useState([]);
   const [statistics, setStatistics] = useState(null);
+  const [membersStats, setMembersStats] = useState(null);
+  const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedTechnique, setSelectedTechnique] = useState(null);
   const [selectedKyu, setSelectedKyu] = useState(null);
   const [showStats, setShowStats] = useState(true);
+  const [activeTab, setActiveTab] = useState("techniques");
   
   const fetchData = useCallback(async () => {
     try {
-      const [kyuResponse, statsResponse] = await Promise.all([
+      const [kyuResponse, statsResponse, membersStatsResponse, membersResponse] = await Promise.all([
         axios.get(`${API}/kyu-levels`),
-        axios.get(`${API}/statistics`)
+        axios.get(`${API}/statistics`),
+        axios.get(`${API}/members-stats`),
+        axios.get(`${API}/members`)
       ]);
       setKyuLevels(kyuResponse.data);
       setStatistics(statsResponse.data);
+      setMembersStats(membersStatsResponse.data);
+      setMembers(membersResponse.data);
     } catch (error) {
       console.error("Error fetching data:", error);
       toast.error("Erreur lors du chargement des données");
@@ -765,7 +1301,6 @@ function App() {
       toast.success("Niveau de maîtrise mis à jour");
       fetchData();
     } catch (error) {
-      console.error("Error updating mastery:", error);
       toast.error("Erreur lors de la mise à jour");
     }
   };
@@ -776,7 +1311,6 @@ function App() {
       toast.success("Session de pratique enregistrée !");
       fetchData();
     } catch (error) {
-      console.error("Error recording practice:", error);
       toast.error("Erreur lors de l'enregistrement");
     }
   };
@@ -791,7 +1325,7 @@ function App() {
       <div className="min-h-screen bg-slate-950 flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-slate-700 border-t-cyan-500 rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-slate-400">Chargement des techniques...</p>
+          <p className="text-slate-400">Chargement...</p>
         </div>
       </div>
     );
@@ -836,24 +1370,57 @@ function App() {
       
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 py-6">
-        {/* Statistics Dashboard */}
-        {showStats && <StatisticsDashboard statistics={statistics} />}
+        {/* Règlement Intérieur - EN HAUT */}
+        <ReglementInterieur onRegister={fetchData} />
         
-        {/* Règlement Intérieur */}
-        <ReglementInterieur />
-        
-        {/* Grade Sections */}
-        <div className="space-y-2">
-          {kyuLevels.map((kyu) => (
-            <GradeSection
-              key={kyu.id}
-              kyu={kyu}
-              onViewTechnique={(technique) => handleViewTechnique(kyu, technique)}
-              onUpdateMastery={(techniqueId, level) => handleUpdateMastery(kyu.id, techniqueId, level)}
-              onPractice={(techniqueId) => handlePractice(kyu.id, techniqueId)}
-            />
-          ))}
-        </div>
+        {/* Tabs for Techniques and Members */}
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
+          <TabsList className="bg-slate-800 border-slate-700">
+            <TabsTrigger value="techniques" className="data-[state=active]:bg-slate-700">
+              <Swords className="w-4 h-4 mr-2" />
+              Techniques
+            </TabsTrigger>
+            <TabsTrigger value="members" className="data-[state=active]:bg-slate-700">
+              <Users className="w-4 h-4 mr-2" />
+              Adhérents ({members.length})
+            </TabsTrigger>
+          </TabsList>
+          
+          <TabsContent value="techniques" className="mt-6">
+            {/* Statistics Dashboard */}
+            {showStats && <StatisticsDashboard statistics={statistics} membersStats={membersStats} />}
+            
+            {/* Grade Sections */}
+            <div className="space-y-2">
+              {kyuLevels.map((kyu) => (
+                <GradeSection
+                  key={kyu.id}
+                  kyu={kyu}
+                  onViewTechnique={(technique) => handleViewTechnique(kyu, technique)}
+                  onUpdateMastery={(techniqueId, level) => handleUpdateMastery(kyu.id, techniqueId, level)}
+                  onPractice={(techniqueId) => handlePractice(kyu.id, techniqueId)}
+                />
+              ))}
+            </div>
+          </TabsContent>
+          
+          <TabsContent value="members" className="mt-6">
+            <Card className="bg-slate-900/50 border-slate-700">
+              <CardHeader>
+                <CardTitle className="text-white flex items-center gap-2">
+                  <Users className="w-5 h-5 text-cyan-400" />
+                  Liste des adhérents
+                </CardTitle>
+                <CardDescription className="text-slate-400">
+                  {membersStats?.active || 0} actifs • {membersStats?.pending || 0} en attente de validation
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <MembersList members={members} onRefresh={fetchData} />
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </main>
       
       {/* Technique Modal */}
@@ -862,19 +1429,12 @@ function App() {
         kyuName={selectedKyu?.name}
         kyuColor={selectedKyu?.color}
         isOpen={!!selectedTechnique}
-        onClose={() => {
-          setSelectedTechnique(null);
-          setSelectedKyu(null);
-        }}
+        onClose={() => { setSelectedTechnique(null); setSelectedKyu(null); }}
         onUpdateMastery={(techniqueId, level) => {
-          if (selectedKyu) {
-            handleUpdateMastery(selectedKyu.id, techniqueId, level);
-          }
+          if (selectedKyu) handleUpdateMastery(selectedKyu.id, techniqueId, level);
         }}
         onPractice={(techniqueId) => {
-          if (selectedKyu) {
-            handlePractice(selectedKyu.id, techniqueId);
-          }
+          if (selectedKyu) handlePractice(selectedKyu.id, techniqueId);
         }}
       />
       
