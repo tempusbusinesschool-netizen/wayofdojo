@@ -2233,10 +2233,7 @@ function App() {
                 alt="Logo Aikido La Rivière" 
                 className="h-14 w-auto object-contain"
               />
-              <div>
-                <h1 className="text-xl font-bold text-white">Aikido La Rivière</h1>
-                <p className="text-xs text-slate-400">68, rue du Docteur Schweitzer 97421 SAINT-LOUIS - RÉUNION</p>
-              </div>
+              <p className="text-xs text-slate-400">68, rue du Docteur Schweitzer 97421 SAINT-LOUIS - RÉUNION</p>
             </div>
             <div className="flex items-center gap-2">
               {isAdmin && (
