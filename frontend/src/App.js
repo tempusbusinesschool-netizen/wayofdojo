@@ -11,10 +11,13 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Toaster, toast } from "sonner";
-import { Target, Award, Circle, Eye, TrendingUp, BookOpen, Swords, BarChart3, CheckCircle2, Clock, Flame, ScrollText, ChevronDown, ChevronUp, Shield, Users, Heart, AlertTriangle, UserPlus, PenTool, Trash2, Edit, Mail, Phone, MapPin, Baby, User } from "lucide-react";
+import { Target, Award, Circle, Eye, TrendingUp, BookOpen, Swords, BarChart3, CheckCircle2, Clock, Flame, ScrollText, ChevronDown, ChevronUp, Shield, Users, Heart, AlertTriangle, UserPlus, PenTool, Trash2, Edit, Mail, Phone, MapPin, Baby, User, Lock, LogOut, KeyRound } from "lucide-react";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
+
+// Admin password (in production, this should be in backend)
+const ADMIN_PASSWORD = "aikido2024";
 
 // Mastery level configuration
 const MASTERY_LEVELS = {
