@@ -52,7 +52,6 @@ function ReglementInterieur({ onRegister, isAdmin }) {
                 <UserPlus className="w-4 h-4 mr-2" />
                 Nouvelle inscription
               </Button>
-              </Button>
               <Button
                 variant="ghost"
                 onClick={() => setIsExpanded(!isExpanded)}
