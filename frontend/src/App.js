@@ -749,83 +749,76 @@ function MemberRegistrationForm({ onSuccess, onCancel, registrationType = 'child
             className="bg-slate-700 border-slate-600 text-white"
           />
         </div>
-        
-        <div className="flex items-center space-x-2">
-          <Checkbox
-            id="is_adult"
-            checked={formData.is_adult_member}
-            onCheckedChange={(checked) => handleChange('is_adult_member', checked)}
-          />
-          <Label htmlFor="is_adult" className="text-slate-300 cursor-pointer">
-            Je suis moi-même adhérent (adulte pratiquant)
-          </Label>
-        </div>
       </div>
       
-      {/* Children Info */}
-      <div className="space-y-4">
-        <h3 className="text-lg font-semibold text-white flex items-center gap-2">
-          <Baby className="w-5 h-5 text-cyan-400" />
-          Enfant(s) inscrit(s)
-        </h3>
-        
-        {formData.children.length > 0 && (
-          <div className="space-y-2">
-            {formData.children.map((child, idx) => (
-              <div key={idx} className="flex items-center justify-between bg-slate-700 p-3 rounded-lg">
-                <span className="text-white">
-                  {child.first_name} {child.last_name}
-                  {child.birth_date && ` (${child.birth_date})`}
-                </span>
-                <Button
-                  type="button"
-                  size="sm"
-                  variant="ghost"
-                  onClick={() => removeChild(idx)}
-                  className="text-red-400 hover:text-red-300"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </Button>
-              </div>
-            ))}
-          </div>
-        )}
-        
-        <div className="bg-slate-700/50 p-4 rounded-lg space-y-3">
-          <div className="grid grid-cols-2 gap-3">
-            <Input
-              placeholder="Prénom de l'enfant"
-              value={newChild.first_name}
-              onChange={(e) => setNewChild(prev => ({ ...prev, first_name: e.target.value }))}
-              className="bg-slate-600 border-slate-500 text-white"
-            />
-            <Input
-              placeholder="Nom de l'enfant"
-              value={newChild.last_name}
-              onChange={(e) => setNewChild(prev => ({ ...prev, last_name: e.target.value }))}
-              className="bg-slate-600 border-slate-500 text-white"
-            />
-          </div>
-          <div className="flex gap-3">
-            <Input
-              type="date"
-              placeholder="Date de naissance"
-              value={newChild.birth_date}
-              onChange={(e) => setNewChild(prev => ({ ...prev, birth_date: e.target.value }))}
-              className="bg-slate-600 border-slate-500 text-white flex-1"
-            />
-            <Button
-              type="button"
-              onClick={addChild}
-              disabled={!newChild.first_name || !newChild.last_name}
-              className="bg-cyan-600 hover:bg-cyan-500"
-            >
-              <UserPlus className="w-4 h-4 mr-1" />
-              Ajouter
-            </Button>
+      {/* Children Info - Only for child registration */}
+      {isChildRegistration && (
+        <div className="space-y-4">
+          <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+            <Baby className="w-5 h-5 text-purple-400" />
+            Enfant(s) à inscrire *
+          </h3>
+          
+          {formData.children.length > 0 && (
+            <div className="space-y-2">
+              {formData.children.map((child, idx) => (
+                <div key={idx} className="flex items-center justify-between bg-purple-900/30 border border-purple-700 p-3 rounded-lg">
+                  <span className="text-white flex items-center gap-2">
+                    <Baby className="w-4 h-4 text-purple-400" />
+                    {child.first_name} {child.last_name}
+                    {child.birth_date && ` (né(e) le ${new Date(child.birth_date).toLocaleDateString('fr-FR')})`}
+                  </span>
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => removeChild(idx)}
+                    className="text-red-400 hover:text-red-300"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
+                </div>
+              ))}
+            </div>
+          )}
+          
+          <div className="bg-slate-700/50 p-4 rounded-lg space-y-3">
+            <p className="text-sm text-slate-400 mb-2">Ajouter un enfant :</p>
+            <div className="grid grid-cols-2 gap-3">
+              <Input
+                placeholder="Prénom de l'enfant"
+                value={newChild.first_name}
+                onChange={(e) => setNewChild(prev => ({ ...prev, first_name: e.target.value }))}
+                className="bg-slate-600 border-slate-500 text-white"
+              />
+              <Input
+                placeholder="Nom de l'enfant"
+                value={newChild.last_name}
+                onChange={(e) => setNewChild(prev => ({ ...prev, last_name: e.target.value }))}
+                className="bg-slate-600 border-slate-500 text-white"
+              />
+            </div>
+            <div className="flex gap-3">
+              <Input
+                type="date"
+                placeholder="Date de naissance"
+                value={newChild.birth_date}
+                onChange={(e) => setNewChild(prev => ({ ...prev, birth_date: e.target.value }))}
+                className="bg-slate-600 border-slate-500 text-white flex-1"
+              />
+              <Button
+                type="button"
+                onClick={addChild}
+                disabled={!newChild.first_name || !newChild.last_name}
+                className="bg-purple-600 hover:bg-purple-500"
+              >
+                <UserPlus className="w-4 h-4 mr-1" />
+                Ajouter
+              </Button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
       
       {/* Signature */}
       <div className="space-y-4 border-t border-slate-700 pt-6">
