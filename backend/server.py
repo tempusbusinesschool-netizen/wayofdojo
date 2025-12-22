@@ -285,6 +285,78 @@ async def record_practice(kyu_id: str, technique_id: str):
     raise HTTPException(status_code=404, detail="Technique not found")
 
 
+# Statistics API
+@api_router.get("/statistics")
+async def get_statistics():
+    """Get overall statistics and progression"""
+    kyu_levels = await db.kyu_levels.find({}, {"_id": 0}).to_list(100)
+    
+    total_techniques = 0
+    mastered_techniques = 0
+    in_progress_techniques = 0
+    total_practice_sessions = 0
+    techniques_by_level = []
+    
+    mastery_weights = {
+        "not_started": 0,
+        "learning": 0.33,
+        "practiced": 0.66,
+        "mastered": 1
+    }
+    
+    for kyu in kyu_levels:
+        kyu_total = len(kyu.get('techniques', []))
+        kyu_mastered = 0
+        kyu_in_progress = 0
+        kyu_sessions = 0
+        kyu_weighted_progress = 0
+        
+        for tech in kyu.get('techniques', []):
+            total_techniques += 1
+            mastery = tech.get('mastery_level', 'not_started')
+            sessions = tech.get('practice_count', 0)
+            total_practice_sessions += sessions
+            kyu_sessions += sessions
+            kyu_weighted_progress += mastery_weights.get(mastery, 0)
+            
+            if mastery == 'mastered':
+                mastered_techniques += 1
+                kyu_mastered += 1
+            elif mastery in ['learning', 'practiced']:
+                in_progress_techniques += 1
+                kyu_in_progress += 1
+        
+        techniques_by_level.append({
+            "name": kyu.get('name'),
+            "color": kyu.get('color'),
+            "total": kyu_total,
+            "mastered": kyu_mastered,
+            "in_progress": kyu_in_progress,
+            "not_started": kyu_total - kyu_mastered - kyu_in_progress,
+            "practice_sessions": kyu_sessions,
+            "progress_percentage": round((kyu_weighted_progress / kyu_total) * 100, 1) if kyu_total > 0 else 0
+        })
+    
+    overall_progress = 0
+    if total_techniques > 0:
+        weighted_total = sum(
+            mastery_weights.get(tech.get('mastery_level', 'not_started'), 0)
+            for kyu in kyu_levels
+            for tech in kyu.get('techniques', [])
+        )
+        overall_progress = round((weighted_total / total_techniques) * 100, 1)
+    
+    return {
+        "total_techniques": total_techniques,
+        "mastered_techniques": mastered_techniques,
+        "in_progress_techniques": in_progress_techniques,
+        "not_started_techniques": total_techniques - mastered_techniques - in_progress_techniques,
+        "total_practice_sessions": total_practice_sessions,
+        "overall_progress": overall_progress,
+        "techniques_by_level": techniques_by_level
+    }
+
+
 # Clear and reseed data
 @api_router.post("/reseed")
 async def reseed_data():
