@@ -1277,7 +1277,7 @@ function ReglementInterieur({ onRegister, isAdmin, onAdminClick }) {
             <div className="text-center py-4 border-b border-slate-700">
               <h2 className="text-2xl font-bold text-white">{REGLEMENT_INTERIEUR.clubName}</h2>
               <p className="text-slate-400 text-sm mt-1">{REGLEMENT_INTERIEUR.subtitle}</p>
-              <p className="text-slate-500 text-xs mt-2">Document établi le {today}</p>
+              <p className="text-slate-500 text-xs mt-2">Document établi le {new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
             </div>
             
             {/* Expand All Button */}
