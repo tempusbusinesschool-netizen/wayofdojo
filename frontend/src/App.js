@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { Swords, Users, BarChart3, LogOut, Baby, User, LogIn } from "lucide-react";
+import { Swords, Users, BarChart3, LogOut, Baby, User, LogIn, Lock, ScrollText } from "lucide-react";
 
 // Import custom components
 import {
