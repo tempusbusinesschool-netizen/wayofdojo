@@ -1517,7 +1517,7 @@ function TechniqueModal({ technique, kyuName, kyuColor, isOpen, onClose, onUpdat
 // ═══════════════════════════════════════════════════════════════════════════════════
 // GRADE SECTION COMPONENT
 // ═══════════════════════════════════════════════════════════════════════════════════
-function GradeSection({ kyu, onViewTechnique, onUpdateMastery, onPractice }) {
+function GradeSection({ kyu, onViewTechnique, onUpdateMastery, onPractice, isFiltered, originalCount }) {
   const [isExpanded, setIsExpanded] = useState(true);
   
   const masteredCount = kyu.techniques.filter(t => t.mastery_level === 'mastered').length;
@@ -1545,7 +1545,11 @@ function GradeSection({ kyu, onViewTechnique, onUpdateMastery, onPractice }) {
             <div>
               <h2 className="text-xl font-bold text-white">{kyu.name}</h2>
               <p className="text-sm text-slate-400">
-                {kyu.techniques.length} techniques • {progressPercent}% maîtrisé
+                {isFiltered ? (
+                  <span>{kyu.techniques.length} / {originalCount} techniques affichées</span>
+                ) : (
+                  <span>{kyu.techniques.length} techniques • {progressPercent}% maîtrisé</span>
+                )}
               </p>
             </div>
           </div>
