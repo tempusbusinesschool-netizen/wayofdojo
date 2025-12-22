@@ -391,6 +391,7 @@ function MemberRegistrationForm({ onSuccess, onCancel }) {
     address: '',
     city: '',
     postal_code: '',
+    emergency_contact: '',
     is_adult_member: false,
     children: [],
     reglement_accepted: false,
