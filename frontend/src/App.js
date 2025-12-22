@@ -298,7 +298,7 @@ function AppContent() {
               />
               <div className="hidden sm:block">
                 <p className="text-sm text-slate-300 font-medium">68, rue du Docteur Schweitzer<br/>97421 SAINT-LOUIS - RÉUNION</p>
-                <a href="mailto:bruno@istas.fr" className="text-xs text-cyan-400 hover:text-cyan-300">bruno@istas.fr</a>
+                <a href="mailto:aikidolariviere@gmail.com" className="text-xs text-cyan-400 hover:text-cyan-300">aikidolariviere@gmail.com</a>
               </div>
             </div>
             <div className="flex items-center gap-2">
