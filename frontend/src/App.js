@@ -2084,7 +2084,12 @@ function App() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <MembersList members={members} onRefresh={fetchData} />
+                  <MembersList 
+                    members={members} 
+                    onRefresh={fetchData}
+                    onRegisterChild={() => setShowChildRegistration(true)}
+                    onRegisterAdult={() => setShowAdultRegistration(true)}
+                  />
                 </CardContent>
               </Card>
             </TabsContent>
