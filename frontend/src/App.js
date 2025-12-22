@@ -1617,6 +1617,20 @@ function App() {
     toast.success("Déconnexion réussie");
   };
   
+  // Refs for grade sections to enable scrolling
+  const gradeSectionRefs = useRef({});
+  
+  const handleGradeClick = (gradeName) => {
+    // Find the matching kyu level
+    const targetKyu = kyuLevels.find(kyu => kyu.name === gradeName);
+    if (targetKyu && gradeSectionRefs.current[targetKyu.id]) {
+      gradeSectionRefs.current[targetKyu.id].scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      });
+    }
+  };
+  
   const fetchData = useCallback(async () => {
     try {
       const [kyuResponse, statsResponse, membersStatsResponse, membersResponse] = await Promise.all([
