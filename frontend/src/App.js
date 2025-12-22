@@ -1377,6 +1377,23 @@ function App() {
   const [showStats, setShowStats] = useState(true);
   const [activeTab, setActiveTab] = useState("techniques");
   
+  // Admin state
+  const [isAdmin, setIsAdmin] = useState(() => {
+    return sessionStorage.getItem('aikido_admin') === 'true';
+  });
+  const [showAdminLogin, setShowAdminLogin] = useState(false);
+  
+  const handleAdminLogin = () => {
+    setIsAdmin(true);
+  };
+  
+  const handleAdminLogout = () => {
+    sessionStorage.removeItem('aikido_admin');
+    setIsAdmin(false);
+    setActiveTab("techniques");
+    toast.success("Déconnexion réussie");
+  };
+  
   const fetchData = useCallback(async () => {
     try {
       const [kyuResponse, statsResponse, membersStatsResponse, membersResponse] = await Promise.all([
