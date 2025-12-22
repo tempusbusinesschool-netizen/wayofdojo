@@ -1359,11 +1359,131 @@ function ReglementInterieur({ onRegister, isAdmin, onAdminClick }) {
 // ═══════════════════════════════════════════════════════════════════════════════════
 // STATISTICS DASHBOARD COMPONENT
 // ═══════════════════════════════════════════════════════════════════════════════════
-function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterClick, activeFilter, isAdmin, onMembersClick }) {
+function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterClick, activeFilter, isAdmin, onMembersClick, kyuLevels, onExport }) {
   if (!statistics) return null;
   
+  // Export progression to CSV
+  const exportToCSV = () => {
+    if (!kyuLevels || kyuLevels.length === 0) {
+      toast.error("Aucune donnée à exporter");
+      return;
+    }
+
+    const today = new Date().toLocaleDateString('fr-FR');
+    let csvContent = "Grade,Technique,Description,Niveau de Maîtrise,Sessions de Pratique,Dernière Pratique\n";
+    
+    kyuLevels.forEach(kyu => {
+      kyu.techniques.forEach(tech => {
+        const masteryLabels = {
+          'not_started': 'Non commencé',
+          'learning': 'En apprentissage', 
+          'practiced': 'Pratiqué',
+          'mastered': 'Maîtrisé'
+        };
+        const mastery = masteryLabels[tech.mastery_level] || 'Non commencé';
+        const sessions = tech.practice_count || 0;
+        const lastPractice = tech.last_practiced ? new Date(tech.last_practiced).toLocaleDateString('fr-FR') : 'Jamais';
+        const description = (tech.description || '').replace(/,/g, ';').replace(/\n/g, ' ');
+        
+        csvContent += `"${kyu.name}","${tech.name}","${description}","${mastery}",${sessions},"${lastPractice}"\n`;
+      });
+    });
+
+    // Create and download file
+    const blob = new Blob(["\ufeff" + csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `progression_aikido_${today.replace(/\//g, '-')}.csv`;
+    link.click();
+    
+    toast.success("Progression exportée avec succès !");
+  };
+
+  // Export progression to PDF (text format)
+  const exportToPDF = () => {
+    if (!kyuLevels || kyuLevels.length === 0) {
+      toast.error("Aucune donnée à exporter");
+      return;
+    }
+
+    const today = new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+    const masteryLabels = {
+      'not_started': '⬜ Non commencé',
+      'learning': '🟡 En apprentissage', 
+      'practiced': '🟠 Pratiqué',
+      'mastered': '✅ Maîtrisé'
+    };
+
+    let content = `AIKIDO LA RIVIÈRE - SUIVI DE PROGRESSION
+==========================================
+Date d'export: ${today}
+
+RÉSUMÉ GLOBAL
+-------------
+Total techniques: ${statistics.total_techniques}
+Maîtrisées: ${statistics.mastered_techniques} (${statistics.overall_progress}%)
+En cours: ${statistics.in_progress_techniques}
+Sessions totales: ${statistics.total_practice_sessions}
+
+`;
+
+    kyuLevels.forEach(kyu => {
+      const masteredCount = kyu.techniques.filter(t => t.mastery_level === 'mastered').length;
+      const progressPercent = kyu.techniques.length > 0 
+        ? Math.round((masteredCount / kyu.techniques.length) * 100) 
+        : 0;
+      
+      content += `\n${'═'.repeat(50)}\n`;
+      content += `${kyu.name.toUpperCase()} - ${masteredCount}/${kyu.techniques.length} maîtrisées (${progressPercent}%)\n`;
+      content += `${'═'.repeat(50)}\n\n`;
+      
+      kyu.techniques.forEach(tech => {
+        const mastery = masteryLabels[tech.mastery_level] || '⬜ Non commencé';
+        const sessions = tech.practice_count || 0;
+        
+        content += `${mastery} ${tech.name}\n`;
+        if (sessions > 0) {
+          content += `   → ${sessions} session(s) de pratique\n`;
+        }
+      });
+    });
+
+    content += `\n\n${'─'.repeat(50)}\nDocument généré automatiquement par Aikido La Rivière\n`;
+
+    // Create and download file
+    const blob = new Blob([content], { type: 'text/plain;charset=utf-8;' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `progression_aikido_${today.replace(/\//g, '-').replace(/ /g, '_')}.txt`;
+    link.click();
+    
+    toast.success("Progression exportée avec succès !");
+  };
+
   return (
     <div className="mb-8 animate-fadeIn">
+      {/* Export Button */}
+      <div className="flex justify-end mb-4 gap-2">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={exportToCSV}
+          className="border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-white"
+        >
+          <Download className="w-4 h-4 mr-2" />
+          Export CSV
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={exportToPDF}
+          className="border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-white"
+        >
+          <FileText className="w-4 h-4 mr-2" />
+          Export TXT
+        </Button>
+      </div>
+      
       {/* Main Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-6">
         <Card 
