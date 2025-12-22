@@ -636,11 +636,34 @@ function MemberRegistrationForm({ onSuccess, onCancel, registrationType = 'child
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Header with registration type */}
+      <div className={`p-3 rounded-lg ${isChildRegistration ? 'bg-purple-900/30 border border-purple-700' : 'bg-cyan-900/30 border border-cyan-700'}`}>
+        <h2 className="text-lg font-bold text-white flex items-center gap-2">
+          {isChildRegistration ? (
+            <>
+              <Baby className="w-5 h-5 text-purple-400" />
+              Inscription Enfant
+            </>
+          ) : (
+            <>
+              <User className="w-5 h-5 text-cyan-400" />
+              Inscription Adulte
+            </>
+          )}
+        </h2>
+        <p className="text-sm text-slate-400 mt-1">
+          {isChildRegistration 
+            ? "Formulaire d'inscription pour un ou plusieurs enfants"
+            : "Formulaire d'inscription pour un adulte pratiquant"
+          }
+        </p>
+      </div>
+
       {/* Parent/Adult Info */}
       <div className="space-y-4">
         <h3 className="text-lg font-semibold text-white flex items-center gap-2">
           <User className="w-5 h-5 text-cyan-400" />
-          Informations du responsable / adulte
+          {isChildRegistration ? "Informations du responsable légal" : "Informations de l'adhérent"}
         </h3>
         
         <div className="grid grid-cols-2 gap-4">
