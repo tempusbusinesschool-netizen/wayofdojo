@@ -225,10 +225,10 @@ function App() {
         
         {/* Tabs for Techniques and Members */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
-          <TabsList className="bg-slate-800 border-slate-700">
-            <TabsTrigger value="techniques" className="data-[state=active]:bg-slate-700">
-              <Swords className="w-4 h-4 mr-2" />
-              Techniques
+          <TabsList className="bg-slate-800 border-slate-700 h-auto">
+            <TabsTrigger value="techniques" className="data-[state=active]:bg-slate-700 text-base py-3 px-4">
+              <Swords className="w-5 h-5 mr-2" />
+              Les différentes techniques en Aïkido
             </TabsTrigger>
             {isAdmin && (
               <TabsTrigger value="members" className="data-[state=active]:bg-slate-700">
@@ -408,6 +408,9 @@ function App() {
           </p>
           <p className="text-slate-600 text-xs mt-1">
             Instructeurs : Céline ROSETTE (3e Dan) • Yeza LUCAS (2e Dan)
+          </p>
+          <p className="text-slate-600 text-xs mt-3">
+            © humanknowledge.fr - 2025
           </p>
         </div>
       </footer>
