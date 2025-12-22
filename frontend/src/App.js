@@ -1036,6 +1036,17 @@ function MembersList({ members, onRefresh, onRegisterChild, onRegisterAdult }) {
     }
   };
 
+  const handleDeleteChild = async (memberId, childId, childName) => {
+    if (!window.confirm(`Êtes-vous sûr de vouloir supprimer l'inscription de ${childName} ?`)) return;
+    try {
+      await axios.delete(`${API}/members/${memberId}/delete-child/${childId}`);
+      toast.success("Inscription de l'enfant supprimée");
+      onRefresh();
+    } catch (error) {
+      toast.error("Erreur lors de la suppression");
+    }
+  };
+
   const handleDelete = async (memberId) => {
     if (!window.confirm("Êtes-vous sûr de vouloir supprimer cet adhérent ?")) return;
     try {
