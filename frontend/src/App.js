@@ -715,7 +715,12 @@ function MembersList({ members, onRefresh }) {
           <CardContent className="p-4">
             <div className="flex items-start justify-between">
               <div className="space-y-1">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
+                  {member.member_id && (
+                    <Badge className="bg-slate-600 text-cyan-300 text-xs font-mono">
+                      {member.member_id}
+                    </Badge>
+                  )}
                   <span className="font-semibold text-white">
                     {member.parent_first_name} {member.parent_last_name}
                   </span>
@@ -724,7 +729,7 @@ function MembersList({ members, onRefresh }) {
                     <Badge className="bg-cyan-600 text-white text-xs">Adulte adhérent</Badge>
                   )}
                 </div>
-                <div className="flex items-center gap-4 text-sm text-slate-400">
+                <div className="flex items-center gap-4 text-sm text-slate-400 flex-wrap">
                   <span className="flex items-center gap-1">
                     <Mail className="w-3 h-3" /> {member.email}
                   </span>
@@ -732,6 +737,18 @@ function MembersList({ members, onRefresh }) {
                     <Phone className="w-3 h-3" /> {member.phone}
                   </span>
                 </div>
+                {(member.address || member.city || member.postal_code) && (
+                  <div className="flex items-center gap-1 text-sm text-slate-400">
+                    <MapPin className="w-3 h-3" />
+                    {[member.address, member.postal_code, member.city].filter(Boolean).join(', ')}
+                  </div>
+                )}
+                {member.emergency_contact && (
+                  <div className="flex items-center gap-1 text-sm text-orange-400">
+                    <AlertTriangle className="w-3 h-3" />
+                    Urgence: {member.emergency_contact}
+                  </div>
+                )}
                 {member.children && member.children.length > 0 && (
                   <div className="flex items-center gap-1 text-sm text-slate-400">
                     <Baby className="w-3 h-3" />
