@@ -376,13 +376,6 @@ function AppContent() {
       
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 py-6">
-        {/* Règlement Intérieur - EN HAUT */}
-        <ReglementInterieur 
-          onRegister={fetchData} 
-          isAdmin={isAdmin}
-          onAdminClick={() => setShowAdminLogin(true)}
-        />
-        
         {/* Title Section */}
         <div className="text-center mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-white flex items-center justify-center gap-3">
@@ -391,6 +384,20 @@ function AppContent() {
           </h1>
           <div className="w-24 h-1 bg-gradient-to-r from-cyan-500 to-blue-500 mx-auto mt-4 rounded-full"></div>
         </div>
+
+        {/* Admin access button for non-admin users */}
+        {!isAdmin && (
+          <div className="flex justify-center mb-6">
+            <Button
+              variant="outline"
+              onClick={() => setShowAdminLogin(true)}
+              className="border-slate-600 text-slate-400 hover:bg-slate-800 hover:text-white"
+            >
+              <Lock className="w-4 h-4 mr-2" />
+              Espace Administrateur
+            </Button>
+          </div>
+        )}
 
         {/* Tabs for Techniques and Members */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
@@ -403,6 +410,10 @@ function AppContent() {
               <TabsTrigger value="members" className="data-[state=active]:bg-slate-700">
                 <Users className="w-4 h-4 mr-2" />
                 Adhérents ({members.length})
+              </TabsTrigger>
+              <TabsTrigger value="reglement" className="data-[state=active]:bg-slate-700">
+                <ScrollText className="w-4 h-4 mr-2" />
+                Règlement
               </TabsTrigger>
             </TabsList>
           )}
