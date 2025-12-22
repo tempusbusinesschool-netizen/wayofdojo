@@ -648,6 +648,17 @@ async def create_member(input: MemberCreate):
         doc['children'] = [child if isinstance(child, dict) else child.model_dump() for child in doc['children']]
     
     await db.members.insert_one(doc)
+    
+    # Send confirmation email (non-blocking)
+    try:
+        await send_confirmation_email(
+            member=member_obj.model_dump(),
+            is_adult=input.is_adult_member
+        )
+    except Exception as e:
+        logger.error(f"Failed to send confirmation email: {str(e)}")
+        # Don't fail the registration if email fails
+    
     return member_obj
 
 @api_router.put("/members/{member_id}", response_model=Member)
