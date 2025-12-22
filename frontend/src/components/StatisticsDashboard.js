@@ -220,6 +220,43 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
     return doc.output('datauristring');
   };
   
+  const handleDownloadPDF = async () => {
+    if (!kyuLevels || kyuLevels.length === 0) {
+      toast.error("Aucune donnée à exporter");
+      return;
+    }
+
+    setSending(true);
+    toast.info("Génération du PDF en cours...");
+
+    try {
+      const pdfBase64 = await generatePDFBase64();
+      const today = new Date().toLocaleDateString('fr-FR').replace(/\//g, '-');
+      
+      // Convert base64 to blob and download
+      const byteCharacters = atob(pdfBase64.split(',')[1]);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      const blob = new Blob([byteArray], { type: 'application/pdf' });
+      
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = `progression_aikido_${today}.pdf`;
+      link.click();
+      
+      toast.success("PDF téléchargé avec succès !");
+      setShowEmailDialog(false);
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+      toast.error("Erreur lors de la génération du PDF");
+    } finally {
+      setSending(false);
+    }
+  };
+
   const handleSendPDF = async () => {
     if (!email || !email.includes('@')) {
       toast.error("Veuillez saisir une adresse email valide");
@@ -249,7 +286,12 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
       setEmail('');
     } catch (error) {
       console.error('Error sending PDF:', error);
-      toast.error(error.response?.data?.detail || "Erreur lors de l'envoi du PDF");
+      const errorMsg = error.response?.data?.detail || "";
+      if (errorMsg.includes("testing emails") || errorMsg.includes("verify a domain")) {
+        toast.error("Service email en mode test. Utilisez le bouton 'Télécharger' pour obtenir votre PDF.");
+      } else {
+        toast.error(errorMsg || "Erreur lors de l'envoi du PDF");
+      }
     } finally {
       setSending(false);
     }
