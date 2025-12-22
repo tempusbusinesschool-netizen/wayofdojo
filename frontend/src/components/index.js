@@ -1,6 +1,7 @@
 export { default as SignaturePad } from './SignaturePad';
 export { default as AdminLoginDialog } from './AdminLoginDialog';
 export { default as AuthDialog } from './AuthDialog';
+export { default as CGUDialog } from './CGUDialog';
 export { default as DeplacementsSection } from './DeplacementsSection';
 export { default as TechniqueCard } from './TechniqueCard';
 export { default as TechniqueModal } from './TechniqueModal';
