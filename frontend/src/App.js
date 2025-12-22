@@ -4,14 +4,14 @@ import axios from "axios";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Toaster, toast } from "sonner";
-import { Target, Award, Circle, Eye, TrendingUp, BookOpen, Swords, BarChart3, CheckCircle2, Clock, Flame, ScrollText, ChevronDown, ChevronUp, Shield, Users, Heart, AlertTriangle, UserPlus, PenTool, Trash2, Edit, Mail, Phone, MapPin, Baby, User, Lock, LogOut, KeyRound } from "lucide-react";
+import { Target, Award, Circle, Eye, TrendingUp, BookOpen, Swords, BarChart3, CheckCircle2, Clock, Flame, ScrollText, ChevronDown, ChevronUp, Shield, Users, Heart, AlertTriangle, UserPlus, PenTool, Trash2, Edit, Mail, Phone, MapPin, Baby, User, Lock, LogOut, KeyRound, Plus } from "lucide-react";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
