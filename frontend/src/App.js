@@ -532,6 +532,18 @@ function MemberRegistrationForm({ onSuccess, onCancel }) {
           </div>
         </div>
         
+        <div>
+          <Label className="text-slate-300">Numéro d'urgence *</Label>
+          <Input
+            type="tel"
+            value={formData.emergency_contact}
+            onChange={(e) => handleChange('emergency_contact', e.target.value)}
+            placeholder="Numéro à contacter en cas d'urgence"
+            required
+            className="bg-slate-700 border-slate-600 text-white"
+          />
+        </div>
+        
         <div className="flex items-center space-x-2">
           <Checkbox
             id="is_adult"
