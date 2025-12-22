@@ -423,7 +423,6 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
             </Card>
           </div>
         )}
-        </div>
         
         <Card className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-slate-700 mb-6">
           <CardContent className="p-4">
