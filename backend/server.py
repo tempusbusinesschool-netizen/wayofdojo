@@ -68,6 +68,9 @@ class MemberBase(BaseModel):
     address: Optional[str] = None
     city: Optional[str] = None
     postal_code: Optional[str] = None
+    
+    # Contact d'urgence
+    emergency_contact: Optional[str] = None
 
 class MemberCreate(MemberBase):
     """Modèle pour créer un nouvel adhérent"""
@@ -79,6 +82,7 @@ class Member(MemberBase):
     model_config = ConfigDict(extra="ignore")
     
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    member_id: Optional[str] = None  # Numéro d'adhérent (AR-001, AR-002, etc.)
     status: MemberStatus = MemberStatus.PENDING
     reglement_accepted: bool = False
     reglement_signed_date: Optional[str] = None
@@ -100,6 +104,7 @@ class MemberUpdate(BaseModel):
     address: Optional[str] = None
     city: Optional[str] = None
     postal_code: Optional[str] = None
+    emergency_contact: Optional[str] = None
     status: Optional[MemberStatus] = None
     club_signature: Optional[str] = None
     club_signed_date: Optional[str] = None
