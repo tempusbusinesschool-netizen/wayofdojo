@@ -45,6 +45,7 @@ function AppContent() {
   const [showStats, setShowStats] = useState(true);
   const [activeTab, setActiveTab] = useState("techniques");
   const [showAuthDialog, setShowAuthDialog] = useState(false);
+  const [showCGU, setShowCGU] = useState(false);
   
   // Admin state
   const [isAdmin, setIsAdmin] = useState(() => {
