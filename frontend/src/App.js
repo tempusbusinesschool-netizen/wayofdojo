@@ -1120,6 +1120,7 @@ function MembersList({ members, onRefresh, onRegisterChild, onRegisterAdult }) {
                   parentInfo={child.parentInfo}
                   onValidate={handleValidate}
                   onValidateChild={handleValidateChild}
+                  onDeleteChild={handleDeleteChild}
                   onDelete={handleDelete}
                 />
               ))}
