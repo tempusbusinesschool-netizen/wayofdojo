@@ -1452,7 +1452,10 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         
         {membersStats && (
           <>
-            <Card className="bg-gradient-to-br from-cyan-800 to-cyan-900 border-cyan-700">
+            <Card 
+              className={`bg-gradient-to-br from-cyan-800 to-cyan-900 border-cyan-700 transition-all ${isAdmin ? 'cursor-pointer hover:scale-105 hover:shadow-lg' : 'opacity-80'}`}
+              onClick={() => isAdmin && onMembersClick && onMembersClick('adults')}
+            >
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
                   <div className="p-2 rounded-lg bg-cyan-700">
@@ -1461,12 +1464,16 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                   <div>
                     <p className="text-2xl font-bold text-white">{membersStats.total_members}</p>
                     <p className="text-xs text-cyan-300">Adhérents</p>
+                    {isAdmin && <p className="text-xs text-cyan-400/60 mt-0.5">Cliquez pour gérer</p>}
                   </div>
                 </div>
               </CardContent>
             </Card>
             
-            <Card className="bg-gradient-to-br from-purple-800 to-purple-900 border-purple-700">
+            <Card 
+              className={`bg-gradient-to-br from-purple-800 to-purple-900 border-purple-700 transition-all ${isAdmin ? 'cursor-pointer hover:scale-105 hover:shadow-lg' : 'opacity-80'}`}
+              onClick={() => isAdmin && onMembersClick && onMembersClick('children')}
+            >
               <CardContent className="p-4">
                 <div className="flex items-center gap-3">
                   <div className="p-2 rounded-lg bg-purple-700">
@@ -1475,6 +1482,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                   <div>
                     <p className="text-2xl font-bold text-white">{membersStats.total_children}</p>
                     <p className="text-xs text-purple-300">Enfants</p>
+                    {isAdmin && <p className="text-xs text-purple-400/60 mt-0.5">Cliquez pour gérer</p>}
                   </div>
                 </div>
               </CardContent>
