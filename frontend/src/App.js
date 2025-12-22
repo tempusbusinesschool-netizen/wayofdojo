@@ -296,7 +296,10 @@ function AppContent() {
                 alt="Logo Aikido La Rivière" 
                 className="h-20 w-auto object-contain"
               />
-              <p className="text-sm text-slate-300 hidden sm:block font-medium">68, rue du Docteur Schweitzer<br/>97421 SAINT-LOUIS - RÉUNION</p>
+              <div className="hidden sm:block">
+                <p className="text-sm text-slate-300 font-medium">68, rue du Docteur Schweitzer<br/>97421 SAINT-LOUIS - RÉUNION</p>
+                <a href="mailto:bruno@istas.fr" className="text-xs text-cyan-400 hover:text-cyan-300">bruno@istas.fr</a>
+              </div>
             </div>
             <div className="flex items-center gap-2">
               {/* User Auth Button */}
