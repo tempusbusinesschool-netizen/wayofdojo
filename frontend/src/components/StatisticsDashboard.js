@@ -314,19 +314,19 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
           </Button>
         </div>
         
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6 max-w-4xl mx-auto">
           <Card 
             className={`bg-gradient-to-br from-slate-800 to-slate-900 border-slate-700 cursor-pointer transition-all hover:scale-105 hover:shadow-lg ${activeFilter === 'all' ? 'ring-2 ring-slate-400' : ''}`}
             onClick={() => onFilterClick && onFilterClick('all')}
           >
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-slate-700">
-                  <BookOpen className="w-5 h-5 text-slate-300" />
+            <CardContent className="p-6">
+              <div className="flex flex-col items-center text-center gap-3">
+                <div className="p-3 rounded-xl bg-slate-700">
+                  <BookOpen className="w-8 h-8 text-slate-300" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-white">{statistics.total_techniques}</p>
-                  <p className="text-xs text-slate-400">Techniques</p>
+                  <p className="text-4xl font-bold text-white">{statistics.total_techniques}</p>
+                  <p className="text-sm text-slate-400 mt-1">Techniques</p>
                 </div>
               </div>
             </CardContent>
@@ -336,14 +336,14 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
             className={`bg-gradient-to-br from-emerald-800 to-emerald-900 border-emerald-700 cursor-pointer transition-all hover:scale-105 hover:shadow-lg ${activeFilter === 'mastered' ? 'ring-2 ring-emerald-400' : ''}`}
             onClick={() => onFilterClick && onFilterClick('mastered')}
           >
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-emerald-700">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-300" />
+            <CardContent className="p-6">
+              <div className="flex flex-col items-center text-center gap-3">
+                <div className="p-3 rounded-xl bg-emerald-700">
+                  <CheckCircle2 className="w-8 h-8 text-emerald-300" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-white">{statistics.mastered_techniques}</p>
-                  <p className="text-xs text-emerald-300">Maîtrisées</p>
+                  <p className="text-4xl font-bold text-white">{statistics.mastered_techniques}</p>
+                  <p className="text-sm text-emerald-300 mt-1">Maîtrisées</p>
                 </div>
               </div>
             </CardContent>
@@ -353,14 +353,14 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
             className={`bg-gradient-to-br from-amber-800 to-amber-900 border-amber-700 cursor-pointer transition-all hover:scale-105 hover:shadow-lg ${activeFilter === 'in_progress' ? 'ring-2 ring-amber-400' : ''}`}
             onClick={() => onFilterClick && onFilterClick('in_progress')}
           >
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-amber-700">
-                  <Clock className="w-5 h-5 text-amber-300" />
+            <CardContent className="p-6">
+              <div className="flex flex-col items-center text-center gap-3">
+                <div className="p-3 rounded-xl bg-amber-700">
+                  <Clock className="w-8 h-8 text-amber-300" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-white">{statistics.in_progress_techniques}</p>
-                  <p className="text-xs text-amber-300">En cours</p>
+                  <p className="text-4xl font-bold text-white">{statistics.in_progress_techniques}</p>
+                  <p className="text-sm text-amber-300 mt-1">En cours</p>
                 </div>
               </div>
             </CardContent>
@@ -370,58 +370,59 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
             className={`bg-gradient-to-br from-rose-800 to-rose-900 border-rose-700 cursor-pointer transition-all hover:scale-105 hover:shadow-lg ${activeFilter === 'practiced' ? 'ring-2 ring-rose-400' : ''}`}
             onClick={() => onFilterClick && onFilterClick('practiced')}
           >
-            <CardContent className="p-4">
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-rose-700">
-                  <Flame className="w-5 h-5 text-rose-300" />
+            <CardContent className="p-6">
+              <div className="flex flex-col items-center text-center gap-3">
+                <div className="p-3 rounded-xl bg-rose-700">
+                  <Flame className="w-8 h-8 text-rose-300" />
                 </div>
                 <div>
-                  <p className="text-2xl font-bold text-white">{statistics.total_practice_sessions}</p>
-                  <p className="text-xs text-rose-300">Sessions</p>
+                  <p className="text-4xl font-bold text-white">{statistics.total_practice_sessions}</p>
+                  <p className="text-sm text-rose-300 mt-1">Sessions</p>
                 </div>
               </div>
             </CardContent>
           </Card>
+        </div>
           
-          {membersStats && isAdmin && (
-            <>
-              <Card 
-                className="bg-gradient-to-br from-cyan-800 to-cyan-900 border-cyan-700 cursor-pointer transition-all hover:scale-105 hover:shadow-lg"
-                onClick={() => onMembersClick && onMembersClick('adults')}
-              >
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-cyan-700">
-                      <Users className="w-5 h-5 text-cyan-300" />
-                    </div>
-                    <div>
-                      <p className="text-2xl font-bold text-white">{membersStats.total_members}</p>
-                      <p className="text-xs text-cyan-300">Adhérents</p>
-                      <p className="text-xs text-cyan-400/60 mt-0.5">Cliquez pour gérer</p>
-                    </div>
+        {membersStats && isAdmin && (
+          <div className="grid grid-cols-2 gap-6 mb-6 max-w-lg mx-auto">
+            <Card 
+              className="bg-gradient-to-br from-cyan-800 to-cyan-900 border-cyan-700 cursor-pointer transition-all hover:scale-105 hover:shadow-lg"
+              onClick={() => onMembersClick && onMembersClick('adults')}
+            >
+              <CardContent className="p-6">
+                <div className="flex flex-col items-center text-center gap-3">
+                  <div className="p-3 rounded-xl bg-cyan-700">
+                    <Users className="w-8 h-8 text-cyan-300" />
                   </div>
-                </CardContent>
-              </Card>
-              
-              <Card 
-                className="bg-gradient-to-br from-purple-800 to-purple-900 border-purple-700 cursor-pointer transition-all hover:scale-105 hover:shadow-lg"
-                onClick={() => onMembersClick && onMembersClick('children')}
-              >
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-purple-700">
-                      <Baby className="w-5 h-5 text-purple-300" />
-                    </div>
-                    <div>
-                      <p className="text-2xl font-bold text-white">{membersStats.total_children}</p>
-                      <p className="text-xs text-purple-300">Enfants</p>
-                      <p className="text-xs text-purple-400/60 mt-0.5">Cliquez pour gérer</p>
-                    </div>
+                  <div>
+                    <p className="text-4xl font-bold text-white">{membersStats.total_members}</p>
+                    <p className="text-sm text-cyan-300 mt-1">Adhérents</p>
+                    <p className="text-xs text-cyan-400/60 mt-1">Cliquez pour gérer</p>
                   </div>
-                </CardContent>
-              </Card>
-            </>
-          )}
+                </div>
+              </CardContent>
+            </Card>
+            
+            <Card 
+              className="bg-gradient-to-br from-purple-800 to-purple-900 border-purple-700 cursor-pointer transition-all hover:scale-105 hover:shadow-lg"
+              onClick={() => onMembersClick && onMembersClick('children')}
+            >
+              <CardContent className="p-6">
+                <div className="flex flex-col items-center text-center gap-3">
+                  <div className="p-3 rounded-xl bg-purple-700">
+                    <Baby className="w-8 h-8 text-purple-300" />
+                  </div>
+                  <div>
+                    <p className="text-4xl font-bold text-white">{membersStats.total_children}</p>
+                    <p className="text-sm text-purple-300 mt-1">Enfants</p>
+                    <p className="text-xs text-purple-400/60 mt-1">Cliquez pour gérer</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
         </div>
         
         <Card className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-slate-700 mb-6">
