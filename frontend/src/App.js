@@ -322,6 +322,18 @@ function AppContent() {
                 </Button>
               )}
               
+              {!isAdmin && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowAdminLogin(true)}
+                  className="text-slate-400 hover:text-white hover:bg-slate-700"
+                >
+                  <Lock className="w-4 h-4 mr-1" />
+                  <span className="hidden sm:inline">Admin</span>
+                </Button>
+              )}
+
               {isAdmin && (
                 <Button
                   variant="ghost"
