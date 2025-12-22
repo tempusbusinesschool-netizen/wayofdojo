@@ -761,7 +761,7 @@ function MembersList({ members, onRefresh }) {
 // ═══════════════════════════════════════════════════════════════════════════════════
 // RÈGLEMENT INTÉRIEUR COMPONENT (avec signature)
 // ═══════════════════════════════════════════════════════════════════════════════════
-function ReglementInterieur({ onRegister }) {
+function ReglementInterieur({ onRegister, isAdmin, onAdminClick }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [expandedArticles, setExpandedArticles] = useState(new Set());
   const [showRegistration, setShowRegistration] = useState(false);
@@ -789,6 +789,14 @@ function ReglementInterieur({ onRegister }) {
     day: 'numeric', month: 'long', year: 'numeric' 
   });
 
+  const handleNewInscription = () => {
+    if (isAdmin) {
+      setShowRegistration(true);
+    } else {
+      onAdminClick();
+    }
+  };
+
   return (
     <>
       <Card className="mb-8 bg-gradient-to-br from-slate-800 to-slate-900 border-slate-700">
@@ -805,11 +813,20 @@ function ReglementInterieur({ onRegister }) {
             </div>
             <div className="flex items-center gap-2">
               <Button
-                onClick={() => setShowRegistration(true)}
-                className="bg-emerald-600 hover:bg-emerald-500"
+                onClick={handleNewInscription}
+                className={isAdmin ? "bg-emerald-600 hover:bg-emerald-500" : "bg-slate-600 hover:bg-slate-500"}
               >
-                <UserPlus className="w-4 h-4 mr-2" />
-                Nouvelle inscription
+                {isAdmin ? (
+                  <>
+                    <UserPlus className="w-4 h-4 mr-2" />
+                    Nouvelle inscription
+                  </>
+                ) : (
+                  <>
+                    <Lock className="w-4 h-4 mr-2" />
+                    Administrateur
+                  </>
+                )}
               </Button>
               <Button
                 variant="ghost"
