@@ -2073,6 +2073,15 @@ function App() {
                 onGradeClick={handleGradeClick}
                 onFilterClick={handleFilterClick}
                 activeFilter={techniqueFilter}
+                isAdmin={isAdmin}
+                onMembersClick={(tab) => {
+                  setActiveTab("members");
+                  // Small delay to ensure tab switch before setting inner tab
+                  setTimeout(() => {
+                    const event = new CustomEvent('setMembersTab', { detail: tab });
+                    window.dispatchEvent(event);
+                  }, 100);
+                }}
               />
             )}
             
