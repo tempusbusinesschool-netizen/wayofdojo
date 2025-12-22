@@ -533,7 +533,7 @@ function MemberRegistrationForm({ onSuccess, onCancel }) {
         </div>
         
         <div>
-          <Label className="text-slate-300">Numéro d'urgence *</Label>
+          <Label className="text-slate-300">Numéro d&apos;urgence *</Label>
           <Input
             type="tel"
             value={formData.emergency_contact}

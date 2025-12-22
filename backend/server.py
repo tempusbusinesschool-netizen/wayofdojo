@@ -195,7 +195,7 @@ def deserialize_doc(doc):
         if field in doc and isinstance(doc[field], str):
             try:
                 doc[field] = datetime.fromisoformat(doc[field])
-            except:
+            except ValueError:
                 pass
     if 'techniques' in doc:
         for tech in doc['techniques']:
