@@ -1223,7 +1223,10 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
           </CardContent>
         </Card>
         
-        <Card className="bg-gradient-to-br from-amber-800 to-amber-900 border-amber-700">
+        <Card 
+          className={`bg-gradient-to-br from-amber-800 to-amber-900 border-amber-700 cursor-pointer transition-all hover:scale-105 hover:shadow-lg ${activeFilter === 'in_progress' ? 'ring-2 ring-amber-400' : ''}`}
+          onClick={() => onFilterClick && onFilterClick('in_progress')}
+        >
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
               <div className="p-2 rounded-lg bg-amber-700">
@@ -1237,7 +1240,10 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
           </CardContent>
         </Card>
         
-        <Card className="bg-gradient-to-br from-rose-800 to-rose-900 border-rose-700">
+        <Card 
+          className={`bg-gradient-to-br from-rose-800 to-rose-900 border-rose-700 cursor-pointer transition-all hover:scale-105 hover:shadow-lg ${activeFilter === 'practiced' ? 'ring-2 ring-rose-400' : ''}`}
+          onClick={() => onFilterClick && onFilterClick('practiced')}
+        >
           <CardContent className="p-4">
             <div className="flex items-center gap-3">
               <div className="p-2 rounded-lg bg-rose-700">
