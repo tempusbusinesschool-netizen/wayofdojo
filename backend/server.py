@@ -1275,6 +1275,7 @@ async def seed_data():
                  "practice_tips": ["Garde défensive avec potentiel offensif", "Exige une grande vigilance"]},
                 {"name": "Waki no Kamae (Garde dissimulée)", 
                  "description": "Garde dissimulée jouant sur l'incertitude. Sabre caché derrière le corps.",
+                 "image_url": "/images/bokken/image22.jpg",
                  "key_points": ["Sabre dissimulé derrière le corps", "L'adversaire ne voit pas la lame", "Joue sur l'incertitude et la surprise"],
                  "practice_tips": ["Garde de tromperie", "Nécessite timing et sens du moment"]}
             ]
