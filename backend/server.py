@@ -46,9 +46,11 @@ class MemberStatus(str, Enum):
 
 class ChildInfo(BaseModel):
     """Information sur un enfant adhérent"""
+    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     first_name: str
     last_name: str
     birth_date: Optional[str] = None
+    status: str = "pending"  # pending, active, inactive
 
 class MemberBase(BaseModel):
     """Modèle de base pour un adhérent"""
