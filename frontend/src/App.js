@@ -2093,6 +2093,9 @@ function App() {
               />
             )}
             
+            {/* Section Déplacements - sous Progression par Grade */}
+            <DeplacementsSection />
+            
             {/* Grade Sections */}
             <div className="space-y-2">
               {kyuLevels.map((kyu) => {
