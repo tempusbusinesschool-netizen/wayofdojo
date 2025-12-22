@@ -290,13 +290,13 @@ function AppContent() {
       <header className="sticky top-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4">
               <img 
                 src="/images/logo-aikido.png" 
                 alt="Logo Aikido La Rivière" 
-                className="h-14 w-auto object-contain"
+                className="h-20 w-auto object-contain"
               />
-              <p className="text-xs text-slate-400 hidden sm:block">68, rue du Docteur Schweitzer 97421 SAINT-LOUIS - RÉUNION</p>
+              <p className="text-sm text-slate-300 hidden sm:block font-medium">68, rue du Docteur Schweitzer<br/>97421 SAINT-LOUIS - RÉUNION</p>
             </div>
             <div className="flex items-center gap-2">
               {/* User Auth Button */}
