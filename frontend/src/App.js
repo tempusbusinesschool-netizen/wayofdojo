@@ -1221,10 +1221,6 @@ function ReglementInterieur({ onRegister, isAdmin, onAdminClick }) {
     return icons[iconName] || ScrollText;
   };
 
-  const today = new Date().toLocaleDateString('fr-FR', { 
-    day: 'numeric', month: 'long', year: 'numeric' 
-  });
-
   const handleNewInscription = () => {
     if (isAdmin) {
       setShowRegistration(true);
