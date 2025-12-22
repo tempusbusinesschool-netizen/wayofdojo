@@ -2,452 +2,226 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --background: 0 0% 98%;
-    --foreground: 220 20% 15%;
-    --card: 0 0% 100%;
-    --card-foreground: 220 20% 15%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 220 20% 15%;
-    --primary: 262 80% 55%;
-    --primary-foreground: 0 0% 100%;
-    --secondary: 220 15% 92%;
-    --secondary-foreground: 220 20% 25%;
-    --muted: 220 15% 95%;
-    --muted-foreground: 220 10% 45%;
-    --accent: 340 80% 55%;
-    --accent-foreground: 0 0% 100%;
-    --destructive: 0 70% 50%;
-    --destructive-foreground: 0 0% 100%;
-    --border: 220 15% 88%;
-    --input: 220 15% 88%;
-    --ring: 262 80% 55%;
-    --radius: 0.75rem;
-  }
+/* Aikido Tracker - Dark Theme */
+:root {
+  --background: 222.2 84% 4.9%;
+  --foreground: 210 40% 98%;
+  --card: 222.2 84% 8%;
+  --card-foreground: 210 40% 98%;
+  --popover: 222.2 84% 8%;
+  --popover-foreground: 210 40% 98%;
+  --primary: 191 91% 45%;
+  --primary-foreground: 222.2 47.4% 11.2%;
+  --secondary: 217.2 32.6% 17.5%;
+  --secondary-foreground: 210 40% 98%;
+  --muted: 217.2 32.6% 17.5%;
+  --muted-foreground: 215 20.2% 65.1%;
+  --accent: 217.2 32.6% 17.5%;
+  --accent-foreground: 210 40% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 40% 98%;
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 191 91% 45%;
+  --radius: 0.75rem;
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   THEME AIKIDO ORANGE - Couleurs chaudes et énergiques
-   ═══════════════════════════════════════════════════════════════ */
-
-/* Fond avec dégradé subtil orangé */
-.aikido-bg {
-  background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 25%, #ffedd5 50%, #fff7ed 75%, #fffbeb 100%);
-  min-height: 100vh;
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Header orange vibrant */
-.header-traditional {
-  background: linear-gradient(135deg, #ea580c 0%, #f97316 50%, #fb923c 100%);
-  border-bottom: 3px solid rgba(255,255,255,0.3);
-  box-shadow: 0 4px 20px rgba(234, 88, 12, 0.3);
-}
-
-/* Cartes avec bordures orangées */
-.card-japanese {
-  background: white;
-  border: 1px solid #fed7aa;
-  border-left: 5px solid var(--belt-color, #f97316);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-  border-radius: 16px;
-  transition: all 0.3s ease;
-}
-
-.card-japanese:hover {
-  box-shadow: 0 8px 30px rgba(249, 115, 22, 0.2);
-  transform: translateY(-2px);
-}
-
-/* Couleurs des ceintures - Style orange */
-.belt-white { 
-  --belt-color: #94a3b8; 
-  background: linear-gradient(135deg, #f8fafc, #f1f5f9); 
-}
-.belt-yellow { 
-  --belt-color: #eab308; 
-  background: linear-gradient(135deg, #fef9c3, #fef08a); 
-  box-shadow: inset 0 0 30px rgba(234, 179, 8, 0.1);
-}
-.belt-orange { 
-  --belt-color: #ea580c; 
-  background: linear-gradient(135deg, #ffedd5, #fed7aa); 
-  box-shadow: inset 0 0 30px rgba(234, 88, 12, 0.1);
-}
-.belt-green { 
-  --belt-color: #16a34a; 
-  background: linear-gradient(135deg, #dcfce7, #bbf7d0); 
-  box-shadow: inset 0 0 30px rgba(22, 163, 74, 0.1);
-}
-.belt-blue { 
-  --belt-color: #2563eb; 
-  background: linear-gradient(135deg, #dbeafe, #bfdbfe); 
-  box-shadow: inset 0 0 30px rgba(37, 99, 235, 0.1);
-}
-.belt-brown { 
-  --belt-color: #92400e; 
-  background: linear-gradient(135deg, #fef3c7, #fde68a); 
-  box-shadow: inset 0 0 30px rgba(146, 64, 14, 0.1);
-}
-.belt-black { 
-  --belt-color: #1c1917; 
-  background: linear-gradient(135deg, #292524, #1c1917); 
-  color: white; 
-}
-
-/* Boutons orange */
-.btn-primary {
-  background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
-  color: white;
-  border: none;
-  box-shadow: 0 4px 15px rgba(234, 88, 12, 0.3);
-  transition: all 0.3s ease;
-}
-
-.btn-primary:hover {
-  background: linear-gradient(135deg, #c2410c 0%, #ea580c 100%);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(234, 88, 12, 0.4);
-}
-
-.btn-accent {
-  background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%);
-  color: white;
-  border: none;
-  box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
-}
-
-.btn-accent:hover {
-  background: linear-gradient(135deg, #b91c1c 0%, #dc2626 100%);
-  box-shadow: 0 6px 20px rgba(220, 38, 38, 0.4);
-}
-
-.btn-success {
-  background: linear-gradient(135deg, #16a34a 0%, #22c55e 100%);
-  color: white;
-  box-shadow: 0 4px 15px rgba(22, 163, 74, 0.3);
-}
-
-.btn-success:hover {
-  background: linear-gradient(135deg, #15803d 0%, #16a34a 100%);
-}
-
-/* Badge de maîtrise - Thème orange */
-.mastery-not-started { 
-  background: linear-gradient(135deg, #f5f5f4, #e7e5e4); 
-  color: #78716c; 
-  border: 1px solid #d6d3d1;
-}
-.mastery-learning { 
-  background: linear-gradient(135deg, #dbeafe, #bfdbfe); 
-  color: #1d4ed8; 
-  border: 1px solid #93c5fd;
-  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
-}
-.mastery-practiced { 
-  background: linear-gradient(135deg, #ffedd5, #fed7aa); 
-  color: #c2410c; 
-  border: 1px solid #fdba74;
-  box-shadow: 0 2px 8px rgba(234, 88, 12, 0.2);
-}
-.mastery-mastered { 
-  background: linear-gradient(135deg, #dcfce7, #bbf7d0); 
-  color: #15803d; 
-  border: 1px solid #86efac;
-  box-shadow: 0 2px 8px rgba(22, 163, 74, 0.2);
-}
-
-/* Sections de points clés et conseils */
-.info-section {
-  background: linear-gradient(135deg, #fffbeb, #fef3c7);
-  border-radius: 12px;
-  padding: 14px 18px;
-  border-left: 4px solid var(--section-color, #f97316);
-}
-
-.key-points {
-  --section-color: #ea580c;
-  background: linear-gradient(135deg, #fff7ed, #ffedd5);
-}
-
-.practice-tips {
-  --section-color: #16a34a;
-  background: linear-gradient(135deg, #f0fdf4, #dcfce7);
-}
-
-/* Technique card améliorée */
-.technique-card {
-  background: white;
-  border-radius: 16px;
-  border: 2px solid #fef3c7;
-  transition: all 0.3s ease;
-  overflow: hidden;
-}
-
-.technique-card:hover {
-  border-color: #fdba74;
-  box-shadow: 0 8px 25px rgba(249, 115, 22, 0.15);
-  transform: translateY(-3px);
-}
-
-/* Progress bar orange */
-.progress-traditional {
-  background: linear-gradient(90deg, #fef3c7, #ffedd5);
-  border-radius: 8px;
-  overflow: hidden;
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
   height: 8px;
 }
 
-.progress-traditional-fill {
-  background: linear-gradient(90deg, #ea580c, #f97316, #fb923c);
-  height: 100%;
-  transition: width 0.5s ease;
-  border-radius: 8px;
-}
-
-/* Modal style orange */
-.modal-japanese {
-  border-top: 5px solid;
-  border-image: linear-gradient(90deg, #ea580c, #f97316, #fb923c) 1;
-  border-radius: 20px;
-}
-
-/* Séparateur orange */
-.divider-japanese {
-  height: 2px;
-  background: linear-gradient(90deg, transparent, #fdba74 20%, #f97316 50%, #fdba74 80%, transparent);
-  margin: 16px 0;
-  border-radius: 2px;
-}
-
-/* Animation */
-@keyframes fade-in {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 5px rgba(249, 115, 22, 0.3); }
-  50% { box-shadow: 0 0 20px rgba(249, 115, 22, 0.6); }
-}
-
-.animate-fade-in {
-  animation: fade-in 0.4s ease forwards;
-}
-
-.animate-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
-}
-
-/* Icône kanji */
-.kanji-icon {
-  font-family: 'Noto Sans JP', 'Hiragino Sans', sans-serif;
-  font-weight: 900;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-}
-
-/* Effet de survol sur les illustrations */
-.illustration-container {
-  position: relative;
-  overflow: hidden;
-  border-radius: 12px;
-}
-
-.illustration-container::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(249, 115, 22, 0) 0%, rgba(249, 115, 22, 0.1) 100%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.technique-card:hover .illustration-container::after {
-  opacity: 1;
-}
-
-/* Custom scrollbar - colorful */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
-  border-radius: 5px;
+  background: hsl(222.2 84% 8%);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #818cf8, #c084fc);
-  border-radius: 5px;
+  background: hsl(217.2 32.6% 25%);
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #6366f1, #a855f7);
+  background: hsl(217.2 32.6% 35%);
 }
 
-/* Card animations */
-.card-hover {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.card-hover:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
-/* Gradient text */
-.gradient-text {
-  background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
-/* Floating animation */
-@keyframes float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-10px) rotate(2deg); }
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-out;
 }
 
-.animate-float {
-  animation: float 4s ease-in-out infinite;
+.animate-slideIn {
+  animation: slideIn 0.3s ease-out;
 }
 
-/* Pulse glow */
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4); }
-  50% { box-shadow: 0 0 20px 10px rgba(99, 102, 241, 0.1); }
+.animate-pulse-slow {
+  animation: pulse 2s ease-in-out infinite;
 }
 
-.animate-pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
-}
-
-/* Smooth transitions */
-button, a, .interactive {
-  transition: all 0.2s ease;
-}
-
-/* Focus styles */
-*:focus-visible {
-  outline: 2px solid #818cf8;
-  outline-offset: 2px;
-}
-
-/* Badge styles */
-.badge-gradient {
-  background: linear-gradient(135deg, #6366f1, #a855f7);
-  color: white;
-}
-
-/* Progress bar shine */
-@keyframes progress-shine {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-.progress-shine {
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-  background-size: 200% 100%;
-  animation: progress-shine 2s infinite;
-}
-
-/* SVG illustrations */
-svg {
-  transition: transform 0.3s ease;
-}
-
-svg:hover {
-  transform: scale(1.05);
-}
-
-/* Toast customization */
-[data-sonner-toast] {
-  background: white !important;
-  border: 2px solid #e2e8f0 !important;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1) !important;
-}
-
-/* Colorful borders */
-.border-rainbow {
-  border-image: linear-gradient(135deg, #f97316, #eab308, #22c55e, #3b82f6, #8b5cf6) 1;
-}
-
-/* Glass effect */
-.glass {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(10px);
-}
-
-/* Technique card hover */
+/* Card Styles */
 .technique-card {
   transition: all 0.3s ease;
 }
 
 .technique-card:hover {
-  transform: translateY(-2px) scale(1.02);
+  transform: translateY(-2px);
 }
 
-/* Colorful shadows */
-.shadow-colored {
-  box-shadow: 0 10px 40px -10px currentColor;
+/* Badge Colors */
+.badge-mastered {
+  background: linear-gradient(135deg, #10b981, #059669);
 }
 
-/* Mastery level colors */
-.mastery-not-started { border-color: #9ca3af; background-color: #f9fafb; }
-.mastery-learning { border-color: #3b82f6; background-color: #eff6ff; }
-.mastery-practiced { border-color: #f59e0b; background-color: #fffbeb; }
-.mastery-mastered { border-color: #22c55e; background-color: #f0fdf4; }
-
-/* Animated background gradient */
-@keyframes gradient-shift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+.badge-practiced {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
 }
 
-.animated-gradient {
-  background: linear-gradient(-45deg, #fef3c7, #dbeafe, #fce7f3, #d1fae5);
-  background-size: 400% 400%;
-  animation: gradient-shift 15s ease infinite;
+.badge-learning {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
 }
 
-/* Button shine effect */
-.btn-shine {
+.badge-not-started {
+  background: linear-gradient(135deg, #64748b, #475569);
+}
+
+/* Progress Bar Animation */
+.progress-bar {
+  transition: width 1s ease-out;
+}
+
+/* Modal Backdrop */
+.modal-backdrop {
+  backdrop-filter: blur(8px);
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Grade Section Header */
+.grade-header {
+  backdrop-filter: blur(12px);
+  transition: all 0.3s ease;
+}
+
+/* Image Styles */
+.technique-image {
+  max-height: 300px;
+  object-fit: contain;
+  background: linear-gradient(135deg, hsl(217.2 32.6% 12%), hsl(217.2 32.6% 8%));
+}
+
+/* Button Hover Effects */
+button {
+  transition: all 0.2s ease;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+/* Selection Color */
+::selection {
+  background-color: hsl(191 91% 45% / 0.3);
+  color: white;
+}
+
+/* Focus Styles */
+*:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  border-color: hsl(var(--border));
+  border-top-color: hsl(var(--primary));
+}
+
+/* Stat Card Glow Effect */
+.stat-card {
   position: relative;
-  overflow: hidden;
 }
 
-.btn-shine::after {
+.stat-card::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  transition: left 0.5s;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, transparent, hsl(var(--primary) / 0.2), transparent);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
 }
 
-.btn-shine:hover::after {
-  left: 100%;
+/* Responsive Typography */
+@media (max-width: 640px) {
+  h1 {
+    font-size: 1.25rem;
+  }
+  
+  h2 {
+    font-size: 1rem;
+  }
+  
+  .text-sm {
+    font-size: 0.8125rem;
+  }
 }
 
-/* Line clamp utility */
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+/* Print Styles */
+@media print {
+  body {
+    background: white;
+    color: black;
+  }
+  
+  header, footer, button {
+    display: none;
+  }
 }
