@@ -1001,7 +1001,7 @@ function ReglementInterieur({ onRegister, isAdmin, onAdminClick }) {
 // ═══════════════════════════════════════════════════════════════════════════════════
 // STATISTICS DASHBOARD COMPONENT
 // ═══════════════════════════════════════════════════════════════════════════════════
-function StatisticsDashboard({ statistics, membersStats }) {
+function StatisticsDashboard({ statistics, membersStats, onGradeClick }) {
   if (!statistics) return null;
   
   return (
