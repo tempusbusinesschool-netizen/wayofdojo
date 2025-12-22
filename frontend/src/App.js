@@ -1582,6 +1582,13 @@ function App() {
         }}
       />
       
+      {/* Admin Login Dialog */}
+      <AdminLoginDialog
+        isOpen={showAdminLogin}
+        onClose={() => setShowAdminLogin(false)}
+        onSuccess={handleAdminLogin}
+      />
+      
       {/* Footer */}
       <footer className="border-t border-slate-800 mt-12 py-6">
         <div className="max-w-7xl mx-auto px-4 text-center">
