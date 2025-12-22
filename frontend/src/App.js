@@ -1016,6 +1016,17 @@ function MemberCard({ member, onValidate, onDelete, onValidateChild, onDeleteChi
 function MembersList({ members, onRefresh, onRegisterChild, onRegisterAdult }) {
   const [activeTab, setActiveTab] = useState("children");
 
+  // Listen for tab change events from stats dashboard
+  useEffect(() => {
+    const handleTabChange = (event) => {
+      if (event.detail === 'children' || event.detail === 'adults') {
+        setActiveTab(event.detail);
+      }
+    };
+    window.addEventListener('setMembersTab', handleTabChange);
+    return () => window.removeEventListener('setMembersTab', handleTabChange);
+  }, []);
+
   const handleValidate = async (memberId) => {
     try {
       await axios.post(`${API}/members/${memberId}/validate`);
