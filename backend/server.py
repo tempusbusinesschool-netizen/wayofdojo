@@ -462,8 +462,24 @@ async def create_member(input: MemberCreate):
     if existing:
         raise HTTPException(status_code=400, detail="Un adhérent avec cet email existe déjà")
     
+    # Generate member_id (AR-001, AR-002, etc.)
+    last_member = await db.members.find_one(
+        {"member_id": {"$exists": True, "$ne": None}},
+        sort=[("member_id", -1)]
+    )
+    if last_member and last_member.get("member_id"):
+        try:
+            last_num = int(last_member["member_id"].split("-")[1])
+            new_num = last_num + 1
+        except (ValueError, IndexError):
+            new_num = 1
+    else:
+        new_num = 1
+    new_member_id = f"AR-{new_num:03d}"
+    
     member_data = input.model_dump()
     member_obj = Member(**member_data)
+    member_obj.member_id = new_member_id
     
     # Set signature date if règlement accepted
     if input.reglement_accepted and input.signature_data:
