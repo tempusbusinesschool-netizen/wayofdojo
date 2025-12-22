@@ -1122,13 +1122,24 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick }) {
           <CardTitle className="text-sm font-medium text-slate-300 flex items-center gap-2">
             <BarChart3 className="w-4 h-4" />
             Progression par Grade
+            <span className="text-xs text-slate-500 font-normal ml-2">(cliquez pour voir)</span>
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           {statistics.techniques_by_level?.map((level, index) => (
-            <div key={index} className="space-y-1">
+            <div 
+              key={index} 
+              className="space-y-1 p-2 -mx-2 rounded-lg cursor-pointer hover:bg-slate-800/50 transition-colors"
+              onClick={() => onGradeClick && onGradeClick(level.name)}
+            >
               <div className="flex items-center justify-between text-xs">
-                <span className="text-slate-300 font-medium">{level.name}</span>
+                <span className="text-slate-300 font-medium flex items-center gap-2">
+                  <div 
+                    className="w-3 h-3 rounded-full" 
+                    style={{ backgroundColor: level.color || '#6366f1' }}
+                  />
+                  {level.name}
+                </span>
                 <span className="text-slate-400">
                   {level.mastered}/{level.total} • {level.progress_percentage}%
                 </span>
