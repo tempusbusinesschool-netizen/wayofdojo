@@ -410,13 +410,14 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         
         {/* Title Section - hidden for admin */}
         {!isAdmin && (
-          <div className="mb-12 w-full">
-            <h1 className="text-xl md:text-2xl lg:text-3xl font-bold text-white flex items-center justify-between px-4">
-              <span className="text-amber-400 text-lg md:text-xl lg:text-2xl">平常心</span>
-              <span className="flex-1 text-center whitespace-nowrap">Entraînement aux différentes techniques en Aïkido</span>
-              <span className="text-amber-400 text-lg md:text-xl lg:text-2xl">平常心</span>
+          <div className="mb-8 md:mb-12 w-full px-2">
+            <h1 className="text-base sm:text-lg md:text-2xl lg:text-3xl font-bold text-white flex flex-col md:flex-row items-center justify-center md:justify-between gap-2 md:gap-4 px-2 md:px-4 text-center">
+              <span className="text-amber-400 text-lg md:text-xl lg:text-2xl hidden md:block">平常心</span>
+              <span className="flex-1 text-center">Entraînement aux techniques Aïkido</span>
+              <span className="text-amber-400 text-lg md:text-xl lg:text-2xl hidden md:block">平常心</span>
             </h1>
-            <div className="w-full h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500 mt-4 rounded-full"></div>
+            <p className="text-amber-400 text-center text-sm mt-1 md:hidden">平常心</p>
+            <div className="w-full h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500 mt-3 md:mt-4 rounded-full"></div>
           </div>
         )}
 
