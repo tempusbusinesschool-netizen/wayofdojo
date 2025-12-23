@@ -375,38 +375,24 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
           </div>
         )}
           
-        {/* Admin blocks - Adhérents and Enfants centered full width */}
+        {/* Admin block - Adhérents (adults + children) centered full width */}
         {membersStats && isAdmin && (
-          <div className="grid grid-cols-2 gap-6 mb-12 w-full">
+          <div className="flex justify-center mb-12 w-full">
             <Card 
-              className="bg-gradient-to-br from-cyan-800 to-cyan-900 border-cyan-700 cursor-pointer transition-all hover:scale-105 hover:shadow-lg"
+              className="bg-gradient-to-br from-cyan-800 to-cyan-900 border-cyan-700 cursor-pointer transition-all hover:scale-105 hover:shadow-lg max-w-2xl w-full"
               onClick={() => onMembersClick && onMembersClick('adults')}
             >
               <CardContent className="px-8 py-6">
-                <div className="flex items-center justify-center gap-6">
+                <div className="flex items-center justify-center gap-8">
                   <div className="p-4 rounded-xl bg-cyan-700">
                     <Users className="w-10 h-10 text-cyan-300" />
                   </div>
                   <div className="text-center">
-                    <p className="text-4xl font-bold text-white">{membersStats.total_members}</p>
+                    <p className="text-4xl font-bold text-white">{membersStats.total_members + membersStats.total_children}</p>
                     <p className="text-lg text-cyan-300">Adhérents</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card 
-              className="bg-gradient-to-br from-purple-800 to-purple-900 border-purple-700 cursor-pointer transition-all hover:scale-105 hover:shadow-lg"
-              onClick={() => onMembersClick && onMembersClick('children')}
-            >
-              <CardContent className="px-8 py-6">
-                <div className="flex items-center justify-center gap-6">
-                  <div className="p-4 rounded-xl bg-purple-700">
-                    <Baby className="w-10 h-10 text-purple-300" />
-                  </div>
-                  <div className="text-center">
-                    <p className="text-4xl font-bold text-white">{membersStats.total_children}</p>
-                    <p className="text-lg text-purple-300">Enfants</p>
+                    <p className="text-sm text-cyan-400/70 mt-1">
+                      {membersStats.total_members} adultes • {membersStats.total_children} enfants
+                    </p>
                   </div>
                 </div>
               </CardContent>
