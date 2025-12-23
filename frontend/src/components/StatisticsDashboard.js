@@ -387,10 +387,10 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                     <Users className="w-10 h-10 text-cyan-300" />
                   </div>
                   <div className="text-center">
-                    <p className="text-4xl font-bold text-white">{membersStats.total_members + membersStats.total_children}</p>
+                    <p className="text-4xl font-bold text-white">{(membersStats.adult_members || 0) + (membersStats.total_children || 0)}</p>
                     <p className="text-lg text-cyan-300">Adhérents</p>
                     <p className="text-sm text-cyan-400/70 mt-1">
-                      {membersStats.total_members} adultes • {membersStats.total_children} enfants
+                      {membersStats.adult_members || 0} adultes • {membersStats.total_children || 0} enfants
                     </p>
                   </div>
                 </div>
