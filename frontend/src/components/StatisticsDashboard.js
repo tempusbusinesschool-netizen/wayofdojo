@@ -394,13 +394,9 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
           <h1 className="text-3xl md:text-4xl font-bold text-white flex items-center justify-center gap-4">
             <div className="w-14 h-14 rounded-full border-2 border-slate-600 overflow-hidden bg-slate-700 flex-shrink-0">
               <img 
-                src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Morihei_Ueshiba_1939.jpg" 
+                src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Morihei_Ueshiba_1939.jpg" 
                 alt="Morihei Ueshiba - Fondateur de l'Aïkido"
                 className="w-full h-full object-cover grayscale"
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                  e.target.parentElement.innerHTML = '<span class="text-2xl">翁</span>';
-                }}
               />
             </div>
             Les différentes techniques en Aïkido
