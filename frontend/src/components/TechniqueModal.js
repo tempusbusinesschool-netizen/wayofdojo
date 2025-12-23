@@ -108,11 +108,14 @@ function TechniqueModal({ technique, kyuName, kyuColor, isOpen, onClose, onUpdat
               </span>
               <Button 
                 size="sm" 
-                onClick={() => onPractice(technique.id)}
+                onClick={() => {
+                  onPractice(technique.id);
+                  onClose();
+                }}
                 className="bg-emerald-600 hover:bg-emerald-500 text-white"
               >
                 <Flame className="w-4 h-4 mr-1" />
-                +1 Session
+                Validé
               </Button>
             </div>
           </div>
