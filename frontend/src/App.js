@@ -320,15 +320,20 @@ function AppContent() {
                   </Button>
                 </div>
               ) : (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setShowAuthDialog(true)}
-                  className="border-cyan-600 text-cyan-400 hover:bg-cyan-900/30"
-                >
-                  <LogIn className="w-4 h-4 mr-1" />
-                  Connexion
-                </Button>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-amber-400 hidden md:inline">
+                    💡 Créez un compte pour sauvegarder votre progression !
+                  </span>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setShowAuthDialog(true)}
+                    className="border-cyan-600 text-cyan-400 hover:bg-cyan-900/30"
+                  >
+                    <LogIn className="w-4 h-4 mr-1" />
+                    Connexion
+                  </Button>
+                </div>
               )}
               
               {!isAdmin && (
