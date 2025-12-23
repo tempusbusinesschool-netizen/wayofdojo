@@ -106,8 +106,8 @@ function AppContent() {
       const visitorsData = responses[4].data;
       
       // If user is authenticated, merge their progression
-      if (isAuthenticated && responses[4]) {
-        const progression = responses[4].data;
+      if (isAuthenticated && responses[5]) {
+        const progression = responses[5].data;
         setUserProgression(progression);
         
         // Merge user progression into kyu levels
@@ -132,6 +132,7 @@ function AppContent() {
       setStatistics(statsData);
       setMembersStats(membersStatsData);
       setMembers(membersData);
+      setVisitors(visitorsData);
     } catch (error) {
       console.error("Error fetching data:", error);
       // Don't show error toast for progression endpoint if user just registered
