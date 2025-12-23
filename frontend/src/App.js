@@ -388,17 +388,6 @@ function AppContent() {
           </div>
         </div>
       )}
-
-      {/* Non-authenticated banner */}
-      {!isAuthenticated && (
-        <div className="bg-gradient-to-r from-amber-900/30 to-orange-900/30 border-b border-amber-700/30">
-          <div className="max-w-7xl mx-auto px-4 py-3">
-            <p className="text-sm text-amber-300 text-center">
-              💡 <button onClick={() => setShowAuthDialog(true)} className="underline hover:text-amber-200">Créez un compte</button> pour sauvegarder votre progression personnelle !
-            </p>
-          </div>
-        </div>
-      )}
       
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 py-6">
