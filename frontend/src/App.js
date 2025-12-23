@@ -357,7 +357,7 @@ function AppContent() {
                   className="text-red-400 hover:text-red-300 hover:bg-red-900/20"
                 >
                   <LogOut className="w-4 h-4 sm:mr-1" />
-                  <span className="hidden sm:inline">Admin</span>
+                  <span className="hidden sm:inline">Déconnexion</span>
                 </Button>
               )}
               <Button
