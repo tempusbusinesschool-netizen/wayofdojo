@@ -88,7 +88,8 @@ function AppContent() {
         axios.get(`${API}/kyu-levels`),
         axios.get(`${API}/statistics`),
         axios.get(`${API}/members-stats`),
-        axios.get(`${API}/members`)
+        axios.get(`${API}/members`),
+        axios.get(`${API}/visitors`)
       ];
       
       // If authenticated, also fetch user progression
@@ -102,6 +103,7 @@ function AppContent() {
       const statsData = responses[1].data;
       const membersStatsData = responses[2].data;
       const membersData = responses[3].data;
+      const visitorsData = responses[4].data;
       
       // If user is authenticated, merge their progression
       if (isAuthenticated && responses[4]) {
