@@ -344,7 +344,7 @@ function AppContent() {
                   onClick={() => setShowAdminLogin(true)}
                   className="text-slate-400 hover:text-white hover:bg-slate-700"
                 >
-                  <Lock className="w-4 h-4 mr-1" />
+                  <Lock className="w-4 h-4 sm:mr-1" />
                   <span className="hidden sm:inline">Admin</span>
                 </Button>
               )}
@@ -356,7 +356,7 @@ function AppContent() {
                   onClick={handleAdminLogout}
                   className="text-red-400 hover:text-red-300 hover:bg-red-900/20"
                 >
-                  <LogOut className="w-4 h-4 mr-1" />
+                  <LogOut className="w-4 h-4 sm:mr-1" />
                   <span className="hidden sm:inline">Admin</span>
                 </Button>
               )}
