@@ -524,62 +524,26 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         </Card>
       </div>
 
-      {/* Email Dialog for PDF */}
+      {/* PDF Download Dialog */}
       <Dialog open={showEmailDialog} onOpenChange={setShowEmailDialog}>
         <DialogContent className="max-w-md bg-slate-900 border-slate-700 text-white">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold flex items-center gap-2">
               <FileText className="w-5 h-5 text-cyan-400" />
-              Obtenir ma progression en PDF
+              Télécharger ma progression en PDF
             </DialogTitle>
             <DialogDescription className="text-slate-400">
-              Téléchargez directement ou recevez votre suivi par email.
+              Obtenez votre suivi de progression détaillé.
             </DialogDescription>
           </DialogHeader>
           
           <div className="space-y-4 py-4">
             <div className="flex items-center gap-3 p-3 bg-cyan-900/30 border border-cyan-700 rounded-lg">
-              <Mail className="w-8 h-8 text-cyan-400" />
+              <Download className="w-8 h-8 text-cyan-400" />
               <div>
                 <p className="text-sm text-white font-medium">PDF détaillé inclus</p>
                 <p className="text-xs text-slate-400">Progression globale, techniques par grade, sessions de pratique</p>
               </div>
-            </div>
-
-            {/* Download button - always available */}
-            <Button
-              onClick={handleDownloadPDF}
-              disabled={sending}
-              className="w-full bg-emerald-600 hover:bg-emerald-500"
-            >
-              {sending ? (
-                <>Génération en cours...</>
-              ) : (
-                <>
-                  <Download className="w-4 h-4 mr-2" />
-                  Télécharger le PDF
-                </>
-              )}
-            </Button>
-
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <span className="w-full border-t border-slate-700" />
-              </div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-slate-900 px-2 text-slate-500">ou par email</span>
-              </div>
-            </div>
-            
-            <div>
-              <Label className="text-slate-300">Adresse email</Label>
-              <Input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="votre@email.com"
-                className="bg-slate-700 border-slate-600 text-white mt-1"
-              />
             </div>
           </div>
           
@@ -589,19 +553,19 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               onClick={() => setShowEmailDialog(false)}
               className="flex-1 border-slate-600 text-slate-300 hover:bg-slate-700"
             >
-              Fermer
+              Annuler
             </Button>
             <Button
-              onClick={handleSendPDF}
-              disabled={sending || !email}
-              className="flex-1 bg-cyan-600 hover:bg-cyan-500"
+              onClick={handleDownloadPDF}
+              disabled={sending}
+              className="flex-1 bg-emerald-600 hover:bg-emerald-500"
             >
               {sending ? (
-                <>Envoi en cours...</>
+                <>Génération en cours...</>
               ) : (
                 <>
-                  <Send className="w-4 h-4 mr-2" />
-                  Envoyer
+                  <Download className="w-4 h-4 mr-2" />
+                  Télécharger
                 </>
               )}
             </Button>
