@@ -421,6 +421,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               />
             </div>
             Les différentes techniques en Aïkido
+            <span className="text-amber-400 text-2xl md:text-3xl">平常心</span>
           </h1>
           <div className="w-24 h-1 bg-gradient-to-r from-cyan-500 to-blue-500 mx-auto mt-4 rounded-full"></div>
         </div>
