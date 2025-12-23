@@ -288,8 +288,8 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
             onClick={() => setShowEmailDialog(true)}
             className="border-cyan-600 text-cyan-400 hover:bg-cyan-900/30 hover:text-cyan-300"
           >
-            <Mail className="w-4 h-4 mr-2" />
-            Recevoir mon PDF
+            <Download className="w-4 h-4 mr-2" />
+            Télécharger PDF
           </Button>
           <Button
             variant="outline"
