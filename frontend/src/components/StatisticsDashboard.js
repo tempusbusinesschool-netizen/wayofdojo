@@ -414,7 +414,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         <div className="mb-12 w-full">
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white flex items-center justify-between px-4">
             <span className="text-amber-400 text-2xl md:text-3xl lg:text-4xl">平常心</span>
-            <span className="flex-1 text-center">Les différentes techniques en Aïkido</span>
+            <span className="flex-1 text-center">Entraînement aux différentes techniques en Aïkido</span>
             <span className="text-amber-400 text-2xl md:text-3xl lg:text-4xl">平常心</span>
           </h1>
           <div className="w-full h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-cyan-500 mt-4 rounded-full"></div>
