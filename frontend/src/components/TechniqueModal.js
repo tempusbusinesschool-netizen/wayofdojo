@@ -82,7 +82,10 @@ function TechniqueModal({ technique, kyuName, kyuColor, isOpen, onClose, onUpdat
             <h4 className="text-white font-semibold text-sm mb-3">Niveau de maîtrise</h4>
             <Select 
               value={technique.mastery_level || "not_started"} 
-              onValueChange={(value) => onUpdateMastery(technique.id, value)}
+              onValueChange={(value) => {
+                onUpdateMastery(technique.id, value);
+                onClose();
+              }}
             >
               <SelectTrigger className="w-full bg-slate-700 border-slate-600 text-white">
                 <SelectValue />
