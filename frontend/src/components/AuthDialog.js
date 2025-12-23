@@ -69,7 +69,14 @@ function AuthDialog({ isOpen, onClose }) {
       onClose();
       resetForms();
     } catch (error) {
-      toast.error(error.response?.data?.detail || "Erreur lors de l'inscription");
+      const errorMessage = error.response?.data?.detail;
+      if (errorMessage) {
+        toast.error(errorMessage);
+      } else if (error.message === "Network Error") {
+        toast.error("Erreur de connexion au serveur");
+      } else {
+        toast.error("Erreur lors de l'inscription. Veuillez réessayer.");
+      }
     } finally {
       setLoading(false);
     }
