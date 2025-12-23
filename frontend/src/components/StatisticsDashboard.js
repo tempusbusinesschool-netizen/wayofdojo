@@ -243,46 +243,6 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
     }
   };
 
-  const handleSendPDF = async () => {
-    if (!email || !email.includes('@')) {
-      toast.error("Veuillez saisir une adresse email valide");
-      return;
-    }
-
-    if (!kyuLevels || kyuLevels.length === 0) {
-      toast.error("Aucune donnée à exporter");
-      return;
-    }
-
-    setSending(true);
-    toast.info("Génération et envoi du PDF en cours...");
-
-    try {
-      const pdfBase64 = await generatePDFBase64();
-      const today = new Date().toLocaleDateString('fr-FR').replace(/\//g, '-');
-      
-      await axios.post(`${API}/send-progression-pdf`, {
-        email: email,
-        pdf_base64: pdfBase64,
-        filename: `progression_aikido_${today}.pdf`
-      });
-      
-      toast.success(`PDF envoyé à ${email} !`);
-      setShowEmailDialog(false);
-      setEmail('');
-    } catch (error) {
-      console.error('Error sending PDF:', error);
-      const errorMsg = error.response?.data?.detail || "";
-      if (errorMsg.includes("testing emails") || errorMsg.includes("verify a domain")) {
-        toast.error("Service email en mode test. Utilisez le bouton 'Télécharger' pour obtenir votre PDF.");
-      } else {
-        toast.error(errorMsg || "Erreur lors de l'envoi du PDF");
-      }
-    } finally {
-      setSending(false);
-    }
-  };
-
   const exportToCSV = () => {
     if (!kyuLevels || kyuLevels.length === 0) {
       toast.error("Aucune donnée à exporter");
