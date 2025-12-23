@@ -379,8 +379,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         {membersStats && isAdmin && (
           <div className="flex justify-center mb-12 w-full">
             <Card 
-              className="bg-gradient-to-br from-cyan-800 to-cyan-900 border-cyan-700 cursor-pointer transition-all hover:scale-105 hover:shadow-lg max-w-2xl w-full"
-              onClick={() => onMembersClick && onMembersClick('adults')}
+              className="bg-gradient-to-br from-cyan-800 to-cyan-900 border-cyan-700 max-w-2xl w-full"
             >
               <CardContent className="px-8 py-6">
                 <div className="flex items-center justify-center gap-8">
@@ -394,6 +393,15 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                       {membersStats.total_members} adultes • {membersStats.total_children} enfants
                     </p>
                   </div>
+                </div>
+                <div className="flex justify-center mt-4">
+                  <Button
+                    onClick={() => onMembersClick && onMembersClick('adults')}
+                    className="bg-cyan-600 hover:bg-cyan-500 text-white"
+                  >
+                    <Users className="w-4 h-4 mr-2" />
+                    Gérer les inscriptions
+                  </Button>
                 </div>
               </CardContent>
             </Card>
