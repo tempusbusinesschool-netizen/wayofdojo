@@ -395,22 +395,22 @@ function AppContent() {
         {/* Tabs for Techniques and Members */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
           {isAdmin && (
-            <TabsList className="bg-slate-800 border-slate-700">
-              <TabsTrigger value="techniques" className="data-[state=active]:bg-slate-700">
-                <Swords className="w-4 h-4 mr-2" />
-                Techniques
+            <TabsList className="bg-slate-800 border-slate-700 flex flex-wrap gap-1">
+              <TabsTrigger value="techniques" className="data-[state=active]:bg-slate-700 text-xs sm:text-sm">
+                <Swords className="w-4 h-4 sm:mr-2" />
+                <span className="hidden sm:inline">Techniques</span>
               </TabsTrigger>
-              <TabsTrigger value="members" className="data-[state=active]:bg-slate-700">
-                <Users className="w-4 h-4 mr-2" />
-                Adhérents ({members.length})
+              <TabsTrigger value="members" className="data-[state=active]:bg-slate-700 text-xs sm:text-sm">
+                <Users className="w-4 h-4 sm:mr-2" />
+                <span className="hidden sm:inline">Adhérents</span> ({members.length})
               </TabsTrigger>
-              <TabsTrigger value="visitors" className="data-[state=active]:bg-slate-700">
-                <Eye className="w-4 h-4 mr-2" />
-                Visiteurs ({visitors.length})
+              <TabsTrigger value="visitors" className="data-[state=active]:bg-slate-700 text-xs sm:text-sm">
+                <Eye className="w-4 h-4 sm:mr-2" />
+                <span className="hidden sm:inline">Visiteurs</span> ({visitors.length})
               </TabsTrigger>
-              <TabsTrigger value="reglement" className="data-[state=active]:bg-slate-700">
-                <ScrollText className="w-4 h-4 mr-2" />
-                Règlement
+              <TabsTrigger value="reglement" className="data-[state=active]:bg-slate-700 text-xs sm:text-sm">
+                <ScrollText className="w-4 h-4 sm:mr-2" />
+                <span className="hidden sm:inline">Règlement</span>
               </TabsTrigger>
             </TabsList>
           )}
