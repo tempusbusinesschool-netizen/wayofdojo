@@ -302,7 +302,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
           </div>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-12 max-w-6xl mx-auto">
           <Card 
             className={`bg-gradient-to-br from-slate-800 to-slate-900 border-slate-700 cursor-pointer transition-all hover:scale-105 hover:shadow-lg ${activeFilter === 'all' ? 'ring-2 ring-slate-400' : ''}`}
             onClick={() => onFilterClick && onFilterClick('all')}
