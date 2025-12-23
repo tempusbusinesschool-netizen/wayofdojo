@@ -518,6 +518,71 @@ function AppContent() {
           )}
 
           {isAdmin && (
+            <TabsContent value="visitors" className="mt-6">
+              <div className="mb-4">
+                <Button
+                  variant="outline"
+                  onClick={() => setActiveTab("techniques")}
+                  className="border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-white"
+                >
+                  ← Retour aux techniques
+                </Button>
+              </div>
+              <Card className="bg-slate-900/50 border-slate-700">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center gap-2">
+                    <Eye className="w-5 h-5 text-purple-400" />
+                    Visiteurs inscrits
+                  </CardTitle>
+                  <CardDescription className="text-slate-400">
+                    Utilisateurs qui suivent leur progression sur la plateforme
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {visitors.length === 0 ? (
+                    <p className="text-slate-400 text-center py-8">Aucun visiteur inscrit pour le moment</p>
+                  ) : (
+                    <div className="space-y-3">
+                      {visitors.map((visitor) => (
+                        <div 
+                          key={visitor.id} 
+                          className="flex items-center justify-between p-4 bg-slate-800/50 rounded-lg border border-slate-700"
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center">
+                              <User className="w-5 h-5 text-white" />
+                            </div>
+                            <div>
+                              <p className="font-medium text-white">
+                                {visitor.first_name} {visitor.last_name}
+                              </p>
+                              <p className="text-sm text-slate-400">{visitor.email}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-6 text-sm">
+                            <div className="text-center">
+                              <p className="text-emerald-400 font-bold">{visitor.techniques_mastered}</p>
+                              <p className="text-slate-500 text-xs">Maîtrisées</p>
+                            </div>
+                            <div className="text-center">
+                              <p className="text-amber-400 font-bold">{visitor.techniques_in_progress}</p>
+                              <p className="text-slate-500 text-xs">En cours</p>
+                            </div>
+                            <div className="text-center">
+                              <p className="text-cyan-400 font-bold">{visitor.total_sessions}</p>
+                              <p className="text-slate-500 text-xs">Sessions</p>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </TabsContent>
+          )}
+
+          {isAdmin && (
             <TabsContent value="reglement" className="mt-6">
               <ReglementInterieur 
                 onRegister={fetchData} 
