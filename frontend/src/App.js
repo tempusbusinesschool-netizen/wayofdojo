@@ -410,7 +410,7 @@ function AppContent() {
               </TabsTrigger>
               <TabsTrigger value="reglement" className="data-[state=active]:bg-slate-700 text-xs sm:text-sm">
                 <ScrollText className="w-4 h-4 sm:mr-2" />
-                <span className="hidden sm:inline">Règlement</span>
+                <span className="hidden sm:inline">Règlement Intérieur</span>
               </TabsTrigger>
             </TabsList>
           )}
