@@ -811,71 +811,35 @@ async def record_practice(kyu_id: str, technique_id: str):
 # Statistics API
 @api_router.get("/statistics")
 async def get_statistics():
-    """Get overall statistics and progression"""
+    """Get overall statistics - returns zero progression for non-authenticated requests"""
     kyu_levels = await db.kyu_levels.find({}, {"_id": 0}).to_list(100)
     
     total_techniques = 0
-    mastered_techniques = 0
-    in_progress_techniques = 0
-    total_practice_sessions = 0
     techniques_by_level = []
-    
-    mastery_weights = {
-        "not_started": 0,
-        "learning": 0.33,
-        "practiced": 0.66,
-        "mastered": 1
-    }
     
     for kyu in kyu_levels:
         kyu_total = len(kyu.get('techniques', []))
-        kyu_mastered = 0
-        kyu_in_progress = 0
-        kyu_sessions = 0
-        kyu_weighted_progress = 0
-        
-        for tech in kyu.get('techniques', []):
-            total_techniques += 1
-            mastery = tech.get('mastery_level', 'not_started')
-            sessions = tech.get('practice_count', 0)
-            total_practice_sessions += sessions
-            kyu_sessions += sessions
-            kyu_weighted_progress += mastery_weights.get(mastery, 0)
-            
-            if mastery == 'mastered':
-                mastered_techniques += 1
-                kyu_mastered += 1
-            elif mastery in ['learning', 'practiced']:
-                in_progress_techniques += 1
-                kyu_in_progress += 1
+        total_techniques += kyu_total
         
         techniques_by_level.append({
             "name": kyu.get('name'),
             "color": kyu.get('color'),
             "total": kyu_total,
-            "mastered": kyu_mastered,
-            "in_progress": kyu_in_progress,
-            "not_started": kyu_total - kyu_mastered - kyu_in_progress,
-            "practice_sessions": kyu_sessions,
-            "progress_percentage": round((kyu_weighted_progress / kyu_total) * 100, 1) if kyu_total > 0 else 0
+            "mastered": 0,
+            "in_progress": 0,
+            "not_started": kyu_total,
+            "practice_sessions": 0,
+            "progress_percentage": 0
         })
     
-    overall_progress = 0
-    if total_techniques > 0:
-        weighted_total = sum(
-            mastery_weights.get(tech.get('mastery_level', 'not_started'), 0)
-            for kyu in kyu_levels
-            for tech in kyu.get('techniques', [])
-        )
-        overall_progress = round((weighted_total / total_techniques) * 100, 1)
-    
+    # Return zero progression for non-authenticated users
     return {
         "total_techniques": total_techniques,
-        "mastered_techniques": mastered_techniques,
-        "in_progress_techniques": in_progress_techniques,
-        "not_started_techniques": total_techniques - mastered_techniques - in_progress_techniques,
-        "total_practice_sessions": total_practice_sessions,
-        "overall_progress": overall_progress,
+        "mastered_techniques": 0,
+        "in_progress_techniques": 0,
+        "not_started_techniques": total_techniques,
+        "total_practice_sessions": 0,
+        "overall_progress": 0,
         "techniques_by_level": techniques_by_level
     }
 
