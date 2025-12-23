@@ -404,6 +404,10 @@ function AppContent() {
                 <Users className="w-4 h-4 mr-2" />
                 Adhérents ({members.length})
               </TabsTrigger>
+              <TabsTrigger value="visitors" className="data-[state=active]:bg-slate-700">
+                <Eye className="w-4 h-4 mr-2" />
+                Visiteurs ({visitors.length})
+              </TabsTrigger>
               <TabsTrigger value="reglement" className="data-[state=active]:bg-slate-700">
                 <ScrollText className="w-4 h-4 mr-2" />
                 Règlement
