@@ -321,9 +321,14 @@ function AppContent() {
                 </div>
               ) : (
                 <div className="flex items-center gap-2">
-                  <span className="text-xs text-amber-400 hidden md:inline">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setShowAuthDialog(true)}
+                    className="border-amber-600 text-amber-400 hover:bg-amber-900/30 hidden md:flex"
+                  >
                     💡 Créez un compte pour sauvegarder votre progression !
-                  </span>
+                  </Button>
                   <Button
                     variant="outline"
                     size="sm"
