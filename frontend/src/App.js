@@ -41,6 +41,7 @@ function AppContent() {
   const [statistics, setStatistics] = useState(null);
   const [membersStats, setMembersStats] = useState(null);
   const [members, setMembers] = useState([]);
+  const [visitors, setVisitors] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedTechnique, setSelectedTechnique] = useState(null);
   const [selectedKyu, setSelectedKyu] = useState(null);
