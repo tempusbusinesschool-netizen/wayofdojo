@@ -409,11 +409,33 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         
         <Card className="bg-slate-900/50 border-slate-700">
           <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-slate-300 flex items-center gap-2">
-              <BarChart3 className="w-4 h-4" />
-              Progression par Grade
-              <span className="text-xs text-slate-500 font-normal ml-2">(cliquez pour voir)</span>
-            </CardTitle>
+            <div className="flex items-center justify-between">
+              <CardTitle className="text-sm font-medium text-slate-300 flex items-center gap-2">
+                <BarChart3 className="w-4 h-4" />
+                Progression par Grade
+                <span className="text-xs text-slate-500 font-normal ml-2">(cliquez pour voir)</span>
+              </CardTitle>
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowEmailDialog(true)}
+                  className="border-cyan-600 text-cyan-400 hover:bg-cyan-900/30 hover:text-cyan-300 h-7 text-xs"
+                >
+                  <Download className="w-3 h-3 mr-1" />
+                  PDF
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={exportToCSV}
+                  className="border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-white h-7 text-xs"
+                >
+                  <Download className="w-3 h-3 mr-1" />
+                  CSV
+                </Button>
+              </div>
+            </div>
           </CardHeader>
           <CardContent className="space-y-3">
             {statistics.techniques_by_level?.map((level, index) => (
