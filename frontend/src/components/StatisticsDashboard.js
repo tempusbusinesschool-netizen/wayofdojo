@@ -281,27 +281,6 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
   return (
     <>
       <div className="mb-8 animate-fadeIn">
-        <div className="flex justify-end mb-4 gap-2">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setShowEmailDialog(true)}
-            className="border-cyan-600 text-cyan-400 hover:bg-cyan-900/30 hover:text-cyan-300"
-          >
-            <Download className="w-4 h-4 mr-2" />
-            Télécharger PDF
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={exportToCSV}
-            className="border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-white"
-          >
-            <Download className="w-4 h-4 mr-2" />
-            Export CSV
-          </Button>
-        </div>
-        
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6 max-w-6xl mx-auto">
           <Card 
             className={`bg-gradient-to-br from-slate-800 to-slate-900 border-slate-700 cursor-pointer transition-all hover:scale-105 hover:shadow-lg ${activeFilter === 'all' ? 'ring-2 ring-slate-400' : ''}`}
