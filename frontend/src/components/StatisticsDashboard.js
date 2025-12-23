@@ -282,22 +282,22 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
     <>
       <div className="mb-8 animate-fadeIn">
         {/* Logo and 7 Virtues Section */}
-        <div className="flex flex-col md:flex-row items-center justify-center gap-6 mb-8 p-6 bg-slate-800/50 rounded-xl border border-slate-700">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-8 mb-10 p-8 bg-slate-800/50 rounded-xl border border-slate-700">
           <img 
             src="/images/logo-aikido.png" 
             alt="Logo Aikido La Rivière" 
-            className="h-24 w-auto"
+            className="h-36 w-auto"
           />
           <div className="text-center md:text-left">
-            <h3 className="text-lg font-bold text-cyan-400 mb-3">Les 7 Vertus de l'Aïkido</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-1 text-sm">
-              <p className="text-slate-300"><span className="text-amber-400 font-bold">義 Gi</span> : Droiture</p>
-              <p className="text-slate-300"><span className="text-amber-400 font-bold">勇 Yu</span> : Courage</p>
-              <p className="text-slate-300"><span className="text-amber-400 font-bold">仁 Jin</span> : Bienveillance</p>
-              <p className="text-slate-300"><span className="text-amber-400 font-bold">礼 Rei</span> : Respect</p>
-              <p className="text-slate-300"><span className="text-amber-400 font-bold">誠 Makoto</span> : Sincérité</p>
-              <p className="text-slate-300"><span className="text-amber-400 font-bold">名誉 Meiyo</span> : Honneur</p>
-              <p className="text-slate-300"><span className="text-amber-400 font-bold">忠義 Chugi</span> : Loyauté</p>
+            <h3 className="text-2xl font-bold text-cyan-400 mb-4">Les 7 Vertus de l'Aïkido</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-3 text-base">
+              <p className="text-slate-300"><span className="text-amber-400 font-bold text-lg">義 Gi</span> : Droiture</p>
+              <p className="text-slate-300"><span className="text-amber-400 font-bold text-lg">勇 Yu</span> : Courage</p>
+              <p className="text-slate-300"><span className="text-amber-400 font-bold text-lg">仁 Jin</span> : Bienveillance</p>
+              <p className="text-slate-300"><span className="text-amber-400 font-bold text-lg">礼 Rei</span> : Respect</p>
+              <p className="text-slate-300"><span className="text-amber-400 font-bold text-lg">誠 Makoto</span> : Sincérité</p>
+              <p className="text-slate-300"><span className="text-amber-400 font-bold text-lg">名誉 Meiyo</span> : Honneur</p>
+              <p className="text-slate-300"><span className="text-amber-400 font-bold text-lg">忠義 Chugi</span> : Loyauté</p>
             </div>
           </div>
         </div>
