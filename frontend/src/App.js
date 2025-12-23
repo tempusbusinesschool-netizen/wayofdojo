@@ -131,7 +131,10 @@ function AppContent() {
       setMembers(membersData);
     } catch (error) {
       console.error("Error fetching data:", error);
-      toast.error("Erreur lors du chargement des données");
+      // Don't show error toast for progression endpoint if user just registered
+      if (error.response?.status !== 401) {
+        toast.error("Erreur lors du chargement des données");
+      }
     } finally {
       setLoading(false);
     }
