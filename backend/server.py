@@ -1041,6 +1041,41 @@ async def get_members_stats():
     }
 
 
+@api_router.get("/visitors")
+async def get_visitors():
+    """Get all visitors (users who registered to track their progression)"""
+    users = await db.users.find({}, {"_id": 0, "hashed_password": 0}).to_list(100)
+    
+    visitors = []
+    for user in users:
+        progression = user.get("progression", {})
+        mastered = sum(1 for p in progression.values() if p.get("mastery_level") == "mastered")
+        in_progress = sum(1 for p in progression.values() if p.get("mastery_level") in ["learning", "practiced"])
+        total_sessions = sum(p.get("practice_count", 0) for p in progression.values())
+        
+        visitors.append({
+            "id": user.get("id"),
+            "email": user.get("email"),
+            "first_name": user.get("first_name"),
+            "last_name": user.get("last_name"),
+            "created_at": user.get("created_at"),
+            "techniques_mastered": mastered,
+            "techniques_in_progress": in_progress,
+            "total_sessions": total_sessions
+        })
+    
+    return visitors
+
+
+@api_router.get("/visitors-stats")
+async def get_visitors_stats():
+    """Get visitors statistics"""
+    total_visitors = await db.users.count_documents({})
+    return {
+        "total_visitors": total_visitors
+    }
+
+
 # Clear and reseed data
 @api_router.post("/reseed")
 async def reseed_data():
