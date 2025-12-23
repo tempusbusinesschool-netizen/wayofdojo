@@ -411,12 +411,12 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         )}
         
         {/* Title Section */}
-        <div className="text-center mb-6">
+        <div className="text-center mb-6 w-full">
           <h1 className="text-3xl md:text-4xl font-bold text-white flex items-center justify-center gap-4">
-            Les différentes techniques en Aïkido
             <span className="text-amber-400 text-2xl md:text-3xl">平常心</span>
+            Les différentes techniques en Aïkido
           </h1>
-          <div className="w-24 h-1 bg-gradient-to-r from-cyan-500 to-blue-500 mx-auto mt-4 rounded-full"></div>
+          <div className="w-full max-w-4xl h-1 bg-gradient-to-r from-cyan-500 to-blue-500 mx-auto mt-4 rounded-full"></div>
         </div>
 
         <Card className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-slate-700 mb-6">
