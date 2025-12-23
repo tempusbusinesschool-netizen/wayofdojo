@@ -1,27 +1,13 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { BookOpen, CheckCircle2, Clock, Flame, TrendingUp, BarChart3, Users, Baby, FileText, Download, Mail, Send } from "lucide-react";
+import { BookOpen, CheckCircle2, Clock, Flame, TrendingUp, BarChart3, Users, Baby, FileText, Download } from "lucide-react";
 import { toast } from "sonner";
 
-const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-const API = `${BACKEND_URL}/api`;
-
-function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterClick, activeFilter, isAdmin, onMembersClick, kyuLevels, userEmail }) {
+function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterClick, activeFilter, isAdmin, onMembersClick, kyuLevels }) {
   const [showEmailDialog, setShowEmailDialog] = useState(false);
-  const [email, setEmail] = useState(userEmail || '');
   const [sending, setSending] = useState(false);
-
-  // Update email when userEmail prop changes
-  React.useEffect(() => {
-    if (userEmail) {
-      setEmail(userEmail);
-    }
-  }, [userEmail]);
 
   if (!statistics) return null;
 
