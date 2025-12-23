@@ -320,25 +320,14 @@ function AppContent() {
                   </Button>
                 </div>
               ) : (
-                <div className="flex items-center gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setShowAuthDialog(true)}
-                    className="border-amber-600 text-amber-400 hover:bg-amber-900/30 hidden md:flex"
-                  >
-                    💡 Créez un compte pour sauvegarder votre progression !
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setShowAuthDialog(true)}
-                    className="border-cyan-600 text-cyan-400 hover:bg-cyan-900/30"
-                  >
-                    <LogIn className="w-4 h-4 mr-1" />
-                    Connexion
-                  </Button>
-                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowAuthDialog(true)}
+                  className="border-amber-600 text-amber-400 hover:bg-amber-900/30"
+                >
+                  💡 Créez un compte pour sauvegarder votre progression !
+                </Button>
               )}
               
               {!isAdmin && (
