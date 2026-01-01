@@ -1299,19 +1299,19 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
           {/* Grade Cards Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
             {statistics.techniques_by_level?.map((level, index) => {
-              // Fun emojis and colors for each grade type
+              // Fun emojis and colors for each grade type WITH BELT EQUIVALENCE
               const gradeStyles = {
-                '5e KYU': { emoji: '🌱', gradient: 'from-lime-500 to-green-600', glow: 'shadow-lime-500/40', rank: 'Débutant' },
-                '4e KYU': { emoji: '🌿', gradient: 'from-emerald-500 to-teal-600', glow: 'shadow-emerald-500/40', rank: 'Apprenti' },
-                '3e KYU': { emoji: '🔥', gradient: 'from-orange-500 to-red-600', glow: 'shadow-orange-500/40', rank: 'Avancé' },
-                '2e KYU': { emoji: '💎', gradient: 'from-blue-500 to-indigo-600', glow: 'shadow-blue-500/40', rank: 'Expert' },
-                '1er KYU': { emoji: '⚡', gradient: 'from-purple-500 to-violet-600', glow: 'shadow-purple-500/40', rank: 'Pré-Dan' },
-                'SHODAN': { emoji: '🥋', gradient: 'from-slate-700 to-slate-900', glow: 'shadow-slate-500/40', rank: '1er Dan' },
-                'NIDAN': { emoji: '🌟', gradient: 'from-amber-600 to-orange-700', glow: 'shadow-amber-500/40', rank: '2e Dan' },
-                'SANDAN': { emoji: '👑', gradient: 'from-yellow-500 to-amber-600', glow: 'shadow-yellow-500/40', rank: '3e Dan' },
-                'YONDAN': { emoji: '🏆', gradient: 'from-rose-500 to-pink-600', glow: 'shadow-rose-500/40', rank: '4e Dan' },
-                'BOKKEN': { emoji: '⚔️', gradient: 'from-cyan-500 to-blue-600', glow: 'shadow-cyan-500/40', rank: 'Sabre' },
-                'Déplacements': { emoji: '🦶', gradient: 'from-pink-500 to-fuchsia-600', glow: 'shadow-pink-500/40', rank: 'Bases' },
+                '5e KYU': { emoji: '🟡', gradient: 'from-yellow-400 to-yellow-600', glow: 'shadow-yellow-500/40', rank: 'Débutant', belt: 'Jaune' },
+                '4e KYU': { emoji: '🟠', gradient: 'from-orange-400 to-orange-600', glow: 'shadow-orange-500/40', rank: 'Apprenti', belt: 'Orange' },
+                '3e KYU': { emoji: '🟢', gradient: 'from-green-500 to-green-700', glow: 'shadow-green-500/40', rank: 'Avancé', belt: 'Verte' },
+                '2e KYU': { emoji: '🔵', gradient: 'from-blue-500 to-blue-700', glow: 'shadow-blue-500/40', rank: 'Expert', belt: 'Bleue' },
+                '1er KYU': { emoji: '🟤', gradient: 'from-amber-700 to-amber-900', glow: 'shadow-amber-500/40', rank: 'Pré-Dan', belt: 'Marron' },
+                'SHODAN': { emoji: '⚫', gradient: 'from-slate-700 to-slate-900', glow: 'shadow-slate-500/40', rank: '1er Dan', belt: 'Noire' },
+                'NIDAN': { emoji: '⚫', gradient: 'from-slate-600 to-slate-800', glow: 'shadow-slate-500/40', rank: '2e Dan', belt: 'Noire' },
+                'SANDAN': { emoji: '⚫', gradient: 'from-slate-600 to-slate-800', glow: 'shadow-slate-500/40', rank: '3e Dan', belt: 'Noire' },
+                'YONDAN': { emoji: '⚫', gradient: 'from-slate-600 to-slate-800', glow: 'shadow-slate-500/40', rank: '4e Dan', belt: 'Noire' },
+                'BOKKEN': { emoji: '⚔️', gradient: 'from-cyan-500 to-blue-600', glow: 'shadow-cyan-500/40', rank: 'Sabre', belt: null },
+                'Déplacements': { emoji: '🦶', gradient: 'from-pink-500 to-fuchsia-600', glow: 'shadow-pink-500/40', rank: 'Bases', belt: null },
               };
               
               // Find matching style
@@ -1320,7 +1320,8 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 emoji: '✨', 
                 gradient: 'from-indigo-500 to-purple-600', 
                 glow: 'shadow-indigo-500/40',
-                rank: 'Grade'
+                rank: 'Grade',
+                belt: null
               };
               
               const isComplete = level.progress_percentage === 100;
@@ -1350,9 +1351,14 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                       
                       {/* Grade info */}
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-between flex-wrap gap-1">
                           <h4 className="font-bold text-white text-sm md:text-base truncate pr-2">
                             {level.name}
+                            {style.belt && (
+                              <span className="ml-2 text-xs font-normal opacity-90">
+                                (Ceinture {style.belt})
+                              </span>
+                            )}
                           </h4>
                           <span className="text-white/80 text-xs font-medium bg-white/20 px-2 py-0.5 rounded-full">
                             {style.rank}
