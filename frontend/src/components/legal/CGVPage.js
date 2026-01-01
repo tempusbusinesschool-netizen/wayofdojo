@@ -65,11 +65,15 @@ function CGVPage({ isOpen, onClose }) {
             <section>
               <h2 className="text-lg font-semibold text-white mb-3">Article 3 - Période d'essai</h2>
               <p>
-                Chaque offre comprend une période d'essai gratuite. Pendant cette période, l'utilisateur 
-                bénéficie de l'ensemble des fonctionnalités de l'offre souscrite.
+                Chaque offre comprend une période d'essai gratuite de <strong>14 jours</strong>. 
+                Pendant cette période, l'utilisateur bénéficie de l'ensemble des fonctionnalités de l'offre souscrite.
               </p>
               <p className="mt-2">
-                À l'issue de la période d'essai, l'abonnement est automatiquement converti en abonnement 
+                <strong>Annulation pendant l'essai :</strong> L'utilisateur peut annuler son abonnement à tout moment 
+                pendant les 14 jours d'essai, sans frais ni engagement.
+              </p>
+              <p className="mt-2">
+                <strong>À l'issue de la période d'essai :</strong> L'abonnement est automatiquement converti en abonnement 
                 payant si l'utilisateur a enregistré un moyen de paiement. Dans le cas contraire, l'accès 
                 aux fonctionnalités premium est suspendu.
               </p>
