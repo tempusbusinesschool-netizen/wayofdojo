@@ -842,7 +842,15 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                   <Award className="w-5 h-5 mr-2" />
                   Changer ma ceinture
                 </Button>
-                <p className="text-slate-500 text-xs text-center">Clique pour indiquer<br/>ton grade actuel</p>
+                <Button 
+                  onClick={() => setShowTimelinePanel(true)}
+                  variant="outline"
+                  className="border-amber-500/50 text-amber-400 hover:bg-amber-900/30 hover:text-amber-300 font-semibold px-4 py-2 rounded-xl"
+                >
+                  <Clock className="w-4 h-4 mr-2" />
+                  Mon Parcours
+                </Button>
+                <p className="text-slate-500 text-xs text-center">Clique pour voir<br/>ton historique</p>
               </div>
             </div>
 
