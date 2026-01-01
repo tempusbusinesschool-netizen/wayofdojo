@@ -862,14 +862,24 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 <h4 className="text-indigo-300 font-bold flex items-center gap-2">
                   🎯 Mes Vertus Travaillées
                 </h4>
-                <Button 
-                  onClick={() => setShowVirtuesDialog(true)}
-                  variant="ghost"
-                  size="sm"
-                  className="text-indigo-400 hover:text-indigo-300 hover:bg-indigo-900/30 text-xs"
-                >
-                  Détails →
-                </Button>
+                <div className="flex gap-2">
+                  <Button 
+                    onClick={() => setShowVirtueActionsPanel(true)}
+                    size="sm"
+                    className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold text-xs shadow-lg shadow-amber-500/30"
+                  >
+                    <Sparkles className="w-3 h-3 mr-1" />
+                    Gagner des points !
+                  </Button>
+                  <Button 
+                    onClick={() => setShowVirtuesDialog(true)}
+                    variant="ghost"
+                    size="sm"
+                    className="text-indigo-400 hover:text-indigo-300 hover:bg-indigo-900/30 text-xs"
+                  >
+                    Détails →
+                  </Button>
+                </div>
               </div>
               
               {totalVirtuePoints > 0 ? (
