@@ -50,9 +50,9 @@ function CGUDialog({ isOpen, onClose }) {
           </section>
 
           <section>
-            <h3 className="text-lg font-semibold text-white">4. Lien avec l'association d'aïkido « La Rivière »</h3>
+            <h3 className="text-lg font-semibold text-white">4. Lien avec la plateforme Techniques Aikido</h3>
             <p>
-              Le Service est proposé en lien avec l'association/club d'aïkido La Rivière, à des fins d'accompagnement pédagogique et de soutien à la pratique.
+              Le Service est proposé à des fins d'accompagnement pédagogique et de soutien à la pratique.
             </p>
             <p className="mt-2">Toutefois :</p>
             <ul className="list-disc pl-6 space-y-1">
