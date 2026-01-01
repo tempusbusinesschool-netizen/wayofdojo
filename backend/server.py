@@ -264,6 +264,183 @@ class SendProgressionPDFRequest(BaseModel):
     pdf_base64: str
     filename: str = "progression_aikido.pdf"
 
+
+# ═══════════════════════════════════════════════════════════════════════════════════
+# DOJO MODELS
+# ═══════════════════════════════════════════════════════════════════════════════════
+
+class DojoCreate(BaseModel):
+    name: str = Field(..., min_length=2, max_length=100)
+    description: Optional[str] = None
+    address: Optional[str] = None
+    city: Optional[str] = None
+    admin_password: str = Field(..., min_length=6)
+
+class DojoUpdate(BaseModel):
+    name: Optional[str] = Field(None, min_length=2, max_length=100)
+    description: Optional[str] = None
+    address: Optional[str] = None
+    city: Optional[str] = None
+    admin_password: Optional[str] = Field(None, min_length=6)
+
+class DojoResponse(BaseModel):
+    id: str
+    name: str
+    description: Optional[str] = None
+    address: Optional[str] = None
+    city: Optional[str] = None
+    is_default: bool = False
+    members_count: int = 0
+    created_at: str
+
+
+# ═══════════════════════════════════════════════════════════════════════════════════
+# DOJO ENDPOINTS
+# ═══════════════════════════════════════════════════════════════════════════════════
+
+@api_router.get("/dojos")
+async def get_all_dojos():
+    """Récupérer la liste de tous les dojos"""
+    dojos = await db.dojos.find({}, {"_id": 0, "admin_password": 0}).to_list(100)
+    
+    # Add default dojo if not exists
+    if not dojos:
+        # Create default dojo
+        await db.dojos.insert_one(DEFAULT_DOJO)
+        dojos = [DEFAULT_DOJO.copy()]
+        del dojos[0]["admin_password"]
+    
+    # Count members for each dojo
+    for dojo in dojos:
+        members_count = await db.users.count_documents({"dojo_id": dojo["id"]})
+        dojo["members_count"] = members_count
+    
+    return {"dojos": dojos}
+
+@api_router.get("/dojos/{dojo_id}")
+async def get_dojo(dojo_id: str):
+    """Récupérer un dojo par son ID"""
+    dojo = await db.dojos.find_one({"id": dojo_id}, {"_id": 0, "admin_password": 0})
+    if not dojo:
+        raise HTTPException(status_code=404, detail="Dojo non trouvé")
+    
+    members_count = await db.users.count_documents({"dojo_id": dojo_id})
+    dojo["members_count"] = members_count
+    
+    return dojo
+
+class SuperAdminAuth(BaseModel):
+    super_admin_password: str
+
+@api_router.post("/dojos")
+async def create_dojo(dojo: DojoCreate, auth: SuperAdminAuth):
+    """Créer un nouveau dojo (Super Admin uniquement)"""
+    # Verify super admin password
+    if auth.super_admin_password != SUPER_ADMIN_PASSWORD:
+        raise HTTPException(status_code=403, detail="Mot de passe Super Admin incorrect")
+    
+    # Check if dojo name already exists
+    existing = await db.dojos.find_one({"name": dojo.name})
+    if existing:
+        raise HTTPException(status_code=400, detail="Un dojo avec ce nom existe déjà")
+    
+    # Generate dojo ID from name
+    dojo_id = dojo.name.lower().replace(" ", "-").replace("'", "")
+    dojo_id = ''.join(c for c in dojo_id if c.isalnum() or c == '-')
+    
+    # Check if ID already exists
+    existing_id = await db.dojos.find_one({"id": dojo_id})
+    if existing_id:
+        dojo_id = f"{dojo_id}-{str(uuid.uuid4())[:8]}"
+    
+    new_dojo = {
+        "id": dojo_id,
+        "name": dojo.name,
+        "description": dojo.description or f"Dojo {dojo.name}",
+        "address": dojo.address or "",
+        "city": dojo.city or "",
+        "admin_password": dojo.admin_password,
+        "is_default": False,
+        "created_at": datetime.now(timezone.utc).isoformat()
+    }
+    
+    await db.dojos.insert_one(new_dojo)
+    logger.info(f"New dojo created: {dojo.name} ({dojo_id})")
+    
+    # Return without password
+    del new_dojo["admin_password"]
+    new_dojo["members_count"] = 0
+    
+    return {
+        "success": True,
+        "message": f"Dojo '{dojo.name}' créé avec succès !",
+        "dojo": new_dojo
+    }
+
+@api_router.put("/dojos/{dojo_id}")
+async def update_dojo(dojo_id: str, dojo: DojoUpdate, auth: SuperAdminAuth):
+    """Modifier un dojo (Super Admin uniquement)"""
+    if auth.super_admin_password != SUPER_ADMIN_PASSWORD:
+        raise HTTPException(status_code=403, detail="Mot de passe Super Admin incorrect")
+    
+    existing = await db.dojos.find_one({"id": dojo_id})
+    if not existing:
+        raise HTTPException(status_code=404, detail="Dojo non trouvé")
+    
+    update_data = {k: v for k, v in dojo.model_dump().items() if v is not None}
+    if not update_data:
+        raise HTTPException(status_code=400, detail="Aucune donnée à mettre à jour")
+    
+    await db.dojos.update_one({"id": dojo_id}, {"$set": update_data})
+    
+    return {"success": True, "message": "Dojo mis à jour"}
+
+@api_router.delete("/dojos/{dojo_id}")
+async def delete_dojo(dojo_id: str, auth: SuperAdminAuth):
+    """Supprimer un dojo (Super Admin uniquement)"""
+    if auth.super_admin_password != SUPER_ADMIN_PASSWORD:
+        raise HTTPException(status_code=403, detail="Mot de passe Super Admin incorrect")
+    
+    dojo = await db.dojos.find_one({"id": dojo_id})
+    if not dojo:
+        raise HTTPException(status_code=404, detail="Dojo non trouvé")
+    
+    if dojo.get("is_default"):
+        raise HTTPException(status_code=400, detail="Impossible de supprimer le dojo par défaut")
+    
+    # Move all users to default dojo
+    await db.users.update_many(
+        {"dojo_id": dojo_id},
+        {"$set": {"dojo_id": "aikido-la-riviere", "dojo_name": "Aikido La Rivière"}}
+    )
+    
+    await db.dojos.delete_one({"id": dojo_id})
+    logger.info(f"Dojo deleted: {dojo_id}")
+    
+    return {"success": True, "message": "Dojo supprimé, les membres ont été transférés au dojo par défaut"}
+
+@api_router.post("/dojos/{dojo_id}/assign-user/{user_id}")
+async def assign_user_to_dojo(dojo_id: str, user_id: str, auth: SuperAdminAuth):
+    """Assigner un utilisateur à un dojo (Super Admin uniquement)"""
+    if auth.super_admin_password != SUPER_ADMIN_PASSWORD:
+        raise HTTPException(status_code=403, detail="Mot de passe Super Admin incorrect")
+    
+    dojo = await db.dojos.find_one({"id": dojo_id}, {"_id": 0})
+    if not dojo:
+        raise HTTPException(status_code=404, detail="Dojo non trouvé")
+    
+    user = await db.users.find_one({"id": user_id})
+    if not user:
+        raise HTTPException(status_code=404, detail="Utilisateur non trouvé")
+    
+    await db.users.update_one(
+        {"id": user_id},
+        {"$set": {"dojo_id": dojo_id, "dojo_name": dojo["name"]}}
+    )
+    
+    return {"success": True, "message": f"Utilisateur assigné au dojo {dojo['name']}"}
+
+
 @api_router.post("/send-progression-pdf")
 async def send_progression_pdf(request: SendProgressionPDFRequest):
     """Send progression PDF by email"""
