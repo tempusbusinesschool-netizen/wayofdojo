@@ -1618,6 +1618,13 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         onClose={() => setShowTimelinePanel(false)}
         isAuthenticated={isAuthenticated}
       />
+
+      {/* Journal Panel */}
+      <JournalPanel 
+        isOpen={showJournalPanel}
+        onClose={() => setShowJournalPanel(false)}
+        isAuthenticated={isAuthenticated}
+      />
     </>
   );
 }
