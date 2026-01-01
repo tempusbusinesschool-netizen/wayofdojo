@@ -600,6 +600,22 @@ function AppContent() {
             </div>
           )}
           
+          {/* User Tabs - Navigation utilisateur (non-admin) */}
+          {!isAdmin && (
+            <div className="mb-4">
+              <TabsList className="bg-slate-800 border-slate-700 flex flex-wrap gap-1">
+                <TabsTrigger value="techniques" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-cyan-600 data-[state=active]:to-blue-600 text-xs sm:text-sm">
+                  <Swords className="w-4 h-4 sm:mr-2" />
+                  <span className="hidden sm:inline">Mon Parcours</span>
+                </TabsTrigger>
+                <TabsTrigger value="comprendre" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-600 data-[state=active]:to-violet-600 text-xs sm:text-sm">
+                  <BookOpen className="w-4 h-4 sm:mr-2" />
+                  <span className="hidden sm:inline">Comprendre l'Aïkido</span>
+                </TabsTrigger>
+              </TabsList>
+            </div>
+          )}
+          
           <TabsContent value="techniques" className="mt-6">
             {/* Filter indicator */}
             {techniqueFilter !== 'all' && (
