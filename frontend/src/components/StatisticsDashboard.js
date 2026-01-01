@@ -187,6 +187,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
   const [showVirtueActionsPanel, setShowVirtueActionsPanel] = useState(false);
   const [showTimelinePanel, setShowTimelinePanel] = useState(false);
   const [showJournalPanel, setShowJournalPanel] = useState(false);
+  const [showDeplacementsExpanded, setShowDeplacementsExpanded] = useState(false);
   const [sending, setSending] = useState(false);
   const [pdfExportStatus, setPdfExportStatus] = useState(null);
   const [exportingPdf, setExportingPdf] = useState(false);
