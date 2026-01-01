@@ -702,16 +702,9 @@ function AppContent() {
             </TabsContent>
           )}
 
-          {isAdmin && (
+          {isSuperAdmin && (
             <TabsContent value="visitors" className="mt-6">
-              <div className="mb-4 flex flex-col sm:flex-row gap-3 justify-between">
-                <Button
-                  variant="outline"
-                  onClick={() => setActiveTab("techniques")}
-                  className="border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-white"
-                >
-                  ← Retour aux techniques
-                </Button>
+              <div className="mb-4 flex flex-col sm:flex-row gap-3 justify-end">
                 <div className="flex gap-2">
                   {/* Dojo Filter */}
                   <Select 
@@ -733,14 +726,6 @@ function AppContent() {
                       ))}
                     </SelectContent>
                   </Select>
-                  {/* Manage Dojos Button */}
-                  <Button
-                    onClick={() => setShowDojoManagement(true)}
-                    className="bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-400 hover:to-indigo-400 text-white"
-                  >
-                    <Building2 className="w-4 h-4 mr-2" />
-                    Gérer les dojos
-                  </Button>
                 </div>
               </div>
               <Card className="bg-slate-900/50 border-slate-700">
