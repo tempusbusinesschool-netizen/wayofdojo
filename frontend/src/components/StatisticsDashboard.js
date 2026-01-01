@@ -246,11 +246,6 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
 
   // Handle PDF export
   const handleExportPdf = async () => {
-    if (!pdfExportStatus?.can_export) {
-      toast.error(pdfExportStatus?.message || "Export non disponible");
-      return;
-    }
-    
     setExportingPdf(true);
     try {
       const response = await axios.get(
@@ -272,15 +267,15 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
       
       // Update status
       setPdfExportStatus({
-        ...pdfExportStatus,
         can_export: false,
         days_remaining: 180,
         message: "Prochain export disponible dans 180 jours"
       });
     } catch (error) {
+      console.error("PDF export error:", error);
       const message = error.response?.status === 429 
         ? "Export limité à 1 fois par semestre"
-        : "Erreur lors de l'export";
+        : "Erreur lors de l'export PDF";
       toast.error(message);
     } finally {
       setExportingPdf(false);
