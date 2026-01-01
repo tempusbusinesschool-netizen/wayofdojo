@@ -112,24 +112,6 @@ function ReglementInterieur() {
           </CardContent>
         )}
       </Card>
-      
-      <Dialog open={showRegistration} onOpenChange={setShowRegistration}>
-        <DialogContent className="max-w-2xl bg-slate-900 border-slate-700 text-white max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle className="text-xl font-bold flex items-center gap-2">
-              <UserPlus className="w-5 h-5 text-cyan-400" />
-              Nouvelle inscription
-            </DialogTitle>
-          </DialogHeader>
-          <MemberRegistrationForm
-            onSuccess={() => {
-              setShowRegistration(false);
-              if (onRegister) onRegister();
-            }}
-            onCancel={() => setShowRegistration(false)}
-          />
-        </DialogContent>
-      </Dialog>
     </>
   );
 }
