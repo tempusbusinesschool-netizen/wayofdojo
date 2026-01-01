@@ -65,12 +65,28 @@ function AppContent() {
   const [showCGU, setShowCGU] = useState(false);
   const [showMentionsLegales, setShowMentionsLegales] = useState(false);
   const [showPolitiqueConfidentialite, setShowPolitiqueConfidentialite] = useState(false);
+  const [showDojoManagement, setShowDojoManagement] = useState(false);
+  const [dojos, setDojos] = useState([]);
+  const [selectedDojoFilter, setSelectedDojoFilter] = useState("all");
   
   // Admin state
   const [isAdmin, setIsAdmin] = useState(() => {
     return sessionStorage.getItem('aikido_admin') === 'true';
   });
   const [showAdminLogin, setShowAdminLogin] = useState(false);
+  
+  // Fetch dojos list
+  useEffect(() => {
+    const fetchDojos = async () => {
+      try {
+        const response = await axios.get(`${API}/dojos`);
+        setDojos(response.data.dojos || []);
+      } catch (error) {
+        console.error("Error fetching dojos:", error);
+      }
+    };
+    fetchDojos();
+  }, [showDojoManagement]);
   
   const handleAdminLogin = () => {
     setIsAdmin(true);
