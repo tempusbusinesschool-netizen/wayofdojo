@@ -227,6 +227,66 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
     }
   };
 
+  // Fetch PDF export status
+  useEffect(() => {
+    const fetchPdfStatus = async () => {
+      if (!isAuthenticated) {
+        setPdfExportStatus(null);
+        return;
+      }
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/export-pdf/status`);
+        setPdfExportStatus(response.data);
+      } catch (error) {
+        console.error("Error fetching PDF status:", error);
+      }
+    };
+    fetchPdfStatus();
+  }, [isAuthenticated]);
+
+  // Handle PDF export
+  const handleExportPdf = async () => {
+    if (!pdfExportStatus?.can_export) {
+      toast.error(pdfExportStatus?.message || "Export non disponible");
+      return;
+    }
+    
+    setExportingPdf(true);
+    try {
+      const response = await axios.get(
+        `${process.env.REACT_APP_BACKEND_URL}/api/auth/export-pdf`,
+        { responseType: 'blob' }
+      );
+      
+      // Create download link
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `parcours_aikido_${new Date().toISOString().split('T')[0]}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      window.URL.revokeObjectURL(url);
+      
+      toast.success("📄 PDF téléchargé avec succès !");
+      
+      // Update status
+      setPdfExportStatus({
+        ...pdfExportStatus,
+        can_export: false,
+        days_remaining: 180,
+        message: "Prochain export disponible dans 180 jours"
+      });
+    } catch (error) {
+      const message = error.response?.status === 429 
+        ? "Export limité à 1 fois par semestre"
+        : "Erreur lors de l'export";
+      toast.error(message);
+    } finally {
+      setExportingPdf(false);
+    }
+  };
+
   // Get current belt info from userBelt prop
   const currentBelt = userBelt ? AIKIDO_BELTS[userBelt] : AIKIDO_BELTS["6e_kyu"];
 
