@@ -705,7 +705,7 @@ function AppContent() {
           </TabsContent>
           
           {/* Onglet Comprendre l'Aïkido - Utilisateurs */}
-          {!isAdmin && (
+          {!isAdminMode && (
             <TabsContent value="comprendre" className="mt-6">
               <HakamaSection />
             </TabsContent>
