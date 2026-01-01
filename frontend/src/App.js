@@ -875,33 +875,60 @@ function AppContent() {
       {/* Footer */}
       <footer className="border-t border-slate-800 mt-12 py-6">
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <p className="text-slate-500 text-sm">
-            Techniques Aikido • {displayStatistics?.total_techniques || 0} techniques
+          <p className="text-slate-500 text-sm font-semibold">
+            Aikido
+          </p>
+          <p className="text-slate-400 text-sm">
+            Techniques d&apos;Aikido
           </p>
           <p className="text-slate-600 text-xs mt-3">
             © humanknowledge.fr - 2025
           </p>
-          <div className="flex justify-center gap-4 mt-3 flex-wrap">
-            <button 
-              onClick={() => setShowCGU(true)}
+          <div className="flex justify-center gap-3 mt-3 flex-wrap">
+            <a 
+              href="https://customer-assets.emergentagent.com/job_budo-journey/artifacts/ta4uael4_CGU_HUMAN_KNOWLEDGE.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-cyan-500 hover:text-cyan-400 text-xs underline"
             >
-              Conditions Générales d'Utilisation
-            </button>
+              CGU
+            </a>
             <span className="text-slate-600 text-xs">•</span>
-            <button 
-              onClick={() => setShowMentionsLegales(true)}
+            <a 
+              href="https://customer-assets.emergentagent.com/job_budo-journey/artifacts/jh2gw9qv_CGV_HUMAN_KNOWLEDGE.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-cyan-500 hover:text-cyan-400 text-xs underline"
             >
-              Mentions Légales
-            </button>
+              CGV
+            </a>
             <span className="text-slate-600 text-xs">•</span>
-            <button 
-              onClick={() => setShowPolitiqueConfidentialite(true)}
+            <a 
+              href="https://customer-assets.emergentagent.com/job_budo-journey/artifacts/21i5vxtx_Charte_utilisation_HUMAN_KNOWLEDGE.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-cyan-500 hover:text-cyan-400 text-xs underline"
             >
-              Politique de Confidentialité
-            </button>
+              Charte d&apos;utilisation
+            </a>
+            <span className="text-slate-600 text-xs">•</span>
+            <a 
+              href="https://customer-assets.emergentagent.com/job_budo-journey/artifacts/vmjkomnl_Mentions_legales_HUMAN_KNOWLEDGE.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-cyan-500 hover:text-cyan-400 text-xs underline"
+            >
+              Mentions légales
+            </a>
+            <span className="text-slate-600 text-xs">•</span>
+            <a 
+              href="https://customer-assets.emergentagent.com/job_budo-journey/artifacts/hwwk367w_Politique_confidentialite_HUMAN_KNOWLEDGE.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-cyan-500 hover:text-cyan-400 text-xs underline"
+            >
+              Politique de confidentialité
+            </a>
           </div>
         </div>
       </footer>
