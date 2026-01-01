@@ -299,10 +299,20 @@ function AppContent() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-3">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-cyan-600 to-blue-800 flex items-center justify-center border-2 border-cyan-400">
-                  <span className="text-2xl font-bold text-white">合</span>
+                <div className="relative w-16 h-16">
+                  {/* Yin-Yang style logo in yellow/gold */}
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-amber-400 via-yellow-500 to-amber-600 shadow-lg shadow-amber-500/30"></div>
+                  <div className="absolute inset-1 rounded-full bg-slate-900 flex items-center justify-center">
+                    <div className="relative w-10 h-10">
+                      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-gradient-to-b from-amber-400 to-yellow-500"></div>
+                      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-slate-900 border-2 border-amber-500"></div>
+                      <div className="absolute top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-slate-900"></div>
+                      <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-amber-400"></div>
+                    </div>
+                  </div>
                 </div>
                 <div>
+                  <p className="text-sm text-amber-400 font-medium">Aikido</p>
                   <p className="text-lg md:text-xl text-white font-bold">Techniques d'Aikido</p>
                   <a href="mailto:aikidolariviere@gmail.com" className="text-xs text-cyan-400 hover:text-cyan-300 hidden sm:block">aikidolariviere@gmail.com</a>
                 </div>
