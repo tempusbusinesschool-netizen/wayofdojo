@@ -472,6 +472,7 @@ function AppContent() {
                 }}
                 kyuLevels={kyuLevels}
                 userEmail={user?.email}
+                userBelt={isAuthenticated ? userBelt : null}
               />
             )}
             
