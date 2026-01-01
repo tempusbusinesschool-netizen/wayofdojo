@@ -94,3 +94,26 @@
 - Test user password: testpass123
 - Current belt: 5e kyu (Ceinture Jaune)
 - Active role: Gardien du respect (can be activated/deactivated)
+
+## Timeline (Parcours) and Journal Features Tests
+
+### Timeline Feature Tests (NEW)
+1. [ ] Timeline panel opens from "Parcours" button
+2. [ ] Panel shows "Mon Parcours Aïkido" title
+3. [ ] Vertical timeline with colored dots displays correctly
+4. [ ] Events show: belt changes, virtue actions, role activation, account creation
+5. [ ] Dates formatted in French
+6. [ ] Timeline loads user events correctly
+
+### Journal Feature Tests (NEW)
+1. [ ] Journal panel opens from "Journal" button
+2. [ ] Panel shows "Mon Journal Privé" title
+3. [ ] "Nouvelle réflexion" button is visible and functional
+4. [ ] Form shows mood selector with 8 emoji options
+5. [ ] Text area for writing reflections works
+6. [ ] Sauvegarder and Annuler buttons function correctly
+7. [ ] Mood selection works (Content, Serein, Motivé, etc.)
+8. [ ] Entry creation and display works
+9. [ ] Success toast message appears
+10. [ ] Entry appears in list with mood emoji and date
+11. [ ] Private note about privacy shown at bottom
