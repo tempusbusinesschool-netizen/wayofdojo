@@ -93,9 +93,10 @@ function AppContent() {
         axios.get(`${API}/visitors`)
       ];
       
-      // If authenticated, also fetch user progression
+      // If authenticated, also fetch user progression and belt
       if (isAuthenticated) {
         requests.push(axios.get(`${API}/auth/progression`));
+        requests.push(axios.get(`${API}/auth/belt`));
       }
       
       const responses = await Promise.all(requests);
@@ -106,10 +107,16 @@ function AppContent() {
       const membersData = responses[3].data;
       const visitorsData = responses[4].data;
       
-      // If user is authenticated, merge their progression
+      // If user is authenticated, merge their progression and belt
       if (isAuthenticated && responses[5]) {
         const progression = responses[5].data;
         setUserProgression(progression);
+        
+        // Get user belt
+        if (responses[6]) {
+          const beltData = responses[6].data;
+          setUserBelt(beltData.belt_level || "6e_kyu");
+        }
         
         // Merge user progression into kyu levels
         kyuData = kyuData.map(kyu => ({
