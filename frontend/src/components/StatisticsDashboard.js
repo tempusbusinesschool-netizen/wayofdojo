@@ -928,8 +928,8 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
             {/* Points explanation */}
             <div className="mt-4 text-center">
               <p className="text-slate-400 text-xs italic">
-                🎌 Gagne des points en progressant : 📖 1pt • 🎯 2pts • 🏆 3pts
-                <br />Débloque des trophées et montre ta progression !
+                🎌 Gagne des points : 📖 1pt • 🎯 2pts • 🏆 3pts • {currentBelt.emoji} +10pts/grade
+                <br />Débloque des trophées et développe tes vertus !
               </p>
             </div>
           </div>
@@ -947,16 +947,17 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               </DialogDescription>
             </DialogHeader>
             
-            {/* Points summary */}
+            {/* Points summary with belt */}
             <div className="bg-gradient-to-r from-purple-900/50 to-pink-900/50 p-4 rounded-xl border border-purple-500/30 mb-4">
               <div className="text-center">
                 <p className="text-4xl font-bold bg-gradient-to-r from-yellow-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
                   {points.total} Points
                 </p>
-                <div className="flex justify-center gap-4 mt-2 text-xs">
+                <div className="flex flex-wrap justify-center gap-3 mt-2 text-xs">
                   <span className="text-amber-300">📖 {points.learning}pts</span>
                   <span className="text-blue-300">🎯 {points.practiced}pts</span>
                   <span className="text-emerald-300">🏆 {points.mastered}pts</span>
+                  <span className="text-yellow-300">{currentBelt.emoji} {points.belt}pts</span>
                 </div>
               </div>
             </div>
