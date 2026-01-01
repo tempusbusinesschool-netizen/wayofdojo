@@ -875,6 +875,81 @@ async def update_user_belt(data: UserBeltUpdate, user: dict = Depends(require_au
         "belt_info": belt_info
     }
 
+
+# ═══════════════════════════════════════════════════════════════════════════════════
+# SYMBOLIC ROLE ENDPOINTS
+# ═══════════════════════════════════════════════════════════════════════════════════
+
+class SymbolicRoleActivation(BaseModel):
+    activate: bool = True  # True to activate, False to deactivate
+
+@api_router.put("/auth/symbolic-role")
+async def toggle_symbolic_role(data: SymbolicRoleActivation, user: dict = Depends(require_auth)):
+    """Activer ou désactiver le rôle symbolique de l'utilisateur"""
+    belt_level = user.get("belt_level", "6e_kyu")
+    belt_info = AIKIDO_BELTS.get(belt_level)
+    
+    if not belt_info:
+        raise HTTPException(status_code=400, detail="Niveau de ceinture invalide")
+    
+    symbolic_role = belt_info.get("symbolic_role")
+    
+    if data.activate and not symbolic_role:
+        raise HTTPException(
+            status_code=400, 
+            detail="Aucun rôle symbolique disponible pour ta ceinture actuelle. Continue ton chemin ! 🌱"
+        )
+    
+    # Update user's active symbolic role
+    if data.activate:
+        await db.users.update_one(
+            {"id": user["id"]},
+            {
+                "$set": {
+                    "active_symbolic_role": {
+                        "name": symbolic_role["name"],
+                        "virtue": symbolic_role["virtue"],
+                        "intention": symbolic_role["intention"],
+                        "activated_at": datetime.now(timezone.utc).isoformat(),
+                        "belt_level": belt_level
+                    }
+                }
+            }
+        )
+        logger.info(f"User {user['id']} activated symbolic role: {symbolic_role['name']}")
+        return {
+            "success": True,
+            "message": f"🎭 Tu es maintenant {symbolic_role['name']} !",
+            "role": symbolic_role
+        }
+    else:
+        await db.users.update_one(
+            {"id": user["id"]},
+            {"$unset": {"active_symbolic_role": ""}}
+        )
+        logger.info(f"User {user['id']} deactivated their symbolic role")
+        return {
+            "success": True,
+            "message": "Rôle symbolique désactivé",
+            "role": None
+        }
+
+@api_router.get("/auth/symbolic-role")
+async def get_user_symbolic_role(user: dict = Depends(require_auth)):
+    """Récupérer le rôle symbolique actif de l'utilisateur"""
+    active_role = user.get("active_symbolic_role")
+    belt_level = user.get("belt_level", "6e_kyu")
+    belt_info = AIKIDO_BELTS.get(belt_level, AIKIDO_BELTS["6e_kyu"])
+    available_role = belt_info.get("symbolic_role")
+    
+    return {
+        "active_role": active_role,
+        "available_role": available_role,
+        "belt_level": belt_level,
+        "can_activate": available_role is not None and active_role is None
+    }
+
+
 @api_router.get("/visitors")
 async def get_visitors():
     """Récupérer la liste des utilisateurs inscrits (visiteurs) avec stats de progression"""
