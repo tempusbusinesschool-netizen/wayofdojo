@@ -1620,6 +1620,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
             </div>
           </CardContent>
         </Card>
+      </div>
 
       {/* PDF Download Dialog */}
       <Dialog open={showEmailDialog} onOpenChange={setShowEmailDialog}>
