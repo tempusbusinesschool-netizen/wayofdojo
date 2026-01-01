@@ -929,18 +929,23 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 {/* PDF Export Button */}
                 <Button 
                   onClick={handleExportPdf}
-                  disabled={exportingPdf || !pdfExportStatus?.can_export}
+                  disabled={exportingPdf || (pdfExportStatus && !pdfExportStatus.can_export)}
                   variant="outline"
                   size="sm"
                   className={`w-full font-semibold px-3 py-1.5 rounded-lg ${
-                    pdfExportStatus?.can_export
+                    !pdfExportStatus || pdfExportStatus.can_export
                       ? 'border-emerald-500/50 text-emerald-400 hover:bg-emerald-900/30 hover:text-emerald-300'
                       : 'border-slate-600 text-slate-500 cursor-not-allowed'
                   }`}
                   title={pdfExportStatus?.message || "Export PDF"}
                 >
                   <FileDown className="w-4 h-4 mr-1" />
-                  {exportingPdf ? "Export..." : pdfExportStatus?.can_export ? "Export PDF" : `PDF (${pdfExportStatus?.days_remaining}j)`}
+                  {exportingPdf 
+                    ? "Export..." 
+                    : !pdfExportStatus || pdfExportStatus.can_export 
+                      ? "Export PDF" 
+                      : `PDF (${pdfExportStatus.days_remaining || 180}j)`
+                  }
                 </Button>
               </div>
             </div>
