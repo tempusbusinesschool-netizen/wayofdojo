@@ -580,7 +580,7 @@ function AppContent() {
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
                   <Shield className="w-4 h-4 text-white" />
                 </div>
-                <span className="text-cyan-400 font-semibold">🛡️ Admin</span>
+                <span className="text-cyan-400 font-semibold">🛡️ Espace de gestion</span>
                 <span className="text-xs text-slate-500 hidden sm:inline">Cadre • Contrôle • Conformité</span>
               </div>
               <TabsList className="bg-slate-800 border-slate-700 flex flex-wrap gap-1">
