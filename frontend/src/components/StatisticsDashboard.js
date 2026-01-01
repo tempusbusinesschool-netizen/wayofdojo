@@ -1472,6 +1472,14 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Virtue Actions Panel */}
+      <VirtueActionsPanel 
+        isOpen={showVirtueActionsPanel}
+        onClose={() => setShowVirtueActionsPanel(false)}
+        isAuthenticated={isAuthenticated}
+        onPointsUpdate={onRefreshData}
+      />
     </>
   );
 }
