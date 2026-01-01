@@ -31,7 +31,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
     
     doc.setFontSize(10);
     doc.setFont('helvetica', 'normal');
-    doc.text('68, rue du Docteur Schweitzer 97421 SAINT-LOUIS - RÉUNION', pageWidth / 2, 26, { align: 'center' });
+    doc.text('Techniques Aikido', pageWidth / 2, 26, { align: 'center' });
     
     doc.setFontSize(14);
     doc.setFont('helvetica', 'bold');
