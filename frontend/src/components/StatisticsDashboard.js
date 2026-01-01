@@ -97,67 +97,13 @@ const AIKIDO_VIRTUES = [
   { name: "Responsabilité", kanji: "責", emoji: "⚖️" }
 ];
 
-function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterClick, activeFilter, isAdmin, onMembersClick, kyuLevels }) {
+function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterClick, activeFilter, isAdmin, onMembersClick, kyuLevels, userBelt }) {
   const [showEmailDialog, setShowEmailDialog] = useState(false);
-  const [showGameDialog, setShowGameDialog] = useState(false);
+  const [showBeltDialog, setShowBeltDialog] = useState(false);
   const [sending, setSending] = useState(false);
 
-  // Calculate XP and Belt
-  const gameStats = useMemo(() => {
-    if (!statistics) return null;
-
-    // Calculate total XP
-    let totalXP = 0;
-    totalXP += (statistics.mastered_techniques || 0) * XP_POINTS.technique_mastered;
-    totalXP += (statistics.in_progress_techniques || 0) * XP_POINTS.technique_learning;
-    totalXP += (statistics.total_practice_sessions || 0) * XP_POINTS.session_completed;
-
-    // Calculate completed grades bonus
-    const completedGrades = statistics.techniques_by_level?.filter(
-      level => level.progress_percentage === 100
-    ).length || 0;
-    totalXP += completedGrades * XP_POINTS.grade_completed;
-
-    // Determine current belt
-    let currentBelt = BELT_SYSTEM[0];
-    let nextBelt = BELT_SYSTEM[1];
-    for (let i = BELT_SYSTEM.length - 1; i >= 0; i--) {
-      if (totalXP >= BELT_SYSTEM[i].minXP) {
-        currentBelt = BELT_SYSTEM[i];
-        nextBelt = BELT_SYSTEM[i + 1] || null;
-        break;
-      }
-    }
-
-    // Calculate progress to next belt
-    const progressToNext = nextBelt 
-      ? Math.min(100, ((totalXP - currentBelt.minXP) / (nextBelt.minXP - currentBelt.minXP)) * 100)
-      : 100;
-
-    // Random motivation message
-    const motivationMessage = MOTIVATION_MESSAGES[Math.floor(Math.random() * MOTIVATION_MESSAGES.length)];
-
-    // Achievements/Badges
-    const achievements = [];
-    if (statistics.mastered_techniques >= 1) achievements.push({ icon: "🎯", name: "Première Maîtrise", desc: "1 technique maîtrisée" });
-    if (statistics.mastered_techniques >= 10) achievements.push({ icon: "🌟", name: "Débutant Confirmé", desc: "10 techniques maîtrisées" });
-    if (statistics.mastered_techniques >= 25) achievements.push({ icon: "💎", name: "Pratiquant Assidu", desc: "25 techniques maîtrisées" });
-    if (statistics.mastered_techniques >= 50) achievements.push({ icon: "🏅", name: "Expert en Herbe", desc: "50 techniques maîtrisées" });
-    if (statistics.mastered_techniques >= 100) achievements.push({ icon: "🏆", name: "Maître Technique", desc: "100 techniques maîtrisées" });
-    if (statistics.total_practice_sessions >= 10) achievements.push({ icon: "🔥", name: "Entraînement Régulier", desc: "10 sessions" });
-    if (statistics.total_practice_sessions >= 50) achievements.push({ icon: "⚡", name: "Machine de Guerre", desc: "50 sessions" });
-    if (completedGrades >= 1) achievements.push({ icon: "📜", name: "Premier Grade", desc: "1 grade complété" });
-
-    return {
-      totalXP,
-      currentBelt,
-      nextBelt,
-      progressToNext,
-      motivationMessage,
-      achievements,
-      completedGrades
-    };
-  }, [statistics]);
+  // Get current belt info from userBelt prop (assigned by teacher, not calculated)
+  const currentBelt = userBelt ? AIKIDO_BELTS[userBelt] : AIKIDO_BELTS["6e_kyu"];
 
   if (!statistics) return null;
 
