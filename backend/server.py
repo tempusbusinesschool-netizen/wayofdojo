@@ -1161,6 +1161,298 @@ async def delete_journal_entry(entry_id: str, user: dict = Depends(require_auth)
     }
 
 
+# ═══════════════════════════════════════════════════════════════════════════════════
+# EXPORT PDF ENDPOINTS
+# ═══════════════════════════════════════════════════════════════════════════════════
+
+@api_router.get("/auth/export-pdf/status")
+async def get_export_pdf_status(user: dict = Depends(require_auth)):
+    """Vérifier si l'utilisateur peut exporter son PDF (limite 6 mois)"""
+    last_export = user.get("last_pdf_export")
+    
+    if not last_export:
+        return {
+            "can_export": True,
+            "last_export": None,
+            "next_available": None,
+            "message": "Tu peux exporter ton parcours en PDF !"
+        }
+    
+    try:
+        last_export_date = datetime.fromisoformat(last_export.replace('Z', '+00:00'))
+        next_available = last_export_date + timedelta(days=180)  # 6 months
+        now = datetime.now(timezone.utc)
+        
+        if now >= next_available:
+            return {
+                "can_export": True,
+                "last_export": last_export,
+                "next_available": None,
+                "message": "Tu peux exporter ton parcours en PDF !"
+            }
+        else:
+            days_remaining = (next_available - now).days
+            return {
+                "can_export": False,
+                "last_export": last_export,
+                "next_available": next_available.isoformat(),
+                "days_remaining": days_remaining,
+                "message": f"Prochain export disponible dans {days_remaining} jours"
+            }
+    except:
+        return {
+            "can_export": True,
+            "last_export": None,
+            "next_available": None,
+            "message": "Tu peux exporter ton parcours en PDF !"
+        }
+
+
+@api_router.get("/auth/export-pdf")
+async def export_user_pdf(user: dict = Depends(require_auth)):
+    """Générer et télécharger le PDF du parcours utilisateur"""
+    
+    # Check if user can export (6 month limit)
+    last_export = user.get("last_pdf_export")
+    if last_export:
+        try:
+            last_export_date = datetime.fromisoformat(last_export.replace('Z', '+00:00'))
+            next_available = last_export_date + timedelta(days=180)
+            if datetime.now(timezone.utc) < next_available:
+                days_remaining = (next_available - datetime.now(timezone.utc)).days
+                raise HTTPException(
+                    status_code=429,
+                    detail=f"Export limité à 1 fois par semestre. Prochain export dans {days_remaining} jours."
+                )
+        except HTTPException:
+            raise
+        except:
+            pass
+    
+    # Get user data
+    user_name = f"{user.get('first_name', '')} {user.get('last_name', '')}".strip() or "Pratiquant"
+    belt_level = user.get("belt_level", "6e_kyu")
+    belt_info = AIKIDO_BELTS.get(belt_level, AIKIDO_BELTS["6e_kyu"])
+    progression = user.get("progression", [])
+    virtue_actions = user.get("virtue_actions", [])
+    active_role = user.get("active_symbolic_role")
+    created_at = user.get("created_at", "")
+    
+    # Calculate stats
+    mastered_count = sum(1 for p in progression if p.get("status") == "mastered")
+    practiced_count = sum(1 for p in progression if p.get("status") == "practiced")
+    learning_count = sum(1 for p in progression if p.get("status") == "in_progress")
+    
+    # Calculate points
+    technique_points = learning_count * 1 + practiced_count * 2 + mastered_count * 3
+    belt_points = (belt_info.get("order", 0) + 1) * 10
+    virtue_points = sum(a.get("points", 0) for a in virtue_actions)
+    total_points = technique_points + belt_points + virtue_points
+    
+    # Create PDF buffer
+    buffer = io.BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=A4, topMargin=1.5*cm, bottomMargin=1.5*cm)
+    
+    # Styles
+    styles = getSampleStyleSheet()
+    title_style = ParagraphStyle(
+        'CustomTitle',
+        parent=styles['Heading1'],
+        fontSize=24,
+        textColor=colors.HexColor('#D97706'),
+        alignment=TA_CENTER,
+        spaceAfter=20
+    )
+    subtitle_style = ParagraphStyle(
+        'CustomSubtitle',
+        parent=styles['Heading2'],
+        fontSize=14,
+        textColor=colors.HexColor('#64748B'),
+        alignment=TA_CENTER,
+        spaceAfter=30
+    )
+    section_style = ParagraphStyle(
+        'SectionTitle',
+        parent=styles['Heading2'],
+        fontSize=16,
+        textColor=colors.HexColor('#1E293B'),
+        spaceBefore=20,
+        spaceAfter=10
+    )
+    body_style = ParagraphStyle(
+        'CustomBody',
+        parent=styles['Normal'],
+        fontSize=11,
+        textColor=colors.HexColor('#334155'),
+        spaceAfter=8
+    )
+    
+    # Build PDF content
+    story = []
+    
+    # Header
+    story.append(Paragraph("平常心 Techniques d'Aïkido 平常心", title_style))
+    story.append(Paragraph("Synthèse du Parcours", subtitle_style))
+    story.append(Spacer(1, 10))
+    
+    # User info
+    story.append(Paragraph(f"<b>Pratiquant :</b> {user_name}", body_style))
+    story.append(Paragraph(f"<b>Email :</b> {user.get('email', 'N/A')}", body_style))
+    if created_at:
+        try:
+            created_date = datetime.fromisoformat(created_at.replace('Z', '+00:00'))
+            story.append(Paragraph(f"<b>Membre depuis :</b> {created_date.strftime('%d/%m/%Y')}", body_style))
+        except:
+            pass
+    story.append(Paragraph(f"<b>Date d'export :</b> {datetime.now().strftime('%d/%m/%Y à %H:%M')}", body_style))
+    story.append(Spacer(1, 20))
+    
+    # Belt section
+    story.append(Paragraph("🥋 Ma Ceinture", section_style))
+    belt_data = [
+        ["Ceinture", "Grade", "Points"],
+        [f"{belt_info.get('emoji', '')} {belt_info.get('name', belt_level)}", belt_info.get('grade', ''), f"+{belt_points} pts"]
+    ]
+    belt_table = Table(belt_data, colWidths=[8*cm, 5*cm, 3*cm])
+    belt_table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#F59E0B')),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, -1), 11),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.HexColor('#FEF3C7')),
+        ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#D97706')),
+    ]))
+    story.append(belt_table)
+    
+    # Symbolic role if active
+    if active_role:
+        story.append(Spacer(1, 10))
+        story.append(Paragraph(f"🎭 <b>Rôle symbolique actif :</b> {active_role.get('name', '')} (Vertu: {active_role.get('virtue', '')})", body_style))
+    
+    story.append(Spacer(1, 20))
+    
+    # Techniques section
+    story.append(Paragraph("🎯 Progression Techniques", section_style))
+    tech_data = [
+        ["Statut", "Nombre", "Points"],
+        ["📖 En apprentissage", str(learning_count), f"+{learning_count * 1} pts"],
+        ["🎯 Pratiquées", str(practiced_count), f"+{practiced_count * 2} pts"],
+        ["🏆 Maîtrisées", str(mastered_count), f"+{mastered_count * 3} pts"],
+    ]
+    tech_table = Table(tech_data, colWidths=[8*cm, 4*cm, 4*cm])
+    tech_table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#3B82F6')),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, -1), 11),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.HexColor('#EFF6FF')),
+        ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#3B82F6')),
+    ]))
+    story.append(tech_table)
+    story.append(Spacer(1, 20))
+    
+    # Virtues section
+    story.append(Paragraph("🎌 Points de Vertu", section_style))
+    if virtue_actions:
+        virtue_summary = {}
+        for action in virtue_actions:
+            vid = action.get("virtue_id", "unknown")
+            if vid not in virtue_summary:
+                virtue_info = VIRTUE_ACTIONS.get(vid, {})
+                virtue_summary[vid] = {
+                    "name": virtue_info.get("name", vid),
+                    "emoji": virtue_info.get("emoji", "🎯"),
+                    "points": 0,
+                    "count": 0
+                }
+            virtue_summary[vid]["points"] += action.get("points", 0)
+            virtue_summary[vid]["count"] += 1
+        
+        virtue_data = [["Vertu", "Actions", "Points"]]
+        for vid, data in virtue_summary.items():
+            virtue_data.append([f"{data['emoji']} {data['name']}", str(data['count']), f"+{data['points']} pts"])
+        virtue_data.append(["<b>Total</b>", "", f"<b>+{virtue_points} pts</b>"])
+        
+        virtue_table = Table(virtue_data, colWidths=[8*cm, 4*cm, 4*cm])
+        virtue_table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#8B5CF6')),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('FONTSIZE', (0, 0), (-1, -1), 11),
+            ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+            ('BACKGROUND', (0, 1), (-1, -2), colors.HexColor('#F5F3FF')),
+            ('BACKGROUND', (0, -1), (-1, -1), colors.HexColor('#DDD6FE')),
+            ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#8B5CF6')),
+        ]))
+        story.append(virtue_table)
+    else:
+        story.append(Paragraph("Aucune action de vertu enregistrée pour le moment.", body_style))
+    
+    story.append(Spacer(1, 30))
+    
+    # Total points
+    story.append(Paragraph("⭐ Total des Points", section_style))
+    total_data = [
+        ["Catégorie", "Points"],
+        ["Techniques", f"+{technique_points} pts"],
+        ["Ceinture", f"+{belt_points} pts"],
+        ["Vertus", f"+{virtue_points} pts"],
+        ["<b>TOTAL</b>", f"<b>{total_points} pts</b>"],
+    ]
+    total_table = Table(total_data, colWidths=[10*cm, 6*cm])
+    total_table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#10B981')),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.white),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, -1), 12),
+        ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+        ('BACKGROUND', (0, 1), (-1, -2), colors.HexColor('#ECFDF5')),
+        ('BACKGROUND', (0, -1), (-1, -1), colors.HexColor('#A7F3D0')),
+        ('GRID', (0, 0), (-1, -1), 1, colors.HexColor('#10B981')),
+    ]))
+    story.append(total_table)
+    
+    # Footer
+    story.append(Spacer(1, 40))
+    footer_style = ParagraphStyle(
+        'Footer',
+        parent=styles['Normal'],
+        fontSize=9,
+        textColor=colors.HexColor('#94A3B8'),
+        alignment=TA_CENTER
+    )
+    story.append(Paragraph("─" * 50, footer_style))
+    story.append(Paragraph("Aïkido La Rivière - Techniques d'Aïkido", footer_style))
+    story.append(Paragraph("Ce document est généré automatiquement. Prochain export disponible dans 6 mois.", footer_style))
+    
+    # Build PDF
+    doc.build(story)
+    buffer.seek(0)
+    
+    # Update last export date
+    await db.users.update_one(
+        {"id": user["id"]},
+        {"$set": {"last_pdf_export": datetime.now(timezone.utc).isoformat()}}
+    )
+    
+    logger.info(f"User {user['id']} exported their PDF")
+    
+    # Return PDF file
+    filename = f"parcours_aikido_{user_name.replace(' ', '_')}_{datetime.now().strftime('%Y%m%d')}.pdf"
+    
+    return StreamingResponse(
+        buffer,
+        media_type="application/pdf",
+        headers={"Content-Disposition": f"attachment; filename={filename}"}
+    )
+
+
 @api_router.get("/visitors")
 async def get_visitors():
     """Récupérer la liste des utilisateurs inscrits (visiteurs) avec stats de progression"""
