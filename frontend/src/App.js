@@ -82,7 +82,7 @@ function AppContent() {
   const [showPaywall, setShowPaywall] = useState(false);
   const [showDojoRegistration, setShowDojoRegistration] = useState(false);
   
-  // Admin state - now supports two types: 'super_admin' and 'admin_dojo'
+  // Admin state - supports two types: 'admin' (plateforme) and 'espace_dojo' (club)
   const [adminType, setAdminType] = useState(() => {
     const stored = sessionStorage.getItem('aikido_admin');
     return stored && stored !== 'false' ? stored : null;
@@ -90,9 +90,13 @@ function AppContent() {
   const [showAdminLogin, setShowAdminLogin] = useState(false);
   
   // Computed admin flags
-  const isAdmin = adminType !== null;
-  const isSuperAdmin = adminType === 'super_admin';
-  const isAdminDojo = adminType === 'admin_dojo';
+  const isAdminMode = adminType !== null;
+  const isAdmin = adminType === 'admin'; // Plateforme - gestion dojos, conformité
+  const isEspaceDojo = adminType === 'espace_dojo'; // Club - gestion adhérents
+  
+  // Legacy compatibility
+  const isSuperAdmin = isAdmin;
+  const isAdminDojo = isEspaceDojo;
   
   // Handle onboarding completion
   const handleOnboardingComplete = () => {
