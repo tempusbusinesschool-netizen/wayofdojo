@@ -67,8 +67,10 @@ function AppContent() {
   const [activeTab, setActiveTab] = useState("techniques");
   const [showAuthDialog, setShowAuthDialog] = useState(false);
   const [showCGU, setShowCGU] = useState(false);
+  const [showCGV, setShowCGV] = useState(false);
+  const [showCharte, setShowCharte] = useState(false);
   const [showMentionsLegales, setShowMentionsLegales] = useState(false);
-  const [showPolitiqueConfidentialite, setShowPolitiqueConfidentialite] = useState(false);
+  const [showRGPD, setShowRGPD] = useState(false);
   const [showDojoManagement, setShowDojoManagement] = useState(false);
   const [dojos, setDojos] = useState([]);
   const [selectedDojoFilter, setSelectedDojoFilter] = useState("all");
