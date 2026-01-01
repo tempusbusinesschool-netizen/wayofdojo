@@ -334,11 +334,19 @@ function AdminLoginDialog({ isOpen, onClose, onSuccess }) {
       </div>
       
       <div className="p-3 bg-slate-800/50 rounded-lg border border-slate-700">
-        <p className="text-xs text-slate-400">
-          <strong>Exemple de test :</strong><br />
-          Email: <code className="text-orange-400">contact@aikido-lariviere.fr</code><br />
-          Mot de passe: <code className="text-orange-400">aikido2024</code>
+        <p className="text-xs text-slate-400 mb-2">
+          <strong>Compte de test :</strong>
         </p>
+        <button
+          type="button"
+          onClick={() => {
+            setEmail('contact@aikido-lariviere.fr');
+            setPassword('aikido2024');
+          }}
+          className="w-full p-2 text-xs bg-orange-900/30 hover:bg-orange-900/50 border border-orange-700/50 rounded-lg text-orange-400 transition-colors"
+        >
+          🔑 Remplir avec contact@aikido-lariviere.fr / aikido2024
+        </button>
       </div>
       
       <div className="flex gap-3 pt-2">
