@@ -459,7 +459,7 @@ async def register(data: UserRegister):
     if existing:
         raise HTTPException(status_code=400, detail="Un compte avec cet email existe déjà")
     
-    # Create user
+    # Create user with default belt (6e kyu - white belt)
     user = {
         "id": str(uuid.uuid4()),
         "first_name": data.first_name,
@@ -467,7 +467,10 @@ async def register(data: UserRegister):
         "email": data.email.lower(),
         "password_hash": hash_password(data.password),
         "created_at": datetime.now(timezone.utc).isoformat(),
-        "progression": {}  # Will store technique_id -> {mastery_level, practice_count, last_practiced}
+        "progression": {},  # Will store technique_id -> {mastery_level, practice_count, last_practiced}
+        "belt_level": "6e_kyu",  # Default: white belt (6e kyu)
+        "belt_awarded_at": datetime.now(timezone.utc).isoformat(),
+        "belt_awarded_by": "system"  # Initial belt is system-assigned
     }
     
     await db.users.insert_one(user)
