@@ -626,9 +626,9 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 
                 {/* Sous-titre */}
                 <p className="text-base md:text-lg text-slate-300 max-w-2xl mx-auto">
-                  🥋 Jouer et s&apos;entraîner aux techniques après les cours du Dojo
+                  🥋 S&apos;entraîner à l&apos;aïkido en dehors du dojo,
                   <br />
-                  <span className="text-cyan-400 font-semibold">Simple et ludique !</span>
+                  <span className="text-cyan-400 font-semibold">de façon simple et ludique !</span>
                 </p>
               </div>
               
