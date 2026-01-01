@@ -613,7 +613,6 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 {/* Badge Plateforme */}
                 <div className="inline-flex items-center gap-3 mb-4 px-6 py-2 bg-gradient-to-r from-amber-500/20 via-yellow-500/20 to-amber-500/20 rounded-full border border-amber-500/40">
                   <span className="text-amber-400 text-2xl md:text-3xl font-bold animate-pulse">平常心</span>
-                  <span className="text-amber-300 text-sm md:text-base">• Esprit serein •</span>
                   <span className="text-amber-400 text-2xl md:text-3xl font-bold animate-pulse">平常心</span>
                 </div>
                 
