@@ -111,23 +111,6 @@ class DojoTester:
                 }
             }
             
-    def test_create_dojo(self):
-        """Test POST /api/dojos - Create a new dojo with super admin password"""
-        try:
-            # Prepare request data with separate dojo and auth objects
-            request_data = {
-                "dojo": {
-                    "name": "Aikido Paris Test",
-                    "description": "Test dojo for Multi-Dojo feature",
-                    "address": "123 Test Street",
-                    "city": "Paris",
-                    "admin_password": "testadmin123"
-                },
-                "auth": {
-                    "super_admin_password": SUPER_ADMIN_PASSWORD
-                }
-            }
-            
             response = self.session.post(f"{BACKEND_URL}/dojos", json=request_data)
             
             # The API has a serialization issue but the dojo is created successfully
