@@ -386,6 +386,51 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
   return (
     <>
       <div className="mb-8 animate-fadeIn">
+        {/* Title Section - moved above Hakama */}
+        {!isAdmin && (
+          <div className="mb-8 md:mb-12 w-full px-2">
+            <h1 className="text-base sm:text-lg md:text-2xl lg:text-3xl font-bold text-white flex flex-col md:flex-row items-center justify-center md:justify-between gap-2 md:gap-4 px-2 md:px-4 text-center">
+              <span className="text-amber-400 text-lg md:text-xl lg:text-2xl hidden md:block">平常心</span>
+              <span className="flex-1 text-center">Entraînement aux techniques Aïkido</span>
+              <span className="text-amber-400 text-lg md:text-xl lg:text-2xl hidden md:block">平常心</span>
+            </h1>
+            <p className="text-amber-400 text-center text-sm mt-1 md:hidden">平常心</p>
+            <div className="w-full h-1 bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 mt-3 md:mt-4 rounded-full"></div>
+            
+            {/* Fun Guide Section */}
+            <div className="mt-6 p-4 md:p-6 bg-gradient-to-r from-purple-900/40 via-pink-900/40 to-purple-900/40 rounded-2xl border border-purple-500/30">
+              <h2 className="text-center text-lg md:text-xl font-bold text-white mb-4 flex items-center justify-center gap-2">
+                🎯 Comment ça marche ?
+              </h2>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+                <div className="bg-gradient-to-br from-blue-600 to-blue-800 p-3 md:p-4 rounded-xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg">
+                  <div className="text-3xl md:text-4xl mb-2">👆</div>
+                  <p className="text-white font-bold text-sm">1. Choisis</p>
+                  <p className="text-blue-200 text-xs">une technique</p>
+                </div>
+                <div className="bg-gradient-to-br from-green-600 to-green-800 p-3 md:p-4 rounded-xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg">
+                  <div className="text-3xl md:text-4xl mb-2">👀</div>
+                  <p className="text-white font-bold text-sm">2. Regarde</p>
+                  <p className="text-green-200 text-xs">les détails</p>
+                </div>
+                <div className="bg-gradient-to-br from-orange-600 to-orange-800 p-3 md:p-4 rounded-xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg">
+                  <div className="text-3xl md:text-4xl mb-2">🥋</div>
+                  <p className="text-white font-bold text-sm">3. Pratique</p>
+                  <p className="text-orange-200 text-xs">au dojo</p>
+                </div>
+                <div className="bg-gradient-to-br from-pink-600 to-pink-800 p-3 md:p-4 rounded-xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg">
+                  <div className="text-3xl md:text-4xl mb-2">✅</div>
+                  <p className="text-white font-bold text-sm">4. Valide</p>
+                  <p className="text-pink-200 text-xs">ta progression</p>
+                </div>
+              </div>
+              <p className="text-center text-purple-300 text-xs md:text-sm mt-4">
+                💡 Crée ton compte pour sauvegarder ta progression et devenir un vrai maître ! 🏆
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* Logo and 7 Virtues Section */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-8 mb-6 p-8 bg-slate-800/50 rounded-xl border border-slate-700">
           <div className="flex flex-col items-center gap-2">
