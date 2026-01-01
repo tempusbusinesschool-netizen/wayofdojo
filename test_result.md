@@ -311,6 +311,7 @@ metadata:
 
 test_plan:
   current_focus:
+    - "Comprendre l'Aïkido tab with Les Sept Plis du Hakama section"
     - "Onboarding Flow (4 screens)"
     - "Paywall Dialog (Ninja and Dojo plans)"
     - "Dojo Registration Dialog (2-step form)"
