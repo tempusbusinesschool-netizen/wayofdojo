@@ -130,19 +130,35 @@ function AppContent() {
     fetchDojos();
   }, [showDojoManagement]);
   
-  const handleAdminLogin = (type) => {
+  // Selected dojo for Espace Dojo
+  const [selectedDojoForAdmin, setSelectedDojoForAdmin] = useState(() => {
+    const storedId = sessionStorage.getItem('aikido_dojo_id');
+    const storedName = sessionStorage.getItem('aikido_dojo_name');
+    if (storedId && storedName) {
+      return { id: storedId, name: storedName };
+    }
+    return null;
+  });
+  
+  const handleAdminLogin = (type, dojo = null) => {
     setAdminType(type);
+    if (dojo) {
+      setSelectedDojoForAdmin(dojo);
+    }
     // Redirect to appropriate default tab based on admin type
     if (type === 'admin') {
       setActiveTab("dashboard"); // Admin sees platform dashboard
     } else if (type === 'espace_dojo') {
-      setActiveTab("members"); // Espace Dojo manages members
+      setActiveTab("dojo-dashboard"); // Espace Dojo sees dojo dashboard
     }
   };
   
   const handleAdminLogout = () => {
     sessionStorage.removeItem('aikido_admin');
+    sessionStorage.removeItem('aikido_dojo_id');
+    sessionStorage.removeItem('aikido_dojo_name');
     setAdminType(null);
+    setSelectedDojoForAdmin(null);
     setActiveTab("techniques");
     toast.success("Déconnexion réussie");
   };
