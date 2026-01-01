@@ -1,15 +1,12 @@
 import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { ScrollText, ChevronDown, ChevronUp, Shield, Heart, Users, Clock, AlertTriangle, UserPlus } from "lucide-react";
+import { ScrollText, ChevronDown, ChevronUp, Shield, Heart, Users, Clock, AlertTriangle } from "lucide-react";
 import { REGLEMENT_INTERIEUR } from "@/constants";
-import MemberRegistrationForm from "./MemberRegistrationForm";
 
-function ReglementInterieur({ onRegister, isAdmin }) {
+function ReglementInterieur() {
   const [isExpanded, setIsExpanded] = useState(true);
   const [expandedArticles, setExpandedArticles] = useState(new Set());
-  const [showRegistration, setShowRegistration] = useState(false);
 
   const toggleArticle = (articleId) => {
     const newExpanded = new Set(expandedArticles);
