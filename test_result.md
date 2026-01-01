@@ -6,10 +6,10 @@
 - Track issues and resolutions
 
 ## Current Test Focus
-- Feature: Actions par Vertu (Virtue Actions System)
-- Backend endpoints: /api/virtues, /api/auth/virtue-actions (GET, POST)
-- Frontend component: VirtueActionsPanel.js
-- Integration with StatisticsDashboard.js
+- Feature: Multi-Dojo Architecture
+- Backend endpoints: /api/dojos (GET, POST), /api/dojos/{dojo_id} (DELETE), /api/dojos/{dojo_id}/assign-user/{user_id}
+- Frontend component: DojoManagement.js
+- Integration with App.js (Visiteurs tab)
 
 ## Features to Test
 
