@@ -556,56 +556,70 @@ function AppContent() {
       <main className="max-w-7xl mx-auto px-4 py-6">
         {/* Tabs for Techniques and Members */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
-          {/* Super Admin Tabs - Gestion plateforme */}
-          {isSuperAdmin && (
+          {/* Admin Tabs - Gestion plateforme HUMAN KNOWLEDGE */}
+          {isAdmin && (
             <div className="mb-4">
               <div className="flex items-center gap-2 mb-3">
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
-                  <Lock className="w-4 h-4 text-white" />
+                  <Shield className="w-4 h-4 text-white" />
                 </div>
-                <span className="text-cyan-400 font-semibold">🛡️ Espace Super Admin</span>
+                <span className="text-cyan-400 font-semibold">🛡️ Admin</span>
+                <span className="text-xs text-slate-500 hidden sm:inline">Cadre • Contrôle • Conformité</span>
               </div>
               <TabsList className="bg-slate-800 border-slate-700 flex flex-wrap gap-1">
-                <TabsTrigger value="visitors" className="data-[state=active]:bg-cyan-700 text-xs sm:text-sm">
-                  <Eye className="w-4 h-4 sm:mr-2" />
-                  <span className="hidden sm:inline">Visiteurs</span> ({visitors.length})
+                <TabsTrigger value="dashboard" className="data-[state=active]:bg-cyan-700 text-xs sm:text-sm">
+                  <LayoutDashboard className="w-4 h-4 sm:mr-2" />
+                  <span className="hidden sm:inline">Tableau de bord</span>
                 </TabsTrigger>
                 <TabsTrigger value="dojos" className="data-[state=active]:bg-cyan-700 text-xs sm:text-sm">
                   <Building2 className="w-4 h-4 sm:mr-2" />
-                  <span className="hidden sm:inline">Gestion Dojos</span> ({dojos.length})
+                  <span className="hidden sm:inline">Gestion Dojos</span>
                 </TabsTrigger>
-                <TabsTrigger value="reglement" className="data-[state=active]:bg-cyan-700 text-xs sm:text-sm">
+                <TabsTrigger value="subscriptions" className="data-[state=active]:bg-cyan-700 text-xs sm:text-sm">
+                  <CreditCard className="w-4 h-4 sm:mr-2" />
+                  <span className="hidden sm:inline">Abonnements</span>
+                </TabsTrigger>
+                <TabsTrigger value="legal" className="data-[state=active]:bg-cyan-700 text-xs sm:text-sm">
                   <ScrollText className="w-4 h-4 sm:mr-2" />
-                  <span className="hidden sm:inline">Règlement</span>
+                  <span className="hidden sm:inline">Juridique</span>
                 </TabsTrigger>
               </TabsList>
             </div>
           )}
           
-          {/* Admin Dojo Tabs - Gestion club */}
-          {isAdminDojo && (
+          {/* Espace Dojo Tabs - Gestion club */}
+          {isEspaceDojo && (
             <div className="mb-4">
               <div className="flex items-center gap-2 mb-3">
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center">
                   <Building2 className="w-4 h-4 text-white" />
                 </div>
-                <span className="text-orange-400 font-semibold">🏯 Espace Admin Dojo</span>
+                <span className="text-orange-400 font-semibold">🏯 Espace Dojo</span>
+                <span className="text-xs text-slate-500 hidden sm:inline">Gestion humaine • Locale</span>
               </div>
               <TabsList className="bg-slate-800 border-slate-700 flex flex-wrap gap-1">
+                <TabsTrigger value="dojo-dashboard" className="data-[state=active]:bg-orange-700 text-xs sm:text-sm">
+                  <LayoutDashboard className="w-4 h-4 sm:mr-2" />
+                  <span className="hidden sm:inline">Mon Dojo</span>
+                </TabsTrigger>
                 <TabsTrigger value="members" className="data-[state=active]:bg-orange-700 text-xs sm:text-sm">
                   <Users className="w-4 h-4 sm:mr-2" />
-                  <span className="hidden sm:inline">Adhérents</span> ({members.length})
+                  <span className="hidden sm:inline">Adhérents</span>
                 </TabsTrigger>
-                <TabsTrigger value="reglement" className="data-[state=active]:bg-orange-700 text-xs sm:text-sm">
-                  <ScrollText className="w-4 h-4 sm:mr-2" />
-                  <span className="hidden sm:inline">Règlement</span>
+                <TabsTrigger value="animation" className="data-[state=active]:bg-orange-700 text-xs sm:text-sm">
+                  <Sparkles className="w-4 h-4 sm:mr-2" />
+                  <span className="hidden sm:inline">Animation</span>
+                </TabsTrigger>
+                <TabsTrigger value="techniques-ref" className="data-[state=active]:bg-orange-700 text-xs sm:text-sm">
+                  <Swords className="w-4 h-4 sm:mr-2" />
+                  <span className="hidden sm:inline">Techniques</span>
                 </TabsTrigger>
               </TabsList>
             </div>
           )}
           
           {/* User Tabs - Navigation utilisateur (non-admin) */}
-          {!isAdmin && (
+          {!isAdminMode && (
             <div className="mb-4">
               <TabsList className="bg-slate-800 border-slate-700 flex flex-wrap gap-1">
                 <TabsTrigger value="techniques" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-cyan-600 data-[state=active]:to-blue-600 text-xs sm:text-sm">
