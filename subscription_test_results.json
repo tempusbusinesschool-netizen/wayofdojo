@@ -1,0 +1,114 @@
+[
+  {
+    "test": "GET /api/subscription-plans",
+    "success": true,
+    "message": "Successfully retrieved both subscription plans with correct details",
+    "timestamp": "2026-01-01T16:43:10.982907",
+    "details": {
+      "ninja_plan": {
+        "id": "ninja",
+        "name": "Ninja individuel",
+        "price": 4.5,
+        "currency": "eur",
+        "trial_days": 90,
+        "commitment_months": 0,
+        "description": "Ton parcours personnel, sans engagement"
+      },
+      "dojo_plan": {
+        "id": "dojo",
+        "name": "Offre Dojo",
+        "price": 65.0,
+        "currency": "eur",
+        "trial_days": 10,
+        "commitment_months": 12,
+        "description": "Un outil de gestion et d'animation pour les clubs"
+      }
+    }
+  },
+  {
+    "test": "POST /api/auth/register-dojo",
+    "success": true,
+    "message": "Successfully registered dojo with 10-day trial",
+    "timestamp": "2026-01-01T16:43:11.521788",
+    "details": {
+      "dojo_id": "aikido-test-dojo",
+      "trial_days": 10,
+      "response": {
+        "success": true,
+        "message": "Dojo 'Aikido Test Dojo' cr\u00e9\u00e9 avec succ\u00e8s !",
+        "dojo_id": "aikido-test-dojo",
+        "trial_days": 10
+      }
+    }
+  },
+  {
+    "test": "User Registration",
+    "success": true,
+    "message": "Successfully registered test user",
+    "timestamp": "2026-01-01T16:43:11.794161",
+    "details": {}
+  },
+  {
+    "test": "GET /api/auth/subscription",
+    "success": true,
+    "message": "No subscription found (expected for new user)",
+    "timestamp": "2026-01-01T16:43:11.805567",
+    "details": {
+      "has_subscription": false
+    }
+  },
+  {
+    "test": "POST /api/subscriptions/checkout",
+    "success": true,
+    "message": "Successfully started 3-month trial for ninja plan",
+    "timestamp": "2026-01-01T16:43:11.817919",
+    "details": {
+      "subscription": {
+        "id": "1898f04f-934d-4a11-877d-f804bfd3a1b4",
+        "plan": "Ninja individuel",
+        "trial_end": "2026-04-01T16:43:11.813755+00:00",
+        "status": "trialing"
+      },
+      "message": "\ud83c\udf89 Ton essai gratuit de 90 jours a commenc\u00e9 !"
+    }
+  },
+  {
+    "test": "GET /api/auth/subscription",
+    "success": true,
+    "message": "Successfully retrieved user subscription status",
+    "timestamp": "2026-01-01T16:43:11.867248",
+    "details": {
+      "has_subscription": true,
+      "subscription": {
+        "id": "1898f04f-934d-4a11-877d-f804bfd3a1b4",
+        "user_id": "5205ab79-49c1-4b8e-91cd-6d411f38b26f",
+        "user_email": "test_subscription_1767285790@example.com",
+        "plan_id": "ninja",
+        "plan_name": "Ninja individuel",
+        "status": "trialing",
+        "trial_start": "2026-01-01T16:43:11.813777+00:00",
+        "trial_end": "2026-04-01T16:43:11.813755+00:00",
+        "price": 4.5,
+        "currency": "eur",
+        "commitment_months": 0,
+        "created_at": "2026-01-01T16:43:11.813787+00:00",
+        "stripe_session_id": null,
+        "card_added": false
+      }
+    }
+  },
+  {
+    "test": "Dojo Admin Login",
+    "success": true,
+    "message": "Successfully logged in dojo admin: sensei_1767285790@testdojo.com",
+    "timestamp": "2026-01-01T16:43:12.106405",
+    "details": {
+      "user": {
+        "id": "8cb3f955-5a74-4dd1-b593-54224e98e286",
+        "first_name": "Jean",
+        "last_name": "Sensei",
+        "email": "sensei_1767285790@testdojo.com"
+      }
+    }
+  }
+]
