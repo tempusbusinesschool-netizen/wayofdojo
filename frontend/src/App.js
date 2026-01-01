@@ -27,8 +27,6 @@ import {
   DeplacementsSection,
   TechniqueModal,
   GradeSection,
-  MembersList,
-  MemberRegistrationForm,
   ReglementInterieur,
   StatisticsDashboard,
   CGUDialog,
