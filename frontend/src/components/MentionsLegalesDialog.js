@@ -46,7 +46,7 @@ function MentionsLegalesDialog({ isOpen, onClose }) {
               <p><strong>Statut :</strong> Association loi 1901</p>
               <p><strong>Rôle :</strong> partenaire pédagogique</p>
             </div>
-            <p className="mt-3">L'association Aïkido La Rivière :</p>
+            <p className="mt-3">L'association Techniques Aikido :</p>
             <ul className="list-disc pl-6 space-y-1">
               <li>n'est pas éditrice du site ;</li>
               <li>n'intervient pas dans la gestion technique ou numérique du service ;</li>
