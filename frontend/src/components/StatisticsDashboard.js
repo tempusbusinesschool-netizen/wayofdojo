@@ -594,84 +594,120 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
   return (
     <>
       <div className="mb-8 animate-fadeIn">
-        {/* Title Section - moved above Hakama */}
+        {/* BLOC UNIFIÉ - Hero Section avec Titre, Guide et Vertus */}
         {!isAdmin && (
-          <div className="mb-8 md:mb-12 w-full px-2">
-            <h1 className="text-base sm:text-lg md:text-2xl lg:text-3xl font-bold text-white flex flex-col md:flex-row items-center justify-center md:justify-between gap-2 md:gap-4 px-2 md:px-4 text-center">
-              <span className="text-amber-400 text-lg md:text-xl lg:text-2xl hidden md:block">平常心</span>
-              <span className="flex-1 text-center">Jouer et s'entrainer aux techniques d'Aïkido après les cours du Dojo, Simple et ludique !</span>
-              <span className="text-amber-400 text-lg md:text-xl lg:text-2xl hidden md:block">平常心</span>
-            </h1>
-            <p className="text-amber-400 text-center text-sm mt-1 md:hidden">平常心</p>
-            <div className="w-full h-1 bg-gradient-to-r from-amber-500 via-yellow-400 to-amber-500 mt-3 md:mt-4 rounded-full"></div>
-            
-            {/* Fun Guide Section */}
-            <div className="mt-6 p-4 md:p-6 bg-gradient-to-r from-purple-900/40 via-pink-900/40 to-purple-900/40 rounded-2xl border border-purple-500/30">
-              <h2 className="text-center text-lg md:text-xl font-bold text-white mb-4 flex flex-col md:flex-row items-center justify-center gap-2">
-                <span className="text-green-400">💚 D'abord c'est Gratuit !</span>
-                <span className="hidden md:inline text-purple-400">•</span>
-                <span>🎯 Ensuite comment ça marche ?</span>
-              </h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-                <div className="bg-gradient-to-br from-blue-600 to-blue-800 p-3 md:p-4 rounded-xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg">
-                  <div className="text-3xl md:text-4xl mb-2">👆</div>
-                  <p className="text-white font-bold text-sm">1. Choisis</p>
-                  <p className="text-blue-200 text-xs">une technique</p>
+          <div className="mb-8 md:mb-12 w-full">
+            {/* Bloc Principal Unifié */}
+            <div className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl border-2 border-amber-500/40 shadow-2xl shadow-amber-500/10">
+              
+              {/* Fond décoratif avec motifs japonais */}
+              <div className="absolute inset-0 opacity-5">
+                <div className="absolute top-4 left-4 text-8xl text-amber-400">合</div>
+                <div className="absolute top-4 right-4 text-8xl text-amber-400">気</div>
+                <div className="absolute bottom-4 left-1/4 text-8xl text-amber-400">道</div>
+                <div className="absolute bottom-4 right-1/4 text-8xl text-amber-400">武</div>
+              </div>
+              
+              {/* ====== TITRE DE LA PLATEFORME ====== */}
+              <div className="relative pt-6 pb-4 px-4 md:px-8 text-center border-b border-amber-500/20">
+                {/* Badge Plateforme */}
+                <div className="inline-flex items-center gap-3 mb-4 px-6 py-2 bg-gradient-to-r from-amber-500/20 via-yellow-500/20 to-amber-500/20 rounded-full border border-amber-500/40">
+                  <span className="text-amber-400 text-2xl md:text-3xl font-bold animate-pulse">平常心</span>
+                  <span className="text-amber-300 text-sm md:text-base">• Esprit serein •</span>
+                  <span className="text-amber-400 text-2xl md:text-3xl font-bold animate-pulse">平常心</span>
                 </div>
-                <div className="bg-gradient-to-br from-green-600 to-green-800 p-3 md:p-4 rounded-xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg">
-                  <div className="text-3xl md:text-4xl mb-2">👀</div>
-                  <p className="text-white font-bold text-sm">2. Regarde</p>
-                  <p className="text-green-200 text-xs">les détails</p>
+                
+                {/* Titre Principal avec effet gradient animé */}
+                <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black mb-3">
+                  <span className="bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">
+                    Techniques d&apos;Aïkido
+                  </span>
+                </h1>
+                
+                {/* Sous-titre */}
+                <p className="text-base md:text-lg text-slate-300 max-w-2xl mx-auto">
+                  🥋 Jouer et s&apos;entraîner aux techniques après les cours du Dojo
+                  <br />
+                  <span className="text-cyan-400 font-semibold">Simple et ludique !</span>
+                </p>
+              </div>
+              
+              {/* ====== GUIDE EN 4 ÉTAPES ====== */}
+              <div className="relative px-4 md:px-8 py-6 border-b border-amber-500/20">
+                <div className="flex flex-col md:flex-row items-center justify-center gap-2 mb-5">
+                  <span className="text-green-400 font-bold text-lg">💚 C&apos;est Gratuit !</span>
+                  <span className="hidden md:inline text-amber-400">•</span>
+                  <span className="text-white font-bold text-lg">🎯 Comment ça marche ?</span>
                 </div>
-                <div className="bg-gradient-to-br from-orange-600 to-orange-800 p-3 md:p-4 rounded-xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg">
-                  <div className="text-3xl md:text-4xl mb-2">🥋</div>
-                  <p className="text-white font-bold text-sm">3. Pratique</p>
-                  <p className="text-orange-200 text-xs">au dojo</p>
+                
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 max-w-4xl mx-auto">
+                  <div className="bg-gradient-to-br from-blue-600 to-blue-800 p-3 md:p-4 rounded-xl text-center transform hover:scale-105 hover:-rotate-1 transition-all cursor-pointer shadow-lg shadow-blue-500/30">
+                    <div className="text-3xl md:text-4xl mb-2">👆</div>
+                    <p className="text-white font-bold text-sm">1. Choisis</p>
+                    <p className="text-blue-200 text-xs">une technique</p>
+                  </div>
+                  <div className="bg-gradient-to-br from-green-600 to-green-800 p-3 md:p-4 rounded-xl text-center transform hover:scale-105 hover:rotate-1 transition-all cursor-pointer shadow-lg shadow-green-500/30">
+                    <div className="text-3xl md:text-4xl mb-2">👀</div>
+                    <p className="text-white font-bold text-sm">2. Regarde</p>
+                    <p className="text-green-200 text-xs">les détails</p>
+                  </div>
+                  <div className="bg-gradient-to-br from-orange-600 to-orange-800 p-3 md:p-4 rounded-xl text-center transform hover:scale-105 hover:-rotate-1 transition-all cursor-pointer shadow-lg shadow-orange-500/30">
+                    <div className="text-3xl md:text-4xl mb-2">🥋</div>
+                    <p className="text-white font-bold text-sm">3. Pratique</p>
+                    <p className="text-orange-200 text-xs">au dojo</p>
+                  </div>
+                  <div className="bg-gradient-to-br from-pink-600 to-pink-800 p-3 md:p-4 rounded-xl text-center transform hover:scale-105 hover:rotate-1 transition-all cursor-pointer shadow-lg shadow-pink-500/30">
+                    <div className="text-3xl md:text-4xl mb-2">✅</div>
+                    <p className="text-white font-bold text-sm">4. Valide</p>
+                    <p className="text-pink-200 text-xs">ta progression</p>
+                  </div>
                 </div>
-                <div className="bg-gradient-to-br from-pink-600 to-pink-800 p-3 md:p-4 rounded-xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg">
-                  <div className="text-3xl md:text-4xl mb-2">✅</div>
-                  <p className="text-white font-bold text-sm">4. Valide</p>
-                  <p className="text-pink-200 text-xs">ta progression</p>
+                
+                <p className="text-center text-amber-300/80 text-xs md:text-sm mt-4">
+                  💡 Crée ton compte pour sauvegarder ta progression et devenir un vrai maître ! 🏆
+                </p>
+              </div>
+              
+              {/* ====== LES 7 VERTUS ====== */}
+              <div className="relative px-4 md:px-8 py-6">
+                <div className="flex flex-col md:flex-row items-center justify-center gap-6">
+                  {/* Logo Yin-Yang */}
+                  <div className="flex flex-col items-center gap-2">
+                    <div className="relative w-20 h-20 md:w-24 md:h-24">
+                      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-amber-400 via-yellow-500 to-amber-600 shadow-lg shadow-amber-500/40 animate-pulse"></div>
+                      <div className="absolute inset-1 rounded-full bg-slate-900 flex items-center justify-center">
+                        <div className="relative w-12 h-12 md:w-14 md:h-14">
+                          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-6 md:w-7 md:h-7 rounded-full bg-gradient-to-b from-amber-400 to-yellow-500"></div>
+                          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-6 md:w-7 md:h-7 rounded-full bg-slate-900 border-2 border-amber-500"></div>
+                          <div className="absolute top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-slate-900"></div>
+                          <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-amber-400"></div>
+                        </div>
+                      </div>
+                    </div>
+                    <p className="text-amber-400 font-bold text-sm">合気道</p>
+                  </div>
+                  
+                  {/* Les 7 Vertus */}
+                  <div className="flex-1 text-center md:text-left">
+                    <h3 className="text-lg md:text-xl font-bold text-cyan-400 mb-3 flex items-center justify-center md:justify-start gap-2">
+                      <span className="text-2xl">🎌</span> Les 7 Vertus de l&apos;Aïkido
+                    </h3>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-2 text-sm md:text-base">
+                      <p className="text-slate-300"><span className="text-red-400 font-bold">義 Gi</span> : Droiture</p>
+                      <p className="text-slate-300"><span className="text-orange-400 font-bold">勇 Yu</span> : Courage</p>
+                      <p className="text-slate-300"><span className="text-pink-400 font-bold">仁 Jin</span> : Bienveillance</p>
+                      <p className="text-slate-300"><span className="text-yellow-400 font-bold">礼 Rei</span> : Respect</p>
+                      <p className="text-slate-300"><span className="text-green-400 font-bold">誠 Makoto</span> : Sincérité</p>
+                      <p className="text-slate-300"><span className="text-blue-400 font-bold">名誉 Meiyo</span> : Honneur</p>
+                      <p className="text-slate-300 md:col-span-2"><span className="text-purple-400 font-bold">忠義 Chugi</span> : Loyauté</p>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <p className="text-center text-purple-300 text-xs md:text-sm mt-4">
-                💡 Crée ton compte pour sauvegarder ta progression et devenir un vrai maître ! 🏆
-              </p>
+              
             </div>
           </div>
         )}
-
-        {/* Logo and 7 Virtues Section */}
-        <div className="flex flex-col md:flex-row items-center justify-center gap-8 mb-6 p-8 bg-slate-800/50 rounded-xl border border-slate-700">
-          <div className="flex flex-col items-center gap-2">
-            {/* Yin-Yang style logo in yellow/gold - larger version */}
-            <div className="relative w-28 h-28">
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-amber-400 via-yellow-500 to-amber-600 shadow-lg shadow-amber-500/30"></div>
-              <div className="absolute inset-1.5 rounded-full bg-slate-900 flex items-center justify-center">
-                <div className="relative w-16 h-16">
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-gradient-to-b from-amber-400 to-yellow-500"></div>
-                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-slate-900 border-2 border-amber-500"></div>
-                  <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-slate-900"></div>
-                  <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-amber-400"></div>
-                </div>
-              </div>
-            </div>
-            <p className="text-sm text-amber-400 font-medium">Aikido</p>
-            <p className="text-lg font-bold text-white">Techniques d'Aikido</p>
-          </div>
-          <div className="text-center md:text-left">
-            <h3 className="text-2xl font-bold text-cyan-400 mb-4">Les 7 Vertus de l'Aïkido</h3>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-3 text-base">
-              <p className="text-slate-300"><span className="text-amber-400 font-bold text-lg">義 Gi</span> : Droiture</p>
-              <p className="text-slate-300"><span className="text-amber-400 font-bold text-lg">勇 Yu</span> : Courage</p>
-              <p className="text-slate-300"><span className="text-amber-400 font-bold text-lg">仁 Jin</span> : Bienveillance</p>
-              <p className="text-slate-300"><span className="text-amber-400 font-bold text-lg">礼 Rei</span> : Respect</p>
-              <p className="text-slate-300"><span className="text-amber-400 font-bold text-lg">誠 Makoto</span> : Sincérité</p>
-              <p className="text-slate-300"><span className="text-amber-400 font-bold text-lg">名誉 Meiyo</span> : Honneur</p>
-              <p className="text-slate-300"><span className="text-amber-400 font-bold text-lg">忠義 Chugi</span> : Loyauté</p>
-            </div>
-          </div>
-        </div>
 
         {/* O Sensei & Hakama Section */}
         <div className="mb-10 p-6 md:p-8 bg-gradient-to-br from-slate-800/80 via-slate-900/80 to-slate-800/80 rounded-2xl border border-amber-500/30 shadow-xl">
