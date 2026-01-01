@@ -886,7 +886,7 @@ function AppContent() {
           </p>
           <div className="flex justify-center gap-3 mt-3 flex-wrap">
             <a 
-              href="https://customer-assets.emergentagent.com/job_budo-journey/artifacts/ta4uael4_CGU_HUMAN_KNOWLEDGE.pdf"
+              href="https://customer-assets.emergentagent.com/job_budo-journey/artifacts/ye93af5u_CGU_HUMAN_KNOWLEDGE-V2026.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="text-cyan-500 hover:text-cyan-400 text-xs underline"
@@ -895,7 +895,7 @@ function AppContent() {
             </a>
             <span className="text-slate-600 text-xs">•</span>
             <a 
-              href="https://customer-assets.emergentagent.com/job_budo-journey/artifacts/u75ktggo_CGV_FINALES_HUMAN_KNOWLEDGE.pdf"
+              href="https://customer-assets.emergentagent.com/job_budo-journey/artifacts/60zyegcd_CGV_FINALES_HUMAN_KNOWLEDGE-V2026.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="text-cyan-500 hover:text-cyan-400 text-xs underline"
@@ -904,7 +904,7 @@ function AppContent() {
             </a>
             <span className="text-slate-600 text-xs">•</span>
             <a 
-              href="https://customer-assets.emergentagent.com/job_budo-journey/artifacts/21i5vxtx_Charte_utilisation_HUMAN_KNOWLEDGE.pdf"
+              href="https://customer-assets.emergentagent.com/job_budo-journey/artifacts/jqas0i5r_CHARTE_UTILISATION_HUMAN_KNOWLEDGE-V2026.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="text-cyan-500 hover:text-cyan-400 text-xs underline"
@@ -913,7 +913,7 @@ function AppContent() {
             </a>
             <span className="text-slate-600 text-xs">•</span>
             <a 
-              href="https://customer-assets.emergentagent.com/job_budo-journey/artifacts/vmjkomnl_Mentions_legales_HUMAN_KNOWLEDGE.pdf"
+              href="https://customer-assets.emergentagent.com/job_budo-journey/artifacts/r5qdgcym_MENTIONS_LEGALES_HUMAN_KNOWLEDGE-V2026.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="text-cyan-500 hover:text-cyan-400 text-xs underline"
@@ -922,12 +922,12 @@ function AppContent() {
             </a>
             <span className="text-slate-600 text-xs">•</span>
             <a 
-              href="https://customer-assets.emergentagent.com/job_budo-journey/artifacts/hwwk367w_Politique_confidentialite_HUMAN_KNOWLEDGE.pdf"
+              href="https://customer-assets.emergentagent.com/job_budo-journey/artifacts/r92am4eo_POLITIQUE_RGPD_HUMAN_KNOWLEDGE-V2026.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="text-cyan-500 hover:text-cyan-400 text-xs underline"
             >
-              Politique de confidentialité
+              Politique RGPD
             </a>
           </div>
         </div>
