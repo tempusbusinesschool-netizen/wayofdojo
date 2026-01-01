@@ -16,12 +16,11 @@ const CATEGORY_STYLES = {
 
 // Belt equivalences for KYU grades
 const BELT_EQUIVALENCES = {
-  '6e KYU': { belt: 'Blanche', emoji: '⚪', color: '#E5E7EB' },
-  '5e KYU': { belt: 'Jaune', emoji: '🟡', color: '#FCD34D' },
-  '4e KYU': { belt: 'Orange', emoji: '🟠', color: '#FB923C' },
-  '3e KYU': { belt: 'Verte', emoji: '🟢', color: '#22C55E' },
-  '2e KYU': { belt: 'Bleue', emoji: '🔵', color: '#3B82F6' },
-  '1er KYU': { belt: 'Marron', emoji: '🟤', color: '#92400E' },
+  '5E KYU': { belt: 'Jaune', emoji: '🟡', color: '#FCD34D' },
+  '4E KYU': { belt: 'Orange', emoji: '🟠', color: '#FB923C' },
+  '3E KYU': { belt: 'Verte', emoji: '🟢', color: '#22C55E' },
+  '2E KYU': { belt: 'Bleue', emoji: '🔵', color: '#3B82F6' },
+  '1ER KYU': { belt: 'Marron', emoji: '🟤', color: '#92400E' },
   'SHODAN': { belt: 'Noire', emoji: '⚫', color: '#1F2937' },
   'NIDAN': { belt: 'Noire', emoji: '⚫', color: '#1F2937' },
   'SANDAN': { belt: 'Noire', emoji: '⚫', color: '#1F2937' },
