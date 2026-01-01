@@ -1015,6 +1015,79 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
           </DialogContent>
         </Dialog>
 
+        {/* Virtues Detail Dialog */}
+        <Dialog open={showVirtuesDialog} onOpenChange={setShowVirtuesDialog}>
+          <DialogContent className="max-w-lg bg-slate-900 border-slate-700 text-white max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle className="text-xl font-bold flex items-center gap-2 text-indigo-400">
+                🎯 Mes Vertus de l'Aïkido
+              </DialogTitle>
+              <DialogDescription className="text-slate-400">
+                Répartition de tes vertus travaillées sur ton parcours
+              </DialogDescription>
+            </DialogHeader>
+            
+            {/* Pie Chart */}
+            <div className="flex justify-center py-4">
+              {totalVirtuePoints > 0 ? (
+                <VirtuePieChart virtueData={virtueData} />
+              ) : (
+                <p className="text-slate-400 text-center">Aucune donnée disponible</p>
+              )}
+            </div>
+            
+            {/* Virtue Details */}
+            <div className="space-y-3 mt-4">
+              <h4 className="text-slate-300 font-semibold mb-3">Détail des vertus :</h4>
+              {virtueData.sort((a, b) => b.value - a.value).map((virtue, idx) => {
+                const percent = totalVirtuePoints > 0 ? Math.round((virtue.value / totalVirtuePoints) * 100) : 0;
+                return (
+                  <div key={idx} className="bg-slate-800/50 rounded-lg p-3 border border-slate-700">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <span className="text-2xl">{virtue.emoji}</span>
+                        <div>
+                          <p className="text-white font-bold">{virtue.name}</p>
+                          <p className="text-slate-500 text-xs">{virtue.kanji}</p>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-lg font-bold" style={{ color: virtue.color }}>{virtue.value} pts</p>
+                        <p className="text-slate-400 text-xs">{percent}%</p>
+                      </div>
+                    </div>
+                    {/* Progress bar */}
+                    <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
+                      <div 
+                        className="h-full rounded-full transition-all duration-500"
+                        style={{ width: `${percent}%`, backgroundColor: virtue.color }}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            
+            {/* Explanation */}
+            <div className="mt-6 bg-indigo-900/20 rounded-lg p-4 border border-indigo-500/30">
+              <h4 className="text-indigo-300 font-semibold mb-2">Comment ça marche ?</h4>
+              <ul className="text-xs text-slate-300 space-y-1">
+                <li>• <strong>Humilité</strong> : Points des techniques en apprentissage</li>
+                <li>• <strong>Persévérance</strong> : Points des techniques pratiquées</li>
+                <li>• <strong>Maîtrise de soi</strong> : Points des techniques maîtrisées</li>
+                <li>• <strong>Attention</strong> : Séances au dojo</li>
+                <li>• <strong>Ceinture</strong> : Chaque grade renforce sa vertu associée</li>
+                <li>• <strong>Rôle symbolique</strong> : Bonus pour la vertu du rôle</li>
+              </ul>
+            </div>
+            
+            <p className="text-center text-slate-500 text-xs mt-4 italic">
+              Ce graphique nourrit ta réflexion personnelle et donne du sens à ta pratique.
+              <br />Il reste strictement personnel. 🥋
+            </p>
+          </DialogContent>
+        </Dialog>
+
         {/* Belt Selection Dialog */}
         <Dialog open={showBeltDialog} onOpenChange={setShowBeltDialog}>
           <DialogContent className="max-w-lg bg-slate-900 border-slate-700 text-white max-h-[90vh] overflow-y-auto">
