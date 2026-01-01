@@ -647,19 +647,19 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               </div>
               
               {/* ====== TITRE DE LA PLATEFORME ====== */}
-              <div className="relative pt-6 pb-4 px-4 md:px-8 text-center border-b border-amber-500/20">
+              <div className="relative pt-8 pb-6 px-4 md:px-8 text-center border-b border-amber-500/20">
                 
                 {/* Titre Principal avec 平常心 à gauche et à droite */}
-                <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black mb-3 flex items-center justify-center gap-3 md:gap-6">
-                  <span className="text-amber-400 text-xl md:text-2xl lg:text-3xl font-bold animate-pulse">平常心</span>
+                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black mb-4 flex items-center justify-center gap-4 md:gap-8">
+                  <span className="text-amber-400 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold animate-pulse">平常心</span>
                   <span className="bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">
                     Techniques d&apos;Aïkido
                   </span>
-                  <span className="text-amber-400 text-xl md:text-2xl lg:text-3xl font-bold animate-pulse">平常心</span>
+                  <span className="text-amber-400 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold animate-pulse">平常心</span>
                 </h1>
                 
                 {/* Sous-titre */}
-                <p className="text-base md:text-lg text-slate-300 max-w-2xl mx-auto">
+                <p className="text-base md:text-lg lg:text-xl text-slate-300 max-w-2xl mx-auto">
                   🥋 S&apos;entraîner à l&apos;aïkido en dehors du dojo,
                   <br />
                   <span className="text-cyan-400 font-semibold">de façon simple et ludique !</span>
