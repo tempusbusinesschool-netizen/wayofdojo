@@ -125,13 +125,19 @@ function AppContent() {
     fetchDojos();
   }, [showDojoManagement]);
   
-  const handleAdminLogin = () => {
-    setIsAdmin(true);
+  const handleAdminLogin = (type) => {
+    setAdminType(type);
+    // Redirect to appropriate default tab based on admin type
+    if (type === 'super_admin') {
+      setActiveTab("visitors"); // Super Admin sees global visitors/dojos
+    } else if (type === 'admin_dojo') {
+      setActiveTab("members"); // Admin Dojo manages members
+    }
   };
   
   const handleAdminLogout = () => {
     sessionStorage.removeItem('aikido_admin');
-    setIsAdmin(false);
+    setAdminType(null);
     setActiveTab("techniques");
     toast.success("Déconnexion admin réussie");
   };
