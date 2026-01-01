@@ -488,6 +488,115 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
           </div>
         </div>
 
+        {/* GAMIFICATION SECTION - Belt & XP System */}
+        {!isAdmin && gameStats && (
+          <div className="mb-8 p-4 md:p-6 bg-gradient-to-r from-purple-900/60 via-indigo-900/60 to-purple-900/60 rounded-2xl border-2 border-purple-500/50 shadow-xl shadow-purple-500/20">
+            <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-8">
+              
+              {/* Current Belt Display */}
+              <div className="flex flex-col items-center">
+                <div className={`w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-br ${gameStats.currentBelt.color} flex items-center justify-center shadow-lg transform hover:scale-110 transition-all cursor-pointer`}
+                     onClick={() => setShowGameDialog(true)}>
+                  <span className="text-4xl md:text-5xl">{gameStats.currentBelt.emoji}</span>
+                </div>
+                <p className={`mt-2 font-bold text-sm md:text-base ${gameStats.currentBelt.textColor === 'text-white' || gameStats.currentBelt.textColor === 'text-blue-100' || gameStats.currentBelt.textColor === 'text-amber-100' ? 'text-white' : 'text-amber-400'}`}>
+                  {gameStats.currentBelt.name}
+                </p>
+                <p className="text-purple-300 text-xs">Niveau actuel</p>
+              </div>
+
+              {/* XP Progress */}
+              <div className="flex-1 w-full">
+                <div className="flex justify-between items-center mb-2">
+                  <span className="text-white font-bold text-lg md:text-xl flex items-center gap-2">
+                    <Zap className="w-5 h-5 text-yellow-400" />
+                    {gameStats.totalXP} XP
+                  </span>
+                  {gameStats.nextBelt && (
+                    <span className="text-purple-300 text-sm">
+                      Prochain : {gameStats.nextBelt.emoji} {gameStats.nextBelt.name}
+                    </span>
+                  )}
+                </div>
+                
+                {/* XP Progress Bar */}
+                <div className="h-4 md:h-6 bg-slate-700 rounded-full overflow-hidden border border-purple-500/30">
+                  <div 
+                    className={`h-full bg-gradient-to-r ${gameStats.currentBelt.color} transition-all duration-1000 ease-out relative`}
+                    style={{ width: `${gameStats.progressToNext}%` }}
+                  >
+                    <div className="absolute inset-0 bg-white/20 animate-pulse"></div>
+                  </div>
+                </div>
+                
+                {gameStats.nextBelt && (
+                  <p className="text-purple-300 text-xs mt-1 text-center">
+                    {gameStats.nextBelt.minXP - gameStats.totalXP} XP restants pour la prochaine ceinture !
+                  </p>
+                )}
+
+                {/* Motivation Message */}
+                <p className="text-center text-yellow-300 text-sm md:text-base mt-3 font-medium animate-pulse">
+                  {gameStats.motivationMessage}
+                </p>
+              </div>
+
+              {/* Quick Stats & Achievements Button */}
+              <div className="flex flex-col items-center gap-2">
+                <Button 
+                  onClick={() => setShowGameDialog(true)}
+                  className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-white font-bold px-4 py-2 rounded-xl shadow-lg transform hover:scale-105 transition-all"
+                >
+                  <Trophy className="w-5 h-5 mr-2" />
+                  Mes Trophées
+                </Button>
+                <p className="text-purple-300 text-xs">{gameStats.achievements.length} badges débloqués</p>
+              </div>
+            </div>
+
+            {/* Mini Achievements Row */}
+            {gameStats.achievements.length > 0 && (
+              <div className="mt-4 flex flex-wrap justify-center gap-2">
+                {gameStats.achievements.slice(0, 5).map((achievement, idx) => (
+                  <div 
+                    key={idx}
+                    className="bg-slate-800/80 px-3 py-1 rounded-full border border-yellow-500/30 flex items-center gap-1 text-xs"
+                    title={achievement.desc}
+                  >
+                    <span>{achievement.icon}</span>
+                    <span className="text-yellow-300">{achievement.name}</span>
+                  </div>
+                ))}
+                {gameStats.achievements.length > 5 && (
+                  <div className="bg-slate-800/80 px-3 py-1 rounded-full border border-purple-500/30 text-xs text-purple-300">
+                    +{gameStats.achievements.length - 5} autres
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* XP Earning Tips */}
+            <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
+              <div className="bg-slate-800/50 p-2 rounded-lg text-center">
+                <p className="text-emerald-400 font-bold">+50 XP</p>
+                <p className="text-slate-400">Technique maîtrisée</p>
+              </div>
+              <div className="bg-slate-800/50 p-2 rounded-lg text-center">
+                <p className="text-amber-400 font-bold">+20 XP</p>
+                <p className="text-slate-400">Technique pratiquée</p>
+              </div>
+              <div className="bg-slate-800/50 p-2 rounded-lg text-center">
+                <p className="text-pink-400 font-bold">+5 XP</p>
+                <p className="text-slate-400">Session validée</p>
+              </div>
+              <div className="bg-slate-800/50 p-2 rounded-lg text-center">
+                <p className="text-cyan-400 font-bold">+100 XP</p>
+                <p className="text-slate-400">Grade complété 🎉</p>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Statistics blocks - hidden for admin - FUN DESIGN */}
         {!isAdmin && (
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-12 max-w-6xl mx-auto px-2">
