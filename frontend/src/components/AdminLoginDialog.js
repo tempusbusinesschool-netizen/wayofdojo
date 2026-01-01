@@ -504,6 +504,15 @@ function AdminLoginDialog({ isOpen, onClose, onSuccess }) {
         )}
       </div>
       
+      {/* Bouton de remplissage automatique pour test */}
+      <button
+        type="button"
+        onClick={() => setPassword('aikido2024')}
+        className="w-full p-2 text-xs bg-cyan-900/30 hover:bg-cyan-900/50 border border-cyan-700/50 rounded-lg text-cyan-400 transition-colors"
+      >
+        🔑 Utiliser le compte test (aikido2024)
+      </button>
+      
       <div className="flex gap-3 pt-2">
         <Button
           type="button"
