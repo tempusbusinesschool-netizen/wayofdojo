@@ -459,13 +459,13 @@ VIRTUE_ACTIONS = {
         "emoji": "💝",
         "color": "#3B82F6",
         "individual_actions": [
-            {"id": "jin_aide", "name": "Aide spontanée à un autre pratiquant", "points": 10},
-            {"id": "jin_accueil", "name": "Accueil actif d'un nouveau", "points": 15},
-            {"id": "jin_journal", "name": "Journal réflexif sur un acte de bienveillance", "points": 5},
+            {"id": "jin_aide", "name": "Aide spontanée à un autre pratiquant", "points": 20},
+            {"id": "jin_accueil", "name": "Accueil actif d'un nouveau", "points": 20},
+            {"id": "jin_journal", "name": "Journal réflexif sur un acte de bienveillance", "points": 20},
         ],
         "collective_actions": [
-            {"id": "jin_cycle", "name": "Participation à un cycle « dojo bienveillant »", "points": 5},
-            {"id": "jin_soutien", "name": "Action collective de soutien (événement, solidarité)", "points": 15},
+            {"id": "jin_cycle", "name": "Participation à un cycle « dojo bienveillant »", "points": 20},
+            {"id": "jin_soutien", "name": "Action collective de soutien (événement, solidarité)", "points": 20},
         ]
     },
     "gi": {
@@ -476,12 +476,12 @@ VIRTUE_ACTIONS = {
         "color": "#8B5CF6",
         "individual_actions": [
             {"id": "gi_engagement", "name": "Engagement personnel tenu sur une période définie", "points": 20},
-            {"id": "gi_reconnaissance", "name": "Reconnaissance honnête d'un manquement", "points": 10},
-            {"id": "gi_temoignage", "name": "Témoignage écrit/audio sur la parole donnée", "points": 5},
+            {"id": "gi_reconnaissance", "name": "Reconnaissance honnête d'un manquement", "points": 20},
+            {"id": "gi_temoignage", "name": "Témoignage écrit/audio sur la parole donnée", "points": 20},
         ],
         "collective_actions": [
-            {"id": "gi_collectif", "name": "Engagement collectif respecté (règle, cadre)", "points": 10},
-            {"id": "gi_cycle", "name": "Cycle dojo « honneur et parole »", "points": 15},
+            {"id": "gi_collectif", "name": "Engagement collectif respecté (règle, cadre)", "points": 20},
+            {"id": "gi_cycle", "name": "Cycle dojo « honneur et parole »", "points": 20},
         ]
     },
     "rei": {
@@ -491,12 +491,12 @@ VIRTUE_ACTIONS = {
         "emoji": "🙏",
         "color": "#FCD34D",
         "individual_actions": [
-            {"id": "rei_rituels", "name": "Travail conscient des rituels et postures", "points": 10},
-            {"id": "rei_journal", "name": "Journal sur l'impact de la courtoisie", "points": 5},
+            {"id": "rei_rituels", "name": "Travail conscient des rituels et postures", "points": 20},
+            {"id": "rei_journal", "name": "Journal sur l'impact de la courtoisie", "points": 20},
         ],
         "collective_actions": [
-            {"id": "rei_rituel", "name": "Rituel collectif maintenu sur une période", "points": 10},
-            {"id": "rei_cycle", "name": "Cycle dojo « courtoisie et respect »", "points": 15},
+            {"id": "rei_rituel", "name": "Rituel collectif maintenu sur une période", "points": 20},
+            {"id": "rei_cycle", "name": "Cycle dojo « courtoisie et respect »", "points": 20},
         ]
     },
     "chi": {
@@ -506,12 +506,12 @@ VIRTUE_ACTIONS = {
         "emoji": "🧘",
         "color": "#22C55E",
         "individual_actions": [
-            {"id": "chi_analyse", "name": "Analyse réflexive d'une situation de tension", "points": 10},
-            {"id": "chi_calme", "name": "Choix volontaire du calme dans une difficulté", "points": 15},
+            {"id": "chi_analyse", "name": "Analyse réflexive d'une situation de tension", "points": 20},
+            {"id": "chi_calme", "name": "Choix volontaire du calme dans une difficulté", "points": 20},
         ],
         "collective_actions": [
-            {"id": "chi_reflexion", "name": "Temps collectif de réflexion (hors tatami)", "points": 10},
-            {"id": "chi_cycle", "name": "Cycle dojo « lenteur et justesse »", "points": 15},
+            {"id": "chi_reflexion", "name": "Temps collectif de réflexion (hors tatami)", "points": 20},
+            {"id": "chi_cycle", "name": "Cycle dojo « lenteur et justesse »", "points": 20},
         ]
     },
     "shin": {
@@ -521,12 +521,12 @@ VIRTUE_ACTIONS = {
         "emoji": "💎",
         "color": "#EC4899",
         "individual_actions": [
-            {"id": "shin_journal", "name": "Journal sincère sur ses motivations", "points": 10},
-            {"id": "shin_limite", "name": "Reconnaissance d'une limite ou d'un doute", "points": 15},
+            {"id": "shin_journal", "name": "Journal sincère sur ses motivations", "points": 20},
+            {"id": "shin_limite", "name": "Reconnaissance d'une limite ou d'un doute", "points": 20},
         ],
         "collective_actions": [
-            {"id": "shin_cycle", "name": "Cycle collectif « pratique authentique »", "points": 10},
-            {"id": "shin_partage", "name": "Partage volontaire d'expérience", "points": 15},
+            {"id": "shin_cycle", "name": "Cycle collectif « pratique authentique »", "points": 20},
+            {"id": "shin_partage", "name": "Partage volontaire d'expérience", "points": 20},
         ]
     },
     "chu": {
@@ -536,12 +536,12 @@ VIRTUE_ACTIONS = {
         "emoji": "🛡️",
         "color": "#F97316",
         "individual_actions": [
-            {"id": "chu_representer", "name": "Engagement à représenter le dojo", "points": 15},
-            {"id": "chu_gratitude", "name": "Témoignage de gratitude envers l'enseignement", "points": 10},
+            {"id": "chu_representer", "name": "Engagement à représenter le dojo", "points": 20},
+            {"id": "chu_gratitude", "name": "Témoignage de gratitude envers l'enseignement", "points": 20},
         ],
         "collective_actions": [
             {"id": "chu_valoriser", "name": "Action collective valorisant le dojo", "points": 20},
-            {"id": "chu_cycle", "name": "Cycle dojo « identité et transmission »", "points": 15},
+            {"id": "chu_cycle", "name": "Cycle dojo « identité et transmission »", "points": 20},
         ]
     },
     "ko": {
@@ -551,11 +551,11 @@ VIRTUE_ACTIONS = {
         "emoji": "🌳",
         "color": "#14B8A6",
         "individual_actions": [
-            {"id": "ko_bases", "name": "Travail approfondi d'une base technique", "points": 10},
-            {"id": "ko_journal", "name": "Journal sur le sens des fondements", "points": 5},
+            {"id": "ko_bases", "name": "Travail approfondi d'une base technique", "points": 20},
+            {"id": "ko_journal", "name": "Journal sur le sens des fondements", "points": 20},
         ],
         "collective_actions": [
-            {"id": "ko_cycle", "name": "Cycle collectif « retour aux bases »", "points": 15},
+            {"id": "ko_cycle", "name": "Cycle collectif « retour aux bases »", "points": 20},
             {"id": "ko_transmission", "name": "Transmission intergénérationnelle", "points": 20},
         ]
     }
