@@ -686,6 +686,92 @@ async def get_user_progression(user: dict = Depends(require_auth)):
 
 
 # ═══════════════════════════════════════════════════════════════════════════════════
+# VIRTUE ACTIONS ENDPOINTS
+# ═══════════════════════════════════════════════════════════════════════════════════
+
+@api_router.get("/virtues")
+async def get_virtue_actions():
+    """Récupérer le référentiel des vertus et leurs actions"""
+    return VIRTUE_ACTIONS
+
+@api_router.get("/auth/virtue-actions")
+async def get_user_virtue_actions(user: dict = Depends(require_auth)):
+    """Récupérer les actions de vertu de l'utilisateur"""
+    virtue_actions = user.get("virtue_actions", [])
+    
+    # Calculate totals per virtue
+    virtue_totals = {}
+    for virtue_id in VIRTUE_ACTIONS.keys():
+        virtue_totals[virtue_id] = {
+            "individual_points": 0,
+            "collective_points": 0,
+            "total_points": 0,
+            "action_count": 0
+        }
+    
+    for action in virtue_actions:
+        vid = action.get("virtue_id")
+        if vid in virtue_totals:
+            points = action.get("points", 0)
+            if action.get("action_type") == "individual":
+                virtue_totals[vid]["individual_points"] += points
+            else:
+                virtue_totals[vid]["collective_points"] += points
+            virtue_totals[vid]["total_points"] += points
+            virtue_totals[vid]["action_count"] += 1
+    
+    return {
+        "actions": virtue_actions,
+        "totals": virtue_totals,
+        "total_pv": sum(v["individual_points"] for v in virtue_totals.values()),
+        "total_pc": sum(v["collective_points"] for v in virtue_totals.values()),
+        "total_points": sum(v["total_points"] for v in virtue_totals.values())
+    }
+
+@api_router.post("/auth/virtue-actions")
+async def log_virtue_action(data: VirtueActionLog, user: dict = Depends(require_auth)):
+    """Enregistrer une action de vertu pour l'utilisateur"""
+    # Validate virtue exists
+    if data.virtue_id not in VIRTUE_ACTIONS:
+        raise HTTPException(status_code=400, detail=f"Vertu invalide: {data.virtue_id}")
+    
+    virtue = VIRTUE_ACTIONS[data.virtue_id]
+    
+    # Find the action and get points
+    action_list = virtue["individual_actions"] if data.action_type == "individual" else virtue["collective_actions"]
+    action = next((a for a in action_list if a["id"] == data.action_id), None)
+    
+    if not action:
+        raise HTTPException(status_code=400, detail=f"Action invalide: {data.action_id}")
+    
+    # Create action log entry
+    action_entry = {
+        "id": str(uuid.uuid4()),
+        "virtue_id": data.virtue_id,
+        "action_id": data.action_id,
+        "action_type": data.action_type,
+        "action_name": action["name"],
+        "points": action["points"],
+        "note": data.note,
+        "logged_at": datetime.now(timezone.utc).isoformat()
+    }
+    
+    # Update user's virtue actions
+    await db.users.update_one(
+        {"id": user["id"]},
+        {"$push": {"virtue_actions": action_entry}}
+    )
+    
+    logger.info(f"User {user['id']} logged virtue action: {data.virtue_id}/{data.action_id} (+{action['points']} pts)")
+    
+    return {
+        "success": True,
+        "message": f"+{action['points']} points pour {virtue['name']} !",
+        "action": action_entry
+    }
+
+
+# ═══════════════════════════════════════════════════════════════════════════════════
 # BELT SYSTEM ENDPOINTS
 # ═══════════════════════════════════════════════════════════════════════════════════
 
