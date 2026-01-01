@@ -1655,14 +1655,24 @@ async def export_user_pdf(user: dict = Depends(require_auth)):
 
 
 @api_router.get("/visitors")
-async def get_visitors():
+async def get_visitors(dojo_id: Optional[str] = None):
     """Récupérer la liste des utilisateurs inscrits (visiteurs) avec stats de progression"""
-    users = await db.users.find({}, {"_id": 0, "password_hash": 0}).to_list(1000)
+    # Build query - filter by dojo if specified
+    query = {}
+    if dojo_id:
+        query["dojo_id"] = dojo_id
+    
+    users = await db.users.find(query, {"_id": 0, "password_hash": 0}).to_list(1000)
     
     # Add belt info and progression stats to each user
     for user in users:
         belt_level = user.get("belt_level", "6e_kyu")
         user["belt_info"] = AIKIDO_BELTS.get(belt_level, AIKIDO_BELTS["6e_kyu"])
+        
+        # Add default dojo info if missing
+        if "dojo_id" not in user:
+            user["dojo_id"] = "aikido-la-riviere"
+            user["dojo_name"] = "Aikido La Rivière"
         
         # Calculate progression stats
         progression = user.get("progression", {})
