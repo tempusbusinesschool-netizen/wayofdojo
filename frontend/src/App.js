@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Swords, Users, BarChart3, LogOut, Baby, User, LogIn, Lock, ScrollText, Eye, Award, Building2 } from "lucide-react";
+import { Swords, Users, BarChart3, LogOut, Baby, User, LogIn, Lock, ScrollText, Eye, Award, Building2, Sparkles } from "lucide-react";
 
 // Aikido Belt System - for display
 const AIKIDO_BELTS = {
@@ -39,6 +39,9 @@ import {
 // Import Auth Context
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import DojoManagement from "@/components/DojoManagement";
+import OnboardingFlow from "@/components/OnboardingFlow";
+import PaywallDialog from "@/components/PaywallDialog";
+import DojoRegistrationDialog from "@/components/DojoRegistrationDialog";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
