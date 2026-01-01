@@ -805,7 +805,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         {/* FUN PROGRESSION SECTION - Colorful & Kid-Friendly - MOVED BEFORE Mon Parcours */}
         <div className="mb-8 bg-gradient-to-br from-indigo-900/60 via-purple-900/60 to-pink-900/60 rounded-2xl border-2 border-purple-500/40 p-4 md:p-6 shadow-xl">
           {/* Header with fun styling */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-3 mb-6">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-3 mb-4">
             <div className="flex items-center gap-3">
               <div className="text-4xl animate-bounce">🎯</div>
               <div>
@@ -834,6 +834,53 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 <Download className="w-3 h-3 mr-1" />
                 📊 CSV
               </Button>
+            </div>
+          </div>
+
+          {/* Stats Bar - Integrated */}
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-2 mb-6">
+            <div 
+              className={`bg-gradient-to-br from-indigo-600 to-indigo-800 rounded-xl p-3 text-center cursor-pointer hover:scale-105 transition-all ${activeFilter === 'all' ? 'ring-2 ring-white' : ''}`}
+              onClick={() => onFilterClick && onFilterClick('all')}
+            >
+              <div className="text-2xl">📚</div>
+              <p className="text-xl font-bold text-white">{statistics.total_techniques}</p>
+              <p className="text-xs text-indigo-200">Techniques</p>
+            </div>
+            <div 
+              className={`bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-xl p-3 text-center cursor-pointer hover:scale-105 transition-all ${activeFilter === 'mastered' ? 'ring-2 ring-white' : ''}`}
+              onClick={() => onFilterClick && onFilterClick('mastered')}
+            >
+              <div className="text-2xl">🏆</div>
+              <p className="text-xl font-bold text-white">{statistics.mastered_techniques}</p>
+              <p className="text-xs text-emerald-100">Maîtrisées</p>
+            </div>
+            <div 
+              className={`bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl p-3 text-center cursor-pointer hover:scale-105 transition-all ${activeFilter === 'in_progress' ? 'ring-2 ring-white' : ''}`}
+              onClick={() => onFilterClick && onFilterClick('in_progress')}
+            >
+              <div className="text-2xl">🔥</div>
+              <p className="text-xl font-bold text-white">{statistics.in_progress_techniques}</p>
+              <p className="text-xs text-amber-100">En cours</p>
+            </div>
+            <div 
+              className={`bg-gradient-to-br from-pink-500 to-rose-600 rounded-xl p-3 text-center cursor-pointer hover:scale-105 transition-all ${activeFilter === 'practiced' ? 'ring-2 ring-white' : ''}`}
+              onClick={() => onFilterClick && onFilterClick('practiced')}
+            >
+              <div className="text-2xl">⭐</div>
+              <p className="text-xl font-bold text-white">{statistics.total_practice_sessions}</p>
+              <p className="text-xs text-pink-100">Sessions</p>
+            </div>
+            <div className="col-span-2 md:col-span-1 bg-gradient-to-br from-cyan-600 to-teal-700 rounded-xl p-3 text-center">
+              <div className="text-2xl">📈</div>
+              <p className="text-xl font-bold text-white">{statistics.overall_progress}%</p>
+              <p className="text-xs text-cyan-100">Progression</p>
+              <div className="mt-1 h-1.5 bg-black/30 rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-white/80 rounded-full transition-all"
+                  style={{ width: `${statistics.overall_progress}%` }}
+                />
+              </div>
             </div>
           </div>
 
