@@ -609,7 +609,7 @@ function AppContent() {
 
           {isAdmin && (
             <TabsContent value="visitors" className="mt-6">
-              <div className="mb-4">
+              <div className="mb-4 flex flex-col sm:flex-row gap-3 justify-between">
                 <Button
                   variant="outline"
                   onClick={() => setActiveTab("techniques")}
@@ -617,23 +617,58 @@ function AppContent() {
                 >
                   ← Retour aux techniques
                 </Button>
+                <div className="flex gap-2">
+                  {/* Dojo Filter */}
+                  <Select 
+                    value={selectedDojoFilter} 
+                    onValueChange={setSelectedDojoFilter}
+                  >
+                    <SelectTrigger className="w-48 bg-slate-800 border-slate-600 text-white">
+                      <Building2 className="w-4 h-4 mr-2 text-blue-400" />
+                      <SelectValue placeholder="Filtrer par dojo" />
+                    </SelectTrigger>
+                    <SelectContent className="bg-slate-800 border-slate-700">
+                      <SelectItem value="all" className="text-white hover:bg-slate-700">
+                        Tous les dojos
+                      </SelectItem>
+                      {dojos.map((dojo) => (
+                        <SelectItem key={dojo.id} value={dojo.id} className="text-white hover:bg-slate-700">
+                          {dojo.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {/* Manage Dojos Button */}
+                  <Button
+                    onClick={() => setShowDojoManagement(true)}
+                    className="bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-400 hover:to-indigo-400 text-white"
+                  >
+                    <Building2 className="w-4 h-4 mr-2" />
+                    Gérer les dojos
+                  </Button>
+                </div>
               </div>
               <Card className="bg-slate-900/50 border-slate-700">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center gap-2">
                     <Eye className="w-5 h-5 text-purple-400" />
                     Visiteurs inscrits
+                    {selectedDojoFilter !== "all" && (
+                      <span className="text-sm font-normal text-blue-400">
+                        ({dojos.find(d => d.id === selectedDojoFilter)?.name})
+                      </span>
+                    )}
                   </CardTitle>
                   <CardDescription className="text-slate-400">
                     Utilisateurs qui suivent leur progression sur la plateforme
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  {visitors.length === 0 ? (
-                    <p className="text-slate-400 text-center py-8">Aucun visiteur inscrit pour le moment</p>
+                  {visitors.filter(v => selectedDojoFilter === "all" || v.dojo_id === selectedDojoFilter).length === 0 ? (
+                    <p className="text-slate-400 text-center py-8">Aucun visiteur inscrit {selectedDojoFilter !== "all" ? "dans ce dojo" : "pour le moment"}</p>
                   ) : (
                     <div className="space-y-3">
-                      {visitors.map((visitor) => {
+                      {visitors.filter(v => selectedDojoFilter === "all" || v.dojo_id === selectedDojoFilter).map((visitor) => {
                         const visitorBelt = visitor.belt_level || "6e_kyu";
                         const beltInfo = visitor.belt_info || AIKIDO_BELTS[visitorBelt] || AIKIDO_BELTS["6e_kyu"];
                         
