@@ -956,6 +956,13 @@ function AppContent() {
           toast.success("🏯 Dojo créé ! Connectez-vous pour continuer.");
         }}
       />
+
+      {/* Legal Pages */}
+      <CGUPage isOpen={showCGU} onClose={() => setShowCGU(false)} />
+      <CGVPage isOpen={showCGV} onClose={() => setShowCGV(false)} />
+      <ChartePage isOpen={showCharte} onClose={() => setShowCharte(false)} />
+      <MentionsLegalesPage isOpen={showMentionsLegales} onClose={() => setShowMentionsLegales(false)} />
+      <RGPDPage isOpen={showRGPD} onClose={() => setShowRGPD(false)} />
       
       {/* Footer */}
       <footer className="border-t border-slate-800 mt-12 py-6">
@@ -967,50 +974,40 @@ function AppContent() {
             © humanknowledge.fr - 2025
           </p>
           <div className="flex justify-center gap-3 mt-3 flex-wrap">
-            <a 
-              href="https://customer-assets.emergentagent.com/job_budo-journey/artifacts/ye93af5u_CGU_HUMAN_KNOWLEDGE-V2026.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-cyan-500 hover:text-cyan-400 text-xs underline"
+            <button 
+              onClick={() => setShowCGU(true)}
+              className="text-cyan-500 hover:text-cyan-400 text-xs underline cursor-pointer"
             >
               CGU
-            </a>
+            </button>
             <span className="text-slate-600 text-xs">•</span>
-            <a 
-              href="https://customer-assets.emergentagent.com/job_budo-journey/artifacts/60zyegcd_CGV_FINALES_HUMAN_KNOWLEDGE-V2026.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-cyan-500 hover:text-cyan-400 text-xs underline"
+            <button 
+              onClick={() => setShowCGV(true)}
+              className="text-cyan-500 hover:text-cyan-400 text-xs underline cursor-pointer"
             >
               CGV
-            </a>
+            </button>
             <span className="text-slate-600 text-xs">•</span>
-            <a 
-              href="https://customer-assets.emergentagent.com/job_budo-journey/artifacts/jqas0i5r_CHARTE_UTILISATION_HUMAN_KNOWLEDGE-V2026.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-cyan-500 hover:text-cyan-400 text-xs underline"
+            <button 
+              onClick={() => setShowCharte(true)}
+              className="text-cyan-500 hover:text-cyan-400 text-xs underline cursor-pointer"
             >
               Charte d&apos;utilisation
-            </a>
+            </button>
             <span className="text-slate-600 text-xs">•</span>
-            <a 
-              href="https://customer-assets.emergentagent.com/job_budo-journey/artifacts/r5qdgcym_MENTIONS_LEGALES_HUMAN_KNOWLEDGE-V2026.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-cyan-500 hover:text-cyan-400 text-xs underline"
+            <button 
+              onClick={() => setShowMentionsLegales(true)}
+              className="text-cyan-500 hover:text-cyan-400 text-xs underline cursor-pointer"
             >
               Mentions légales
-            </a>
+            </button>
             <span className="text-slate-600 text-xs">•</span>
-            <a 
-              href="https://customer-assets.emergentagent.com/job_budo-journey/artifacts/r92am4eo_POLITIQUE_RGPD_HUMAN_KNOWLEDGE-V2026.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-cyan-500 hover:text-cyan-400 text-xs underline"
+            <button 
+              onClick={() => setShowRGPD(true)}
+              className="text-cyan-500 hover:text-cyan-400 text-xs underline cursor-pointer"
             >
               Politique RGPD
-            </a>
+            </button>
           </div>
         </div>
       </footer>
