@@ -1,13 +1,103 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { BookOpen, CheckCircle2, Clock, Flame, TrendingUp, BarChart3, Users, Baby, FileText, Download, Swords } from "lucide-react";
+import { BookOpen, CheckCircle2, Clock, Flame, TrendingUp, BarChart3, Users, Baby, FileText, Download, Swords, Trophy, Star, Zap, Target } from "lucide-react";
 import { toast } from "sonner";
+
+// Belt System Configuration
+const BELT_SYSTEM = [
+  { name: "Ceinture Blanche", color: "from-gray-100 to-gray-300", textColor: "text-gray-800", minXP: 0, emoji: "⚪", message: "Bienvenue dans ta quête de maîtrise !" },
+  { name: "Ceinture Jaune", color: "from-yellow-400 to-yellow-600", textColor: "text-yellow-900", minXP: 100, emoji: "🟡", message: "Tu progresses bien, continue !" },
+  { name: "Ceinture Orange", color: "from-orange-400 to-orange-600", textColor: "text-orange-900", minXP: 300, emoji: "🟠", message: "Excellent travail, tu es sur la bonne voie !" },
+  { name: "Ceinture Verte", color: "from-green-500 to-green-700", textColor: "text-green-900", minXP: 600, emoji: "🟢", message: "Impressionnant ! Tu deviens un vrai pratiquant !" },
+  { name: "Ceinture Bleue", color: "from-blue-500 to-blue-700", textColor: "text-blue-100", minXP: 1000, emoji: "🔵", message: "Wahou ! Tu maîtrises de nombreuses techniques !" },
+  { name: "Ceinture Marron", color: "from-amber-700 to-amber-900", textColor: "text-amber-100", minXP: 1500, emoji: "🟤", message: "Tu es presque un expert !" },
+  { name: "Ceinture Noire", color: "from-gray-800 to-black", textColor: "text-white", minXP: 2500, emoji: "⚫", message: "MAÎTRE ! Tu as atteint le sommet ! 🏆" },
+];
+
+// XP Points Configuration
+const XP_POINTS = {
+  technique_mastered: 50,      // Technique maîtrisée
+  technique_practiced: 20,     // Technique pratiquée
+  technique_learning: 10,      // Technique en apprentissage
+  session_completed: 5,        // Session validée
+  grade_completed: 100,        // Grade complété (bonus)
+  streak_bonus: 25,            // Bonus série
+};
+
+// Motivational Messages
+const MOTIVATION_MESSAGES = [
+  "🔥 Continue comme ça, tu es sur le chemin de la maîtrise !",
+  "💪 Chaque technique maîtrisée te rapproche de ton objectif !",
+  "🌟 La persévérance est la clé du succès en Aïkido !",
+  "🥋 O Sensei serait fier de ta progression !",
+  "⭐ Tu es une source d'inspiration !",
+  "🎯 Reste concentré, le prochain grade t'attend !",
+  "🏆 Les champions ne s'arrêtent jamais !",
+];
 
 function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterClick, activeFilter, isAdmin, onMembersClick, kyuLevels }) {
   const [showEmailDialog, setShowEmailDialog] = useState(false);
+  const [showGameDialog, setShowGameDialog] = useState(false);
   const [sending, setSending] = useState(false);
+
+  // Calculate XP and Belt
+  const gameStats = useMemo(() => {
+    if (!statistics) return null;
+
+    // Calculate total XP
+    let totalXP = 0;
+    totalXP += (statistics.mastered_techniques || 0) * XP_POINTS.technique_mastered;
+    totalXP += (statistics.in_progress_techniques || 0) * XP_POINTS.technique_learning;
+    totalXP += (statistics.total_practice_sessions || 0) * XP_POINTS.session_completed;
+
+    // Calculate completed grades bonus
+    const completedGrades = statistics.techniques_by_level?.filter(
+      level => level.progress_percentage === 100
+    ).length || 0;
+    totalXP += completedGrades * XP_POINTS.grade_completed;
+
+    // Determine current belt
+    let currentBelt = BELT_SYSTEM[0];
+    let nextBelt = BELT_SYSTEM[1];
+    for (let i = BELT_SYSTEM.length - 1; i >= 0; i--) {
+      if (totalXP >= BELT_SYSTEM[i].minXP) {
+        currentBelt = BELT_SYSTEM[i];
+        nextBelt = BELT_SYSTEM[i + 1] || null;
+        break;
+      }
+    }
+
+    // Calculate progress to next belt
+    const progressToNext = nextBelt 
+      ? Math.min(100, ((totalXP - currentBelt.minXP) / (nextBelt.minXP - currentBelt.minXP)) * 100)
+      : 100;
+
+    // Random motivation message
+    const motivationMessage = MOTIVATION_MESSAGES[Math.floor(Math.random() * MOTIVATION_MESSAGES.length)];
+
+    // Achievements/Badges
+    const achievements = [];
+    if (statistics.mastered_techniques >= 1) achievements.push({ icon: "🎯", name: "Première Maîtrise", desc: "1 technique maîtrisée" });
+    if (statistics.mastered_techniques >= 10) achievements.push({ icon: "🌟", name: "Débutant Confirmé", desc: "10 techniques maîtrisées" });
+    if (statistics.mastered_techniques >= 25) achievements.push({ icon: "💎", name: "Pratiquant Assidu", desc: "25 techniques maîtrisées" });
+    if (statistics.mastered_techniques >= 50) achievements.push({ icon: "🏅", name: "Expert en Herbe", desc: "50 techniques maîtrisées" });
+    if (statistics.mastered_techniques >= 100) achievements.push({ icon: "🏆", name: "Maître Technique", desc: "100 techniques maîtrisées" });
+    if (statistics.total_practice_sessions >= 10) achievements.push({ icon: "🔥", name: "Entraînement Régulier", desc: "10 sessions" });
+    if (statistics.total_practice_sessions >= 50) achievements.push({ icon: "⚡", name: "Machine de Guerre", desc: "50 sessions" });
+    if (completedGrades >= 1) achievements.push({ icon: "📜", name: "Premier Grade", desc: "1 grade complété" });
+
+    return {
+      totalXP,
+      currentBelt,
+      nextBelt,
+      progressToNext,
+      motivationMessage,
+      achievements,
+      completedGrades
+    };
+  }, [statistics]);
 
   if (!statistics) return null;
 
