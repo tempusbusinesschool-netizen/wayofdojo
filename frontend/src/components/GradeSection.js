@@ -14,6 +14,30 @@ const CATEGORY_STYLES = {
   'TANTO': { emoji: '🗡️', color: 'from-red-500 to-rose-600', label: 'Couteau' },
 };
 
+// Belt equivalences for KYU grades
+const BELT_EQUIVALENCES = {
+  '6e KYU': { belt: 'Blanche', emoji: '⚪', color: '#E5E7EB' },
+  '5e KYU': { belt: 'Jaune', emoji: '🟡', color: '#FCD34D' },
+  '4e KYU': { belt: 'Orange', emoji: '🟠', color: '#FB923C' },
+  '3e KYU': { belt: 'Verte', emoji: '🟢', color: '#22C55E' },
+  '2e KYU': { belt: 'Bleue', emoji: '🔵', color: '#3B82F6' },
+  '1er KYU': { belt: 'Marron', emoji: '🟤', color: '#92400E' },
+  'SHODAN': { belt: 'Noire', emoji: '⚫', color: '#1F2937' },
+  'NIDAN': { belt: 'Noire', emoji: '⚫', color: '#1F2937' },
+  'SANDAN': { belt: 'Noire', emoji: '⚫', color: '#1F2937' },
+  'YONDAN': { belt: 'Noire', emoji: '⚫', color: '#1F2937' },
+};
+
+// Helper to find belt equivalence
+const getBeltEquivalence = (kyuName) => {
+  for (const [key, value] of Object.entries(BELT_EQUIVALENCES)) {
+    if (kyuName.toUpperCase().includes(key)) {
+      return value;
+    }
+  }
+  return null;
+};
+
 function GradeSection({ kyu, onViewTechnique, onUpdateMastery, onPractice, isFiltered, originalCount }) {
   const [isExpanded, setIsExpanded] = useState(true);
   
@@ -22,6 +46,9 @@ function GradeSection({ kyu, onViewTechnique, onUpdateMastery, onPractice, isFil
   const progressPercent = kyu.techniques.length > 0 
     ? Math.round((masteredCount / kyu.techniques.length) * 100) 
     : 0;
+  
+  // Get belt equivalence for this grade
+  const beltInfo = getBeltEquivalence(kyu.name);
   
   const groupedTechniques = {};
   kyu.techniques.forEach(tech => {
@@ -43,11 +70,11 @@ function GradeSection({ kyu, onViewTechnique, onUpdateMastery, onPractice, isFil
             {/* Colorful grade indicator */}
             <div 
               className="w-14 h-14 rounded-xl flex items-center justify-center shadow-lg transform transition-transform hover:scale-110"
-              style={{ backgroundColor: kyu.color }}
+              style={{ backgroundColor: beltInfo?.color || kyu.color }}
             >
               <span className="text-2xl font-bold text-white drop-shadow-lg">
-                {kyu.name.includes('KYU') ? kyu.name.match(/\d+/)?.[0] || '?' : 
-                 kyu.name.includes('DAN') || kyu.name.includes('SHODAN') ? '段' : '🥋'}
+                {beltInfo?.emoji || (kyu.name.includes('KYU') ? kyu.name.match(/\d+/)?.[0] || '?' : 
+                 kyu.name.includes('DAN') || kyu.name.includes('SHODAN') ? '段' : '🥋')}
               </span>
             </div>
             <div>
