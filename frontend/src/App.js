@@ -72,11 +72,34 @@ function AppContent() {
   const [dojos, setDojos] = useState([]);
   const [selectedDojoFilter, setSelectedDojoFilter] = useState("all");
   
+  // Onboarding & Paywall state
+  const [showOnboarding, setShowOnboarding] = useState(() => {
+    return !localStorage.getItem('aikido_onboarding_seen');
+  });
+  const [showPaywall, setShowPaywall] = useState(false);
+  const [showDojoRegistration, setShowDojoRegistration] = useState(false);
+  
   // Admin state
   const [isAdmin, setIsAdmin] = useState(() => {
     return sessionStorage.getItem('aikido_admin') === 'true';
   });
   const [showAdminLogin, setShowAdminLogin] = useState(false);
+  
+  // Handle onboarding completion
+  const handleOnboardingComplete = () => {
+    localStorage.setItem('aikido_onboarding_seen', 'true');
+    setShowOnboarding(false);
+    // Show paywall after onboarding if not authenticated
+    if (!isAuthenticated) {
+      setShowPaywall(true);
+    }
+  };
+  
+  // Handle subscription
+  const handleSubscribe = (planId) => {
+    toast.success(`🎉 Abonnement ${planId} activé !`);
+    setShowPaywall(false);
+  };
   
   // Fetch dojos list
   useEffect(() => {
