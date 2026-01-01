@@ -384,6 +384,7 @@ function VirtueActionsPanel({ isOpen, onClose, isAuthenticated, onPointsUpdate }
         <div className="mt-4 bg-slate-800/50 rounded-lg p-3 text-xs text-slate-400">
           <p className="font-semibold text-slate-300 mb-1">Légende :</p>
           <p><span className="text-amber-400">PV</span> = Points Vertu Individuels • <span className="text-cyan-400">PC</span> = Points Collectifs</p>
+          <p className="mt-1"><span className="text-emerald-400">✓</span> = Action déjà validée ce mois-ci (limite : 1 fois/mois par action)</p>
           <p className="mt-1 italic">Ces actions reflètent ton engagement personnel dans les valeurs de l'Aïkido.</p>
         </div>
       </DialogContent>
