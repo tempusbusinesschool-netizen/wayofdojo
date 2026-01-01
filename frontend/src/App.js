@@ -298,10 +298,6 @@ function AppContent() {
     setSelectedTechnique(technique);
   };
   
-  // Registration dialogs state
-  const [showChildRegistration, setShowChildRegistration] = useState(false);
-  const [showAdultRegistration, setShowAdultRegistration] = useState(false);
-  
   // Filter state for technique filtering
   const [techniqueFilter, setTechniqueFilter] = useState('all');
   
