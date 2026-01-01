@@ -1,10 +1,42 @@
 import { Circle, BookOpen, Target, Award } from "lucide-react";
 
 export const MASTERY_LEVELS = {
-  not_started: { label: "Non démarré", color: "bg-slate-500", icon: Circle, weight: 0 },
-  learning: { label: "En apprentissage", color: "bg-amber-500", icon: BookOpen, weight: 33 },
-  practiced: { label: "Pratiqué", color: "bg-blue-500", icon: Target, weight: 66 },
-  mastered: { label: "Maîtrisé", color: "bg-emerald-500", icon: Award, weight: 100 }
+  not_started: { 
+    label: "À découvrir", 
+    color: "bg-slate-500", 
+    gradient: "from-slate-500 to-slate-600",
+    icon: Circle, 
+    emoji: "💤",
+    weight: 0,
+    message: "Prêt à commencer ?"
+  },
+  learning: { 
+    label: "En apprentissage", 
+    color: "bg-amber-500", 
+    gradient: "from-amber-400 to-orange-500",
+    icon: BookOpen, 
+    emoji: "📖",
+    weight: 33,
+    message: "Tu progresses !"
+  },
+  practiced: { 
+    label: "Pratiqué", 
+    color: "bg-blue-500", 
+    gradient: "from-blue-400 to-indigo-500",
+    icon: Target, 
+    emoji: "🎯",
+    weight: 66,
+    message: "Continue comme ça !"
+  },
+  mastered: { 
+    label: "Maîtrisé", 
+    color: "bg-emerald-500", 
+    gradient: "from-emerald-400 to-green-500",
+    icon: Award, 
+    emoji: "🏆",
+    weight: 100,
+    message: "Bravo champion !"
+  }
 };
 
 export const ADMIN_PASSWORD = "aikido2024";
