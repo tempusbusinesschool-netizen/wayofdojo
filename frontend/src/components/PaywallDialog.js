@@ -4,7 +4,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
-import { Check, X, Sparkles, Building2, CreditCard } from "lucide-react";
+import { Check, X, CreditCard, Gift, ArrowLeft } from "lucide-react";
 
 const API = process.env.REACT_APP_BACKEND_URL + "/api";
 
@@ -17,6 +17,7 @@ const PLANS = {
     price: "4,50 €",
     period: "/mois",
     trial: "3 mois gratuits",
+    trialDays: 90,
     features: [
       { text: "Accès complet aux techniques de révision", included: true },
       { text: "Suivi personnel de progression", included: true },
@@ -46,6 +47,7 @@ const PLANS = {
     price: "65 €",
     period: "/mois",
     trial: "10 jours gratuits",
+    trialDays: 10,
     features: [
       { text: "Espace de gestion du dojo", included: true },
       { text: "Gestion des adhérents (nombre illimité)", included: true },
@@ -151,73 +153,196 @@ function PlanCard({ plan, onSelect, loading, selected }) {
   );
 }
 
+function PaymentOptionScreen({ plan, onSelectOption, onBack, loading }) {
+  return (
+    <div className="p-6">
+      {/* Back button */}
+      <button
+        onClick={onBack}
+        className="flex items-center gap-2 text-slate-400 hover:text-white mb-6 transition-colors"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        Retour aux offres
+      </button>
+      
+      {/* Plan selected */}
+      <div className="text-center mb-6">
+        <span className="text-5xl mb-3 block">{plan.emoji}</span>
+        <h3 className="text-2xl font-bold text-white">{plan.name}</h3>
+        <p className="text-slate-400">{plan.price}{plan.period}</p>
+        <Badge className={`mt-2 bg-gradient-to-r ${plan.gradient} text-white`}>
+          {plan.trial}
+        </Badge>
+      </div>
+      
+      {/* Payment options */}
+      <div className="space-y-4">
+        <h4 className="text-center text-slate-300 font-medium mb-4">
+          Comment souhaites-tu commencer ?
+        </h4>
+        
+        {/* Option 1: Without card */}
+        <button
+          onClick={() => onSelectOption('trial_only')}
+          disabled={loading}
+          className="w-full p-4 rounded-xl border-2 border-slate-600 hover:border-emerald-500 bg-slate-800/50 hover:bg-emerald-900/20 transition-all text-left group"
+        >
+          <div className="flex items-start gap-4">
+            <div className="w-12 h-12 rounded-full bg-emerald-900/50 flex items-center justify-center flex-shrink-0 group-hover:bg-emerald-800/50">
+              <Gift className="w-6 h-6 text-emerald-400" />
+            </div>
+            <div>
+              <h5 className="font-semibold text-white flex items-center gap-2">
+                🎁 Essai gratuit sans carte
+              </h5>
+              <p className="text-sm text-slate-400 mt-1">
+                Commence ton essai de <span className="text-emerald-400 font-medium">{plan.trialDays} jours</span> sans renseigner de carte.
+                Tu pourras ajouter ta carte plus tard.
+              </p>
+              <p className="text-xs text-slate-500 mt-2">
+                ✓ Aucun prélèvement automatique
+              </p>
+            </div>
+          </div>
+        </button>
+        
+        {/* Option 2: With card */}
+        <button
+          onClick={() => onSelectOption('with_card')}
+          disabled={loading}
+          className="w-full p-4 rounded-xl border-2 border-slate-600 hover:border-blue-500 bg-slate-800/50 hover:bg-blue-900/20 transition-all text-left group"
+        >
+          <div className="flex items-start gap-4">
+            <div className="w-12 h-12 rounded-full bg-blue-900/50 flex items-center justify-center flex-shrink-0 group-hover:bg-blue-800/50">
+              <CreditCard className="w-6 h-6 text-blue-400" />
+            </div>
+            <div>
+              <h5 className="font-semibold text-white flex items-center gap-2">
+                💳 Essai gratuit avec carte
+                <Badge className="bg-blue-600 text-white text-xs">Recommandé</Badge>
+              </h5>
+              <p className="text-sm text-slate-400 mt-1">
+                Renseigne ta carte maintenant pour un accès continu après l'essai.
+                <span className="text-blue-400 font-medium"> Aucun prélèvement pendant {plan.trialDays} jours.</span>
+              </p>
+              <p className="text-xs text-slate-500 mt-2">
+                ✓ Paiement sécurisé via Stripe • ✓ Annulable à tout moment
+              </p>
+            </div>
+          </div>
+        </button>
+      </div>
+      
+      {/* Loading indicator */}
+      {loading && (
+        <div className="flex items-center justify-center gap-2 mt-6 text-slate-400">
+          <div className="w-5 h-5 border-2 border-slate-400 border-t-transparent rounded-full animate-spin" />
+          Préparation de ton abonnement...
+        </div>
+      )}
+    </div>
+  );
+}
+
 function PaywallDialog({ isOpen, onClose, onSubscribe, userEmail }) {
   const [loading, setLoading] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(null);
+  const [showPaymentOptions, setShowPaymentOptions] = useState(false);
   
-  const handleSelectPlan = async (planId) => {
+  const handleSelectPlan = (planId) => {
     if (!userEmail) {
       toast.error("Connecte-toi pour souscrire à un abonnement");
       return;
     }
-    
     setSelectedPlan(planId);
+    setShowPaymentOptions(true);
+  };
+  
+  const handlePaymentOption = async (option) => {
     setLoading(true);
     
     try {
       const originUrl = window.location.origin;
       
-      const response = await axios.post(`${API}/subscriptions/checkout`, {
-        plan_id: planId,
-        origin_url: originUrl
-      });
-      
-      if (response.data.url) {
+      if (option === 'trial_only') {
+        // Start trial without card
+        const response = await axios.post(`${API}/subscriptions/checkout`, {
+          plan_id: selectedPlan,
+          origin_url: originUrl,
+          with_card: false
+        });
+        
+        if (response.data.trial_started) {
+          toast.success(response.data.message);
+          onSubscribe(selectedPlan);
+          onClose();
+        }
+      } else if (option === 'with_card') {
         // Redirect to Stripe Checkout
-        window.location.href = response.data.url;
-      } else if (response.data.trial_started) {
-        // Trial started without payment
-        toast.success(response.data.message);
-        onSubscribe(planId);
-        onClose();
+        const response = await axios.post(`${API}/subscriptions/checkout-with-card`, {
+          plan_id: selectedPlan,
+          origin_url: originUrl
+        });
+        
+        if (response.data.url) {
+          window.location.href = response.data.url;
+        } else {
+          toast.error("Erreur lors de la création du paiement");
+        }
       }
     } catch (error) {
       console.error("Subscription error:", error);
       toast.error(error.response?.data?.detail || "Erreur lors de la souscription");
     } finally {
       setLoading(false);
-      setSelectedPlan(null);
     }
+  };
+  
+  const handleBack = () => {
+    setShowPaymentOptions(false);
+    setSelectedPlan(null);
   };
   
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-4xl bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900 border-2 border-slate-700 text-white p-0 overflow-hidden max-h-[95vh] overflow-y-auto">
-        {/* Header */}
-        <div className="text-center pt-8 pb-4 px-6">
-          <h2 className="text-2xl font-bold text-white mb-2">
-            Choisis ton parcours
-          </h2>
-          <p className="text-slate-400">
-            Commence gratuitement, sans carte bancaire
-          </p>
-        </div>
         
-        {/* Plans */}
-        <div className="grid md:grid-cols-2 gap-6 px-6 pb-6">
-          <PlanCard
-            plan={PLANS.ninja}
-            onSelect={handleSelectPlan}
+        {showPaymentOptions && selectedPlan ? (
+          <PaymentOptionScreen
+            plan={PLANS[selectedPlan]}
+            onSelectOption={handlePaymentOption}
+            onBack={handleBack}
             loading={loading}
-            selected={selectedPlan === 'ninja'}
           />
-          <PlanCard
-            plan={PLANS.dojo}
-            onSelect={handleSelectPlan}
-            loading={loading}
-            selected={selectedPlan === 'dojo'}
-          />
-        </div>
+        ) : (
+          <>
+            {/* Header */}
+            <div className="text-center pt-8 pb-4 px-6">
+              <h2 className="text-2xl font-bold text-white mb-2">
+                Choisis ton parcours
+              </h2>
+              <p className="text-slate-400">
+                Commence gratuitement, sans carte bancaire
+              </p>
+            </div>
+            
+            {/* Plans */}
+            <div className="grid md:grid-cols-2 gap-6 px-6 pb-6">
+              <PlanCard
+                plan={PLANS.ninja}
+                onSelect={handleSelectPlan}
+                loading={loading}
+                selected={selectedPlan === 'ninja'}
+              />
+              <PlanCard
+                plan={PLANS.dojo}
+                onSelect={handleSelectPlan}
+                loading={loading}
+                selected={selectedPlan === 'dojo'}
+              />
+            </div>
+          </>
+        )}
         
         {/* Footer mentions */}
         <div className="bg-slate-900/80 border-t border-slate-700 px-6 py-4">
