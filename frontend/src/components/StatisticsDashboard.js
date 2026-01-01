@@ -282,7 +282,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
     <>
       <div className="mb-8 animate-fadeIn">
         {/* Logo and 7 Virtues Section */}
-        <div className="flex flex-col md:flex-row items-center justify-center gap-8 mb-10 p-8 bg-slate-800/50 rounded-xl border border-slate-700">
+        <div className="flex flex-col md:flex-row items-center justify-center gap-8 mb-6 p-8 bg-slate-800/50 rounded-xl border border-slate-700">
           <div className="flex flex-col items-center gap-2">
             {/* Yin-Yang style logo in yellow/gold - larger version */}
             <div className="relative w-28 h-28">
@@ -309,6 +309,91 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               <p className="text-slate-300"><span className="text-amber-400 font-bold text-lg">誠 Makoto</span> : Sincérité</p>
               <p className="text-slate-300"><span className="text-amber-400 font-bold text-lg">名誉 Meiyo</span> : Honneur</p>
               <p className="text-slate-300"><span className="text-amber-400 font-bold text-lg">忠義 Chugi</span> : Loyauté</p>
+            </div>
+          </div>
+        </div>
+
+        {/* O Sensei & Hakama Section */}
+        <div className="mb-10 p-6 md:p-8 bg-gradient-to-br from-slate-800/80 via-slate-900/80 to-slate-800/80 rounded-2xl border border-amber-500/30 shadow-xl">
+          <div className="flex flex-col lg:flex-row gap-6 items-start">
+            {/* O Sensei Image */}
+            <div className="flex flex-col items-center lg:items-start gap-3 lg:min-w-[200px]">
+              <div className="relative">
+                <div className="w-32 h-40 md:w-40 md:h-48 rounded-xl overflow-hidden border-4 border-amber-500/50 shadow-lg shadow-amber-500/20">
+                  <img 
+                    src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Morihei_Ueshiba_1939.jpg" 
+                    alt="O Sensei - Morihei Ueshiba"
+                    className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                  />
+                </div>
+                <div className="absolute -bottom-2 -right-2 bg-amber-500 text-slate-900 px-3 py-1 rounded-full text-xs font-bold">
+                  O Sensei
+                </div>
+              </div>
+              <p className="text-amber-400 font-semibold text-center">Morihei Ueshiba</p>
+              <p className="text-slate-400 text-xs text-center">Fondateur de l'Aïkido</p>
+            </div>
+
+            {/* Text Content */}
+            <div className="flex-1">
+              <h3 className="text-xl md:text-2xl font-bold text-amber-400 mb-4 flex items-center gap-2">
+                🥋 Les Sept Plis du Hakama
+              </h3>
+              
+              <div className="space-y-4 text-slate-300 text-sm md:text-base leading-relaxed">
+                <p>
+                  O Sensei enseignait que <span className="text-amber-400 font-semibold">« les sept plis du hakama symbolisent les sept vertus du budō »</span>. 
+                  Ces vertus, héritées de l'éthique du samouraï d'autrefois, constituent le socle moral du bushidō.
+                </p>
+                
+                <p>
+                  Les <span className="text-cyan-400 font-semibold">budō</span> sont les arts martiaux japonais apparus entre le milieu du XIXᵉ et le milieu du XXᵉ siècle. 
+                  En japonais, <em>bu</em> signifie la guerre ou le combat, et <em>dō</em> la voie. Le budō désigne ainsi un chemin de formation globale, 
+                  à la fois physique, mentale et spirituelle.
+                </p>
+
+                <blockquote className="border-l-4 border-amber-500 pl-4 py-2 bg-slate-800/50 rounded-r-lg italic text-slate-200">
+                  « Les sept plis du hakama symbolisent les sept vertus du budō. Le hakama nous incite à refléter la vraie nature du bushidō. 
+                  L'aïkido nous invite à polir sans cesse ces sept vertus traditionnelles dans notre pratique. »
+                  <footer className="text-amber-400 font-semibold mt-2 not-italic">— Morihei Ueshiba</footer>
+                </blockquote>
+              </div>
+
+              {/* 7 Virtues Grid */}
+              <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="bg-gradient-to-r from-red-900/40 to-red-800/40 p-3 rounded-lg border border-red-500/30">
+                  <p className="font-bold text-red-400">仁 JIN – Bienveillance</p>
+                  <p className="text-xs text-slate-300">Attention sincère portée à autrui, respect constant des autres.</p>
+                </div>
+                <div className="bg-gradient-to-r from-blue-900/40 to-blue-800/40 p-3 rounded-lg border border-blue-500/30">
+                  <p className="font-bold text-blue-400">義 GI – Justice, honneur</p>
+                  <p className="text-xs text-slate-300">Fidélité à la parole donnée et aux engagements pris.</p>
+                </div>
+                <div className="bg-gradient-to-r from-purple-900/40 to-purple-800/40 p-3 rounded-lg border border-purple-500/30">
+                  <p className="font-bold text-purple-400">礼 REI – Courtoisie</p>
+                  <p className="text-xs text-slate-300">Expression visible de l'estime portée à autrui.</p>
+                </div>
+                <div className="bg-gradient-to-r from-green-900/40 to-green-800/40 p-3 rounded-lg border border-green-500/30">
+                  <p className="font-bold text-green-400">智 CHI – Sagesse</p>
+                  <p className="text-xs text-slate-300">Discerner avec justesse, garder calme et lucidité.</p>
+                </div>
+                <div className="bg-gradient-to-r from-yellow-900/40 to-yellow-800/40 p-3 rounded-lg border border-yellow-500/30">
+                  <p className="font-bold text-yellow-400">信 SHIN – Sincérité</p>
+                  <p className="text-xs text-slate-300">Engagement total et constant, sans artifice.</p>
+                </div>
+                <div className="bg-gradient-to-r from-cyan-900/40 to-cyan-800/40 p-3 rounded-lg border border-cyan-500/30">
+                  <p className="font-bold text-cyan-400">忠 CHU – Loyauté</p>
+                  <p className="text-xs text-slate-300">Fidélité sincère à son école et son enseignement.</p>
+                </div>
+                <div className="bg-gradient-to-r from-pink-900/40 to-pink-800/40 p-3 rounded-lg border border-pink-500/30 md:col-span-2">
+                  <p className="font-bold text-pink-400">孝 KŌ – Piété, respect des fondements</p>
+                  <p className="text-xs text-slate-300">Respect profond des bases techniques, spirituelles et philosophiques des arts martiaux.</p>
+                </div>
+              </div>
+
+              <p className="mt-4 text-xs text-slate-400 italic text-center">
+                Un hakama est composé de sept plis : cinq à l'avant et deux à l'arrière. Chacun rappelle les valeurs que le pratiquant s'efforce de cultiver sur la voie du budō.
+              </p>
             </div>
           </div>
         </div>
