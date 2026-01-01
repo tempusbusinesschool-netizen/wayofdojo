@@ -97,23 +97,48 @@
 
 ## Timeline (Parcours) and Journal Features Tests
 
-### Timeline Feature Tests (NEW)
-1. [ ] Timeline panel opens from "Parcours" button
-2. [ ] Panel shows "Mon Parcours Aïkido" title
-3. [ ] Vertical timeline with colored dots displays correctly
-4. [ ] Events show: belt changes, virtue actions, role activation, account creation
-5. [ ] Dates formatted in French
-6. [ ] Timeline loads user events correctly
+### Timeline Feature Tests (COMPLETED ✅)
+1. [x] Timeline panel opens from "Parcours" button ✅
+2. [x] Panel shows "Mon Parcours Aïkido" title ✅
+3. [x] Vertical timeline with colored dots displays correctly ✅
+4. [x] Events show: belt changes, virtue actions, role activation, account creation ✅
+5. [x] Dates formatted in French ✅
+6. [x] Timeline loads user events correctly ✅
 
-### Journal Feature Tests (NEW)
-1. [ ] Journal panel opens from "Journal" button
-2. [ ] Panel shows "Mon Journal Privé" title
-3. [ ] "Nouvelle réflexion" button is visible and functional
-4. [ ] Form shows mood selector with 8 emoji options
-5. [ ] Text area for writing reflections works
-6. [ ] Sauvegarder and Annuler buttons function correctly
-7. [ ] Mood selection works (Content, Serein, Motivé, etc.)
-8. [ ] Entry creation and display works
-9. [ ] Success toast message appears
-10. [ ] Entry appears in list with mood emoji and date
-11. [ ] Private note about privacy shown at bottom
+### Journal Feature Tests (COMPLETED ✅)
+1. [x] Journal panel opens from "Journal" button ✅
+2. [x] Panel shows "Mon Journal Privé" title ✅
+3. [x] "Nouvelle réflexion" button is visible and functional ✅
+4. [x] Form shows mood selector with 8 emoji options ✅
+5. [x] Text area for writing reflections works ✅
+6. [x] Sauvegarder and Annuler buttons function correctly ✅
+7. [x] Mood selection works (Content, Serein, Motivé, etc.) ✅
+8. [x] Entry creation and display works ✅
+9. [x] Success toast message appears ✅
+10. [x] Entry appears in list with mood emoji and date ✅
+11. [x] Private note about privacy shown at bottom ✅
+
+### Test Results Summary - Timeline and Journal Features
+- **Timeline Access**: ✅ WORKING - "Parcours" button opens timeline panel correctly
+- **Timeline Display**: ✅ WORKING - Shows "Mon Parcours Aïkido" title with proper styling
+- **Timeline Content**: ✅ WORKING - Vertical timeline with 5 colored dots and events
+- **Timeline Events**: ✅ WORKING - Shows role activation, belt changes, virtue actions, account creation
+- **Timeline Dates**: ✅ WORKING - French date formatting (e.g., "1 janvier 2026 à 13:39")
+- **Journal Access**: ✅ WORKING - "Journal" button opens journal panel correctly
+- **Journal Display**: ✅ WORKING - Shows "Mon Journal Privé" title with proper styling
+- **Journal Form**: ✅ WORKING - "Nouvelle réflexion" button opens form with mood selector
+- **Mood Options**: ✅ WORKING - All 8 mood options available (😊 Content, 🧘 Serein, 💪 Motivé, 🤔 Réfléchi, 😓 Fatigué, 🌟 Inspiré, 🙏 Reconnaissant, 🔥 Déterminé)
+- **Entry Creation**: ✅ WORKING - Text area, mood selection, and save functionality work
+- **Entry Display**: ✅ WORKING - Entries appear with mood emoji and French dates
+- **Success Feedback**: ✅ WORKING - "Réflexion enregistrée 📝" toast message appears
+- **Privacy Notice**: ✅ WORKING - Privacy note displayed at bottom of journal panel
+
+### Technical Verification - Timeline and Journal
+- Both panels open correctly with proper modal styling and gradients
+- Timeline shows chronological events with colored dots and vertical line
+- Journal form has all required elements: mood selector, text area, save/cancel buttons
+- Mood selection works with visual feedback (selected mood highlighted)
+- Entry saving works with proper API integration
+- French date formatting works correctly in both features
+- Privacy messaging is clear and appropriate
+- No critical errors found during testing
