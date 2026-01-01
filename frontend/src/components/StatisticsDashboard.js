@@ -494,114 +494,154 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
           </div>
         </div>
 
-        {/* GAMIFICATION SECTION - Belt & XP System */}
-        {!isAdmin && gameStats && (
-          <div className="mb-8 p-4 md:p-6 bg-gradient-to-r from-purple-900/60 via-indigo-900/60 to-purple-900/60 rounded-2xl border-2 border-purple-500/50 shadow-xl shadow-purple-500/20">
-            <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-8">
+        {/* MA CEINTURE - Real Aikido Belt System (No XP, No Automatic Progression) */}
+        {!isAdmin && currentBelt && (
+          <div className="mb-8 p-4 md:p-6 bg-gradient-to-r from-slate-800/80 via-slate-900/80 to-slate-800/80 rounded-2xl border-2 border-amber-500/30 shadow-xl">
+            <div className="flex flex-col md:flex-row items-center gap-6">
               
               {/* Current Belt Display */}
-              <div className="flex flex-col items-center">
-                <div className={`w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-br ${gameStats.currentBelt.color} flex items-center justify-center shadow-lg transform hover:scale-110 transition-all cursor-pointer`}
-                     onClick={() => setShowGameDialog(true)}>
-                  <span className="text-4xl md:text-5xl">{gameStats.currentBelt.emoji}</span>
+              <div className="flex flex-col items-center cursor-pointer transform hover:scale-105 transition-all" onClick={() => setShowBeltDialog(true)}>
+                <div className={`w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br ${currentBelt.gradient} flex items-center justify-center shadow-xl border-4 border-white/20`}>
+                  <span className="text-5xl md:text-6xl">{currentBelt.emoji}</span>
                 </div>
-                <p className={`mt-2 font-bold text-sm md:text-base ${gameStats.currentBelt.textColor === 'text-white' || gameStats.currentBelt.textColor === 'text-blue-100' || gameStats.currentBelt.textColor === 'text-amber-100' ? 'text-white' : 'text-amber-400'}`}>
-                  {gameStats.currentBelt.name}
-                </p>
-                <p className="text-purple-300 text-xs">Niveau actuel</p>
+                <p className="mt-3 font-bold text-lg md:text-xl text-white">{currentBelt.name}</p>
+                <p className="text-amber-400 font-medium">{currentBelt.grade}</p>
               </div>
 
-              {/* XP Progress */}
-              <div className="flex-1 w-full">
-                <div className="flex justify-between items-center mb-2">
-                  <span className="text-white font-bold text-lg md:text-xl flex items-center gap-2">
-                    <Zap className="w-5 h-5 text-yellow-400" />
-                    {gameStats.totalXP} XP
-                  </span>
-                  {gameStats.nextBelt && (
-                    <span className="text-purple-300 text-sm">
-                      Prochain : {gameStats.nextBelt.emoji} {gameStats.nextBelt.name}
-                    </span>
-                  )}
-                </div>
+              {/* Belt Info & Message */}
+              <div className="flex-1 text-center md:text-left">
+                <h3 className="text-xl md:text-2xl font-bold text-amber-400 mb-2 flex items-center justify-center md:justify-start gap-2">
+                  🥋 Mon Parcours Aïkido
+                </h3>
                 
-                {/* XP Progress Bar */}
-                <div className="h-4 md:h-6 bg-slate-700 rounded-full overflow-hidden border border-purple-500/30">
-                  <div 
-                    className={`h-full bg-gradient-to-r ${gameStats.currentBelt.color} transition-all duration-1000 ease-out relative`}
-                    style={{ width: `${gameStats.progressToNext}%` }}
-                  >
-                    <div className="absolute inset-0 bg-white/20 animate-pulse"></div>
+                <p className="text-slate-300 text-sm md:text-base mb-4">
+                  {currentBelt.message}
+                </p>
+
+                {/* Symbolic Role (if available) */}
+                {currentBelt.symbolicRole && (
+                  <div className="bg-gradient-to-r from-purple-900/50 to-indigo-900/50 rounded-xl p-4 border border-purple-500/30">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Award className="w-5 h-5 text-purple-400" />
+                      <span className="text-purple-300 font-semibold text-sm">Rôle symbolique disponible</span>
+                    </div>
+                    <p className="text-white font-bold">{currentBelt.symbolicRole.name}</p>
+                    <p className="text-purple-300 text-xs mt-1">
+                      Vertu : <span className="text-purple-200">{currentBelt.symbolicRole.virtue}</span>
+                    </p>
+                    <p className="text-slate-400 text-xs mt-1 italic">
+                      {currentBelt.symbolicRole.intention}
+                    </p>
                   </div>
-                </div>
-                
-                {gameStats.nextBelt && (
-                  <p className="text-purple-300 text-xs mt-1 text-center">
-                    {gameStats.nextBelt.minXP - gameStats.totalXP} XP restants pour la prochaine ceinture !
-                  </p>
                 )}
 
-                {/* Motivation Message */}
-                <p className="text-center text-yellow-300 text-sm md:text-base mt-3 font-medium animate-pulse">
-                  {gameStats.motivationMessage}
-                </p>
+                {!currentBelt.symbolicRole && (
+                  <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700">
+                    <p className="text-slate-400 text-sm">
+                      🌱 Continue ton chemin pour débloquer un rôle symbolique au prochain grade !
+                    </p>
+                  </div>
+                )}
               </div>
 
-              {/* Quick Stats & Achievements Button */}
+              {/* Quick Info Button */}
               <div className="flex flex-col items-center gap-2">
                 <Button 
-                  onClick={() => setShowGameDialog(true)}
-                  className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-400 hover:to-orange-400 text-white font-bold px-4 py-2 rounded-xl shadow-lg transform hover:scale-105 transition-all"
+                  onClick={() => setShowBeltDialog(true)}
+                  className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold px-4 py-2 rounded-xl shadow-lg transform hover:scale-105 transition-all"
                 >
-                  <Trophy className="w-5 h-5 mr-2" />
-                  Mes Trophées
+                  <Award className="w-5 h-5 mr-2" />
+                  Voir mon parcours
                 </Button>
-                <p className="text-purple-300 text-xs">{gameStats.achievements.length} badges débloqués</p>
               </div>
             </div>
 
-            {/* Mini Achievements Row */}
-            {gameStats.achievements.length > 0 && (
-              <div className="mt-4 flex flex-wrap justify-center gap-2">
-                {gameStats.achievements.slice(0, 5).map((achievement, idx) => (
-                  <div 
-                    key={idx}
-                    className="bg-slate-800/80 px-3 py-1 rounded-full border border-yellow-500/30 flex items-center gap-1 text-xs"
-                    title={achievement.desc}
-                  >
-                    <span>{achievement.icon}</span>
-                    <span className="text-yellow-300">{achievement.name}</span>
-                  </div>
-                ))}
-                {gameStats.achievements.length > 5 && (
-                  <div className="bg-slate-800/80 px-3 py-1 rounded-full border border-purple-500/30 text-xs text-purple-300">
-                    +{gameStats.achievements.length - 5} autres
-                  </div>
-                )}
+            {/* Technique States Summary (replaces XP tips) */}
+            <div className="mt-6 grid grid-cols-3 gap-3 text-xs">
+              <div className="bg-amber-900/30 p-3 rounded-xl text-center border border-amber-500/30">
+                <p className="text-2xl mb-1">📖</p>
+                <p className="text-amber-300 font-bold">{statistics.in_progress_techniques || 0}</p>
+                <p className="text-slate-400">En apprentissage</p>
               </div>
-            )}
+              <div className="bg-blue-900/30 p-3 rounded-xl text-center border border-blue-500/30">
+                <p className="text-2xl mb-1">🎯</p>
+                <p className="text-blue-300 font-bold">{statistics.total_practice_sessions || 0}</p>
+                <p className="text-slate-400">Séances au dojo</p>
+              </div>
+              <div className="bg-emerald-900/30 p-3 rounded-xl text-center border border-emerald-500/30">
+                <p className="text-2xl mb-1">🏆</p>
+                <p className="text-emerald-300 font-bold">{statistics.mastered_techniques || 0}</p>
+                <p className="text-slate-400">Maîtrisées</p>
+              </div>
+            </div>
 
-            {/* XP Earning Tips */}
-            <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
-              <div className="bg-slate-800/50 p-2 rounded-lg text-center">
-                <p className="text-emerald-400 font-bold">+50 XP</p>
-                <p className="text-slate-400">Technique maîtrisée</p>
-              </div>
-              <div className="bg-slate-800/50 p-2 rounded-lg text-center">
-                <p className="text-amber-400 font-bold">+20 XP</p>
-                <p className="text-slate-400">Technique pratiquée</p>
-              </div>
-              <div className="bg-slate-800/50 p-2 rounded-lg text-center">
-                <p className="text-pink-400 font-bold">+5 XP</p>
-                <p className="text-slate-400">Session validée</p>
-              </div>
-              <div className="bg-slate-800/50 p-2 rounded-lg text-center">
-                <p className="text-cyan-400 font-bold">+100 XP</p>
-                <p className="text-slate-400">Grade complété 🎉</p>
-              </div>
+            {/* Philosophy Message */}
+            <div className="mt-4 text-center">
+              <p className="text-slate-400 text-xs italic">
+                🎌 La ceinture est un jalon sur ton chemin, attribuée par ton enseignant au dojo.
+                <br />Pas de points, pas de compétition – juste ta progression personnelle.
+              </p>
             </div>
           </div>
         )}
+
+        {/* Belt Info Dialog */}
+        <Dialog open={showBeltDialog} onOpenChange={setShowBeltDialog}>
+          <DialogContent className="max-w-lg bg-slate-900 border-slate-700 text-white max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle className="text-xl font-bold flex items-center gap-2 text-amber-400">
+                🥋 Le Chemin des Ceintures
+              </DialogTitle>
+              <DialogDescription className="text-slate-400">
+                Chaque ceinture est un jalon de ton parcours en Aïkido
+              </DialogDescription>
+            </DialogHeader>
+            
+            <div className="space-y-3 py-4">
+              {Object.entries(AIKIDO_BELTS).map(([key, belt]) => {
+                const isCurrentBelt = userBelt === key;
+                const isPassed = belt.order < (AIKIDO_BELTS[userBelt]?.order || 0);
+                
+                return (
+                  <div 
+                    key={key}
+                    className={`p-3 rounded-xl border-2 transition-all ${
+                      isCurrentBelt 
+                        ? 'border-amber-500 bg-amber-900/30 ring-2 ring-amber-500/50' 
+                        : isPassed 
+                          ? 'border-emerald-500/50 bg-emerald-900/20' 
+                          : 'border-slate-700 bg-slate-800/50 opacity-60'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="text-3xl">{belt.emoji}</span>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <p className="font-bold text-white">{belt.name}</p>
+                          {isCurrentBelt && <span className="text-xs bg-amber-500 text-white px-2 py-0.5 rounded-full">Actuelle</span>}
+                          {isPassed && <span className="text-xs text-emerald-400">✓</span>}
+                        </div>
+                        <p className="text-slate-400 text-xs">{belt.grade}</p>
+                        {belt.symbolicRole && (
+                          <p className="text-purple-300 text-xs mt-1">
+                            🎭 Rôle : {belt.symbolicRole.name}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+            
+            <div className="bg-slate-800 rounded-lg p-4 border border-slate-700">
+              <p className="text-sm text-slate-300 text-center">
+                💡 <strong>Rappel :</strong> La ceinture est attribuée par ton enseignant au dojo, 
+                selon ta progression réelle sur le tatami.
+              </p>
+            </div>
+          </DialogContent>
+        </Dialog>
 
         {/* Statistics blocks - hidden for admin - FUN DESIGN */}
         {!isAdmin && (
