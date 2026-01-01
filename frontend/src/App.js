@@ -611,7 +611,7 @@ function AppContent() {
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center">
                   <Building2 className="w-4 h-4 text-white" />
                 </div>
-                <span className="text-orange-400 font-semibold">🏯 Espace Dojo</span>
+                <span className="text-orange-400 font-semibold">🏯 Mon Dojo</span>
                 <span className="text-xs text-slate-500 hidden sm:inline">Gestion humaine • Locale</span>
               </div>
               <TabsList className="bg-slate-800 border-slate-700 flex flex-wrap gap-1">
