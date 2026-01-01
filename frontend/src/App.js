@@ -439,14 +439,32 @@ function AppContent() {
                   </Button>
                 </div>
               ) : (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setShowAuthDialog(true)}
-                  className="border-amber-600 text-amber-400 hover:bg-amber-900/30"
-                >
-                  💡 S&apos;inscrire gratuitement
-                </Button>
+                <div className="flex items-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setShowAuthDialog(true)}
+                    className="border-amber-600 text-amber-400 hover:bg-amber-900/30"
+                  >
+                    🥷 S&apos;inscrire
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setShowDojoRegistration(true)}
+                    className="border-cyan-600 text-cyan-400 hover:bg-cyan-900/30 hidden sm:flex"
+                  >
+                    🏯 Espace Dojo
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setShowPaywall(true)}
+                    className="text-slate-400 hover:text-amber-400"
+                  >
+                    <Sparkles className="w-4 h-4" />
+                  </Button>
+                </div>
               )}
               
               {!isAdmin && (
