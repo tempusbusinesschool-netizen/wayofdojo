@@ -1598,6 +1598,13 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         isAuthenticated={isAuthenticated}
         onPointsUpdate={onRefreshData}
       />
+
+      {/* Timeline Panel */}
+      <TimelinePanel 
+        isOpen={showTimelinePanel}
+        onClose={() => setShowTimelinePanel(false)}
+        isAuthenticated={isAuthenticated}
+      />
     </>
   );
 }
