@@ -32,7 +32,8 @@ import {
   ReglementInterieur,
   StatisticsDashboard,
   CGUDialog,
-  MentionsLegalesDialog
+  MentionsLegalesDialog,
+  HakamaSection
 } from "@/components";
 
 // Import Auth Context
