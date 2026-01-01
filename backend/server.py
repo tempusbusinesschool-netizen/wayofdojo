@@ -730,7 +730,7 @@ async def get_user_virtue_actions(user: dict = Depends(require_auth)):
 
 @api_router.post("/auth/virtue-actions")
 async def log_virtue_action(data: VirtueActionLog, user: dict = Depends(require_auth)):
-    """Enregistrer une action de vertu pour l'utilisateur"""
+    """Enregistrer une action de vertu pour l'utilisateur (max 1 fois par mois par action)"""
     # Validate virtue exists
     if data.virtue_id not in VIRTUE_ACTIONS:
         raise HTTPException(status_code=400, detail=f"Vertu invalide: {data.virtue_id}")
@@ -744,6 +744,24 @@ async def log_virtue_action(data: VirtueActionLog, user: dict = Depends(require_
     if not action:
         raise HTTPException(status_code=400, detail=f"Action invalide: {data.action_id}")
     
+    # Check if action was already logged this month (limit: 1 per month per action)
+    now = datetime.now(timezone.utc)
+    current_month_start = now.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+    
+    user_actions = user.get("virtue_actions", [])
+    for logged_action in user_actions:
+        if logged_action.get("action_id") == data.action_id:
+            logged_at_str = logged_action.get("logged_at", "")
+            try:
+                logged_at = datetime.fromisoformat(logged_at_str.replace('Z', '+00:00'))
+                if logged_at >= current_month_start:
+                    raise HTTPException(
+                        status_code=400, 
+                        detail=f"Tu as déjà validé cette action ce mois-ci ! Reviens le mois prochain 🗓️"
+                    )
+            except (ValueError, TypeError):
+                continue
+    
     # Create action log entry
     action_entry = {
         "id": str(uuid.uuid4()),
@@ -753,7 +771,7 @@ async def log_virtue_action(data: VirtueActionLog, user: dict = Depends(require_
         "action_name": action["name"],
         "points": action["points"],
         "note": data.note,
-        "logged_at": datetime.now(timezone.utc).isoformat()
+        "logged_at": now.isoformat()
     }
     
     # Update user's virtue actions
