@@ -3280,6 +3280,395 @@ async def seed_data():
     return {"message": "Data seeded successfully", "count": len(initial_data)}
 
 
+# ═══════════════════════════════════════════════════════════════════════════════════
+# SUBSCRIPTION SYSTEM
+# ═══════════════════════════════════════════════════════════════════════════════════
+
+from emergentintegrations.payments.stripe.checkout import StripeCheckout, CheckoutSessionResponse, CheckoutStatusResponse, CheckoutSessionRequest
+
+# Subscription Plans
+SUBSCRIPTION_PLANS = {
+    "ninja": {
+        "id": "ninja",
+        "name": "Ninja individuel",
+        "price": 4.50,
+        "currency": "eur",
+        "trial_days": 90,  # 3 months
+        "commitment_months": 0,  # No commitment
+        "description": "Ton parcours personnel, sans engagement"
+    },
+    "dojo": {
+        "id": "dojo",
+        "name": "Offre Dojo",
+        "price": 65.00,
+        "currency": "eur",
+        "trial_days": 10,
+        "commitment_months": 12,  # 12 months commitment
+        "description": "Un outil de gestion et d'animation pour les clubs"
+    }
+}
+
+class SubscriptionCheckoutRequest(BaseModel):
+    plan_id: str
+    origin_url: str
+
+class DojoRegistrationRequest(BaseModel):
+    # Dojo info
+    dojo_name: str
+    dojo_address: Optional[str] = None
+    dojo_city: str
+    dojo_phone: Optional[str] = None
+    dojo_description: Optional[str] = None
+    # Admin info
+    first_name: str
+    last_name: str
+    email: EmailStr
+    password: str
+
+@api_router.get("/subscription-plans")
+async def get_subscription_plans():
+    """Récupérer les plans d'abonnement disponibles"""
+    return SUBSCRIPTION_PLANS
+
+@api_router.post("/subscriptions/checkout")
+async def create_subscription_checkout(data: SubscriptionCheckoutRequest, user: dict = Depends(require_auth)):
+    """Créer une session de checkout pour un abonnement"""
+    
+    if data.plan_id not in SUBSCRIPTION_PLANS:
+        raise HTTPException(status_code=400, detail="Plan invalide")
+    
+    plan = SUBSCRIPTION_PLANS[data.plan_id]
+    
+    # Check if user already has an active subscription
+    existing_sub = await db.subscriptions.find_one({
+        "user_id": user["id"],
+        "status": {"$in": ["active", "trialing"]}
+    })
+    
+    if existing_sub:
+        raise HTTPException(status_code=400, detail="Tu as déjà un abonnement actif")
+    
+    # For trial period without card, we create the subscription directly
+    trial_end = datetime.now(timezone.utc) + timedelta(days=plan["trial_days"])
+    
+    subscription = {
+        "id": str(uuid.uuid4()),
+        "user_id": user["id"],
+        "user_email": user["email"],
+        "plan_id": data.plan_id,
+        "plan_name": plan["name"],
+        "status": "trialing",
+        "trial_start": datetime.now(timezone.utc).isoformat(),
+        "trial_end": trial_end.isoformat(),
+        "price": plan["price"],
+        "currency": plan["currency"],
+        "commitment_months": plan["commitment_months"],
+        "created_at": datetime.now(timezone.utc).isoformat(),
+        "stripe_session_id": None,
+        "card_added": False
+    }
+    
+    await db.subscriptions.insert_one(subscription)
+    
+    # Update user with subscription info
+    await db.users.update_one(
+        {"id": user["id"]},
+        {"$set": {
+            "subscription_id": subscription["id"],
+            "subscription_plan": data.plan_id,
+            "subscription_status": "trialing",
+            "trial_end": trial_end.isoformat()
+        }}
+    )
+    
+    logger.info(f"User {user['id']} started trial for plan {data.plan_id}")
+    
+    return {
+        "trial_started": True,
+        "message": f"🎉 Ton essai gratuit de {plan['trial_days']} jours a commencé !",
+        "subscription": {
+            "id": subscription["id"],
+            "plan": plan["name"],
+            "trial_end": trial_end.isoformat(),
+            "status": "trialing"
+        }
+    }
+
+@api_router.post("/subscriptions/add-payment-method")
+async def add_payment_method(data: SubscriptionCheckoutRequest, user: dict = Depends(require_auth)):
+    """Ajouter une méthode de paiement à la fin de l'essai"""
+    
+    if data.plan_id not in SUBSCRIPTION_PLANS:
+        raise HTTPException(status_code=400, detail="Plan invalide")
+    
+    plan = SUBSCRIPTION_PLANS[data.plan_id]
+    
+    # Get Stripe API key
+    stripe_api_key = os.environ.get("STRIPE_API_KEY")
+    if not stripe_api_key:
+        raise HTTPException(status_code=500, detail="Configuration Stripe manquante")
+    
+    # Create webhook URL
+    webhook_url = f"{data.origin_url}/api/webhook/stripe"
+    
+    stripe_checkout = StripeCheckout(api_key=stripe_api_key, webhook_url=webhook_url)
+    
+    # Create checkout session
+    success_url = f"{data.origin_url}/subscription/success?session_id={{CHECKOUT_SESSION_ID}}"
+    cancel_url = f"{data.origin_url}/subscription/cancel"
+    
+    checkout_request = CheckoutSessionRequest(
+        amount=float(plan["price"]),
+        currency=plan["currency"],
+        success_url=success_url,
+        cancel_url=cancel_url,
+        metadata={
+            "user_id": user["id"],
+            "user_email": user["email"],
+            "plan_id": data.plan_id,
+            "type": "subscription"
+        }
+    )
+    
+    session = await stripe_checkout.create_checkout_session(checkout_request)
+    
+    # Create payment transaction record
+    transaction = {
+        "id": str(uuid.uuid4()),
+        "session_id": session.session_id,
+        "user_id": user["id"],
+        "user_email": user["email"],
+        "plan_id": data.plan_id,
+        "amount": plan["price"],
+        "currency": plan["currency"],
+        "payment_status": "pending",
+        "created_at": datetime.now(timezone.utc).isoformat()
+    }
+    
+    await db.payment_transactions.insert_one(transaction)
+    
+    return {
+        "url": session.url,
+        "session_id": session.session_id
+    }
+
+@api_router.get("/subscriptions/status/{session_id}")
+async def get_subscription_status(session_id: str, user: dict = Depends(require_auth)):
+    """Vérifier le statut d'un paiement d'abonnement"""
+    
+    stripe_api_key = os.environ.get("STRIPE_API_KEY")
+    if not stripe_api_key:
+        raise HTTPException(status_code=500, detail="Configuration Stripe manquante")
+    
+    stripe_checkout = StripeCheckout(api_key=stripe_api_key, webhook_url="")
+    
+    status = await stripe_checkout.get_checkout_status(session_id)
+    
+    # Update transaction
+    await db.payment_transactions.update_one(
+        {"session_id": session_id},
+        {"$set": {
+            "payment_status": status.payment_status,
+            "status": status.status,
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        }}
+    )
+    
+    if status.payment_status == "paid":
+        # Activate subscription
+        transaction = await db.payment_transactions.find_one({"session_id": session_id})
+        if transaction:
+            await db.subscriptions.update_one(
+                {"user_id": transaction["user_id"], "status": "trialing"},
+                {"$set": {
+                    "status": "active",
+                    "card_added": True,
+                    "stripe_session_id": session_id,
+                    "activated_at": datetime.now(timezone.utc).isoformat()
+                }}
+            )
+            
+            await db.users.update_one(
+                {"id": transaction["user_id"]},
+                {"$set": {"subscription_status": "active"}}
+            )
+    
+    return {
+        "status": status.status,
+        "payment_status": status.payment_status
+    }
+
+@api_router.get("/auth/subscription")
+async def get_user_subscription(user: dict = Depends(require_auth)):
+    """Récupérer l'abonnement de l'utilisateur"""
+    
+    subscription = await db.subscriptions.find_one(
+        {"user_id": user["id"], "status": {"$in": ["active", "trialing"]}},
+        {"_id": 0}
+    )
+    
+    if not subscription:
+        return {"has_subscription": False, "subscription": None}
+    
+    # Check if trial has expired
+    if subscription["status"] == "trialing":
+        trial_end = datetime.fromisoformat(subscription["trial_end"].replace('Z', '+00:00'))
+        if datetime.now(timezone.utc) > trial_end:
+            # Trial expired
+            await db.subscriptions.update_one(
+                {"id": subscription["id"]},
+                {"$set": {"status": "trial_expired"}}
+            )
+            await db.users.update_one(
+                {"id": user["id"]},
+                {"$set": {"subscription_status": "trial_expired"}}
+            )
+            subscription["status"] = "trial_expired"
+    
+    return {
+        "has_subscription": subscription["status"] in ["active", "trialing"],
+        "subscription": subscription
+    }
+
+@api_router.post("/auth/register-dojo")
+async def register_dojo(data: DojoRegistrationRequest):
+    """Inscription d'un nouveau dojo avec son administrateur"""
+    
+    # Check if email already exists
+    existing = await db.users.find_one({"email": data.email.lower()})
+    if existing:
+        raise HTTPException(status_code=400, detail="Un compte avec cet email existe déjà")
+    
+    # Check if dojo name already exists
+    existing_dojo = await db.dojos.find_one({"name": data.dojo_name})
+    if existing_dojo:
+        raise HTTPException(status_code=400, detail="Un dojo avec ce nom existe déjà")
+    
+    # Generate dojo ID
+    dojo_id = data.dojo_name.lower().replace(" ", "-").replace("'", "")
+    dojo_id = ''.join(c for c in dojo_id if c.isalnum() or c == '-')
+    
+    # Check if ID already exists
+    existing_id = await db.dojos.find_one({"id": dojo_id})
+    if existing_id:
+        dojo_id = f"{dojo_id}-{str(uuid.uuid4())[:8]}"
+    
+    # Create dojo
+    new_dojo = {
+        "id": dojo_id,
+        "name": data.dojo_name,
+        "description": data.dojo_description or f"Dojo {data.dojo_name}",
+        "address": data.dojo_address or "",
+        "city": data.dojo_city,
+        "phone": data.dojo_phone or "",
+        "admin_password": hash_password(str(uuid.uuid4())[:12]),  # Random password, admin uses personal login
+        "is_default": False,
+        "created_at": datetime.now(timezone.utc).isoformat(),
+        "subscription_plan": "dojo",
+        "subscription_status": "trialing",
+        "trial_end": (datetime.now(timezone.utc) + timedelta(days=10)).isoformat()
+    }
+    
+    await db.dojos.insert_one(new_dojo)
+    
+    # Create admin user
+    user = {
+        "id": str(uuid.uuid4()),
+        "first_name": data.first_name,
+        "last_name": data.last_name,
+        "email": data.email.lower(),
+        "password_hash": hash_password(data.password),
+        "created_at": datetime.now(timezone.utc).isoformat(),
+        "progression": {},
+        "belt_level": "6e_kyu",
+        "belt_awarded_at": datetime.now(timezone.utc).isoformat(),
+        "belt_awarded_by": "system",
+        "dojo_id": dojo_id,
+        "dojo_name": data.dojo_name,
+        "role": "dojo_admin",  # Special role for dojo administrators
+        "subscription_plan": "dojo",
+        "subscription_status": "trialing",
+        "trial_end": (datetime.now(timezone.utc) + timedelta(days=10)).isoformat()
+    }
+    
+    await db.users.insert_one(user)
+    
+    # Create subscription
+    subscription = {
+        "id": str(uuid.uuid4()),
+        "user_id": user["id"],
+        "dojo_id": dojo_id,
+        "user_email": user["email"],
+        "plan_id": "dojo",
+        "plan_name": "Offre Dojo",
+        "status": "trialing",
+        "trial_start": datetime.now(timezone.utc).isoformat(),
+        "trial_end": (datetime.now(timezone.utc) + timedelta(days=10)).isoformat(),
+        "price": 65.00,
+        "currency": "eur",
+        "commitment_months": 12,
+        "created_at": datetime.now(timezone.utc).isoformat(),
+        "card_added": False
+    }
+    
+    await db.subscriptions.insert_one(subscription)
+    
+    logger.info(f"New dojo registered: {data.dojo_name} by {data.email}")
+    
+    return {
+        "success": True,
+        "message": f"Dojo '{data.dojo_name}' créé avec succès !",
+        "dojo_id": dojo_id,
+        "trial_days": 10
+    }
+
+@api_router.post("/webhook/stripe")
+async def stripe_webhook(request):
+    """Handle Stripe webhooks"""
+    from fastapi import Request
+    body = await request.body()
+    signature = request.headers.get("Stripe-Signature")
+    
+    stripe_api_key = os.environ.get("STRIPE_API_KEY")
+    if not stripe_api_key:
+        raise HTTPException(status_code=500, detail="Configuration Stripe manquante")
+    
+    stripe_checkout = StripeCheckout(api_key=stripe_api_key, webhook_url="")
+    
+    try:
+        webhook_response = await stripe_checkout.handle_webhook(body, signature)
+        
+        if webhook_response.payment_status == "paid":
+            # Update transaction and subscription
+            session_id = webhook_response.session_id
+            
+            await db.payment_transactions.update_one(
+                {"session_id": session_id},
+                {"$set": {
+                    "payment_status": "paid",
+                    "updated_at": datetime.now(timezone.utc).isoformat()
+                }}
+            )
+            
+            transaction = await db.payment_transactions.find_one({"session_id": session_id})
+            if transaction:
+                await db.subscriptions.update_one(
+                    {"user_id": transaction["user_id"]},
+                    {"$set": {
+                        "status": "active",
+                        "card_added": True,
+                        "activated_at": datetime.now(timezone.utc).isoformat()
+                    }}
+                )
+        
+        logger.info(f"Stripe webhook processed: {webhook_response.event_type}")
+        return {"status": "success"}
+        
+    except Exception as e:
+        logger.error(f"Stripe webhook error: {str(e)}")
+        raise HTTPException(status_code=400, detail=str(e))
+
+
 # Include the router in the main app
 app.include_router(api_router)
 
