@@ -876,7 +876,7 @@ function AppContent() {
       <footer className="border-t border-slate-800 mt-12 py-6">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <p className="text-slate-400 text-sm">
-            Techniques d&apos;Aikido
+            Gamification &amp; apprentissage des techniques d&apos;Aikido affilié à un Dojo
           </p>
           <p className="text-slate-600 text-xs mt-3">
             © humanknowledge.fr - 2025
