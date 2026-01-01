@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+import { CheckCircle2, Lock } from "lucide-react";
 
 const API = process.env.REACT_APP_BACKEND_URL + "/api";
 
@@ -74,6 +75,28 @@ function VirtueActionsPanel({ isOpen, onClose, isAuthenticated, onPointsUpdate }
   const [selectedAction, setSelectedAction] = useState(null);
   const [note, setNote] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // Calculate which actions have been completed this month
+  const actionsCompletedThisMonth = useMemo(() => {
+    if (!userVirtueData?.actions) return new Set();
+    
+    const now = new Date();
+    const currentMonth = now.getMonth();
+    const currentYear = now.getFullYear();
+    
+    const completedIds = new Set();
+    userVirtueData.actions.forEach(action => {
+      const loggedAt = new Date(action.logged_at);
+      if (loggedAt.getMonth() === currentMonth && loggedAt.getFullYear() === currentYear) {
+        completedIds.add(action.action_id);
+      }
+    });
+    
+    return completedIds;
+  }, [userVirtueData]);
+
+  // Get total actions completed this month
+  const totalActionsThisMonth = actionsCompletedThisMonth.size;
 
   // Fetch virtue reference data
   useEffect(() => {
