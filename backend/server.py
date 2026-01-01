@@ -437,6 +437,136 @@ async def delete_dojo(dojo_id: str, auth: SuperAdminAuth):
     
     return {"success": True, "message": "Dojo supprimé, les membres ont été transférés au dojo par défaut"}
 
+# ═══════════════════════════════════════════════════════════════════════════════════
+# DOJO LOGIN ENDPOINT
+# ═══════════════════════════════════════════════════════════════════════════════════
+
+@api_router.post("/dojos/login")
+async def dojo_login(login_data: DojoLoginRequest):
+    """Connexion à l'Espace Dojo avec email et mot de passe"""
+    # Find dojo by email
+    dojo = await db.dojos.find_one({"email": login_data.email.lower()})
+    
+    if not dojo:
+        raise HTTPException(status_code=401, detail="Email non trouvé")
+    
+    # Verify password (plain text comparison for now, could be hashed later)
+    if dojo.get("admin_password") != login_data.password:
+        raise HTTPException(status_code=401, detail="Mot de passe incorrect")
+    
+    # Create a token for the dojo
+    token = jwt.encode({
+        "dojo_id": dojo["id"],
+        "dojo_name": dojo["name"],
+        "type": "dojo_admin",
+        "exp": datetime.now(timezone.utc) + timedelta(hours=24)
+    }, JWT_SECRET, algorithm=JWT_ALGORITHM)
+    
+    return {
+        "success": True,
+        "message": f"Connexion réussie à {dojo['name']}",
+        "dojo": {
+            "id": dojo["id"],
+            "name": dojo["name"],
+            "email": dojo.get("email"),
+            "city": dojo.get("city", ""),
+            "description": dojo.get("description", "")
+        },
+        "token": token
+    }
+
+# ═══════════════════════════════════════════════════════════════════════════════════
+# DOJO MEMBERS (ADHERENTS) ENDPOINTS - RGPD COMPLIANT
+# ═══════════════════════════════════════════════════════════════════════════════════
+
+class DojoMemberCreate(BaseModel):
+    display_name: str = Field(..., min_length=2, max_length=100)
+    use_pseudonym: bool = False
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+    pseudonym: Optional[str] = None
+    status: str = "active"  # active, inactive
+    email: Optional[EmailStr] = None
+    internal_note: Optional[str] = None
+    dojo_id: str
+    # Grade and progression
+    belt_level: Optional[str] = "6e_kyu"
+    progression_percentage: Optional[int] = 0
+
+class DojoMemberUpdate(BaseModel):
+    display_name: Optional[str] = None
+    status: Optional[str] = None
+    email: Optional[EmailStr] = None
+    internal_note: Optional[str] = None
+    belt_level: Optional[str] = None
+    progression_percentage: Optional[int] = None
+
+@api_router.get("/dojo-members")
+async def get_dojo_members(dojo_id: Optional[str] = None):
+    """Récupérer les adhérents d'un dojo"""
+    query = {}
+    if dojo_id:
+        query["dojo_id"] = dojo_id
+    
+    members = await db.dojo_members.find(query, {"_id": 0}).to_list(500)
+    return {"members": members}
+
+@api_router.post("/dojo-members")
+async def create_dojo_member(member: DojoMemberCreate):
+    """Créer un nouvel adhérent (RGPD-compliant)"""
+    # Verify dojo exists
+    dojo = await db.dojos.find_one({"id": member.dojo_id})
+    if not dojo:
+        raise HTTPException(status_code=404, detail="Dojo non trouvé")
+    
+    new_member = {
+        "id": str(uuid.uuid4()),
+        "display_name": member.display_name,
+        "use_pseudonym": member.use_pseudonym,
+        "first_name": member.first_name,
+        "last_name": member.last_name,
+        "pseudonym": member.pseudonym,
+        "status": member.status,
+        "email": member.email,
+        "internal_note": member.internal_note,
+        "dojo_id": member.dojo_id,
+        "belt_level": member.belt_level or "6e_kyu",
+        "progression_percentage": member.progression_percentage or 0,
+        "created_at": datetime.now(timezone.utc).isoformat()
+    }
+    
+    await db.dojo_members.insert_one(new_member)
+    logger.info(f"New dojo member created: {member.display_name} for dojo {member.dojo_id}")
+    
+    return {"success": True, "member": {k: v for k, v in new_member.items() if k != "_id"}}
+
+@api_router.patch("/dojo-members/{member_id}")
+async def update_dojo_member(member_id: str, update: DojoMemberUpdate):
+    """Modifier un adhérent"""
+    existing = await db.dojo_members.find_one({"id": member_id})
+    if not existing:
+        raise HTTPException(status_code=404, detail="Adhérent non trouvé")
+    
+    update_data = {k: v for k, v in update.model_dump().items() if v is not None}
+    if not update_data:
+        raise HTTPException(status_code=400, detail="Aucune donnée à mettre à jour")
+    
+    await db.dojo_members.update_one({"id": member_id}, {"$set": update_data})
+    
+    return {"success": True, "message": "Adhérent mis à jour"}
+
+@api_router.delete("/dojo-members/{member_id}")
+async def delete_dojo_member(member_id: str):
+    """Supprimer un adhérent"""
+    existing = await db.dojo_members.find_one({"id": member_id})
+    if not existing:
+        raise HTTPException(status_code=404, detail="Adhérent non trouvé")
+    
+    await db.dojo_members.delete_one({"id": member_id})
+    logger.info(f"Dojo member deleted: {member_id}")
+    
+    return {"success": True, "message": "Adhérent supprimé"}
+
 @api_router.post("/dojos/{dojo_id}/assign-user/{user_id}")
 async def assign_user_to_dojo(dojo_id: str, user_id: str, auth: SuperAdminAuth):
     """Assigner un utilisateur à un dojo (Super Admin uniquement)"""
