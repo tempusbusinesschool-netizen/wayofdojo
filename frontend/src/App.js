@@ -743,7 +743,9 @@ function AppContent() {
                         <Building2 className="w-8 h-8 text-white" />
                       </div>
                       <div>
-                        <h2 className="text-2xl font-bold text-white">Aikido La Rivière</h2>
+                        <h2 className="text-2xl font-bold text-white">
+                          {selectedDojoForAdmin?.name || 'Mon Dojo'}
+                        </h2>
                         <div className="flex items-center gap-2 mt-1">
                           <Badge className="bg-green-600 text-white">Actif</Badge>
                           <span className="text-slate-400 text-sm">Abonnement Dojo</span>
