@@ -1,40 +1,100 @@
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { BookOpen, CheckCircle2, Clock, Flame, TrendingUp, BarChart3, Users, Baby, FileText, Download, Swords, Trophy, Star, Zap, Target } from "lucide-react";
+import { TrendingUp, BarChart3, Users, FileText, Download, Award } from "lucide-react";
 import { toast } from "sonner";
 
-// Belt System Configuration
-const BELT_SYSTEM = [
-  { name: "Ceinture Blanche", color: "from-gray-100 to-gray-300", textColor: "text-gray-800", minXP: 0, emoji: "⚪", message: "Bienvenue dans ta quête de maîtrise !" },
-  { name: "Ceinture Jaune", color: "from-yellow-400 to-yellow-600", textColor: "text-yellow-900", minXP: 100, emoji: "🟡", message: "Tu progresses bien, continue !" },
-  { name: "Ceinture Orange", color: "from-orange-400 to-orange-600", textColor: "text-orange-900", minXP: 300, emoji: "🟠", message: "Excellent travail, tu es sur la bonne voie !" },
-  { name: "Ceinture Verte", color: "from-green-500 to-green-700", textColor: "text-green-900", minXP: 600, emoji: "🟢", message: "Impressionnant ! Tu deviens un vrai pratiquant !" },
-  { name: "Ceinture Bleue", color: "from-blue-500 to-blue-700", textColor: "text-blue-100", minXP: 1000, emoji: "🔵", message: "Wahou ! Tu maîtrises de nombreuses techniques !" },
-  { name: "Ceinture Marron", color: "from-amber-700 to-amber-900", textColor: "text-amber-100", minXP: 1500, emoji: "🟤", message: "Tu es presque un expert !" },
-  { name: "Ceinture Noire", color: "from-gray-800 to-black", textColor: "text-white", minXP: 2500, emoji: "⚫", message: "MAÎTRE ! Tu as atteint le sommet ! 🏆" },
-];
-
-// XP Points Configuration
-const XP_POINTS = {
-  technique_mastered: 50,      // Technique maîtrisée
-  technique_practiced: 20,     // Technique pratiquée
-  technique_learning: 10,      // Technique en apprentissage
-  session_completed: 5,        // Session validée
-  grade_completed: 100,        // Grade complété (bonus)
-  streak_bonus: 25,            // Bonus série
+// Aikido Belt System - Real grades (no XP, no automatic progression)
+const AIKIDO_BELTS = {
+  "6e_kyu": {
+    name: "Ceinture Blanche",
+    grade: "6e kyu",
+    color: "#E5E7EB",
+    gradient: "from-gray-100 to-gray-300",
+    textColor: "text-gray-800",
+    emoji: "⚪",
+    order: 0,
+    symbolicRole: null,
+    message: "Bienvenue sur le chemin de l'Aïkido !"
+  },
+  "5e_kyu": {
+    name: "Ceinture Jaune",
+    grade: "5e kyu",
+    color: "#FCD34D",
+    gradient: "from-yellow-300 to-yellow-500",
+    textColor: "text-yellow-900",
+    emoji: "🟡",
+    order: 1,
+    symbolicRole: { name: "Gardien du respect", virtue: "Respect", intention: "Cadre (salut, soin du tatami, posture)" },
+    message: "Tu apprends les bases avec sérieux !"
+  },
+  "4e_kyu": {
+    name: "Ceinture Orange",
+    grade: "4e kyu",
+    color: "#FB923C",
+    gradient: "from-orange-400 to-orange-600",
+    textColor: "text-orange-900",
+    emoji: "🟠",
+    order: 2,
+    symbolicRole: { name: "Pilier de persévérance", virtue: "Persévérance", intention: "Continuité et encouragement" },
+    message: "Ton engagement grandit !"
+  },
+  "3e_kyu": {
+    name: "Ceinture Verte",
+    grade: "3e kyu",
+    color: "#22C55E",
+    gradient: "from-green-400 to-green-600",
+    textColor: "text-green-900",
+    emoji: "🟢",
+    order: 3,
+    symbolicRole: { name: "Médiateur du calme", virtue: "Maîtrise de soi", intention: "Régulation de l'intensité, écoute" },
+    message: "Tu te stabilises dans ta pratique !"
+  },
+  "2e_kyu": {
+    name: "Ceinture Bleue",
+    grade: "2e kyu",
+    color: "#3B82F6",
+    gradient: "from-blue-400 to-blue-600",
+    textColor: "text-blue-100",
+    emoji: "🔵",
+    order: 4,
+    symbolicRole: { name: "Soutien du dojo", virtue: "Bienveillance", intention: "Aide aux débutants, soutien logistique" },
+    message: "Ta maturité se confirme !"
+  },
+  "1er_kyu": {
+    name: "Ceinture Marron",
+    grade: "1er kyu",
+    color: "#92400E",
+    gradient: "from-amber-700 to-amber-900",
+    textColor: "text-amber-100",
+    emoji: "🟤",
+    order: 5,
+    symbolicRole: { name: "Passeur de voie", virtue: "Transmission", intention: "Transmettre sans imposer" },
+    message: "Tu es prêt à transmettre !"
+  },
+  "shodan": {
+    name: "Ceinture Noire",
+    grade: "Shodan (1er Dan)",
+    color: "#1F2937",
+    gradient: "from-gray-800 to-black",
+    textColor: "text-white",
+    emoji: "⚫",
+    order: 6,
+    symbolicRole: null,
+    message: "Le vrai chemin commence maintenant !"
+  }
 };
 
-// Motivational Messages
-const MOTIVATION_MESSAGES = [
-  "🔥 Continue comme ça, tu es sur le chemin de la maîtrise !",
-  "💪 Chaque technique maîtrisée te rapproche de ton objectif !",
-  "🌟 La persévérance est la clé du succès en Aïkido !",
-  "🥋 O Sensei serait fier de ta progression !",
-  "⭐ Tu es une source d'inspiration !",
-  "🎯 Reste concentré, le prochain grade t'attend !",
-  "🏆 Les champions ne s'arrêtent jamais !",
+// 7 Virtues of Aikido
+const AIKIDO_VIRTUES = [
+  { name: "Respect", kanji: "礼", emoji: "🙏" },
+  { name: "Persévérance", kanji: "忍", emoji: "💪" },
+  { name: "Maîtrise de soi", kanji: "克", emoji: "🧘" },
+  { name: "Humilité", kanji: "謙", emoji: "🌱" },
+  { name: "Bienveillance", kanji: "仁", emoji: "💝" },
+  { name: "Attention", kanji: "注", emoji: "👁️" },
+  { name: "Responsabilité", kanji: "責", emoji: "⚖️" }
 ];
 
 function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterClick, activeFilter, isAdmin, onMembersClick, kyuLevels }) {
