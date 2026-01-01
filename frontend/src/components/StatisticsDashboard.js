@@ -1250,6 +1250,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               {Object.entries(AIKIDO_BELTS).map(([key, belt]) => {
                 const isCurrentBelt = userBelt === key;
                 const isPassed = belt.order < (AIKIDO_BELTS[userBelt]?.order || 0);
+                const beltPoints = (belt.order + 1) * 10; // 10 pts per grade level
                 
                 return (
                   <div 
@@ -1278,11 +1279,15 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                           </p>
                         )}
                       </div>
-                      {!isCurrentBelt && (
-                        <div className="text-slate-500 text-xs">
-                          Cliquer pour sélectionner →
+                      {/* Points badge */}
+                      <div className="flex flex-col items-end gap-1">
+                        <div className="bg-amber-500/20 text-amber-400 px-2 py-1 rounded-lg text-xs font-bold">
+                          +{beltPoints} pts
                         </div>
-                      )}
+                        {!isCurrentBelt && (
+                          <span className="text-slate-500 text-[10px]">Sélectionner →</span>
+                        )}
+                      </div>
                     </div>
                   </div>
                 );
