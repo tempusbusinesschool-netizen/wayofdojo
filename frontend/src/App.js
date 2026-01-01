@@ -897,6 +897,31 @@ function AppContent() {
         isOpen={showDojoManagement}
         onClose={() => setShowDojoManagement(false)}
       />
+
+      {/* Onboarding Flow */}
+      <OnboardingFlow
+        isOpen={showOnboarding}
+        onClose={() => setShowOnboarding(false)}
+        onComplete={handleOnboardingComplete}
+      />
+
+      {/* Paywall Dialog */}
+      <PaywallDialog
+        isOpen={showPaywall}
+        onClose={() => setShowPaywall(false)}
+        onSubscribe={handleSubscribe}
+        userEmail={user?.email}
+      />
+
+      {/* Dojo Registration Dialog */}
+      <DojoRegistrationDialog
+        isOpen={showDojoRegistration}
+        onClose={() => setShowDojoRegistration(false)}
+        onSuccess={() => {
+          setShowDojoRegistration(false);
+          toast.success("🏯 Dojo créé ! Connectez-vous pour continuer.");
+        }}
+      />
       
       {/* Footer */}
       <footer className="border-t border-slate-800 mt-12 py-6">
