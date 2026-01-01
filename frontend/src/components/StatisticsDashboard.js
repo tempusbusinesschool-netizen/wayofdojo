@@ -182,6 +182,43 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
   const [showVirtuesDialog, setShowVirtuesDialog] = useState(false);
   const [showVirtueActionsPanel, setShowVirtueActionsPanel] = useState(false);
   const [sending, setSending] = useState(false);
+  const [activeSymbolicRole, setActiveSymbolicRole] = useState(null);
+  const [roleLoading, setRoleLoading] = useState(false);
+
+  // Fetch user's active symbolic role
+  useEffect(() => {
+    const fetchSymbolicRole = async () => {
+      if (!isAuthenticated) {
+        setActiveSymbolicRole(null);
+        return;
+      }
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_BACKEND_URL}/api/auth/symbolic-role`);
+        setActiveSymbolicRole(response.data.active_role);
+      } catch (error) {
+        console.error("Error fetching symbolic role:", error);
+      }
+    };
+    fetchSymbolicRole();
+  }, [isAuthenticated, userBelt]);
+
+  // Toggle symbolic role activation
+  const handleToggleSymbolicRole = async (activate) => {
+    setRoleLoading(true);
+    try {
+      const response = await axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/auth/symbolic-role`, {
+        activate: activate
+      });
+      if (response.data.success) {
+        toast.success(response.data.message);
+        setActiveSymbolicRole(activate ? response.data.role : null);
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.detail || "Erreur lors de l'activation du rôle");
+    } finally {
+      setRoleLoading(false);
+    }
+  };
 
   // Get current belt info from userBelt prop
   const currentBelt = userBelt ? AIKIDO_BELTS[userBelt] : AIKIDO_BELTS["6e_kyu"];
