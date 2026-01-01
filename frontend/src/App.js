@@ -589,38 +589,84 @@ function AppContent() {
                     <p className="text-slate-400 text-center py-8">Aucun visiteur inscrit pour le moment</p>
                   ) : (
                     <div className="space-y-3">
-                      {visitors.map((visitor) => (
-                        <div 
-                          key={visitor.id} 
-                          className="flex items-center justify-between p-4 bg-slate-800/50 rounded-lg border border-slate-700"
-                        >
-                          <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full bg-purple-600 flex items-center justify-center">
-                              <User className="w-5 h-5 text-white" />
+                      {visitors.map((visitor) => {
+                        const visitorBelt = visitor.belt_level || "6e_kyu";
+                        const beltInfo = visitor.belt_info || AIKIDO_BELTS[visitorBelt] || AIKIDO_BELTS["6e_kyu"];
+                        
+                        return (
+                          <div 
+                            key={visitor.id} 
+                            className="flex flex-col md:flex-row md:items-center justify-between p-4 bg-slate-800/50 rounded-lg border border-slate-700 gap-4"
+                          >
+                            <div className="flex items-center gap-3">
+                              {/* Belt indicator */}
+                              <div 
+                                className="w-12 h-12 rounded-full flex items-center justify-center text-2xl border-2"
+                                style={{ 
+                                  backgroundColor: beltInfo.color + '20',
+                                  borderColor: beltInfo.color
+                                }}
+                              >
+                                {beltInfo.emoji}
+                              </div>
+                              <div>
+                                <p className="font-medium text-white">
+                                  {visitor.first_name} {visitor.last_name}
+                                </p>
+                                <p className="text-sm text-slate-400">{visitor.email}</p>
+                                <p className="text-xs text-slate-500">
+                                  Inscrit le {new Date(visitor.created_at).toLocaleDateString('fr-FR')}
+                                </p>
+                              </div>
                             </div>
-                            <div>
-                              <p className="font-medium text-white">
-                                {visitor.first_name} {visitor.last_name}
-                              </p>
-                              <p className="text-sm text-slate-400">{visitor.email}</p>
+                            
+                            <div className="flex flex-wrap items-center gap-4">
+                              {/* Stats */}
+                              <div className="flex items-center gap-4 text-sm">
+                                <div className="text-center">
+                                  <p className="text-emerald-400 font-bold">{visitor.techniques_mastered || 0}</p>
+                                  <p className="text-slate-500 text-xs">🏆 Maîtrisées</p>
+                                </div>
+                                <div className="text-center">
+                                  <p className="text-amber-400 font-bold">{visitor.techniques_in_progress || 0}</p>
+                                  <p className="text-slate-500 text-xs">📖 En cours</p>
+                                </div>
+                                <div className="text-center">
+                                  <p className="text-cyan-400 font-bold">{visitor.total_sessions || 0}</p>
+                                  <p className="text-slate-500 text-xs">🔥 Sessions</p>
+                                </div>
+                              </div>
+                              
+                              {/* Belt selector for admin */}
+                              <div className="flex items-center gap-2">
+                                <Award className="w-4 h-4 text-amber-400" />
+                                <Select 
+                                  value={visitorBelt}
+                                  onValueChange={(value) => handleAssignBelt(visitor.id, value)}
+                                >
+                                  <SelectTrigger className="w-40 bg-slate-700 border-slate-600 text-white text-sm">
+                                    <SelectValue />
+                                  </SelectTrigger>
+                                  <SelectContent className="bg-slate-800 border-slate-700">
+                                    {Object.entries(AIKIDO_BELTS).map(([key, belt]) => (
+                                      <SelectItem 
+                                        key={key} 
+                                        value={key} 
+                                        className="text-white hover:bg-slate-700 cursor-pointer"
+                                      >
+                                        <span className="flex items-center gap-2">
+                                          <span>{belt.emoji}</span>
+                                          <span>{belt.name} ({belt.grade})</span>
+                                        </span>
+                                      </SelectItem>
+                                    ))}
+                                  </SelectContent>
+                                </Select>
+                              </div>
                             </div>
                           </div>
-                          <div className="flex items-center gap-6 text-sm">
-                            <div className="text-center">
-                              <p className="text-emerald-400 font-bold">{visitor.techniques_mastered}</p>
-                              <p className="text-slate-500 text-xs">Maîtrisées</p>
-                            </div>
-                            <div className="text-center">
-                              <p className="text-amber-400 font-bold">{visitor.techniques_in_progress}</p>
-                              <p className="text-slate-500 text-xs">En cours</p>
-                            </div>
-                            <div className="text-center">
-                              <p className="text-cyan-400 font-bold">{visitor.total_sessions}</p>
-                              <p className="text-slate-500 text-xs">Sessions</p>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
+                        );
+                      })}
                     </div>
                   )}
                 </CardContent>
