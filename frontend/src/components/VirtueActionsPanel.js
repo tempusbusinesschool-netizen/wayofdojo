@@ -248,26 +248,44 @@ function VirtueActionsPanel({ isOpen, onClose, isAuthenticated, onPointsUpdate }
                       <div>
                         <p className="text-amber-400 text-xs font-semibold mb-2">🧑 Actions Individuelles (PV)</p>
                         <div className="space-y-1">
-                          {virtue.individual_actions.map((action) => (
-                            <button
-                              key={action.id}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setSelectedAction({ ...action, type: "individual" });
-                              }}
-                              disabled={!isAuthenticated}
-                              className={`w-full text-left p-2 rounded-lg text-xs transition-all ${
-                                selectedAction?.id === action.id
-                                  ? 'bg-amber-600/50 border border-amber-500'
-                                  : 'bg-slate-700/50 hover:bg-slate-700 border border-transparent'
-                              } ${!isAuthenticated ? 'opacity-50 cursor-not-allowed' : ''}`}
-                            >
-                              <div className="flex justify-between items-center">
-                                <span className="text-slate-200">{action.name}</span>
-                                <span className="text-amber-400 font-bold">+{action.points} PV</span>
-                              </div>
-                            </button>
-                          ))}
+                          {virtue.individual_actions.map((action) => {
+                            const isCompletedThisMonth = actionsCompletedThisMonth.has(action.id);
+                            const isSelected = selectedAction?.id === action.id;
+                            
+                            return (
+                              <button
+                                key={action.id}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  if (!isCompletedThisMonth) {
+                                    setSelectedAction({ ...action, type: "individual" });
+                                  }
+                                }}
+                                disabled={!isAuthenticated || isCompletedThisMonth}
+                                className={`w-full text-left p-2 rounded-lg text-xs transition-all ${
+                                  isCompletedThisMonth
+                                    ? 'bg-emerald-900/30 border border-emerald-500/50 cursor-default'
+                                    : isSelected
+                                      ? 'bg-amber-600/50 border border-amber-500'
+                                      : 'bg-slate-700/50 hover:bg-slate-700 border border-transparent'
+                                } ${!isAuthenticated && !isCompletedThisMonth ? 'opacity-50 cursor-not-allowed' : ''}`}
+                              >
+                                <div className="flex justify-between items-center">
+                                  <div className="flex items-center gap-2">
+                                    {isCompletedThisMonth && <CheckCircle2 className="w-4 h-4 text-emerald-400" />}
+                                    <span className={isCompletedThisMonth ? 'text-emerald-300' : 'text-slate-200'}>
+                                      {action.name}
+                                    </span>
+                                  </div>
+                                  {isCompletedThisMonth ? (
+                                    <span className="text-emerald-400 font-bold text-[10px]">✓ Ce mois</span>
+                                  ) : (
+                                    <span className="text-amber-400 font-bold">+{action.points} PV</span>
+                                  )}
+                                </div>
+                              </button>
+                            );
+                          })}
                         </div>
                       </div>
                       
@@ -275,26 +293,44 @@ function VirtueActionsPanel({ isOpen, onClose, isAuthenticated, onPointsUpdate }
                       <div>
                         <p className="text-cyan-400 text-xs font-semibold mb-2">👥 Actions Collectives (PC)</p>
                         <div className="space-y-1">
-                          {virtue.collective_actions.map((action) => (
-                            <button
-                              key={action.id}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setSelectedAction({ ...action, type: "collective" });
-                              }}
-                              disabled={!isAuthenticated}
-                              className={`w-full text-left p-2 rounded-lg text-xs transition-all ${
-                                selectedAction?.id === action.id
-                                  ? 'bg-cyan-600/50 border border-cyan-500'
-                                  : 'bg-slate-700/50 hover:bg-slate-700 border border-transparent'
-                              } ${!isAuthenticated ? 'opacity-50 cursor-not-allowed' : ''}`}
-                            >
-                              <div className="flex justify-between items-center">
-                                <span className="text-slate-200">{action.name}</span>
-                                <span className="text-cyan-400 font-bold">+{action.points} PC</span>
-                              </div>
-                            </button>
-                          ))}
+                          {virtue.collective_actions.map((action) => {
+                            const isCompletedThisMonth = actionsCompletedThisMonth.has(action.id);
+                            const isSelectedAction = selectedAction?.id === action.id;
+                            
+                            return (
+                              <button
+                                key={action.id}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  if (!isCompletedThisMonth) {
+                                    setSelectedAction({ ...action, type: "collective" });
+                                  }
+                                }}
+                                disabled={!isAuthenticated || isCompletedThisMonth}
+                                className={`w-full text-left p-2 rounded-lg text-xs transition-all ${
+                                  isCompletedThisMonth
+                                    ? 'bg-emerald-900/30 border border-emerald-500/50 cursor-default'
+                                    : isSelectedAction
+                                      ? 'bg-cyan-600/50 border border-cyan-500'
+                                      : 'bg-slate-700/50 hover:bg-slate-700 border border-transparent'
+                                } ${!isAuthenticated && !isCompletedThisMonth ? 'opacity-50 cursor-not-allowed' : ''}`}
+                              >
+                                <div className="flex justify-between items-center">
+                                  <div className="flex items-center gap-2">
+                                    {isCompletedThisMonth && <CheckCircle2 className="w-4 h-4 text-emerald-400" />}
+                                    <span className={isCompletedThisMonth ? 'text-emerald-300' : 'text-slate-200'}>
+                                      {action.name}
+                                    </span>
+                                  </div>
+                                  {isCompletedThisMonth ? (
+                                    <span className="text-emerald-400 font-bold text-[10px]">✓ Ce mois</span>
+                                  ) : (
+                                    <span className="text-cyan-400 font-bold">+{action.points} PC</span>
+                                  )}
+                                </div>
+                              </button>
+                            );
+                          })}
                         </div>
                       </div>
                     </div>
