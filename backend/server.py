@@ -3814,7 +3814,7 @@ async def register_dojo(data: DojoRegistrationRequest):
         "created_at": datetime.now(timezone.utc).isoformat(),
         "subscription_plan": "dojo",
         "subscription_status": "trialing",
-        "trial_end": (datetime.now(timezone.utc) + timedelta(days=10)).isoformat()
+        "trial_end": (datetime.now(timezone.utc) + timedelta(days=14)).isoformat()
     }
     
     await db.dojos.insert_one(new_dojo)
@@ -3836,7 +3836,7 @@ async def register_dojo(data: DojoRegistrationRequest):
         "role": "dojo_admin",  # Special role for dojo administrators
         "subscription_plan": "dojo",
         "subscription_status": "trialing",
-        "trial_end": (datetime.now(timezone.utc) + timedelta(days=10)).isoformat()
+        "trial_end": (datetime.now(timezone.utc) + timedelta(days=14)).isoformat()
     }
     
     await db.users.insert_one(user)
@@ -3851,7 +3851,7 @@ async def register_dojo(data: DojoRegistrationRequest):
         "plan_name": "Offre Dojo",
         "status": "trialing",
         "trial_start": datetime.now(timezone.utc).isoformat(),
-        "trial_end": (datetime.now(timezone.utc) + timedelta(days=10)).isoformat(),
+        "trial_end": (datetime.now(timezone.utc) + timedelta(days=14)).isoformat(),
         "price": 65.00,
         "currency": "eur",
         "commitment_months": 12,
@@ -3867,7 +3867,7 @@ async def register_dojo(data: DojoRegistrationRequest):
         "success": True,
         "message": f"Dojo '{data.dojo_name}' créé avec succès !",
         "dojo_id": dojo_id,
-        "trial_days": 10
+        "trial_days": 14
     }
 
 @api_router.post("/webhook/stripe")
