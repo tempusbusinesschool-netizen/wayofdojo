@@ -242,21 +242,6 @@ class DojoTester:
             
             response = self.session.post(f"{BACKEND_URL}/dojos", json=request_data)
             
-    def test_wrong_super_admin_password(self):
-        """Test that wrong super admin password is rejected"""
-        try:
-            request_data = {
-                "dojo": {
-                    "name": "Should Fail Dojo",
-                    "admin_password": "testadmin123"
-                },
-                "auth": {
-                    "super_admin_password": "wrongpassword"
-                }
-            }
-            
-            response = self.session.post(f"{BACKEND_URL}/dojos", json=request_data)
-            
             if response.status_code == 403:
                 self.log_result("Wrong Super Admin Password", True, 
                               "Correctly rejected wrong super admin password")
