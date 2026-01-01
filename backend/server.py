@@ -565,6 +565,73 @@ async def get_user_progression(user: dict = Depends(require_auth)):
 
 
 # ═══════════════════════════════════════════════════════════════════════════════════
+# BELT SYSTEM ENDPOINTS
+# ═══════════════════════════════════════════════════════════════════════════════════
+
+@api_router.get("/belts")
+async def get_belt_levels():
+    """Récupérer le référentiel des ceintures Aïkido"""
+    return AIKIDO_BELTS
+
+@api_router.get("/auth/belt")
+async def get_user_belt(user: dict = Depends(require_auth)):
+    """Récupérer la ceinture actuelle de l'utilisateur"""
+    belt_level = user.get("belt_level", "6e_kyu")
+    belt_info = AIKIDO_BELTS.get(belt_level, AIKIDO_BELTS["6e_kyu"])
+    return {
+        "belt_level": belt_level,
+        "belt_info": belt_info,
+        "awarded_at": user.get("belt_awarded_at"),
+        "awarded_by": user.get("belt_awarded_by")
+    }
+
+@api_router.post("/admin/assign-belt")
+async def assign_belt(data: BeltAssignment):
+    """Attribuer une ceinture à un utilisateur (Admin/Enseignant seulement)"""
+    # Validate belt level exists
+    if data.belt_level not in AIKIDO_BELTS:
+        raise HTTPException(status_code=400, detail=f"Niveau de ceinture invalide: {data.belt_level}")
+    
+    # Find the user
+    user = await db.users.find_one({"id": data.user_id}, {"_id": 0})
+    if not user:
+        raise HTTPException(status_code=404, detail="Utilisateur non trouvé")
+    
+    # Update belt level
+    await db.users.update_one(
+        {"id": data.user_id},
+        {
+            "$set": {
+                "belt_level": data.belt_level,
+                "belt_awarded_at": datetime.now(timezone.utc).isoformat(),
+                "belt_awarded_by": "admin"
+            }
+        }
+    )
+    
+    belt_info = AIKIDO_BELTS[data.belt_level]
+    logger.info(f"Belt {data.belt_level} assigned to user {data.user_id}")
+    
+    return {
+        "success": True,
+        "message": f"Ceinture {belt_info['name']} attribuée avec succès",
+        "belt_info": belt_info
+    }
+
+@api_router.get("/visitors")
+async def get_visitors():
+    """Récupérer la liste des utilisateurs inscrits (visiteurs)"""
+    users = await db.users.find({}, {"_id": 0, "password_hash": 0}).to_list(1000)
+    
+    # Add belt info to each user
+    for user in users:
+        belt_level = user.get("belt_level", "6e_kyu")
+        user["belt_info"] = AIKIDO_BELTS.get(belt_level, AIKIDO_BELTS["6e_kyu"])
+    
+    return users
+
+
+# ═══════════════════════════════════════════════════════════════════════════════════
 # ADHÉRENTS MODELS
 # ═══════════════════════════════════════════════════════════════════════════════════
 
