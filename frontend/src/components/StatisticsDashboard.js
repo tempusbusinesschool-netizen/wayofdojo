@@ -605,8 +605,10 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
             
             {/* Fun Guide Section */}
             <div className="mt-6 p-4 md:p-6 bg-gradient-to-r from-purple-900/40 via-pink-900/40 to-purple-900/40 rounded-2xl border border-purple-500/30">
-              <h2 className="text-center text-lg md:text-xl font-bold text-white mb-4 flex items-center justify-center gap-2">
-                🎯 Comment ça marche ?
+              <h2 className="text-center text-lg md:text-xl font-bold text-white mb-4 flex flex-col md:flex-row items-center justify-center gap-2">
+                <span className="text-green-400">💚 D'abord c'est Gratuit !</span>
+                <span className="hidden md:inline text-purple-400">•</span>
+                <span>🎯 Ensuite comment ça marche ?</span>
               </h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
                 <div className="bg-gradient-to-br from-blue-600 to-blue-800 p-3 md:p-4 rounded-xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg">
