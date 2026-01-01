@@ -367,6 +367,7 @@ async def create_dojo(dojo: DojoCreate, auth: SuperAdminAuth):
         "description": dojo.description or f"Dojo {dojo.name}",
         "address": dojo.address or "",
         "city": dojo.city or "",
+        "email": dojo.email,
         "admin_password": dojo.admin_password,
         "is_default": False,
         "created_at": datetime.now(timezone.utc).isoformat()
@@ -382,6 +383,7 @@ async def create_dojo(dojo: DojoCreate, auth: SuperAdminAuth):
         "description": new_dojo["description"],
         "address": new_dojo["address"],
         "city": new_dojo["city"],
+        "email": new_dojo["email"],
         "is_default": new_dojo["is_default"],
         "created_at": new_dojo["created_at"],
         "members_count": 0
