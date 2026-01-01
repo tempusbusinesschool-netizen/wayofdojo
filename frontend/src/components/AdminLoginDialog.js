@@ -571,6 +571,15 @@ function AdminLoginDialog({ isOpen, onClose, onSuccess }) {
         )}
       </div>
       
+      {/* Bouton de remplissage automatique pour test */}
+      <button
+        type="button"
+        onClick={() => setPassword('senseiclub')}
+        className="w-full p-2 text-xs bg-orange-900/30 hover:bg-orange-900/50 border border-orange-700/50 rounded-lg text-orange-400 transition-colors"
+      >
+        🔑 Utiliser le compte test (senseiclub)
+      </button>
+      
       <div className="flex gap-3 pt-2">
         <Button
           type="button"
