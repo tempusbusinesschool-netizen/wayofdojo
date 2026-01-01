@@ -284,11 +284,12 @@ metadata:
 
 test_plan:
   current_focus:
-    - "GET /api/subscription-plans"
-    - "POST /api/auth/register-dojo"
-    - "POST /api/subscriptions/checkout"
-    - "GET /api/auth/subscription"
-  stuck_tasks: []
+    - "Onboarding Flow (4 screens)"
+    - "Paywall Dialog (Ninja and Dojo plans)"
+    - "Dojo Registration Dialog (2-step form)"
+    - "Header Buttons (when not logged in)"
+  stuck_tasks:
+    - "Paywall Dialog (Ninja and Dojo plans)"
   test_all: false
   test_priority: "high_first"
 
@@ -299,3 +300,5 @@ agent_communication:
     message: "Frontend Multi-Dojo testing completed successfully! All 8 frontend features tested and working correctly. Fixed critical bugs: 1) DojoManagement API request format (dojo/auth structure), 2) Backend ObjectId serialization in dojo creation response. Minor issue: Building2 icons in dojo badges not rendering (Lucide React issue) but badges display correctly with blue styling. All core functionality working as expected."
   - agent: "testing"
     message: "Subscription & Onboarding system testing completed successfully! All 4 backend subscription endpoints tested and working correctly: 1) GET /api/subscription-plans returns both ninja and dojo plans with correct pricing and trial periods, 2) POST /api/auth/register-dojo successfully creates dojo and admin user with 10-day trial, 3) POST /api/subscriptions/checkout starts 3-month trial for ninja plan without payment, 4) GET /api/auth/subscription correctly returns subscription status. All subscription flows working as expected."
+  - agent: "testing"
+    message: "Onboarding Flow and Paywall UI testing completed! WORKING: 1) Onboarding flow (4 screens with proper navigation, content, and progress dots), 2) Dojo registration dialog (2-step form with all fields and navigation), 3) Header buttons (S'inscrire, Espace Dojo, sparkle icon, Admin). ISSUE: Paywall dialog does not open after completing onboarding - the 'Découvrir les offres' button on final screen doesn't trigger paywall. However, paywall works when opened via sparkle button and displays both plans correctly."
