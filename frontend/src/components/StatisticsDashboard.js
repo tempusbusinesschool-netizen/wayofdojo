@@ -743,6 +743,235 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
           </div>
         )}
 
+        {/* MA CEINTURE - Real Aikido Belt System (No XP, No Automatic Progression) */}
+        {!isAdmin && currentBelt && (
+          <div className="mb-8 p-4 md:p-6 bg-gradient-to-r from-slate-800/80 via-slate-900/80 to-slate-800/80 rounded-2xl border-2 border-amber-500/30 shadow-xl">
+            <div className="flex flex-col md:flex-row items-center gap-6">
+              
+              {/* Current Belt Display */}
+              <div className="flex flex-col items-center cursor-pointer transform hover:scale-105 transition-all" onClick={() => setShowBeltDialog(true)}>
+                <div className={`w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br ${currentBelt.gradient} flex items-center justify-center shadow-xl border-4 border-white/20`}>
+                  <span className="text-5xl md:text-6xl">{currentBelt.emoji}</span>
+                </div>
+                <p className="mt-3 font-bold text-lg md:text-xl text-white">{currentBelt.name}</p>
+                <p className="text-amber-400 font-medium">{currentBelt.grade}</p>
+              </div>
+
+              {/* Belt Info & Message */}
+              <div className="flex-1 text-center md:text-left">
+                <h3 className="text-xl md:text-2xl font-bold text-amber-400 mb-2 flex items-center justify-center md:justify-start gap-2">
+                  🥋 Mon Parcours Aïkido
+                </h3>
+                
+                <p className="text-slate-300 text-sm md:text-base mb-4">
+                  {currentBelt.message}
+                </p>
+
+                {/* ACTIVE Symbolic Role Display */}
+                {activeSymbolicRole && (
+                  <div className="bg-gradient-to-r from-purple-600/60 to-indigo-600/60 rounded-xl p-4 border-2 border-purple-400/50 shadow-lg shadow-purple-500/20 mb-3">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <Shield className="w-6 h-6 text-purple-300 animate-pulse" />
+                        <span className="text-purple-100 font-bold text-sm">🎭 Rôle Actif</span>
+                      </div>
+                      <Button
+                        onClick={() => handleToggleSymbolicRole(false)}
+                        disabled={roleLoading}
+                        size="sm"
+                        variant="ghost"
+                        className="text-purple-300 hover:text-red-400 hover:bg-red-900/30 text-xs"
+                      >
+                        Désactiver
+                      </Button>
+                    </div>
+                    <p className="text-white font-bold text-lg">{activeSymbolicRole.name}</p>
+                    <p className="text-purple-200 text-xs mt-1">
+                      Vertu : <span className="text-white font-semibold">{activeSymbolicRole.virtue}</span>
+                    </p>
+                    <p className="text-purple-300/80 text-xs mt-1 italic">
+                      {activeSymbolicRole.intention}
+                    </p>
+                  </div>
+                )}
+
+                {/* Symbolic Role Available but not activated */}
+                {!activeSymbolicRole && currentBelt.symbolicRole && (
+                  <div className="bg-gradient-to-r from-purple-900/50 to-indigo-900/50 rounded-xl p-4 border border-purple-500/30">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <Award className="w-5 h-5 text-purple-400" />
+                        <span className="text-purple-300 font-semibold text-sm">Rôle symbolique disponible</span>
+                      </div>
+                    </div>
+                    <p className="text-white font-bold">{currentBelt.symbolicRole.name}</p>
+                    <p className="text-purple-300 text-xs mt-1">
+                      Vertu : <span className="text-purple-200">{currentBelt.symbolicRole.virtue}</span>
+                    </p>
+                    <p className="text-slate-400 text-xs mt-1 italic mb-3">
+                      {currentBelt.symbolicRole.intention}
+                    </p>
+                    <Button
+                      onClick={() => handleToggleSymbolicRole(true)}
+                      disabled={roleLoading}
+                      size="sm"
+                      className="w-full bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-400 hover:to-indigo-400 text-white font-bold"
+                    >
+                      {roleLoading ? "Activation..." : "🎭 Activer ce rôle"}
+                    </Button>
+                  </div>
+                )}
+
+                {!activeSymbolicRole && !currentBelt.symbolicRole && (
+                  <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700">
+                    <p className="text-slate-400 text-sm">
+                      🌱 Continue ton chemin pour débloquer un rôle symbolique au prochain grade !
+                    </p>
+                  </div>
+                )}
+              </div>
+
+              {/* Quick Info Button */}
+              <div className="flex flex-col items-center gap-2">
+                <Button 
+                  onClick={() => setShowBeltDialog(true)}
+                  className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold px-4 py-2 rounded-xl shadow-lg transform hover:scale-105 transition-all"
+                >
+                  <Award className="w-5 h-5 mr-2" />
+                  Changer ma ceinture
+                </Button>
+                <p className="text-slate-500 text-xs text-center">Clique pour indiquer<br/>ton grade actuel</p>
+              </div>
+            </div>
+
+            {/* Technique States Summary with POINTS */}
+            <div className="mt-6 grid grid-cols-2 md:grid-cols-5 gap-3 text-xs">
+              <div className="bg-amber-900/30 p-3 rounded-xl text-center border border-amber-500/30">
+                <p className="text-2xl mb-1">📖</p>
+                <p className="text-amber-300 font-bold">{statistics.in_progress_techniques || 0}</p>
+                <p className="text-slate-400">En apprentissage</p>
+                <p className="text-amber-500 text-[10px] mt-1">+1 pt/technique</p>
+              </div>
+              <div className="bg-blue-900/30 p-3 rounded-xl text-center border border-blue-500/30">
+                <p className="text-2xl mb-1">🎯</p>
+                <p className="text-blue-300 font-bold">{points.practicedCount || 0}</p>
+                <p className="text-slate-400">Pratiquées</p>
+                <p className="text-blue-500 text-[10px] mt-1">+2 pts/technique</p>
+              </div>
+              <div className="bg-emerald-900/30 p-3 rounded-xl text-center border border-emerald-500/30">
+                <p className="text-2xl mb-1">🏆</p>
+                <p className="text-emerald-300 font-bold">{statistics.mastered_techniques || 0}</p>
+                <p className="text-slate-400">Maîtrisées</p>
+                <p className="text-emerald-500 text-[10px] mt-1">+3 pts/technique</p>
+              </div>
+              {/* Belt Points */}
+              <div className="bg-gradient-to-br from-amber-900/40 to-yellow-900/40 p-3 rounded-xl text-center border border-amber-400/40">
+                <p className="text-2xl mb-1">{currentBelt.emoji}</p>
+                <p className="text-amber-300 font-bold">+{points.belt}</p>
+                <p className="text-slate-400">Ceinture</p>
+                <p className="text-amber-500 text-[10px] mt-1">+10 pts/grade</p>
+              </div>
+              {/* Total Points */}
+              <div className="bg-gradient-to-br from-purple-900/50 to-pink-900/50 p-3 rounded-xl text-center border-2 border-purple-500/50 shadow-lg shadow-purple-500/20 col-span-2 md:col-span-1">
+                <p className="text-2xl mb-1">⭐</p>
+                <p className="text-3xl font-bold bg-gradient-to-r from-yellow-400 to-pink-400 bg-clip-text text-transparent">{points.total}</p>
+                <p className="text-purple-300 font-semibold">Total Points</p>
+              </div>
+            </div>
+
+            {/* VIRTUE PIE CHART - Camembert des Vertus */}
+            <div className="mt-6 p-4 bg-gradient-to-r from-indigo-900/30 via-purple-900/30 to-indigo-900/30 rounded-xl border border-indigo-500/30">
+              <div className="flex items-center justify-between mb-4">
+                <h4 className="text-indigo-300 font-bold flex items-center gap-2">
+                  🎯 Mes Vertus Travaillées
+                </h4>
+                <div className="flex gap-2">
+                  <Button 
+                    onClick={() => setShowVirtueActionsPanel(true)}
+                    size="sm"
+                    className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold text-xs shadow-lg shadow-amber-500/30"
+                  >
+                    <Sparkles className="w-3 h-3 mr-1" />
+                    Gagner des points !
+                  </Button>
+                  <Button 
+                    onClick={() => setShowVirtuesDialog(true)}
+                    variant="ghost"
+                    size="sm"
+                    className="text-indigo-400 hover:text-indigo-300 hover:bg-indigo-900/30 text-xs"
+                  >
+                    Détails →
+                  </Button>
+                </div>
+              </div>
+              
+              {totalVirtuePoints > 0 ? (
+                <VirtuePieChart virtueData={virtueData} />
+              ) : (
+                <p className="text-slate-400 text-sm text-center py-4">
+                  🌱 Commence à pratiquer pour développer tes vertus !
+                </p>
+              )}
+              
+              <p className="text-center text-indigo-300/70 text-xs mt-4 italic">
+                Répartition de tes vertus basée sur ta progression et ton parcours
+              </p>
+            </div>
+
+            {/* Trophies Section */}
+            <div className="mt-6 p-4 bg-gradient-to-r from-yellow-900/30 via-amber-900/30 to-yellow-900/30 rounded-xl border border-yellow-500/30">
+              <div className="flex items-center justify-between mb-3">
+                <h4 className="text-amber-400 font-bold flex items-center gap-2">
+                  🏆 Mes Trophées ({trophies.unlocked.length})
+                </h4>
+                <Button 
+                  onClick={() => setShowTrophiesDialog(true)}
+                  variant="ghost"
+                  size="sm"
+                  className="text-amber-400 hover:text-amber-300 hover:bg-amber-900/30 text-xs"
+                >
+                  Voir tout →
+                </Button>
+              </div>
+              
+              {trophies.unlocked.length === 0 ? (
+                <p className="text-slate-400 text-sm text-center py-2">
+                  🌱 Continue à pratiquer pour débloquer tes premiers trophées !
+                </p>
+              ) : (
+                <div className="flex flex-wrap gap-2">
+                  {trophies.unlocked.slice(0, 6).map((trophy, idx) => (
+                    <div 
+                      key={idx}
+                      className="bg-slate-800/80 px-3 py-1.5 rounded-full border border-yellow-500/30 flex items-center gap-1.5 text-xs hover:scale-105 transition-all cursor-pointer"
+                      title={trophy.desc}
+                    >
+                      <span className="text-lg">{trophy.icon}</span>
+                      <span className="text-yellow-300 font-medium">{trophy.name}</span>
+                    </div>
+                  ))}
+                  {trophies.unlocked.length > 6 && (
+                    <div 
+                      className="bg-slate-800/80 px-3 py-1.5 rounded-full border border-purple-500/30 text-xs text-purple-300 cursor-pointer hover:bg-purple-900/30"
+                      onClick={() => setShowTrophiesDialog(true)}
+                    >
+                      +{trophies.unlocked.length - 6} autres
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Points explanation */}
+            <div className="mt-4 text-center">
+              <p className="text-slate-400 text-xs italic">
+                🎌 Gagne des points : 📖 1pt • 🎯 2pts • 🏆 3pts • {currentBelt.emoji} +10pts/grade
+                <br />Débloque des trophées et développe tes vertus !
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* O Sensei & Hakama Section */}
         <div className="mb-10 p-6 md:p-8 bg-gradient-to-br from-slate-800/80 via-slate-900/80 to-slate-800/80 rounded-2xl border border-amber-500/30 shadow-xl">
           <div className="flex flex-col lg:flex-row gap-6 items-start">
