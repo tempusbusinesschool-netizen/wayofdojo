@@ -842,6 +842,94 @@ function AppContent() {
             </TabsContent>
           )}
 
+          {/* Onglet Gestion Dojos - Super Admin uniquement */}
+          {isSuperAdmin && (
+            <TabsContent value="dojos" className="mt-6">
+              <Card className="bg-slate-900/50 border-slate-700">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center gap-2">
+                    <Building2 className="w-5 h-5 text-cyan-400" />
+                    Gestion des Dojos
+                  </CardTitle>
+                  <CardDescription className="text-slate-400">
+                    Créer, activer et gérer les dojos de la plateforme
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="mb-4">
+                    <Button
+                      onClick={() => setShowDojoManagement(true)}
+                      className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white"
+                    >
+                      <Building2 className="w-4 h-4 mr-2" />
+                      Ouvrir la gestion des dojos
+                    </Button>
+                  </div>
+                  
+                  {/* Quick Stats */}
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
+                      <p className="text-2xl font-bold text-cyan-400">{dojos.length}</p>
+                      <p className="text-sm text-slate-400">Total Dojos</p>
+                    </div>
+                    <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
+                      <p className="text-2xl font-bold text-green-400">
+                        {dojos.filter(d => d.subscription_status === 'active' || d.subscription_status === 'trialing').length}
+                      </p>
+                      <p className="text-sm text-slate-400">Dojos Actifs</p>
+                    </div>
+                    <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
+                      <p className="text-2xl font-bold text-purple-400">{visitors.length}</p>
+                      <p className="text-sm text-slate-400">Visiteurs Total</p>
+                    </div>
+                    <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
+                      <p className="text-2xl font-bold text-amber-400">{members.length}</p>
+                      <p className="text-sm text-slate-400">Adhérents Total</p>
+                    </div>
+                  </div>
+                  
+                  {/* Dojos List */}
+                  <div className="space-y-3">
+                    <h3 className="text-lg font-semibold text-white mb-3">Liste des Dojos</h3>
+                    {dojos.length === 0 ? (
+                      <p className="text-slate-400 text-center py-8">Aucun dojo enregistré</p>
+                    ) : (
+                      dojos.map((dojo) => (
+                        <div 
+                          key={dojo.id}
+                          className="flex items-center justify-between p-4 bg-slate-800/50 rounded-lg border border-slate-700"
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
+                              <Building2 className="w-5 h-5 text-white" />
+                            </div>
+                            <div>
+                              <p className="font-medium text-white">{dojo.name}</p>
+                              <p className="text-sm text-slate-400">
+                                {dojo.city || 'Ville non renseignée'} • {dojo.members_count || 0} membres
+                              </p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            {dojo.is_default && (
+                              <Badge className="bg-cyan-600 text-white text-xs">Par défaut</Badge>
+                            )}
+                            {dojo.subscription_status === 'trialing' && (
+                              <Badge className="bg-amber-600 text-white text-xs">Essai</Badge>
+                            )}
+                            {dojo.subscription_status === 'active' && (
+                              <Badge className="bg-green-600 text-white text-xs">Actif</Badge>
+                            )}
+                          </div>
+                        </div>
+                      ))
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+          )}
+
           {isAdmin && (
             <TabsContent value="reglement" className="mt-6">
               <ReglementInterieur 
