@@ -233,11 +233,9 @@ function VirtueActionsPanel({ isOpen, onClose, isAuthenticated, onPointsUpdate }
                           <p className="text-white/80 text-xs">{virtue.name}</p>
                         </div>
                       </div>
-                      {isAuthenticated && (
-                        <div className="bg-white/20 px-2 py-1 rounded-full">
-                          <p className="text-white font-bold text-sm">{points} pts</p>
-                        </div>
-                      )}
+                      <div className="bg-white/20 px-2 py-1 rounded-full">
+                        <p className="text-white font-bold text-sm">10 pts</p>
+                      </div>
                     </div>
                   </div>
                   
