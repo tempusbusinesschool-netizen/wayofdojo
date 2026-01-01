@@ -875,9 +875,6 @@ function AppContent() {
       {/* Footer */}
       <footer className="border-t border-slate-800 mt-12 py-6">
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <p className="text-slate-500 text-sm font-semibold">
-            Aikido
-          </p>
           <p className="text-slate-400 text-sm">
             Techniques d&apos;Aikido
           </p>
