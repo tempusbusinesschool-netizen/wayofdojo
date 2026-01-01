@@ -1340,52 +1340,6 @@ function AppContent() {
         isOpen={showAuthDialog}
         onClose={() => setShowAuthDialog(false)}
       />
-      
-      {/* Child Registration Dialog */}
-      <Dialog open={showChildRegistration} onOpenChange={setShowChildRegistration}>
-        <DialogContent className="bg-slate-900 border-slate-700 text-white max-w-2xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle className="text-xl font-bold flex items-center gap-2">
-              <Baby className="w-6 h-6 text-purple-400" />
-              Inscription Enfant
-            </DialogTitle>
-            <DialogDescription className="text-slate-400">
-              Formulaire d&apos;inscription pour un ou plusieurs enfants
-            </DialogDescription>
-          </DialogHeader>
-          <MemberRegistrationForm
-            registrationType="child"
-            onSuccess={() => {
-              setShowChildRegistration(false);
-              fetchData();
-            }}
-            onCancel={() => setShowChildRegistration(false)}
-          />
-        </DialogContent>
-      </Dialog>
-      
-      {/* Adult Registration Dialog */}
-      <Dialog open={showAdultRegistration} onOpenChange={setShowAdultRegistration}>
-        <DialogContent className="bg-slate-900 border-slate-700 text-white max-w-2xl max-h-[90vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle className="text-xl font-bold flex items-center gap-2">
-              <User className="w-6 h-6 text-cyan-400" />
-              Inscription Adulte
-            </DialogTitle>
-            <DialogDescription className="text-slate-400">
-              Formulaire d&apos;inscription pour un adulte pratiquant
-            </DialogDescription>
-          </DialogHeader>
-          <MemberRegistrationForm
-            registrationType="adult"
-            onSuccess={() => {
-              setShowAdultRegistration(false);
-              fetchData();
-            }}
-            onCancel={() => setShowAdultRegistration(false)}
-          />
-        </DialogContent>
-      </Dialog>
 
       {/* CGU Dialog */}
       <CGUDialog
