@@ -207,7 +207,8 @@ class DojoTester:
                     if filtered_correctly:
                         self.log_result("GET /api/visitors?dojo_id={dojo_id}", True, 
                                       f"Successfully filtered {len(visitors)} visitors for dojo {dojo_id}",
-                                      {"visitors_count": len(visitors), "dojo_id": dojo_id})
+                                      {"visitors_count": len(visitors), "dojo_id": dojo_id, 
+                                       "note": "Low count expected - only users with explicit dojo_id in DB are returned"})
                     else:
                         self.log_result("GET /api/visitors?dojo_id={dojo_id}", False, 
                                       "Visitors not properly filtered by dojo",
