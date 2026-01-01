@@ -39,4 +39,9 @@ export const MASTERY_LEVELS = {
   }
 };
 
+// Admin Passwords
+export const SUPER_ADMIN_PASSWORD = "aikido2024";  // Super Admin (plateforme)
+export const ADMIN_DOJO_PASSWORD = "senseiclub";   // Admin Dojo (club)
+
+// Legacy export for backward compatibility
 export const ADMIN_PASSWORD = "aikido2024";
