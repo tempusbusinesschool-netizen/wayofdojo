@@ -187,6 +187,12 @@ function VirtueActionsPanel({ isOpen, onClose, isAuthenticated, onPointsUpdate }
                 <p className="text-xs text-slate-400">Total Points Vertu</p>
               </div>
             </div>
+            {/* Monthly progress indicator */}
+            <div className="mt-3 pt-3 border-t border-purple-500/20 text-center">
+              <p className="text-xs text-slate-300">
+                🗓️ Ce mois-ci : <span className="text-emerald-400 font-bold">{totalActionsThisMonth}</span> action{totalActionsThisMonth > 1 ? 's' : ''} validée{totalActionsThisMonth > 1 ? 's' : ''}
+              </p>
+            </div>
           </div>
         )}
 
