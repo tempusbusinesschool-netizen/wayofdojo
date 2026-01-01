@@ -86,7 +86,7 @@ function CGUDialog({ isOpen, onClose }) {
               <li>de ne jamais tenter de reproduire seul ou sans encadrement les techniques décrites.</li>
             </ul>
             <p className="mt-3 text-amber-400 font-medium">
-              Le Fournisseur et l'association La Rivière ne sauraient être tenus responsables de tout accident, blessure ou dommage corporel résultant de l'utilisation du Service.
+              Le Fournisseur ne saurait être tenu responsable de tout accident, blessure ou dommage corporel résultant de l'utilisation du Service.
             </p>
           </section>
 
