@@ -201,7 +201,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
 
     doc.setFontSize(8);
     doc.setTextColor(150, 150, 150);
-    doc.text('Aikido La Rivière - Club affilié FFAAA - © humanknowledge.fr', pageWidth / 2, pageHeight - 10, { align: 'center' });
+    doc.text('Techniques Aikido - © humanknowledge.fr', pageWidth / 2, pageHeight - 10, { align: 'center' });
 
     return doc.output('datauristring');
   };
