@@ -39,9 +39,9 @@ function CGVPage({ isOpen, onClose }) {
                 <h3 className="font-semibold text-amber-400">🥷 Ninja Individuel</h3>
                 <ul className="mt-2 space-y-1">
                   <li>• Tarif : 4,50 € TTC / mois</li>
-                  <li>• Période d'essai : 3 mois gratuits</li>
-                  <li>• Sans engagement</li>
-                  <li>• Résiliable à tout moment</li>
+                  <li>• Période d'essai : 14 jours gratuits</li>
+                  <li>• Annulation possible à tout moment pendant l'essai</li>
+                  <li>• Sans engagement après l'essai</li>
                 </ul>
               </div>
               
@@ -49,9 +49,9 @@ function CGVPage({ isOpen, onClose }) {
                 <h3 className="font-semibold text-cyan-400">🏯 Offre Dojo</h3>
                 <ul className="mt-2 space-y-1">
                   <li>• Tarif : 65 € TTC / mois</li>
-                  <li>• Période d'essai : 10 jours gratuits</li>
-                  <li>• Engagement : 12 mois</li>
-                  <li>• Reconduction tacite annuelle</li>
+                  <li>• Période d'essai : 14 jours gratuits</li>
+                  <li>• Annulation possible à tout moment pendant l'essai</li>
+                  <li>• Engagement : 12 mois après l'essai</li>
                 </ul>
               </div>
               
