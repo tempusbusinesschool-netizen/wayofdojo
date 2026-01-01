@@ -1560,63 +1560,6 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
           </DialogContent>
         </Dialog>
 
-        {/* Statistics blocks - hidden for admin - FUN DESIGN */}
-        {!isAdmin && (
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-12 max-w-6xl mx-auto px-2">
-            <Card 
-              className={`bg-gradient-to-br from-indigo-600 to-indigo-800 border-indigo-400 cursor-pointer transition-all hover:scale-105 hover:shadow-xl hover:shadow-indigo-500/30 ${activeFilter === 'all' ? 'ring-4 ring-indigo-400 ring-opacity-50' : ''}`}
-              onClick={() => onFilterClick && onFilterClick('all')}
-            >
-              <CardContent className="p-3 md:px-6 md:py-4">
-                <div className="flex flex-col items-center text-center">
-                  <div className="text-3xl md:text-4xl mb-2">📚</div>
-                  <p className="text-3xl md:text-4xl font-bold text-white">{statistics.total_techniques}</p>
-                  <p className="text-xs md:text-sm text-indigo-200 font-medium">Techniques</p>
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card 
-              className={`bg-gradient-to-br from-emerald-500 to-emerald-700 border-emerald-400 cursor-pointer transition-all hover:scale-105 hover:shadow-xl hover:shadow-emerald-500/30 ${activeFilter === 'mastered' ? 'ring-4 ring-emerald-400 ring-opacity-50' : ''}`}
-              onClick={() => onFilterClick && onFilterClick('mastered')}
-            >
-              <CardContent className="p-3 md:px-6 md:py-4">
-                <div className="flex flex-col items-center text-center">
-                  <div className="text-3xl md:text-4xl mb-2">🏆</div>
-                  <p className="text-3xl md:text-4xl font-bold text-white">{statistics.mastered_techniques}</p>
-                  <p className="text-xs md:text-sm text-emerald-100 font-medium">Maîtrisées</p>
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card 
-              className={`bg-gradient-to-br from-amber-500 to-orange-600 border-amber-400 cursor-pointer transition-all hover:scale-105 hover:shadow-xl hover:shadow-amber-500/30 ${activeFilter === 'in_progress' ? 'ring-4 ring-amber-400 ring-opacity-50' : ''}`}
-              onClick={() => onFilterClick && onFilterClick('in_progress')}
-            >
-              <CardContent className="p-3 md:px-6 md:py-4">
-                <div className="flex flex-col items-center text-center">
-                  <div className="text-3xl md:text-4xl mb-2">🔥</div>
-                  <p className="text-3xl md:text-4xl font-bold text-white">{statistics.in_progress_techniques}</p>
-                  <p className="text-xs md:text-sm text-amber-100 font-medium">En cours</p>
-                </div>
-              </CardContent>
-            </Card>
-            
-            <Card 
-              className={`bg-gradient-to-br from-pink-500 to-rose-600 border-pink-400 cursor-pointer transition-all hover:scale-105 hover:shadow-xl hover:shadow-pink-500/30 ${activeFilter === 'practiced' ? 'ring-4 ring-pink-400 ring-opacity-50' : ''}`}
-              onClick={() => onFilterClick && onFilterClick('practiced')}
-            >
-              <CardContent className="p-3 md:px-6 md:py-4">
-                <div className="flex flex-col items-center text-center">
-                  <div className="text-3xl md:text-4xl mb-2">⭐</div>
-                  <p className="text-3xl md:text-4xl font-bold text-white">{statistics.total_practice_sessions}</p>
-                  <p className="text-xs md:text-sm text-pink-100 font-medium">Sessions</p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        )}
-          
         {/* Admin block - Adhérents (adults + children) centered full width */}
         {membersStats && isAdmin && (
           <div className="flex justify-center mb-12 w-full">
@@ -1649,24 +1592,6 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
             </Card>
           </div>
         )}
-        
-        <Card className="bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 border-slate-700 mb-6">
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between mb-2">
-              <div className="flex items-center gap-2">
-                <TrendingUp className="w-5 h-5 text-cyan-400" />
-                <span className="text-sm font-medium text-white">Progression Globale</span>
-              </div>
-              <span className="text-2xl font-bold text-cyan-400">{statistics.overall_progress}%</span>
-            </div>
-            <div className="w-full h-3 bg-slate-700 rounded-full overflow-hidden">
-              <div 
-                className="h-full bg-gradient-to-r from-cyan-500 to-emerald-500 rounded-full transition-all duration-1000 ease-out"
-                style={{ width: `${statistics.overall_progress}%` }}
-              />
-            </div>
-          </CardContent>
-        </Card>
       </div>
 
       {/* PDF Download Dialog */}
