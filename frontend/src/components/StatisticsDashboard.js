@@ -283,11 +283,12 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
       <div className="mb-8 animate-fadeIn">
         {/* Logo and 7 Virtues Section */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-8 mb-10 p-8 bg-slate-800/50 rounded-xl border border-slate-700">
-          <img 
-            src="/images/logo-aikido.png" 
-            alt="Logo Techniques Aikido" 
-            className="h-36 w-auto"
-          />
+          <div className="flex flex-col items-center gap-2">
+            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-cyan-600 to-blue-800 flex items-center justify-center border-3 border-cyan-400 shadow-lg shadow-cyan-500/30">
+              <span className="text-4xl font-bold text-white">合</span>
+            </div>
+            <p className="text-lg font-bold text-white">Techniques d'Aikido</p>
+          </div>
           <div className="text-center md:text-left">
             <h3 className="text-2xl font-bold text-cyan-400 mb-4">Les 7 Vertus de l'Aïkido</h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-3 text-base">
