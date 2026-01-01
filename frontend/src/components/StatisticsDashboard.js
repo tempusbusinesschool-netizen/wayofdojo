@@ -982,6 +982,82 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               <span className="animate-bounce" style={{ animationDelay: '400ms' }}>🔥</span>
             </div>
           </div>
+
+          {/* DÉPLACEMENTS - Intégré dans Ma Progression Ninja */}
+          <div className="mt-6 pt-6 border-t-2 border-purple-500/30">
+            <div 
+              className="flex items-center justify-between cursor-pointer group"
+              onClick={() => setShowDeplacementsExpanded(!showDeplacementsExpanded)}
+            >
+              <div className="flex items-center gap-3">
+                <div className="relative">
+                  <div className="p-3 rounded-xl bg-gradient-to-br from-orange-400 to-pink-500 shadow-lg shadow-orange-500/30 group-hover:scale-110 transition-transform">
+                    <span className="text-2xl">🦶</span>
+                  </div>
+                  <div className="absolute -top-1 -right-1 text-lg animate-bounce">✨</div>
+                </div>
+                <div>
+                  <h4 className="text-lg font-bold bg-gradient-to-r from-orange-400 via-pink-400 to-purple-400 bg-clip-text text-transparent flex items-center gap-2">
+                    Les Déplacements 👣
+                  </h4>
+                  <p className="text-purple-300 text-xs">🎯 Apprends à bouger comme un vrai ninja ! 🥷</p>
+                </div>
+              </div>
+              <div className={`p-2 rounded-full bg-purple-600/30 transform transition-transform duration-300 ${showDeplacementsExpanded ? 'rotate-180' : ''}`}>
+                <ChevronDown className="w-5 h-5 text-white" />
+              </div>
+            </div>
+
+            {showDeplacementsExpanded && (
+              <div className="mt-4 space-y-4 animate-in slide-in-from-top-2">
+                {/* 4 Directions */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                  {DEPLACEMENTS_DATA.directions.items.map((dir, idx) => (
+                    <div 
+                      key={idx}
+                      className="bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl p-3 text-center transform hover:scale-105 transition-all cursor-pointer shadow-md"
+                    >
+                      <div className="text-2xl mb-1">
+                        {dir.name === 'mae' && '⬆️'}
+                        {dir.name === 'ushiro' && '⬇️'}
+                        {dir.name === 'migi' && '➡️'}
+                        {dir.name === 'hidari' && '⬅️'}
+                      </div>
+                      <p className="text-white font-bold text-sm uppercase">{dir.name}</p>
+                      <p className="text-cyan-100 text-xs">{dir.description}</p>
+                    </div>
+                  ))}
+                </div>
+
+                {/* 3 Pas Magiques */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                  <div className="bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl p-4 text-center shadow-lg shadow-green-500/30">
+                    <div className="text-3xl mb-2">🚶</div>
+                    <h5 className="text-white font-bold">Ayumi ashi</h5>
+                    <p className="text-green-100 text-xs mt-1">Le pas naturel</p>
+                  </div>
+                  <div className="bg-gradient-to-br from-blue-500 to-cyan-600 rounded-xl p-4 text-center shadow-lg shadow-blue-500/30">
+                    <div className="text-3xl mb-2">🏃</div>
+                    <h5 className="text-white font-bold">Okuri ashi</h5>
+                    <p className="text-blue-100 text-xs mt-1">Le pas chassé</p>
+                  </div>
+                  <div className="bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl p-4 text-center shadow-lg shadow-purple-500/30">
+                    <div className="text-3xl mb-2">🌀</div>
+                    <h5 className="text-white font-bold">Tenkan</h5>
+                    <p className="text-purple-100 text-xs mt-1">Le pivot magique</p>
+                  </div>
+                </div>
+
+                {/* Astuce */}
+                <div className="bg-gradient-to-r from-amber-900/40 to-orange-900/40 rounded-xl p-3 border border-amber-500/30">
+                  <p className="text-amber-300 text-sm flex items-center gap-2">
+                    <span className="text-xl">🐱</span>
+                    <span><strong>Astuce ninja :</strong> Pose toujours la pointe du pied en premier, comme un chat silencieux !</span>
+                  </p>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* MA CEINTURE - Real Aikido Belt System (No XP, No Automatic Progression) */}
