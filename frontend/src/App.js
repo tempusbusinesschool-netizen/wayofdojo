@@ -38,6 +38,7 @@ import {
 
 // Import Auth Context
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
+import DojoManagement from "@/components/DojoManagement";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
