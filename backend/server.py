@@ -367,14 +367,22 @@ async def create_dojo(dojo: DojoCreate, auth: SuperAdminAuth):
     await db.dojos.insert_one(new_dojo)
     logger.info(f"New dojo created: {dojo.name} ({dojo_id})")
     
-    # Return without password
-    del new_dojo["admin_password"]
-    new_dojo["members_count"] = 0
+    # Create response dojo without MongoDB ObjectId and password
+    response_dojo = {
+        "id": new_dojo["id"],
+        "name": new_dojo["name"],
+        "description": new_dojo["description"],
+        "address": new_dojo["address"],
+        "city": new_dojo["city"],
+        "is_default": new_dojo["is_default"],
+        "created_at": new_dojo["created_at"],
+        "members_count": 0
+    }
     
     return {
         "success": True,
         "message": f"Dojo '{dojo.name}' créé avec succès !",
-        "dojo": new_dojo
+        "dojo": response_dojo
     }
 
 @api_router.put("/dojos/{dojo_id}")
