@@ -56,3 +56,23 @@
   1. Monthly limit (1 action/month per action type) works correctly
   2. Points are calculated correctly (PV for individual, PC for collective)
   3. UI shows completed actions with checkmark indicator
+
+## Symbolic Role Feature Tests
+
+### Backend Tests (PASSED via curl)
+1. [x] GET /api/auth/symbolic-role - Returns user's active and available roles ✅
+2. [x] PUT /api/auth/symbolic-role (activate) - Activates symbolic role ✅
+3. [x] PUT /api/auth/symbolic-role (deactivate) - Deactivates symbolic role ✅
+4. [x] Role only available for belts with symbolic roles (5e kyu+) ✅
+
+### Frontend Tests (Need verification)
+1. [ ] Active role displayed with purple/indigo gradient
+2. [ ] "Désactiver" button visible when role is active
+3. [ ] "Activer ce rôle" button visible when role is available but not active
+4. [ ] Message shows when no role is available (6e kyu)
+
+## Test Credentials
+- Email: test_virtue@example.com
+- Password: testpass123
+- Current belt: 5e kyu (Ceinture Jaune)
+- Active role: Gardien du respect
