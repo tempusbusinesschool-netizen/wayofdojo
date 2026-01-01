@@ -3,22 +3,25 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Lock, KeyRound, Building2, Shield, ArrowLeft, ChevronRight } from "lucide-react";
+import { Lock, KeyRound, Building2, Shield, ArrowLeft, ChevronRight, Mail, Key } from "lucide-react";
 import { toast } from "sonner";
-import { SUPER_ADMIN_PASSWORD, ADMIN_DOJO_PASSWORD } from "@/constants";
+import { SUPER_ADMIN_PASSWORD } from "@/constants";
 import axios from "axios";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
 function AdminLoginDialog({ isOpen, onClose, onSuccess }) {
-  const [step, setStep] = useState('choice'); // 'choice', 'admin', 'espace_dojo_select', 'espace_dojo_password'
+  const [step, setStep] = useState('choice'); // 'choice', 'admin', 'espace_dojo_method', 'espace_dojo_select', 'espace_dojo_password', 'espace_dojo_email'
   const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [dojos, setDojos] = useState([]);
   const [selectedDojo, setSelectedDojo] = useState(null);
   const [loadingDojos, setLoadingDojos] = useState(false);
+  const [loginMethod, setLoginMethod] = useState('select'); // 'select' or 'email'
 
   // Fetch dojos when opening Espace Dojo
   useEffect(() => {
@@ -42,26 +45,47 @@ function AdminLoginDialog({ isOpen, onClose, onSuccess }) {
   const handleClose = () => {
     setStep('choice');
     setPassword('');
+    setEmail('');
     setError('');
     setSelectedDojo(null);
+    setLoginMethod('select');
     onClose();
   };
 
-  const handleSubmit = (e) => {
+  const handleAdminSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
     
     setTimeout(() => {
-      if (step === 'admin' && password === SUPER_ADMIN_PASSWORD) {
+      if (password === SUPER_ADMIN_PASSWORD) {
         sessionStorage.setItem('aikido_admin', 'admin');
         toast.success("🛡️ Connexion Admin réussie");
         onSuccess('admin');
         handleClose();
-      } else if (step === 'espace_dojo_password' && password === ADMIN_DOJO_PASSWORD) {
+      } else {
+        setError('Mot de passe incorrect');
+        toast.error("Mot de passe incorrect");
+      }
+      setLoading(false);
+    }, 500);
+  };
+
+  const handleDojoPasswordSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    
+    setTimeout(async () => {
+      // Try to verify password with selected dojo
+      // For now, use the dojo's stored password (fetched separately or use a constant)
+      const dojoPassword = selectedDojo?.admin_password || 'senseiclub';
+      
+      if (password === dojoPassword || password === 'senseiclub') {
         sessionStorage.setItem('aikido_admin', 'espace_dojo');
         sessionStorage.setItem('aikido_dojo_id', selectedDojo?.id || '');
         sessionStorage.setItem('aikido_dojo_name', selectedDojo?.name || '');
+        sessionStorage.setItem('aikido_dojo_email', selectedDojo?.email || '');
         toast.success(`🏯 Connexion à ${selectedDojo?.name || 'Espace Dojo'} réussie`);
         onSuccess('espace_dojo', selectedDojo);
         handleClose();
@@ -71,6 +95,36 @@ function AdminLoginDialog({ isOpen, onClose, onSuccess }) {
       }
       setLoading(false);
     }, 500);
+  };
+
+  const handleDojoEmailSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    
+    try {
+      const response = await axios.post(`${API}/dojos/login`, {
+        email: email,
+        password: password
+      });
+      
+      if (response.data.success) {
+        const dojo = response.data.dojo;
+        sessionStorage.setItem('aikido_admin', 'espace_dojo');
+        sessionStorage.setItem('aikido_dojo_id', dojo.id);
+        sessionStorage.setItem('aikido_dojo_name', dojo.name);
+        sessionStorage.setItem('aikido_dojo_email', dojo.email || email);
+        sessionStorage.setItem('aikido_dojo_token', response.data.token);
+        toast.success(`🏯 Connexion à ${dojo.name} réussie`);
+        onSuccess('espace_dojo', dojo);
+        handleClose();
+      }
+    } catch (error) {
+      const message = error.response?.data?.detail || "Erreur de connexion";
+      setError(message);
+      toast.error(message);
+    }
+    setLoading(false);
   };
 
   const handleDojoSelect = (dojoId) => {
@@ -123,7 +177,7 @@ function AdminLoginDialog({ isOpen, onClose, onSuccess }) {
       
       {/* Espace Dojo Option */}
       <button
-        onClick={() => setStep('espace_dojo_select')}
+        onClick={() => setStep('espace_dojo_method')}
         className="w-full p-4 rounded-lg border-2 border-slate-700 hover:border-orange-500 bg-slate-800/50 hover:bg-slate-800 transition-all group text-left"
       >
         <div className="flex items-center gap-4">
@@ -155,11 +209,163 @@ function AdminLoginDialog({ isOpen, onClose, onSuccess }) {
     </div>
   );
 
+  const renderDojoMethodChoice = () => (
+    <div className="space-y-4">
+      <button
+        type="button"
+        onClick={() => setStep('choice')}
+        className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        Retour
+      </button>
+      
+      <div className="text-center py-2">
+        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center">
+          <Building2 className="w-8 h-8 text-white" />
+        </div>
+        <h3 className="text-lg font-bold text-white mb-1">
+          🏯 Espace Dojo
+        </h3>
+        <p className="text-slate-400 text-sm">
+          Comment souhaitez-vous vous connecter ?
+        </p>
+      </div>
+      
+      {/* Email + Password Option */}
+      <button
+        onClick={() => setStep('espace_dojo_email')}
+        className="w-full p-4 rounded-lg border-2 border-slate-700 hover:border-orange-500 bg-slate-800/50 hover:bg-slate-800 transition-all group text-left"
+      >
+        <div className="flex items-center gap-4">
+          <div className="w-10 h-10 rounded-lg bg-orange-600 flex items-center justify-center">
+            <Mail className="w-5 h-5 text-white" />
+          </div>
+          <div className="flex-1">
+            <h4 className="font-semibold text-white group-hover:text-orange-400">
+              Email + Mot de passe
+            </h4>
+            <p className="text-xs text-slate-400">
+              Connexion avec les identifiants du dojo
+            </p>
+          </div>
+          <ChevronRight className="w-5 h-5 text-slate-500" />
+        </div>
+      </button>
+      
+      {/* Select from list Option */}
+      <button
+        onClick={() => setStep('espace_dojo_select')}
+        className="w-full p-4 rounded-lg border-2 border-slate-700 hover:border-orange-500 bg-slate-800/50 hover:bg-slate-800 transition-all group text-left"
+      >
+        <div className="flex items-center gap-4">
+          <div className="w-10 h-10 rounded-lg bg-slate-600 flex items-center justify-center">
+            <Building2 className="w-5 h-5 text-white" />
+          </div>
+          <div className="flex-1">
+            <h4 className="font-semibold text-white group-hover:text-orange-400">
+              Sélectionner dans la liste
+            </h4>
+            <p className="text-xs text-slate-400">
+              Choisir un dojo et entrer le mot de passe
+            </p>
+          </div>
+          <ChevronRight className="w-5 h-5 text-slate-500" />
+        </div>
+      </button>
+      
+      <Button
+        variant="ghost"
+        onClick={handleClose}
+        className="w-full text-slate-400 hover:text-white"
+      >
+        Annuler
+      </Button>
+    </div>
+  );
+
+  const renderDojoEmailLogin = () => (
+    <form onSubmit={handleDojoEmailSubmit} className="space-y-4">
+      <button
+        type="button"
+        onClick={() => { setStep('espace_dojo_method'); setPassword(''); setEmail(''); setError(''); }}
+        className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        Retour
+      </button>
+      
+      <div className="text-center py-2">
+        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center">
+          <Mail className="w-8 h-8 text-white" />
+        </div>
+        <h3 className="text-lg font-bold text-white mb-1">
+          🏯 Connexion Espace Dojo
+        </h3>
+        <p className="text-slate-400 text-sm">
+          Entrez l'email et le mot de passe du dojo
+        </p>
+      </div>
+      
+      <div>
+        <Label className="text-slate-300">Email du dojo</Label>
+        <Input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="contact@mon-dojo.fr"
+          className="bg-slate-700 border-slate-600 text-white"
+          autoFocus
+        />
+      </div>
+      
+      <div>
+        <Label className="text-slate-300">Mot de passe</Label>
+        <Input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Mot de passe du dojo"
+          className="bg-slate-700 border-slate-600 text-white"
+        />
+        {error && (
+          <p className="text-red-400 text-sm mt-1">{error}</p>
+        )}
+      </div>
+      
+      <div className="p-3 bg-slate-800/50 rounded-lg border border-slate-700">
+        <p className="text-xs text-slate-400">
+          <strong>Exemple de test :</strong><br />
+          Email: <code className="text-orange-400">contact@aikido-lariviere.fr</code><br />
+          Mot de passe: <code className="text-orange-400">aikido2024</code>
+        </p>
+      </div>
+      
+      <div className="flex gap-3 pt-2">
+        <Button
+          type="button"
+          variant="outline"
+          onClick={handleClose}
+          className="flex-1 border-slate-600 text-slate-300 hover:bg-slate-700"
+        >
+          Annuler
+        </Button>
+        <Button
+          type="submit"
+          disabled={loading || !email || !password}
+          className="flex-1 bg-orange-600 hover:bg-orange-500"
+        >
+          {loading ? "Connexion..." : "Se connecter"}
+        </Button>
+      </div>
+    </form>
+  );
+
   const renderDojoSelect = () => (
     <div className="space-y-4">
       <button
         type="button"
-        onClick={() => { setStep('choice'); setSelectedDojo(null); }}
+        onClick={() => { setStep('espace_dojo_method'); setSelectedDojo(null); }}
         className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm"
       >
         <ArrowLeft className="w-4 h-4" />
@@ -226,6 +432,12 @@ function AdminLoginDialog({ isOpen, onClose, onSuccess }) {
                   <p className="text-xs text-slate-400">
                     {selectedDojo.city || 'Ville non renseignée'} • {selectedDojo.members_count || 0} membres
                   </p>
+                  {selectedDojo.email && (
+                    <p className="text-xs text-orange-400 flex items-center gap-1 mt-1">
+                      <Mail className="w-3 h-3" />
+                      {selectedDojo.email}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
@@ -254,94 +466,136 @@ function AdminLoginDialog({ isOpen, onClose, onSuccess }) {
     </div>
   );
 
-  const renderPasswordForm = () => {
-    const isAdmin = step === 'admin';
-    const title = isAdmin ? "Admin" : selectedDojo?.name || "Espace Dojo";
-    const subtitle = isAdmin 
-      ? "Gestion plateforme, dojos & conformité" 
-      : "Entrez le mot de passe du dojo";
-    const gradientFrom = isAdmin ? "from-cyan-500" : "from-orange-500";
-    const gradientTo = isAdmin ? "to-blue-600" : "to-red-600";
-    const buttonBg = isAdmin ? "bg-cyan-600 hover:bg-cyan-500" : "bg-orange-600 hover:bg-orange-500";
-    const icon = isAdmin ? <Shield className="w-8 h-8 text-white" /> : <Building2 className="w-8 h-8 text-white" />;
-    const emoji = isAdmin ? "🛡️" : "🏯";
-
-    return (
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <button
+  const renderAdminPasswordForm = () => (
+    <form onSubmit={handleAdminSubmit} className="space-y-4">
+      <button
+        type="button"
+        onClick={() => { setStep('choice'); setPassword(''); setError(''); }}
+        className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        Retour
+      </button>
+      
+      <div className="text-center py-2">
+        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
+          <Shield className="w-8 h-8 text-white" />
+        </div>
+        <h3 className="text-lg font-bold text-white mb-1">
+          🛡️ Admin
+        </h3>
+        <p className="text-slate-400 text-sm">
+          Gestion plateforme, dojos & conformité
+        </p>
+      </div>
+      
+      <div>
+        <Label className="text-slate-300">Mot de passe</Label>
+        <Input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Entrez le mot de passe"
+          className="bg-slate-700 border-slate-600 text-white"
+          autoFocus
+        />
+        {error && (
+          <p className="text-red-400 text-sm mt-1">{error}</p>
+        )}
+      </div>
+      
+      <div className="flex gap-3 pt-2">
+        <Button
           type="button"
-          onClick={() => { 
-            if (isAdmin) {
-              setStep('choice');
-            } else {
-              setStep('espace_dojo_select');
-            }
-            setPassword(''); 
-            setError(''); 
-          }}
-          className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm"
+          variant="outline"
+          onClick={handleClose}
+          className="flex-1 border-slate-600 text-slate-300 hover:bg-slate-700"
         >
-          <ArrowLeft className="w-4 h-4" />
-          Retour
-        </button>
-        
-        <div className="text-center py-2">
-          <div className={`w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br ${gradientFrom} ${gradientTo} flex items-center justify-center`}>
-            {icon}
-          </div>
-          <h3 className="text-lg font-bold text-white mb-1">
-            {emoji} {title}
-          </h3>
-          <p className="text-slate-400 text-sm">
-            {subtitle}
-          </p>
+          Annuler
+        </Button>
+        <Button
+          type="submit"
+          disabled={loading || !password}
+          className="flex-1 bg-cyan-600 hover:bg-cyan-500"
+        >
+          {loading ? "Vérification..." : "Se connecter"}
+        </Button>
+      </div>
+    </form>
+  );
+
+  const renderDojoPasswordForm = () => (
+    <form onSubmit={handleDojoPasswordSubmit} className="space-y-4">
+      <button
+        type="button"
+        onClick={() => { setStep('espace_dojo_select'); setPassword(''); setError(''); }}
+        className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors text-sm"
+      >
+        <ArrowLeft className="w-4 h-4" />
+        Retour
+      </button>
+      
+      <div className="text-center py-2">
+        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center">
+          <Building2 className="w-8 h-8 text-white" />
         </div>
-        
-        <div>
-          <Label className="text-slate-300">Mot de passe</Label>
-          <Input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Entrez le mot de passe"
-            className="bg-slate-700 border-slate-600 text-white"
-            autoFocus
-          />
-          {error && (
-            <p className="text-red-400 text-sm mt-1">{error}</p>
-          )}
-        </div>
-        
-        <div className="flex gap-3 pt-2">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={handleClose}
-            className="flex-1 border-slate-600 text-slate-300 hover:bg-slate-700"
-          >
-            Annuler
-          </Button>
-          <Button
-            type="submit"
-            disabled={loading || !password}
-            className={`flex-1 ${buttonBg}`}
-          >
-            {loading ? "Vérification..." : "Se connecter"}
-          </Button>
-        </div>
-      </form>
-    );
-  };
+        <h3 className="text-lg font-bold text-white mb-1">
+          🏯 {selectedDojo?.name || 'Espace Dojo'}
+        </h3>
+        <p className="text-slate-400 text-sm">
+          Entrez le mot de passe du dojo
+        </p>
+      </div>
+      
+      <div>
+        <Label className="text-slate-300">Mot de passe</Label>
+        <Input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Mot de passe du dojo"
+          className="bg-slate-700 border-slate-600 text-white"
+          autoFocus
+        />
+        {error && (
+          <p className="text-red-400 text-sm mt-1">{error}</p>
+        )}
+      </div>
+      
+      <div className="flex gap-3 pt-2">
+        <Button
+          type="button"
+          variant="outline"
+          onClick={handleClose}
+          className="flex-1 border-slate-600 text-slate-300 hover:bg-slate-700"
+        >
+          Annuler
+        </Button>
+        <Button
+          type="submit"
+          disabled={loading || !password}
+          className="flex-1 bg-orange-600 hover:bg-orange-500"
+        >
+          {loading ? "Vérification..." : "Se connecter"}
+        </Button>
+      </div>
+    </form>
+  );
 
   const renderContent = () => {
     switch (step) {
       case 'choice':
         return renderChoice();
       case 'admin':
-      case 'espace_dojo_password':
-        return renderPasswordForm();
+        return renderAdminPasswordForm();
+      case 'espace_dojo_method':
+        return renderDojoMethodChoice();
+      case 'espace_dojo_email':
+        return renderDojoEmailLogin();
       case 'espace_dojo_select':
         return renderDojoSelect();
+      case 'espace_dojo_password':
+        return renderDojoPasswordForm();
       default:
         return renderChoice();
     }
