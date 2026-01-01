@@ -178,15 +178,17 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
   const [showEmailDialog, setShowEmailDialog] = useState(false);
   const [showBeltDialog, setShowBeltDialog] = useState(false);
   const [showTrophiesDialog, setShowTrophiesDialog] = useState(false);
+  const [showVirtuesDialog, setShowVirtuesDialog] = useState(false);
   const [sending, setSending] = useState(false);
 
   // Get current belt info from userBelt prop
   const currentBelt = userBelt ? AIKIDO_BELTS[userBelt] : AIKIDO_BELTS["6e_kyu"];
 
-  // Calculate points based on technique mastery
+  // Calculate points based on technique mastery AND belt
   // En apprentissage = 1 point, Pratiqué = 2 points, Maîtrisé = 3 points
+  // + 10 points per belt grade acquired
   const calculatePoints = () => {
-    if (!statistics) return { total: 0, learning: 0, practiced: 0, mastered: 0 };
+    if (!statistics) return { total: 0, learning: 0, practiced: 0, mastered: 0, belt: 0 };
     
     const learningPoints = (statistics.in_progress_techniques || 0) * 1;
     const practicedTechniques = kyuLevels?.reduce((acc, kyu) => {
@@ -195,11 +197,15 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
     const practicedPoints = practicedTechniques * 2;
     const masteredPoints = (statistics.mastered_techniques || 0) * 3;
     
+    // Belt points: 10 points per grade (cumulative based on belt order)
+    const beltPoints = currentBelt?.points || 0;
+    
     return {
-      total: learningPoints + practicedPoints + masteredPoints,
+      total: learningPoints + practicedPoints + masteredPoints + beltPoints,
       learning: learningPoints,
       practiced: practicedPoints,
       mastered: masteredPoints,
+      belt: beltPoints,
       learningCount: statistics.in_progress_techniques || 0,
       practicedCount: practicedTechniques,
       masteredCount: statistics.mastered_techniques || 0
@@ -208,11 +214,60 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
 
   const points = calculatePoints();
 
+  // Calculate virtues based on progression, belt, and techniques
+  const calculateVirtues = () => {
+    const virtueScores = {};
+    AIKIDO_VIRTUES.forEach(v => {
+      virtueScores[v.name] = 0;
+    });
+    
+    // Add points from belt's associated virtue
+    if (currentBelt?.associatedVirtue) {
+      virtueScores[currentBelt.associatedVirtue] = (virtueScores[currentBelt.associatedVirtue] || 0) + (currentBelt.points || 0);
+    }
+    
+    // Add points from symbolic role's virtue
+    if (currentBelt?.symbolicRole?.virtue) {
+      virtueScores[currentBelt.symbolicRole.virtue] = (virtueScores[currentBelt.symbolicRole.virtue] || 0) + 5;
+    }
+    
+    // Distribute technique points across virtues based on mastery level
+    // Learning: Humilité (learning to be humble)
+    // Practiced: Persévérance (practicing regularly)
+    // Mastered: Maîtrise de soi (self-control achieved)
+    virtueScores["Humilité"] += points.learning;
+    virtueScores["Persévérance"] += points.practiced;
+    virtueScores["Maîtrise de soi"] += points.mastered;
+    
+    // Add points for sessions (Attention - being present at dojo)
+    const sessions = statistics?.total_practice_sessions || 0;
+    virtueScores["Attention"] += Math.min(sessions, 50); // Cap at 50
+    
+    // Bienveillance grows with helping others (approximated by total techniques)
+    const totalTechniques = points.learningCount + points.practicedCount + points.masteredCount;
+    virtueScores["Bienveillance"] += Math.floor(totalTechniques / 5);
+    
+    // Responsabilité grows with higher belt levels
+    virtueScores["Responsabilité"] += (currentBelt?.order || 0) * 3;
+    
+    // Respect is foundational - grows with everything
+    virtueScores["Respect"] += Math.floor((points.total) / 10) + 5;
+    
+    // Convert to array format for pie chart
+    return AIKIDO_VIRTUES.map(virtue => ({
+      ...virtue,
+      value: virtueScores[virtue.name] || 0
+    })).filter(v => v.value > 0);
+  };
+
+  const virtueData = calculateVirtues();
+  const totalVirtuePoints = virtueData.reduce((sum, v) => sum + v.value, 0);
+
   // Trophies/Badges based on points and achievements
   const getTrophies = () => {
     const trophies = [];
     
-    // Points-based trophies
+    // Points-based trophies (now includes belt points)
     if (points.total >= 10) trophies.push({ icon: "🌟", name: "Première Étoile", desc: "10 points atteints", unlocked: true });
     if (points.total >= 25) trophies.push({ icon: "⭐", name: "Étoile Montante", desc: "25 points atteints", unlocked: true });
     if (points.total >= 50) trophies.push({ icon: "🌟", name: "Constellation", desc: "50 points atteints", unlocked: true });
