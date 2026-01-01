@@ -895,7 +895,7 @@ function AppContent() {
             </a>
             <span className="text-slate-600 text-xs">•</span>
             <a 
-              href="https://customer-assets.emergentagent.com/job_budo-journey/artifacts/jh2gw9qv_CGV_HUMAN_KNOWLEDGE.pdf"
+              href="https://customer-assets.emergentagent.com/job_budo-journey/artifacts/u75ktggo_CGV_FINALES_HUMAN_KNOWLEDGE.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="text-cyan-500 hover:text-cyan-400 text-xs underline"
