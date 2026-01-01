@@ -78,8 +78,16 @@ function GradeSection({ kyu, onViewTechnique, onUpdateMastery, onPractice, isFil
               </span>
             </div>
             <div>
-              <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-2">
+              <h2 className="text-xl md:text-2xl font-bold text-white flex items-center gap-2 flex-wrap">
                 {kyu.name}
+                {beltInfo && (
+                  <span 
+                    className="text-sm md:text-base font-medium px-2 py-0.5 rounded-full"
+                    style={{ backgroundColor: beltInfo.color + '30', color: beltInfo.color === '#E5E7EB' ? '#9CA3AF' : beltInfo.color }}
+                  >
+                    Ceinture {beltInfo.belt}
+                  </span>
+                )}
                 {progressPercent === 100 && <span className="text-xl animate-bounce">🎉</span>}
               </h2>
               <p className="text-sm text-slate-400">
