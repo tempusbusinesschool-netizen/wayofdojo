@@ -166,7 +166,11 @@ function AppContent() {
   
   useEffect(() => {
     if (!authLoading) {
-      fetchData();
+      // Small delay to ensure axios headers are set after authentication
+      const timer = setTimeout(() => {
+        fetchData();
+      }, isAuthenticated ? 100 : 0);
+      return () => clearTimeout(timer);
     }
   }, [fetchData, authLoading, isAuthenticated]);
   
