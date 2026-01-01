@@ -13,3 +13,4 @@ export { default as MembersList } from './MembersList';
 export { default as MemberRegistrationForm } from './MemberRegistrationForm';
 export { default as ReglementInterieur } from './ReglementInterieur';
 export { default as StatisticsDashboard } from './StatisticsDashboard';
+export { default as HakamaSection } from './HakamaSection';
