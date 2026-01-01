@@ -59,6 +59,54 @@ backend:
         agent: "testing"
         comment: "Correctly validates super admin password 'superaikido2024' for dojo creation/deletion operations. Properly rejects wrong passwords with 403 status."
 
+  - task: "GET /api/subscription-plans"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "Successfully returns 2 subscription plans (ninja and dojo) with correct details: ninja (€4.50/month, 90-day trial, no commitment) and dojo (€65/month, 10-day trial, 12-month commitment)."
+
+  - task: "POST /api/auth/register-dojo"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "Successfully creates both dojo and admin user with 10-day trial. Returns success with dojo_id. Tested with real dojo data including name, city, address, phone, description, and admin credentials."
+
+  - task: "POST /api/subscriptions/checkout"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "Successfully creates checkout for ninja plan and starts 3-month trial without requiring payment. Returns trial_started=true with subscription details including ID, plan name, and trialing status."
+
+  - task: "GET /api/auth/subscription"
+    implemented: true
+    working: true
+    file: "/app/backend/server.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "Successfully returns subscription status for authenticated user. Correctly shows has_subscription=false for new users and has_subscription=true with subscription details for users with active trials."
+
 frontend:
   - task: "Admin login with password 'aikido2024'"
     implemented: true
