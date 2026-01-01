@@ -693,9 +693,17 @@ function AppContent() {
                                   {visitor.first_name} {visitor.last_name}
                                 </p>
                                 <p className="text-sm text-slate-400">{visitor.email}</p>
-                                <p className="text-xs text-slate-500">
-                                  Inscrit le {new Date(visitor.created_at).toLocaleDateString('fr-FR')}
-                                </p>
+                                <div className="flex items-center gap-2 mt-1">
+                                  <p className="text-xs text-slate-500">
+                                    Inscrit le {new Date(visitor.created_at).toLocaleDateString('fr-FR')}
+                                  </p>
+                                  {visitor.dojo_name && (
+                                    <span className="text-xs bg-blue-600/30 text-blue-300 px-2 py-0.5 rounded-full flex items-center gap-1">
+                                      <Building2 className="w-3 h-3" />
+                                      {visitor.dojo_name}
+                                    </span>
+                                  )}
+                                </div>
                               </div>
                             </div>
                             
@@ -856,6 +864,12 @@ function AppContent() {
       <PolitiqueConfidentialiteDialog
         isOpen={showPolitiqueConfidentialite}
         onClose={() => setShowPolitiqueConfidentialite(false)}
+      />
+
+      {/* Dojo Management Dialog */}
+      <DojoManagement
+        isOpen={showDojoManagement}
+        onClose={() => setShowDojoManagement(false)}
       />
       
       {/* Footer */}
