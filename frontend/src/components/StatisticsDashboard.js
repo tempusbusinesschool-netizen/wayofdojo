@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { TrendingUp, BarChart3, Users, FileText, Download, Award } from "lucide-react";
 import { toast } from "sonner";
 
-// Aikido Belt System - Real grades (no XP, no automatic progression)
+// Aikido Belt System - Real grades with KYU equivalence
 const AIKIDO_BELTS = {
   "6e_kyu": {
     name: "Ceinture Blanche",
@@ -16,7 +16,9 @@ const AIKIDO_BELTS = {
     textColor: "text-gray-800",
     emoji: "⚪",
     order: 0,
+    points: 0, // Starting belt = 0 points
     symbolicRole: null,
+    associatedVirtue: "Humilité",
     message: "Bienvenue sur le chemin de l'Aïkido !"
   },
   "5e_kyu": {
@@ -27,7 +29,9 @@ const AIKIDO_BELTS = {
     textColor: "text-yellow-900",
     emoji: "🟡",
     order: 1,
+    points: 10, // 10 points for this belt
     symbolicRole: { name: "Gardien du respect", virtue: "Respect", intention: "Cadre (salut, soin du tatami, posture)" },
+    associatedVirtue: "Respect",
     message: "Tu apprends les bases avec sérieux !"
   },
   "4e_kyu": {
@@ -38,7 +42,9 @@ const AIKIDO_BELTS = {
     textColor: "text-orange-900",
     emoji: "🟠",
     order: 2,
+    points: 20, // Cumulative: 10 + 10
     symbolicRole: { name: "Pilier de persévérance", virtue: "Persévérance", intention: "Continuité et encouragement" },
+    associatedVirtue: "Persévérance",
     message: "Ton engagement grandit !"
   },
   "3e_kyu": {
@@ -49,7 +55,9 @@ const AIKIDO_BELTS = {
     textColor: "text-green-900",
     emoji: "🟢",
     order: 3,
+    points: 30, // Cumulative: 20 + 10
     symbolicRole: { name: "Médiateur du calme", virtue: "Maîtrise de soi", intention: "Régulation de l'intensité, écoute" },
+    associatedVirtue: "Maîtrise de soi",
     message: "Tu te stabilises dans ta pratique !"
   },
   "2e_kyu": {
@@ -60,7 +68,9 @@ const AIKIDO_BELTS = {
     textColor: "text-blue-100",
     emoji: "🔵",
     order: 4,
+    points: 40, // Cumulative: 30 + 10
     symbolicRole: { name: "Soutien du dojo", virtue: "Bienveillance", intention: "Aide aux débutants, soutien logistique" },
+    associatedVirtue: "Bienveillance",
     message: "Ta maturité se confirme !"
   },
   "1er_kyu": {
@@ -71,7 +81,9 @@ const AIKIDO_BELTS = {
     textColor: "text-amber-100",
     emoji: "🟤",
     order: 5,
+    points: 50, // Cumulative: 40 + 10
     symbolicRole: { name: "Passeur de voie", virtue: "Transmission", intention: "Transmettre sans imposer" },
+    associatedVirtue: "Responsabilité",
     message: "Tu es prêt à transmettre !"
   },
   "shodan": {
@@ -82,21 +94,85 @@ const AIKIDO_BELTS = {
     textColor: "text-white",
     emoji: "⚫",
     order: 6,
+    points: 60, // Cumulative: 50 + 10
     symbolicRole: null,
+    associatedVirtue: "Attention",
     message: "Le vrai chemin commence maintenant !"
   }
 };
 
-// 7 Virtues of Aikido
+// 7 Virtues of Aikido with colors for pie chart
 const AIKIDO_VIRTUES = [
-  { name: "Respect", kanji: "礼", emoji: "🙏" },
-  { name: "Persévérance", kanji: "忍", emoji: "💪" },
-  { name: "Maîtrise de soi", kanji: "克", emoji: "🧘" },
-  { name: "Humilité", kanji: "謙", emoji: "🌱" },
-  { name: "Bienveillance", kanji: "仁", emoji: "💝" },
-  { name: "Attention", kanji: "注", emoji: "👁️" },
-  { name: "Responsabilité", kanji: "責", emoji: "⚖️" }
+  { name: "Respect", kanji: "礼", emoji: "🙏", color: "#FCD34D", colorClass: "bg-yellow-400" },
+  { name: "Persévérance", kanji: "忍", emoji: "💪", color: "#FB923C", colorClass: "bg-orange-400" },
+  { name: "Maîtrise de soi", kanji: "克", emoji: "🧘", color: "#22C55E", colorClass: "bg-green-500" },
+  { name: "Humilité", kanji: "謙", emoji: "🌱", color: "#A78BFA", colorClass: "bg-violet-400" },
+  { name: "Bienveillance", kanji: "仁", emoji: "💝", color: "#3B82F6", colorClass: "bg-blue-500" },
+  { name: "Attention", kanji: "注", emoji: "👁️", color: "#EC4899", colorClass: "bg-pink-500" },
+  { name: "Responsabilité", kanji: "責", emoji: "⚖️", color: "#14B8A6", colorClass: "bg-teal-500" }
 ];
+
+// Simple Pie Chart Component
+const VirtuePieChart = ({ virtueData }) => {
+  const total = virtueData.reduce((sum, v) => sum + v.value, 0);
+  if (total === 0) return null;
+  
+  let cumulativePercent = 0;
+  const segments = virtueData.filter(v => v.value > 0).map((virtue, index) => {
+    const percent = (virtue.value / total) * 100;
+    const startAngle = cumulativePercent * 3.6; // Convert to degrees
+    cumulativePercent += percent;
+    const endAngle = cumulativePercent * 3.6;
+    
+    // Calculate SVG arc path
+    const startRad = (startAngle - 90) * Math.PI / 180;
+    const endRad = (endAngle - 90) * Math.PI / 180;
+    const x1 = 50 + 40 * Math.cos(startRad);
+    const y1 = 50 + 40 * Math.sin(startRad);
+    const x2 = 50 + 40 * Math.cos(endRad);
+    const y2 = 50 + 40 * Math.sin(endRad);
+    const largeArc = percent > 50 ? 1 : 0;
+    
+    return {
+      ...virtue,
+      percent: Math.round(percent),
+      path: `M 50 50 L ${x1} ${y1} A 40 40 0 ${largeArc} 1 ${x2} ${y2} Z`
+    };
+  });
+  
+  return (
+    <div className="flex flex-col md:flex-row items-center gap-4">
+      <svg viewBox="0 0 100 100" className="w-32 h-32 md:w-40 md:h-40">
+        {segments.map((segment, idx) => (
+          <path
+            key={idx}
+            d={segment.path}
+            fill={segment.color}
+            stroke="#1e293b"
+            strokeWidth="1"
+            className="hover:opacity-80 transition-opacity cursor-pointer"
+          />
+        ))}
+        <circle cx="50" cy="50" r="20" fill="#1e293b" />
+        <text x="50" y="52" textAnchor="middle" fill="white" fontSize="8" fontWeight="bold">
+          {total}
+        </text>
+        <text x="50" y="60" textAnchor="middle" fill="#94a3b8" fontSize="5">
+          points
+        </text>
+      </svg>
+      <div className="grid grid-cols-2 gap-1 text-xs">
+        {segments.map((segment, idx) => (
+          <div key={idx} className="flex items-center gap-1.5">
+            <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: segment.color }}></div>
+            <span className="text-slate-300">{segment.emoji} {segment.name}</span>
+            <span className="text-slate-500 ml-auto">{segment.percent}%</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterClick, activeFilter, isAdmin, onMembersClick, kyuLevels, userBelt, onBeltChange }) {
   const [showEmailDialog, setShowEmailDialog] = useState(false);
