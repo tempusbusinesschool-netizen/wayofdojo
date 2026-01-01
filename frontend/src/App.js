@@ -402,7 +402,7 @@ function AppContent() {
                   onClick={() => setShowAuthDialog(true)}
                   className="border-amber-600 text-amber-400 hover:bg-amber-900/30"
                 >
-                  💡 Créez un compte pour sauvegarder votre progression !
+                  💡 S&apos;inscrire gratuitement
                 </Button>
               )}
               
