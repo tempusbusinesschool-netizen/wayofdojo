@@ -187,6 +187,8 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
   const [showTimelinePanel, setShowTimelinePanel] = useState(false);
   const [showJournalPanel, setShowJournalPanel] = useState(false);
   const [sending, setSending] = useState(false);
+  const [pdfExportStatus, setPdfExportStatus] = useState(null);
+  const [exportingPdf, setExportingPdf] = useState(false);
   const [activeSymbolicRole, setActiveSymbolicRole] = useState(null);
   const [roleLoading, setRoleLoading] = useState(false);
 
