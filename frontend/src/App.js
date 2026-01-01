@@ -686,6 +686,13 @@ function AppContent() {
             </div>
           </TabsContent>
           
+          {/* Onglet Comprendre l'Aïkido - Utilisateurs */}
+          {!isAdmin && (
+            <TabsContent value="comprendre" className="mt-6">
+              <HakamaSection />
+            </TabsContent>
+          )}
+          
           {/* Onglet Adhérents - Admin Dojo uniquement */}
           {isAdminDojo && (
             <TabsContent value="members" className="mt-6">
