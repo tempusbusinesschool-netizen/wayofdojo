@@ -90,9 +90,12 @@ function AppContent() {
     localStorage.setItem('aikido_onboarding_seen', 'true');
     setShowOnboarding(false);
     // Show paywall after onboarding if not authenticated
-    if (!isAuthenticated) {
-      setShowPaywall(true);
-    }
+    // Use setTimeout to ensure onboarding dialog closes first
+    setTimeout(() => {
+      if (!isAuthenticated) {
+        setShowPaywall(true);
+      }
+    }, 300);
   };
   
   // Handle subscription
