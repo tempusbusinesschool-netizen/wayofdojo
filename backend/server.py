@@ -3394,6 +3394,112 @@ async def create_subscription_checkout(data: SubscriptionCheckoutRequest, user: 
         }
     }
 
+class SubscriptionCheckoutWithCardRequest(BaseModel):
+    plan_id: str
+    origin_url: str
+
+@api_router.post("/subscriptions/checkout-with-card")
+async def create_subscription_checkout_with_card(data: SubscriptionCheckoutWithCardRequest, user: dict = Depends(require_auth)):
+    """Créer une session de checkout Stripe avec carte bancaire pour un abonnement"""
+    
+    if data.plan_id not in SUBSCRIPTION_PLANS:
+        raise HTTPException(status_code=400, detail="Plan invalide")
+    
+    plan = SUBSCRIPTION_PLANS[data.plan_id]
+    
+    # Check if user already has an active subscription
+    existing_sub = await db.subscriptions.find_one({
+        "user_id": user["id"],
+        "status": {"$in": ["active", "trialing"]}
+    })
+    
+    if existing_sub:
+        raise HTTPException(status_code=400, detail="Tu as déjà un abonnement actif")
+    
+    # Get Stripe API key
+    stripe_api_key = os.environ.get("STRIPE_API_KEY")
+    if not stripe_api_key:
+        raise HTTPException(status_code=500, detail="Configuration Stripe manquante")
+    
+    # Create webhook URL
+    webhook_url = f"{data.origin_url}/api/webhook/stripe"
+    
+    stripe_checkout = StripeCheckout(api_key=stripe_api_key, webhook_url=webhook_url)
+    
+    # Create checkout session
+    success_url = f"{data.origin_url}?subscription=success&plan={data.plan_id}"
+    cancel_url = f"{data.origin_url}?subscription=cancelled"
+    
+    # Calculate trial end date
+    trial_end = datetime.now(timezone.utc) + timedelta(days=plan["trial_days"])
+    
+    checkout_request = CheckoutSessionRequest(
+        amount=float(plan["price"]),
+        currency=plan["currency"],
+        success_url=success_url,
+        cancel_url=cancel_url,
+        metadata={
+            "user_id": user["id"],
+            "user_email": user["email"],
+            "plan_id": data.plan_id,
+            "plan_name": plan["name"],
+            "trial_days": str(plan["trial_days"]),
+            "type": "subscription_with_trial"
+        }
+    )
+    
+    try:
+        session = await stripe_checkout.create_checkout_session(checkout_request)
+        
+        # Create pending subscription record
+        subscription = {
+            "id": str(uuid.uuid4()),
+            "user_id": user["id"],
+            "user_email": user["email"],
+            "plan_id": data.plan_id,
+            "plan_name": plan["name"],
+            "status": "pending_payment",
+            "trial_start": datetime.now(timezone.utc).isoformat(),
+            "trial_end": trial_end.isoformat(),
+            "price": plan["price"],
+            "currency": plan["currency"],
+            "commitment_months": plan["commitment_months"],
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "stripe_session_id": session.session_id,
+            "card_added": True,
+            "payment_method": "card"
+        }
+        
+        await db.subscriptions.insert_one(subscription)
+        
+        # Create payment transaction record
+        transaction = {
+            "id": str(uuid.uuid4()),
+            "session_id": session.session_id,
+            "user_id": user["id"],
+            "user_email": user["email"],
+            "plan_id": data.plan_id,
+            "amount": plan["price"],
+            "currency": plan["currency"],
+            "payment_status": "pending",
+            "type": "subscription_setup",
+            "created_at": datetime.now(timezone.utc).isoformat()
+        }
+        
+        await db.payment_transactions.insert_one(transaction)
+        
+        logger.info(f"User {user['id']} started checkout with card for plan {data.plan_id}")
+        
+        return {
+            "url": session.url,
+            "session_id": session.session_id,
+            "trial_days": plan["trial_days"]
+        }
+        
+    except Exception as e:
+        logger.error(f"Stripe checkout error: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Erreur Stripe: {str(e)}")
+
 @api_router.post("/subscriptions/add-payment-method")
 async def add_payment_method(data: SubscriptionCheckoutRequest, user: dict = Depends(require_auth)):
     """Ajouter une méthode de paiement à la fin de l'essai"""
