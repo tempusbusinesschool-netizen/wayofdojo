@@ -668,11 +668,12 @@ function AppContent() {
                               <div className="flex items-center gap-2">
                                 <Award className="w-4 h-4 text-amber-400" />
                                 <Select 
+                                  key={`belt-select-${visitor.id}-${visitorBelt}`}
                                   value={visitorBelt}
                                   onValueChange={(value) => handleAssignBelt(visitor.id, value)}
                                 >
                                   <SelectTrigger className="w-40 bg-slate-700 border-slate-600 text-white text-sm">
-                                    <SelectValue />
+                                    <SelectValue placeholder="Sélectionner" />
                                   </SelectTrigger>
                                   <SelectContent className="bg-slate-800 border-slate-700">
                                     {Object.entries(AIKIDO_BELTS).map(([key, belt]) => (
