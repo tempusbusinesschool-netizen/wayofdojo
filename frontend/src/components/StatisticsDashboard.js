@@ -180,6 +180,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
   const [showBeltDialog, setShowBeltDialog] = useState(false);
   const [showTrophiesDialog, setShowTrophiesDialog] = useState(false);
   const [showVirtuesDialog, setShowVirtuesDialog] = useState(false);
+  const [showVirtueActionsPanel, setShowVirtueActionsPanel] = useState(false);
   const [sending, setSending] = useState(false);
 
   // Get current belt info from userBelt prop
