@@ -33,7 +33,8 @@ import {
   StatisticsDashboard,
   CGUDialog,
   MentionsLegalesDialog,
-  HakamaSection
+  HakamaSection,
+  DojoMembersList
 } from "@/components";
 
 // Import Auth Context
