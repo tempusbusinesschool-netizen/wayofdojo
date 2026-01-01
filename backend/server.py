@@ -54,6 +54,21 @@ app = FastAPI()
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
 
+# Super Admin password (for creating dojos)
+SUPER_ADMIN_PASSWORD = os.environ.get("SUPER_ADMIN_PASSWORD", "superaikido2024")
+
+# Default dojo
+DEFAULT_DOJO = {
+    "id": "aikido-la-riviere",
+    "name": "Aikido La Rivière",
+    "description": "Dojo principal - Club d'Aïkido La Rivière",
+    "address": "",
+    "city": "",
+    "admin_password": "aikido2024",
+    "is_default": True,
+    "created_at": "2024-01-01T00:00:00+00:00"
+}
+
 
 # ═══════════════════════════════════════════════════════════════════════════════════
 # AUTHENTICATION HELPERS
