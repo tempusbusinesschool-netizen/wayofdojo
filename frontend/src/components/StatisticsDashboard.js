@@ -285,7 +285,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         <div className="flex flex-col md:flex-row items-center justify-center gap-8 mb-10 p-8 bg-slate-800/50 rounded-xl border border-slate-700">
           <img 
             src="/images/logo-aikido.png" 
-            alt="Logo Aikido La Rivière" 
+            alt="Logo Techniques Aikido" 
             className="h-36 w-auto"
           />
           <div className="text-center md:text-left">
