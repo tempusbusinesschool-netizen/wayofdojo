@@ -411,7 +411,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               <div className="relative">
                 <div className="w-32 h-40 md:w-40 md:h-48 rounded-xl overflow-hidden border-4 border-amber-500/50 shadow-lg shadow-amber-500/20">
                   <img 
-                    src="https://upload.wikimedia.org/wikipedia/commons/e/e3/Morihei_Ueshiba_1939.jpg" 
+                    src="https://customer-assets.emergentagent.com/job_dojo-progress-1/artifacts/dz0s4slt_Sensei%20MoriHei%20Ueshiba.jpg" 
                     alt="O Sensei - Morihei Ueshiba"
                     className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
                   />
