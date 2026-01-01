@@ -1052,6 +1052,107 @@ async def get_user_timeline(user: dict = Depends(require_auth)):
     }
 
 
+# ═══════════════════════════════════════════════════════════════════════════════════
+# JOURNAL PRIVÉ ENDPOINTS
+# ═══════════════════════════════════════════════════════════════════════════════════
+
+class JournalEntry(BaseModel):
+    content: str = Field(..., min_length=1, max_length=5000)
+    mood: Optional[str] = None  # emoji or mood indicator
+    tags: Optional[List[str]] = None
+
+class JournalEntryUpdate(BaseModel):
+    content: Optional[str] = Field(None, min_length=1, max_length=5000)
+    mood: Optional[str] = None
+    tags: Optional[List[str]] = None
+
+@api_router.get("/auth/journal")
+async def get_journal_entries(user: dict = Depends(require_auth), limit: int = 50):
+    """Récupérer les entrées du journal de l'utilisateur"""
+    journal = user.get("journal", [])
+    
+    # Sort by date (most recent first)
+    sorted_journal = sorted(
+        journal, 
+        key=lambda x: x.get("created_at", ""), 
+        reverse=True
+    )[:limit]
+    
+    return {
+        "entries": sorted_journal,
+        "total_entries": len(journal)
+    }
+
+@api_router.post("/auth/journal")
+async def create_journal_entry(data: JournalEntry, user: dict = Depends(require_auth)):
+    """Créer une nouvelle entrée dans le journal"""
+    entry = {
+        "id": str(uuid.uuid4()),
+        "content": data.content,
+        "mood": data.mood,
+        "tags": data.tags or [],
+        "created_at": datetime.now(timezone.utc).isoformat(),
+        "updated_at": None
+    }
+    
+    await db.users.update_one(
+        {"id": user["id"]},
+        {"$push": {"journal": entry}}
+    )
+    
+    logger.info(f"User {user['id']} created journal entry")
+    
+    return {
+        "success": True,
+        "message": "Réflexion enregistrée 📝",
+        "entry": entry
+    }
+
+@api_router.put("/auth/journal/{entry_id}")
+async def update_journal_entry(entry_id: str, data: JournalEntryUpdate, user: dict = Depends(require_auth)):
+    """Modifier une entrée du journal"""
+    journal = user.get("journal", [])
+    entry_index = next((i for i, e in enumerate(journal) if e.get("id") == entry_id), None)
+    
+    if entry_index is None:
+        raise HTTPException(status_code=404, detail="Entrée non trouvée")
+    
+    # Update the entry
+    update_fields = {}
+    if data.content is not None:
+        update_fields[f"journal.{entry_index}.content"] = data.content
+    if data.mood is not None:
+        update_fields[f"journal.{entry_index}.mood"] = data.mood
+    if data.tags is not None:
+        update_fields[f"journal.{entry_index}.tags"] = data.tags
+    update_fields[f"journal.{entry_index}.updated_at"] = datetime.now(timezone.utc).isoformat()
+    
+    await db.users.update_one(
+        {"id": user["id"]},
+        {"$set": update_fields}
+    )
+    
+    return {
+        "success": True,
+        "message": "Réflexion mise à jour"
+    }
+
+@api_router.delete("/auth/journal/{entry_id}")
+async def delete_journal_entry(entry_id: str, user: dict = Depends(require_auth)):
+    """Supprimer une entrée du journal"""
+    await db.users.update_one(
+        {"id": user["id"]},
+        {"$pull": {"journal": {"id": entry_id}}}
+    )
+    
+    logger.info(f"User {user['id']} deleted journal entry {entry_id}")
+    
+    return {
+        "success": True,
+        "message": "Réflexion supprimée"
+    }
+
+
 @api_router.get("/visitors")
 async def get_visitors():
     """Récupérer la liste des utilisateurs inscrits (visiteurs) avec stats de progression"""
