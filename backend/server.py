@@ -3433,18 +3433,20 @@ SUBSCRIPTION_PLANS = {
         "name": "Ninja individuel",
         "price": 4.50,
         "currency": "eur",
-        "trial_days": 90,  # 3 months
+        "trial_days": 14,  # 14 jours d'essai gratuit
         "commitment_months": 0,  # No commitment
-        "description": "Ton parcours personnel, sans engagement"
+        "description": "Ton parcours personnel, sans engagement",
+        "cancellation_info": "Annulation possible à tout moment pendant les 14 jours d'essai"
     },
     "dojo": {
         "id": "dojo",
         "name": "Offre Dojo",
         "price": 65.00,
         "currency": "eur",
-        "trial_days": 10,
+        "trial_days": 14,  # 14 jours d'essai gratuit
         "commitment_months": 12,  # 12 months commitment
-        "description": "Un outil de gestion et d'animation pour les clubs"
+        "description": "Un outil de gestion et d'animation pour les clubs",
+        "cancellation_info": "Annulation possible à tout moment pendant les 14 jours d'essai"
     }
 }
 
