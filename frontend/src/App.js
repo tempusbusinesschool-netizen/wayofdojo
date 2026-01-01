@@ -987,148 +987,87 @@ function AppContent() {
             </TabsContent>
           )}
 
-          {isSuperAdmin && (
-            <TabsContent value="visitors" className="mt-6">
-              <div className="mb-4 flex flex-col sm:flex-row gap-3 justify-end">
-                <div className="flex gap-2">
-                  {/* Dojo Filter */}
-                  <Select 
-                    value={selectedDojoFilter} 
-                    onValueChange={setSelectedDojoFilter}
-                  >
-                    <SelectTrigger className="w-48 bg-slate-800 border-slate-600 text-white">
-                      <Building2 className="w-4 h-4 mr-2 text-blue-400" />
-                      <SelectValue placeholder="Filtrer par dojo" />
-                    </SelectTrigger>
-                    <SelectContent className="bg-slate-800 border-slate-700">
-                      <SelectItem value="all" className="text-white hover:bg-slate-700">
-                        Tous les dojos
-                      </SelectItem>
-                      {dojos.map((dojo) => (
-                        <SelectItem key={dojo.id} value={dojo.id} className="text-white hover:bg-slate-700">
-                          {dojo.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+          {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+          {/* ADMIN - Gestion Plateforme (HUMAN KNOWLEDGE) */}
+          {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+          
+          {/* Onglet Tableau de Bord Admin */}
+          {isAdmin && (
+            <TabsContent value="dashboard" className="mt-6">
+              <div className="space-y-6">
+                {/* Stats globales */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <Card className="bg-gradient-to-br from-cyan-900/30 to-blue-900/30 border-cyan-700/50">
+                    <CardContent className="p-4 text-center">
+                      <p className="text-3xl font-bold text-cyan-400">{dojos.length}</p>
+                      <p className="text-sm text-slate-400">Total Dojos</p>
+                    </CardContent>
+                  </Card>
+                  <Card className="bg-gradient-to-br from-green-900/30 to-emerald-900/30 border-green-700/50">
+                    <CardContent className="p-4 text-center">
+                      <p className="text-3xl font-bold text-green-400">
+                        {dojos.filter(d => d.subscription_status === 'active').length}
+                      </p>
+                      <p className="text-sm text-slate-400">Dojos Actifs</p>
+                    </CardContent>
+                  </Card>
+                  <Card className="bg-gradient-to-br from-amber-900/30 to-orange-900/30 border-amber-700/50">
+                    <CardContent className="p-4 text-center">
+                      <p className="text-3xl font-bold text-amber-400">
+                        {dojos.filter(d => d.subscription_status === 'trialing').length}
+                      </p>
+                      <p className="text-sm text-slate-400">En Essai</p>
+                    </CardContent>
+                  </Card>
+                  <Card className="bg-gradient-to-br from-purple-900/30 to-violet-900/30 border-purple-700/50">
+                    <CardContent className="p-4 text-center">
+                      <p className="text-3xl font-bold text-purple-400">{visitors.length}</p>
+                      <p className="text-sm text-slate-400">Utilisateurs</p>
+                    </CardContent>
+                  </Card>
                 </div>
-              </div>
-              <Card className="bg-slate-900/50 border-slate-700">
-                <CardHeader>
-                  <CardTitle className="text-white flex items-center gap-2">
-                    <Eye className="w-5 h-5 text-purple-400" />
-                    Visiteurs inscrits
-                    {selectedDojoFilter !== "all" && (
-                      <span className="text-sm font-normal text-blue-400">
-                        ({dojos.find(d => d.id === selectedDojoFilter)?.name})
-                      </span>
-                    )}
-                  </CardTitle>
-                  <CardDescription className="text-slate-400">
-                    Utilisateurs qui suivent leur progression sur la plateforme
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {visitors.filter(v => selectedDojoFilter === "all" || v.dojo_id === selectedDojoFilter).length === 0 ? (
-                    <p className="text-slate-400 text-center py-8">Aucun visiteur inscrit {selectedDojoFilter !== "all" ? "dans ce dojo" : "pour le moment"}</p>
-                  ) : (
-                    <div className="space-y-3">
-                      {visitors.filter(v => selectedDojoFilter === "all" || v.dojo_id === selectedDojoFilter).map((visitor) => {
-                        const visitorBelt = visitor.belt_level || "6e_kyu";
-                        const beltInfo = visitor.belt_info || AIKIDO_BELTS[visitorBelt] || AIKIDO_BELTS["6e_kyu"];
-                        
-                        return (
-                          <div 
-                            key={visitor.id} 
-                            className="flex flex-col md:flex-row md:items-center justify-between p-4 bg-slate-800/50 rounded-lg border border-slate-700 gap-4"
-                          >
-                            <div className="flex items-center gap-3">
-                              {/* Belt indicator */}
-                              <div 
-                                className="w-12 h-12 rounded-full flex items-center justify-center text-2xl border-2"
-                                style={{ 
-                                  backgroundColor: beltInfo.color + '20',
-                                  borderColor: beltInfo.color
-                                }}
-                              >
-                                {beltInfo.emoji}
-                              </div>
-                              <div>
-                                <p className="font-medium text-white">
-                                  {visitor.first_name} {visitor.last_name}
-                                </p>
-                                <p className="text-sm text-slate-400">{visitor.email}</p>
-                                <div className="flex items-center gap-2 mt-1">
-                                  <p className="text-xs text-slate-500">
-                                    Inscrit le {new Date(visitor.created_at).toLocaleDateString('fr-FR')}
-                                  </p>
-                                  {visitor.dojo_name && (
-                                    <span className="text-xs bg-blue-600/30 text-blue-300 px-2 py-0.5 rounded-full flex items-center gap-1">
-                                      <Building2 className="w-3 h-3" />
-                                      {visitor.dojo_name}
-                                    </span>
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-                            
-                            <div className="flex flex-wrap items-center gap-4">
-                              {/* Stats */}
-                              <div className="flex items-center gap-4 text-sm">
-                                <div className="text-center">
-                                  <p className="text-emerald-400 font-bold">{visitor.techniques_mastered || 0}</p>
-                                  <p className="text-slate-500 text-xs">🏆 Maîtrisées</p>
-                                </div>
-                                <div className="text-center">
-                                  <p className="text-amber-400 font-bold">{visitor.techniques_in_progress || 0}</p>
-                                  <p className="text-slate-500 text-xs">📖 En cours</p>
-                                </div>
-                                <div className="text-center">
-                                  <p className="text-cyan-400 font-bold">{visitor.total_sessions || 0}</p>
-                                  <p className="text-slate-500 text-xs">🔥 Sessions</p>
-                                </div>
-                              </div>
-                              
-                              {/* Belt selector for admin */}
-                              <div className="flex items-center gap-2">
-                                <Award className="w-4 h-4 text-amber-400" />
-                                <Select 
-                                  key={`belt-select-${visitor.id}-${visitorBelt}`}
-                                  value={visitorBelt}
-                                  onValueChange={(value) => handleAssignBelt(visitor.id, value)}
-                                >
-                                  <SelectTrigger className="w-40 bg-slate-700 border-slate-600 text-white text-sm">
-                                    <SelectValue placeholder="Sélectionner" />
-                                  </SelectTrigger>
-                                  <SelectContent className="bg-slate-800 border-slate-700">
-                                    {Object.entries(AIKIDO_BELTS).map(([key, belt]) => (
-                                      <SelectItem 
-                                        key={key} 
-                                        value={key} 
-                                        className="text-white hover:bg-slate-700 cursor-pointer"
-                                      >
-                                        <span className="flex items-center gap-2">
-                                          <span>{belt.emoji}</span>
-                                          <span>{belt.name} ({belt.grade})</span>
-                                        </span>
-                                      </SelectItem>
-                                    ))}
-                                  </SelectContent>
-                                </Select>
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      })}
+                
+                {/* Alertes */}
+                <Card className="bg-slate-900/50 border-slate-700">
+                  <CardHeader>
+                    <CardTitle className="text-white flex items-center gap-2">
+                      <AlertTriangle className="w-5 h-5 text-amber-400" />
+                      Alertes Plateforme
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-2">
+                      {dojos.filter(d => d.subscription_status === 'trialing').length > 0 && (
+                        <div className="flex items-center gap-3 p-3 bg-amber-900/20 rounded-lg border border-amber-700/30">
+                          <AlertTriangle className="w-4 h-4 text-amber-400" />
+                          <span className="text-amber-300 text-sm">
+                            {dojos.filter(d => d.subscription_status === 'trialing').length} dojo(s) en période d'essai
+                          </span>
+                        </div>
+                      )}
+                      <div className="flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg border border-slate-700">
+                        <Eye className="w-4 h-4 text-slate-400" />
+                        <span className="text-slate-400 text-sm">Aucune alerte critique</span>
+                      </div>
                     </div>
-                  )}
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+                
+                {/* Rappel des permissions */}
+                <Card className="bg-cyan-900/20 border-cyan-700/30">
+                  <CardContent className="p-4">
+                    <p className="text-cyan-300 text-sm flex items-center gap-2">
+                      <Shield className="w-4 h-4" />
+                      <span><strong>Rappel :</strong> L'Admin ne gère jamais les adhérents directement. Cette responsabilité appartient à chaque Espace Dojo.</span>
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
             </TabsContent>
           )}
 
-          {/* Onglet Gestion Dojos - Super Admin uniquement */}
-          {isSuperAdmin && (
+          {/* Onglet Gestion Dojos - Admin */}
+          {isAdmin && (
             <TabsContent value="dojos" className="mt-6">
               <Card className="bg-slate-900/50 border-slate-700">
                 <CardHeader>
@@ -1137,43 +1076,21 @@ function AppContent() {
                     Gestion des Dojos
                   </CardTitle>
                   <CardDescription className="text-slate-400">
-                    Créer, activer et gérer les dojos de la plateforme
+                    Créer, activer, suspendre et gérer les dojos
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="mb-4">
+                  <div className="mb-6">
                     <Button
                       onClick={() => setShowDojoManagement(true)}
                       className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white"
                     >
                       <Building2 className="w-4 h-4 mr-2" />
-                      Ouvrir la gestion des dojos
+                      Créer / Gérer les dojos
                     </Button>
                   </div>
                   
-                  {/* Quick Stats */}
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                    <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
-                      <p className="text-2xl font-bold text-cyan-400">{dojos.length}</p>
-                      <p className="text-sm text-slate-400">Total Dojos</p>
-                    </div>
-                    <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
-                      <p className="text-2xl font-bold text-green-400">
-                        {dojos.filter(d => d.subscription_status === 'active' || d.subscription_status === 'trialing').length}
-                      </p>
-                      <p className="text-sm text-slate-400">Dojos Actifs</p>
-                    </div>
-                    <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
-                      <p className="text-2xl font-bold text-purple-400">{visitors.length}</p>
-                      <p className="text-sm text-slate-400">Visiteurs Total</p>
-                    </div>
-                    <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
-                      <p className="text-2xl font-bold text-amber-400">{members.length}</p>
-                      <p className="text-sm text-slate-400">Adhérents Total</p>
-                    </div>
-                  </div>
-                  
-                  {/* Dojos List */}
+                  {/* Liste des Dojos avec statuts */}
                   <div className="space-y-3">
                     <h3 className="text-lg font-semibold text-white mb-3">Liste des Dojos</h3>
                     {dojos.length === 0 ? (
@@ -1182,29 +1099,50 @@ function AppContent() {
                       dojos.map((dojo) => (
                         <div 
                           key={dojo.id}
-                          className="flex items-center justify-between p-4 bg-slate-800/50 rounded-lg border border-slate-700"
+                          className="p-4 bg-slate-800/50 rounded-lg border border-slate-700"
                         >
-                          <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
-                              <Building2 className="w-5 h-5 text-white" />
+                          <div className="flex items-center justify-between mb-2">
+                            <div className="flex items-center gap-3">
+                              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
+                                <Building2 className="w-5 h-5 text-white" />
+                              </div>
+                              <div>
+                                <p className="font-medium text-white">{dojo.name}</p>
+                                <p className="text-sm text-slate-400">
+                                  {dojo.city || 'Ville non renseignée'}
+                                </p>
+                              </div>
                             </div>
-                            <div>
-                              <p className="font-medium text-white">{dojo.name}</p>
-                              <p className="text-sm text-slate-400">
-                                {dojo.city || 'Ville non renseignée'} • {dojo.members_count || 0} membres
-                              </p>
+                            <div className="flex items-center gap-2">
+                              {dojo.is_default && (
+                                <Badge className="bg-cyan-600 text-white text-xs">Par défaut</Badge>
+                              )}
+                              {dojo.subscription_status === 'trialing' && (
+                                <Badge className="bg-amber-600 text-white text-xs">Essai</Badge>
+                              )}
+                              {dojo.subscription_status === 'active' && (
+                                <Badge className="bg-green-600 text-white text-xs">Actif</Badge>
+                              )}
+                              {!dojo.subscription_status && (
+                                <Badge className="bg-slate-600 text-white text-xs">En attente</Badge>
+                              )}
                             </div>
                           </div>
-                          <div className="flex items-center gap-2">
-                            {dojo.is_default && (
-                              <Badge className="bg-cyan-600 text-white text-xs">Par défaut</Badge>
-                            )}
-                            {dojo.subscription_status === 'trialing' && (
-                              <Badge className="bg-amber-600 text-white text-xs">Essai</Badge>
-                            )}
-                            {dojo.subscription_status === 'active' && (
-                              <Badge className="bg-green-600 text-white text-xs">Actif</Badge>
-                            )}
+                          <div className="grid grid-cols-3 gap-4 mt-3 pt-3 border-t border-slate-700">
+                            <div className="text-center">
+                              <p className="text-xs text-slate-500">ID</p>
+                              <p className="text-sm text-slate-300 font-mono">{dojo.id}</p>
+                            </div>
+                            <div className="text-center">
+                              <p className="text-xs text-slate-500">Membres</p>
+                              <p className="text-sm text-slate-300">{dojo.members_count || 0}</p>
+                            </div>
+                            <div className="text-center">
+                              <p className="text-xs text-slate-500">Création</p>
+                              <p className="text-sm text-slate-300">
+                                {dojo.created_at ? new Date(dojo.created_at).toLocaleDateString('fr-FR') : 'N/A'}
+                              </p>
+                            </div>
                           </div>
                         </div>
                       ))
@@ -1215,13 +1153,163 @@ function AppContent() {
             </TabsContent>
           )}
 
+          {/* Onglet Abonnements - Admin */}
           {isAdmin && (
-            <TabsContent value="reglement" className="mt-6">
-              <ReglementInterieur 
-                onRegister={fetchData} 
-                isAdmin={isAdmin}
-                onAdminClick={() => {}}
-              />
+            <TabsContent value="subscriptions" className="mt-6">
+              <Card className="bg-slate-900/50 border-slate-700">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center gap-2">
+                    <CreditCard className="w-5 h-5 text-cyan-400" />
+                    Gestion des Abonnements
+                  </CardTitle>
+                  <CardDescription className="text-slate-400">
+                    Vue Stripe : statuts, échéances, historique
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {/* Stats abonnements */}
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+                    <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
+                      <p className="text-2xl font-bold text-green-400">
+                        {dojos.filter(d => d.subscription_status === 'active').length}
+                      </p>
+                      <p className="text-sm text-slate-400">Abonnements Actifs</p>
+                    </div>
+                    <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
+                      <p className="text-2xl font-bold text-amber-400">
+                        {dojos.filter(d => d.subscription_status === 'trialing').length}
+                      </p>
+                      <p className="text-sm text-slate-400">En Période d'Essai</p>
+                    </div>
+                    <div className="bg-slate-800/50 rounded-lg p-4 border border-slate-700">
+                      <p className="text-2xl font-bold text-red-400">0</p>
+                      <p className="text-sm text-slate-400">Impayés</p>
+                    </div>
+                  </div>
+                  
+                  {/* Liste des abonnements */}
+                  <div className="space-y-3">
+                    <h4 className="text-lg font-semibold text-white">Détail par Dojo</h4>
+                    {dojos.map((dojo) => (
+                      <div key={dojo.id} className="flex items-center justify-between p-3 bg-slate-800/50 rounded-lg border border-slate-700">
+                        <div>
+                          <p className="font-medium text-white">{dojo.name}</p>
+                          <p className="text-xs text-slate-500">
+                            Plan: {dojo.subscription_plan || 'Non défini'}
+                          </p>
+                        </div>
+                        <div className="text-right">
+                          {dojo.subscription_status === 'active' && (
+                            <Badge className="bg-green-600 text-white">Actif</Badge>
+                          )}
+                          {dojo.subscription_status === 'trialing' && (
+                            <Badge className="bg-amber-600 text-white">Essai</Badge>
+                          )}
+                          {!dojo.subscription_status && (
+                            <Badge className="bg-slate-600 text-white">Aucun</Badge>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  
+                  <div className="mt-6 p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+                    <p className="text-slate-400 text-sm">
+                      <strong>Note :</strong> L'intégration Stripe est en mode test. Les données bancaires ne sont pas accessibles depuis cette interface.
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+          )}
+
+          {/* Onglet Juridique - Admin */}
+          {isAdmin && (
+            <TabsContent value="legal" className="mt-6">
+              <Card className="bg-slate-900/50 border-slate-700">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center gap-2">
+                    <ScrollText className="w-5 h-5 text-cyan-400" />
+                    Juridique & Conformité
+                  </CardTitle>
+                  <CardDescription className="text-slate-400">
+                    Gestion des versions CGU, CGV, Charte, RGPD
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="font-semibold text-white">CGU</h4>
+                        <Badge className="bg-green-600 text-white text-xs">v1.0</Badge>
+                      </div>
+                      <p className="text-sm text-slate-400">Conditions Générales d'Utilisation</p>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="mt-3 border-slate-600 text-slate-300"
+                        onClick={() => setShowCGU(true)}
+                      >
+                        Voir le document
+                      </Button>
+                    </div>
+                    
+                    <div className="p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="font-semibold text-white">CGV</h4>
+                        <Badge className="bg-green-600 text-white text-xs">v1.0</Badge>
+                      </div>
+                      <p className="text-sm text-slate-400">Conditions Générales de Vente</p>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="mt-3 border-slate-600 text-slate-300"
+                        onClick={() => setShowCGV(true)}
+                      >
+                        Voir le document
+                      </Button>
+                    </div>
+                    
+                    <div className="p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="font-semibold text-white">Charte</h4>
+                        <Badge className="bg-green-600 text-white text-xs">v1.0</Badge>
+                      </div>
+                      <p className="text-sm text-slate-400">Charte d'utilisation</p>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="mt-3 border-slate-600 text-slate-300"
+                        onClick={() => setShowCharte(true)}
+                      >
+                        Voir le document
+                      </Button>
+                    </div>
+                    
+                    <div className="p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+                      <div className="flex items-center justify-between mb-2">
+                        <h4 className="font-semibold text-white">RGPD</h4>
+                        <Badge className="bg-green-600 text-white text-xs">v1.0</Badge>
+                      </div>
+                      <p className="text-sm text-slate-400">Protection des données</p>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="mt-3 border-slate-600 text-slate-300"
+                        onClick={() => setShowRGPD(true)}
+                      >
+                        Voir le document
+                      </Button>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-6 p-4 bg-cyan-900/20 rounded-lg border border-cyan-700/30">
+                    <p className="text-cyan-300 text-sm">
+                      <strong>Export RGPD :</strong> En cas de demande légale, un export global des données peut être généré depuis cette section.
+                    </p>
+                  </div>
+                </CardContent>
+              </Card>
             </TabsContent>
           )}
         </Tabs>
