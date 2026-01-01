@@ -183,6 +183,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
   const [showTrophiesDialog, setShowTrophiesDialog] = useState(false);
   const [showVirtuesDialog, setShowVirtuesDialog] = useState(false);
   const [showVirtueActionsPanel, setShowVirtueActionsPanel] = useState(false);
+  const [showTimelinePanel, setShowTimelinePanel] = useState(false);
   const [sending, setSending] = useState(false);
   const [activeSymbolicRole, setActiveSymbolicRole] = useState(null);
   const [roleLoading, setRoleLoading] = useState(false);
