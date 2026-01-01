@@ -284,9 +284,19 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         {/* Logo and 7 Virtues Section */}
         <div className="flex flex-col md:flex-row items-center justify-center gap-8 mb-10 p-8 bg-slate-800/50 rounded-xl border border-slate-700">
           <div className="flex flex-col items-center gap-2">
-            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-cyan-600 to-blue-800 flex items-center justify-center border-3 border-cyan-400 shadow-lg shadow-cyan-500/30">
-              <span className="text-4xl font-bold text-white">合</span>
+            {/* Yin-Yang style logo in yellow/gold - larger version */}
+            <div className="relative w-28 h-28">
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-amber-400 via-yellow-500 to-amber-600 shadow-lg shadow-amber-500/30"></div>
+              <div className="absolute inset-1.5 rounded-full bg-slate-900 flex items-center justify-center">
+                <div className="relative w-16 h-16">
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-gradient-to-b from-amber-400 to-yellow-500"></div>
+                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-slate-900 border-2 border-amber-500"></div>
+                  <div className="absolute top-1.5 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-slate-900"></div>
+                  <div className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-amber-400"></div>
+                </div>
+              </div>
             </div>
+            <p className="text-sm text-amber-400 font-medium">Aikido</p>
             <p className="text-lg font-bold text-white">Techniques d'Aikido</p>
           </div>
           <div className="text-center md:text-left">
