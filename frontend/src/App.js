@@ -38,6 +38,7 @@ function AppContent() {
   
   const [kyuLevels, setKyuLevels] = useState([]);
   const [userProgression, setUserProgression] = useState({});
+  const [userBelt, setUserBelt] = useState("6e_kyu"); // Default: white belt
   const [statistics, setStatistics] = useState(null);
   const [membersStats, setMembersStats] = useState(null);
   const [members, setMembers] = useState([]);
