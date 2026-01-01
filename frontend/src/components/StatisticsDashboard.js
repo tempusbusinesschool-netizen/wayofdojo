@@ -313,73 +313,57 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
           </div>
         </div>
 
-        {/* Statistics blocks - hidden for admin */}
+        {/* Statistics blocks - hidden for admin - FUN DESIGN */}
         {!isAdmin && (
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mb-12 max-w-6xl mx-auto px-2">
             <Card 
-              className={`bg-gradient-to-br from-slate-800 to-slate-900 border-slate-700 cursor-pointer transition-all hover:scale-105 hover:shadow-lg ${activeFilter === 'all' ? 'ring-2 ring-slate-400' : ''}`}
+              className={`bg-gradient-to-br from-indigo-600 to-indigo-800 border-indigo-400 cursor-pointer transition-all hover:scale-105 hover:shadow-xl hover:shadow-indigo-500/30 ${activeFilter === 'all' ? 'ring-4 ring-indigo-400 ring-opacity-50' : ''}`}
               onClick={() => onFilterClick && onFilterClick('all')}
             >
               <CardContent className="p-3 md:px-6 md:py-4">
-                <div className="flex flex-col items-center text-center md:flex-row md:text-left md:gap-5">
-                  <div className="p-2 md:p-3 rounded-xl bg-slate-700 mb-2 md:mb-0">
-                    <BookOpen className="w-5 h-5 md:w-7 md:h-7 text-slate-300" />
-                  </div>
-                  <div>
-                    <p className="text-2xl md:text-3xl font-bold text-white">{statistics.total_techniques}</p>
-                    <p className="text-xs md:text-sm text-slate-400">Techniques</p>
-                  </div>
+                <div className="flex flex-col items-center text-center">
+                  <div className="text-3xl md:text-4xl mb-2">📚</div>
+                  <p className="text-3xl md:text-4xl font-bold text-white">{statistics.total_techniques}</p>
+                  <p className="text-xs md:text-sm text-indigo-200 font-medium">Techniques</p>
                 </div>
               </CardContent>
             </Card>
             
             <Card 
-              className={`bg-gradient-to-br from-emerald-800 to-emerald-900 border-emerald-700 cursor-pointer transition-all hover:scale-105 hover:shadow-lg ${activeFilter === 'mastered' ? 'ring-2 ring-emerald-400' : ''}`}
+              className={`bg-gradient-to-br from-emerald-500 to-emerald-700 border-emerald-400 cursor-pointer transition-all hover:scale-105 hover:shadow-xl hover:shadow-emerald-500/30 ${activeFilter === 'mastered' ? 'ring-4 ring-emerald-400 ring-opacity-50' : ''}`}
               onClick={() => onFilterClick && onFilterClick('mastered')}
             >
               <CardContent className="p-3 md:px-6 md:py-4">
-                <div className="flex flex-col items-center text-center md:flex-row md:text-left md:gap-5">
-                  <div className="p-2 md:p-3 rounded-xl bg-emerald-700 mb-2 md:mb-0">
-                    <CheckCircle2 className="w-5 h-5 md:w-7 md:h-7 text-emerald-300" />
-                  </div>
-                  <div>
-                    <p className="text-2xl md:text-3xl font-bold text-white">{statistics.mastered_techniques}</p>
-                    <p className="text-xs md:text-sm text-emerald-300">Maîtrisées</p>
-                  </div>
+                <div className="flex flex-col items-center text-center">
+                  <div className="text-3xl md:text-4xl mb-2">🏆</div>
+                  <p className="text-3xl md:text-4xl font-bold text-white">{statistics.mastered_techniques}</p>
+                  <p className="text-xs md:text-sm text-emerald-100 font-medium">Maîtrisées</p>
                 </div>
               </CardContent>
             </Card>
             
             <Card 
-              className={`bg-gradient-to-br from-amber-800 to-amber-900 border-amber-700 cursor-pointer transition-all hover:scale-105 hover:shadow-lg ${activeFilter === 'in_progress' ? 'ring-2 ring-amber-400' : ''}`}
+              className={`bg-gradient-to-br from-amber-500 to-orange-600 border-amber-400 cursor-pointer transition-all hover:scale-105 hover:shadow-xl hover:shadow-amber-500/30 ${activeFilter === 'in_progress' ? 'ring-4 ring-amber-400 ring-opacity-50' : ''}`}
               onClick={() => onFilterClick && onFilterClick('in_progress')}
             >
               <CardContent className="p-3 md:px-6 md:py-4">
-                <div className="flex flex-col items-center text-center md:flex-row md:text-left md:gap-5">
-                  <div className="p-2 md:p-3 rounded-xl bg-amber-700 mb-2 md:mb-0">
-                    <Clock className="w-5 h-5 md:w-7 md:h-7 text-amber-300" />
-                  </div>
-                  <div>
-                    <p className="text-2xl md:text-3xl font-bold text-white">{statistics.in_progress_techniques}</p>
-                    <p className="text-xs md:text-sm text-amber-300">En cours</p>
-                  </div>
+                <div className="flex flex-col items-center text-center">
+                  <div className="text-3xl md:text-4xl mb-2">🔥</div>
+                  <p className="text-3xl md:text-4xl font-bold text-white">{statistics.in_progress_techniques}</p>
+                  <p className="text-xs md:text-sm text-amber-100 font-medium">En cours</p>
                 </div>
               </CardContent>
             </Card>
             
             <Card 
-              className={`bg-gradient-to-br from-rose-800 to-rose-900 border-rose-700 cursor-pointer transition-all hover:scale-105 hover:shadow-lg ${activeFilter === 'practiced' ? 'ring-2 ring-rose-400' : ''}`}
+              className={`bg-gradient-to-br from-pink-500 to-rose-600 border-pink-400 cursor-pointer transition-all hover:scale-105 hover:shadow-xl hover:shadow-pink-500/30 ${activeFilter === 'practiced' ? 'ring-4 ring-pink-400 ring-opacity-50' : ''}`}
               onClick={() => onFilterClick && onFilterClick('practiced')}
             >
               <CardContent className="p-3 md:px-6 md:py-4">
-                <div className="flex flex-col items-center text-center md:flex-row md:text-left md:gap-5">
-                  <div className="p-2 md:p-3 rounded-xl bg-rose-700 mb-2 md:mb-0">
-                    <Flame className="w-5 h-5 md:w-7 md:h-7 text-rose-300" />
-                  </div>
-                  <div>
-                    <p className="text-2xl md:text-3xl font-bold text-white">{statistics.total_practice_sessions}</p>
-                    <p className="text-xs md:text-sm text-rose-300">Sessions</p>
-                  </div>
+                <div className="flex flex-col items-center text-center">
+                  <div className="text-3xl md:text-4xl mb-2">⭐</div>
+                  <p className="text-3xl md:text-4xl font-bold text-white">{statistics.total_practice_sessions}</p>
+                  <p className="text-xs md:text-sm text-pink-100 font-medium">Sessions</p>
                 </div>
               </CardContent>
             </Card>
