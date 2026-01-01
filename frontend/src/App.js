@@ -6,7 +6,19 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { Swords, Users, BarChart3, LogOut, Baby, User, LogIn, Lock, ScrollText, Eye } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Swords, Users, BarChart3, LogOut, Baby, User, LogIn, Lock, ScrollText, Eye, Award } from "lucide-react";
+
+// Aikido Belt System - for display
+const AIKIDO_BELTS = {
+  "6e_kyu": { name: "Blanche", grade: "6e kyu", emoji: "⚪", color: "#E5E7EB" },
+  "5e_kyu": { name: "Jaune", grade: "5e kyu", emoji: "🟡", color: "#FCD34D" },
+  "4e_kyu": { name: "Orange", grade: "4e kyu", emoji: "🟠", color: "#FB923C" },
+  "3e_kyu": { name: "Verte", grade: "3e kyu", emoji: "🟢", color: "#22C55E" },
+  "2e_kyu": { name: "Bleue", grade: "2e kyu", emoji: "🔵", color: "#3B82F6" },
+  "1er_kyu": { name: "Marron", grade: "1er kyu", emoji: "🟤", color: "#92400E" },
+  "shodan": { name: "Noire", grade: "Shodan", emoji: "⚫", color: "#1F2937" }
+};
 
 // Import custom components
 import {
