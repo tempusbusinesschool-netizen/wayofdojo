@@ -750,68 +750,147 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
           </CardContent>
         </Card>
         
-        <Card className="bg-slate-900/50 border-slate-700">
-          <CardHeader className="pb-2">
-            <div className="flex items-center justify-between">
-              <CardTitle className="text-sm font-medium text-slate-300 flex items-center gap-2">
-                <BarChart3 className="w-4 h-4" />
-                Progression par Grade
-                <span className="text-xs text-slate-500 font-normal ml-2">(cliquez pour voir)</span>
-              </CardTitle>
-              <div className="flex gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setShowEmailDialog(true)}
-                  className="border-cyan-600 text-cyan-400 hover:bg-cyan-900/30 hover:text-cyan-300 h-7 text-xs"
-                >
-                  <Download className="w-3 h-3 mr-1" />
-                  PDF
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={exportToCSV}
-                  className="border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-white h-7 text-xs"
-                >
-                  <Download className="w-3 h-3 mr-1" />
-                  CSV
-                </Button>
+        {/* FUN PROGRESSION SECTION - Colorful & Kid-Friendly */}
+        <div className="bg-gradient-to-br from-indigo-900/60 via-purple-900/60 to-pink-900/60 rounded-2xl border-2 border-purple-500/40 p-4 md:p-6 shadow-xl">
+          {/* Header with fun styling */}
+          <div className="flex flex-col md:flex-row items-center justify-between gap-3 mb-6">
+            <div className="flex items-center gap-3">
+              <div className="text-4xl animate-bounce">🎯</div>
+              <div>
+                <h3 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-yellow-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
+                  Ma Progression Ninja ! 🥷
+                </h3>
+                <p className="text-purple-300 text-xs md:text-sm">Clique sur un grade pour voir les techniques</p>
               </div>
             </div>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {statistics.techniques_by_level?.map((level, index) => (
-              <div 
-                key={index} 
-                className="space-y-1 p-2 -mx-2 rounded-lg cursor-pointer hover:bg-slate-800/50 transition-colors"
-                onClick={() => onGradeClick && onGradeClick(level.name)}
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowEmailDialog(true)}
+                className="bg-gradient-to-r from-cyan-600 to-blue-600 border-none text-white hover:from-cyan-500 hover:to-blue-500 h-8 text-xs font-bold shadow-lg shadow-cyan-500/30"
               >
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-slate-300 font-medium flex items-center gap-2">
-                    <div 
-                      className="w-3 h-3 rounded-full" 
-                      style={{ backgroundColor: level.color || '#6366f1' }}
-                    />
-                    {level.name}
-                  </span>
-                  <span className="text-slate-400">
-                    {level.mastered}/{level.total} • {level.progress_percentage}%
-                  </span>
+                <Download className="w-3 h-3 mr-1" />
+                📄 PDF
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={exportToCSV}
+                className="bg-gradient-to-r from-green-600 to-emerald-600 border-none text-white hover:from-green-500 hover:to-emerald-500 h-8 text-xs font-bold shadow-lg shadow-green-500/30"
+              >
+                <Download className="w-3 h-3 mr-1" />
+                📊 CSV
+              </Button>
+            </div>
+          </div>
+
+          {/* Grade Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+            {statistics.techniques_by_level?.map((level, index) => {
+              // Fun emojis and colors for each grade type
+              const gradeStyles = {
+                '5e KYU': { emoji: '🌱', gradient: 'from-lime-500 to-green-600', glow: 'shadow-lime-500/40', rank: 'Débutant' },
+                '4e KYU': { emoji: '🌿', gradient: 'from-emerald-500 to-teal-600', glow: 'shadow-emerald-500/40', rank: 'Apprenti' },
+                '3e KYU': { emoji: '🔥', gradient: 'from-orange-500 to-red-600', glow: 'shadow-orange-500/40', rank: 'Avancé' },
+                '2e KYU': { emoji: '💎', gradient: 'from-blue-500 to-indigo-600', glow: 'shadow-blue-500/40', rank: 'Expert' },
+                '1er KYU': { emoji: '⚡', gradient: 'from-purple-500 to-violet-600', glow: 'shadow-purple-500/40', rank: 'Pré-Dan' },
+                'SHODAN': { emoji: '🥋', gradient: 'from-slate-700 to-slate-900', glow: 'shadow-slate-500/40', rank: '1er Dan' },
+                'NIDAN': { emoji: '🌟', gradient: 'from-amber-600 to-orange-700', glow: 'shadow-amber-500/40', rank: '2e Dan' },
+                'SANDAN': { emoji: '👑', gradient: 'from-yellow-500 to-amber-600', glow: 'shadow-yellow-500/40', rank: '3e Dan' },
+                'YONDAN': { emoji: '🏆', gradient: 'from-rose-500 to-pink-600', glow: 'shadow-rose-500/40', rank: '4e Dan' },
+                'BOKKEN': { emoji: '⚔️', gradient: 'from-cyan-500 to-blue-600', glow: 'shadow-cyan-500/40', rank: 'Sabre' },
+                'Déplacements': { emoji: '🦶', gradient: 'from-pink-500 to-fuchsia-600', glow: 'shadow-pink-500/40', rank: 'Bases' },
+              };
+              
+              // Find matching style
+              const styleKey = Object.keys(gradeStyles).find(key => level.name.includes(key)) || null;
+              const style = styleKey ? gradeStyles[styleKey] : { 
+                emoji: '✨', 
+                gradient: 'from-indigo-500 to-purple-600', 
+                glow: 'shadow-indigo-500/40',
+                rank: 'Grade'
+              };
+              
+              const isComplete = level.progress_percentage === 100;
+              const isStarted = level.progress_percentage > 0;
+
+              return (
+                <div 
+                  key={index} 
+                  className={`relative overflow-hidden rounded-xl cursor-pointer transform transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 ${style.glow} shadow-lg`}
+                  onClick={() => onGradeClick && onGradeClick(level.name)}
+                >
+                  {/* Background gradient */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${style.gradient} opacity-90`}></div>
+                  
+                  {/* Completion sparkles */}
+                  {isComplete && (
+                    <div className="absolute top-2 right-2 text-2xl animate-pulse">🎉</div>
+                  )}
+                  
+                  {/* Content */}
+                  <div className="relative p-3 md:p-4">
+                    <div className="flex items-center gap-3">
+                      {/* Emoji badge */}
+                      <div className={`w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-2xl md:text-3xl ${isComplete ? 'animate-bounce' : ''}`}>
+                        {style.emoji}
+                      </div>
+                      
+                      {/* Grade info */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between">
+                          <h4 className="font-bold text-white text-sm md:text-base truncate pr-2">
+                            {level.name}
+                          </h4>
+                          <span className="text-white/80 text-xs font-medium bg-white/20 px-2 py-0.5 rounded-full">
+                            {style.rank}
+                          </span>
+                        </div>
+                        
+                        {/* Progress bar */}
+                        <div className="mt-2 h-3 md:h-4 bg-black/30 rounded-full overflow-hidden">
+                          <div 
+                            className="h-full bg-gradient-to-r from-white/80 to-white/60 rounded-full transition-all duration-1000 ease-out relative"
+                            style={{ width: `${Math.max(level.progress_percentage, 2)}%` }}
+                          >
+                            {level.progress_percentage > 10 && (
+                              <div className="absolute inset-0 bg-white/30 animate-pulse"></div>
+                            )}
+                          </div>
+                        </div>
+                        
+                        {/* Stats */}
+                        <div className="mt-1 flex items-center justify-between text-xs">
+                          <span className="text-white/90 font-medium">
+                            {isComplete ? '✅ Complété !' : isStarted ? '🚀 En cours...' : '💤 À débloquer'}
+                          </span>
+                          <span className="text-white font-bold bg-white/20 px-2 py-0.5 rounded-full">
+                            {level.mastered}/{level.total} • {level.progress_percentage}%
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div className="w-full h-2 bg-slate-700 rounded-full overflow-hidden">
-                  <div 
-                    className="h-full rounded-full transition-all duration-700"
-                    style={{ 
-                      width: `${level.progress_percentage}%`,
-                      backgroundColor: level.color || '#6366f1'
-                    }}
-                  />
-                </div>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
+              );
+            })}
+          </div>
+
+          {/* Fun footer message */}
+          <div className="mt-6 text-center">
+            <p className="text-purple-300 text-sm">
+              🌟 Continue à t'entraîner pour débloquer tous les grades ! 🌟
+            </p>
+            <div className="flex justify-center gap-2 mt-2 text-2xl">
+              <span className="animate-bounce" style={{ animationDelay: '0ms' }}>🥋</span>
+              <span className="animate-bounce" style={{ animationDelay: '100ms' }}>💪</span>
+              <span className="animate-bounce" style={{ animationDelay: '200ms' }}>⭐</span>
+              <span className="animate-bounce" style={{ animationDelay: '300ms' }}>🎯</span>
+              <span className="animate-bounce" style={{ animationDelay: '400ms' }}>🔥</span>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* PDF Download Dialog */}
