@@ -97,20 +97,19 @@ class DojoTester:
     def test_create_dojo(self):
         """Test POST /api/dojos - Create a new dojo with super admin password"""
         try:
-            new_dojo_data = {
-                "name": "Aikido Paris Test",
-                "description": "Test dojo for Multi-Dojo feature",
-                "address": "123 Test Street",
-                "city": "Paris",
-                "admin_password": "testadmin123"
+            # Prepare request data with separate dojo and auth objects
+            request_data = {
+                "dojo": {
+                    "name": "Aikido Paris Test",
+                    "description": "Test dojo for Multi-Dojo feature",
+                    "address": "123 Test Street",
+                    "city": "Paris",
+                    "admin_password": "testadmin123"
+                },
+                "auth": {
+                    "super_admin_password": SUPER_ADMIN_PASSWORD
+                }
             }
-            
-            auth_data = {
-                "super_admin_password": SUPER_ADMIN_PASSWORD
-            }
-            
-            # Combine dojo data and auth data
-            request_data = {**new_dojo_data, **auth_data}
             
             response = self.session.post(f"{BACKEND_URL}/dojos", json=request_data)
             
