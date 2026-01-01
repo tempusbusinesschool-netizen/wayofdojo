@@ -620,13 +620,23 @@ async def assign_belt(data: BeltAssignment):
 
 @api_router.get("/visitors")
 async def get_visitors():
-    """Récupérer la liste des utilisateurs inscrits (visiteurs)"""
+    """Récupérer la liste des utilisateurs inscrits (visiteurs) avec stats de progression"""
     users = await db.users.find({}, {"_id": 0, "password_hash": 0}).to_list(1000)
     
-    # Add belt info to each user
+    # Add belt info and progression stats to each user
     for user in users:
         belt_level = user.get("belt_level", "6e_kyu")
         user["belt_info"] = AIKIDO_BELTS.get(belt_level, AIKIDO_BELTS["6e_kyu"])
+        
+        # Calculate progression stats
+        progression = user.get("progression", {})
+        user["techniques_mastered"] = sum(1 for p in progression.values() if p.get("mastery_level") == "mastered")
+        user["techniques_in_progress"] = sum(1 for p in progression.values() if p.get("mastery_level") in ["learning", "practiced"])
+        user["total_sessions"] = sum(p.get("practice_count", 0) for p in progression.values())
+        
+        # Remove progression dict from response (too heavy)
+        if "progression" in user:
+            del user["progression"]
     
     return users
 
