@@ -179,8 +179,7 @@ class DojoTester:
             response = self.session.get(url)
             
             if response.status_code == 200:
-                data = response.json()
-                visitors = data.get("visitors", [])
+                visitors = response.json()  # API returns list directly
                 
                 if dojo_id:
                     # Check if all visitors belong to the specified dojo
