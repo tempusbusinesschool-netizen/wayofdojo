@@ -686,34 +686,167 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               </div>
             </div>
 
-            {/* Technique States Summary (replaces XP tips) */}
-            <div className="mt-6 grid grid-cols-3 gap-3 text-xs">
+            {/* Technique States Summary with POINTS */}
+            <div className="mt-6 grid grid-cols-2 md:grid-cols-4 gap-3 text-xs">
               <div className="bg-amber-900/30 p-3 rounded-xl text-center border border-amber-500/30">
                 <p className="text-2xl mb-1">📖</p>
                 <p className="text-amber-300 font-bold">{statistics.in_progress_techniques || 0}</p>
                 <p className="text-slate-400">En apprentissage</p>
+                <p className="text-amber-500 text-[10px] mt-1">+1 pt/technique</p>
               </div>
               <div className="bg-blue-900/30 p-3 rounded-xl text-center border border-blue-500/30">
                 <p className="text-2xl mb-1">🎯</p>
-                <p className="text-blue-300 font-bold">{statistics.total_practice_sessions || 0}</p>
-                <p className="text-slate-400">Séances au dojo</p>
+                <p className="text-blue-300 font-bold">{points.practicedCount || 0}</p>
+                <p className="text-slate-400">Pratiquées</p>
+                <p className="text-blue-500 text-[10px] mt-1">+2 pts/technique</p>
               </div>
               <div className="bg-emerald-900/30 p-3 rounded-xl text-center border border-emerald-500/30">
                 <p className="text-2xl mb-1">🏆</p>
                 <p className="text-emerald-300 font-bold">{statistics.mastered_techniques || 0}</p>
                 <p className="text-slate-400">Maîtrisées</p>
+                <p className="text-emerald-500 text-[10px] mt-1">+3 pts/technique</p>
+              </div>
+              {/* Total Points */}
+              <div className="bg-gradient-to-br from-purple-900/50 to-pink-900/50 p-3 rounded-xl text-center border-2 border-purple-500/50 shadow-lg shadow-purple-500/20">
+                <p className="text-2xl mb-1">⭐</p>
+                <p className="text-3xl font-bold bg-gradient-to-r from-yellow-400 to-pink-400 bg-clip-text text-transparent">{points.total}</p>
+                <p className="text-purple-300 font-semibold">Points</p>
               </div>
             </div>
 
-            {/* Philosophy Message */}
+            {/* Trophies Section */}
+            <div className="mt-6 p-4 bg-gradient-to-r from-yellow-900/30 via-amber-900/30 to-yellow-900/30 rounded-xl border border-yellow-500/30">
+              <div className="flex items-center justify-between mb-3">
+                <h4 className="text-amber-400 font-bold flex items-center gap-2">
+                  🏆 Mes Trophées ({trophies.unlocked.length})
+                </h4>
+                <Button 
+                  onClick={() => setShowTrophiesDialog(true)}
+                  variant="ghost"
+                  size="sm"
+                  className="text-amber-400 hover:text-amber-300 hover:bg-amber-900/30 text-xs"
+                >
+                  Voir tout →
+                </Button>
+              </div>
+              
+              {trophies.unlocked.length === 0 ? (
+                <p className="text-slate-400 text-sm text-center py-2">
+                  🌱 Continue à pratiquer pour débloquer tes premiers trophées !
+                </p>
+              ) : (
+                <div className="flex flex-wrap gap-2">
+                  {trophies.unlocked.slice(0, 6).map((trophy, idx) => (
+                    <div 
+                      key={idx}
+                      className="bg-slate-800/80 px-3 py-1.5 rounded-full border border-yellow-500/30 flex items-center gap-1.5 text-xs hover:scale-105 transition-all cursor-pointer"
+                      title={trophy.desc}
+                    >
+                      <span className="text-lg">{trophy.icon}</span>
+                      <span className="text-yellow-300 font-medium">{trophy.name}</span>
+                    </div>
+                  ))}
+                  {trophies.unlocked.length > 6 && (
+                    <div 
+                      className="bg-slate-800/80 px-3 py-1.5 rounded-full border border-purple-500/30 text-xs text-purple-300 cursor-pointer hover:bg-purple-900/30"
+                      onClick={() => setShowTrophiesDialog(true)}
+                    >
+                      +{trophies.unlocked.length - 6} autres
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Points explanation */}
             <div className="mt-4 text-center">
               <p className="text-slate-400 text-xs italic">
-                🎌 Indique ta ceinture actuelle pour suivre ton chemin en Aïkido.
-                <br />Pas de points, pas de compétition – juste ta progression personnelle.
+                🎌 Gagne des points en progressant : 📖 1pt • 🎯 2pts • 🏆 3pts
+                <br />Débloque des trophées et montre ta progression !
               </p>
             </div>
           </div>
         )}
+
+        {/* Trophies Dialog */}
+        <Dialog open={showTrophiesDialog} onOpenChange={setShowTrophiesDialog}>
+          <DialogContent className="max-w-lg bg-slate-900 border-slate-700 text-white max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle className="text-xl font-bold flex items-center gap-2 text-amber-400">
+                🏆 Mes Trophées & Badges
+              </DialogTitle>
+              <DialogDescription className="text-slate-400">
+                Tu as débloqué {trophies.unlocked.length} trophée{trophies.unlocked.length > 1 ? 's' : ''} !
+              </DialogDescription>
+            </DialogHeader>
+            
+            {/* Points summary */}
+            <div className="bg-gradient-to-r from-purple-900/50 to-pink-900/50 p-4 rounded-xl border border-purple-500/30 mb-4">
+              <div className="text-center">
+                <p className="text-4xl font-bold bg-gradient-to-r from-yellow-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
+                  {points.total} Points
+                </p>
+                <div className="flex justify-center gap-4 mt-2 text-xs">
+                  <span className="text-amber-300">📖 {points.learning}pts</span>
+                  <span className="text-blue-300">🎯 {points.practiced}pts</span>
+                  <span className="text-emerald-300">🏆 {points.mastered}pts</span>
+                </div>
+              </div>
+            </div>
+            
+            {/* Unlocked trophies */}
+            {trophies.unlocked.length > 0 && (
+              <div className="mb-4">
+                <h4 className="text-emerald-400 font-semibold mb-3 flex items-center gap-2">
+                  ✅ Trophées débloqués ({trophies.unlocked.length})
+                </h4>
+                <div className="grid grid-cols-1 gap-2">
+                  {trophies.unlocked.map((trophy, idx) => (
+                    <div 
+                      key={idx}
+                      className="flex items-center gap-3 p-3 bg-emerald-900/20 rounded-lg border border-emerald-500/30"
+                    >
+                      <span className="text-3xl">{trophy.icon}</span>
+                      <div>
+                        <p className="text-white font-bold">{trophy.name}</p>
+                        <p className="text-emerald-300 text-xs">{trophy.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            
+            {/* Locked trophies (next to unlock) */}
+            {trophies.locked.length > 0 && (
+              <div>
+                <h4 className="text-slate-400 font-semibold mb-3 flex items-center gap-2">
+                  🔒 Prochains trophées à débloquer
+                </h4>
+                <div className="grid grid-cols-1 gap-2">
+                  {trophies.locked.map((trophy, idx) => (
+                    <div 
+                      key={idx}
+                      className="flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg border border-slate-700 opacity-60"
+                    >
+                      <span className="text-3xl">{trophy.icon}</span>
+                      <div>
+                        <p className="text-slate-300 font-bold">{trophy.name}</p>
+                        <p className="text-slate-500 text-xs">{trophy.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            
+            {trophies.unlocked.length === 0 && trophies.locked.length === 0 && (
+              <p className="text-center text-slate-400 py-4">
+                🌱 Continue à pratiquer pour débloquer tes premiers trophées !
+              </p>
+            )}
+          </DialogContent>
+        </Dialog>
 
         {/* Belt Selection Dialog */}
         <Dialog open={showBeltDialog} onOpenChange={setShowBeltDialog}>
