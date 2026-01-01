@@ -721,9 +721,9 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 
                 {/* Sous-titre */}
                 <p className="text-base md:text-lg lg:text-xl text-slate-300 max-w-2xl mx-auto">
-                  🥋 S&apos;entraîner à l&apos;aïkido en dehors du dojo,
+                  🥋 Réviser et approfondir sa pratique personnelle de l&apos;aïkido
                   <br />
-                  <span className="text-cyan-400 font-semibold">de façon simple et ludique !</span>
+                  <span className="text-cyan-400 font-semibold">en complément de l&apos;enseignement dispensé en dojo.</span>
                 </p>
               </div>
               
