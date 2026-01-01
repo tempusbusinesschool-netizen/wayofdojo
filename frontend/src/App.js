@@ -440,6 +440,16 @@ function AppContent() {
                     <LogOut className="w-4 h-4 mr-1" />
                     <span className="hidden sm:inline">Déconnexion</span>
                   </Button>
+                  {/* Show upgrade button for users without subscription */}
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setShowPaywall(true)}
+                    className="text-amber-400 hover:text-amber-300 hover:bg-amber-900/20"
+                    title="Voir les offres"
+                  >
+                    <Sparkles className="w-4 h-4" />
+                  </Button>
                 </div>
               ) : (
                 <div className="flex items-center gap-2">
