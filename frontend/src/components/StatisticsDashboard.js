@@ -751,8 +751,8 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                   </div>
                   <div className="bg-gradient-to-br from-pink-600 to-pink-800 p-3 md:p-4 rounded-xl text-center transform hover:scale-105 hover:rotate-1 transition-all cursor-pointer shadow-lg shadow-pink-500/30">
                     <div className="text-3xl md:text-4xl mb-2">✅</div>
-                    <p className="text-white font-bold text-sm">4. Valide</p>
-                    <p className="text-pink-200 text-xs">ta progression</p>
+                    <p className="text-white font-bold text-sm">4. Validation</p>
+                    <p className="text-pink-200 text-xs">avec ton enseignant</p>
                   </div>
                 </div>
                 
