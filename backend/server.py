@@ -618,6 +618,38 @@ async def assign_belt(data: BeltAssignment):
         "belt_info": belt_info
     }
 
+class UserBeltUpdate(BaseModel):
+    belt_level: str
+
+@api_router.put("/auth/belt")
+async def update_user_belt(data: UserBeltUpdate, user: dict = Depends(require_auth)):
+    """Permet à l'utilisateur de mettre à jour sa propre ceinture (auto-déclaration)"""
+    # Validate belt level exists
+    if data.belt_level not in AIKIDO_BELTS:
+        raise HTTPException(status_code=400, detail=f"Niveau de ceinture invalide: {data.belt_level}")
+    
+    # Update user's belt level
+    await db.users.update_one(
+        {"id": user["id"]},
+        {
+            "$set": {
+                "belt_level": data.belt_level,
+                "belt_awarded_at": datetime.now(timezone.utc).isoformat(),
+                "belt_awarded_by": "self"  # Auto-déclaration
+            }
+        }
+    )
+    
+    belt_info = AIKIDO_BELTS[data.belt_level]
+    logger.info(f"User {user['id']} updated their belt to {data.belt_level}")
+    
+    return {
+        "success": True,
+        "message": f"Ceinture {belt_info['name']} sélectionnée !",
+        "belt_level": data.belt_level,
+        "belt_info": belt_info
+    }
+
 @api_router.get("/visitors")
 async def get_visitors():
     """Récupérer la liste des utilisateurs inscrits (visiteurs) avec stats de progression"""
