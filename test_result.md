@@ -291,6 +291,18 @@ frontend:
         agent: "testing"
         comment: "All header buttons working correctly when not logged in: 🥷 S'inscrire (opens auth dialog), 🏯 Espace Dojo (opens dojo registration), ✨ sparkle icon (opens paywall), and Admin button (visible and functional). All buttons are properly positioned and responsive."
 
+  - task: "Comprendre l'Aïkido tab with Les Sept Plis du Hakama section"
+    implemented: true
+    working: "NA"
+    file: "/app/frontend/src/components/HakamaSection.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "testing"
+        comment: "New feature to be tested: Comprendre l'Aïkido tab with Les Sept Plis du Hakama section for regular users. Component exists and needs UI testing."
+
 metadata:
   created_by: "testing_agent"
   version: "1.0"
