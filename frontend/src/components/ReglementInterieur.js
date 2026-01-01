@@ -43,13 +43,6 @@ function ReglementInterieur() {
             </div>
             <div className="flex items-center gap-2">
               <Button
-                onClick={() => setShowRegistration(true)}
-                className="bg-emerald-600 hover:bg-emerald-500"
-              >
-                <UserPlus className="w-4 h-4 mr-2" />
-                Nouvelle inscription
-              </Button>
-              <Button
                 variant="ghost"
                 onClick={() => setIsExpanded(!isExpanded)}
                 className="text-slate-400 hover:text-white hover:bg-slate-700"
