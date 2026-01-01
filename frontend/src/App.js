@@ -805,28 +805,13 @@ function AppContent() {
             </TabsContent>
           )}
           
-          {/* Onglet Adhérents - Espace Dojo */}
+          {/* Onglet Adhérents - Espace Dojo (RGPD-compliant) */}
           {isEspaceDojo && (
             <TabsContent value="members" className="mt-6">
-              <Card className="bg-slate-900/50 border-slate-700">
-                <CardHeader>
-                  <CardTitle className="text-white flex items-center gap-2">
-                    <Users className="w-5 h-5 text-orange-400" />
-                    Gestion des Adhérents
-                  </CardTitle>
-                  <CardDescription className="text-slate-400">
-                    Ajouter, modifier ou supprimer des adhérents manuellement
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <MembersList 
-                    members={members} 
-                    onRefresh={fetchData}
-                    onRegisterChild={() => setShowChildRegistration(true)}
-                    onRegisterAdult={() => setShowAdultRegistration(true)}
-                  />
-                </CardContent>
-              </Card>
+              <DojoMembersList 
+                dojoId={selectedDojoForAdmin?.id}
+                dojoName={selectedDojoForAdmin?.name}
+              />
             </TabsContent>
           )}
           
