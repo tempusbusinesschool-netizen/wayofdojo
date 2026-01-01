@@ -4,10 +4,11 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { TrendingUp, BarChart3, Users, FileText, Download, Award, Sparkles, Shield, Clock } from "lucide-react";
+import { TrendingUp, BarChart3, Users, FileText, Download, Award, Sparkles, Shield, Clock, BookOpen } from "lucide-react";
 import { toast } from "sonner";
 import VirtueActionsPanel from "./VirtueActionsPanel";
 import TimelinePanel from "./TimelinePanel";
+import JournalPanel from "./JournalPanel";
 
 // Aikido Belt System - Real grades with KYU equivalence
 const AIKIDO_BELTS = {
