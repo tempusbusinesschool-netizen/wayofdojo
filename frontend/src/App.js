@@ -298,14 +298,14 @@ function AppContent() {
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <img 
-                src="/images/logo-aikido.png" 
-                alt="Logo Techniques Aikido" 
-                className="h-20 w-auto object-contain"
-              />
-              <div className="hidden sm:block">
-                <p className="text-lg text-white font-bold">Techniques Aikido</p>
-                <a href="mailto:aikidolariviere@gmail.com" className="text-xs text-cyan-400 hover:text-cyan-300">aikidolariviere@gmail.com</a>
+              <div className="flex items-center gap-3">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-cyan-600 to-blue-800 flex items-center justify-center border-2 border-cyan-400">
+                  <span className="text-2xl font-bold text-white">合</span>
+                </div>
+                <div>
+                  <p className="text-lg md:text-xl text-white font-bold">Techniques d'Aikido</p>
+                  <a href="mailto:aikidolariviere@gmail.com" className="text-xs text-cyan-400 hover:text-cyan-300 hidden sm:block">aikidolariviere@gmail.com</a>
+                </div>
               </div>
             </div>
             <div className="flex items-center gap-2">
