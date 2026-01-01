@@ -42,6 +42,7 @@ import DojoManagement from "@/components/DojoManagement";
 import OnboardingFlow from "@/components/OnboardingFlow";
 import PaywallDialog from "@/components/PaywallDialog";
 import DojoRegistrationDialog from "@/components/DojoRegistrationDialog";
+import { CGUPage, CGVPage, ChartePage, MentionsLegalesPage, RGPDPage } from "@/components/legal";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
