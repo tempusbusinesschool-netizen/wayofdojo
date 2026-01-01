@@ -295,6 +295,22 @@ function AppContent() {
       })
     };
   };
+
+  // Function to assign belt to a visitor (admin only)
+  const handleAssignBelt = async (userId, beltLevel) => {
+    try {
+      await axios.post(`${API}/admin/assign-belt`, {
+        user_id: userId,
+        belt_level: beltLevel
+      });
+      toast.success(`Ceinture ${AIKIDO_BELTS[beltLevel]?.name || beltLevel} attribuée avec succès !`);
+      // Refresh visitors list
+      fetchData();
+    } catch (error) {
+      console.error("Error assigning belt:", error);
+      toast.error("Erreur lors de l'attribution de la ceinture");
+    }
+  };
   
   if (loading || authLoading) {
     return (
