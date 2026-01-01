@@ -275,6 +275,7 @@ class DojoCreate(BaseModel):
     description: Optional[str] = None
     address: Optional[str] = None
     city: Optional[str] = None
+    email: EmailStr = Field(..., description="Email du dojo pour connexion")
     admin_password: str = Field(..., min_length=6)
 
 class DojoUpdate(BaseModel):
@@ -282,6 +283,7 @@ class DojoUpdate(BaseModel):
     description: Optional[str] = None
     address: Optional[str] = None
     city: Optional[str] = None
+    email: Optional[EmailStr] = None
     admin_password: Optional[str] = Field(None, min_length=6)
 
 class DojoResponse(BaseModel):
@@ -290,9 +292,14 @@ class DojoResponse(BaseModel):
     description: Optional[str] = None
     address: Optional[str] = None
     city: Optional[str] = None
+    email: Optional[str] = None
     is_default: bool = False
     members_count: int = 0
     created_at: str
+
+class DojoLoginRequest(BaseModel):
+    email: EmailStr
+    password: str
 
 
 # ═══════════════════════════════════════════════════════════════════════════════════
