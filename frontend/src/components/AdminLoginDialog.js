@@ -162,7 +162,7 @@ function AdminLoginDialog({ isOpen, onClose, onSuccess }) {
           </div>
           <div className="flex-1">
             <h3 className="font-bold text-white group-hover:text-cyan-400 transition-colors">
-              🛡️ Admin
+              🛡️ Espace de gestion
             </h3>
             <p className="text-sm text-slate-400">
               Gestion plateforme & dojos
@@ -175,7 +175,7 @@ function AdminLoginDialog({ isOpen, onClose, onSuccess }) {
         </div>
       </button>
       
-      {/* Espace Dojo Option */}
+      {/* Inscription Dojo Option */}
       <button
         onClick={() => setStep('espace_dojo_method')}
         className="w-full p-4 rounded-lg border-2 border-slate-700 hover:border-orange-500 bg-slate-800/50 hover:bg-slate-800 transition-all group text-left"
