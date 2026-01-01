@@ -101,10 +101,85 @@ const AIKIDO_VIRTUES = [
 function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterClick, activeFilter, isAdmin, onMembersClick, kyuLevels, userBelt, onBeltChange }) {
   const [showEmailDialog, setShowEmailDialog] = useState(false);
   const [showBeltDialog, setShowBeltDialog] = useState(false);
+  const [showTrophiesDialog, setShowTrophiesDialog] = useState(false);
   const [sending, setSending] = useState(false);
 
   // Get current belt info from userBelt prop
   const currentBelt = userBelt ? AIKIDO_BELTS[userBelt] : AIKIDO_BELTS["6e_kyu"];
+
+  // Calculate points based on technique mastery
+  // En apprentissage = 1 point, Pratiqué = 2 points, Maîtrisé = 3 points
+  const calculatePoints = () => {
+    if (!statistics) return { total: 0, learning: 0, practiced: 0, mastered: 0 };
+    
+    const learningPoints = (statistics.in_progress_techniques || 0) * 1;
+    const practicedTechniques = kyuLevels?.reduce((acc, kyu) => {
+      return acc + kyu.techniques.filter(t => t.mastery_level === 'practiced').length;
+    }, 0) || 0;
+    const practicedPoints = practicedTechniques * 2;
+    const masteredPoints = (statistics.mastered_techniques || 0) * 3;
+    
+    return {
+      total: learningPoints + practicedPoints + masteredPoints,
+      learning: learningPoints,
+      practiced: practicedPoints,
+      mastered: masteredPoints,
+      learningCount: statistics.in_progress_techniques || 0,
+      practicedCount: practicedTechniques,
+      masteredCount: statistics.mastered_techniques || 0
+    };
+  };
+
+  const points = calculatePoints();
+
+  // Trophies/Badges based on points and achievements
+  const getTrophies = () => {
+    const trophies = [];
+    
+    // Points-based trophies
+    if (points.total >= 10) trophies.push({ icon: "🌟", name: "Première Étoile", desc: "10 points atteints", unlocked: true });
+    if (points.total >= 25) trophies.push({ icon: "⭐", name: "Étoile Montante", desc: "25 points atteints", unlocked: true });
+    if (points.total >= 50) trophies.push({ icon: "🌟", name: "Constellation", desc: "50 points atteints", unlocked: true });
+    if (points.total >= 100) trophies.push({ icon: "💫", name: "Galaxie", desc: "100 points atteints", unlocked: true });
+    if (points.total >= 200) trophies.push({ icon: "🌌", name: "Univers", desc: "200 points atteints", unlocked: true });
+    
+    // Mastery-based trophies
+    if (points.masteredCount >= 1) trophies.push({ icon: "🎯", name: "Première Maîtrise", desc: "1 technique maîtrisée", unlocked: true });
+    if (points.masteredCount >= 5) trophies.push({ icon: "🏅", name: "Apprenti Confirmé", desc: "5 techniques maîtrisées", unlocked: true });
+    if (points.masteredCount >= 10) trophies.push({ icon: "🥉", name: "Pratiquant Bronze", desc: "10 techniques maîtrisées", unlocked: true });
+    if (points.masteredCount >= 25) trophies.push({ icon: "🥈", name: "Pratiquant Argent", desc: "25 techniques maîtrisées", unlocked: true });
+    if (points.masteredCount >= 50) trophies.push({ icon: "🥇", name: "Pratiquant Or", desc: "50 techniques maîtrisées", unlocked: true });
+    if (points.masteredCount >= 100) trophies.push({ icon: "🏆", name: "Maître Technique", desc: "100 techniques maîtrisées", unlocked: true });
+    
+    // Learning-based trophies
+    if (points.learningCount >= 5) trophies.push({ icon: "📚", name: "Curieux", desc: "5 techniques en apprentissage", unlocked: true });
+    if (points.learningCount >= 15) trophies.push({ icon: "🎓", name: "Étudiant Assidu", desc: "15 techniques en apprentissage", unlocked: true });
+    
+    // Session-based trophies
+    const totalSessions = statistics.total_practice_sessions || 0;
+    if (totalSessions >= 10) trophies.push({ icon: "🔥", name: "Flamme Naissante", desc: "10 séances au dojo", unlocked: true });
+    if (totalSessions >= 50) trophies.push({ icon: "🔥", name: "Feu Ardent", desc: "50 séances au dojo", unlocked: true });
+    if (totalSessions >= 100) trophies.push({ icon: "🌋", name: "Volcan", desc: "100 séances au dojo", unlocked: true });
+    
+    // Belt-based trophies
+    const beltOrder = currentBelt?.order || 0;
+    if (beltOrder >= 1) trophies.push({ icon: "🟡", name: "Ceinture Jaune", desc: "5e kyu atteint", unlocked: true });
+    if (beltOrder >= 2) trophies.push({ icon: "🟠", name: "Ceinture Orange", desc: "4e kyu atteint", unlocked: true });
+    if (beltOrder >= 3) trophies.push({ icon: "🟢", name: "Ceinture Verte", desc: "3e kyu atteint", unlocked: true });
+    if (beltOrder >= 4) trophies.push({ icon: "🔵", name: "Ceinture Bleue", desc: "2e kyu atteint", unlocked: true });
+    if (beltOrder >= 5) trophies.push({ icon: "🟤", name: "Ceinture Marron", desc: "1er kyu atteint", unlocked: true });
+    if (beltOrder >= 6) trophies.push({ icon: "⚫", name: "Ceinture Noire", desc: "Shodan atteint", unlocked: true });
+    
+    // Add locked trophies for motivation
+    const lockedTrophies = [];
+    if (points.total < 10) lockedTrophies.push({ icon: "🔒", name: "Première Étoile", desc: "10 points requis", unlocked: false });
+    if (points.total < 50 && points.total >= 10) lockedTrophies.push({ icon: "🔒", name: "Constellation", desc: "50 points requis", unlocked: false });
+    if (points.masteredCount < 10 && points.masteredCount >= 1) lockedTrophies.push({ icon: "🔒", name: "Pratiquant Bronze", desc: "10 techniques maîtrisées requises", unlocked: false });
+    
+    return { unlocked: trophies, locked: lockedTrophies.slice(0, 3) };
+  };
+
+  const trophies = getTrophies();
 
   // Handle belt change by user
   const handleBeltChange = (newBeltLevel) => {
