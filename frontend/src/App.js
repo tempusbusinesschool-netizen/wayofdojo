@@ -711,17 +711,92 @@ function AppContent() {
             </TabsContent>
           )}
           
-          {/* Onglet Adhérents - Admin Dojo uniquement */}
-          {isAdminDojo && (
+          {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+          {/* ESPACE DOJO - Gestion Adhérents */}
+          {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+          
+          {/* Onglet Dashboard Dojo */}
+          {isEspaceDojo && (
+            <TabsContent value="dojo-dashboard" className="mt-6">
+              <div className="space-y-6">
+                {/* En-tête Dojo */}
+                <Card className="bg-gradient-to-br from-orange-900/30 to-red-900/30 border-orange-700/50">
+                  <CardContent className="p-6">
+                    <div className="flex items-center gap-4">
+                      <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center">
+                        <Building2 className="w-8 h-8 text-white" />
+                      </div>
+                      <div>
+                        <h2 className="text-2xl font-bold text-white">Aikido La Rivière</h2>
+                        <div className="flex items-center gap-2 mt-1">
+                          <Badge className="bg-green-600 text-white">Actif</Badge>
+                          <span className="text-slate-400 text-sm">Abonnement Dojo</span>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+                
+                {/* Stats rapides */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  <Card className="bg-slate-800/50 border-slate-700">
+                    <CardContent className="p-4 text-center">
+                      <p className="text-3xl font-bold text-orange-400">{members.length}</p>
+                      <p className="text-sm text-slate-400">Adhérents actifs</p>
+                    </CardContent>
+                  </Card>
+                  <Card className="bg-slate-800/50 border-slate-700">
+                    <CardContent className="p-4 text-center">
+                      <p className="text-3xl font-bold text-green-400">85%</p>
+                      <p className="text-sm text-slate-400">Assiduité globale</p>
+                    </CardContent>
+                  </Card>
+                  <Card className="bg-slate-800/50 border-slate-700">
+                    <CardContent className="p-4 text-center">
+                      <p className="text-3xl font-bold text-purple-400">12</p>
+                      <p className="text-sm text-slate-400">Sessions ce mois</p>
+                    </CardContent>
+                  </Card>
+                  <Card className="bg-slate-800/50 border-slate-700">
+                    <CardContent className="p-4 text-center">
+                      <p className="text-3xl font-bold text-amber-400">25j</p>
+                      <p className="text-sm text-slate-400">Avant échéance</p>
+                    </CardContent>
+                  </Card>
+                </div>
+                
+                {/* Alertes */}
+                <Card className="bg-slate-900/50 border-slate-700">
+                  <CardHeader>
+                    <CardTitle className="text-white flex items-center gap-2">
+                      <AlertTriangle className="w-5 h-5 text-amber-400" />
+                      Alertes
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-3 p-3 bg-amber-900/20 rounded-lg border border-amber-700/30">
+                        <AlertTriangle className="w-4 h-4 text-amber-400" />
+                        <span className="text-amber-300 text-sm">Échéance abonnement dans 25 jours</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+          )}
+          
+          {/* Onglet Adhérents - Espace Dojo */}
+          {isEspaceDojo && (
             <TabsContent value="members" className="mt-6">
               <Card className="bg-slate-900/50 border-slate-700">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center gap-2">
                     <Users className="w-5 h-5 text-orange-400" />
-                    Liste des adhérents
+                    Gestion des Adhérents
                   </CardTitle>
                   <CardDescription className="text-slate-400">
-                    {membersStats?.active || 0} actifs • {membersStats?.pending || 0} en attente de validation
+                    Ajouter, modifier ou supprimer des adhérents manuellement
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -731,6 +806,182 @@ function AppContent() {
                     onRegisterChild={() => setShowChildRegistration(true)}
                     onRegisterAdult={() => setShowAdultRegistration(true)}
                   />
+                </CardContent>
+              </Card>
+            </TabsContent>
+          )}
+          
+          {/* Onglet Animation - Espace Dojo */}
+          {isEspaceDojo && (
+            <TabsContent value="animation" className="mt-6">
+              <div className="space-y-6">
+                <Card className="bg-slate-900/50 border-slate-700">
+                  <CardHeader>
+                    <CardTitle className="text-white flex items-center gap-2">
+                      <Sparkles className="w-5 h-5 text-purple-400" />
+                      Animation du Dojo
+                    </CardTitle>
+                    <CardDescription className="text-slate-400">
+                      Défis collectifs non compétitifs et suivi d'assiduité
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    {/* Défis collectifs */}
+                    <div className="grid md:grid-cols-2 gap-4 mb-6">
+                      <div className="p-4 bg-gradient-to-br from-purple-900/30 to-violet-900/30 rounded-xl border border-purple-700/30">
+                        <div className="flex items-center gap-3 mb-3">
+                          <div className="w-10 h-10 rounded-lg bg-purple-600 flex items-center justify-center">
+                            <span className="text-xl">🎯</span>
+                          </div>
+                          <div>
+                            <h4 className="font-semibold text-white">Défi du Mois</h4>
+                            <p className="text-xs text-purple-300">Pratique collective</p>
+                          </div>
+                        </div>
+                        <p className="text-slate-300 text-sm">100 chutes ukemi en groupe</p>
+                        <div className="mt-3 bg-slate-800 rounded-full h-2">
+                          <div className="bg-purple-500 h-2 rounded-full" style={{width: '65%'}}></div>
+                        </div>
+                        <p className="text-xs text-slate-400 mt-1">65% accompli</p>
+                      </div>
+                      
+                      <div className="p-4 bg-gradient-to-br from-emerald-900/30 to-green-900/30 rounded-xl border border-emerald-700/30">
+                        <div className="flex items-center gap-3 mb-3">
+                          <div className="w-10 h-10 rounded-lg bg-emerald-600 flex items-center justify-center">
+                            <span className="text-xl">🧘</span>
+                          </div>
+                          <div>
+                            <h4 className="font-semibold text-white">Méditation</h4>
+                            <p className="text-xs text-emerald-300">Sérénité collective</p>
+                          </div>
+                        </div>
+                        <p className="text-slate-300 text-sm">10 min de mokuso par cours</p>
+                        <div className="mt-3 bg-slate-800 rounded-full h-2">
+                          <div className="bg-emerald-500 h-2 rounded-full" style={{width: '80%'}}></div>
+                        </div>
+                        <p className="text-xs text-slate-400 mt-1">80% accompli</p>
+                      </div>
+                    </div>
+                    
+                    {/* Assiduité anonymisée */}
+                    <h4 className="text-lg font-semibold text-white mb-3">Assiduité Globale (anonymisée)</h4>
+                    <div className="grid grid-cols-7 gap-2">
+                      {['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'].map((jour, i) => (
+                        <div key={jour} className="text-center">
+                          <p className="text-xs text-slate-500 mb-1">{jour}</p>
+                          <div className={`h-8 rounded ${i < 5 ? 'bg-orange-500/50' : 'bg-slate-700'}`}></div>
+                        </div>
+                      ))}
+                    </div>
+                    <p className="text-xs text-slate-500 mt-2">Participation moyenne par jour de la semaine</p>
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+          )}
+          
+          {/* Onglet Techniques - Espace Dojo (référentiel lecture seule) */}
+          {isEspaceDojo && (
+            <TabsContent value="techniques-ref" className="mt-6">
+              <Card className="bg-slate-900/50 border-slate-700">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center gap-2">
+                    <Swords className="w-5 h-5 text-orange-400" />
+                    Les différentes techniques en Aïkido
+                  </CardTitle>
+                  <CardDescription className="text-slate-400">
+                    Référentiel des techniques (lecture seule - pas d'évaluation)
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {/* Immobilisations */}
+                    <div className="p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+                      <h4 className="font-semibold text-cyan-400 mb-3 flex items-center gap-2">
+                        <span>🔒</span> Immobilisations (Osae Waza)
+                      </h4>
+                      <ul className="space-y-1 text-sm text-slate-300">
+                        <li>• Ikkyo (1ère technique)</li>
+                        <li>• Nikyo (2ème technique)</li>
+                        <li>• Sankyo (3ème technique)</li>
+                        <li>• Yonkyo (4ème technique)</li>
+                        <li>• Gokyo (5ème technique)</li>
+                      </ul>
+                    </div>
+                    
+                    {/* Projections */}
+                    <div className="p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+                      <h4 className="font-semibold text-purple-400 mb-3 flex items-center gap-2">
+                        <span>🌀</span> Projections (Nage Waza)
+                      </h4>
+                      <ul className="space-y-1 text-sm text-slate-300">
+                        <li>• Irimi Nage (projection en entrant)</li>
+                        <li>• Shiho Nage (projection 4 directions)</li>
+                        <li>• Kote Gaeshi (retournement poignet)</li>
+                        <li>• Kaiten Nage (projection rotative)</li>
+                        <li>• Tenchi Nage (ciel et terre)</li>
+                      </ul>
+                    </div>
+                    
+                    {/* Attaques */}
+                    <div className="p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+                      <h4 className="font-semibold text-amber-400 mb-3 flex items-center gap-2">
+                        <span>⚔️</span> Attaques (Waza)
+                      </h4>
+                      <ul className="space-y-1 text-sm text-slate-300">
+                        <li>• Shomen Uchi (frappe frontale)</li>
+                        <li>• Yokomen Uchi (frappe latérale)</li>
+                        <li>• Tsuki (coup de poing)</li>
+                        <li>• Katate Dori (saisie poignet)</li>
+                        <li>• Ryote Dori (saisie deux mains)</li>
+                      </ul>
+                    </div>
+                    
+                    {/* Déplacements */}
+                    <div className="p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+                      <h4 className="font-semibold text-green-400 mb-3 flex items-center gap-2">
+                        <span>👣</span> Déplacements (Tai Sabaki)
+                      </h4>
+                      <ul className="space-y-1 text-sm text-slate-300">
+                        <li>• Irimi (entrer)</li>
+                        <li>• Tenkan (pivoter)</li>
+                        <li>• Kaiten (rotation)</li>
+                        <li>• Tsugi Ashi (pas glissé)</li>
+                      </ul>
+                    </div>
+                    
+                    {/* Chutes */}
+                    <div className="p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+                      <h4 className="font-semibold text-rose-400 mb-3 flex items-center gap-2">
+                        <span>🔄</span> Chutes (Ukemi)
+                      </h4>
+                      <ul className="space-y-1 text-sm text-slate-300">
+                        <li>• Mae Ukemi (chute avant)</li>
+                        <li>• Ushiro Ukemi (chute arrière)</li>
+                        <li>• Yoko Ukemi (chute latérale)</li>
+                        <li>• Tobu Ukemi (chute projetée)</li>
+                      </ul>
+                    </div>
+                    
+                    {/* Armes */}
+                    <div className="p-4 bg-slate-800/50 rounded-lg border border-slate-700">
+                      <h4 className="font-semibold text-orange-400 mb-3 flex items-center gap-2">
+                        <span>🗡️</span> Armes (Buki Waza)
+                      </h4>
+                      <ul className="space-y-1 text-sm text-slate-300">
+                        <li>• Jo (bâton)</li>
+                        <li>• Bokken (sabre en bois)</li>
+                        <li>• Tanto (couteau)</li>
+                      </ul>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-6 p-4 bg-amber-900/20 rounded-lg border border-amber-700/30">
+                    <p className="text-amber-300 text-sm flex items-center gap-2">
+                      <AlertTriangle className="w-4 h-4" />
+                      <span>🚫 <strong>Rappel :</strong> L'Espace Dojo ne permet pas d'évaluer techniquement les adhérents. La progression individuelle reste dans l'espace personnel de chaque pratiquant.</span>
+                    </p>
+                  </div>
                 </CardContent>
               </Card>
             </TabsContent>
