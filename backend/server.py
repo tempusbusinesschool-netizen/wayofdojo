@@ -780,7 +780,12 @@ async def register(data: UserRegister):
     if existing:
         raise HTTPException(status_code=400, detail="Un compte avec cet email existe déjà")
     
-    # Create user with default belt (6e kyu - white belt)
+    # Ensure default dojo exists
+    default_dojo = await db.dojos.find_one({"id": "aikido-la-riviere"})
+    if not default_dojo:
+        await db.dojos.insert_one(DEFAULT_DOJO)
+    
+    # Create user with default belt (6e kyu - white belt) and default dojo
     user = {
         "id": str(uuid.uuid4()),
         "first_name": data.first_name,
@@ -791,7 +796,9 @@ async def register(data: UserRegister):
         "progression": {},  # Will store technique_id -> {mastery_level, practice_count, last_practiced}
         "belt_level": "6e_kyu",  # Default: white belt (6e kyu)
         "belt_awarded_at": datetime.now(timezone.utc).isoformat(),
-        "belt_awarded_by": "system"  # Initial belt is system-assigned
+        "belt_awarded_by": "system",  # Initial belt is system-assigned
+        "dojo_id": "aikido-la-riviere",  # Default dojo
+        "dojo_name": "Aikido La Rivière"
     }
     
     await db.users.insert_one(user)
@@ -799,7 +806,7 @@ async def register(data: UserRegister):
     # Generate token
     token = create_token(user["id"], user["email"])
     
-    logger.info(f"New user registered: {user['email']}")
+    logger.info(f"New user registered: {user['email']} in dojo: {user['dojo_name']}")
     
     return {
         "token": token,
@@ -807,7 +814,9 @@ async def register(data: UserRegister):
             "id": user["id"],
             "first_name": user["first_name"],
             "last_name": user["last_name"],
-            "email": user["email"]
+            "email": user["email"],
+            "dojo_id": user["dojo_id"],
+            "dojo_name": user["dojo_name"]
         }
     }
 
