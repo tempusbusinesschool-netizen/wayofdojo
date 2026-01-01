@@ -16,8 +16,8 @@ const PLANS = {
     tagline: "Ton parcours personnel, sans engagement",
     price: "4,50 €",
     period: "/mois",
-    trial: "3 mois gratuits",
-    trialDays: 90,
+    trial: "14 jours gratuits",
+    trialDays: 14,
     features: [
       { text: "Accès complet aux techniques de révision", included: true },
       { text: "Suivi personnel de progression", included: true },
@@ -27,12 +27,12 @@ const PLANS = {
       { text: "Gamification douce (régularité, engagement)", included: true }
     ],
     conditions: [
-      "3 mois gratuits",
+      "14 jours d'essai gratuit",
+      "Annulation possible pendant l'essai",
       "Puis 4,50 € / mois",
-      "Sans engagement",
-      "Résiliable à tout moment"
+      "Sans engagement, résiliable à tout moment"
     ],
-    cta: "Commencer mon parcours Ninja",
+    cta: "Commencer mon essai gratuit",
     footer: "Un outil pour rester aligné avec ta pratique, pas pour te juger.",
     gradient: "from-amber-500 to-orange-500",
     borderColor: "border-amber-500/50",
@@ -46,8 +46,8 @@ const PLANS = {
     badge: "Réservé aux clubs et enseignants",
     price: "65 €",
     period: "/mois",
-    trial: "10 jours gratuits",
-    trialDays: 10,
+    trial: "14 jours gratuits",
+    trialDays: 14,
     features: [
       { text: "Espace de gestion du dojo", included: true },
       { text: "Gestion des adhérents (nombre illimité)", included: true },
@@ -59,12 +59,12 @@ const PLANS = {
       { text: "Aucun grade, diplôme ou certification", included: false }
     ],
     conditions: [
-      "10 jours gratuits",
+      "14 jours d'essai gratuit",
+      "Annulation possible pendant l'essai",
       "Puis 65 € / mois",
-      "Engagement 12 mois",
-      "Reconduction tacite annuelle"
+      "Engagement 12 mois après l'essai"
     ],
-    cta: "Activer l'espace Dojo",
+    cta: "Commencer mon essai gratuit",
     footer: "Un outil pour structurer et animer, sans interférer avec l'enseignement.",
     gradient: "from-cyan-500 to-blue-500",
     borderColor: "border-cyan-500/50",
