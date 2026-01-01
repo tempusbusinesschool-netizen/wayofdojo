@@ -188,11 +188,14 @@ metadata:
 
 test_plan:
   current_focus:
-    - "GET /api/dojos endpoint"
-    - "POST /api/dojos endpoint"
-    - "DELETE /api/dojos/{dojo_id} endpoint"
-    - "GET /api/visitors filtering by dojo"
-    - "Super admin password validation"
+    - "Admin login with password 'aikido2024'"
+    - "Visiteurs tab navigation"
+    - "Dojo filter dropdown visibility"
+    - "Gérer les dojos button and modal"
+    - "Visitor cards with dojo name badges"
+    - "Dojo management modal functionality"
+    - "Create new dojo form"
+    - "Visitor filtering by dojo dropdown"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
@@ -200,3 +203,5 @@ test_plan:
 agent_communication:
   - agent: "testing"
     message: "Backend Multi-Dojo API testing completed successfully. All 5 backend endpoints tested and working correctly. Minor serialization issue in POST response but functionality is intact. Frontend testing required for complete feature validation."
+  - agent: "testing"
+    message: "Frontend Multi-Dojo testing completed successfully! All 8 frontend features tested and working correctly. Fixed critical bugs: 1) DojoManagement API request format (dojo/auth structure), 2) Backend ObjectId serialization in dojo creation response. Minor issue: Building2 icons in dojo badges not rendering (Lucide React issue) but badges display correctly with blue styling. All core functionality working as expected."
