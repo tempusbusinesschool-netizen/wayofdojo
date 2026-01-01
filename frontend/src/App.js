@@ -314,7 +314,6 @@ function AppContent() {
                 <div>
                   <p className="text-sm text-amber-400 font-medium">Aikido</p>
                   <p className="text-lg md:text-xl text-white font-bold">Techniques d'Aikido</p>
-                  <a href="mailto:aikidolariviere@gmail.com" className="text-xs text-cyan-400 hover:text-cyan-300 hidden sm:block">aikidolariviere@gmail.com</a>
                 </div>
               </div>
             </div>
