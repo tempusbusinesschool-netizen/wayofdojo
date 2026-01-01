@@ -32,8 +32,7 @@ import {
   ReglementInterieur,
   StatisticsDashboard,
   CGUDialog,
-  MentionsLegalesDialog,
-  PolitiqueConfidentialiteDialog
+  MentionsLegalesDialog
 } from "@/components";
 
 // Import Auth Context
