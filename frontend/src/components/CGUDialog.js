@@ -40,7 +40,7 @@ function CGUDialog({ isOpen, onClose }) {
             </ul>
             <p className="mt-3">
               Le Service est strictement informatif et pédagogique.
-              Il est destiné à compléter l'enseignement dispensé en dojo, notamment au sein de l'association/club d'aïkido « La Rivière », et ne constitue en aucun cas :
+              Il est destiné à compléter l'enseignement dispensé en dojo et ne constitue en aucun cas :
             </p>
             <ul className="list-disc pl-6 space-y-1">
               <li>un cours pratique à distance ;</li>
