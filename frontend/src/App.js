@@ -920,12 +920,6 @@ function AppContent() {
         onClose={() => setShowMentionsLegales(false)}
       />
 
-      {/* Politique de Confidentialité Dialog */}
-      <PolitiqueConfidentialiteDialog
-        isOpen={showPolitiqueConfidentialite}
-        onClose={() => setShowPolitiqueConfidentialite(false)}
-      />
-
       {/* Dojo Management Dialog */}
       <DojoManagement
         isOpen={showDojoManagement}
