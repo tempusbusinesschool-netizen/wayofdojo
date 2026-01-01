@@ -844,15 +844,26 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                   <Award className="w-5 h-5 mr-2" />
                   Changer ma ceinture
                 </Button>
-                <Button 
-                  onClick={() => setShowTimelinePanel(true)}
-                  variant="outline"
-                  className="border-amber-500/50 text-amber-400 hover:bg-amber-900/30 hover:text-amber-300 font-semibold px-4 py-2 rounded-xl"
-                >
-                  <Clock className="w-4 h-4 mr-2" />
-                  Mon Parcours
-                </Button>
-                <p className="text-slate-500 text-xs text-center">Clique pour voir<br/>ton historique</p>
+                <div className="flex gap-2">
+                  <Button 
+                    onClick={() => setShowTimelinePanel(true)}
+                    variant="outline"
+                    size="sm"
+                    className="border-amber-500/50 text-amber-400 hover:bg-amber-900/30 hover:text-amber-300 font-semibold px-3 py-1.5 rounded-lg"
+                  >
+                    <Clock className="w-4 h-4 mr-1" />
+                    Parcours
+                  </Button>
+                  <Button 
+                    onClick={() => setShowJournalPanel(true)}
+                    variant="outline"
+                    size="sm"
+                    className="border-pink-500/50 text-pink-400 hover:bg-pink-900/30 hover:text-pink-300 font-semibold px-3 py-1.5 rounded-lg"
+                  >
+                    <BookOpen className="w-4 h-4 mr-1" />
+                    Journal
+                  </Button>
+                </div>
               </div>
             </div>
 
