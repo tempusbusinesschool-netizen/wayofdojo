@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import { SUPER_ADMIN_PASSWORD, ADMIN_DOJO_PASSWORD } from "@/constants";
 
 function AdminLoginDialog({ isOpen, onClose, onSuccess }) {
-  const [step, setStep] = useState('choice'); // 'choice', 'super_admin', 'admin_dojo'
+  const [step, setStep] = useState('choice'); // 'choice', 'admin', 'espace_dojo'
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -26,15 +26,15 @@ function AdminLoginDialog({ isOpen, onClose, onSuccess }) {
     setError('');
     
     setTimeout(() => {
-      if (step === 'super_admin' && password === SUPER_ADMIN_PASSWORD) {
-        sessionStorage.setItem('aikido_admin', 'super_admin');
-        toast.success("🛡️ Connexion Super Admin réussie");
-        onSuccess('super_admin');
+      if (step === 'admin' && password === SUPER_ADMIN_PASSWORD) {
+        sessionStorage.setItem('aikido_admin', 'admin');
+        toast.success("🛡️ Connexion Admin réussie");
+        onSuccess('admin');
         handleClose();
-      } else if (step === 'admin_dojo' && password === ADMIN_DOJO_PASSWORD) {
-        sessionStorage.setItem('aikido_admin', 'admin_dojo');
-        toast.success("🏯 Connexion Admin Dojo réussie");
-        onSuccess('admin_dojo');
+      } else if (step === 'espace_dojo' && password === ADMIN_DOJO_PASSWORD) {
+        sessionStorage.setItem('aikido_admin', 'espace_dojo');
+        toast.success("🏯 Connexion Espace Dojo réussie");
+        onSuccess('espace_dojo');
         handleClose();
       } else {
         setError('Mot de passe incorrect');
@@ -51,13 +51,13 @@ function AdminLoginDialog({ isOpen, onClose, onSuccess }) {
           <Lock className="w-8 h-8 text-white" />
         </div>
         <p className="text-slate-400 text-sm">
-          Sélectionnez votre type d'accès administrateur
+          Sélectionnez votre espace de gestion
         </p>
       </div>
       
-      {/* Super Admin Option */}
+      {/* Admin Option (Plateforme) */}
       <button
-        onClick={() => setStep('super_admin')}
+        onClick={() => setStep('admin')}
         className="w-full p-4 rounded-lg border-2 border-slate-700 hover:border-cyan-500 bg-slate-800/50 hover:bg-slate-800 transition-all group text-left"
       >
         <div className="flex items-center gap-4">
@@ -66,18 +66,21 @@ function AdminLoginDialog({ isOpen, onClose, onSuccess }) {
           </div>
           <div>
             <h3 className="font-bold text-white group-hover:text-cyan-400 transition-colors">
-              🛡️ Super Admin
+              🛡️ Admin
             </h3>
             <p className="text-sm text-slate-400">
               Gestion plateforme & dojos
+            </p>
+            <p className="text-xs text-slate-500 mt-1">
+              Cadre • Contrôle • Conformité
             </p>
           </div>
         </div>
       </button>
       
-      {/* Admin Dojo Option */}
+      {/* Espace Dojo Option */}
       <button
-        onClick={() => setStep('admin_dojo')}
+        onClick={() => setStep('espace_dojo')}
         className="w-full p-4 rounded-lg border-2 border-slate-700 hover:border-orange-500 bg-slate-800/50 hover:bg-slate-800 transition-all group text-left"
       >
         <div className="flex items-center gap-4">
@@ -86,10 +89,13 @@ function AdminLoginDialog({ isOpen, onClose, onSuccess }) {
           </div>
           <div>
             <h3 className="font-bold text-white group-hover:text-orange-400 transition-colors">
-              🏯 Admin Dojo
+              🏯 Espace Dojo
             </h3>
             <p className="text-sm text-slate-400">
-              Gestion des adhérents du club
+              Gestion du club & adhérents
+            </p>
+            <p className="text-xs text-slate-500 mt-1">
+              Gestion humaine • Locale
             </p>
           </div>
         </div>
@@ -106,16 +112,16 @@ function AdminLoginDialog({ isOpen, onClose, onSuccess }) {
   );
 
   const renderPasswordForm = () => {
-    const isSuperAdmin = step === 'super_admin';
-    const title = isSuperAdmin ? "Super Admin" : "Admin Dojo";
-    const subtitle = isSuperAdmin 
-      ? "Gestion de la plateforme et des dojos" 
-      : "Gestion des adhérents de votre club";
-    const gradientFrom = isSuperAdmin ? "from-cyan-500" : "from-orange-500";
-    const gradientTo = isSuperAdmin ? "to-blue-600" : "to-red-600";
-    const buttonBg = isSuperAdmin ? "bg-cyan-600 hover:bg-cyan-500" : "bg-orange-600 hover:bg-orange-500";
-    const icon = isSuperAdmin ? <Shield className="w-8 h-8 text-white" /> : <Building2 className="w-8 h-8 text-white" />;
-    const emoji = isSuperAdmin ? "🛡️" : "🏯";
+    const isAdmin = step === 'admin';
+    const title = isAdmin ? "Admin" : "Espace Dojo";
+    const subtitle = isAdmin 
+      ? "Gestion plateforme, dojos & conformité" 
+      : "Gestion du club et des adhérents";
+    const gradientFrom = isAdmin ? "from-cyan-500" : "from-orange-500";
+    const gradientTo = isAdmin ? "to-blue-600" : "to-red-600";
+    const buttonBg = isAdmin ? "bg-cyan-600 hover:bg-cyan-500" : "bg-orange-600 hover:bg-orange-500";
+    const icon = isAdmin ? <Shield className="w-8 h-8 text-white" /> : <Building2 className="w-8 h-8 text-white" />;
+    const emoji = isAdmin ? "🛡️" : "🏯";
 
     return (
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -182,10 +188,10 @@ function AdminLoginDialog({ isOpen, onClose, onSuccess }) {
         <DialogHeader>
           <DialogTitle className="text-xl font-bold flex items-center gap-2">
             <Lock className="w-5 h-5 text-cyan-400" />
-            Espace Administrateur
+            Espace de Gestion
           </DialogTitle>
           <DialogDescription className="text-slate-400">
-            Accédez à l'espace de gestion
+            Accédez à votre espace dédié
           </DialogDescription>
         </DialogHeader>
         
