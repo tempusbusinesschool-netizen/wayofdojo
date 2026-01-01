@@ -855,24 +855,62 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                   {currentBelt.message}
                 </p>
 
-                {/* Symbolic Role (if available) */}
-                {currentBelt.symbolicRole && (
+                {/* ACTIVE Symbolic Role Display */}
+                {activeSymbolicRole && (
+                  <div className="bg-gradient-to-r from-purple-600/60 to-indigo-600/60 rounded-xl p-4 border-2 border-purple-400/50 shadow-lg shadow-purple-500/20 mb-3">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <Shield className="w-6 h-6 text-purple-300 animate-pulse" />
+                        <span className="text-purple-100 font-bold text-sm">🎭 Rôle Actif</span>
+                      </div>
+                      <Button
+                        onClick={() => handleToggleSymbolicRole(false)}
+                        disabled={roleLoading}
+                        size="sm"
+                        variant="ghost"
+                        className="text-purple-300 hover:text-red-400 hover:bg-red-900/30 text-xs"
+                      >
+                        Désactiver
+                      </Button>
+                    </div>
+                    <p className="text-white font-bold text-lg">{activeSymbolicRole.name}</p>
+                    <p className="text-purple-200 text-xs mt-1">
+                      Vertu : <span className="text-white font-semibold">{activeSymbolicRole.virtue}</span>
+                    </p>
+                    <p className="text-purple-300/80 text-xs mt-1 italic">
+                      {activeSymbolicRole.intention}
+                    </p>
+                  </div>
+                )}
+
+                {/* Symbolic Role Available but not activated */}
+                {!activeSymbolicRole && currentBelt.symbolicRole && (
                   <div className="bg-gradient-to-r from-purple-900/50 to-indigo-900/50 rounded-xl p-4 border border-purple-500/30">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Award className="w-5 h-5 text-purple-400" />
-                      <span className="text-purple-300 font-semibold text-sm">Rôle symbolique disponible</span>
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-2">
+                        <Award className="w-5 h-5 text-purple-400" />
+                        <span className="text-purple-300 font-semibold text-sm">Rôle symbolique disponible</span>
+                      </div>
                     </div>
                     <p className="text-white font-bold">{currentBelt.symbolicRole.name}</p>
                     <p className="text-purple-300 text-xs mt-1">
                       Vertu : <span className="text-purple-200">{currentBelt.symbolicRole.virtue}</span>
                     </p>
-                    <p className="text-slate-400 text-xs mt-1 italic">
+                    <p className="text-slate-400 text-xs mt-1 italic mb-3">
                       {currentBelt.symbolicRole.intention}
                     </p>
+                    <Button
+                      onClick={() => handleToggleSymbolicRole(true)}
+                      disabled={roleLoading}
+                      size="sm"
+                      className="w-full bg-gradient-to-r from-purple-500 to-indigo-500 hover:from-purple-400 hover:to-indigo-400 text-white font-bold"
+                    >
+                      {roleLoading ? "Activation..." : "🎭 Activer ce rôle"}
+                    </Button>
                   </div>
                 )}
 
-                {!currentBelt.symbolicRole && (
+                {!activeSymbolicRole && !currentBelt.symbolicRole && (
                   <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700">
                     <p className="text-slate-400 text-sm">
                       🌱 Continue ton chemin pour débloquer un rôle symbolique au prochain grade !
