@@ -42,7 +42,7 @@ function MentionsLegalesDialog({ isOpen, onClose }) {
             <h3 className="text-lg font-semibold text-white">3. Partenaire pédagogique</h3>
             <p>Le service est proposé en lien pédagogique avec :</p>
             <div className="bg-slate-800/50 p-4 rounded-lg mt-2">
-              <p><strong>Association / Club :</strong> Aïkido La Rivière</p>
+              <p><strong>Association / Club :</strong> Techniques Aikido</p>
               <p><strong>Statut :</strong> Association loi 1901</p>
               <p><strong>Rôle :</strong> partenaire pédagogique</p>
             </div>
