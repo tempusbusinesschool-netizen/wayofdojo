@@ -560,8 +560,9 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                   className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold px-4 py-2 rounded-xl shadow-lg transform hover:scale-105 transition-all"
                 >
                   <Award className="w-5 h-5 mr-2" />
-                  Voir mon parcours
+                  Changer ma ceinture
                 </Button>
+                <p className="text-slate-500 text-xs text-center">Clique pour indiquer<br/>ton grade actuel</p>
               </div>
             </div>
 
@@ -587,7 +588,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
             {/* Philosophy Message */}
             <div className="mt-4 text-center">
               <p className="text-slate-400 text-xs italic">
-                🎌 La ceinture est un jalon sur ton chemin, attribuée par ton enseignant au dojo.
+                🎌 Indique ta ceinture actuelle pour suivre ton chemin en Aïkido.
                 <br />Pas de points, pas de compétition – juste ta progression personnelle.
               </p>
             </div>
