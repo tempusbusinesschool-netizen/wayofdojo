@@ -228,6 +228,54 @@ frontend:
         agent: "testing"
         comment: "Visitor filtering by dojo dropdown working correctly. Shows 'Tous les dojos' option and allows filtering visitors by specific dojos."
 
+  - task: "Onboarding Flow (4 screens)"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/OnboardingFlow.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "Onboarding flow working perfectly. All 4 screens display correctly: Screen 1 (Bienvenue dans ton parcours Ninja with ninja emoji), Screen 2 (Ce que fait l'application with 4 checkmarks and blue note), Screen 3 (Ton parcours Ninja est unique with purple diamonds and 'Aucune comparaison' message), Screen 4 (Clubs & Dojos with bullet points and independence note). Navigation buttons (Suivant, Précédent, Passer) work correctly. Progress dots update properly."
+
+  - task: "Paywall Dialog (Ninja and Dojo plans)"
+    implemented: true
+    working: false
+    file: "/app/frontend/src/components/PaywallDialog.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "Paywall dialog implementation exists but does not open after completing onboarding flow. The 'Découvrir les offres' button on final onboarding screen does not trigger paywall. However, paywall can be opened via sparkle button in header and displays both plans correctly: Ninja individuel (4,50 €/mois, 3 mois gratuits) and Offre Dojo (65 €/mois, 10 jours gratuits) with proper features and CTAs."
+
+  - task: "Dojo Registration Dialog (2-step form)"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/DojoRegistrationDialog.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "Dojo registration dialog working perfectly. 2-step form functions correctly: Step 1 (dojo info: name, city, phone, address, description) and Step 2 (admin account: first name, last name, email, password, confirm password). Progress bar shows steps correctly. Navigation buttons ('Continuer →' and '← Retour') work properly. All form fields are present and functional."
+
+  - task: "Header Buttons (when not logged in)"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/App.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "All header buttons working correctly when not logged in: 🥷 S'inscrire (opens auth dialog), 🏯 Espace Dojo (opens dojo registration), ✨ sparkle icon (opens paywall), and Admin button (visible and functional). All buttons are properly positioned and responsive."
+
 metadata:
   created_by: "testing_agent"
   version: "1.0"
