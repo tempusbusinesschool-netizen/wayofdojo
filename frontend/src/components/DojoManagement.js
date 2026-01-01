@@ -54,8 +54,8 @@ function DojoManagement({ isOpen, onClose }) {
 
     try {
       const response = await axios.post(`${API}/dojos`, {
-        ...formData,
-        super_admin_password: superAdminPassword
+        dojo: formData,
+        auth: { super_admin_password: superAdminPassword }
       });
       
       if (response.data.success) {
