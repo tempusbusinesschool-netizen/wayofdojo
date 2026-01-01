@@ -311,6 +311,26 @@ function AppContent() {
       toast.error("Erreur lors de l'attribution de la ceinture");
     }
   };
+
+  // Function for user to change their own belt (self-declaration)
+  const handleUserBeltChange = async (newBeltLevel) => {
+    if (!isAuthenticated) {
+      toast.error("Connecte-toi pour enregistrer ta ceinture !");
+      return;
+    }
+    
+    try {
+      const response = await axios.put(`${API}/auth/belt`, {
+        belt_level: newBeltLevel
+      });
+      
+      setUserBelt(newBeltLevel);
+      toast.success(`${AIKIDO_BELTS[newBeltLevel]?.emoji} ${response.data.message}`);
+    } catch (error) {
+      console.error("Error updating belt:", error);
+      toast.error("Erreur lors de la mise à jour de ta ceinture");
+    }
+  };
   
   if (loading || authLoading) {
     return (
