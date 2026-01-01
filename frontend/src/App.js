@@ -81,11 +81,17 @@ function AppContent() {
   const [showPaywall, setShowPaywall] = useState(false);
   const [showDojoRegistration, setShowDojoRegistration] = useState(false);
   
-  // Admin state
-  const [isAdmin, setIsAdmin] = useState(() => {
-    return sessionStorage.getItem('aikido_admin') === 'true';
+  // Admin state - now supports two types: 'super_admin' and 'admin_dojo'
+  const [adminType, setAdminType] = useState(() => {
+    const stored = sessionStorage.getItem('aikido_admin');
+    return stored && stored !== 'false' ? stored : null;
   });
   const [showAdminLogin, setShowAdminLogin] = useState(false);
+  
+  // Computed admin flags
+  const isAdmin = adminType !== null;
+  const isSuperAdmin = adminType === 'super_admin';
+  const isAdminDojo = adminType === 'admin_dojo';
   
   // Handle onboarding completion
   const handleOnboardingComplete = () => {
