@@ -300,11 +300,11 @@ function AppContent() {
             <div className="flex items-center gap-4">
               <img 
                 src="/images/logo-aikido.png" 
-                alt="Logo Aikido La Rivière" 
+                alt="Logo Techniques Aikido" 
                 className="h-20 w-auto object-contain"
               />
               <div className="hidden sm:block">
-                <p className="text-sm text-slate-300 font-medium">68, rue du Docteur Schweitzer<br/>97421 SAINT-LOUIS - RÉUNION</p>
+                <p className="text-lg text-white font-bold">Techniques Aikido</p>
                 <a href="mailto:aikidolariviere@gmail.com" className="text-xs text-cyan-400 hover:text-cyan-300">aikidolariviere@gmail.com</a>
               </div>
             </div>
