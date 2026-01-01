@@ -14,3 +14,5 @@ export { default as MemberRegistrationForm } from './MemberRegistrationForm';
 export { default as ReglementInterieur } from './ReglementInterieur';
 export { default as StatisticsDashboard } from './StatisticsDashboard';
 export { default as HakamaSection } from './HakamaSection';
+export { default as DojoMemberForm } from './DojoMemberForm';
+export { default as DojoMembersList } from './DojoMembersList';
