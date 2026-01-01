@@ -648,17 +648,14 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               
               {/* ====== TITRE DE LA PLATEFORME ====== */}
               <div className="relative pt-6 pb-4 px-4 md:px-8 text-center border-b border-amber-500/20">
-                {/* Badge Plateforme */}
-                <div className="inline-flex items-center gap-3 mb-4 px-6 py-2 bg-gradient-to-r from-amber-500/20 via-yellow-500/20 to-amber-500/20 rounded-full border border-amber-500/40">
-                  <span className="text-amber-400 text-2xl md:text-3xl font-bold animate-pulse">平常心</span>
-                  <span className="text-amber-400 text-2xl md:text-3xl font-bold animate-pulse">平常心</span>
-                </div>
                 
-                {/* Titre Principal avec effet gradient animé */}
-                <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black mb-3">
+                {/* Titre Principal avec 平常心 à gauche et à droite */}
+                <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black mb-3 flex items-center justify-center gap-3 md:gap-6">
+                  <span className="text-amber-400 text-xl md:text-2xl lg:text-3xl font-bold animate-pulse">平常心</span>
                   <span className="bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">
                     Techniques d&apos;Aïkido
                   </span>
+                  <span className="text-amber-400 text-xl md:text-2xl lg:text-3xl font-bold animate-pulse">平常心</span>
                 </h1>
                 
                 {/* Sous-titre */}
