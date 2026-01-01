@@ -97,7 +97,7 @@ function AuthDialog({ isOpen, onClose }) {
       <DialogContent className="max-w-md bg-slate-900 border-slate-700 text-white">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold text-center">
-            Aikido La Rivière
+            Techniques Aikido
           </DialogTitle>
           <DialogDescription className="text-slate-400 text-center">
             Connectez-vous pour sauvegarder votre progression
