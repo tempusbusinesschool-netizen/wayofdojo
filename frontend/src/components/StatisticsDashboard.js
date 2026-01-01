@@ -730,8 +730,6 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               {/* ====== GUIDE EN 4 ÉTAPES ====== */}
               <div className="relative px-4 md:px-8 py-6 border-b border-amber-500/20">
                 <div className="flex flex-col md:flex-row items-center justify-center gap-2 mb-5">
-                  <span className="text-green-400 font-bold text-lg">💚 C&apos;est Gratuit !</span>
-                  <span className="hidden md:inline text-amber-400">•</span>
                   <span className="text-white font-bold text-lg">🎯 Comment ça marche ?</span>
                 </div>
                 
