@@ -372,6 +372,82 @@ class UserProgressionUpdate(BaseModel):
 
 
 # ═══════════════════════════════════════════════════════════════════════════════════
+# AIKIDO BELT SYSTEM (Real Grades - No XP)
+# ═══════════════════════════════════════════════════════════════════════════════════
+
+# Belt levels following real Aikido progression
+AIKIDO_BELTS = {
+    "6e_kyu": {
+        "name": "Ceinture Blanche",
+        "grade": "6e kyu",
+        "color": "#FFFFFF",
+        "emoji": "⚪",
+        "order": 0,
+        "symbolic_role": None,
+        "message": "Bienvenue sur le chemin de l'Aïkido !"
+    },
+    "5e_kyu": {
+        "name": "Ceinture Jaune", 
+        "grade": "5e kyu",
+        "color": "#FCD34D",
+        "emoji": "🟡",
+        "order": 1,
+        "symbolic_role": {"name": "Gardien du respect", "virtue": "Respect", "intention": "Cadre (salut, soin du tatami, posture)"},
+        "message": "Tu apprends les bases avec sérieux !"
+    },
+    "4e_kyu": {
+        "name": "Ceinture Orange",
+        "grade": "4e kyu", 
+        "color": "#FB923C",
+        "emoji": "🟠",
+        "order": 2,
+        "symbolic_role": {"name": "Pilier de persévérance", "virtue": "Persévérance", "intention": "Continuité et encouragement"},
+        "message": "Ton engagement grandit !"
+    },
+    "3e_kyu": {
+        "name": "Ceinture Verte",
+        "grade": "3e kyu",
+        "color": "#22C55E", 
+        "emoji": "🟢",
+        "order": 3,
+        "symbolic_role": {"name": "Médiateur du calme", "virtue": "Maîtrise de soi", "intention": "Régulation de l'intensité, écoute"},
+        "message": "Tu te stabilises dans ta pratique !"
+    },
+    "2e_kyu": {
+        "name": "Ceinture Bleue",
+        "grade": "2e kyu",
+        "color": "#3B82F6",
+        "emoji": "🔵", 
+        "order": 4,
+        "symbolic_role": {"name": "Soutien du dojo", "virtue": "Bienveillance", "intention": "Aide aux débutants, soutien logistique"},
+        "message": "Ta maturité se confirme !"
+    },
+    "1er_kyu": {
+        "name": "Ceinture Marron",
+        "grade": "1er kyu",
+        "color": "#92400E",
+        "emoji": "🟤",
+        "order": 5,
+        "symbolic_role": {"name": "Passeur de voie", "virtue": "Transmission", "intention": "Transmettre sans imposer"},
+        "message": "Tu es prêt à transmettre !"
+    },
+    "shodan": {
+        "name": "Ceinture Noire",
+        "grade": "Shodan (1er Dan)",
+        "color": "#1F2937",
+        "emoji": "⚫",
+        "order": 6,
+        "symbolic_role": None,
+        "message": "Le vrai chemin commence maintenant !"
+    }
+}
+
+class BeltAssignment(BaseModel):
+    user_id: str
+    belt_level: str  # e.g., "5e_kyu", "4e_kyu", etc.
+
+
+# ═══════════════════════════════════════════════════════════════════════════════════
 # AUTHENTICATION ENDPOINTS
 # ═══════════════════════════════════════════════════════════════════════════════════
 
