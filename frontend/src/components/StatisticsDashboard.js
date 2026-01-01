@@ -987,25 +987,25 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
           {/* DÉPLACEMENTS - Intégré dans Ma Progression Ninja */}
           <div className="mt-6 pt-6 border-t-2 border-purple-500/30">
             <div 
-              className="flex items-center justify-between cursor-pointer group"
+              className="flex items-center justify-between cursor-pointer group p-4 rounded-xl bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 shadow-lg shadow-pink-500/40 hover:shadow-pink-500/60 hover:scale-[1.01] transition-all"
               onClick={() => setShowDeplacementsExpanded(!showDeplacementsExpanded)}
             >
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-4">
                 <div className="relative">
-                  <div className="p-3 rounded-xl bg-gradient-to-br from-orange-400 to-pink-500 shadow-lg shadow-orange-500/30 group-hover:scale-110 transition-transform">
-                    <span className="text-2xl">🦶</span>
+                  <div className="p-3 rounded-xl bg-white/20 backdrop-blur-sm shadow-inner group-hover:scale-110 transition-transform">
+                    <span className="text-3xl">🦶</span>
                   </div>
-                  <div className="absolute -top-1 -right-1 text-lg animate-bounce">✨</div>
+                  <div className="absolute -top-2 -right-2 text-xl animate-bounce">✨</div>
                 </div>
                 <div>
-                  <h4 className="text-lg font-bold bg-gradient-to-r from-orange-400 via-pink-400 to-purple-400 bg-clip-text text-transparent flex items-center gap-2">
+                  <h4 className="text-xl md:text-2xl font-bold text-white flex items-center gap-2 drop-shadow-lg">
                     Les Déplacements 👣
                   </h4>
-                  <p className="text-purple-300 text-xs">🎯 Apprends à bouger comme un vrai ninja ! 🥷</p>
+                  <p className="text-white/90 text-sm font-medium">🎯 Apprends à bouger comme un vrai ninja ! 🥷</p>
                 </div>
               </div>
-              <div className={`p-2 rounded-full bg-purple-600/30 transform transition-transform duration-300 ${showDeplacementsExpanded ? 'rotate-180' : ''}`}>
-                <ChevronDown className="w-5 h-5 text-white" />
+              <div className={`p-2 rounded-full bg-white/20 transform transition-transform duration-300 ${showDeplacementsExpanded ? 'rotate-180' : ''}`}>
+                <ChevronDown className="w-6 h-6 text-white" />
               </div>
             </div>
 
