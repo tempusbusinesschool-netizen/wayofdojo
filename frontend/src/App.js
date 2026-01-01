@@ -526,6 +526,8 @@ function AppContent() {
                 userEmail={user?.email}
                 userBelt={isAuthenticated ? userBelt : null}
                 onBeltChange={handleUserBeltChange}
+                isAuthenticated={isAuthenticated}
+                onRefreshData={fetchData}
               />
             )}
             
