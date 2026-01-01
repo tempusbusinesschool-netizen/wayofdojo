@@ -950,6 +950,108 @@ async def get_user_symbolic_role(user: dict = Depends(require_auth)):
     }
 
 
+# ═══════════════════════════════════════════════════════════════════════════════════
+# PARCOURS / TIMELINE ENDPOINTS
+# ═══════════════════════════════════════════════════════════════════════════════════
+
+@api_router.get("/auth/timeline")
+async def get_user_timeline(user: dict = Depends(require_auth)):
+    """Récupérer le parcours chronologique de l'utilisateur"""
+    events = []
+    
+    # 1. Account creation event
+    created_at = user.get("created_at")
+    if created_at:
+        events.append({
+            "type": "account_created",
+            "icon": "🌟",
+            "title": "Début du parcours",
+            "description": "Bienvenue sur le chemin de l'Aïkido !",
+            "date": created_at,
+            "color": "amber"
+        })
+    
+    # 2. Belt changes
+    belt_level = user.get("belt_level", "6e_kyu")
+    belt_awarded_at = user.get("belt_awarded_at")
+    if belt_level != "6e_kyu" and belt_awarded_at:
+        belt_info = AIKIDO_BELTS.get(belt_level, {})
+        events.append({
+            "type": "belt_change",
+            "icon": belt_info.get("emoji", "🥋"),
+            "title": f"Ceinture obtenue : {belt_info.get('name', belt_level)}",
+            "description": f"Grade : {belt_info.get('grade', '')}",
+            "date": belt_awarded_at,
+            "color": "yellow"
+        })
+    
+    # 3. Symbolic role activation
+    active_role = user.get("active_symbolic_role")
+    if active_role and active_role.get("activated_at"):
+        events.append({
+            "type": "role_activated",
+            "icon": "🎭",
+            "title": f"Rôle activé : {active_role.get('name', '')}",
+            "description": f"Vertu : {active_role.get('virtue', '')}",
+            "date": active_role.get("activated_at"),
+            "color": "purple"
+        })
+    
+    # 4. Virtue actions logged
+    virtue_actions = user.get("virtue_actions", [])
+    for action in virtue_actions:
+        virtue_id = action.get("virtue_id", "")
+        virtue_info = VIRTUE_ACTIONS.get(virtue_id, {})
+        events.append({
+            "type": "virtue_action",
+            "icon": virtue_info.get("emoji", "🎯"),
+            "title": f"Action de vertu : {action.get('action_name', '')}",
+            "description": f"+{action.get('points', 0)} points ({virtue_info.get('name', '')})",
+            "date": action.get("logged_at"),
+            "color": "indigo"
+        })
+    
+    # 5. Technique progression (mastered techniques)
+    progression = user.get("progression", [])
+    for prog in progression:
+        if prog.get("status") == "mastered":
+            events.append({
+                "type": "technique_mastered",
+                "icon": "🏆",
+                "title": f"Technique maîtrisée",
+                "description": prog.get("technique_name", prog.get("technique_id", "")),
+                "date": prog.get("updated_at", prog.get("started_at")),
+                "color": "emerald"
+            })
+        elif prog.get("status") == "practiced":
+            events.append({
+                "type": "technique_practiced",
+                "icon": "🎯",
+                "title": f"Technique pratiquée",
+                "description": prog.get("technique_name", prog.get("technique_id", "")),
+                "date": prog.get("updated_at", prog.get("started_at")),
+                "color": "blue"
+            })
+    
+    # Sort events by date (most recent first)
+    def parse_date(event):
+        date_str = event.get("date")
+        if not date_str:
+            return datetime.min
+        try:
+            return datetime.fromisoformat(date_str.replace('Z', '+00:00'))
+        except:
+            return datetime.min
+    
+    events.sort(key=parse_date, reverse=True)
+    
+    return {
+        "events": events,
+        "total_events": len(events),
+        "user_name": f"{user.get('first_name', '')} {user.get('last_name', '')}".strip()
+    }
+
+
 @api_router.get("/visitors")
 async def get_visitors():
     """Récupérer la liste des utilisateurs inscrits (visiteurs) avec stats de progression"""
