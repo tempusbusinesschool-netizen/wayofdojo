@@ -98,13 +98,21 @@ const AIKIDO_VIRTUES = [
   { name: "Responsabilité", kanji: "責", emoji: "⚖️" }
 ];
 
-function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterClick, activeFilter, isAdmin, onMembersClick, kyuLevels, userBelt }) {
+function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterClick, activeFilter, isAdmin, onMembersClick, kyuLevels, userBelt, onBeltChange }) {
   const [showEmailDialog, setShowEmailDialog] = useState(false);
   const [showBeltDialog, setShowBeltDialog] = useState(false);
   const [sending, setSending] = useState(false);
 
-  // Get current belt info from userBelt prop (assigned by teacher, not calculated)
+  // Get current belt info from userBelt prop
   const currentBelt = userBelt ? AIKIDO_BELTS[userBelt] : AIKIDO_BELTS["6e_kyu"];
+
+  // Handle belt change by user
+  const handleBeltChange = (newBeltLevel) => {
+    if (onBeltChange) {
+      onBeltChange(newBeltLevel);
+    }
+    setShowBeltDialog(false);
+  };
 
   if (!statistics) return null;
 
