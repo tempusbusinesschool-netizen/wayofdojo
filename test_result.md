@@ -236,14 +236,10 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Admin login with password 'aikido2024'"
-    - "Visiteurs tab navigation"
-    - "Dojo filter dropdown visibility"
-    - "Gérer les dojos button and modal"
-    - "Visitor cards with dojo name badges"
-    - "Dojo management modal functionality"
-    - "Create new dojo form"
-    - "Visitor filtering by dojo dropdown"
+    - "GET /api/subscription-plans"
+    - "POST /api/auth/register-dojo"
+    - "POST /api/subscriptions/checkout"
+    - "GET /api/auth/subscription"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
