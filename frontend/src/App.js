@@ -669,21 +669,13 @@ function AppContent() {
             </div>
           </TabsContent>
           
-          {isAdmin && (
+          {/* Onglet Adhérents - Admin Dojo uniquement */}
+          {isAdminDojo && (
             <TabsContent value="members" className="mt-6">
-              <div className="mb-4">
-                <Button
-                  variant="outline"
-                  onClick={() => setActiveTab("techniques")}
-                  className="border-slate-600 text-slate-300 hover:bg-slate-700 hover:text-white"
-                >
-                  ← Retour aux techniques
-                </Button>
-              </div>
               <Card className="bg-slate-900/50 border-slate-700">
                 <CardHeader>
                   <CardTitle className="text-white flex items-center gap-2">
-                    <Users className="w-5 h-5 text-cyan-400" />
+                    <Users className="w-5 h-5 text-orange-400" />
                     Liste des adhérents
                   </CardTitle>
                   <CardDescription className="text-slate-400">
