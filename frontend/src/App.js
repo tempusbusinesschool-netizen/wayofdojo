@@ -495,7 +495,7 @@ function AppContent() {
                     onClick={() => setShowAuthDialog(true)}
                     className="border-amber-600 text-amber-400 hover:bg-amber-900/30"
                   >
-                    🥷 S&apos;inscrire
+                    🥷 S&apos;inscrire gratuitement
                   </Button>
                   <Button
                     variant="outline"
@@ -503,7 +503,7 @@ function AppContent() {
                     onClick={() => setShowDojoRegistration(true)}
                     className="border-cyan-600 text-cyan-400 hover:bg-cyan-900/30 hidden sm:flex"
                   >
-                    🏯 Espace Dojo
+                    🏯 Inscription Dojo
                   </Button>
                   <Button
                     variant="ghost"
@@ -524,7 +524,7 @@ function AppContent() {
                   className="text-slate-400 hover:text-white hover:bg-slate-700"
                 >
                   <Lock className="w-4 h-4 sm:mr-1" />
-                  <span className="hidden sm:inline">Admin</span>
+                  <span className="hidden sm:inline">Espace de gestion</span>
                 </Button>
               )}
 
