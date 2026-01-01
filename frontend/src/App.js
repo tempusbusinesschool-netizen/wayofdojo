@@ -690,10 +690,7 @@ function AppContent() {
       <footer className="border-t border-slate-800 mt-12 py-6">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <p className="text-slate-500 text-sm">
-            Aikido La Rivière • Club affilié FFAAA • {displayStatistics?.total_techniques || 0} techniques
-          </p>
-          <p className="text-slate-600 text-xs mt-1">
-            Instructeurs : Céline ROSETTE (3e Dan) • Yeza LUCAS (2e Dan)
+            Techniques Aikido • {displayStatistics?.total_techniques || 0} techniques
           </p>
           <p className="text-slate-600 text-xs mt-3">
             © humanknowledge.fr - 2025
