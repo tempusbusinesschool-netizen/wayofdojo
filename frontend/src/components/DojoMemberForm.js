@@ -6,33 +6,29 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
-import { UserPlus, Shield, AlertTriangle } from "lucide-react";
+import { Slider } from "@/components/ui/slider";
+import { UserPlus, Shield, AlertTriangle, Award } from "lucide-react";
 import { toast } from "sonner";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
-/**
- * Formulaire d'ajout d'adhérent RGPD-compliant
- * 
- * Champs obligatoires :
- * - Identité (prénom/nom OU pseudonyme)
- * - Statut (actif/inactif)
- * - Dojo (automatique)
- * - Date d'inscription (automatique)
- * 
- * Champs optionnels :
- * - Email (pour notifications)
- * - Commentaire interne
- * 
- * Champs INTERDITS :
- * - Date de naissance ❌
- * - Adresse ❌
- * - Téléphone ❌
- */
+// Grades Aikido
+const AIKIDO_GRADES = [
+  { value: "6e_kyu", label: "6ème Kyu", color: "#ffffff", emoji: "⬜" },
+  { value: "5e_kyu", label: "5ème Kyu", color: "#ffeb3b", emoji: "🟨" },
+  { value: "4e_kyu", label: "4ème Kyu", color: "#ff9800", emoji: "🟧" },
+  { value: "3e_kyu", label: "3ème Kyu", color: "#4caf50", emoji: "🟩" },
+  { value: "2e_kyu", label: "2ème Kyu", color: "#2196f3", emoji: "🟦" },
+  { value: "1er_kyu", label: "1er Kyu", color: "#9c27b0", emoji: "🟪" },
+  { value: "1er_dan", label: "1er Dan", color: "#000000", emoji: "⬛" },
+  { value: "2e_dan", label: "2ème Dan", color: "#000000", emoji: "⬛⬛" },
+  { value: "3e_dan", label: "3ème Dan", color: "#000000", emoji: "⬛⬛⬛" },
+];
+
 function DojoMemberForm({ onSuccess, onCancel, dojoId, dojoName }) {
   const [formData, setFormData] = useState({
-    display_name: '', // Prénom Nom ou Pseudonyme
+    display_name: '',
     use_pseudonym: false,
     pseudonym: '',
     first_name: '',
@@ -40,7 +36,9 @@ function DojoMemberForm({ onSuccess, onCancel, dojoId, dojoName }) {
     status: 'active',
     email: '',
     internal_note: '',
-    dojo_id: dojoId || ''
+    dojo_id: dojoId || '',
+    belt_level: '6e_kyu',
+    progression_percentage: 0
   });
   const [loading, setLoading] = useState(false);
 
@@ -51,7 +49,6 @@ function DojoMemberForm({ onSuccess, onCancel, dojoId, dojoName }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Validation
     if (formData.use_pseudonym && !formData.pseudonym.trim()) {
       toast.error("Veuillez entrer un pseudonyme");
       return;
@@ -81,6 +78,8 @@ function DojoMemberForm({ onSuccess, onCancel, dojoId, dojoName }) {
       setLoading(false);
     }
   };
+
+  const selectedGrade = AIKIDO_GRADES.find(g => g.value === formData.belt_level);
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -171,6 +170,77 @@ function DojoMemberForm({ onSuccess, onCancel, dojoId, dojoName }) {
             </SelectItem>
           </SelectContent>
         </Select>
+      </div>
+
+      {/* Grade et Progression */}
+      <div className="space-y-4 pt-4 border-t border-slate-700">
+        <p className="text-sm text-orange-400 font-medium flex items-center gap-2">
+          <Award className="w-4 h-4" />
+          Grade et Progression
+        </p>
+        
+        <div>
+          <Label className="text-slate-300">Grade actuel</Label>
+          <Select 
+            value={formData.belt_level} 
+            onValueChange={(value) => handleChange('belt_level', value)}
+          >
+            <SelectTrigger className="bg-slate-700 border-slate-600 text-white mt-1">
+              <SelectValue placeholder="Sélectionner le grade" />
+            </SelectTrigger>
+            <SelectContent className="bg-slate-800 border-slate-700">
+              {AIKIDO_GRADES.map((grade) => (
+                <SelectItem 
+                  key={grade.value} 
+                  value={grade.value} 
+                  className="text-white hover:bg-slate-700"
+                >
+                  <span className="flex items-center gap-2">
+                    <span>{grade.emoji}</span>
+                    <span>{grade.label}</span>
+                  </span>
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+        
+        <div>
+          <div className="flex justify-between mb-2">
+            <Label className="text-slate-300">Progression dans la plateforme</Label>
+            <span className="text-orange-400 font-bold">{formData.progression_percentage}%</span>
+          </div>
+          <Slider
+            value={[formData.progression_percentage]}
+            onValueChange={(value) => handleChange('progression_percentage', value[0])}
+            max={100}
+            step={5}
+            className="w-full"
+          />
+          <div className="flex justify-between text-xs text-slate-500 mt-1">
+            <span>Débutant</span>
+            <span>Avancé</span>
+          </div>
+        </div>
+        
+        {/* Grade Preview */}
+        {selectedGrade && (
+          <div className="p-3 bg-slate-800/50 rounded-lg border border-slate-700 flex items-center gap-3">
+            <div 
+              className="w-10 h-10 rounded-full flex items-center justify-center text-xl border-2"
+              style={{ 
+                backgroundColor: selectedGrade.color + '20',
+                borderColor: selectedGrade.color
+              }}
+            >
+              {selectedGrade.emoji}
+            </div>
+            <div>
+              <p className="text-white font-medium">{selectedGrade.label}</p>
+              <p className="text-xs text-slate-400">{formData.progression_percentage}% de progression</p>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Champs optionnels */}
