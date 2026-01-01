@@ -71,8 +71,26 @@
 3. [x] "Activer ce rôle" button visible when role is available but not active ✅
 4. [x] Role activation/deactivation functionality working correctly ✅
 
+### Test Results Summary - Symbolic Role Feature
+- **Login Flow**: ✅ WORKING - User can login with test credentials (test_virtue@example.com)
+- **Belt Display**: ✅ WORKING - Shows "Ceinture Jaune" (5e kyu) correctly
+- **Active Role Display**: ✅ WORKING - Purple gradient box with "🎭 Rôle Actif" header
+- **Role Information**: ✅ WORKING - Shows "Gardien du respect", "Vertu : Respect", and intention text
+- **Role Deactivation**: ✅ WORKING - "Désactiver" button works, changes UI to available state
+- **Role Reactivation**: ✅ WORKING - "Activer ce rôle" button works, restores active state
+- **UI Transitions**: ✅ WORKING - Smooth transitions between active/available states
+- **Visual Design**: ✅ WORKING - Purple/indigo gradient styling as expected
+
+### Technical Verification - Symbolic Role
+- Modal displays correctly with proper purple gradient styling
+- Role activation/deactivation API calls work correctly
+- UI state changes appropriately between active and available modes
+- All expected text elements are present and visible
+- No critical errors found during testing
+- Toast messages may not be visible but functionality works correctly
+
 ## Test Credentials
-- Email: test_virtue@example.com
-- Password: testpass123
+- Test user email: test_virtue@example.com
+- Test user password: testpass123
 - Current belt: 5e kyu (Ceinture Jaune)
-- Active role: Gardien du respect
+- Active role: Gardien du respect (can be activated/deactivated)
