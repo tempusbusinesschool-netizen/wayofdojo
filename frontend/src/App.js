@@ -591,6 +591,10 @@ function AppContent() {
                   <LayoutDashboard className="w-4 h-4 sm:mr-2" />
                   <span className="hidden sm:inline">Tableau de bord</span>
                 </TabsTrigger>
+                <TabsTrigger value="users" className="data-[state=active]:bg-cyan-700 text-xs sm:text-sm">
+                  <Users className="w-4 h-4 sm:mr-2" />
+                  <span className="hidden sm:inline">Utilisateurs</span>
+                </TabsTrigger>
                 <TabsTrigger value="dojos" className="data-[state=active]:bg-cyan-700 text-xs sm:text-sm">
                   <Building2 className="w-4 h-4 sm:mr-2" />
                   <span className="hidden sm:inline">Gestion Dojos</span>
