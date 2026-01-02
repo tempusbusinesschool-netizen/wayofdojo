@@ -1398,10 +1398,16 @@ function AppContent() {
         onSuccess={handleAdminLogin}
       />
 
-      {/* Auth Dialog */}
+      {/* Auth Dialog (Inscription) */}
       <AuthDialog
         isOpen={showAuthDialog}
         onClose={() => setShowAuthDialog(false)}
+      />
+
+      {/* Login Dialog (Connexion) */}
+      <LoginDialog
+        isOpen={showLoginDialog}
+        onClose={() => setShowLoginDialog(false)}
       />
 
       {/* CGU Dialog */}
