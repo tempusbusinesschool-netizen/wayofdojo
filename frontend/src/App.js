@@ -74,10 +74,8 @@ function AppContent() {
   const [dojos, setDojos] = useState([]);
   const [selectedDojoFilter, setSelectedDojoFilter] = useState("all");
   
-  // Onboarding & Paywall state
-  const [showOnboarding, setShowOnboarding] = useState(() => {
-    return !localStorage.getItem('aikido_onboarding_seen');
-  });
+  // Onboarding & Paywall state - Onboarding désactivé
+  const [showOnboarding, setShowOnboarding] = useState(false);
   const [showPaywall, setShowPaywall] = useState(false);
   const [showDojoRegistration, setShowDojoRegistration] = useState(false);
   
