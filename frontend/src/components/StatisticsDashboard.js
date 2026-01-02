@@ -742,15 +742,15 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                     <p className="text-white font-bold text-sm">2. Regarde</p>
                     <p className="text-green-200 text-xs">les détails</p>
                   </div>
-                  <div className="bg-gradient-to-br from-orange-600 to-orange-800 p-3 md:p-4 rounded-xl text-center transform hover:scale-105 hover:-rotate-1 transition-all cursor-pointer shadow-lg shadow-orange-500/30">
-                    <div className="text-3xl md:text-4xl mb-2">🥋</div>
-                    <p className="text-white font-bold text-sm">3. Pratique</p>
-                    <p className="text-orange-200 text-xs">au dojo</p>
-                  </div>
-                  <div className="bg-gradient-to-br from-purple-600 to-purple-800 p-3 md:p-4 rounded-xl text-center transform hover:scale-105 hover:rotate-1 transition-all cursor-pointer shadow-lg shadow-purple-500/30">
+                  <div className="bg-gradient-to-br from-purple-600 to-purple-800 p-3 md:p-4 rounded-xl text-center transform hover:scale-105 hover:-rotate-1 transition-all cursor-pointer shadow-lg shadow-purple-500/30">
                     <div className="text-3xl md:text-4xl mb-2">🎮</div>
-                    <p className="text-white font-bold text-sm">4. Joue</p>
+                    <p className="text-white font-bold text-sm">3. Joue</p>
                     <p className="text-purple-200 text-xs">applique les valeurs</p>
+                  </div>
+                  <div className="bg-gradient-to-br from-orange-600 to-orange-800 p-3 md:p-4 rounded-xl text-center transform hover:scale-105 hover:rotate-1 transition-all cursor-pointer shadow-lg shadow-orange-500/30">
+                    <div className="text-3xl md:text-4xl mb-2">🥋</div>
+                    <p className="text-white font-bold text-sm">4. Pratique</p>
+                    <p className="text-orange-200 text-xs">au dojo</p>
                   </div>
                   <div className="bg-gradient-to-br from-pink-600 to-pink-800 p-3 md:p-4 rounded-xl text-center transform hover:scale-105 hover:-rotate-1 transition-all cursor-pointer shadow-lg shadow-pink-500/30 col-span-2 md:col-span-1">
                     <div className="text-3xl md:text-4xl mb-2">✅</div>
