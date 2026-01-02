@@ -709,13 +709,6 @@ function AppContent() {
             </div>
           </TabsContent>
           
-          {/* Onglet Comprendre l'Aïkido - Utilisateurs */}
-          {!isAdminMode && (
-            <TabsContent value="comprendre" className="mt-6">
-              <HakamaSection />
-            </TabsContent>
-          )}
-          
           {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
           {/* ESPACE DOJO - Gestion Adhérents */}
           {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
