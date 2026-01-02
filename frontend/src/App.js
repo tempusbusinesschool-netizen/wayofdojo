@@ -1493,6 +1493,7 @@ function AppContent() {
         onPractice={(techniqueId) => {
           if (selectedKyu) handlePractice(selectedKyu.id, techniqueId);
         }}
+        isAuthenticated={isAuthenticated}
       />
       
       {/* Admin Login Dialog */}
