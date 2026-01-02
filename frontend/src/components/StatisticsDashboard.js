@@ -723,7 +723,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 
                 {/* Sous-titre */}
                 <p className="text-base md:text-lg lg:text-xl text-slate-300 max-w-2xl mx-auto">
-                  🥋 Réviser et approfondir sa pratique personnelle de l&apos;aïkido
+                  <strong className="text-white">🥋 Réviser et approfondir sa pratique de l&apos;aïkido</strong>
                   <br />
                   <span className="text-cyan-400 font-semibold">en complément de l&apos;enseignement dispensé en dojo.</span>
                 </p>
@@ -731,10 +731,6 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               
               {/* ====== GUIDE EN 4 ÉTAPES ====== */}
               <div className="relative px-4 md:px-8 py-6 border-b border-amber-500/20">
-                <div className="flex flex-col md:flex-row items-center justify-center gap-2 mb-5">
-                  <span className="text-white font-bold text-lg">🎯 Comment ça marche ?</span>
-                </div>
-                
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 max-w-4xl mx-auto">
                   <div className="bg-gradient-to-br from-blue-600 to-blue-800 p-3 md:p-4 rounded-xl text-center transform hover:scale-105 hover:-rotate-1 transition-all cursor-pointer shadow-lg shadow-blue-500/30">
                     <div className="text-3xl md:text-4xl mb-2">👆</div>
