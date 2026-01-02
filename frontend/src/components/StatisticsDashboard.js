@@ -744,7 +744,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                   </div>
                   <div className="bg-gradient-to-br from-purple-600 to-purple-800 p-3 md:p-4 rounded-xl text-center transform hover:scale-105 hover:-rotate-1 transition-all cursor-pointer shadow-lg shadow-purple-500/30">
                     <div className="text-3xl md:text-4xl mb-2">🎮</div>
-                    <p className="text-white font-bold text-sm">3. Joue</p>
+                    <p className="text-white font-bold text-sm">3. Apprend</p>
                     <p className="text-purple-200 text-xs">applique les valeurs</p>
                   </div>
                   <div className="bg-gradient-to-br from-orange-600 to-orange-800 p-3 md:p-4 rounded-xl text-center transform hover:scale-105 hover:rotate-1 transition-all cursor-pointer shadow-lg shadow-orange-500/30">
