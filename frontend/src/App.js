@@ -66,6 +66,7 @@ function AppContent() {
   const [showStats, setShowStats] = useState(true);
   const [activeTab, setActiveTab] = useState("techniques");
   const [showAuthDialog, setShowAuthDialog] = useState(false);
+  const [showLoginDialog, setShowLoginDialog] = useState(false);
   const [showCGU, setShowCGU] = useState(false);
   const [showCGV, setShowCGV] = useState(false);
   const [showCharte, setShowCharte] = useState(false);
