@@ -1047,6 +1047,71 @@ function AppContent() {
                     </p>
                   </CardContent>
                 </Card>
+                
+                {/* Identifiants de test */}
+                <Card className="bg-slate-900/50 border-slate-700">
+                  <CardHeader>
+                    <CardTitle className="text-white flex items-center gap-2">
+                      <KeyRound className="w-5 h-5 text-emerald-400" />
+                      Identifiants des comptes
+                    </CardTitle>
+                    <CardDescription className="text-slate-400">
+                      Référence rapide des accès administrateurs
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid md:grid-cols-2 gap-4">
+                      {/* Admin Plateforme */}
+                      <div className="p-4 bg-cyan-900/20 rounded-lg border border-cyan-700/30">
+                        <div className="flex items-center gap-2 mb-3">
+                          <Shield className="w-5 h-5 text-cyan-400" />
+                          <h4 className="font-semibold text-cyan-400">Espace de gestion (Admin)</h4>
+                        </div>
+                        <div className="space-y-2 text-sm">
+                          <p className="text-slate-300">
+                            <span className="text-slate-500">Mot de passe :</span>{' '}
+                            <code className="bg-slate-800 px-2 py-1 rounded text-cyan-300">aikido2024</code>
+                          </p>
+                        </div>
+                      </div>
+                      
+                      {/* Espace Dojo - Email */}
+                      <div className="p-4 bg-orange-900/20 rounded-lg border border-orange-700/30">
+                        <div className="flex items-center gap-2 mb-3">
+                          <Building2 className="w-5 h-5 text-orange-400" />
+                          <h4 className="font-semibold text-orange-400">Espace Dojo (Email)</h4>
+                        </div>
+                        <div className="space-y-2 text-sm">
+                          <p className="text-slate-300">
+                            <span className="text-slate-500">Email :</span>{' '}
+                            <code className="bg-slate-800 px-2 py-1 rounded text-orange-300">contact@aikido-lariviere.fr</code>
+                          </p>
+                          <p className="text-slate-300">
+                            <span className="text-slate-500">Mot de passe :</span>{' '}
+                            <code className="bg-slate-800 px-2 py-1 rounded text-orange-300">aikido2024</code>
+                          </p>
+                        </div>
+                      </div>
+                      
+                      {/* Espace Dojo - Liste */}
+                      <div className="p-4 bg-amber-900/20 rounded-lg border border-amber-700/30 md:col-span-2">
+                        <div className="flex items-center gap-2 mb-3">
+                          <Users className="w-5 h-5 text-amber-400" />
+                          <h4 className="font-semibold text-amber-400">Espace Dojo (Sélection liste)</h4>
+                        </div>
+                        <div className="space-y-2 text-sm">
+                          <p className="text-slate-300">
+                            <span className="text-slate-500">Mot de passe partagé :</span>{' '}
+                            <code className="bg-slate-800 px-2 py-1 rounded text-amber-300">senseiclub</code>
+                          </p>
+                          <p className="text-xs text-slate-500 mt-2">
+                            Ce mot de passe permet d'accéder à n'importe quel dojo via la sélection dans la liste.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
               </div>
             </TabsContent>
           )}
