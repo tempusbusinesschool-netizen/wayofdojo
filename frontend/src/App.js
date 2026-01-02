@@ -635,10 +635,6 @@ function AppContent() {
                   <Swords className="w-4 h-4 sm:mr-2" />
                   <span className="hidden sm:inline">Mon Parcours</span>
                 </TabsTrigger>
-                <TabsTrigger value="comprendre" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-600 data-[state=active]:to-violet-600 text-xs sm:text-sm">
-                  <BookOpen className="w-4 h-4 sm:mr-2" />
-                  <span className="hidden sm:inline">Comprendre l'Aïkido</span>
-                </TabsTrigger>
               </TabsList>
             </div>
           )}
