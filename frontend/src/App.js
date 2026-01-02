@@ -494,7 +494,7 @@ function AppContent() {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => setShowAuthDialog(true)}
+                    onClick={() => setShowLoginDialog(true)}
                     className="border-emerald-600 text-emerald-400 hover:bg-emerald-900/30"
                   >
                     <LogIn className="w-4 h-4 mr-1" />
