@@ -206,11 +206,16 @@ function TechniqueModal({ technique, kyuName, kyuColor, isOpen, onClose, onUpdat
               <Button 
                 size="lg" 
                 onClick={() => {
+                  if (!isAuthenticated) {
+                    toast.error("🔒 Inscrivez-vous pour enregistrer votre pratique");
+                    return;
+                  }
                   onPractice(technique.id);
                   onClose();
                 }}
-                className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 text-white font-bold px-6 rounded-xl shadow-lg shadow-green-500/30 transform hover:scale-105 transition-all"
+                className={`bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 text-white font-bold px-6 rounded-xl shadow-lg shadow-green-500/30 transform hover:scale-105 transition-all ${!isAuthenticated ? 'opacity-50' : ''}`}
               >
+                {!isAuthenticated && <Lock className="w-4 h-4 mr-2" />}
                 <Star className="w-5 h-5 mr-2" />
                 J'ai pratiqué ! ✨
               </Button>
