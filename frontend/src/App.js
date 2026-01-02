@@ -492,6 +492,15 @@ function AppContent() {
                   <Button
                     variant="outline"
                     size="sm"
+                    onClick={() => setShowAuthDialog(true)}
+                    className="border-emerald-600 text-emerald-400 hover:bg-emerald-900/30"
+                  >
+                    <LogIn className="w-4 h-4 mr-1" />
+                    Se connecter
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
                     onClick={() => setShowDojoRegistration(true)}
                     className="border-cyan-600 text-cyan-400 hover:bg-cyan-900/30 hidden sm:flex"
                   >
