@@ -535,13 +535,13 @@ function AppContent() {
                 variant="ghost"
                 size="sm"
                 onClick={() => setShowStats(!showStats)}
-                className={`text-slate-400 hover:text-white ${showStats ? 'bg-slate-800' : ''}`}
+                className={`text-slate-400 hover:text-white ${showStats ? 'bg-slate-800' : ''} hidden`}
               >
                 <BarChart3 className="w-4 h-4 mr-1" />
                 <span className="hidden sm:inline">Stats</span>
               </Button>
               {displayStatistics && (
-                <Badge className="bg-cyan-600 text-white">
+                <Badge className="bg-cyan-600 text-white hidden">
                   {displayStatistics.overall_progress}%
                 </Badge>
               )}
