@@ -164,11 +164,17 @@ function TechniqueModal({ technique, kyuName, kyuColor, isOpen, onClose, onUpdat
               <Select 
                 value={technique.mastery_level || "not_started"} 
                 onValueChange={(value) => {
+                  if (!isAuthenticated) {
+                    toast.error("🔒 Inscrivez-vous pour suivre votre progression");
+                    return;
+                  }
                   onUpdateMastery(technique.id, value);
                   onClose();
                 }}
+                disabled={!isAuthenticated}
               >
                 <SelectTrigger className={`w-full border-2 text-white font-medium
+                  ${!isAuthenticated ? 'opacity-50 cursor-not-allowed' : ''}
                   ${isMastered 
                     ? 'bg-emerald-800/50 border-emerald-500/50' 
                     : isPracticed 
