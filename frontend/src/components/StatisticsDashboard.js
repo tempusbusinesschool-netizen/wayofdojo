@@ -731,7 +731,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               
               {/* ====== GUIDE EN 4 ÉTAPES ====== */}
               <div className="relative px-4 md:px-8 py-6 border-b border-amber-500/20">
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 max-w-4xl mx-auto">
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4 max-w-5xl mx-auto">
                   <div className="bg-gradient-to-br from-blue-600 to-blue-800 p-3 md:p-4 rounded-xl text-center transform hover:scale-105 hover:-rotate-1 transition-all cursor-pointer shadow-lg shadow-blue-500/30">
                     <div className="text-3xl md:text-4xl mb-2">👆</div>
                     <p className="text-white font-bold text-sm">1. Choisis</p>
@@ -747,9 +747,14 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                     <p className="text-white font-bold text-sm">3. Pratique</p>
                     <p className="text-orange-200 text-xs">au dojo</p>
                   </div>
-                  <div className="bg-gradient-to-br from-pink-600 to-pink-800 p-3 md:p-4 rounded-xl text-center transform hover:scale-105 hover:rotate-1 transition-all cursor-pointer shadow-lg shadow-pink-500/30">
+                  <div className="bg-gradient-to-br from-purple-600 to-purple-800 p-3 md:p-4 rounded-xl text-center transform hover:scale-105 hover:rotate-1 transition-all cursor-pointer shadow-lg shadow-purple-500/30">
+                    <div className="text-3xl md:text-4xl mb-2">🎮</div>
+                    <p className="text-white font-bold text-sm">4. Joue</p>
+                    <p className="text-purple-200 text-xs">applique les valeurs</p>
+                  </div>
+                  <div className="bg-gradient-to-br from-pink-600 to-pink-800 p-3 md:p-4 rounded-xl text-center transform hover:scale-105 hover:-rotate-1 transition-all cursor-pointer shadow-lg shadow-pink-500/30 col-span-2 md:col-span-1">
                     <div className="text-3xl md:text-4xl mb-2">✅</div>
-                    <p className="text-white font-bold text-sm">4. Validation</p>
+                    <p className="text-white font-bold text-sm">5. Validation</p>
                     <p className="text-pink-200 text-xs">avec ton enseignant</p>
                   </div>
                 </div>
