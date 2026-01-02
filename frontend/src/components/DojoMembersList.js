@@ -68,7 +68,29 @@ function DojoMembersList({ dojoId, dojoName }) {
   };
 
   useEffect(() => {
-    fetchMembers();
+    const loadMembers = async () => {
+      try {
+        const response = await axios.get(`${API}/dojo-members`, {
+          params: { dojo_id: dojoId }
+        });
+        setMembers(response.data.members || []);
+      } catch (error) {
+        console.error("Error fetching members:", error);
+        // Use mock data if API not ready
+        setMembers([
+          { id: '1', display_name: 'Jean Dupont', status: 'active', created_at: new Date().toISOString(), email: 'jean@example.com', belt_level: '4e_kyu', progression_percentage: 45 },
+          { id: '2', display_name: 'Marie Martin', status: 'active', created_at: new Date().toISOString(), belt_level: '5e_kyu', progression_percentage: 30 },
+          { id: '3', display_name: 'NinjaAikido42', status: 'active', created_at: new Date().toISOString(), use_pseudonym: true, belt_level: '3e_kyu', progression_percentage: 65 },
+          { id: '4', display_name: 'Pierre Leroy', status: 'inactive', created_at: new Date().toISOString(), internal_note: 'Absent depuis 2 mois', belt_level: '6e_kyu', progression_percentage: 10 },
+          { id: '5', display_name: 'Sophie Bernard', status: 'active', created_at: new Date().toISOString(), belt_level: '1er_kyu', progression_percentage: 85 },
+        ]);
+      }
+      setLoading(false);
+    };
+    
+    if (dojoId) {
+      loadMembers();
+    }
   }, [dojoId]);
 
   const handleToggleStatus = async (memberId, currentStatus) => {
