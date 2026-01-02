@@ -723,7 +723,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 
                 {/* Sous-titre */}
                 <p className="text-base md:text-lg lg:text-xl text-slate-300 max-w-2xl mx-auto">
-                  <strong className="text-white">🥋 Réviser et approfondir sa pratique de l&apos;aïkido</strong>
+                  <strong className="text-white">🥋 Développe ta maîtrise de l&apos;aïkido avec un entraînement interactif et progressif</strong>
                   <br />
                   <span className="text-cyan-400 font-semibold">en complément de l&apos;enseignement dispensé en dojo.</span>
                 </p>
