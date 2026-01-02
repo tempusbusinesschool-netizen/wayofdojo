@@ -2,10 +2,11 @@ import React from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Sparkles, Star } from "lucide-react";
+import { Sparkles, Star, Lock } from "lucide-react";
 import { MASTERY_LEVELS } from "@/constants";
+import { toast } from "sonner";
 
-function TechniqueModal({ technique, kyuName, kyuColor, isOpen, onClose, onUpdateMastery, onPractice }) {
+function TechniqueModal({ technique, kyuName, kyuColor, isOpen, onClose, onUpdateMastery, onPractice, isAuthenticated }) {
   if (!technique) return null;
   
   const mastery = MASTERY_LEVELS[technique.mastery_level] || MASTERY_LEVELS.not_started;
