@@ -1121,6 +1121,116 @@ function AppContent() {
             </TabsContent>
           )}
 
+          {/* Onglet Gestion Utilisateurs - Admin */}
+          {isAdmin && (
+            <TabsContent value="users" className="mt-6">
+              <Card className="bg-slate-900/50 border-slate-700">
+                <CardHeader>
+                  <CardTitle className="text-white flex items-center gap-2">
+                    <Users className="w-5 h-5 text-purple-400" />
+                    Gestion des Utilisateurs
+                  </CardTitle>
+                  <CardDescription className="text-slate-400">
+                    Liste des utilisateurs inscrits sur la plateforme
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {/* Stats utilisateurs */}
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                    <div className="p-4 bg-purple-900/20 rounded-lg border border-purple-700/30 text-center">
+                      <p className="text-2xl font-bold text-purple-400">{visitors.length}</p>
+                      <p className="text-xs text-slate-400">Total inscrits</p>
+                    </div>
+                    <div className="p-4 bg-green-900/20 rounded-lg border border-green-700/30 text-center">
+                      <p className="text-2xl font-bold text-green-400">
+                        {visitors.filter(v => v.subscription?.status === 'active' || v.subscription?.status === 'trialing').length}
+                      </p>
+                      <p className="text-xs text-slate-400">Abonnés actifs</p>
+                    </div>
+                    <div className="p-4 bg-amber-900/20 rounded-lg border border-amber-700/30 text-center">
+                      <p className="text-2xl font-bold text-amber-400">
+                        {visitors.filter(v => v.subscription?.status === 'trialing').length}
+                      </p>
+                      <p className="text-xs text-slate-400">En essai</p>
+                    </div>
+                    <div className="p-4 bg-slate-800/50 rounded-lg border border-slate-700 text-center">
+                      <p className="text-2xl font-bold text-slate-400">
+                        {visitors.filter(v => !v.subscription || v.subscription?.status === 'inactive').length}
+                      </p>
+                      <p className="text-xs text-slate-400">Sans abonnement</p>
+                    </div>
+                  </div>
+                  
+                  {/* Liste des utilisateurs */}
+                  <div className="space-y-3">
+                    <h3 className="text-lg font-semibold text-white mb-3">Liste des utilisateurs ({visitors.length})</h3>
+                    
+                    {visitors.length === 0 ? (
+                      <div className="text-center py-8 text-slate-400">
+                        <Users className="w-12 h-12 mx-auto mb-3 opacity-50" />
+                        <p>Aucun utilisateur inscrit</p>
+                      </div>
+                    ) : (
+                      <div className="overflow-x-auto">
+                        <table className="w-full">
+                          <thead>
+                            <tr className="border-b border-slate-700">
+                              <th className="text-left py-3 px-4 text-slate-400 font-medium text-sm">Utilisateur</th>
+                              <th className="text-left py-3 px-4 text-slate-400 font-medium text-sm">Email</th>
+                              <th className="text-left py-3 px-4 text-slate-400 font-medium text-sm">Mot de passe</th>
+                              <th className="text-left py-3 px-4 text-slate-400 font-medium text-sm">Statut</th>
+                              <th className="text-left py-3 px-4 text-slate-400 font-medium text-sm">Inscription</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {visitors.map((visitor) => (
+                              <tr key={visitor.id} className="border-b border-slate-800 hover:bg-slate-800/50">
+                                <td className="py-3 px-4">
+                                  <div className="flex items-center gap-2">
+                                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-purple-500 to-violet-600 flex items-center justify-center text-white text-sm font-bold">
+                                      {visitor.first_name?.[0]}{visitor.last_name?.[0]}
+                                    </div>
+                                    <span className="text-white font-medium">
+                                      {visitor.first_name} {visitor.last_name}
+                                    </span>
+                                  </div>
+                                </td>
+                                <td className="py-3 px-4">
+                                  <code className="text-cyan-400 text-sm bg-slate-800 px-2 py-1 rounded">
+                                    {visitor.email}
+                                  </code>
+                                </td>
+                                <td className="py-3 px-4">
+                                  <code className="text-amber-400 text-sm bg-slate-800 px-2 py-1 rounded">
+                                    {visitor.password_plain || '••••••••'}
+                                  </code>
+                                </td>
+                                <td className="py-3 px-4">
+                                  {visitor.subscription?.status === 'active' && (
+                                    <Badge className="bg-green-600 text-white">Actif</Badge>
+                                  )}
+                                  {visitor.subscription?.status === 'trialing' && (
+                                    <Badge className="bg-amber-600 text-white">Essai</Badge>
+                                  )}
+                                  {(!visitor.subscription || visitor.subscription?.status === 'inactive') && (
+                                    <Badge className="bg-slate-600 text-white">Gratuit</Badge>
+                                  )}
+                                </td>
+                                <td className="py-3 px-4 text-slate-400 text-sm">
+                                  {visitor.created_at ? new Date(visitor.created_at).toLocaleDateString('fr-FR') : '-'}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+          )}
+
           {/* Onglet Gestion Dojos - Admin */}
           {isAdmin && (
             <TabsContent value="dojos" className="mt-6">
