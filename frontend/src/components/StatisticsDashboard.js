@@ -817,8 +817,14 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => setShowEmailDialog(true)}
-                className="bg-gradient-to-r from-cyan-600 to-blue-600 border-none text-white hover:from-cyan-500 hover:to-blue-500 h-8 text-xs font-bold shadow-lg shadow-cyan-500/30"
+                onClick={() => {
+                  if (!isAuthenticated) {
+                    toast.error("🔒 Inscrivez-vous pour télécharger votre progression en PDF");
+                    return;
+                  }
+                  setShowEmailDialog(true);
+                }}
+                className={`bg-gradient-to-r from-cyan-600 to-blue-600 border-none text-white hover:from-cyan-500 hover:to-blue-500 h-8 text-xs font-bold shadow-lg shadow-cyan-500/30 ${!isAuthenticated ? 'opacity-50' : ''}`}
               >
                 <Download className="w-3 h-3 mr-1" />
                 📄 PDF
@@ -826,8 +832,14 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               <Button
                 variant="outline"
                 size="sm"
-                onClick={exportToCSV}
-                className="bg-gradient-to-r from-green-600 to-emerald-600 border-none text-white hover:from-green-500 hover:to-emerald-500 h-8 text-xs font-bold shadow-lg shadow-green-500/30"
+                onClick={() => {
+                  if (!isAuthenticated) {
+                    toast.error("🔒 Inscrivez-vous pour télécharger votre progression en CSV");
+                    return;
+                  }
+                  exportToCSV();
+                }}
+                className={`bg-gradient-to-r from-green-600 to-emerald-600 border-none text-white hover:from-green-500 hover:to-emerald-500 h-8 text-xs font-bold shadow-lg shadow-green-500/30 ${!isAuthenticated ? 'opacity-50' : ''}`}
               >
                 <Download className="w-3 h-3 mr-1" />
                 📊 CSV
