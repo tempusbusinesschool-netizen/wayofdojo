@@ -1267,7 +1267,6 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
             {/* Contenu de l'accordéon */}
             {accordionOpen.valeurs && (
               <div className="bg-gradient-to-br from-violet-900/40 via-purple-900/40 to-indigo-900/40 p-4 md:p-6">
-            </div>
 
             {/* VIRTUE PIE CHART - Camembert des Vertus */}
             <div className="p-4 bg-gradient-to-r from-indigo-900/30 via-purple-900/30 to-indigo-900/30 rounded-xl border border-indigo-500/30 mb-6">
