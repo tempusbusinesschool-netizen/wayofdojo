@@ -800,10 +800,21 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* BLOC UNIQUE FUSIONNÉ : Ma Progression Ninja + Stats + Grades KYU */}
+        {/* ACCORDÉON 1 : Ma Progression Ninja + Stats + Grades KYU */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {!isAuthenticated && (
-          <div id="bloc1-progression" className="mb-8 bg-gradient-to-br from-indigo-900/60 via-purple-900/60 to-pink-900/60 rounded-2xl border-2 border-purple-500/40 p-4 md:p-6 shadow-xl">
+          <AccordionBlock
+            title="Ma Progression Ninja !"
+            emoji="🎯"
+            subtitle="Stats & Grades KYU"
+            gradientFrom="from-indigo-600"
+            gradientVia="via-purple-600"
+            gradientTo="to-pink-600"
+            borderColor="border-purple-500/40"
+            isOpen={true}
+            testId="accordion-progression"
+          >
+          <div id="bloc1-progression" className="bg-gradient-to-br from-indigo-900/60 via-purple-900/60 to-pink-900/60 p-4 md:p-6">
             
             {/* EN HAUT : Titre Ma Progression Ninja + boutons */}
             <div className="flex flex-col md:flex-row items-center justify-between gap-3 mb-6">
