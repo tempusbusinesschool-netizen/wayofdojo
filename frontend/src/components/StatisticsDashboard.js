@@ -1045,7 +1045,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         {/* BLOC 2 : ENTRAINEMENT TECHNIQUES D'AIKIDO */}
         {/* Contient: Les Ceintures, Mon Parcours Aïkido, Les Déplacements */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {isAuthenticated && !isAdmin && currentBelt && (
+        {!isAdmin && currentBelt && (
           <div className="mb-8 bg-gradient-to-br from-cyan-900/40 via-blue-900/40 to-indigo-900/40 rounded-2xl border-2 border-cyan-500/40 p-4 md:p-6 shadow-xl">
             <div className="flex items-center gap-3 mb-6">
               <div className="text-4xl">🥋</div>
