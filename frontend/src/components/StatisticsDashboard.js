@@ -1009,21 +1009,31 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* BLOC FUSIONNÉ : Entrainement + Grades détaillés */}
+        {/* ACCORDÉON 2 : Entrainement + Grades détaillés */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {!isAuthenticated && (
-          <div id="bloc2-entrainement" className="mb-8 bg-gradient-to-br from-cyan-900/40 via-blue-900/40 to-indigo-900/40 rounded-2xl border-2 border-cyan-500/40 p-4 md:p-6 shadow-xl">
-            
-            {/* EN HAUT : Titre Entrainement */}
-            <div className="flex items-center gap-3 mb-6">
-              <div className="text-4xl">🥋</div>
-              <div>
-                <h2 className="text-xl md:text-2xl font-bold text-cyan-400">
-                  Entrainement - Techniques d&apos;Aikido
-                </h2>
-                <p className="text-slate-400 text-sm">Les ceintures, ton parcours et les déplacements</p>
+          <div id="bloc2-entrainement" className="mb-4 rounded-2xl border-2 border-cyan-500/40 shadow-xl overflow-hidden">
+            {/* Header de l'accordéon */}
+            <div 
+              className="bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 p-4 cursor-pointer hover:from-cyan-500 hover:via-blue-500 hover:to-indigo-500 transition-all"
+              onClick={() => toggleAccordion('entrainement')}
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <h3 className="text-lg md:text-xl font-bold text-white">
+                    Entrainement - Techniques d&apos;Aikido 🥋
+                  </h3>
+                  <span className="text-cyan-200 text-xs md:text-sm hidden md:inline">Parcours & Déplacements</span>
+                </div>
+                <div className={`p-2 rounded-full bg-white/20 transform transition-transform duration-300 ${accordionOpen.entrainement ? 'rotate-180' : ''}`}>
+                  <ChevronDown className="w-5 h-5 text-white" />
+                </div>
               </div>
             </div>
+            
+            {/* Contenu de l'accordéon */}
+            {accordionOpen.entrainement && (
+              <div className="bg-gradient-to-br from-cyan-900/40 via-blue-900/40 to-indigo-900/40 p-4 md:p-6">
 
             {/* Section Mon Parcours Aïkido (si currentBelt disponible) */}
             {currentBelt && (
