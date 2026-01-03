@@ -637,7 +637,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                   
                   <div className="relative text-center">
                     <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4">
-                      🥋 BUDO JOURNEY
+                      🥋 NINJA-AIKIDO
                     </h1>
                     <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-6">
                       <strong>Développe ta maîtrise de l&apos;aïkido</strong> avec un entraînement interactif et progressif

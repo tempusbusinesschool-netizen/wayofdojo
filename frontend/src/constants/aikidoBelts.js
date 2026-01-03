@@ -15,7 +15,7 @@ export const AIKIDO_BELTS = {
     // Messages ludiques pour enfants
     funMessage: "Tu commences une grande aventure ! 🌟",
     animalSpirit: "🐣",
-    animalName: "Petit Poussin",
+    animalName: "Petit Scarabée",
     encouragement: "Chaque ninja commence par le premier pas !"
   },
   "5e_kyu": {
@@ -32,7 +32,7 @@ export const AIKIDO_BELTS = {
     message: "Tu apprends les bases avec sérieux !",
     funMessage: "Bravo ! Tu brilles comme le soleil ! ☀️",
     animalSpirit: "🐥",
-    animalName: "Poussin Doré",
+    animalName: "Scarabée Doré",
     encouragement: "Tu grandis vite, continue comme ça !"
   },
   "4e_kyu": {
