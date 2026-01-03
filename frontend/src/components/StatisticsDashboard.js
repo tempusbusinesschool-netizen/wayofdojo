@@ -799,10 +799,31 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* BLOC UNIQUE FUSIONNÉ : Ma Progression Ninja + Stats + Grades KYU */}
+        {/* ACCORDÉON 1 : Ma Progression Ninja + Stats + Grades KYU */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {!isAuthenticated && (
-          <div id="bloc1-progression" className="mb-8 bg-gradient-to-br from-indigo-900/60 via-purple-900/60 to-pink-900/60 rounded-2xl border-2 border-purple-500/40 p-4 md:p-6 shadow-xl">
+          <div id="bloc1-progression" className="mb-4 rounded-2xl border-2 border-purple-500/40 shadow-xl overflow-hidden">
+            {/* Header de l'accordéon - toujours visible */}
+            <div 
+              className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 p-4 cursor-pointer hover:from-indigo-500 hover:via-purple-500 hover:to-pink-500 transition-all"
+              onClick={() => toggleAccordion('progression')}
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <h3 className="text-lg md:text-xl font-bold text-white">
+                    Ma Progression Ninja ! 🥷
+                  </h3>
+                  <span className="text-purple-200 text-xs md:text-sm hidden md:inline">Stats & Grades KYU</span>
+                </div>
+                <div className={`p-2 rounded-full bg-white/20 transform transition-transform duration-300 ${accordionOpen.progression ? 'rotate-180' : ''}`}>
+                  <ChevronDown className="w-5 h-5 text-white" />
+                </div>
+              </div>
+            </div>
+            
+            {/* Contenu de l'accordéon - dépliable */}
+            {accordionOpen.progression && (
+              <div className="bg-gradient-to-br from-indigo-900/60 via-purple-900/60 to-pink-900/60 p-4 md:p-6">
             
             {/* EN HAUT : Titre Ma Progression Ninja + boutons */}
             <div className="flex flex-col md:flex-row items-center justify-between gap-3 mb-6">
