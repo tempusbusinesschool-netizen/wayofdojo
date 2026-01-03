@@ -118,12 +118,13 @@ Application web pour le club d'Aikido "Aikido La Rivière". L'application doit s
 ---
 
 ## Key Files
-- `/app/frontend/src/components/StatisticsDashboard.js` - Dashboard principal (refactorisé)
+- `/app/frontend/src/components/StatisticsDashboard.js` - Dashboard principal (refactorisé, 1345 lignes)
 - `/app/frontend/src/components/SimpleAccordion.jsx` - Composant accordéon réutilisable
 - `/app/frontend/src/components/BeltProgressCard.jsx` - Section Mon Parcours ludique (enfants)
 - `/app/frontend/src/components/GradeCardsGrid.jsx` - Grille des grades
 - `/app/frontend/src/components/DeplacementsSection.jsx` - Section déplacements
 - `/app/frontend/src/components/VirtuesSection.jsx` - Section 7 Vertus ludique (enfants) ✅
+- `/app/frontend/src/components/HakamaHistory.jsx` - Section Histoire de l'Aikido (7 plis du Hakama) ✅
 - `/app/frontend/src/constants/aikidoBelts.js` - Définitions ceintures avec animaux
 - `/app/frontend/src/App.js` - Composant principal
 - `/app/backend/server.py` - API backend
