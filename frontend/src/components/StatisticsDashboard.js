@@ -798,19 +798,6 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                     <p className="text-emerald-200 text-[10px] md:text-xs mt-1">PDF, CSV, Journal</p>
                   </div>
                 </div>
-
-                {/* GRADES VISITEUR */}
-                <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-4 md:p-6">
-                  <h3 className="text-white font-bold text-lg mb-4">📋 Grades KYU</h3>
-                  <div className="flex flex-wrap gap-2 md:gap-3">
-                    <span className="bg-yellow-400 text-slate-900 px-4 py-2 rounded-full font-bold text-sm">5e KYU</span>
-                    <span className="bg-orange-500 text-white px-4 py-2 rounded-full font-bold text-sm">4e KYU</span>
-                    <span className="bg-green-500 text-white px-4 py-2 rounded-full font-bold text-sm">3e KYU</span>
-                    <span className="bg-blue-500 text-white px-4 py-2 rounded-full font-bold text-sm">2e KYU</span>
-                    <span className="bg-amber-700 text-white px-4 py-2 rounded-full font-bold text-sm">1er KYU</span>
-                    <span className="bg-slate-800 text-white px-4 py-2 rounded-full font-bold text-sm border-2 border-slate-600">SHODAN</span>
-                  </div>
-                </div>
               </>
             )}
 
