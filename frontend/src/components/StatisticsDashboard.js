@@ -943,90 +943,9 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               techniquesByLevel={statistics.techniques_by_level}
               onGradeClick={onGradeClick}
             />
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-            {statistics.techniques_by_level?.map((level, index) => {
-              const gradeStyles = {
-                '5e KYU': { emoji: '🟡', gradient: 'from-yellow-400 to-yellow-600', glow: 'shadow-yellow-500/40', rank: 'Débutant', belt: 'Jaune' },
-                '4e KYU': { emoji: '🟠', gradient: 'from-orange-400 to-orange-600', glow: 'shadow-orange-500/40', rank: 'Apprenti', belt: 'Orange' },
-                '3e KYU': { emoji: '🟢', gradient: 'from-green-500 to-green-700', glow: 'shadow-green-500/40', rank: 'Avancé', belt: 'Verte' },
-                '2e KYU': { emoji: '🔵', gradient: 'from-blue-500 to-blue-700', glow: 'shadow-blue-500/40', rank: 'Expert', belt: 'Bleue' },
-                '1er KYU': { emoji: '🟤', gradient: 'from-amber-700 to-amber-900', glow: 'shadow-amber-500/40', rank: 'Pré-Dan', belt: 'Marron' },
-                'SHODAN': { emoji: '⚫', gradient: 'from-slate-700 to-slate-900', glow: 'shadow-slate-500/40', rank: '1er Dan', belt: 'Noire' },
-                'NIDAN': { emoji: '⚫', gradient: 'from-slate-600 to-slate-800', glow: 'shadow-slate-500/40', rank: '2e Dan', belt: 'Noire' },
-                'SANDAN': { emoji: '⚫', gradient: 'from-slate-600 to-slate-800', glow: 'shadow-slate-500/40', rank: '3e Dan', belt: 'Noire' },
-                'YONDAN': { emoji: '⚫', gradient: 'from-slate-600 to-slate-800', glow: 'shadow-slate-500/40', rank: '4e Dan', belt: 'Noire' },
-                'BOKKEN': { emoji: '⚔️', gradient: 'from-cyan-500 to-blue-600', glow: 'shadow-cyan-500/40', rank: 'Sabre', belt: null },
-                'Déplacements': { emoji: '🦶', gradient: 'from-pink-500 to-fuchsia-600', glow: 'shadow-pink-500/40', rank: 'Bases', belt: null },
-              };
-              
-              const styleKey = Object.keys(gradeStyles).find(key => level.name.includes(key)) || null;
-              const style = styleKey ? gradeStyles[styleKey] : { 
-                emoji: '✨', 
-                gradient: 'from-indigo-500 to-purple-600', 
-                glow: 'shadow-indigo-500/40',
-                rank: 'Grade',
-                belt: null
-              };
-              
-              const isComplete = level.progress_percentage === 100;
-              const isStarted = level.progress_percentage > 0;
-
-              return (
-                <div 
-                  key={index} 
-                  className={`relative overflow-hidden rounded-xl cursor-pointer transform transition-all duration-300 hover:scale-[1.02] hover:-translate-y-1 ${style.glow} shadow-lg`}
-                  onClick={() => onGradeClick && onGradeClick(level.name)}
-                >
-                  <div className={`absolute inset-0 bg-gradient-to-br ${style.gradient} opacity-90`}></div>
-                  {isComplete && (
-                    <div className="absolute top-2 right-2 text-2xl animate-pulse">🎉</div>
-                  )}
-                  <div className="relative p-3 md:p-4">
-                    <div className="flex items-center gap-3">
-                      <div className={`w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-2xl md:text-3xl ${isComplete ? 'animate-bounce' : ''}`}>
-                        {style.emoji}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between flex-wrap gap-1">
-                          <h4 className="font-bold text-white text-sm md:text-base truncate pr-2">
-                            {level.name}
-                            {style.belt && (
-                              <span className="ml-2 text-xs font-normal opacity-90">
-                                (Ceinture {style.belt})
-                              </span>
-                            )}
-                          </h4>
-                          <span className="text-white/80 text-xs font-medium bg-white/20 px-2 py-0.5 rounded-full">
-                            {style.rank}
-                          </span>
-                        </div>
-                        <div className="mt-2 h-3 md:h-4 bg-black/30 rounded-full overflow-hidden">
-                          <div 
-                            className="h-full bg-gradient-to-r from-white/80 to-white/60 rounded-full transition-all duration-1000 ease-out relative"
-                            style={{ width: `${Math.max(level.progress_percentage, 2)}%` }}
-                          >
-                            {level.progress_percentage > 10 && (
-                              <div className="absolute inset-0 bg-white/30 animate-pulse"></div>
-                            )}
-                          </div>
-                        </div>
-                        <div className="mt-1 flex items-center justify-between text-xs">
-                          <span className="text-white/90 font-medium">
-                            {isComplete ? '✅ Complété !' : isStarted ? '🚀 En cours...' : '💤 À débloquer'}
-                          </span>
-                          <span className="text-white font-bold bg-white/20 px-2 py-0.5 rounded-full">
-                            {level.mastered}/{level.total} • {level.progress_percentage}%
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
 
           {/* Section Déplacements */}
+          <DeplacementsSection />
           <div className="mt-6 pt-4 border-t border-cyan-500/30">
             <div 
               className="flex items-center justify-between cursor-pointer group p-4 rounded-xl bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 shadow-lg shadow-pink-500/40 hover:shadow-pink-500/60 hover:scale-[1.01] transition-all"
