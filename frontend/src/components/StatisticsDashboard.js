@@ -695,113 +695,123 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
   return (
     <>
       <div className="mb-8 animate-fadeIn">
-        {/* BLOC UNIFIÉ - Hero Section avec Titre, Guide et Vertus */}
+        {/* ========== OPTION A - HERO + GRILLE COLORÉE ========== */}
         {!isAdmin && (
           <div className="mb-8 md:mb-12 w-full">
-            {/* Bloc Principal Unifié */}
-            <div className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl border-2 border-amber-500/40 shadow-2xl shadow-amber-500/10">
-              
-              {/* Fond décoratif avec motifs japonais */}
-              <div className="absolute inset-0 opacity-5">
-                <div className="absolute top-4 left-4 text-8xl text-amber-400">合</div>
-                <div className="absolute top-4 right-4 text-8xl text-amber-400">気</div>
-                <div className="absolute bottom-4 left-1/4 text-8xl text-amber-400">道</div>
-                <div className="absolute bottom-4 right-1/4 text-8xl text-amber-400">武</div>
+            
+            {/* HERO BANNER */}
+            <div className="relative overflow-hidden bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-500 rounded-3xl p-8 md:p-12 mb-6 shadow-2xl">
+              {/* Fond décoratif */}
+              <div className="absolute inset-0 opacity-10">
+                <div className="absolute top-4 left-8 text-9xl">🥋</div>
+                <div className="absolute bottom-4 right-8 text-9xl">☯️</div>
               </div>
               
-              {/* ====== TITRE DE LA PLATEFORME ====== */}
-              <div className="relative pt-8 pb-6 px-4 md:px-8 text-center border-b border-amber-500/20">
-                
-                {/* Titre Principal avec 平常心 à gauche et à droite */}
-                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black mb-4 flex items-center justify-center gap-4 md:gap-8">
-                  <span className="text-amber-400 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold animate-pulse">平常心</span>
-                  <span className="bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">
-                    Techniques d&apos;Aïkido
-                  </span>
-                  <span className="text-amber-400 text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold animate-pulse">平常心</span>
+              <div className="relative text-center">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4">
+                  🥋 BUDO JOURNEY
                 </h1>
-                
-                {/* Sous-titre */}
-                <p className="text-base md:text-lg lg:text-xl text-slate-300 max-w-2xl mx-auto">
-                  <strong className="text-white">🥋 Développe ta maîtrise de l&apos;aïkido avec un entraînement interactif et progressif</strong>
-                  <br />
-                  <span className="text-cyan-400 font-semibold">en complément de l&apos;enseignement dispensé en dojo.</span>
+                <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-6">
+                  <strong>Développe ta maîtrise de l&apos;aïkido</strong> avec un entraînement interactif et progressif
                 </p>
-              </div>
-              
-              {/* ====== GUIDE EN 4 ÉTAPES ====== */}
-              <div className="relative px-4 md:px-8 py-6 border-b border-amber-500/20">
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4 max-w-5xl mx-auto">
-                  <div className="bg-gradient-to-br from-blue-600 to-blue-800 p-3 md:p-4 rounded-xl text-center transform hover:scale-105 hover:-rotate-1 transition-all cursor-pointer shadow-lg shadow-blue-500/30">
-                    <div className="text-3xl md:text-4xl mb-2">👆</div>
-                    <p className="text-white font-bold text-sm">1. Choisis</p>
-                    <p className="text-blue-200 text-xs">une technique</p>
-                  </div>
-                  <div className="bg-gradient-to-br from-green-600 to-green-800 p-3 md:p-4 rounded-xl text-center transform hover:scale-105 hover:rotate-1 transition-all cursor-pointer shadow-lg shadow-green-500/30">
-                    <div className="text-3xl md:text-4xl mb-2">👀</div>
-                    <p className="text-white font-bold text-sm">2. Regarde</p>
-                    <p className="text-green-200 text-xs">les détails</p>
-                  </div>
-                  <div className="bg-gradient-to-br from-purple-600 to-purple-800 p-3 md:p-4 rounded-xl text-center transform hover:scale-105 hover:-rotate-1 transition-all cursor-pointer shadow-lg shadow-purple-500/30">
-                    <div className="text-3xl md:text-4xl mb-2">🎮</div>
-                    <p className="text-white font-bold text-sm">3. Apprend</p>
-                    <p className="text-purple-200 text-xs">applique les valeurs</p>
-                  </div>
-                  <div className="bg-gradient-to-br from-orange-600 to-orange-800 p-3 md:p-4 rounded-xl text-center transform hover:scale-105 hover:rotate-1 transition-all cursor-pointer shadow-lg shadow-orange-500/30">
-                    <div className="text-3xl md:text-4xl mb-2">🥋</div>
-                    <p className="text-white font-bold text-sm">4. Pratique</p>
-                    <p className="text-orange-200 text-xs">au dojo</p>
-                  </div>
-                  <div className="bg-gradient-to-br from-pink-600 to-pink-800 p-3 md:p-4 rounded-xl text-center transform hover:scale-105 hover:-rotate-1 transition-all cursor-pointer shadow-lg shadow-pink-500/30 col-span-2 md:col-span-1">
-                    <div className="text-3xl md:text-4xl mb-2">✅</div>
-                    <p className="text-white font-bold text-sm">5. Validation</p>
-                    <p className="text-pink-200 text-xs">avec ton enseignant</p>
-                  </div>
-                </div>
-                
-                <p className="text-center text-amber-300/80 text-xs md:text-sm mt-4">
-                  💡 Crée ton compte pour sauvegarder ta progression et devenir un vrai maître ! 🏆
-                </p>
-              </div>
-              
-              {/* ====== LES 7 VERTUS ====== */}
-              <div className="relative px-4 md:px-8 py-6">
-                <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-                  {/* Logo Yin-Yang */}
-                  <div className="flex flex-col items-center gap-2">
-                    <div className="relative w-20 h-20 md:w-24 md:h-24">
-                      <div className="absolute inset-0 rounded-full bg-gradient-to-br from-amber-400 via-yellow-500 to-amber-600 shadow-lg shadow-amber-500/40 animate-pulse"></div>
-                      <div className="absolute inset-1 rounded-full bg-slate-900 flex items-center justify-center">
-                        <div className="relative w-12 h-12 md:w-14 md:h-14">
-                          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-6 md:w-7 md:h-7 rounded-full bg-gradient-to-b from-amber-400 to-yellow-500"></div>
-                          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-6 md:w-7 md:h-7 rounded-full bg-slate-900 border-2 border-amber-500"></div>
-                          <div className="absolute top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-slate-900"></div>
-                          <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-amber-400"></div>
-                        </div>
-                      </div>
-                    </div>
-                    <p className="text-amber-400 font-bold text-sm">合気道</p>
-                  </div>
-                  
-                  {/* Les 7 Vertus */}
-                  <div className="flex-1 text-center md:text-left">
-                    <h3 className="text-lg md:text-xl font-bold text-cyan-400 mb-3 flex items-center justify-center md:justify-start gap-2">
-                      <span className="text-2xl">🎌</span> Les 7 Vertus de l&apos;Aïkido
-                    </h3>
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-2 text-sm md:text-base">
-                      <p className="text-slate-300"><span className="text-red-400 font-bold">義 Gi</span> : Droiture</p>
-                      <p className="text-slate-300"><span className="text-orange-400 font-bold">勇 Yu</span> : Courage</p>
-                      <p className="text-slate-300"><span className="text-pink-400 font-bold">仁 Jin</span> : Bienveillance</p>
-                      <p className="text-slate-300"><span className="text-yellow-400 font-bold">礼 Rei</span> : Respect</p>
-                      <p className="text-slate-300"><span className="text-green-400 font-bold">誠 Makoto</span> : Sincérité</p>
-                      <p className="text-slate-300"><span className="text-blue-400 font-bold">名誉 Meiyo</span> : Honneur</p>
-                      <p className="text-slate-300 md:col-span-2"><span className="text-purple-400 font-bold">忠義 Chugi</span> : Loyauté</p>
-                    </div>
-                  </div>
+                <div className="flex flex-wrap gap-3 justify-center">
+                  <Button
+                    onClick={() => {
+                      // Trigger registration
+                      const event = new CustomEvent('openAuthDialog');
+                      window.dispatchEvent(event);
+                    }}
+                    className="bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold px-6 py-3 rounded-xl text-lg shadow-lg"
+                  >
+                    🥷 S&apos;inscrire gratuitement
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      const event = new CustomEvent('openLoginDialog');
+                      window.dispatchEvent(event);
+                    }}
+                    className="border-2 border-white text-white hover:bg-white/20 font-bold px-6 py-3 rounded-xl text-lg"
+                  >
+                    Se connecter
+                  </Button>
                 </div>
               </div>
-              
             </div>
+            
+            {/* 5 ÉTAPES EN GRILLE */}
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4 mb-6">
+              <div className="bg-gradient-to-br from-blue-500 to-blue-700 p-4 md:p-5 rounded-2xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg">
+                <div className="text-3xl md:text-4xl mb-2">👆</div>
+                <p className="text-white font-bold text-sm md:text-base">1. Choisis</p>
+                <p className="text-blue-200 text-xs">une technique</p>
+              </div>
+              <div className="bg-gradient-to-br from-green-500 to-green-700 p-4 md:p-5 rounded-2xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg">
+                <div className="text-3xl md:text-4xl mb-2">👀</div>
+                <p className="text-white font-bold text-sm md:text-base">2. Regarde</p>
+                <p className="text-green-200 text-xs">les détails</p>
+              </div>
+              <div className="bg-gradient-to-br from-purple-500 to-purple-700 p-4 md:p-5 rounded-2xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg">
+                <div className="text-3xl md:text-4xl mb-2">🎮</div>
+                <p className="text-white font-bold text-sm md:text-base">3. Apprend</p>
+                <p className="text-purple-200 text-xs">applique les valeurs</p>
+              </div>
+              <div className="bg-gradient-to-br from-orange-500 to-orange-700 p-4 md:p-5 rounded-2xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg">
+                <div className="text-3xl md:text-4xl mb-2">🥋</div>
+                <p className="text-white font-bold text-sm md:text-base">4. Pratique</p>
+                <p className="text-orange-200 text-xs">au dojo</p>
+              </div>
+              <div className="bg-gradient-to-br from-pink-500 to-pink-700 p-4 md:p-5 rounded-2xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg col-span-2 md:col-span-1">
+                <div className="text-3xl md:text-4xl mb-2">✅</div>
+                <p className="text-white font-bold text-sm md:text-base">5. Validation</p>
+                <p className="text-pink-200 text-xs">avec ton enseignant</p>
+              </div>
+            </div>
+            
+            {/* 4 CARTES STATISTIQUES */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6">
+              <div 
+                className={`bg-gradient-to-br from-indigo-500/20 to-indigo-600/20 border border-indigo-500/30 rounded-2xl p-4 md:p-5 text-center cursor-pointer hover:scale-105 transition-all ${activeFilter === 'all' ? 'ring-2 ring-indigo-400' : ''}`}
+                onClick={() => onFilterClick && onFilterClick('all')}
+              >
+                <p className="text-indigo-400 text-3xl md:text-4xl font-bold">{statistics.total_techniques}</p>
+                <p className="text-slate-400 text-sm mt-1">📚 Techniques</p>
+              </div>
+              <div 
+                className={`bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 border border-emerald-500/30 rounded-2xl p-4 md:p-5 text-center cursor-pointer hover:scale-105 transition-all ${activeFilter === 'mastered' ? 'ring-2 ring-emerald-400' : ''}`}
+                onClick={() => onFilterClick && onFilterClick('mastered')}
+              >
+                <p className="text-emerald-400 text-3xl md:text-4xl font-bold">{statistics.mastered_techniques}</p>
+                <p className="text-slate-400 text-sm mt-1">✅ Maîtrisées</p>
+              </div>
+              <div 
+                className={`bg-gradient-to-br from-amber-500/20 to-amber-600/20 border border-amber-500/30 rounded-2xl p-4 md:p-5 text-center cursor-pointer hover:scale-105 transition-all ${activeFilter === 'in_progress' ? 'ring-2 ring-amber-400' : ''}`}
+                onClick={() => onFilterClick && onFilterClick('in_progress')}
+              >
+                <p className="text-amber-400 text-3xl md:text-4xl font-bold">{statistics.total_practice_sessions}</p>
+                <p className="text-slate-400 text-sm mt-1">🏆 Trophées</p>
+              </div>
+              <div className="bg-gradient-to-br from-pink-500/20 to-pink-600/20 border border-pink-500/30 rounded-2xl p-4 md:p-5 text-center">
+                <p className="text-pink-400 text-3xl md:text-4xl font-bold">{statistics.overall_progress}%</p>
+                <p className="text-slate-400 text-sm mt-1">⭐ Progression</p>
+              </div>
+            </div>
+            
+            {/* GRADES KYU - BADGES */}
+            <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-4 md:p-6">
+              <h3 className="text-white font-bold text-lg mb-4">📋 Grades KYU</h3>
+              <div className="flex flex-wrap gap-2 md:gap-3">
+                <span className="bg-yellow-400 text-slate-900 px-4 py-2 rounded-full font-bold text-sm cursor-pointer hover:scale-105 transition-all">5e KYU</span>
+                <span className="bg-orange-500 text-white px-4 py-2 rounded-full font-bold text-sm cursor-pointer hover:scale-105 transition-all">4e KYU</span>
+                <span className="bg-green-500 text-white px-4 py-2 rounded-full font-bold text-sm cursor-pointer hover:scale-105 transition-all">3e KYU</span>
+                <span className="bg-blue-500 text-white px-4 py-2 rounded-full font-bold text-sm cursor-pointer hover:scale-105 transition-all">2e KYU</span>
+                <span className="bg-amber-700 text-white px-4 py-2 rounded-full font-bold text-sm cursor-pointer hover:scale-105 transition-all">1er KYU</span>
+                <span className="bg-slate-800 text-white px-4 py-2 rounded-full font-bold text-sm border-2 border-slate-600 cursor-pointer hover:scale-105 transition-all">SHODAN</span>
+                <span className="bg-slate-800 text-white px-4 py-2 rounded-full font-bold text-sm border-2 border-slate-600 cursor-pointer hover:scale-105 transition-all">NIDAN</span>
+                <span className="bg-slate-800 text-white px-4 py-2 rounded-full font-bold text-sm border-2 border-slate-600 cursor-pointer hover:scale-105 transition-all">SANDAN</span>
+              </div>
+            </div>
+            
           </div>
         )}
 
