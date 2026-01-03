@@ -193,6 +193,21 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
   const [exportingPdf, setExportingPdf] = useState(false);
   const [activeSymbolicRole, setActiveSymbolicRole] = useState(null);
   const [roleLoading, setRoleLoading] = useState(false);
+  
+  // États pour les accordéons
+  const [accordionOpen, setAccordionOpen] = useState({
+    progression: true,
+    entrainement: false,
+    valeurs: false,
+    histoire: false
+  });
+  
+  const toggleAccordion = (key) => {
+    setAccordionOpen(prev => ({
+      ...prev,
+      [key]: !prev[key]
+    }));
+  };
 
   // Fetch user's active symbolic role
   useEffect(() => {
