@@ -1126,13 +1126,16 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                     <span><strong>Astuce ninja :</strong> Pose toujours la pointe du pied en premier, comme un chat silencieux !</span>
                   </p>
                 </div>
+              </div>
+            )}
+          </div>
 
-                {/* Fun footer message */}
-                <div className="mt-6 text-center">
-                  <p className="text-cyan-300 text-sm">
-                    🌟 Continue à t&apos;entraîner pour débloquer tous les grades ! 🌟
-                  </p>
-                  <div className="flex justify-center gap-2 mt-2 text-2xl">
+          {/* Fun footer message */}
+          <div className="mt-6 text-center">
+            <p className="text-cyan-300 text-sm">
+              🌟 Continue à t&apos;entraîner pour débloquer tous les grades ! 🌟
+            </p>
+            <div className="flex justify-center gap-2 mt-2 text-2xl">
                     <span className="animate-bounce" style={{ animationDelay: '0ms' }}>🥋</span>
                     <span className="animate-bounce" style={{ animationDelay: '100ms' }}>💪</span>
                     <span className="animate-bounce" style={{ animationDelay: '200ms' }}>⭐</span>
