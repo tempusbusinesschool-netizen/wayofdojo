@@ -684,6 +684,7 @@ function AppContent() {
                 }}
                 kyuLevels={kyuLevels}
                 userEmail={user?.email}
+                userName={user?.first_name}
                 userBelt={isAuthenticated ? userBelt : null}
                 onBeltChange={handleUserBeltChange}
                 isAuthenticated={isAuthenticated}
