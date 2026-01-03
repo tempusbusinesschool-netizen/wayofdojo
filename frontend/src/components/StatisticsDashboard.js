@@ -1525,6 +1525,8 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 </p>
               </div>
             </div>
+              </div>
+            )}
           </div>
         )}
 
