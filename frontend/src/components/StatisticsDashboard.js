@@ -975,57 +975,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 </div>
               </>
             )}
-                      const event = new CustomEvent('openAuthDialog');
-                      window.dispatchEvent(event);
-                    }}
-                    className="bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold px-6 py-3 rounded-xl text-lg shadow-lg"
-                  >
-                    🥷 S&apos;inscrire gratuitement
-                  </Button>
-                  <Button
-                    variant="outline"
-                    onClick={() => {
-                      const event = new CustomEvent('openLoginDialog');
-                      window.dispatchEvent(event);
-                    }}
-                    className="border-2 border-white text-white hover:bg-white/20 font-bold px-6 py-3 rounded-xl text-lg"
-                  >
-                    Se connecter
-                  </Button>
-                </div>
-              </div>
-            </div>
-            
-            {/* 5 ÉTAPES EN GRILLE */}
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4 mb-6">
-              <div className="bg-gradient-to-br from-blue-500 to-blue-700 p-4 md:p-5 rounded-2xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg">
-                <div className="text-3xl md:text-4xl mb-2">👆</div>
-                <p className="text-white font-bold text-sm md:text-base">1. Choisis</p>
-                <p className="text-blue-200 text-xs">une technique</p>
-              </div>
-              <div className="bg-gradient-to-br from-green-500 to-green-700 p-4 md:p-5 rounded-2xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg">
-                <div className="text-3xl md:text-4xl mb-2">👀</div>
-                <p className="text-white font-bold text-sm md:text-base">2. Regarde</p>
-                <p className="text-green-200 text-xs">les détails</p>
-              </div>
-              <div className="bg-gradient-to-br from-purple-500 to-purple-700 p-4 md:p-5 rounded-2xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg">
-                <div className="text-3xl md:text-4xl mb-2">🎮</div>
-                <p className="text-white font-bold text-sm md:text-base">3. Apprend</p>
-                <p className="text-purple-200 text-xs">applique les valeurs</p>
-              </div>
-              <div className="bg-gradient-to-br from-orange-500 to-orange-700 p-4 md:p-5 rounded-2xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg">
-                <div className="text-3xl md:text-4xl mb-2">🥋</div>
-                <p className="text-white font-bold text-sm md:text-base">4. Pratique</p>
-                <p className="text-orange-200 text-xs">au dojo</p>
-              </div>
-              <div className="bg-gradient-to-br from-pink-500 to-pink-700 p-4 md:p-5 rounded-2xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg col-span-2 md:col-span-1">
-                <div className="text-3xl md:text-4xl mb-2">✅</div>
-                <p className="text-white font-bold text-sm md:text-base">5. Validation</p>
-                <p className="text-pink-200 text-xs">avec ton enseignant</p>
-              </div>
-            </div>
-            {/* Old sections removed - now handled by authentication-based display above */}
-            
+
           </div>
         )}
 
