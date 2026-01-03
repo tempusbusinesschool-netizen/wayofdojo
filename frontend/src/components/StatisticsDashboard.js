@@ -799,65 +799,129 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* BLOC UNIQUE FUSIONNÉ : Ma Progression Ninja + Stats + Grades KYU */}
+        {/* ACCORDÉON 1 : Ma Progression Ninja */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {!isAuthenticated && (
-          <div id="bloc1-progression" className="mb-8 bg-gradient-to-br from-indigo-900/60 via-purple-900/60 to-pink-900/60 rounded-2xl border-2 border-purple-500/40 p-4 md:p-6 shadow-xl">
-            
-            {/* EN HAUT : Titre Ma Progression Ninja + boutons */}
-            <div className="flex flex-col md:flex-row items-center justify-between gap-3 mb-6">
-              <div className="flex items-center gap-3">
-                <div className="text-4xl animate-bounce">🎯</div>
-                <div>
-                  <h3 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-yellow-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
+          <div id="bloc1-progression" className="mb-4 rounded-2xl border-2 border-purple-500/40 shadow-xl overflow-hidden">
+            {/* Header de l'accordéon - toujours visible */}
+            <div 
+              className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 p-4 cursor-pointer hover:from-indigo-500 hover:via-purple-500 hover:to-pink-500 transition-all"
+              onClick={() => toggleAccordion('progression')}
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <h3 className="text-lg md:text-xl font-bold text-white">
                     Ma Progression Ninja ! 🥷
                   </h3>
-                  <p className="text-purple-300 text-xs md:text-sm">Tableau de bord général</p>
+                  <span className="text-purple-200 text-xs md:text-sm hidden md:inline">Stats & Grades KYU</span>
+                </div>
+                <div className={`p-2 rounded-full bg-white/20 transform transition-transform duration-300 ${accordionOpen.progression ? 'rotate-180' : ''}`}>
+                  <ChevronDown className="w-5 h-5 text-white" />
                 </div>
               </div>
-              <div className="flex gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => {
-                    if (!isAuthenticated) {
-                      toast.error("🔒 Inscrivez-vous pour télécharger votre progression en PDF");
-                      return;
-                    }
-                    setShowEmailDialog(true);
-                  }}
-                  className={`bg-gradient-to-r from-cyan-600 to-blue-600 border-none text-white hover:from-cyan-500 hover:to-blue-500 h-8 text-xs font-bold shadow-lg shadow-cyan-500/30 ${!isAuthenticated ? 'opacity-50' : ''}`}
-                >
-                  <Download className="w-3 h-3 mr-1" />
-                  📄 PDF
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => {
-                    if (!isAuthenticated) {
-                      toast.error("🔒 Inscrivez-vous pour télécharger votre progression en CSV");
-                      return;
-                    }
-                    exportToCSV();
-                  }}
-                  className={`bg-gradient-to-r from-green-600 to-emerald-600 border-none text-white hover:from-green-500 hover:to-emerald-500 h-8 text-xs font-bold shadow-lg shadow-green-500/30 ${!isAuthenticated ? 'opacity-50' : ''}`}
-                >
-                  <Download className="w-3 h-3 mr-1" />
-                  📊 CSV
-                </Button>
-              </div>
             </div>
+            
+            {/* Contenu de l'accordéon - dépliable */}
+            {accordionOpen.progression && (
+              <div className="bg-gradient-to-br from-indigo-900/60 via-purple-900/60 to-pink-900/60 p-4 md:p-6 animate-in slide-in-from-top-2">
+                {/* Statistiques (8 cartes sur 2 lignes) */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
+                  <div className="bg-gradient-to-br from-indigo-500/30 to-indigo-600/30 border border-indigo-500/40 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
+                    <div className="text-2xl mb-1">📚</div>
+                    <p className="text-2xl font-bold text-indigo-300">{statistics.total_techniques}</p>
+                    <p className="text-sm text-slate-400">Techniques</p>
+                  </div>
+                  <div className="bg-gradient-to-br from-emerald-500/30 to-emerald-600/30 border border-emerald-500/40 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
+                    <div className="text-2xl mb-1">🎯</div>
+                    <p className="text-2xl font-bold text-emerald-300">10</p>
+                    <p className="text-sm text-slate-400">Niveaux</p>
+                  </div>
+                  <div className="bg-gradient-to-br from-amber-500/30 to-amber-600/30 border border-amber-500/40 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
+                    <div className="text-2xl mb-1">🏆</div>
+                    <p className="text-2xl font-bold text-amber-300">15</p>
+                    <p className="text-sm text-slate-400">Trophées</p>
+                  </div>
+                  <div className="bg-gradient-to-br from-pink-500/30 to-pink-600/30 border border-pink-500/40 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
+                    <div className="text-2xl mb-1">☯️</div>
+                    <p className="text-2xl font-bold text-pink-300">7</p>
+                    <p className="text-sm text-slate-400">Vertus</p>
+                  </div>
+                </div>
 
-            {/* AU MILIEU : Statistiques (8 cartes sur 2 lignes) */}
-            {/* LIGNE 1 : Statistiques générales */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
-              <div className="bg-gradient-to-br from-indigo-500/30 to-indigo-600/30 border border-indigo-500/40 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
-                <div className="text-2xl mb-1">📚</div>
-                <p className="text-2xl font-bold text-indigo-300">{statistics.total_techniques}</p>
-                <p className="text-sm text-slate-400">Techniques</p>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+                  <div className="bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
+                    <div className="text-2xl mb-1">🏆</div>
+                    <p className="text-2xl font-bold text-white">{statistics.mastered_techniques}</p>
+                    <p className="text-sm text-emerald-100">Maîtrisées</p>
+                  </div>
+                  <div className="bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
+                    <div className="text-2xl mb-1">🔥</div>
+                    <p className="text-2xl font-bold text-white">{statistics.in_progress_techniques}</p>
+                    <p className="text-sm text-amber-100">En cours</p>
+                  </div>
+                  <div className="bg-gradient-to-br from-pink-500 to-rose-600 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
+                    <div className="text-2xl mb-1">⭐</div>
+                    <p className="text-2xl font-bold text-white">{statistics.total_practice_sessions}</p>
+                    <p className="text-sm text-pink-100">Sessions</p>
+                  </div>
+                  <div className="bg-gradient-to-br from-cyan-600 to-teal-700 rounded-xl p-4 text-center">
+                    <div className="text-2xl mb-1">📈</div>
+                    <p className="text-2xl font-bold text-white">{statistics.overall_progress}%</p>
+                    <p className="text-sm text-cyan-100">Progression</p>
+                    <div className="mt-2 h-2 bg-black/30 rounded-full overflow-hidden">
+                      <div 
+                        className="h-full bg-white/80 rounded-full transition-all"
+                        style={{ width: `${statistics.overall_progress}%` }}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Grades KYU */}
+                <div className="pt-4 border-t border-purple-500/30">
+                  <h4 className="text-white font-bold text-lg mb-4">📋 Grades KYU</h4>
+                  <div className="flex flex-wrap gap-2 md:gap-3">
+                    <span className="bg-yellow-400 text-slate-900 px-4 py-2 rounded-full font-bold text-sm hover:scale-105 transition-all cursor-pointer">5e KYU</span>
+                    <span className="bg-orange-500 text-white px-4 py-2 rounded-full font-bold text-sm hover:scale-105 transition-all cursor-pointer">4e KYU</span>
+                    <span className="bg-green-500 text-white px-4 py-2 rounded-full font-bold text-sm hover:scale-105 transition-all cursor-pointer">3e KYU</span>
+                    <span className="bg-blue-500 text-white px-4 py-2 rounded-full font-bold text-sm hover:scale-105 transition-all cursor-pointer">2e KYU</span>
+                    <span className="bg-amber-700 text-white px-4 py-2 rounded-full font-bold text-sm hover:scale-105 transition-all cursor-pointer">1er KYU</span>
+                    <span className="bg-slate-800 text-white px-4 py-2 rounded-full font-bold text-sm border-2 border-slate-600 hover:scale-105 transition-all cursor-pointer">SHODAN</span>
+                  </div>
+                </div>
+
+                {/* Prochaine Étape */}
+                <div className="mt-6 pt-4 border-t border-purple-500/30 bg-gradient-to-r from-rose-500/20 via-pink-500/20 to-purple-500/20 rounded-xl p-4">
+                  <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div className="flex items-center gap-3">
+                      <div className="text-3xl animate-pulse">🎯</div>
+                      <div>
+                        <h3 className="text-lg font-bold text-white">Prochaine étape</h3>
+                        <p className="text-purple-300 text-xs">
+                          Commence par le <strong className="text-yellow-400">5e KYU</strong>
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex flex-wrap justify-center gap-2">
+                      <Button variant="outline" size="sm" onClick={() => setShowEmailDialog(true)} className="bg-gradient-to-r from-cyan-600 to-blue-600 border-none text-white text-xs h-8">
+                        <Download className="w-3 h-3 mr-1" />PDF
+                      </Button>
+                      <Button variant="outline" size="sm" onClick={() => exportToCSV()} className="bg-gradient-to-r from-emerald-600 to-green-600 border-none text-white text-xs h-8">
+                        <Download className="w-3 h-3 mr-1" />CSV
+                      </Button>
+                      <Button variant="outline" size="sm" onClick={() => setShowTimelinePanel(true)} className="bg-gradient-to-r from-amber-600 to-orange-600 border-none text-white text-xs h-8">
+                        <Clock className="w-3 h-3 mr-1" />Timeline
+                      </Button>
+                      <Button variant="outline" size="sm" onClick={() => setShowJournalPanel(true)} className="bg-gradient-to-r from-violet-600 to-purple-600 border-none text-white text-xs h-8">
+                        <BookOpen className="w-3 h-3 mr-1" />Journal
+                      </Button>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="bg-gradient-to-br from-emerald-500/30 to-emerald-600/30 border border-emerald-500/40 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
+            )}
+          </div>
+        )}
                 <div className="text-2xl mb-1">🎯</div>
                 <p className="text-2xl font-bold text-emerald-300">10</p>
                 <p className="text-sm text-slate-400">Niveaux</p>
