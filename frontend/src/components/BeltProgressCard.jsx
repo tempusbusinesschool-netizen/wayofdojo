@@ -178,7 +178,7 @@ const BeltProgressCard = ({ currentBelt, totalPoints = 0, onBeltClick }) => {
       </div>
 
       {/* Styles pour les animations */}
-      <style jsx>{`
+      <style>{`
         @keyframes spin-slow {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
