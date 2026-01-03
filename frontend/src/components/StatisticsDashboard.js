@@ -1210,7 +1210,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {/* BLOC 3 : COMPRENDRE LES VALEURS DE L'AIKIDO */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {!isAdmin && currentBelt && (
+        {!isAuthenticated && !isAdmin && currentBelt && (
           <div className="mb-8 bg-gradient-to-br from-violet-900/40 via-purple-900/40 to-indigo-900/40 rounded-2xl border-2 border-violet-500/40 p-4 md:p-6 shadow-xl">
             <div className="flex items-center gap-3 mb-6">
               <div className="text-4xl">☯️</div>
