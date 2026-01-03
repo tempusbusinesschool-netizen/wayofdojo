@@ -1144,7 +1144,6 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
             )}
           </div>
         )}
-      )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {/* ACCORDÉON 3 : Les Valeurs de l'Aikido */}
