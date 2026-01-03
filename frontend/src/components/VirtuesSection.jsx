@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Sparkles, Trophy, Star, Zap, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import VirtuesGamification from './VirtuesGamification';
+import { VIRTUES_GAMIFICATION } from '@/constants/virtuesGamification';
 
 // Les 7 Vertus de l'Aikido avec design enfantin
 const VIRTUES_DATA = [
