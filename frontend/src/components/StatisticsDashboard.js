@@ -997,7 +997,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => setShowJournalPanel(true)}
+                    onClick={(e) => { e.stopPropagation(); setShowJournalPanel(true); }}
                     className="bg-gradient-to-r from-violet-600 to-purple-600 border-none text-white hover:from-violet-500 hover:to-purple-500 text-xs h-8"
                   >
                     <BookOpen className="w-3 h-3 mr-1" />
@@ -1006,14 +1006,37 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 </div>
               </div>
             </div>
+            </div>
           </div>
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* BLOC FUSIONNÉ : Entrainement + Grades détaillés */}
+        {/* ACCORDÉON 2 : Entrainement + Grades détaillés */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {!isAuthenticated && (
-          <div id="bloc2-entrainement" className="mb-8 bg-gradient-to-br from-cyan-900/40 via-blue-900/40 to-indigo-900/40 rounded-2xl border-2 border-cyan-500/40 p-4 md:p-6 shadow-xl">
+          <div id="bloc2-entrainement" className="mb-4 rounded-2xl border-2 border-cyan-500/40 shadow-xl overflow-hidden">
+            {/* Header cliquable de l'accordéon */}
+            <div 
+              className="bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 p-4 cursor-pointer hover:from-cyan-500 hover:via-blue-500 hover:to-indigo-500 transition-all"
+              onClick={() => toggleAccordion('entrainement')}
+              data-testid="accordion-entrainement-header"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <span className="text-2xl">🥋</span>
+                  <h3 className="text-lg md:text-xl font-bold text-white">Entrainement - Techniques d&apos;Aikido</h3>
+                </div>
+                <div className={`p-2 rounded-full bg-white/20 transform transition-transform duration-300 ${accordionOpen.entrainement ? 'rotate-180' : ''}`}>
+                  <ChevronDown className="w-5 h-5 text-white" />
+                </div>
+              </div>
+            </div>
+            
+            {/* Contenu de l'accordéon */}
+            <div 
+              className={`bg-gradient-to-br from-cyan-900/40 via-blue-900/40 to-indigo-900/40 p-4 md:p-6 transition-all duration-300 ${accordionOpen.entrainement ? 'block' : 'hidden'}`}
+              data-testid="accordion-entrainement-content"
+            >
             
             {/* EN HAUT : Titre Entrainement */}
             <div className="flex items-center gap-3 mb-6">
