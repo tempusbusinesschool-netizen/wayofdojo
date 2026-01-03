@@ -1243,15 +1243,35 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               <span className="animate-bounce" style={{ animationDelay: '400ms' }}>🔥</span>
             </div>
           </div>
+              </div>
+            )}
           </div>
-        </div>
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* BLOC 3 : COMPRENDRE LES VALEURS DE L'AIKIDO */}
+        {/* ACCORDÉON 3 : COMPRENDRE LES VALEURS DE L'AIKIDO */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {!isAuthenticated && !isAdmin && currentBelt && (
-          <div id="bloc3-valeurs" className="mb-8 bg-gradient-to-br from-violet-900/40 via-purple-900/40 to-indigo-900/40 rounded-2xl border-2 border-violet-500/40 p-4 md:p-6 shadow-xl">
+          <div id="bloc3-valeurs" className="mb-4 rounded-2xl border-2 border-violet-500/40 shadow-xl overflow-hidden">
+            {/* Header cliquable */}
+            <div 
+              className="bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 p-4 cursor-pointer hover:from-violet-500 hover:via-purple-500 hover:to-fuchsia-500 transition-all"
+              onClick={() => toggleAccordion('valeurs')}
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <h3 className="text-lg md:text-xl font-bold text-white">Les Valeurs de l&apos;Aikido ☯️</h3>
+                  <span className="text-violet-200 text-xs md:text-sm hidden md:inline">7 Vertus & Trophées</span>
+                </div>
+                <div className={`p-2 rounded-full bg-white/20 transform transition-transform duration-300 ${accordionOpen.valeurs ? 'rotate-180' : ''}`}>
+                  <ChevronDown className="w-5 h-5 text-white" />
+                </div>
+              </div>
+            </div>
+            
+            {/* Contenu repliable */}
+            {accordionOpen.valeurs && (
+              <div className="bg-gradient-to-br from-violet-900/40 via-purple-900/40 to-indigo-900/40 p-4 md:p-6">
             <div className="flex items-center gap-3 mb-6">
               <div className="text-4xl">☯️</div>
               <div>
