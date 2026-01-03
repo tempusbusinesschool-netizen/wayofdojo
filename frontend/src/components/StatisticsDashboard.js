@@ -799,26 +799,6 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                   </div>
                 </div>
 
-                {/* STATS VISITEUR */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6">
-                  <div className="bg-gradient-to-br from-indigo-500/20 to-indigo-600/20 border border-indigo-500/30 rounded-2xl p-4 md:p-5 text-center">
-                    <p className="text-indigo-400 text-3xl md:text-4xl font-bold">{statistics.total_techniques}</p>
-                    <p className="text-slate-400 text-sm mt-1">📚 Techniques</p>
-                  </div>
-                  <div className="bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 border border-emerald-500/30 rounded-2xl p-4 md:p-5 text-center">
-                    <p className="text-emerald-400 text-3xl md:text-4xl font-bold">10</p>
-                    <p className="text-slate-400 text-sm mt-1">🎯 Niveaux</p>
-                  </div>
-                  <div className="bg-gradient-to-br from-amber-500/20 to-amber-600/20 border border-amber-500/30 rounded-2xl p-4 md:p-5 text-center">
-                    <p className="text-amber-400 text-3xl md:text-4xl font-bold">15</p>
-                    <p className="text-slate-400 text-sm mt-1">🏆 Trophées</p>
-                  </div>
-                  <div className="bg-gradient-to-br from-pink-500/20 to-pink-600/20 border border-pink-500/30 rounded-2xl p-4 md:p-5 text-center">
-                    <p className="text-pink-400 text-3xl md:text-4xl font-bold">7</p>
-                    <p className="text-slate-400 text-sm mt-1">☯️ Vertus</p>
-                  </div>
-                </div>
-
                 {/* GRADES VISITEUR */}
                 <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-4 md:p-6">
                   <h3 className="text-white font-bold text-lg mb-4">📋 Grades KYU</h3>
