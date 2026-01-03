@@ -1095,7 +1095,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
 
           {/* Fun footer message */}
           <div className="mt-6 text-center">
-            <p className="text-purple-300 text-sm">
+            <p className="text-cyan-300 text-sm">
               🌟 Continue à t&apos;entraîner pour débloquer tous les grades ! 🌟
             </p>
             <div className="flex justify-center gap-2 mt-2 text-2xl">
@@ -1105,6 +1105,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               <span className="animate-bounce" style={{ animationDelay: '300ms' }}>🎯</span>
               <span className="animate-bounce" style={{ animationDelay: '400ms' }}>🔥</span>
             </div>
+          </div>
           </div>
         </div>
         )}
