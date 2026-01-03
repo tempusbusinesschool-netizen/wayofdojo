@@ -929,35 +929,20 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               </div>
             </div>
 
-            {/* Section Mon Parcours Aïkido (si currentBelt disponible) */}
+            {/* Section Mon Parcours Aïkido - Version ludique pour enfants */}
             {currentBelt && (
-              <div className="mb-6 p-4 md:p-6 bg-gradient-to-r from-slate-800/80 via-slate-900/80 to-slate-800/80 rounded-xl border border-amber-500/30">
-                <div className="flex flex-col md:flex-row items-center gap-6">
-                  {/* Current Belt Display */}
-                  <div className="flex flex-col items-center cursor-pointer transform hover:scale-105 transition-all" onClick={() => setShowBeltDialog(true)}>
-                    <div className={`w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br ${currentBelt.gradient} flex items-center justify-center shadow-xl border-4 border-white/20`}>
-                      <span className="text-5xl md:text-6xl">{currentBelt.emoji}</span>
-                    </div>
-                    <p className="mt-3 font-bold text-lg md:text-xl text-white">{currentBelt.name}</p>
-                    <p className="text-amber-400 font-medium">{currentBelt.grade}</p>
-                  </div>
-
-                  {/* Belt Info & Message */}
-                  <div className="flex-1 text-center md:text-left">
-                    <h3 className="text-xl md:text-2xl font-bold text-amber-400 mb-2 flex items-center justify-center md:justify-start gap-2">
-                      🥋 Mon Parcours Aïkido
-                    </h3>
-                    <p className="text-slate-300 text-sm md:text-base mb-4">
-                      {currentBelt.message}
-                    </p>
-                  </div>
-                </div>
-              </div>
+              <BeltProgressCard 
+                currentBelt={currentBelt}
+                totalPoints={statistics.total_points || 0}
+                onBeltClick={() => setShowBeltDialog(true)}
+              />
             )}
 
             {/* Grade Cards Grid (détails des techniques par niveau) */}
-            <div className="mb-6">
-              <h3 className="text-lg font-bold text-cyan-300 mb-4">📋 Tous les grades</h3>
+            <GradeCardsGrid 
+              techniquesByLevel={statistics.techniques_by_level}
+              onGradeClick={onGradeClick}
+            />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
             {statistics.techniques_by_level?.map((level, index) => {
               const gradeStyles = {
