@@ -1223,13 +1223,22 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
           </div>
           </div>
         </div>
+        </SimpleAccordion>
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* BLOC 3 : COMPRENDRE LES VALEURS DE L'AIKIDO */}
+        {/* ACCORDÉON 3 : COMPRENDRE LES VALEURS DE L'AIKIDO */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {!isAuthenticated && !isAdmin && currentBelt && (
-          <div id="bloc3-valeurs" className="mb-8 bg-gradient-to-br from-violet-900/40 via-purple-900/40 to-indigo-900/40 rounded-2xl border-2 border-violet-500/40 p-4 md:p-6 shadow-xl">
+          <SimpleAccordion
+            title="Les Valeurs de l'Aikido"
+            emoji="☯️"
+            subtitle="7 Vertus & Trophées"
+            headerGradient="from-violet-600 via-purple-600 to-fuchsia-600"
+            defaultOpen={true}
+            testId="accordion-valeurs"
+          >
+          <div id="bloc3-valeurs" className="bg-gradient-to-br from-violet-900/40 via-purple-900/40 to-indigo-900/40 rounded-b-2xl border-2 border-t-0 border-violet-500/40 p-4 md:p-6 shadow-xl">
             <div className="flex items-center gap-3 mb-6">
               <div className="text-4xl">☯️</div>
               <div>
