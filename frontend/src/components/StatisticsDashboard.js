@@ -961,6 +961,72 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 <span className="bg-slate-800 text-white px-4 py-2 rounded-full font-bold text-sm border-2 border-slate-600 hover:scale-105 transition-all cursor-pointer">SHODAN</span>
               </div>
             </div>
+
+            {/* Section Prochaine Étape (intégrée en bas) */}
+            <div className="mt-6 pt-4 border-t border-purple-500/30 bg-gradient-to-r from-rose-500/20 via-pink-500/20 to-purple-500/20 rounded-xl p-4">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="text-3xl animate-pulse">🎯</div>
+                  <div>
+                    <h3 className="text-lg font-bold text-white">Prochaine étape</h3>
+                    <p className="text-slate-300 text-xs">Continue ton parcours vers la maîtrise !</p>
+                    <p className="text-purple-300 text-xs mt-1">
+                      Commence par le <strong className="text-yellow-400">5e KYU</strong> - Clique sur un grade ci-dessus !
+                    </p>
+                  </div>
+                </div>
+                <div className="flex flex-wrap justify-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      if (!isAuthenticated) {
+                        toast.error("🔒 Inscrivez-vous pour télécharger");
+                        return;
+                      }
+                      setShowEmailDialog(true);
+                    }}
+                    className={`bg-gradient-to-r from-cyan-600 to-blue-600 border-none text-white hover:from-cyan-500 hover:to-blue-500 text-xs h-8 ${!isAuthenticated ? 'opacity-50' : ''}`}
+                  >
+                    <Download className="w-3 h-3 mr-1" />
+                    PDF
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      if (!isAuthenticated) {
+                        toast.error("🔒 Inscrivez-vous pour exporter");
+                        return;
+                      }
+                      exportToCSV();
+                    }}
+                    className={`bg-gradient-to-r from-emerald-600 to-green-600 border-none text-white hover:from-emerald-500 hover:to-green-500 text-xs h-8 ${!isAuthenticated ? 'opacity-50' : ''}`}
+                  >
+                    <Download className="w-3 h-3 mr-1" />
+                    CSV
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setShowTimelinePanel(true)}
+                    className="bg-gradient-to-r from-amber-600 to-orange-600 border-none text-white hover:from-amber-500 hover:to-orange-500 text-xs h-8"
+                  >
+                    <Clock className="w-3 h-3 mr-1" />
+                    Timeline
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setShowJournalPanel(true)}
+                    className="bg-gradient-to-r from-violet-600 to-purple-600 border-none text-white hover:from-violet-500 hover:to-purple-500 text-xs h-8"
+                  >
+                    <BookOpen className="w-3 h-3 mr-1" />
+                    Journal
+                  </Button>
+                </div>
+              </div>
+            </div>
           </div>
         )}
 
