@@ -35,7 +35,7 @@ Application web pour le club d'Aikido "Aikido La Rivière". L'application doit s
 - ErrorBoundary pour prévenir les crashs
 - Dialogs séparés pour inscription et connexion
 
-### January 2026 - Session actuelle
+### January 2026 - Session 2
 - **REORGANISATION DES MODULES UTILISATEUR CONNECTÉ**
   - Structure en 5 blocs distincts :
     1. **BLOC 1** - Tableau de bord général ("Ma Progression Ninja !")
@@ -44,6 +44,21 @@ Application web pour le club d'Aikido "Aikido La Rivière". L'application doit s
     4. **BLOC 4** - Histoire de l'Aikido (Les Sept Plis du Hakama, O Sensei)
     5. **BLOC 5** - Prochaine étape (boutons PDF, CSV, Timeline, Journal)
 
+### January 2026 - Session 3 (Actuelle)
+- **CONVERSION DES BLOCS EN ACCORDÉONS** ✅
+  - Création du composant `SimpleAccordion.jsx` réutilisable
+  - 4 accordéons sur la page visiteur :
+    1. **Ma Progression Ninja !** (gradient violet/rose) - Stats & Grades KYU
+    2. **Entrainement - Techniques d'Aikido** (gradient cyan/bleu) - Parcours & Déplacements
+    3. **Les Valeurs de l'Aikido** (gradient violet/fuchsia) - 7 Vertus & Trophées
+    4. **Histoire de l'Aikido** (gradient orange/ambre) - Hakama & O Sensei
+  - Fonctionnalités des accordéons :
+    - Header coloré cliquable avec emoji et titre
+    - Chevron animé (↑ ouvert, ↓ fermé)
+    - Contenu repliable/dépliable avec animation CSS
+    - data-testid pour les tests automatisés
+  - Tests passés à 100% (frontend)
+
 ---
 
 ## Prioritized Backlog
@@ -51,9 +66,10 @@ Application web pour le club d'Aikido "Aikido La Rivière". L'application doit s
 ### P0 - Critical
 - (Completed) Message d'accueil avec prénom ✅
 - (Completed) Réorganisation des 5 blocs ✅
+- (Completed) Conversion en accordéons ✅
 
 ### P1 - High Priority
-- [ ] Nouveau design du Header (Options A, B, C, D)
+- [ ] Nouveau design du Header (Options A, B, C, D à choisir)
 - [ ] Page de présentation principale (style "Grille Colorée")
 - [ ] Finalisation Stripe (webhooks & paiements réels)
 
@@ -78,6 +94,7 @@ Application web pour le club d'Aikido "Aikido La Rivière". L'application doit s
 ---
 
 ## Key Files
-- `/app/frontend/src/components/StatisticsDashboard.js` - Dashboard principal avec les 5 blocs
+- `/app/frontend/src/components/StatisticsDashboard.js` - Dashboard principal avec les 4 accordéons
+- `/app/frontend/src/components/SimpleAccordion.jsx` - Composant accordéon réutilisable
 - `/app/frontend/src/App.js` - Composant principal
 - `/app/backend/server.py` - API backend
