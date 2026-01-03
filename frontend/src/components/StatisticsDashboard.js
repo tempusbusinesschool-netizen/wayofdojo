@@ -1001,14 +1001,35 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 </div>
               </div>
             </div>
+              </div>
+            )}
           </div>
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* BLOC FUSIONNÉ : Entrainement + Grades détaillés */}
+        {/* ACCORDÉON 2 : Entrainement + Grades détaillés */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {!isAuthenticated && (
-          <div id="bloc2-entrainement" className="mb-8 bg-gradient-to-br from-cyan-900/40 via-blue-900/40 to-indigo-900/40 rounded-2xl border-2 border-cyan-500/40 p-4 md:p-6 shadow-xl">
+          <div id="bloc2-entrainement" className="mb-4 rounded-2xl border-2 border-cyan-500/40 shadow-xl overflow-hidden">
+            {/* Header cliquable */}
+            <div 
+              className="bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 p-4 cursor-pointer hover:from-cyan-500 hover:via-blue-500 hover:to-indigo-500 transition-all"
+              onClick={() => toggleAccordion('entrainement')}
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <h3 className="text-lg md:text-xl font-bold text-white">Entrainement - Techniques d&apos;Aikido 🥋</h3>
+                  <span className="text-cyan-200 text-xs md:text-sm hidden md:inline">Parcours & Déplacements</span>
+                </div>
+                <div className={`p-2 rounded-full bg-white/20 transform transition-transform duration-300 ${accordionOpen.entrainement ? 'rotate-180' : ''}`}>
+                  <ChevronDown className="w-5 h-5 text-white" />
+                </div>
+              </div>
+            </div>
+            
+            {/* Contenu repliable */}
+            {accordionOpen.entrainement && (
+              <div className="bg-gradient-to-br from-cyan-900/40 via-blue-900/40 to-indigo-900/40 p-4 md:p-6">
             
             {/* EN HAUT : Titre Entrainement */}
             <div className="flex items-center gap-3 mb-6">
