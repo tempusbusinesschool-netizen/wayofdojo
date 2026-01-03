@@ -1492,64 +1492,6 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
           </div>
         )}
 
-        {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* BLOC 5 : PROCHAINE ÉTAPE */}
-        {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {!isAuthenticated && (
-          <div id="bloc5-prochaine" className="mb-8 bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-rose-500/20 rounded-2xl border-2 border-purple-500/40 p-4 md:p-6 shadow-xl">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-              <div className="flex items-center gap-4">
-                <div className="text-5xl animate-pulse">🎯</div>
-                <div>
-                  <h2 className="text-xl md:text-2xl font-bold text-white">Prochaine étape</h2>
-                  <p className="text-slate-300 text-sm">Continue ton parcours vers la maîtrise !</p>
-                  <p className="text-purple-300 text-xs mt-1">
-                    Commence par le <strong className="text-yellow-400">5e KYU</strong> - Clique sur un grade dans &quot;Ma Progression Ninja&quot; ci-dessus !
-                  </p>
-                </div>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-2">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setShowEmailDialog(true)}
-                  className="bg-gradient-to-r from-cyan-600 to-blue-600 border-none text-white hover:from-cyan-500 hover:to-blue-500"
-                >
-                  <Download className="w-4 h-4 mr-1" />
-                  Télécharger PDF
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => exportToCSV()}
-                  className="bg-gradient-to-r from-emerald-600 to-green-600 border-none text-white hover:from-emerald-500 hover:to-green-500"
-                >
-                  <Download className="w-4 h-4 mr-1" />
-                  Export CSV
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setShowTimelinePanel(true)}
-                  className="bg-gradient-to-r from-amber-600 to-orange-600 border-none text-white hover:from-amber-500 hover:to-orange-500"
-                >
-                  <Clock className="w-4 h-4 mr-1" />
-                  Ma Timeline
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setShowJournalPanel(true)}
-                  className="bg-gradient-to-r from-violet-600 to-purple-600 border-none text-white hover:from-violet-500 hover:to-purple-500"
-                >
-                  <BookOpen className="w-4 h-4 mr-1" />
-                  Mon Journal
-                </Button>
-              </div>
-            </div>
-          </div>
-        )}
-
         {/* Trophies Dialog */}
         <Dialog open={showTrophiesDialog} onOpenChange={setShowTrophiesDialog}>
           <DialogContent className="max-w-lg bg-slate-900 border-slate-700 text-white max-h-[90vh] overflow-y-auto">
