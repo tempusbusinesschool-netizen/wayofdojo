@@ -845,29 +845,31 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
           </div>
         )}
 
-        {/* FUN PROGRESSION SECTION - Colorful & Kid-Friendly - MOVED BEFORE Mon Parcours */}
-        <div className="mb-8 bg-gradient-to-br from-indigo-900/60 via-purple-900/60 to-pink-900/60 rounded-2xl border-2 border-purple-500/40 p-4 md:p-6 shadow-xl">
-          {/* Header with fun styling */}
-          <div className="flex flex-col md:flex-row items-center justify-between gap-3 mb-4">
-            <div className="flex items-center gap-3">
-              <div className="text-4xl animate-bounce">🎯</div>
-              <div>
-                <h3 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-yellow-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
-                  Ma Progression Ninja ! 🥷
-                </h3>
-                <p className="text-purple-300 text-xs md:text-sm">Clique sur un grade pour voir les techniques</p>
+        {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+        {/* BLOC 1 : TABLEAU DE BORD GÉNÉRAL - Ma Progression Ninja ! */}
+        {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+        {isAuthenticated && (
+          <div className="mb-8 bg-gradient-to-br from-indigo-900/60 via-purple-900/60 to-pink-900/60 rounded-2xl border-2 border-purple-500/40 p-4 md:p-6 shadow-xl">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-3 mb-4">
+              <div className="flex items-center gap-3">
+                <div className="text-4xl animate-bounce">🎯</div>
+                <div>
+                  <h3 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-yellow-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
+                    Ma Progression Ninja ! 🥷
+                  </h3>
+                  <p className="text-purple-300 text-xs md:text-sm">Tableau de bord général</p>
+                </div>
               </div>
-            </div>
-            <div className="flex gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  if (!isAuthenticated) {
-                    toast.error("🔒 Inscrivez-vous pour télécharger votre progression en PDF");
-                    return;
-                  }
-                  setShowEmailDialog(true);
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    if (!isAuthenticated) {
+                      toast.error("🔒 Inscrivez-vous pour télécharger votre progression en PDF");
+                      return;
+                    }
+                    setShowEmailDialog(true);
                 }}
                 className={`bg-gradient-to-r from-cyan-600 to-blue-600 border-none text-white hover:from-cyan-500 hover:to-blue-500 h-8 text-xs font-bold shadow-lg shadow-cyan-500/30 ${!isAuthenticated ? 'opacity-50' : ''}`}
               >
