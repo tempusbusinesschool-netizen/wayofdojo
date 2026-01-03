@@ -739,32 +739,63 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                   </div>
                 </div>
 
-                {/* 5 ÉTAPES - VISITEUR */}
+                {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+                {/* 5 BLOCS CARRÉS - NAVIGATION VISITEUR */}
+                {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
                 <div className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4 mb-6">
-                  <div className="bg-gradient-to-br from-blue-500 to-blue-700 p-4 md:p-5 rounded-2xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg">
-                    <div className="text-3xl md:text-4xl mb-2">👆</div>
-                    <p className="text-white font-bold text-sm md:text-base">1. Choisis</p>
-                    <p className="text-blue-200 text-xs">une technique</p>
+                  {/* BLOC 1 - Tableau de bord général */}
+                  <div 
+                    className="aspect-square bg-gradient-to-br from-indigo-500 via-purple-500 to-indigo-600 p-3 md:p-4 rounded-2xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg hover:shadow-purple-500/40 flex flex-col items-center justify-center border-2 border-purple-400/30"
+                    onClick={() => document.getElementById('bloc1-progression')?.scrollIntoView({ behavior: 'smooth' })}
+                  >
+                    <div className="text-3xl md:text-4xl mb-2">🥷</div>
+                    <p className="text-white font-bold text-xs md:text-sm leading-tight">Ma Progression</p>
+                    <p className="text-white font-bold text-xs md:text-sm leading-tight">Ninja !</p>
+                    <p className="text-purple-200 text-[10px] md:text-xs mt-1">Stats & Grades KYU</p>
                   </div>
-                  <div className="bg-gradient-to-br from-green-500 to-green-700 p-4 md:p-5 rounded-2xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg">
-                    <div className="text-3xl md:text-4xl mb-2">👀</div>
-                    <p className="text-white font-bold text-sm md:text-base">2. Regarde</p>
-                    <p className="text-green-200 text-xs">les détails</p>
-                  </div>
-                  <div className="bg-gradient-to-br from-purple-500 to-purple-700 p-4 md:p-5 rounded-2xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg">
-                    <div className="text-3xl md:text-4xl mb-2">🎮</div>
-                    <p className="text-white font-bold text-sm md:text-base">3. Apprend</p>
-                    <p className="text-purple-200 text-xs">applique les valeurs</p>
-                  </div>
-                  <div className="bg-gradient-to-br from-orange-500 to-orange-700 p-4 md:p-5 rounded-2xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg">
+
+                  {/* BLOC 2 - Entrainement Techniques */}
+                  <div 
+                    className="aspect-square bg-gradient-to-br from-cyan-500 via-blue-500 to-cyan-600 p-3 md:p-4 rounded-2xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg hover:shadow-cyan-500/40 flex flex-col items-center justify-center border-2 border-cyan-400/30"
+                    onClick={() => document.getElementById('bloc2-entrainement')?.scrollIntoView({ behavior: 'smooth' })}
+                  >
                     <div className="text-3xl md:text-4xl mb-2">🥋</div>
-                    <p className="text-white font-bold text-sm md:text-base">4. Pratique</p>
-                    <p className="text-orange-200 text-xs">au dojo</p>
+                    <p className="text-white font-bold text-xs md:text-sm leading-tight">Entrainement</p>
+                    <p className="text-white font-bold text-xs md:text-sm leading-tight">Techniques</p>
+                    <p className="text-cyan-200 text-[10px] md:text-xs mt-1">Parcours & Déplacements</p>
                   </div>
-                  <div className="bg-gradient-to-br from-pink-500 to-pink-700 p-4 md:p-5 rounded-2xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg col-span-2 md:col-span-1">
-                    <div className="text-3xl md:text-4xl mb-2">✅</div>
-                    <p className="text-white font-bold text-sm md:text-base">5. Validation</p>
-                    <p className="text-pink-200 text-xs">avec ton enseignant</p>
+
+                  {/* BLOC 3 - Valeurs de l'Aikido */}
+                  <div 
+                    className="aspect-square bg-gradient-to-br from-violet-500 via-fuchsia-500 to-violet-600 p-3 md:p-4 rounded-2xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg hover:shadow-violet-500/40 flex flex-col items-center justify-center border-2 border-violet-400/30"
+                    onClick={() => document.getElementById('bloc3-valeurs')?.scrollIntoView({ behavior: 'smooth' })}
+                  >
+                    <div className="text-3xl md:text-4xl mb-2">☯️</div>
+                    <p className="text-white font-bold text-xs md:text-sm leading-tight">Les Valeurs</p>
+                    <p className="text-white font-bold text-xs md:text-sm leading-tight">de l&apos;Aikido</p>
+                    <p className="text-violet-200 text-[10px] md:text-xs mt-1">7 Vertus & Trophées</p>
+                  </div>
+
+                  {/* BLOC 4 - Histoire de l'Aikido */}
+                  <div 
+                    className="aspect-square bg-gradient-to-br from-amber-500 via-orange-500 to-amber-600 p-3 md:p-4 rounded-2xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg hover:shadow-amber-500/40 flex flex-col items-center justify-center border-2 border-amber-400/30"
+                    onClick={() => document.getElementById('bloc4-histoire')?.scrollIntoView({ behavior: 'smooth' })}
+                  >
+                    <div className="text-3xl md:text-4xl mb-2">📜</div>
+                    <p className="text-white font-bold text-xs md:text-sm leading-tight">Histoire de</p>
+                    <p className="text-white font-bold text-xs md:text-sm leading-tight">l&apos;Aikido</p>
+                    <p className="text-amber-200 text-[10px] md:text-xs mt-1">Hakama & O Sensei</p>
+                  </div>
+
+                  {/* BLOC 5 - Prochaine étape */}
+                  <div 
+                    className="aspect-square bg-gradient-to-br from-emerald-500 via-teal-500 to-emerald-600 p-3 md:p-4 rounded-2xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg hover:shadow-emerald-500/40 flex flex-col items-center justify-center border-2 border-emerald-400/30 col-span-2 md:col-span-1"
+                    onClick={() => document.getElementById('bloc5-prochaine')?.scrollIntoView({ behavior: 'smooth' })}
+                  >
+                    <div className="text-3xl md:text-4xl mb-2">🎯</div>
+                    <p className="text-white font-bold text-xs md:text-sm leading-tight">Prochaine</p>
+                    <p className="text-white font-bold text-xs md:text-sm leading-tight">Étape</p>
+                    <p className="text-emerald-200 text-[10px] md:text-xs mt-1">PDF, CSV, Journal</p>
                   </div>
                 </div>
 
