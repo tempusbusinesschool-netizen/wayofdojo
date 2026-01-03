@@ -1381,13 +1381,25 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               </p>
             </div>
           </div>
+          </AccordionBlock>
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* BLOC 4 : HISTOIRE DE L'AIKIDO - Les Sept Plis du Hakama */}
+        {/* ACCORDÉON 4 : HISTOIRE DE L'AIKIDO - Les Sept Plis du Hakama */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {!isAuthenticated && (
-          <div id="bloc4-histoire" className="mb-8 bg-gradient-to-br from-amber-900/30 via-slate-900/40 to-amber-900/30 rounded-2xl border-2 border-amber-500/40 p-4 md:p-6 shadow-xl">
+          <AccordionBlock
+            title="Histoire de l'Aikido"
+            emoji="📜"
+            subtitle="Hakama & O Sensei"
+            gradientFrom="from-amber-600"
+            gradientVia="via-orange-600"
+            gradientTo="to-yellow-600"
+            borderColor="border-amber-500/40"
+            isOpen={true}
+            testId="accordion-histoire"
+          >
+          <div id="bloc4-histoire" className="bg-gradient-to-br from-amber-900/30 via-slate-900/40 to-amber-900/30 p-4 md:p-6">
             <div className="flex items-center gap-3 mb-6">
               <div className="text-4xl">📜</div>
               <div>
