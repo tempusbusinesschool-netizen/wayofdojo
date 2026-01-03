@@ -799,32 +799,10 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* ACCORDÉON 1 : Ma Progression Ninja + Stats + Grades KYU */}
+        {/* BLOC UNIQUE FUSIONNÉ : Ma Progression Ninja + Stats + Grades KYU */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {!isAuthenticated && (
-          <div id="bloc1-progression" className="mb-4 rounded-2xl border-2 border-purple-500/40 shadow-xl overflow-hidden">
-            {/* Header cliquable de l'accordéon */}
-            <div 
-              className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 p-4 cursor-pointer hover:from-indigo-500 hover:via-purple-500 hover:to-pink-500 transition-all"
-              onClick={() => toggleAccordion('progression')}
-              data-testid="accordion-progression-header"
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">🎯</span>
-                  <h3 className="text-lg md:text-xl font-bold text-white">Ma Progression Ninja !</h3>
-                </div>
-                <div className={`p-2 rounded-full bg-white/20 transform transition-transform duration-300 ${accordionOpen.progression ? 'rotate-180' : ''}`}>
-                  <ChevronDown className="w-5 h-5 text-white" />
-                </div>
-              </div>
-            </div>
-            
-            {/* Contenu de l'accordéon */}
-            <div 
-              className={`bg-gradient-to-br from-indigo-900/60 via-purple-900/60 to-pink-900/60 p-4 md:p-6 transition-all duration-300 ${accordionOpen.progression ? 'block' : 'hidden'}`}
-              data-testid="accordion-progression-content"
-            >
+          <div id="bloc1-progression" className="mb-8 bg-gradient-to-br from-indigo-900/60 via-purple-900/60 to-pink-900/60 rounded-2xl border-2 border-purple-500/40 p-4 md:p-6 shadow-xl">
             
             {/* EN HAUT : Titre Ma Progression Ninja + boutons */}
             <div className="flex flex-col md:flex-row items-center justify-between gap-3 mb-6">
@@ -841,8 +819,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={(e) => {
-                    e.stopPropagation();
+                  onClick={() => {
                     if (!isAuthenticated) {
                       toast.error("🔒 Inscrivez-vous pour télécharger votre progression en PDF");
                       return;
@@ -857,8 +834,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={(e) => {
-                    e.stopPropagation();
+                  onClick={() => {
                     if (!isAuthenticated) {
                       toast.error("🔒 Inscrivez-vous pour télécharger votre progression en CSV");
                       return;
@@ -997,7 +973,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={(e) => { e.stopPropagation(); setShowJournalPanel(true); }}
+                    onClick={() => setShowJournalPanel(true)}
                     className="bg-gradient-to-r from-violet-600 to-purple-600 border-none text-white hover:from-violet-500 hover:to-purple-500 text-xs h-8"
                   >
                     <BookOpen className="w-3 h-3 mr-1" />
@@ -1006,37 +982,14 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 </div>
               </div>
             </div>
-            </div>
           </div>
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* ACCORDÉON 2 : Entrainement + Grades détaillés */}
+        {/* BLOC FUSIONNÉ : Entrainement + Grades détaillés */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {!isAuthenticated && (
-          <div id="bloc2-entrainement" className="mb-4 rounded-2xl border-2 border-cyan-500/40 shadow-xl overflow-hidden">
-            {/* Header cliquable de l'accordéon */}
-            <div 
-              className="bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 p-4 cursor-pointer hover:from-cyan-500 hover:via-blue-500 hover:to-indigo-500 transition-all"
-              onClick={() => toggleAccordion('entrainement')}
-              data-testid="accordion-entrainement-header"
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">🥋</span>
-                  <h3 className="text-lg md:text-xl font-bold text-white">Entrainement - Techniques d&apos;Aikido</h3>
-                </div>
-                <div className={`p-2 rounded-full bg-white/20 transform transition-transform duration-300 ${accordionOpen.entrainement ? 'rotate-180' : ''}`}>
-                  <ChevronDown className="w-5 h-5 text-white" />
-                </div>
-              </div>
-            </div>
-            
-            {/* Contenu de l'accordéon */}
-            <div 
-              className={`bg-gradient-to-br from-cyan-900/40 via-blue-900/40 to-indigo-900/40 p-4 md:p-6 transition-all duration-300 ${accordionOpen.entrainement ? 'block' : 'hidden'}`}
-              data-testid="accordion-entrainement-content"
-            >
+          <div id="bloc2-entrainement" className="mb-8 bg-gradient-to-br from-cyan-900/40 via-blue-900/40 to-indigo-900/40 rounded-2xl border-2 border-cyan-500/40 p-4 md:p-6 shadow-xl">
             
             {/* EN HAUT : Titre Entrainement */}
             <div className="flex items-center gap-3 mb-6">
@@ -1252,35 +1205,13 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
           </div>
           </div>
         </div>
-      )}
+        )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* ACCORDÉON 3 : COMPRENDRE LES VALEURS DE L'AIKIDO */}
+        {/* BLOC 3 : COMPRENDRE LES VALEURS DE L'AIKIDO */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {!isAuthenticated && !isAdmin && currentBelt && (
-          <div id="bloc3-valeurs" className="mb-4 rounded-2xl border-2 border-violet-500/40 shadow-xl overflow-hidden">
-            {/* Header cliquable de l'accordéon */}
-            <div 
-              className="bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 p-4 cursor-pointer hover:from-violet-500 hover:via-purple-500 hover:to-fuchsia-500 transition-all"
-              onClick={() => toggleAccordion('valeurs')}
-              data-testid="accordion-valeurs-header"
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="text-2xl">☯️</span>
-                  <h3 className="text-lg md:text-xl font-bold text-white">Les Valeurs de l&apos;Aikido</h3>
-                </div>
-                <div className={`p-2 rounded-full bg-white/20 transform transition-transform duration-300 ${accordionOpen.valeurs ? 'rotate-180' : ''}`}>
-                  <ChevronDown className="w-5 h-5 text-white" />
-                </div>
-              </div>
-            </div>
-            
-            {/* Contenu de l'accordéon */}
-            <div 
-              className={`bg-gradient-to-br from-violet-900/40 via-purple-900/40 to-indigo-900/40 p-4 md:p-6 transition-all duration-300 ${accordionOpen.valeurs ? 'block' : 'hidden'}`}
-              data-testid="accordion-valeurs-content"
-            >
+          <div id="bloc3-valeurs" className="mb-8 bg-gradient-to-br from-violet-900/40 via-purple-900/40 to-indigo-900/40 rounded-2xl border-2 border-violet-500/40 p-4 md:p-6 shadow-xl">
             <div className="flex items-center gap-3 mb-6">
               <div className="text-4xl">☯️</div>
               <div>
@@ -1299,7 +1230,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 </h4>
                 <div className="flex gap-2">
                   <Button 
-                    onClick={(e) => { e.stopPropagation(); setShowVirtueActionsPanel(true); }}
+                    onClick={() => setShowVirtueActionsPanel(true)}
                     size="sm"
                     className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold text-xs shadow-lg shadow-amber-500/30"
                   >
