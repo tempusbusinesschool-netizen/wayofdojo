@@ -9,7 +9,6 @@ import { toast } from "sonner";
 import VirtueActionsPanel from "./VirtueActionsPanel";
 import TimelinePanel from "./TimelinePanel";
 import JournalPanel from "./JournalPanel";
-import AccordionBlock from "./AccordionBlock";
 import { DEPLACEMENTS_DATA } from "@/constants";
 
 // Aikido Belt System - Real grades with KYU equivalence
@@ -800,21 +799,10 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* ACCORDÉON 1 : Ma Progression Ninja + Stats + Grades KYU */}
+        {/* BLOC UNIQUE FUSIONNÉ : Ma Progression Ninja + Stats + Grades KYU */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {!isAuthenticated && (
-          <AccordionBlock
-            title="Ma Progression Ninja !"
-            emoji="🎯"
-            subtitle="Stats & Grades KYU"
-            gradientFrom="from-indigo-600"
-            gradientVia="via-purple-600"
-            gradientTo="to-pink-600"
-            borderColor="border-purple-500/40"
-            isOpen={true}
-            testId="accordion-progression"
-          >
-          <div id="bloc1-progression" className="bg-gradient-to-br from-indigo-900/60 via-purple-900/60 to-pink-900/60 p-4 md:p-6">
+          <div id="bloc1-progression" className="mb-8 bg-gradient-to-br from-indigo-900/60 via-purple-900/60 to-pink-900/60 rounded-2xl border-2 border-purple-500/40 p-4 md:p-6 shadow-xl">
             
             {/* EN HAUT : Titre Ma Progression Ninja + boutons */}
             <div className="flex flex-col md:flex-row items-center justify-between gap-3 mb-6">
@@ -995,25 +983,13 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               </div>
             </div>
           </div>
-          </AccordionBlock>
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* ACCORDÉON 2 : Entrainement + Grades détaillés */}
+        {/* BLOC FUSIONNÉ : Entrainement + Grades détaillés */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {!isAuthenticated && (
-          <AccordionBlock
-            title="Entrainement - Techniques d'Aikido"
-            emoji="🥋"
-            subtitle="Parcours & Déplacements"
-            gradientFrom="from-cyan-600"
-            gradientVia="via-blue-600"
-            gradientTo="to-indigo-600"
-            borderColor="border-cyan-500/40"
-            isOpen={true}
-            testId="accordion-entrainement"
-          >
-          <div id="bloc2-entrainement" className="bg-gradient-to-br from-cyan-900/40 via-blue-900/40 to-indigo-900/40 p-4 md:p-6">
+          <div id="bloc2-entrainement" className="mb-8 bg-gradient-to-br from-cyan-900/40 via-blue-900/40 to-indigo-900/40 rounded-2xl border-2 border-cyan-500/40 p-4 md:p-6 shadow-xl">
             
             {/* EN HAUT : Titre Entrainement */}
             <div className="flex items-center gap-3 mb-6">
@@ -1227,25 +1203,15 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               <span className="animate-bounce" style={{ animationDelay: '400ms' }}>🔥</span>
             </div>
           </div>
-          </AccordionBlock>
+          </div>
+        </div>
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* ACCORDÉON 3 : COMPRENDRE LES VALEURS DE L'AIKIDO */}
+        {/* BLOC 3 : COMPRENDRE LES VALEURS DE L'AIKIDO */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {!isAuthenticated && !isAdmin && currentBelt && (
-          <AccordionBlock
-            title="Les Valeurs de l'Aikido"
-            emoji="☯️"
-            subtitle="7 Vertus & Trophées"
-            gradientFrom="from-violet-600"
-            gradientVia="via-purple-600"
-            gradientTo="to-fuchsia-600"
-            borderColor="border-violet-500/40"
-            isOpen={true}
-            testId="accordion-valeurs"
-          >
-          <div id="bloc3-valeurs" className="bg-gradient-to-br from-violet-900/40 via-purple-900/40 to-indigo-900/40 p-4 md:p-6">
+          <div id="bloc3-valeurs" className="mb-8 bg-gradient-to-br from-violet-900/40 via-purple-900/40 to-indigo-900/40 rounded-2xl border-2 border-violet-500/40 p-4 md:p-6 shadow-xl">
             <div className="flex items-center gap-3 mb-6">
               <div className="text-4xl">☯️</div>
               <div>
@@ -1380,25 +1346,13 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               </p>
             </div>
           </div>
-          </AccordionBlock>
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* ACCORDÉON 4 : HISTOIRE DE L'AIKIDO - Les Sept Plis du Hakama */}
+        {/* BLOC 4 : HISTOIRE DE L'AIKIDO - Les Sept Plis du Hakama */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {!isAuthenticated && (
-          <AccordionBlock
-            title="Histoire de l'Aikido"
-            emoji="📜"
-            subtitle="Hakama & O Sensei"
-            gradientFrom="from-amber-600"
-            gradientVia="via-orange-600"
-            gradientTo="to-yellow-600"
-            borderColor="border-amber-500/40"
-            isOpen={true}
-            testId="accordion-histoire"
-          >
-          <div id="bloc4-histoire" className="bg-gradient-to-br from-amber-900/30 via-slate-900/40 to-amber-900/30 p-4 md:p-6">
+          <div id="bloc4-histoire" className="mb-8 bg-gradient-to-br from-amber-900/30 via-slate-900/40 to-amber-900/30 rounded-2xl border-2 border-amber-500/40 p-4 md:p-6 shadow-xl">
             <div className="flex items-center gap-3 mb-6">
               <div className="text-4xl">📜</div>
               <div>
@@ -1491,7 +1445,6 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               </div>
             </div>
           </div>
-          </AccordionBlock>
         )}
 
         {/* Trophies Dialog */}
