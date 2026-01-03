@@ -931,7 +931,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
           </div>
 
           {/* LIGNE 2 : Progression personnelle */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
             <div 
               className={`bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-xl p-3 text-center cursor-pointer hover:scale-105 transition-all ${activeFilter === 'mastered' ? 'ring-2 ring-white' : ''}`}
               onClick={() => onFilterClick && onFilterClick('mastered')}
@@ -968,8 +968,77 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               </div>
             </div>
           </div>
+          </div>
+        )}
 
-          {/* Grade Cards Grid */}
+        {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+        {/* BLOC STATISTIQUES ISOLÉ */}
+        {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+        {!isAuthenticated && (
+          <div className="mb-8 bg-gradient-to-br from-slate-800/80 via-slate-900/80 to-slate-800/80 rounded-2xl border-2 border-slate-600/50 p-4 md:p-6 shadow-xl">
+            <h3 className="text-lg md:text-xl font-bold text-white mb-4 text-center">📊 Mes Statistiques</h3>
+            
+            {/* LIGNE 1 : Statistiques générales */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+              <div className="bg-gradient-to-br from-indigo-500/30 to-indigo-600/30 border border-indigo-500/40 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
+                <div className="text-2xl mb-1">📚</div>
+                <p className="text-2xl font-bold text-indigo-300">{statistics.total_techniques}</p>
+                <p className="text-sm text-slate-400">Techniques</p>
+              </div>
+              <div className="bg-gradient-to-br from-emerald-500/30 to-emerald-600/30 border border-emerald-500/40 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
+                <div className="text-2xl mb-1">🎯</div>
+                <p className="text-2xl font-bold text-emerald-300">10</p>
+                <p className="text-sm text-slate-400">Niveaux</p>
+              </div>
+              <div className="bg-gradient-to-br from-amber-500/30 to-amber-600/30 border border-amber-500/40 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
+                <div className="text-2xl mb-1">🏆</div>
+                <p className="text-2xl font-bold text-amber-300">15</p>
+                <p className="text-sm text-slate-400">Trophées</p>
+              </div>
+              <div className="bg-gradient-to-br from-pink-500/30 to-pink-600/30 border border-pink-500/40 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
+                <div className="text-2xl mb-1">☯️</div>
+                <p className="text-2xl font-bold text-pink-300">7</p>
+                <p className="text-sm text-slate-400">Vertus</p>
+              </div>
+            </div>
+
+            {/* LIGNE 2 : Progression personnelle */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+              <div className="bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
+                <div className="text-2xl mb-1">🏆</div>
+                <p className="text-2xl font-bold text-white">{statistics.mastered_techniques}</p>
+                <p className="text-sm text-emerald-100">Maîtrisées</p>
+              </div>
+              <div className="bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
+                <div className="text-2xl mb-1">🔥</div>
+                <p className="text-2xl font-bold text-white">{statistics.in_progress_techniques}</p>
+                <p className="text-sm text-amber-100">En cours</p>
+              </div>
+              <div className="bg-gradient-to-br from-pink-500 to-rose-600 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
+                <div className="text-2xl mb-1">⭐</div>
+                <p className="text-2xl font-bold text-white">{statistics.total_practice_sessions}</p>
+                <p className="text-sm text-pink-100">Sessions</p>
+              </div>
+              <div className="bg-gradient-to-br from-cyan-600 to-teal-700 rounded-xl p-4 text-center">
+                <div className="text-2xl mb-1">📈</div>
+                <p className="text-2xl font-bold text-white">{statistics.overall_progress}%</p>
+                <p className="text-sm text-cyan-100">Progression</p>
+                <div className="mt-2 h-2 bg-black/30 rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-white/80 rounded-full transition-all"
+                    style={{ width: `${statistics.overall_progress}%` }}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+        {/* BLOC 1 (suite) : Grade Cards Grid */}
+        {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+        {!isAuthenticated && (
+          <div className="mb-8 bg-gradient-to-br from-indigo-900/60 via-purple-900/60 to-pink-900/60 rounded-2xl border-2 border-purple-500/40 p-4 md:p-6 shadow-xl">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
             {statistics.techniques_by_level?.map((level, index) => {
               const gradeStyles = {
