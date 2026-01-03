@@ -93,8 +93,7 @@ Application web pour le club d'Aikido "Aikido La Rivière". L'application doit s
 - (Completed) Conversion en accordéons ✅
 
 ### P1 - High Priority
-- [ ] Extraire "Histoire de l'Aikido" dans `HakamaHistory.jsx` (prochaine étape refactoring)
-- [ ] Nouveau design du Header (Options A, B, C, D à choisir)
+- [x] Extraire "Histoire de l'Aikido" dans `HakamaHistory.jsx` ✅ (DONE)
 - [ ] Page de présentation principale (style "Grille Colorée")
 - [ ] Finalisation Stripe (webhooks & paiements réels)
 
