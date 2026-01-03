@@ -1148,143 +1148,101 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* BLOC 3 : COMPRENDRE LES VALEURS DE L'AIKIDO */}
+        {/* ACCORDÉON 3 : Les Valeurs de l'Aikido */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {!isAuthenticated && !isAdmin && currentBelt && (
-          <div id="bloc3-valeurs" className="mb-8 bg-gradient-to-br from-violet-900/40 via-purple-900/40 to-indigo-900/40 rounded-2xl border-2 border-violet-500/40 p-4 md:p-6 shadow-xl">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="text-4xl">☯️</div>
-              <div>
-                <h2 className="text-xl md:text-2xl font-bold text-violet-400">
-                  Comprendre les Valeurs de l&apos;Aikido
-                </h2>
-                <p className="text-slate-400 text-sm">Les 7 vertus du Budō et ton développement personnel</p>
-              </div>
-            </div>
-
-            {/* VIRTUE PIE CHART - Camembert des Vertus */}
-            <div className="p-4 bg-gradient-to-r from-indigo-900/30 via-purple-900/30 to-indigo-900/30 rounded-xl border border-indigo-500/30 mb-6">
-              <div className="flex items-center justify-between mb-4">
-                <h4 className="text-indigo-300 font-bold flex items-center gap-2">
-                  🎯 Mes Vertus Travaillées
-                </h4>
-                <div className="flex gap-2">
-                  <Button 
-                    onClick={() => setShowVirtueActionsPanel(true)}
-                    size="sm"
-                    className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold text-xs shadow-lg shadow-amber-500/30"
-                  >
-                    <Sparkles className="w-3 h-3 mr-1" />
-                    Gagner des points !
-                  </Button>
-                  <Button 
-                    onClick={() => setShowVirtuesDialog(true)}
-                    variant="ghost"
-                    size="sm"
-                    className="text-indigo-400 hover:text-indigo-300 hover:bg-indigo-900/30 text-xs"
-                  >
-                    Détails →
-                  </Button>
+          <div id="bloc3-valeurs" className="mb-4 rounded-2xl border-2 border-violet-500/40 shadow-xl overflow-hidden">
+            {/* Header de l'accordéon */}
+            <div 
+              className="bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 p-4 cursor-pointer hover:from-violet-500 hover:via-purple-500 hover:to-fuchsia-500 transition-all"
+              onClick={() => toggleAccordion('valeurs')}
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <h3 className="text-lg md:text-xl font-bold text-white">
+                    Les Valeurs de l&apos;Aikido ☯️
+                  </h3>
+                  <span className="text-violet-200 text-xs md:text-sm hidden md:inline">7 Vertus & Trophées</span>
+                </div>
+                <div className={`p-2 rounded-full bg-white/20 transform transition-transform duration-300 ${accordionOpen.valeurs ? 'rotate-180' : ''}`}>
+                  <ChevronDown className="w-5 h-5 text-white" />
                 </div>
               </div>
-              
-              {totalVirtuePoints > 0 ? (
-                <VirtuePieChart virtueData={virtueData} />
-              ) : (
-                <p className="text-slate-400 text-sm text-center py-4">
-                  🌱 Commence à pratiquer pour développer tes vertus !
-                </p>
-              )}
-              
-              <p className="text-center text-indigo-300/70 text-xs mt-4 italic">
-                Répartition de tes vertus basée sur ta progression et ton parcours
-              </p>
             </div>
-
-            {/* Technique States Summary with POINTS */}
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-3 text-xs mb-6">
-              <div className="bg-amber-900/30 p-3 rounded-xl text-center border border-amber-500/30">
-                <p className="text-2xl mb-1">📖</p>
-                <p className="text-amber-300 font-bold">{statistics.in_progress_techniques || 0}</p>
-                <p className="text-slate-400">En apprentissage</p>
-                <p className="text-amber-500 text-[10px] mt-1">+1 pt/technique</p>
-              </div>
-              <div className="bg-blue-900/30 p-3 rounded-xl text-center border border-blue-500/30">
-                <p className="text-2xl mb-1">🎯</p>
-                <p className="text-blue-300 font-bold">{points.practicedCount || 0}</p>
-                <p className="text-slate-400">Pratiquées</p>
-                <p className="text-blue-500 text-[10px] mt-1">+2 pts/technique</p>
-              </div>
-              <div className="bg-emerald-900/30 p-3 rounded-xl text-center border border-emerald-500/30">
-                <p className="text-2xl mb-1">🏆</p>
-                <p className="text-emerald-300 font-bold">{statistics.mastered_techniques || 0}</p>
-                <p className="text-slate-400">Maîtrisées</p>
-                <p className="text-emerald-500 text-[10px] mt-1">+3 pts/technique</p>
-              </div>
-              <div className="bg-gradient-to-br from-amber-900/40 to-yellow-900/40 p-3 rounded-xl text-center border border-amber-400/40">
-                <p className="text-2xl mb-1">{currentBelt.emoji}</p>
-                <p className="text-amber-300 font-bold">+{points.belt}</p>
-                <p className="text-slate-400">Ceinture</p>
-                <p className="text-amber-500 text-[10px] mt-1">+10 pts/grade</p>
-              </div>
-              <div className="bg-gradient-to-br from-purple-900/50 to-pink-900/50 p-3 rounded-xl text-center border-2 border-purple-500/50 shadow-lg shadow-purple-500/20 col-span-2 md:col-span-1">
-                <p className="text-2xl mb-1">⭐</p>
-                <p className="text-3xl font-bold bg-gradient-to-r from-yellow-400 to-pink-400 bg-clip-text text-transparent">{points.total}</p>
-                <p className="text-purple-300 font-semibold">Total Points</p>
-              </div>
-            </div>
-
-            {/* Trophies Section */}
-            <div className="p-4 bg-gradient-to-r from-yellow-900/30 via-amber-900/30 to-yellow-900/30 rounded-xl border border-yellow-500/30">
-              <div className="flex items-center justify-between mb-3">
-                <h4 className="text-amber-400 font-bold flex items-center gap-2">
-                  🏆 Mes Trophées ({trophies.unlocked.length})
-                </h4>
-                <Button 
-                  onClick={() => setShowTrophiesDialog(true)}
-                  variant="ghost"
-                  size="sm"
-                  className="text-amber-400 hover:text-amber-300 hover:bg-amber-900/30 text-xs"
-                >
-                  Voir tout →
-                </Button>
-              </div>
-              
-              {trophies.unlocked.length === 0 ? (
-                <p className="text-slate-400 text-sm text-center py-2">
-                  🌱 Continue à pratiquer pour débloquer tes premiers trophées !
-                </p>
-              ) : (
-                <div className="flex flex-wrap gap-2">
-                  {trophies.unlocked.slice(0, 6).map((trophy, idx) => (
-                    <div 
-                      key={idx}
-                      className="bg-slate-800/80 px-3 py-1.5 rounded-full border border-yellow-500/30 flex items-center gap-1.5 text-xs hover:scale-105 transition-all cursor-pointer"
-                      title={trophy.desc}
-                    >
-                      <span className="text-lg">{trophy.icon}</span>
-                      <span className="text-yellow-300 font-medium">{trophy.name}</span>
+            
+            {/* Contenu de l'accordéon */}
+            {accordionOpen.valeurs && (
+              <div className="bg-gradient-to-br from-violet-900/40 via-purple-900/40 to-indigo-900/40 p-4 md:p-6 animate-in slide-in-from-top-2">
+                {/* VIRTUE PIE CHART */}
+                <div className="p-4 bg-gradient-to-r from-indigo-900/30 via-purple-900/30 to-indigo-900/30 rounded-xl border border-indigo-500/30 mb-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h4 className="text-indigo-300 font-bold">🎯 Mes Vertus Travaillées</h4>
+                    <div className="flex gap-2">
+                      <Button onClick={() => setShowVirtueActionsPanel(true)} size="sm" className="bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs">
+                        <Sparkles className="w-3 h-3 mr-1" />Gagner des points !
+                      </Button>
+                      <Button onClick={() => setShowVirtuesDialog(true)} variant="ghost" size="sm" className="text-indigo-400 text-xs">
+                        Détails →
+                      </Button>
                     </div>
-                  ))}
-                  {trophies.unlocked.length > 6 && (
-                    <div 
-                      className="bg-slate-800/80 px-3 py-1.5 rounded-full border border-purple-500/30 text-xs text-purple-300 cursor-pointer hover:bg-purple-900/30"
-                      onClick={() => setShowTrophiesDialog(true)}
-                    >
-                      +{trophies.unlocked.length - 6} autres
+                  </div>
+                  {totalVirtuePoints > 0 ? (
+                    <VirtuePieChart virtueData={virtueData} />
+                  ) : (
+                    <p className="text-slate-400 text-sm text-center py-4">🌱 Commence à pratiquer pour développer tes vertus !</p>
+                  )}
+                </div>
+
+                {/* Technique States Summary */}
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-3 text-xs mb-6">
+                  <div className="bg-amber-900/30 p-3 rounded-xl text-center border border-amber-500/30">
+                    <p className="text-2xl mb-1">📖</p>
+                    <p className="text-amber-300 font-bold">{statistics.in_progress_techniques || 0}</p>
+                    <p className="text-slate-400">En apprentissage</p>
+                  </div>
+                  <div className="bg-blue-900/30 p-3 rounded-xl text-center border border-blue-500/30">
+                    <p className="text-2xl mb-1">🎯</p>
+                    <p className="text-blue-300 font-bold">{points.practicedCount || 0}</p>
+                    <p className="text-slate-400">Pratiquées</p>
+                  </div>
+                  <div className="bg-emerald-900/30 p-3 rounded-xl text-center border border-emerald-500/30">
+                    <p className="text-2xl mb-1">🏆</p>
+                    <p className="text-emerald-300 font-bold">{statistics.mastered_techniques || 0}</p>
+                    <p className="text-slate-400">Maîtrisées</p>
+                  </div>
+                  <div className="bg-gradient-to-br from-amber-900/40 to-yellow-900/40 p-3 rounded-xl text-center border border-amber-400/40">
+                    <p className="text-2xl mb-1">{currentBelt.emoji}</p>
+                    <p className="text-amber-300 font-bold">+{points.belt}</p>
+                    <p className="text-slate-400">Ceinture</p>
+                  </div>
+                  <div className="bg-gradient-to-br from-purple-900/50 to-pink-900/50 p-3 rounded-xl text-center border-2 border-purple-500/50 col-span-2 md:col-span-1">
+                    <p className="text-2xl mb-1">⭐</p>
+                    <p className="text-2xl font-bold bg-gradient-to-r from-yellow-400 to-pink-400 bg-clip-text text-transparent">{points.total}</p>
+                    <p className="text-purple-300 font-semibold">Total Points</p>
+                  </div>
+                </div>
+
+                {/* Trophies Section */}
+                <div className="p-4 bg-gradient-to-r from-yellow-900/30 via-amber-900/30 to-yellow-900/30 rounded-xl border border-yellow-500/30">
+                  <div className="flex items-center justify-between mb-3">
+                    <h4 className="text-amber-400 font-bold">🏆 Mes Trophées ({trophies.unlocked.length})</h4>
+                    <Button onClick={() => setShowTrophiesDialog(true)} variant="ghost" size="sm" className="text-amber-400 text-xs">Voir tout →</Button>
+                  </div>
+                  {trophies.unlocked.length === 0 ? (
+                    <p className="text-slate-400 text-sm text-center py-2">🌱 Continue à pratiquer pour débloquer tes premiers trophées !</p>
+                  ) : (
+                    <div className="flex flex-wrap gap-2">
+                      {trophies.unlocked.slice(0, 6).map((trophy, idx) => (
+                        <div key={idx} className="bg-slate-800/80 px-3 py-1.5 rounded-full border border-yellow-500/30 flex items-center gap-1.5 text-xs" title={trophy.desc}>
+                          <span className="text-lg">{trophy.icon}</span>
+                          <span className="text-yellow-300 font-medium">{trophy.name}</span>
+                        </div>
+                      ))}
                     </div>
                   )}
                 </div>
-              )}
-            </div>
-
-            {/* Points explanation */}
-            <div className="mt-4 text-center">
-              <p className="text-slate-400 text-xs italic">
-                🎌 Gagne des points : 📖 1pt • 🎯 2pts • 🏆 3pts • {currentBelt.emoji} +10pts/grade
-                <br />Débloque des trophées et développe tes vertus !
-              </p>
-            </div>
+              </div>
+            )}
           </div>
         )}
 
