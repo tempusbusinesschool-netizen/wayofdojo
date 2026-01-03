@@ -219,19 +219,6 @@ const VirtuesSection = ({
 
   return (
     <div className="space-y-6">
-      {/* Header ludique */}
-      <div className="text-center mb-6">
-        <div className="inline-flex items-center gap-3 bg-gradient-to-r from-violet-600/30 to-pink-600/30 rounded-full px-6 py-3 border border-violet-500/30">
-          <span className="text-4xl animate-spin-slow">☯️</span>
-          <div>
-            <h3 className="text-xl md:text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-violet-400 via-pink-400 to-amber-400">
-              Les Super-Pouvoirs du Ninja ! 🥷
-            </h3>
-            <p className="text-violet-300 text-sm">7 vertus magiques à développer</p>
-          </div>
-        </div>
-      </div>
-
       {/* Section Points Total - Design ludique */}
       <div className="relative overflow-hidden rounded-2xl p-5 bg-gradient-to-br from-purple-900/50 via-pink-900/50 to-amber-900/50 border-2 border-purple-500/40">
         {/* Étoiles décoratives */}
