@@ -844,11 +844,13 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* BLOC 1 : TABLEAU DE BORD GÉNÉRAL - Ma Progression Ninja ! */}
+        {/* BLOC UNIQUE FUSIONNÉ : Ma Progression Ninja + Stats + Grades KYU */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {!isAuthenticated && (
           <div id="bloc1-progression" className="mb-8 bg-gradient-to-br from-indigo-900/60 via-purple-900/60 to-pink-900/60 rounded-2xl border-2 border-purple-500/40 p-4 md:p-6 shadow-xl">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-3 mb-4">
+            
+            {/* EN HAUT : Titre Ma Progression Ninja + boutons */}
+            <div className="flex flex-col md:flex-row items-center justify-between gap-3 mb-6">
               <div className="flex items-center gap-3">
                 <div className="text-4xl animate-bounce">🎯</div>
                 <div>
@@ -868,41 +870,33 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                       return;
                     }
                     setShowEmailDialog(true);
-                }}
-                className={`bg-gradient-to-r from-cyan-600 to-blue-600 border-none text-white hover:from-cyan-500 hover:to-blue-500 h-8 text-xs font-bold shadow-lg shadow-cyan-500/30 ${!isAuthenticated ? 'opacity-50' : ''}`}
-              >
-                <Download className="w-3 h-3 mr-1" />
-                📄 PDF
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => {
-                  if (!isAuthenticated) {
-                    toast.error("🔒 Inscrivez-vous pour télécharger votre progression en CSV");
-                    return;
-                  }
-                  exportToCSV();
-                }}
-                className={`bg-gradient-to-r from-green-600 to-emerald-600 border-none text-white hover:from-green-500 hover:to-emerald-500 h-8 text-xs font-bold shadow-lg shadow-green-500/30 ${!isAuthenticated ? 'opacity-50' : ''}`}
-              >
-                <Download className="w-3 h-3 mr-1" />
-                📊 CSV
-              </Button>
+                  }}
+                  className={`bg-gradient-to-r from-cyan-600 to-blue-600 border-none text-white hover:from-cyan-500 hover:to-blue-500 h-8 text-xs font-bold shadow-lg shadow-cyan-500/30 ${!isAuthenticated ? 'opacity-50' : ''}`}
+                >
+                  <Download className="w-3 h-3 mr-1" />
+                  📄 PDF
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    if (!isAuthenticated) {
+                      toast.error("🔒 Inscrivez-vous pour télécharger votre progression en CSV");
+                      return;
+                    }
+                    exportToCSV();
+                  }}
+                  className={`bg-gradient-to-r from-green-600 to-emerald-600 border-none text-white hover:from-green-500 hover:to-emerald-500 h-8 text-xs font-bold shadow-lg shadow-green-500/30 ${!isAuthenticated ? 'opacity-50' : ''}`}
+                >
+                  <Download className="w-3 h-3 mr-1" />
+                  📊 CSV
+                </Button>
+              </div>
             </div>
-          </div>
-          </div>
-        )}
 
-        {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* BLOC STATISTIQUES ISOLÉ */}
-        {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {!isAuthenticated && (
-          <div className="mb-8 bg-gradient-to-br from-slate-800/80 via-slate-900/80 to-slate-800/80 rounded-2xl border-2 border-slate-600/50 p-4 md:p-6 shadow-xl">
-            <h3 className="text-lg md:text-xl font-bold text-white mb-4 text-center">📊 Mes Statistiques</h3>
-            
+            {/* AU MILIEU : Statistiques (8 cartes sur 2 lignes) */}
             {/* LIGNE 1 : Statistiques générales */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
               <div className="bg-gradient-to-br from-indigo-500/30 to-indigo-600/30 border border-indigo-500/40 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
                 <div className="text-2xl mb-1">📚</div>
                 <p className="text-2xl font-bold text-indigo-300">{statistics.total_techniques}</p>
@@ -926,7 +920,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
             </div>
 
             {/* LIGNE 2 : Progression personnelle */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
               <div className="bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
                 <div className="text-2xl mb-1">🏆</div>
                 <p className="text-2xl font-bold text-white">{statistics.mastered_techniques}</p>
@@ -954,11 +948,24 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 </div>
               </div>
             </div>
+
+            {/* EN BAS : Grades KYU (badges colorés) */}
+            <div className="pt-4 border-t border-purple-500/30">
+              <h4 className="text-white font-bold text-lg mb-4">📋 Grades KYU</h4>
+              <div className="flex flex-wrap gap-2 md:gap-3">
+                <span className="bg-yellow-400 text-slate-900 px-4 py-2 rounded-full font-bold text-sm hover:scale-105 transition-all cursor-pointer">5e KYU</span>
+                <span className="bg-orange-500 text-white px-4 py-2 rounded-full font-bold text-sm hover:scale-105 transition-all cursor-pointer">4e KYU</span>
+                <span className="bg-green-500 text-white px-4 py-2 rounded-full font-bold text-sm hover:scale-105 transition-all cursor-pointer">3e KYU</span>
+                <span className="bg-blue-500 text-white px-4 py-2 rounded-full font-bold text-sm hover:scale-105 transition-all cursor-pointer">2e KYU</span>
+                <span className="bg-amber-700 text-white px-4 py-2 rounded-full font-bold text-sm hover:scale-105 transition-all cursor-pointer">1er KYU</span>
+                <span className="bg-slate-800 text-white px-4 py-2 rounded-full font-bold text-sm border-2 border-slate-600 hover:scale-105 transition-all cursor-pointer">SHODAN</span>
+              </div>
+            </div>
           </div>
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* BLOC 1 (suite) : Grade Cards Grid */}
+        {/* Grade Cards Grid (détails des techniques par niveau) */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {!isAuthenticated && (
           <div className="mb-8 bg-gradient-to-br from-indigo-900/60 via-purple-900/60 to-pink-900/60 rounded-2xl border-2 border-purple-500/40 p-4 md:p-6 shadow-xl">
