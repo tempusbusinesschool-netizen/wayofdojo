@@ -906,6 +906,31 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
           </div>
 
           {/* Stats Bar - Integrated */}
+          {/* LIGNE 1 : Statistiques générales */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-3">
+            <div className="bg-gradient-to-br from-indigo-500/30 to-indigo-600/30 border border-indigo-500/40 rounded-xl p-3 text-center hover:scale-105 transition-all cursor-pointer">
+              <div className="text-xl">📚</div>
+              <p className="text-xl font-bold text-indigo-300">{statistics.total_techniques}</p>
+              <p className="text-xs text-slate-400">Techniques</p>
+            </div>
+            <div className="bg-gradient-to-br from-emerald-500/30 to-emerald-600/30 border border-emerald-500/40 rounded-xl p-3 text-center hover:scale-105 transition-all cursor-pointer">
+              <div className="text-xl">🎯</div>
+              <p className="text-xl font-bold text-emerald-300">10</p>
+              <p className="text-xs text-slate-400">Niveaux</p>
+            </div>
+            <div className="bg-gradient-to-br from-amber-500/30 to-amber-600/30 border border-amber-500/40 rounded-xl p-3 text-center hover:scale-105 transition-all cursor-pointer">
+              <div className="text-xl">🏆</div>
+              <p className="text-xl font-bold text-amber-300">15</p>
+              <p className="text-xs text-slate-400">Trophées</p>
+            </div>
+            <div className="bg-gradient-to-br from-pink-500/30 to-pink-600/30 border border-pink-500/40 rounded-xl p-3 text-center hover:scale-105 transition-all cursor-pointer">
+              <div className="text-xl">☯️</div>
+              <p className="text-xl font-bold text-pink-300">7</p>
+              <p className="text-xs text-slate-400">Vertus</p>
+            </div>
+          </div>
+
+          {/* LIGNE 2 : Progression personnelle */}
           <div className="grid grid-cols-2 md:grid-cols-5 gap-2 mb-6">
             <div 
               className={`bg-gradient-to-br from-indigo-600 to-indigo-800 rounded-xl p-3 text-center cursor-pointer hover:scale-105 transition-all ${activeFilter === 'all' ? 'ring-2 ring-white' : ''}`}
