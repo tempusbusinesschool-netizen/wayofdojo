@@ -961,8 +961,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
             </div>
           </div>
           </div>
-        </div>
-        </SimpleAccordion>
+          </SimpleAccordion>
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
