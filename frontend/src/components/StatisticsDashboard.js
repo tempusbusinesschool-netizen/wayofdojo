@@ -1143,10 +1143,10 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               <span className="animate-bounce" style={{ animationDelay: '400ms' }}>🔥</span>
             </div>
           </div>
-            </div>
-          )}
         </div>
       )}
+    </div>
+  )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {/* ACCORDÉON 3 : Les Valeurs de l'Aikido */}
