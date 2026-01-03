@@ -1481,6 +1481,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               </div>
             </div>
           </div>
+          </SimpleAccordion>
         )}
 
         {/* Trophies Dialog */}
