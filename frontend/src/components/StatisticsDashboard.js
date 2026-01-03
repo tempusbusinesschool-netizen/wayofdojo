@@ -753,61 +753,6 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                     </div>
                   </div>
                 </div>
-
-                {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-                {/* 5 BLOCS CARRÉS - NAVIGATION VISITEUR */}
-                {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4 mb-6">
-                  {/* BLOC 1 - Tableau de bord général */}
-                  <div 
-                    className="aspect-square bg-gradient-to-br from-indigo-500 via-purple-500 to-indigo-600 p-3 md:p-4 rounded-2xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg hover:shadow-purple-500/40 flex flex-col items-center justify-center border-2 border-purple-400/30"
-                    onClick={() => document.getElementById('bloc1-progression')?.scrollIntoView({ behavior: 'smooth' })}
-                  >
-                    <p className="text-white font-bold text-sm md:text-base leading-tight">Ma Progression</p>
-                    <p className="text-white font-bold text-sm md:text-base leading-tight">Ninja !</p>
-                    <p className="text-purple-200 text-[10px] md:text-xs mt-2">Stats & Grades KYU</p>
-                  </div>
-
-                  {/* BLOC 2 - Entrainement Techniques */}
-                  <div 
-                    className="aspect-square bg-gradient-to-br from-cyan-500 via-blue-500 to-cyan-600 p-3 md:p-4 rounded-2xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg hover:shadow-cyan-500/40 flex flex-col items-center justify-center border-2 border-cyan-400/30"
-                    onClick={() => document.getElementById('bloc2-entrainement')?.scrollIntoView({ behavior: 'smooth' })}
-                  >
-                    <p className="text-white font-bold text-sm md:text-base leading-tight">Entrainement</p>
-                    <p className="text-white font-bold text-sm md:text-base leading-tight">Techniques</p>
-                    <p className="text-cyan-200 text-[10px] md:text-xs mt-2">Parcours & Déplacements</p>
-                  </div>
-
-                  {/* BLOC 3 - Valeurs de l'Aikido */}
-                  <div 
-                    className="aspect-square bg-gradient-to-br from-violet-500 via-fuchsia-500 to-violet-600 p-3 md:p-4 rounded-2xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg hover:shadow-violet-500/40 flex flex-col items-center justify-center border-2 border-violet-400/30"
-                    onClick={() => document.getElementById('bloc3-valeurs')?.scrollIntoView({ behavior: 'smooth' })}
-                  >
-                    <p className="text-white font-bold text-sm md:text-base leading-tight">Les Valeurs</p>
-                    <p className="text-white font-bold text-sm md:text-base leading-tight">de l&apos;Aikido</p>
-                    <p className="text-violet-200 text-[10px] md:text-xs mt-2">7 Vertus & Trophées</p>
-                  </div>
-
-                  {/* BLOC 4 - Histoire de l'Aikido */}
-                  <div 
-                    className="aspect-square bg-gradient-to-br from-amber-500 via-orange-500 to-amber-600 p-3 md:p-4 rounded-2xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg hover:shadow-amber-500/40 flex flex-col items-center justify-center border-2 border-amber-400/30"
-                    onClick={() => document.getElementById('bloc4-histoire')?.scrollIntoView({ behavior: 'smooth' })}
-                  >
-                    <p className="text-white font-bold text-sm md:text-base leading-tight">Histoire de</p>
-                    <p className="text-white font-bold text-sm md:text-base leading-tight">l&apos;Aikido</p>
-                    <p className="text-amber-200 text-[10px] md:text-xs mt-2">Hakama & O Sensei</p>
-                  </div>
-
-                  {/* BLOC 5 - Prochaine étape */}
-                  <div 
-                    className="aspect-square bg-gradient-to-br from-emerald-500 via-teal-500 to-emerald-600 p-3 md:p-4 rounded-2xl text-center transform hover:scale-105 transition-all cursor-pointer shadow-lg hover:shadow-emerald-500/40 flex flex-col items-center justify-center border-2 border-emerald-400/30 col-span-2 md:col-span-1"
-                    onClick={() => document.getElementById('bloc5-prochaine')?.scrollIntoView({ behavior: 'smooth' })}
-                  >
-                    <p className="text-white font-bold text-sm md:text-base leading-tight">Prochaine</p>
-                    <p className="text-white font-bold text-sm md:text-base leading-tight">Étape</p>
-                    <p className="text-emerald-200 text-[10px] md:text-xs mt-2">PDF, CSV, Journal</p>
-                  </div>
-                </div>
               </>
             )}
 
