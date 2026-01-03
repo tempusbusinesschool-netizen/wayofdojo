@@ -857,7 +857,8 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => {
+                  onClick={(e) => {
+                    e.stopPropagation();
                     if (!isAuthenticated) {
                       toast.error("🔒 Inscrivez-vous pour télécharger votre progression en CSV");
                       return;
