@@ -60,12 +60,13 @@ Application web pour le club d'Aikido "Aikido La Rivière". L'application doit s
   - Tests passés à 100% (frontend)
 
 - **REFACTORING & COMPOSANTS LUDIQUES** ✅
-  - Découpage de `StatisticsDashboard.js` (1818 → ~1500 lignes)
+  - Découpage de `StatisticsDashboard.js` (1818 → **1345 lignes**, -26%)
   - Nouveaux composants extraits :
     - `BeltProgressCard.jsx` - Section "Mon Parcours Ninja" ludique pour enfants
     - `GradeCardsGrid.jsx` - Grille des grades avec cartes colorées
     - `DeplacementsSection.jsx` - Section déplacements dépliable
-    - `VirtuesSection.jsx` - Section "Les 7 Vertus Magiques" ludique ✅ (NEW)
+    - `VirtuesSection.jsx` - Section "Les 7 Vertus Magiques" ludique ✅
+    - `HakamaHistory.jsx` - Section "Histoire de l'Aikido" avec les 7 plis du Hakama ✅ (NEW)
     - `constants/aikidoBelts.js` - Définitions des ceintures avec animaux
   - **Section Mon Parcours Ninja** adaptée aux enfants :
     - Animaux esprits pour chaque ceinture (🐣🐥🐯🐢🐬🦅🐉)
