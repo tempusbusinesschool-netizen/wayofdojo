@@ -1482,7 +1482,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         {/* BLOC 5 : PROCHAINE ÉTAPE */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {!isAuthenticated && (
-          <div className="mb-8 bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-rose-500/20 rounded-2xl border-2 border-purple-500/40 p-4 md:p-6 shadow-xl">
+          <div id="bloc5-prochaine" className="mb-8 bg-gradient-to-r from-purple-500/20 via-pink-500/20 to-rose-500/20 rounded-2xl border-2 border-purple-500/40 p-4 md:p-6 shadow-xl">
             <div className="flex flex-col md:flex-row items-center justify-between gap-4">
               <div className="flex items-center gap-4">
                 <div className="text-5xl animate-pulse">🎯</div>
