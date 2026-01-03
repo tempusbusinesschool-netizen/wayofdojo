@@ -1405,14 +1405,35 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 <br />Débloque des trophées et développe tes vertus !
               </p>
             </div>
+              </div>
+            )}
           </div>
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* BLOC 4 : HISTOIRE DE L'AIKIDO - Les Sept Plis du Hakama */}
+        {/* ACCORDÉON 4 : HISTOIRE DE L'AIKIDO - Les Sept Plis du Hakama */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {!isAuthenticated && (
-          <div id="bloc4-histoire" className="mb-8 bg-gradient-to-br from-amber-900/30 via-slate-900/40 to-amber-900/30 rounded-2xl border-2 border-amber-500/40 p-4 md:p-6 shadow-xl">
+          <div id="bloc4-histoire" className="mb-4 rounded-2xl border-2 border-amber-500/40 shadow-xl overflow-hidden">
+            {/* Header cliquable */}
+            <div 
+              className="bg-gradient-to-r from-amber-600 via-orange-600 to-yellow-600 p-4 cursor-pointer hover:from-amber-500 hover:via-orange-500 hover:to-yellow-500 transition-all"
+              onClick={() => toggleAccordion('histoire')}
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <h3 className="text-lg md:text-xl font-bold text-white">Histoire de l&apos;Aikido 📜</h3>
+                  <span className="text-amber-200 text-xs md:text-sm hidden md:inline">Hakama & O Sensei</span>
+                </div>
+                <div className={`p-2 rounded-full bg-white/20 transform transition-transform duration-300 ${accordionOpen.histoire ? 'rotate-180' : ''}`}>
+                  <ChevronDown className="w-5 h-5 text-white" />
+                </div>
+              </div>
+            </div>
+            
+            {/* Contenu repliable */}
+            {accordionOpen.histoire && (
+              <div className="bg-gradient-to-br from-amber-900/30 via-slate-900/40 to-amber-900/30 p-4 md:p-6">
             <div className="flex items-center gap-3 mb-6">
               <div className="text-4xl">📜</div>
               <div>
