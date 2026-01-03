@@ -799,179 +799,239 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* ACCORDÉON 1 : Ma Progression Ninja */}
+        {/* BLOC UNIQUE FUSIONNÉ : Ma Progression Ninja + Stats + Grades KYU */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {!isAuthenticated && (
-          <div id="bloc1-progression" className="mb-4 rounded-2xl border-2 border-purple-500/40 shadow-xl overflow-hidden">
-            {/* Header de l'accordéon - toujours visible */}
-            <div 
-              className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 p-4 cursor-pointer hover:from-indigo-500 hover:via-purple-500 hover:to-pink-500 transition-all"
-              onClick={() => toggleAccordion('progression')}
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <h3 className="text-lg md:text-xl font-bold text-white">
+          <div id="bloc1-progression" className="mb-8 bg-gradient-to-br from-indigo-900/60 via-purple-900/60 to-pink-900/60 rounded-2xl border-2 border-purple-500/40 p-4 md:p-6 shadow-xl">
+            
+            {/* EN HAUT : Titre Ma Progression Ninja + boutons */}
+            <div className="flex flex-col md:flex-row items-center justify-between gap-3 mb-6">
+              <div className="flex items-center gap-3">
+                <div className="text-4xl animate-bounce">🎯</div>
+                <div>
+                  <h3 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-yellow-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
                     Ma Progression Ninja ! 🥷
                   </h3>
-                  <span className="text-purple-200 text-xs md:text-sm hidden md:inline">Stats & Grades KYU</span>
+                  <p className="text-purple-300 text-xs md:text-sm">Tableau de bord général</p>
                 </div>
-                <div className={`p-2 rounded-full bg-white/20 transform transition-transform duration-300 ${accordionOpen.progression ? 'rotate-180' : ''}`}>
-                  <ChevronDown className="w-5 h-5 text-white" />
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    if (!isAuthenticated) {
+                      toast.error("🔒 Inscrivez-vous pour télécharger votre progression en PDF");
+                      return;
+                    }
+                    setShowEmailDialog(true);
+                  }}
+                  className={`bg-gradient-to-r from-cyan-600 to-blue-600 border-none text-white hover:from-cyan-500 hover:to-blue-500 h-8 text-xs font-bold shadow-lg shadow-cyan-500/30 ${!isAuthenticated ? 'opacity-50' : ''}`}
+                >
+                  <Download className="w-3 h-3 mr-1" />
+                  📄 PDF
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    if (!isAuthenticated) {
+                      toast.error("🔒 Inscrivez-vous pour télécharger votre progression en CSV");
+                      return;
+                    }
+                    exportToCSV();
+                  }}
+                  className={`bg-gradient-to-r from-green-600 to-emerald-600 border-none text-white hover:from-green-500 hover:to-emerald-500 h-8 text-xs font-bold shadow-lg shadow-green-500/30 ${!isAuthenticated ? 'opacity-50' : ''}`}
+                >
+                  <Download className="w-3 h-3 mr-1" />
+                  📊 CSV
+                </Button>
+              </div>
+            </div>
+
+            {/* AU MILIEU : Statistiques (8 cartes sur 2 lignes) */}
+            {/* LIGNE 1 : Statistiques générales */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
+              <div className="bg-gradient-to-br from-indigo-500/30 to-indigo-600/30 border border-indigo-500/40 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
+                <div className="text-2xl mb-1">📚</div>
+                <p className="text-2xl font-bold text-indigo-300">{statistics.total_techniques}</p>
+                <p className="text-sm text-slate-400">Techniques</p>
+              </div>
+              <div className="bg-gradient-to-br from-emerald-500/30 to-emerald-600/30 border border-emerald-500/40 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
+                <div className="text-2xl mb-1">🎯</div>
+                <p className="text-2xl font-bold text-emerald-300">10</p>
+                <p className="text-sm text-slate-400">Niveaux</p>
+              </div>
+              <div className="bg-gradient-to-br from-amber-500/30 to-amber-600/30 border border-amber-500/40 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
+                <div className="text-2xl mb-1">🏆</div>
+                <p className="text-2xl font-bold text-amber-300">15</p>
+                <p className="text-sm text-slate-400">Trophées</p>
+              </div>
+              <div className="bg-gradient-to-br from-pink-500/30 to-pink-600/30 border border-pink-500/40 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
+                <div className="text-2xl mb-1">☯️</div>
+                <p className="text-2xl font-bold text-pink-300">7</p>
+                <p className="text-sm text-slate-400">Vertus</p>
+              </div>
+            </div>
+
+            {/* LIGNE 2 : Progression personnelle */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
+              <div className="bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
+                <div className="text-2xl mb-1">🏆</div>
+                <p className="text-2xl font-bold text-white">{statistics.mastered_techniques}</p>
+                <p className="text-sm text-emerald-100">Maîtrisées</p>
+              </div>
+              <div className="bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
+                <div className="text-2xl mb-1">🔥</div>
+                <p className="text-2xl font-bold text-white">{statistics.in_progress_techniques}</p>
+                <p className="text-sm text-amber-100">En cours</p>
+              </div>
+              <div className="bg-gradient-to-br from-pink-500 to-rose-600 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
+                <div className="text-2xl mb-1">⭐</div>
+                <p className="text-2xl font-bold text-white">{statistics.total_practice_sessions}</p>
+                <p className="text-sm text-pink-100">Sessions</p>
+              </div>
+              <div className="bg-gradient-to-br from-cyan-600 to-teal-700 rounded-xl p-4 text-center">
+                <div className="text-2xl mb-1">📈</div>
+                <p className="text-2xl font-bold text-white">{statistics.overall_progress}%</p>
+                <p className="text-sm text-cyan-100">Progression</p>
+                <div className="mt-2 h-2 bg-black/30 rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-white/80 rounded-full transition-all"
+                    style={{ width: `${statistics.overall_progress}%` }}
+                  />
                 </div>
               </div>
             </div>
-            
-            {/* Contenu de l'accordéon - dépliable */}
-            {accordionOpen.progression && (
-              <div className="bg-gradient-to-br from-indigo-900/60 via-purple-900/60 to-pink-900/60 p-4 md:p-6 animate-in slide-in-from-top-2">
-                {/* Statistiques (8 cartes sur 2 lignes) */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
-                  <div className="bg-gradient-to-br from-indigo-500/30 to-indigo-600/30 border border-indigo-500/40 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
-                    <div className="text-2xl mb-1">📚</div>
-                    <p className="text-2xl font-bold text-indigo-300">{statistics.total_techniques}</p>
-                    <p className="text-sm text-slate-400">Techniques</p>
-                  </div>
-                  <div className="bg-gradient-to-br from-emerald-500/30 to-emerald-600/30 border border-emerald-500/40 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
-                    <div className="text-2xl mb-1">🎯</div>
-                    <p className="text-2xl font-bold text-emerald-300">10</p>
-                    <p className="text-sm text-slate-400">Niveaux</p>
-                  </div>
-                  <div className="bg-gradient-to-br from-amber-500/30 to-amber-600/30 border border-amber-500/40 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
-                    <div className="text-2xl mb-1">🏆</div>
-                    <p className="text-2xl font-bold text-amber-300">15</p>
-                    <p className="text-sm text-slate-400">Trophées</p>
-                  </div>
-                  <div className="bg-gradient-to-br from-pink-500/30 to-pink-600/30 border border-pink-500/40 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
-                    <div className="text-2xl mb-1">☯️</div>
-                    <p className="text-2xl font-bold text-pink-300">7</p>
-                    <p className="text-sm text-slate-400">Vertus</p>
+
+            {/* EN BAS : Grades KYU (badges colorés) */}
+            <div className="pt-4 border-t border-purple-500/30">
+              <h4 className="text-white font-bold text-lg mb-4">📋 Grades KYU</h4>
+              <div className="flex flex-wrap gap-2 md:gap-3">
+                <span className="bg-yellow-400 text-slate-900 px-4 py-2 rounded-full font-bold text-sm hover:scale-105 transition-all cursor-pointer">5e KYU</span>
+                <span className="bg-orange-500 text-white px-4 py-2 rounded-full font-bold text-sm hover:scale-105 transition-all cursor-pointer">4e KYU</span>
+                <span className="bg-green-500 text-white px-4 py-2 rounded-full font-bold text-sm hover:scale-105 transition-all cursor-pointer">3e KYU</span>
+                <span className="bg-blue-500 text-white px-4 py-2 rounded-full font-bold text-sm hover:scale-105 transition-all cursor-pointer">2e KYU</span>
+                <span className="bg-amber-700 text-white px-4 py-2 rounded-full font-bold text-sm hover:scale-105 transition-all cursor-pointer">1er KYU</span>
+                <span className="bg-slate-800 text-white px-4 py-2 rounded-full font-bold text-sm border-2 border-slate-600 hover:scale-105 transition-all cursor-pointer">SHODAN</span>
+              </div>
+            </div>
+
+            {/* Section Prochaine Étape (intégrée en bas) */}
+            <div className="mt-6 pt-4 border-t border-purple-500/30 bg-gradient-to-r from-rose-500/20 via-pink-500/20 to-purple-500/20 rounded-xl p-4">
+              <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="text-3xl animate-pulse">🎯</div>
+                  <div>
+                    <h3 className="text-lg font-bold text-white">Prochaine étape</h3>
+                    <p className="text-slate-300 text-xs">Continue ton parcours vers la maîtrise !</p>
+                    <p className="text-purple-300 text-xs mt-1">
+                      Commence par le <strong className="text-yellow-400">5e KYU</strong> - Clique sur un grade ci-dessus !
+                    </p>
                   </div>
                 </div>
-
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-                  <div className="bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
-                    <div className="text-2xl mb-1">🏆</div>
-                    <p className="text-2xl font-bold text-white">{statistics.mastered_techniques}</p>
-                    <p className="text-sm text-emerald-100">Maîtrisées</p>
-                  </div>
-                  <div className="bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
-                    <div className="text-2xl mb-1">🔥</div>
-                    <p className="text-2xl font-bold text-white">{statistics.in_progress_techniques}</p>
-                    <p className="text-sm text-amber-100">En cours</p>
-                  </div>
-                  <div className="bg-gradient-to-br from-pink-500 to-rose-600 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
-                    <div className="text-2xl mb-1">⭐</div>
-                    <p className="text-2xl font-bold text-white">{statistics.total_practice_sessions}</p>
-                    <p className="text-sm text-pink-100">Sessions</p>
-                  </div>
-                  <div className="bg-gradient-to-br from-cyan-600 to-teal-700 rounded-xl p-4 text-center">
-                    <div className="text-2xl mb-1">📈</div>
-                    <p className="text-2xl font-bold text-white">{statistics.overall_progress}%</p>
-                    <p className="text-sm text-cyan-100">Progression</p>
-                    <div className="mt-2 h-2 bg-black/30 rounded-full overflow-hidden">
-                      <div 
-                        className="h-full bg-white/80 rounded-full transition-all"
-                        style={{ width: `${statistics.overall_progress}%` }}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Grades KYU */}
-                <div className="pt-4 border-t border-purple-500/30">
-                  <h4 className="text-white font-bold text-lg mb-4">📋 Grades KYU</h4>
-                  <div className="flex flex-wrap gap-2 md:gap-3">
-                    <span className="bg-yellow-400 text-slate-900 px-4 py-2 rounded-full font-bold text-sm hover:scale-105 transition-all cursor-pointer">5e KYU</span>
-                    <span className="bg-orange-500 text-white px-4 py-2 rounded-full font-bold text-sm hover:scale-105 transition-all cursor-pointer">4e KYU</span>
-                    <span className="bg-green-500 text-white px-4 py-2 rounded-full font-bold text-sm hover:scale-105 transition-all cursor-pointer">3e KYU</span>
-                    <span className="bg-blue-500 text-white px-4 py-2 rounded-full font-bold text-sm hover:scale-105 transition-all cursor-pointer">2e KYU</span>
-                    <span className="bg-amber-700 text-white px-4 py-2 rounded-full font-bold text-sm hover:scale-105 transition-all cursor-pointer">1er KYU</span>
-                    <span className="bg-slate-800 text-white px-4 py-2 rounded-full font-bold text-sm border-2 border-slate-600 hover:scale-105 transition-all cursor-pointer">SHODAN</span>
-                  </div>
-                </div>
-
-                {/* Prochaine Étape */}
-                <div className="mt-6 pt-4 border-t border-purple-500/30 bg-gradient-to-r from-rose-500/20 via-pink-500/20 to-purple-500/20 rounded-xl p-4">
-                  <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-                    <div className="flex items-center gap-3">
-                      <div className="text-3xl animate-pulse">🎯</div>
-                      <div>
-                        <h3 className="text-lg font-bold text-white">Prochaine étape</h3>
-                        <p className="text-purple-300 text-xs">
-                          Commence par le <strong className="text-yellow-400">5e KYU</strong>
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex flex-wrap justify-center gap-2">
-                      <Button variant="outline" size="sm" onClick={() => setShowEmailDialog(true)} className="bg-gradient-to-r from-cyan-600 to-blue-600 border-none text-white text-xs h-8">
-                        <Download className="w-3 h-3 mr-1" />PDF
-                      </Button>
-                      <Button variant="outline" size="sm" onClick={() => exportToCSV()} className="bg-gradient-to-r from-emerald-600 to-green-600 border-none text-white text-xs h-8">
-                        <Download className="w-3 h-3 mr-1" />CSV
-                      </Button>
-                      <Button variant="outline" size="sm" onClick={() => setShowTimelinePanel(true)} className="bg-gradient-to-r from-amber-600 to-orange-600 border-none text-white text-xs h-8">
-                        <Clock className="w-3 h-3 mr-1" />Timeline
-                      </Button>
-                      <Button variant="outline" size="sm" onClick={() => setShowJournalPanel(true)} className="bg-gradient-to-r from-violet-600 to-purple-600 border-none text-white text-xs h-8">
-                        <BookOpen className="w-3 h-3 mr-1" />Journal
-                      </Button>
-                    </div>
-                  </div>
+                <div className="flex flex-wrap justify-center gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      if (!isAuthenticated) {
+                        toast.error("🔒 Inscrivez-vous pour télécharger");
+                        return;
+                      }
+                      setShowEmailDialog(true);
+                    }}
+                    className={`bg-gradient-to-r from-cyan-600 to-blue-600 border-none text-white hover:from-cyan-500 hover:to-blue-500 text-xs h-8 ${!isAuthenticated ? 'opacity-50' : ''}`}
+                  >
+                    <Download className="w-3 h-3 mr-1" />
+                    PDF
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => {
+                      if (!isAuthenticated) {
+                        toast.error("🔒 Inscrivez-vous pour exporter");
+                        return;
+                      }
+                      exportToCSV();
+                    }}
+                    className={`bg-gradient-to-r from-emerald-600 to-green-600 border-none text-white hover:from-emerald-500 hover:to-green-500 text-xs h-8 ${!isAuthenticated ? 'opacity-50' : ''}`}
+                  >
+                    <Download className="w-3 h-3 mr-1" />
+                    CSV
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setShowTimelinePanel(true)}
+                    className="bg-gradient-to-r from-amber-600 to-orange-600 border-none text-white hover:from-amber-500 hover:to-orange-500 text-xs h-8"
+                  >
+                    <Clock className="w-3 h-3 mr-1" />
+                    Timeline
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setShowJournalPanel(true)}
+                    className="bg-gradient-to-r from-violet-600 to-purple-600 border-none text-white hover:from-violet-500 hover:to-purple-500 text-xs h-8"
+                  >
+                    <BookOpen className="w-3 h-3 mr-1" />
+                    Journal
+                  </Button>
                 </div>
               </div>
-            )}
+            </div>
           </div>
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* ACCORDÉON 2 : Entrainement - Techniques d'Aikido */}
+        {/* BLOC FUSIONNÉ : Entrainement + Grades détaillés */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {!isAuthenticated && (
-          <div id="bloc2-entrainement" className="mb-4 rounded-2xl border-2 border-cyan-500/40 shadow-xl overflow-hidden">
-            {/* Header de l'accordéon */}
-            <div 
-              className="bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 p-4 cursor-pointer hover:from-cyan-500 hover:via-blue-500 hover:to-indigo-500 transition-all"
-              onClick={() => toggleAccordion('entrainement')}
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <h3 className="text-lg md:text-xl font-bold text-white">
-                    Entrainement - Techniques d&apos;Aikido 🥋
-                  </h3>
-                  <span className="text-cyan-200 text-xs md:text-sm hidden md:inline">Parcours & Déplacements</span>
-                </div>
-                <div className={`p-2 rounded-full bg-white/20 transform transition-transform duration-300 ${accordionOpen.entrainement ? 'rotate-180' : ''}`}>
-                  <ChevronDown className="w-5 h-5 text-white" />
-                </div>
+          <div id="bloc2-entrainement" className="mb-8 bg-gradient-to-br from-cyan-900/40 via-blue-900/40 to-indigo-900/40 rounded-2xl border-2 border-cyan-500/40 p-4 md:p-6 shadow-xl">
+            
+            {/* EN HAUT : Titre Entrainement */}
+            <div className="flex items-center gap-3 mb-6">
+              <div className="text-4xl">🥋</div>
+              <div>
+                <h2 className="text-xl md:text-2xl font-bold text-cyan-400">
+                  Entrainement - Techniques d&apos;Aikido
+                </h2>
+                <p className="text-slate-400 text-sm">Les ceintures, ton parcours et les déplacements</p>
               </div>
             </div>
-            
-            {/* Contenu de l'accordéon */}
-            {accordionOpen.entrainement && (
-              <div className="bg-gradient-to-br from-cyan-900/40 via-blue-900/40 to-indigo-900/40 p-4 md:p-6 animate-in slide-in-from-top-2">
-                {/* Section Mon Parcours Aïkido */}
-                {currentBelt && (
-                  <div className="mb-6 p-4 md:p-6 bg-gradient-to-r from-slate-800/80 via-slate-900/80 to-slate-800/80 rounded-xl border border-amber-500/30">
-                    <div className="flex flex-col md:flex-row items-center gap-6">
-                      <div className="flex flex-col items-center cursor-pointer transform hover:scale-105 transition-all" onClick={() => setShowBeltDialog(true)}>
-                        <div className={`w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br ${currentBelt.gradient} flex items-center justify-center shadow-xl border-4 border-white/20`}>
-                          <span className="text-5xl md:text-6xl">{currentBelt.emoji}</span>
-                        </div>
-                        <p className="mt-3 font-bold text-lg md:text-xl text-white">{currentBelt.name}</p>
-                        <p className="text-amber-400 font-medium">{currentBelt.grade}</p>
-                      </div>
-                      <div className="flex-1 text-center md:text-left">
-                        <h3 className="text-xl md:text-2xl font-bold text-amber-400 mb-2">🥋 Mon Parcours Aïkido</h3>
-                        <p className="text-slate-300 text-sm md:text-base">{currentBelt.message}</p>
-                      </div>
-                    </div>
-                  </div>
-                )}
 
-                {/* Grade Cards Grid */}
-                <div className="mb-6">
-                  <h3 className="text-lg font-bold text-cyan-300 mb-4">📋 Tous les grades</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+            {/* Section Mon Parcours Aïkido (si currentBelt disponible) */}
+            {currentBelt && (
+              <div className="mb-6 p-4 md:p-6 bg-gradient-to-r from-slate-800/80 via-slate-900/80 to-slate-800/80 rounded-xl border border-amber-500/30">
+                <div className="flex flex-col md:flex-row items-center gap-6">
+                  {/* Current Belt Display */}
+                  <div className="flex flex-col items-center cursor-pointer transform hover:scale-105 transition-all" onClick={() => setShowBeltDialog(true)}>
+                    <div className={`w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br ${currentBelt.gradient} flex items-center justify-center shadow-xl border-4 border-white/20`}>
+                      <span className="text-5xl md:text-6xl">{currentBelt.emoji}</span>
+                    </div>
+                    <p className="mt-3 font-bold text-lg md:text-xl text-white">{currentBelt.name}</p>
+                    <p className="text-amber-400 font-medium">{currentBelt.grade}</p>
+                  </div>
+
+                  {/* Belt Info & Message */}
+                  <div className="flex-1 text-center md:text-left">
+                    <h3 className="text-xl md:text-2xl font-bold text-amber-400 mb-2 flex items-center justify-center md:justify-start gap-2">
+                      🥋 Mon Parcours Aïkido
+                    </h3>
+                    <p className="text-slate-300 text-sm md:text-base mb-4">
+                      {currentBelt.message}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Grade Cards Grid (détails des techniques par niveau) */}
+            <div className="mb-6">
+              <h3 className="text-lg font-bold text-cyan-300 mb-4">📋 Tous les grades</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
             {statistics.techniques_by_level?.map((level, index) => {
               const gradeStyles = {
                 '5e KYU': { emoji: '🟡', gradient: 'from-yellow-400 to-yellow-600', glow: 'shadow-yellow-500/40', rank: 'Débutant', belt: 'Jaune' },
@@ -1143,188 +1203,247 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               <span className="animate-bounce" style={{ animationDelay: '400ms' }}>🔥</span>
             </div>
           </div>
+          </div>
         </div>
-      )}
-    </div>
-  )}
+        )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* ACCORDÉON 3 : Les Valeurs de l'Aikido */}
+        {/* BLOC 3 : COMPRENDRE LES VALEURS DE L'AIKIDO */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {!isAuthenticated && !isAdmin && currentBelt && (
-          <div id="bloc3-valeurs" className="mb-4 rounded-2xl border-2 border-violet-500/40 shadow-xl overflow-hidden">
-            {/* Header de l'accordéon */}
-            <div 
-              className="bg-gradient-to-r from-violet-600 via-purple-600 to-fuchsia-600 p-4 cursor-pointer hover:from-violet-500 hover:via-purple-500 hover:to-fuchsia-500 transition-all"
-              onClick={() => toggleAccordion('valeurs')}
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <h3 className="text-lg md:text-xl font-bold text-white">
-                    Les Valeurs de l&apos;Aikido ☯️
-                  </h3>
-                  <span className="text-violet-200 text-xs md:text-sm hidden md:inline">7 Vertus & Trophées</span>
-                </div>
-                <div className={`p-2 rounded-full bg-white/20 transform transition-transform duration-300 ${accordionOpen.valeurs ? 'rotate-180' : ''}`}>
-                  <ChevronDown className="w-5 h-5 text-white" />
-                </div>
+          <div id="bloc3-valeurs" className="mb-8 bg-gradient-to-br from-violet-900/40 via-purple-900/40 to-indigo-900/40 rounded-2xl border-2 border-violet-500/40 p-4 md:p-6 shadow-xl">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="text-4xl">☯️</div>
+              <div>
+                <h2 className="text-xl md:text-2xl font-bold text-violet-400">
+                  Comprendre les Valeurs de l&apos;Aikido
+                </h2>
+                <p className="text-slate-400 text-sm">Les 7 vertus du Budō et ton développement personnel</p>
               </div>
             </div>
-            
-            {/* Contenu de l'accordéon */}
-            {accordionOpen.valeurs && (
-              <div className="bg-gradient-to-br from-violet-900/40 via-purple-900/40 to-indigo-900/40 p-4 md:p-6 animate-in slide-in-from-top-2">
-                {/* VIRTUE PIE CHART */}
-                <div className="p-4 bg-gradient-to-r from-indigo-900/30 via-purple-900/30 to-indigo-900/30 rounded-xl border border-indigo-500/30 mb-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <h4 className="text-indigo-300 font-bold">🎯 Mes Vertus Travaillées</h4>
-                    <div className="flex gap-2">
-                      <Button onClick={() => setShowVirtueActionsPanel(true)} size="sm" className="bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs">
-                        <Sparkles className="w-3 h-3 mr-1" />Gagner des points !
-                      </Button>
-                      <Button onClick={() => setShowVirtuesDialog(true)} variant="ghost" size="sm" className="text-indigo-400 text-xs">
-                        Détails →
-                      </Button>
-                    </div>
-                  </div>
-                  {totalVirtuePoints > 0 ? (
-                    <VirtuePieChart virtueData={virtueData} />
-                  ) : (
-                    <p className="text-slate-400 text-sm text-center py-4">🌱 Commence à pratiquer pour développer tes vertus !</p>
-                  )}
-                </div>
 
-                {/* Technique States Summary */}
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-3 text-xs mb-6">
-                  <div className="bg-amber-900/30 p-3 rounded-xl text-center border border-amber-500/30">
-                    <p className="text-2xl mb-1">📖</p>
-                    <p className="text-amber-300 font-bold">{statistics.in_progress_techniques || 0}</p>
-                    <p className="text-slate-400">En apprentissage</p>
-                  </div>
-                  <div className="bg-blue-900/30 p-3 rounded-xl text-center border border-blue-500/30">
-                    <p className="text-2xl mb-1">🎯</p>
-                    <p className="text-blue-300 font-bold">{points.practicedCount || 0}</p>
-                    <p className="text-slate-400">Pratiquées</p>
-                  </div>
-                  <div className="bg-emerald-900/30 p-3 rounded-xl text-center border border-emerald-500/30">
-                    <p className="text-2xl mb-1">🏆</p>
-                    <p className="text-emerald-300 font-bold">{statistics.mastered_techniques || 0}</p>
-                    <p className="text-slate-400">Maîtrisées</p>
-                  </div>
-                  <div className="bg-gradient-to-br from-amber-900/40 to-yellow-900/40 p-3 rounded-xl text-center border border-amber-400/40">
-                    <p className="text-2xl mb-1">{currentBelt.emoji}</p>
-                    <p className="text-amber-300 font-bold">+{points.belt}</p>
-                    <p className="text-slate-400">Ceinture</p>
-                  </div>
-                  <div className="bg-gradient-to-br from-purple-900/50 to-pink-900/50 p-3 rounded-xl text-center border-2 border-purple-500/50 col-span-2 md:col-span-1">
-                    <p className="text-2xl mb-1">⭐</p>
-                    <p className="text-2xl font-bold bg-gradient-to-r from-yellow-400 to-pink-400 bg-clip-text text-transparent">{points.total}</p>
-                    <p className="text-purple-300 font-semibold">Total Points</p>
-                  </div>
-                </div>
-
-                {/* Trophies Section */}
-                <div className="p-4 bg-gradient-to-r from-yellow-900/30 via-amber-900/30 to-yellow-900/30 rounded-xl border border-yellow-500/30">
-                  <div className="flex items-center justify-between mb-3">
-                    <h4 className="text-amber-400 font-bold">🏆 Mes Trophées ({trophies.unlocked.length})</h4>
-                    <Button onClick={() => setShowTrophiesDialog(true)} variant="ghost" size="sm" className="text-amber-400 text-xs">Voir tout →</Button>
-                  </div>
-                  {trophies.unlocked.length === 0 ? (
-                    <p className="text-slate-400 text-sm text-center py-2">🌱 Continue à pratiquer pour débloquer tes premiers trophées !</p>
-                  ) : (
-                    <div className="flex flex-wrap gap-2">
-                      {trophies.unlocked.slice(0, 6).map((trophy, idx) => (
-                        <div key={idx} className="bg-slate-800/80 px-3 py-1.5 rounded-full border border-yellow-500/30 flex items-center gap-1.5 text-xs" title={trophy.desc}>
-                          <span className="text-lg">{trophy.icon}</span>
-                          <span className="text-yellow-300 font-medium">{trophy.name}</span>
-                        </div>
-                      ))}
-                    </div>
-                  )}
+            {/* VIRTUE PIE CHART - Camembert des Vertus */}
+            <div className="p-4 bg-gradient-to-r from-indigo-900/30 via-purple-900/30 to-indigo-900/30 rounded-xl border border-indigo-500/30 mb-6">
+              <div className="flex items-center justify-between mb-4">
+                <h4 className="text-indigo-300 font-bold flex items-center gap-2">
+                  🎯 Mes Vertus Travaillées
+                </h4>
+                <div className="flex gap-2">
+                  <Button 
+                    onClick={() => setShowVirtueActionsPanel(true)}
+                    size="sm"
+                    className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold text-xs shadow-lg shadow-amber-500/30"
+                  >
+                    <Sparkles className="w-3 h-3 mr-1" />
+                    Gagner des points !
+                  </Button>
+                  <Button 
+                    onClick={() => setShowVirtuesDialog(true)}
+                    variant="ghost"
+                    size="sm"
+                    className="text-indigo-400 hover:text-indigo-300 hover:bg-indigo-900/30 text-xs"
+                  >
+                    Détails →
+                  </Button>
                 </div>
               </div>
-            )}
+              
+              {totalVirtuePoints > 0 ? (
+                <VirtuePieChart virtueData={virtueData} />
+              ) : (
+                <p className="text-slate-400 text-sm text-center py-4">
+                  🌱 Commence à pratiquer pour développer tes vertus !
+                </p>
+              )}
+              
+              <p className="text-center text-indigo-300/70 text-xs mt-4 italic">
+                Répartition de tes vertus basée sur ta progression et ton parcours
+              </p>
+            </div>
+
+            {/* Technique States Summary with POINTS */}
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-3 text-xs mb-6">
+              <div className="bg-amber-900/30 p-3 rounded-xl text-center border border-amber-500/30">
+                <p className="text-2xl mb-1">📖</p>
+                <p className="text-amber-300 font-bold">{statistics.in_progress_techniques || 0}</p>
+                <p className="text-slate-400">En apprentissage</p>
+                <p className="text-amber-500 text-[10px] mt-1">+1 pt/technique</p>
+              </div>
+              <div className="bg-blue-900/30 p-3 rounded-xl text-center border border-blue-500/30">
+                <p className="text-2xl mb-1">🎯</p>
+                <p className="text-blue-300 font-bold">{points.practicedCount || 0}</p>
+                <p className="text-slate-400">Pratiquées</p>
+                <p className="text-blue-500 text-[10px] mt-1">+2 pts/technique</p>
+              </div>
+              <div className="bg-emerald-900/30 p-3 rounded-xl text-center border border-emerald-500/30">
+                <p className="text-2xl mb-1">🏆</p>
+                <p className="text-emerald-300 font-bold">{statistics.mastered_techniques || 0}</p>
+                <p className="text-slate-400">Maîtrisées</p>
+                <p className="text-emerald-500 text-[10px] mt-1">+3 pts/technique</p>
+              </div>
+              <div className="bg-gradient-to-br from-amber-900/40 to-yellow-900/40 p-3 rounded-xl text-center border border-amber-400/40">
+                <p className="text-2xl mb-1">{currentBelt.emoji}</p>
+                <p className="text-amber-300 font-bold">+{points.belt}</p>
+                <p className="text-slate-400">Ceinture</p>
+                <p className="text-amber-500 text-[10px] mt-1">+10 pts/grade</p>
+              </div>
+              <div className="bg-gradient-to-br from-purple-900/50 to-pink-900/50 p-3 rounded-xl text-center border-2 border-purple-500/50 shadow-lg shadow-purple-500/20 col-span-2 md:col-span-1">
+                <p className="text-2xl mb-1">⭐</p>
+                <p className="text-3xl font-bold bg-gradient-to-r from-yellow-400 to-pink-400 bg-clip-text text-transparent">{points.total}</p>
+                <p className="text-purple-300 font-semibold">Total Points</p>
+              </div>
+            </div>
+
+            {/* Trophies Section */}
+            <div className="p-4 bg-gradient-to-r from-yellow-900/30 via-amber-900/30 to-yellow-900/30 rounded-xl border border-yellow-500/30">
+              <div className="flex items-center justify-between mb-3">
+                <h4 className="text-amber-400 font-bold flex items-center gap-2">
+                  🏆 Mes Trophées ({trophies.unlocked.length})
+                </h4>
+                <Button 
+                  onClick={() => setShowTrophiesDialog(true)}
+                  variant="ghost"
+                  size="sm"
+                  className="text-amber-400 hover:text-amber-300 hover:bg-amber-900/30 text-xs"
+                >
+                  Voir tout →
+                </Button>
+              </div>
+              
+              {trophies.unlocked.length === 0 ? (
+                <p className="text-slate-400 text-sm text-center py-2">
+                  🌱 Continue à pratiquer pour débloquer tes premiers trophées !
+                </p>
+              ) : (
+                <div className="flex flex-wrap gap-2">
+                  {trophies.unlocked.slice(0, 6).map((trophy, idx) => (
+                    <div 
+                      key={idx}
+                      className="bg-slate-800/80 px-3 py-1.5 rounded-full border border-yellow-500/30 flex items-center gap-1.5 text-xs hover:scale-105 transition-all cursor-pointer"
+                      title={trophy.desc}
+                    >
+                      <span className="text-lg">{trophy.icon}</span>
+                      <span className="text-yellow-300 font-medium">{trophy.name}</span>
+                    </div>
+                  ))}
+                  {trophies.unlocked.length > 6 && (
+                    <div 
+                      className="bg-slate-800/80 px-3 py-1.5 rounded-full border border-purple-500/30 text-xs text-purple-300 cursor-pointer hover:bg-purple-900/30"
+                      onClick={() => setShowTrophiesDialog(true)}
+                    >
+                      +{trophies.unlocked.length - 6} autres
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Points explanation */}
+            <div className="mt-4 text-center">
+              <p className="text-slate-400 text-xs italic">
+                🎌 Gagne des points : 📖 1pt • 🎯 2pts • 🏆 3pts • {currentBelt.emoji} +10pts/grade
+                <br />Débloque des trophées et développe tes vertus !
+              </p>
+            </div>
           </div>
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* ACCORDÉON 4 : Histoire de l'Aikido */}
+        {/* BLOC 4 : HISTOIRE DE L'AIKIDO - Les Sept Plis du Hakama */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {!isAuthenticated && (
-          <div id="bloc4-histoire" className="mb-4 rounded-2xl border-2 border-amber-500/40 shadow-xl overflow-hidden">
-            {/* Header de l'accordéon */}
-            <div 
-              className="bg-gradient-to-r from-amber-600 via-orange-600 to-yellow-600 p-4 cursor-pointer hover:from-amber-500 hover:via-orange-500 hover:to-yellow-500 transition-all"
-              onClick={() => toggleAccordion('histoire')}
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <h3 className="text-lg md:text-xl font-bold text-white">
-                    Histoire de l&apos;Aikido 📜
-                  </h3>
-                  <span className="text-amber-200 text-xs md:text-sm hidden md:inline">Hakama & O Sensei</span>
-                </div>
-                <div className={`p-2 rounded-full bg-white/20 transform transition-transform duration-300 ${accordionOpen.histoire ? 'rotate-180' : ''}`}>
-                  <ChevronDown className="w-5 h-5 text-white" />
-                </div>
+          <div id="bloc4-histoire" className="mb-8 bg-gradient-to-br from-amber-900/30 via-slate-900/40 to-amber-900/30 rounded-2xl border-2 border-amber-500/40 p-4 md:p-6 shadow-xl">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="text-4xl">📜</div>
+              <div>
+                <h2 className="text-xl md:text-2xl font-bold text-amber-400">
+                  Histoire de l&apos;Aikido
+                </h2>
+                <p className="text-slate-400 text-sm">Les Sept Plis du Hakama et la sagesse de O Sensei</p>
               </div>
             </div>
-            
-            {/* Contenu de l'accordéon */}
-            {accordionOpen.histoire && (
-              <div className="bg-gradient-to-br from-amber-900/30 via-slate-900/40 to-amber-900/30 p-4 md:p-6 animate-in slide-in-from-top-2">
-                <div className="flex flex-col lg:flex-row gap-6 items-start">
-                  {/* O Sensei Image */}
-                  <div className="flex flex-col items-center lg:items-start gap-3 lg:min-w-[200px]">
-                    <div className="relative">
-                      <div className="w-32 h-40 md:w-40 md:h-48 rounded-xl overflow-hidden border-4 border-amber-500/50 shadow-lg">
-                        <img 
-                          src="https://customer-assets.emergentagent.com/job_dojo-progress-1/artifacts/dz0s4slt_Sensei%20MoriHei%20Ueshiba.jpg" 
-                          alt="O Sensei - Morihei Ueshiba"
-                          className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
-                        />
-                      </div>
-                      <div className="absolute -bottom-2 -right-2 bg-amber-500 text-slate-900 px-3 py-1 rounded-full text-xs font-bold">O Sensei</div>
-                    </div>
-                    <p className="text-amber-400 font-semibold text-center">Morihei Ueshiba</p>
-                    <p className="text-slate-400 text-xs text-center">Fondateur de l&apos;Aïkido</p>
+
+            <div className="flex flex-col lg:flex-row gap-6 items-start">
+              {/* O Sensei Image */}
+              <div className="flex flex-col items-center lg:items-start gap-3 lg:min-w-[200px]">
+                <div className="relative">
+                  <div className="w-32 h-40 md:w-40 md:h-48 rounded-xl overflow-hidden border-4 border-amber-500/50 shadow-lg shadow-amber-500/20">
+                    <img 
+                      src="https://customer-assets.emergentagent.com/job_dojo-progress-1/artifacts/dz0s4slt_Sensei%20MoriHei%20Ueshiba.jpg" 
+                      alt="O Sensei - Morihei Ueshiba"
+                      className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500"
+                    />
                   </div>
-
-                  {/* Text Content */}
-                  <div className="flex-1">
-                    <h3 className="text-xl font-bold text-amber-400 mb-4">🥋 Les Sept Plis du Hakama</h3>
-                    <p className="text-slate-300 text-sm mb-4">
-                      O Sensei enseignait que <span className="text-amber-400 font-semibold">« les sept plis du hakama symbolisent les sept vertus du budō »</span>.
-                    </p>
-
-                    {/* 7 Virtues Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                      <div className="bg-gradient-to-r from-red-900/40 to-red-800/40 p-2 rounded-lg border border-red-500/30">
-                        <p className="font-bold text-red-400 text-sm">仁 JIN – Bienveillance</p>
-                      </div>
-                      <div className="bg-gradient-to-r from-blue-900/40 to-blue-800/40 p-2 rounded-lg border border-blue-500/30">
-                        <p className="font-bold text-blue-400 text-sm">義 GI – Justice</p>
-                      </div>
-                      <div className="bg-gradient-to-r from-purple-900/40 to-purple-800/40 p-2 rounded-lg border border-purple-500/30">
-                        <p className="font-bold text-purple-400 text-sm">礼 REI – Courtoisie</p>
-                      </div>
-                      <div className="bg-gradient-to-r from-green-900/40 to-green-800/40 p-2 rounded-lg border border-green-500/30">
-                        <p className="font-bold text-green-400 text-sm">智 CHI – Sagesse</p>
-                      </div>
-                      <div className="bg-gradient-to-r from-yellow-900/40 to-yellow-800/40 p-2 rounded-lg border border-yellow-500/30">
-                        <p className="font-bold text-yellow-400 text-sm">信 SHIN – Sincérité</p>
-                      </div>
-                      <div className="bg-gradient-to-r from-cyan-900/40 to-cyan-800/40 p-2 rounded-lg border border-cyan-500/30">
-                        <p className="font-bold text-cyan-400 text-sm">忠 CHU – Loyauté</p>
-                      </div>
-                      <div className="bg-gradient-to-r from-pink-900/40 to-pink-800/40 p-2 rounded-lg border border-pink-500/30 md:col-span-2">
-                        <p className="font-bold text-pink-400 text-sm">孝 KŌ – Piété</p>
-                      </div>
-                    </div>
+                  <div className="absolute -bottom-2 -right-2 bg-amber-500 text-slate-900 px-3 py-1 rounded-full text-xs font-bold">
+                    O Sensei
                   </div>
                 </div>
+                <p className="text-amber-400 font-semibold text-center">Morihei Ueshiba</p>
+                <p className="text-slate-400 text-xs text-center">Fondateur de l&apos;Aïkido</p>
               </div>
-            )}
+
+              {/* Text Content */}
+              <div className="flex-1">
+                <h3 className="text-xl md:text-2xl font-bold text-amber-400 mb-4 flex items-center gap-2">
+                  🥋 Les Sept Plis du Hakama
+                </h3>
+                
+                <div className="space-y-4 text-slate-300 text-sm md:text-base leading-relaxed">
+                  <p>
+                    O Sensei enseignait que <span className="text-amber-400 font-semibold">« les sept plis du hakama symbolisent les sept vertus du budō »</span>. 
+                    Ces vertus, héritées de l&apos;éthique du samouraï d&apos;autrefois, constituent le socle moral du bushidō.
+                  </p>
+                  
+                  <p>
+                    Les <span className="text-cyan-400 font-semibold">budō</span> sont les arts martiaux japonais apparus entre le milieu du XIXᵉ et le milieu du XXᵉ siècle. 
+                    En japonais, <em>bu</em> signifie la guerre ou le combat, et <em>dō</em> la voie. Le budō désigne ainsi un chemin de formation globale, 
+                    à la fois physique, mentale et spirituelle.
+                  </p>
+
+                  <blockquote className="border-l-4 border-amber-500 pl-4 py-2 bg-slate-800/50 rounded-r-lg italic text-slate-200">
+                    « Les sept plis du hakama symbolisent les sept vertus du budō. Le hakama nous incite à refléter la vraie nature du bushidō. 
+                    L&apos;aïkido nous invite à polir sans cesse ces sept vertus traditionnelles dans notre pratique. »
+                    <footer className="text-amber-400 font-semibold mt-2 not-italic">— Morihei Ueshiba</footer>
+                  </blockquote>
+                </div>
+
+                {/* 7 Virtues Grid */}
+                <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div className="bg-gradient-to-r from-red-900/40 to-red-800/40 p-3 rounded-lg border border-red-500/30">
+                    <p className="font-bold text-red-400">仁 JIN – Bienveillance</p>
+                    <p className="text-xs text-slate-300">Attention sincère portée à autrui, respect constant des autres.</p>
+                  </div>
+                  <div className="bg-gradient-to-r from-blue-900/40 to-blue-800/40 p-3 rounded-lg border border-blue-500/30">
+                    <p className="font-bold text-blue-400">義 GI – Justice, honneur</p>
+                    <p className="text-xs text-slate-300">Fidélité à la parole donnée et aux engagements pris.</p>
+                  </div>
+                  <div className="bg-gradient-to-r from-purple-900/40 to-purple-800/40 p-3 rounded-lg border border-purple-500/30">
+                    <p className="font-bold text-purple-400">礼 REI – Courtoisie</p>
+                    <p className="text-xs text-slate-300">Expression visible de l&apos;estime portée à autrui.</p>
+                  </div>
+                  <div className="bg-gradient-to-r from-green-900/40 to-green-800/40 p-3 rounded-lg border border-green-500/30">
+                    <p className="font-bold text-green-400">智 CHI – Sagesse</p>
+                    <p className="text-xs text-slate-300">Discerner avec justesse, garder calme et lucidité.</p>
+                  </div>
+                  <div className="bg-gradient-to-r from-yellow-900/40 to-yellow-800/40 p-3 rounded-lg border border-yellow-500/30">
+                    <p className="font-bold text-yellow-400">信 SHIN – Sincérité</p>
+                    <p className="text-xs text-slate-300">Engagement total et constant, sans artifice.</p>
+                  </div>
+                  <div className="bg-gradient-to-r from-cyan-900/40 to-cyan-800/40 p-3 rounded-lg border border-cyan-500/30">
+                    <p className="font-bold text-cyan-400">忠 CHU – Loyauté</p>
+                    <p className="text-xs text-slate-300">Fidélité sincère à son école et son enseignement.</p>
+                  </div>
+                  <div className="bg-gradient-to-r from-pink-900/40 to-pink-800/40 p-3 rounded-lg border border-pink-500/30 md:col-span-2">
+                    <p className="font-bold text-pink-400">孝 KŌ – Piété, respect des fondements</p>
+                    <p className="text-xs text-slate-300">Respect profond des bases techniques, spirituelles et philosophiques des arts martiaux.</p>
+                  </div>
+                </div>
+
+                <p className="mt-4 text-xs text-slate-400 italic text-center">
+                  Un hakama est composé de sept plis : cinq à l&apos;avant et deux à l&apos;arrière. Chacun rappelle les valeurs que le pratiquant s&apos;efforce de cultiver sur la voie du budō.
+                </p>
+              </div>
+            </div>
           </div>
         )}
 
