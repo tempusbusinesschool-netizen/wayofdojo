@@ -1591,7 +1591,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
           <DialogContent className="max-w-lg bg-slate-900 border-slate-700 text-white max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle className="text-xl font-bold flex items-center gap-2 text-indigo-400">
-                🎯 Mes Vertus de l'Aïkido
+                🎯 Mes Vertus de l&apos;Aïkido
               </DialogTitle>
               <DialogDescription className="text-slate-400">
                 Répartition de tes vertus travaillées sur ton parcours
