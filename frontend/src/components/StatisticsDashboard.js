@@ -1136,16 +1136,16 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               🌟 Continue à t&apos;entraîner pour débloquer tous les grades ! 🌟
             </p>
             <div className="flex justify-center gap-2 mt-2 text-2xl">
-                    <span className="animate-bounce" style={{ animationDelay: '0ms' }}>🥋</span>
-                    <span className="animate-bounce" style={{ animationDelay: '100ms' }}>💪</span>
-                    <span className="animate-bounce" style={{ animationDelay: '200ms' }}>⭐</span>
-                    <span className="animate-bounce" style={{ animationDelay: '300ms' }}>🎯</span>
-                    <span className="animate-bounce" style={{ animationDelay: '400ms' }}>🔥</span>
-                  </div>
-                </div>
-              </div>
-            )}
+              <span className="animate-bounce" style={{ animationDelay: '0ms' }}>🥋</span>
+              <span className="animate-bounce" style={{ animationDelay: '100ms' }}>💪</span>
+              <span className="animate-bounce" style={{ animationDelay: '200ms' }}>⭐</span>
+              <span className="animate-bounce" style={{ animationDelay: '300ms' }}>🎯</span>
+              <span className="animate-bounce" style={{ animationDelay: '400ms' }}>🔥</span>
+            </div>
           </div>
+            </div>
+          )}
+        </div>
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
