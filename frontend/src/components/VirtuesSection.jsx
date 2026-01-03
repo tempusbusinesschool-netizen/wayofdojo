@@ -283,35 +283,25 @@ const VirtuesSection = ({
         </div>
       </div>
 
-      {/* Grille des 7 Vertus */}
-      <div>
-        <div className="flex items-center justify-between mb-4">
-          <h4 className="text-lg font-bold text-violet-300 flex items-center gap-2">
-            <Star className="w-5 h-5 text-yellow-400" />
-            🌟 Les 7 Vertus Magiques
-          </h4>
-          <Button 
-            onClick={onOpenVirtuesDialog}
-            variant="ghost"
-            size="sm"
-            className="text-violet-400 hover:text-violet-300 hover:bg-violet-900/30"
-          >
-            Voir tout <ChevronRight className="w-4 h-4 ml-1" />
-          </Button>
-        </div>
-        
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-3">
-          {VIRTUES_DATA.map((virtue, idx) => (
-            <VirtueCard 
-              key={idx}
-              virtue={virtue}
-              points={virtuePoints[virtue.name] || 0}
-              isUnlocked={virtuePoints[virtue.name] > 0}
-              onClick={onOpenVirtuesDialog}
-            />
-          ))}
-        </div>
-      </div>
+      {/* Système de Gamification des 7 Vertus */}
+      <VirtuesGamification
+        virtueXpMap={{
+          respect: virtuePoints["Respect"] || 0,
+          courage: virtuePoints["Courage"] || 0,
+          maitrise: virtuePoints["Maîtrise"] || 0,
+          humilite: virtuePoints["Humilité"] || 0,
+          bienveillance: virtuePoints["Bienveillance"] || 0,
+          attention: virtuePoints["Attention"] || 0,
+          responsabilite: virtuePoints["Responsabilité"] || 0
+        }}
+        completedChallenges={[]}
+        unlockedBadges={trophies.unlocked?.map(t => t.id) || []}
+        onOpenVirtueDetail={onOpenVirtuesDialog}
+        onCompleteChallenge={(challenge) => {
+          console.log("Challenge completed:", challenge);
+          // Cette fonction sera connectée au backend plus tard
+        }}
+      />
 
       {/* Section Trophées */}
       <div className="relative overflow-hidden rounded-2xl p-5 bg-gradient-to-br from-amber-900/30 via-yellow-900/30 to-orange-900/30 border-2 border-amber-500/40">
