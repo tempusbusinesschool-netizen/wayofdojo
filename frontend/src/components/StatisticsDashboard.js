@@ -880,7 +880,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         {/* BLOC 1 : TABLEAU DE BORD GÉNÉRAL - Ma Progression Ninja ! */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {!isAuthenticated && (
-          <div className="mb-8 bg-gradient-to-br from-indigo-900/60 via-purple-900/60 to-pink-900/60 rounded-2xl border-2 border-purple-500/40 p-4 md:p-6 shadow-xl">
+          <div id="bloc1-progression" className="mb-8 bg-gradient-to-br from-indigo-900/60 via-purple-900/60 to-pink-900/60 rounded-2xl border-2 border-purple-500/40 p-4 md:p-6 shadow-xl">
             <div className="flex flex-col md:flex-row items-center justify-between gap-3 mb-4">
               <div className="flex items-center gap-3">
                 <div className="text-4xl animate-bounce">🎯</div>
