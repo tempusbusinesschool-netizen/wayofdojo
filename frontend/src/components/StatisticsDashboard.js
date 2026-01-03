@@ -10,6 +10,10 @@ import VirtueActionsPanel from "./VirtueActionsPanel";
 import TimelinePanel from "./TimelinePanel";
 import JournalPanel from "./JournalPanel";
 import SimpleAccordion from "./SimpleAccordion";
+import BeltProgressCard from "./BeltProgressCard";
+import GradeCardsGrid from "./GradeCardsGrid";
+import DeplacementsSection from "./DeplacementsSection";
+import { AIKIDO_BELTS, getBeltByPoints } from "@/constants/aikidoBelts";
 import { DEPLACEMENTS_DATA } from "@/constants";
 
 // Aikido Belt System - Real grades with KYU equivalence
