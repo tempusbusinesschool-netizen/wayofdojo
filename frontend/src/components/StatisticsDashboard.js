@@ -1024,50 +1024,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 <p className="text-pink-200 text-xs">avec ton enseignant</p>
               </div>
             </div>
-            
-            {/* 4 CARTES STATISTIQUES */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6">
-              <div 
-                className={`bg-gradient-to-br from-indigo-500/20 to-indigo-600/20 border border-indigo-500/30 rounded-2xl p-4 md:p-5 text-center cursor-pointer hover:scale-105 transition-all ${activeFilter === 'all' ? 'ring-2 ring-indigo-400' : ''}`}
-                onClick={() => onFilterClick && onFilterClick('all')}
-              >
-                <p className="text-indigo-400 text-3xl md:text-4xl font-bold">{statistics.total_techniques}</p>
-                <p className="text-slate-400 text-sm mt-1">📚 Techniques</p>
-              </div>
-              <div 
-                className={`bg-gradient-to-br from-emerald-500/20 to-emerald-600/20 border border-emerald-500/30 rounded-2xl p-4 md:p-5 text-center cursor-pointer hover:scale-105 transition-all ${activeFilter === 'mastered' ? 'ring-2 ring-emerald-400' : ''}`}
-                onClick={() => onFilterClick && onFilterClick('mastered')}
-              >
-                <p className="text-emerald-400 text-3xl md:text-4xl font-bold">{statistics.mastered_techniques}</p>
-                <p className="text-slate-400 text-sm mt-1">✅ Maîtrisées</p>
-              </div>
-              <div 
-                className={`bg-gradient-to-br from-amber-500/20 to-amber-600/20 border border-amber-500/30 rounded-2xl p-4 md:p-5 text-center cursor-pointer hover:scale-105 transition-all ${activeFilter === 'in_progress' ? 'ring-2 ring-amber-400' : ''}`}
-                onClick={() => onFilterClick && onFilterClick('in_progress')}
-              >
-                <p className="text-amber-400 text-3xl md:text-4xl font-bold">{statistics.total_practice_sessions}</p>
-                <p className="text-slate-400 text-sm mt-1">🏆 Trophées</p>
-              </div>
-              <div className="bg-gradient-to-br from-pink-500/20 to-pink-600/20 border border-pink-500/30 rounded-2xl p-4 md:p-5 text-center">
-                <p className="text-pink-400 text-3xl md:text-4xl font-bold">{statistics.overall_progress}%</p>
-                <p className="text-slate-400 text-sm mt-1">⭐ Progression</p>
-              </div>
-            </div>
-            
-            {/* GRADES KYU - BADGES */}
-            <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-4 md:p-6">
-              <h3 className="text-white font-bold text-lg mb-4">📋 Grades KYU</h3>
-              <div className="flex flex-wrap gap-2 md:gap-3">
-                <span className="bg-yellow-400 text-slate-900 px-4 py-2 rounded-full font-bold text-sm cursor-pointer hover:scale-105 transition-all">5e KYU</span>
-                <span className="bg-orange-500 text-white px-4 py-2 rounded-full font-bold text-sm cursor-pointer hover:scale-105 transition-all">4e KYU</span>
-                <span className="bg-green-500 text-white px-4 py-2 rounded-full font-bold text-sm cursor-pointer hover:scale-105 transition-all">3e KYU</span>
-                <span className="bg-blue-500 text-white px-4 py-2 rounded-full font-bold text-sm cursor-pointer hover:scale-105 transition-all">2e KYU</span>
-                <span className="bg-amber-700 text-white px-4 py-2 rounded-full font-bold text-sm cursor-pointer hover:scale-105 transition-all">1er KYU</span>
-                <span className="bg-slate-800 text-white px-4 py-2 rounded-full font-bold text-sm border-2 border-slate-600 cursor-pointer hover:scale-105 transition-all">SHODAN</span>
-                <span className="bg-slate-800 text-white px-4 py-2 rounded-full font-bold text-sm border-2 border-slate-600 cursor-pointer hover:scale-105 transition-all">NIDAN</span>
-                <span className="bg-slate-800 text-white px-4 py-2 rounded-full font-bold text-sm border-2 border-slate-600 cursor-pointer hover:scale-105 transition-all">SANDAN</span>
-              </div>
-            </div>
+            {/* Old sections removed - now handled by authentication-based display above */}
             
           </div>
         )}
