@@ -11,7 +11,7 @@ from datetime import datetime
 import time
 
 # Backend URL from frontend .env
-BACKEND_URL = "https://aikiquest.preview.emergentagent.com/api"
+BACKEND_URL = "https://aikido-progress-3.preview.emergentagent.com/api"
 
 class SubscriptionTester:
     def __init__(self):
@@ -169,7 +169,7 @@ class SubscriptionTester:
         try:
             checkout_data = {
                 "plan_id": "ninja",
-                "origin_url": "https://aikiquest.preview.emergentagent.com"
+                "origin_url": "https://aikido-progress-3.preview.emergentagent.com"
             }
             
             response = self.session.post(f"{BACKEND_URL}/subscriptions/checkout", json=checkout_data)
