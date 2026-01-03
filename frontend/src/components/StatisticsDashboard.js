@@ -922,180 +922,56 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
             )}
           </div>
         )}
-                <div className="text-2xl mb-1">🎯</div>
-                <p className="text-2xl font-bold text-emerald-300">10</p>
-                <p className="text-sm text-slate-400">Niveaux</p>
-              </div>
-              <div className="bg-gradient-to-br from-amber-500/30 to-amber-600/30 border border-amber-500/40 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
-                <div className="text-2xl mb-1">🏆</div>
-                <p className="text-2xl font-bold text-amber-300">15</p>
-                <p className="text-sm text-slate-400">Trophées</p>
-              </div>
-              <div className="bg-gradient-to-br from-pink-500/30 to-pink-600/30 border border-pink-500/40 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
-                <div className="text-2xl mb-1">☯️</div>
-                <p className="text-2xl font-bold text-pink-300">7</p>
-                <p className="text-sm text-slate-400">Vertus</p>
-              </div>
-            </div>
-
-            {/* LIGNE 2 : Progression personnelle */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-              <div className="bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
-                <div className="text-2xl mb-1">🏆</div>
-                <p className="text-2xl font-bold text-white">{statistics.mastered_techniques}</p>
-                <p className="text-sm text-emerald-100">Maîtrisées</p>
-              </div>
-              <div className="bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
-                <div className="text-2xl mb-1">🔥</div>
-                <p className="text-2xl font-bold text-white">{statistics.in_progress_techniques}</p>
-                <p className="text-sm text-amber-100">En cours</p>
-              </div>
-              <div className="bg-gradient-to-br from-pink-500 to-rose-600 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
-                <div className="text-2xl mb-1">⭐</div>
-                <p className="text-2xl font-bold text-white">{statistics.total_practice_sessions}</p>
-                <p className="text-sm text-pink-100">Sessions</p>
-              </div>
-              <div className="bg-gradient-to-br from-cyan-600 to-teal-700 rounded-xl p-4 text-center">
-                <div className="text-2xl mb-1">📈</div>
-                <p className="text-2xl font-bold text-white">{statistics.overall_progress}%</p>
-                <p className="text-sm text-cyan-100">Progression</p>
-                <div className="mt-2 h-2 bg-black/30 rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-white/80 rounded-full transition-all"
-                    style={{ width: `${statistics.overall_progress}%` }}
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* EN BAS : Grades KYU (badges colorés) */}
-            <div className="pt-4 border-t border-purple-500/30">
-              <h4 className="text-white font-bold text-lg mb-4">📋 Grades KYU</h4>
-              <div className="flex flex-wrap gap-2 md:gap-3">
-                <span className="bg-yellow-400 text-slate-900 px-4 py-2 rounded-full font-bold text-sm hover:scale-105 transition-all cursor-pointer">5e KYU</span>
-                <span className="bg-orange-500 text-white px-4 py-2 rounded-full font-bold text-sm hover:scale-105 transition-all cursor-pointer">4e KYU</span>
-                <span className="bg-green-500 text-white px-4 py-2 rounded-full font-bold text-sm hover:scale-105 transition-all cursor-pointer">3e KYU</span>
-                <span className="bg-blue-500 text-white px-4 py-2 rounded-full font-bold text-sm hover:scale-105 transition-all cursor-pointer">2e KYU</span>
-                <span className="bg-amber-700 text-white px-4 py-2 rounded-full font-bold text-sm hover:scale-105 transition-all cursor-pointer">1er KYU</span>
-                <span className="bg-slate-800 text-white px-4 py-2 rounded-full font-bold text-sm border-2 border-slate-600 hover:scale-105 transition-all cursor-pointer">SHODAN</span>
-              </div>
-            </div>
-
-            {/* Section Prochaine Étape (intégrée en bas) */}
-            <div className="mt-6 pt-4 border-t border-purple-500/30 bg-gradient-to-r from-rose-500/20 via-pink-500/20 to-purple-500/20 rounded-xl p-4">
-              <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-                <div className="flex items-center gap-3">
-                  <div className="text-3xl animate-pulse">🎯</div>
-                  <div>
-                    <h3 className="text-lg font-bold text-white">Prochaine étape</h3>
-                    <p className="text-slate-300 text-xs">Continue ton parcours vers la maîtrise !</p>
-                    <p className="text-purple-300 text-xs mt-1">
-                      Commence par le <strong className="text-yellow-400">5e KYU</strong> - Clique sur un grade ci-dessus !
-                    </p>
-                  </div>
-                </div>
-                <div className="flex flex-wrap justify-center gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      if (!isAuthenticated) {
-                        toast.error("🔒 Inscrivez-vous pour télécharger");
-                        return;
-                      }
-                      setShowEmailDialog(true);
-                    }}
-                    className={`bg-gradient-to-r from-cyan-600 to-blue-600 border-none text-white hover:from-cyan-500 hover:to-blue-500 text-xs h-8 ${!isAuthenticated ? 'opacity-50' : ''}`}
-                  >
-                    <Download className="w-3 h-3 mr-1" />
-                    PDF
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => {
-                      if (!isAuthenticated) {
-                        toast.error("🔒 Inscrivez-vous pour exporter");
-                        return;
-                      }
-                      exportToCSV();
-                    }}
-                    className={`bg-gradient-to-r from-emerald-600 to-green-600 border-none text-white hover:from-emerald-500 hover:to-green-500 text-xs h-8 ${!isAuthenticated ? 'opacity-50' : ''}`}
-                  >
-                    <Download className="w-3 h-3 mr-1" />
-                    CSV
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setShowTimelinePanel(true)}
-                    className="bg-gradient-to-r from-amber-600 to-orange-600 border-none text-white hover:from-amber-500 hover:to-orange-500 text-xs h-8"
-                  >
-                    <Clock className="w-3 h-3 mr-1" />
-                    Timeline
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setShowJournalPanel(true)}
-                    className="bg-gradient-to-r from-violet-600 to-purple-600 border-none text-white hover:from-violet-500 hover:to-purple-500 text-xs h-8"
-                  >
-                    <BookOpen className="w-3 h-3 mr-1" />
-                    Journal
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* BLOC FUSIONNÉ : Entrainement + Grades détaillés */}
+        {/* ACCORDÉON 2 : Entrainement - Techniques d'Aikido */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {!isAuthenticated && (
-          <div id="bloc2-entrainement" className="mb-8 bg-gradient-to-br from-cyan-900/40 via-blue-900/40 to-indigo-900/40 rounded-2xl border-2 border-cyan-500/40 p-4 md:p-6 shadow-xl">
-            
-            {/* EN HAUT : Titre Entrainement */}
-            <div className="flex items-center gap-3 mb-6">
-              <div className="text-4xl">🥋</div>
-              <div>
-                <h2 className="text-xl md:text-2xl font-bold text-cyan-400">
-                  Entrainement - Techniques d&apos;Aikido
-                </h2>
-                <p className="text-slate-400 text-sm">Les ceintures, ton parcours et les déplacements</p>
-              </div>
-            </div>
-
-            {/* Section Mon Parcours Aïkido (si currentBelt disponible) */}
-            {currentBelt && (
-              <div className="mb-6 p-4 md:p-6 bg-gradient-to-r from-slate-800/80 via-slate-900/80 to-slate-800/80 rounded-xl border border-amber-500/30">
-                <div className="flex flex-col md:flex-row items-center gap-6">
-                  {/* Current Belt Display */}
-                  <div className="flex flex-col items-center cursor-pointer transform hover:scale-105 transition-all" onClick={() => setShowBeltDialog(true)}>
-                    <div className={`w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br ${currentBelt.gradient} flex items-center justify-center shadow-xl border-4 border-white/20`}>
-                      <span className="text-5xl md:text-6xl">{currentBelt.emoji}</span>
-                    </div>
-                    <p className="mt-3 font-bold text-lg md:text-xl text-white">{currentBelt.name}</p>
-                    <p className="text-amber-400 font-medium">{currentBelt.grade}</p>
-                  </div>
-
-                  {/* Belt Info & Message */}
-                  <div className="flex-1 text-center md:text-left">
-                    <h3 className="text-xl md:text-2xl font-bold text-amber-400 mb-2 flex items-center justify-center md:justify-start gap-2">
-                      🥋 Mon Parcours Aïkido
-                    </h3>
-                    <p className="text-slate-300 text-sm md:text-base mb-4">
-                      {currentBelt.message}
-                    </p>
-                  </div>
+          <div id="bloc2-entrainement" className="mb-4 rounded-2xl border-2 border-cyan-500/40 shadow-xl overflow-hidden">
+            {/* Header de l'accordéon */}
+            <div 
+              className="bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 p-4 cursor-pointer hover:from-cyan-500 hover:via-blue-500 hover:to-indigo-500 transition-all"
+              onClick={() => toggleAccordion('entrainement')}
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <h3 className="text-lg md:text-xl font-bold text-white">
+                    Entrainement - Techniques d&apos;Aikido 🥋
+                  </h3>
+                  <span className="text-cyan-200 text-xs md:text-sm hidden md:inline">Parcours & Déplacements</span>
+                </div>
+                <div className={`p-2 rounded-full bg-white/20 transform transition-transform duration-300 ${accordionOpen.entrainement ? 'rotate-180' : ''}`}>
+                  <ChevronDown className="w-5 h-5 text-white" />
                 </div>
               </div>
-            )}
+            </div>
+            
+            {/* Contenu de l'accordéon */}
+            {accordionOpen.entrainement && (
+              <div className="bg-gradient-to-br from-cyan-900/40 via-blue-900/40 to-indigo-900/40 p-4 md:p-6 animate-in slide-in-from-top-2">
+                {/* Section Mon Parcours Aïkido */}
+                {currentBelt && (
+                  <div className="mb-6 p-4 md:p-6 bg-gradient-to-r from-slate-800/80 via-slate-900/80 to-slate-800/80 rounded-xl border border-amber-500/30">
+                    <div className="flex flex-col md:flex-row items-center gap-6">
+                      <div className="flex flex-col items-center cursor-pointer transform hover:scale-105 transition-all" onClick={() => setShowBeltDialog(true)}>
+                        <div className={`w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-br ${currentBelt.gradient} flex items-center justify-center shadow-xl border-4 border-white/20`}>
+                          <span className="text-5xl md:text-6xl">{currentBelt.emoji}</span>
+                        </div>
+                        <p className="mt-3 font-bold text-lg md:text-xl text-white">{currentBelt.name}</p>
+                        <p className="text-amber-400 font-medium">{currentBelt.grade}</p>
+                      </div>
+                      <div className="flex-1 text-center md:text-left">
+                        <h3 className="text-xl md:text-2xl font-bold text-amber-400 mb-2">🥋 Mon Parcours Aïkido</h3>
+                        <p className="text-slate-300 text-sm md:text-base">{currentBelt.message}</p>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
-            {/* Grade Cards Grid (détails des techniques par niveau) */}
-            <div className="mb-6">
-              <h3 className="text-lg font-bold text-cyan-300 mb-4">📋 Tous les grades</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+                {/* Grade Cards Grid */}
+                <div className="mb-6">
+                  <h3 className="text-lg font-bold text-cyan-300 mb-4">📋 Tous les grades</h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
             {statistics.techniques_by_level?.map((level, index) => {
               const gradeStyles = {
                 '5e KYU': { emoji: '🟡', gradient: 'from-yellow-400 to-yellow-600', glow: 'shadow-yellow-500/40', rank: 'Débutant', belt: 'Jaune' },
