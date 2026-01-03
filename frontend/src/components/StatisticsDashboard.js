@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import VirtueActionsPanel from "./VirtueActionsPanel";
 import TimelinePanel from "./TimelinePanel";
 import JournalPanel from "./JournalPanel";
+import AccordionBlock from "./AccordionBlock";
 import { DEPLACEMENTS_DATA } from "@/constants";
 
 // Aikido Belt System - Real grades with KYU equivalence
