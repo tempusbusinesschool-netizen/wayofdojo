@@ -818,7 +818,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                       <div className="text-center md:text-left">
                         <p className="text-emerald-200 text-sm md:text-base mb-1">Bienvenue dans ton espace,</p>
                         <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-2">
-                          {userName} ! 🎌
+                          &quot;{userName}&quot; ! 🎌
                         </h1>
                         <p className="text-white/80 text-sm md:text-base max-w-md">
                           Continue ton parcours et deviens un vrai maître de l&apos;Aïkido !
