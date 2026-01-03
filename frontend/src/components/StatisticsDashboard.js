@@ -931,15 +931,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
           </div>
 
           {/* LIGNE 2 : Progression personnelle */}
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-2 mb-6">
-            <div 
-              className={`bg-gradient-to-br from-indigo-600 to-indigo-800 rounded-xl p-3 text-center cursor-pointer hover:scale-105 transition-all ${activeFilter === 'all' ? 'ring-2 ring-white' : ''}`}
-              onClick={() => onFilterClick && onFilterClick('all')}
-            >
-              <div className="text-2xl">📚</div>
-              <p className="text-xl font-bold text-white">{statistics.total_techniques}</p>
-              <p className="text-xs text-indigo-200">Techniques</p>
-            </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mb-6">
             <div 
               className={`bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-xl p-3 text-center cursor-pointer hover:scale-105 transition-all ${activeFilter === 'mastered' ? 'ring-2 ring-white' : ''}`}
               onClick={() => onFilterClick && onFilterClick('mastered')}
@@ -964,7 +956,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               <p className="text-xl font-bold text-white">{statistics.total_practice_sessions}</p>
               <p className="text-xs text-pink-100">Sessions</p>
             </div>
-            <div className="col-span-2 md:col-span-1 bg-gradient-to-br from-cyan-600 to-teal-700 rounded-xl p-3 text-center">
+            <div className="bg-gradient-to-br from-cyan-600 to-teal-700 rounded-xl p-3 text-center">
               <div className="text-2xl">📈</div>
               <p className="text-xl font-bold text-white">{statistics.overall_progress}%</p>
               <p className="text-xs text-cyan-100">Progression</p>
