@@ -818,7 +818,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                       <div className="text-center md:text-left">
                         <p className="text-emerald-200 text-sm md:text-base mb-1">Bienvenue dans ton espace,</p>
                         <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-2">
-                          &quot;{userName}&quot; ! 🎌
+                          {userName} ! 🎌
                         </h1>
                         <p className="text-white/80 text-sm md:text-base max-w-md">
                           Continue ton parcours et deviens un vrai maître de l&apos;Aïkido !
@@ -836,140 +836,6 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                           <p className="text-emerald-100 text-xs">Maîtrisées</p>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* GUIDE : COMMENT PROGRESSER */}
-                <div className="bg-gradient-to-br from-slate-800 to-slate-900 border-2 border-cyan-500/30 rounded-2xl p-6 mb-6">
-                  <h2 className="text-xl md:text-2xl font-bold text-white mb-4 flex items-center gap-2">
-                    <span className="text-2xl">📖</span> Comment progresser ?
-                  </h2>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    {/* Étape 1 */}
-                    <div className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-4 hover:bg-blue-500/20 transition-all">
-                      <div className="flex items-center gap-3 mb-3">
-                        <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">1</div>
-                        <h3 className="text-white font-bold">Explore les grades</h3>
-                      </div>
-                      <p className="text-slate-300 text-sm">
-                        Clique sur un <strong className="text-blue-400">grade KYU</strong> ci-dessous pour voir les techniques à apprendre.
-                      </p>
-                    </div>
-                    
-                    {/* Étape 2 */}
-                    <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-4 hover:bg-emerald-500/20 transition-all">
-                      <div className="flex items-center gap-3 mb-3">
-                        <div className="w-10 h-10 bg-emerald-500 rounded-full flex items-center justify-center text-white font-bold">2</div>
-                        <h3 className="text-white font-bold">Pratique au dojo</h3>
-                      </div>
-                      <p className="text-slate-300 text-sm">
-                        Travaille les techniques avec ton <strong className="text-emerald-400">enseignant</strong> et tes partenaires.
-                      </p>
-                    </div>
-                    
-                    {/* Étape 3 */}
-                    <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 hover:bg-amber-500/20 transition-all">
-                      <div className="flex items-center gap-3 mb-3">
-                        <div className="w-10 h-10 bg-amber-500 rounded-full flex items-center justify-center text-white font-bold">3</div>
-                        <h3 className="text-white font-bold">Valide ta progression</h3>
-                      </div>
-                      <p className="text-slate-300 text-sm">
-                        Marque les techniques comme <strong className="text-amber-400">&quot;Maîtrisée&quot;</strong> quand ton enseignant valide.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                {/* MA PROGRESSION - Stats détaillées */}
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4 mb-6">
-                  <div 
-                    className={`bg-gradient-to-br from-indigo-600 to-indigo-800 rounded-2xl p-4 text-center cursor-pointer hover:scale-105 transition-all ${activeFilter === 'all' ? 'ring-2 ring-white' : ''}`}
-                    onClick={() => onFilterClick && onFilterClick('all')}
-                  >
-                    <div className="text-2xl mb-1">📚</div>
-                    <p className="text-2xl font-bold text-white">{statistics.total_techniques}</p>
-                    <p className="text-indigo-200 text-xs">Total</p>
-                  </div>
-                  <div 
-                    className={`bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-2xl p-4 text-center cursor-pointer hover:scale-105 transition-all ${activeFilter === 'mastered' ? 'ring-2 ring-white' : ''}`}
-                    onClick={() => onFilterClick && onFilterClick('mastered')}
-                  >
-                    <div className="text-2xl mb-1">✅</div>
-                    <p className="text-2xl font-bold text-white">{statistics.mastered_techniques}</p>
-                    <p className="text-emerald-100 text-xs">Maîtrisées</p>
-                  </div>
-                  <div 
-                    className={`bg-gradient-to-br from-amber-500 to-orange-600 rounded-2xl p-4 text-center cursor-pointer hover:scale-105 transition-all ${activeFilter === 'in_progress' ? 'ring-2 ring-white' : ''}`}
-                    onClick={() => onFilterClick && onFilterClick('in_progress')}
-                  >
-                    <div className="text-2xl mb-1">🔥</div>
-                    <p className="text-2xl font-bold text-white">{statistics.in_progress_techniques}</p>
-                    <p className="text-amber-100 text-xs">En cours</p>
-                  </div>
-                  <div 
-                    className={`bg-gradient-to-br from-pink-500 to-rose-600 rounded-2xl p-4 text-center cursor-pointer hover:scale-105 transition-all ${activeFilter === 'practiced' ? 'ring-2 ring-white' : ''}`}
-                    onClick={() => onFilterClick && onFilterClick('practiced')}
-                  >
-                    <div className="text-2xl mb-1">⭐</div>
-                    <p className="text-2xl font-bold text-white">{statistics.total_practice_sessions}</p>
-                    <p className="text-pink-100 text-xs">Sessions</p>
-                  </div>
-                  <div className="col-span-2 md:col-span-1 bg-gradient-to-br from-cyan-600 to-teal-700 rounded-2xl p-4 text-center">
-                    <div className="text-2xl mb-1">📈</div>
-                    <p className="text-2xl font-bold text-white">{statistics.overall_progress}%</p>
-                    <p className="text-cyan-100 text-xs">Progression</p>
-                    <div className="mt-2 h-2 bg-black/30 rounded-full overflow-hidden">
-                      <div 
-                        className="h-full bg-white/80 rounded-full transition-all"
-                        style={{ width: `${statistics.overall_progress}%` }}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* PROCHAINE ÉTAPE */}
-                <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 rounded-2xl p-4 md:p-6 mb-6">
-                  <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-                    <div className="flex items-center gap-4">
-                      <div className="text-4xl">🎯</div>
-                      <div>
-                        <h3 className="text-white font-bold text-lg">Prochaine étape</h3>
-                        <p className="text-slate-300 text-sm">Commence par le <strong className="text-yellow-400">5e KYU</strong> - Clique dessus ci-dessous !</p>
-                      </div>
-                    </div>
-                    <div className="flex gap-2">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => {
-                          if (!isAuthenticated) {
-                            toast.error("🔒 Inscrivez-vous pour télécharger");
-                            return;
-                          }
-                          setShowEmailDialog(true);
-                        }}
-                        className="bg-cyan-600 hover:bg-cyan-500 border-none text-white"
-                      >
-                        <Download className="w-4 h-4 mr-1" />
-                        PDF
-                      </Button>
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => {
-                          if (!isAuthenticated) {
-                            toast.error("🔒 Inscrivez-vous pour télécharger");
-                            return;
-                          }
-                          exportToCSV();
-                        }}
-                        className="bg-emerald-600 hover:bg-emerald-500 border-none text-white"
-                      >
-                        <Download className="w-4 h-4 mr-1" />
-                        CSV
-                      </Button>
                     </div>
                   </div>
                 </div>
