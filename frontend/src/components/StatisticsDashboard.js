@@ -1360,6 +1360,16 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         onClose={() => setShowJournalPanel(false)}
         isAuthenticated={isAuthenticated}
       />
+
+      {/* Guided Tour - Tutoriel interactif */}
+      <GuidedTour
+        isOpen={showGuidedTour}
+        onClose={() => setShowGuidedTour(false)}
+        onComplete={() => {
+          toast.success("🎉 Super ! Tu es prêt à commencer ton aventure !");
+        }}
+        userName={userName}
+      />
     </>
   );
 }
