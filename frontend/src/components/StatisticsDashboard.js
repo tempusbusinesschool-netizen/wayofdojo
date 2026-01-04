@@ -936,13 +936,12 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
             </div>
           </div>
           </div>
-          </SimpleAccordion>
-        )}
+        </SimpleAccordion>
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {/* ACCORDÉON 3 : LES VALEURS DE L'AIKIDO - Version ludique enfant */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {!isAuthenticated && !isAdmin && currentBelt && (
+        {currentBelt && (
           <SimpleAccordion
             title="Les Super-Pouvoirs Ninja !"
             emoji="☯️"
