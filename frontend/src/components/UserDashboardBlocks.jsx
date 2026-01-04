@@ -113,13 +113,13 @@ const UserDashboardBlocks = ({
 
           {/* Stats en ligne */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            {/* Stat 1 - Maîtrisées */}
+            {/* Stat 1 - Progression */}
             <div className="bg-gradient-to-br from-emerald-600/20 to-emerald-800/20 rounded-2xl p-4 border border-emerald-500/30 text-center group hover:scale-105 transition-transform">
               <div className="w-12 h-12 mx-auto mb-2 rounded-xl bg-emerald-500/20 flex items-center justify-center group-hover:animate-bounce">
                 <Trophy className="w-6 h-6 text-emerald-400" />
               </div>
               <p className="text-3xl font-black text-emerald-400">{masteredCount}</p>
-              <p className="text-slate-400 text-xs">Maîtrisées</p>
+              <p className="text-slate-400 text-xs">Progression</p>
             </div>
             
             {/* Stat 2 - Pratiquées */}
