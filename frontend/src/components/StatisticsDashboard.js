@@ -108,6 +108,21 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
   const [exportingPdf, setExportingPdf] = useState(false);
   const [activeSymbolicRole, setActiveSymbolicRole] = useState(null);
   const [roleLoading, setRoleLoading] = useState(false);
+  const [showGuidedTour, setShowGuidedTour] = useState(false);
+  
+  // Vérifier si l'utilisateur a déjà vu le tutoriel
+  useEffect(() => {
+    if (isAuthenticated) {
+      const tourCompleted = localStorage.getItem('aikido_tour_completed');
+      if (!tourCompleted) {
+        // Afficher le tutoriel après un court délai
+        const timer = setTimeout(() => {
+          setShowGuidedTour(true);
+        }, 1500);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, [isAuthenticated]);
   
   // États pour les accordéons
   const [accordionOpen, setAccordionOpen] = useState({
