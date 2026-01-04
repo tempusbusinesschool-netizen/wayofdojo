@@ -826,7 +826,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               <div className="bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
                 <div className="text-2xl mb-1">🏆</div>
                 <p className="text-2xl font-bold text-white">{statistics.mastered_techniques}</p>
-                <p className="text-sm text-emerald-100">Maîtrisées</p>
+                <p className="text-sm text-emerald-100">Progression</p>
               </div>
               <div className="bg-gradient-to-br from-amber-500 to-orange-600 rounded-xl p-4 text-center hover:scale-105 transition-all cursor-pointer">
                 <div className="text-2xl mb-1">🔥</div>
