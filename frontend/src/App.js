@@ -310,7 +310,7 @@ function AppContent() {
   
   const getFilterMessage = (filter) => {
     const messages = {
-      mastered: `${statistics?.mastered_techniques || 0} technique(s) maîtrisée(s)`,
+      mastered: `${statistics?.mastered_techniques || 0} technique(s) en progression`,
       in_progress: `${statistics?.in_progress_techniques || 0} technique(s) en cours`,
       practiced: `Techniques avec sessions de pratique`
     };
