@@ -416,7 +416,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
     
     const statsData = [
       { label: 'Techniques', value: statistics.total_techniques, color: [100, 116, 139] },
-      { label: 'Maîtrisées', value: statistics.mastered_techniques, color: [34, 197, 94] },
+      { label: 'Progression', value: statistics.mastered_techniques, color: [34, 197, 94] },
       { label: 'En cours', value: statistics.in_progress_techniques, color: [245, 158, 11] },
       { label: 'Sessions', value: statistics.total_practice_sessions, color: [239, 68, 68] },
       { label: 'Progression', value: `${statistics.overall_progress}%`, color: [6, 182, 212] }
