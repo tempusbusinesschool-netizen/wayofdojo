@@ -53,7 +53,7 @@ const TOUR_STEPS = [
           </div>
           <div className="bg-cyan-600/20 rounded-lg p-3 border border-cyan-500/30">
             <Target className="w-6 h-6 text-cyan-400 mb-1" />
-            <p className="text-sm font-bold text-cyan-400">Pratiquées</p>
+            <p className="text-sm font-bold text-cyan-400">Techniques enseignées au Dojo</p>
             <p className="text-xs text-slate-400">Techniques que tu as déjà travaillées</p>
           </div>
           <div className="bg-violet-600/20 rounded-lg p-3 border border-violet-500/30">

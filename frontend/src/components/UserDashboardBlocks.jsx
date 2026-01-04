@@ -128,7 +128,7 @@ const UserDashboardBlocks = ({
                 <Target className="w-6 h-6 text-cyan-400" />
               </div>
               <p className="text-3xl font-black text-cyan-400">{practicedCount}</p>
-              <p className="text-slate-400 text-xs">Pratiquées</p>
+              <p className="text-slate-400 text-xs">Techniques enseignées au Dojo</p>
             </div>
             
             {/* Stat 3 - En cours */}
