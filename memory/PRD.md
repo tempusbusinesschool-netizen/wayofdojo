@@ -106,16 +106,17 @@ Application web pour le club d'Aikido "Aikido La Rivière". L'application doit s
 
 - **RÉORGANISATION DU DASHBOARD UTILISATEUR CONNECTÉ** ✅ (MAJOR FIX)
   - **Problème résolu** : Les utilisateurs connectés voyaient à la fois les nouveaux composants interactifs ET les anciens accordéons, créant une duplication confuse.
-  - **Solution implémentée** : Conditionnement des accordéons selon l'authentification
+  - **Solution implémentée** : Masquage de l'accordéon "Ma Progression Ninja" uniquement (les stats sont dans UserDashboardBlocks)
   - **Nouveau comportement** :
     | Composant | Visiteur | Utilisateur connecté |
     |-----------|----------|---------------------|
     | Hero Banner | ✅ | ❌ |
+    | Blocs Navigation (5 étapes) | ❌ | ✅ |
     | UserDashboardBlocks | ❌ | ✅ |
     | ProgressionTunnel | ❌ | ✅ |
     | Accordéon "Ma Progression Ninja" | ✅ | ❌ |
     | Accordéon "Entrainement" | ✅ | ✅ |
-    | Accordéon "Les Super-Pouvoirs Ninja" | ✅ | ❌ |
+    | Accordéon "Les Super-Pouvoirs Ninja" | ✅ | ✅ |
     | Accordéon "Histoire de l'Aikido" | ✅ | ✅ |
 
 - **BLOCS CARRÉS DE NAVIGATION** ✅ (NEW)
