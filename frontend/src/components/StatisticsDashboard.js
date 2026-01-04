@@ -15,6 +15,7 @@ import GradeCardsGrid from "./GradeCardsGrid";
 import DeplacementsSection from "./DeplacementsSection";
 import VirtuesSection from "./VirtuesSection";
 import HakamaHistory from "./HakamaHistory";
+import UserDashboardBlocks from "./UserDashboardBlocks";
 import { AIKIDO_BELTS, getBeltByPoints } from "@/constants/aikidoBelts";
 import { DEPLACEMENTS_DATA } from "@/constants";
 
