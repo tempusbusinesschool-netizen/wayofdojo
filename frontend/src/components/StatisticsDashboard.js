@@ -672,16 +672,38 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
 
             {/* ===== ÉCRAN DE BIENVENUE POUR UTILISATEUR CONNECTÉ - CARTES FLOTTANTES ===== */}
             {isAuthenticated && (
-              <UserDashboardBlocks 
-                userName={userName}
-                statistics={statistics}
-                currentBelt={getBeltByPoints(statistics.total_points || 0)}
-                totalPoints={statistics.total_points || 0}
-                onOpenTimeline={() => setIsTimelinePanelOpen(true)}
-                onOpenJournal={() => setIsJournalPanelOpen(true)}
-                onDownloadPDF={handleDownloadPDF}
-                onDownloadCSV={exportToCSV}
-              />
+              <>
+                <UserDashboardBlocks 
+                  userName={userName}
+                  statistics={statistics}
+                  currentBelt={getBeltByPoints(statistics.total_points || 0)}
+                  totalPoints={statistics.total_points || 0}
+                  onOpenTimeline={() => setIsTimelinePanelOpen(true)}
+                  onOpenJournal={() => setIsJournalPanelOpen(true)}
+                  onDownloadPDF={handleDownloadPDF}
+                  onDownloadCSV={exportToCSV}
+                />
+
+                {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+                {/* TUNNEL DE PROGRESSION - Parcours ludique du jour */}
+                {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+                <div className="mt-6">
+                  <ProgressionTunnel
+                    currentBelt={getBeltByPoints(statistics.total_points || 0)}
+                    statistics={statistics}
+                    virtueData={virtueData}
+                    userName={userName}
+                    onCompleteChallenge={(challenge) => {
+                      console.log("Challenge completed:", challenge);
+                      // TODO: Envoyer au backend pour persister
+                    }}
+                    onRequestParentValidation={(challenge) => {
+                      console.log("Parent validation requested:", challenge);
+                      // TODO: Envoyer notification aux parents
+                    }}
+                  />
+                </div>
+              </>
             )}
 
           </div>
