@@ -933,9 +933,11 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
             </div>
           </div>
         </SimpleAccordion>
+        )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {/* ACCORDÉON 2 : Entrainement + Grades détaillés */}
+        {/* Visible pour tous - contenu pédagogique essentiel */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         <SimpleAccordion
           title="Entrainement - Techniques d'Aikido"
