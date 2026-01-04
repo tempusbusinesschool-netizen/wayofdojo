@@ -48,7 +48,7 @@ const TOUR_STEPS = [
         <div className="grid grid-cols-2 gap-3">
           <div className="bg-emerald-600/20 rounded-lg p-3 border border-emerald-500/30">
             <Trophy className="w-6 h-6 text-emerald-400 mb-1" />
-            <p className="text-sm font-bold text-emerald-400">Maîtrisées</p>
+            <p className="text-sm font-bold text-emerald-400">Progression</p>
             <p className="text-xs text-slate-400">Techniques que tu maîtrises parfaitement</p>
           </div>
           <div className="bg-cyan-600/20 rounded-lg p-3 border border-cyan-500/30">
