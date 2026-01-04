@@ -273,7 +273,7 @@ const VirtuesSection = ({
           <div className="bg-emerald-500/20 rounded-xl p-2 text-center border border-emerald-500/30">
             <span className="text-2xl">🏆</span>
             <p className="text-emerald-300 font-bold text-lg">{points.mastered}</p>
-            <p className="text-slate-400 text-xs">Maîtrisées</p>
+            <p className="text-slate-400 text-xs">Progression</p>
           </div>
           <div className="bg-purple-500/20 rounded-xl p-2 text-center border border-purple-500/30">
             <span className="text-2xl">{currentBelt?.emoji || '⚪'}</span>
