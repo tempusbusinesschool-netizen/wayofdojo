@@ -962,26 +962,24 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               onOpenTrophiesDialog={() => setShowTrophiesDialog(true)}
             />
           </div>
-          </SimpleAccordion>
+        </SimpleAccordion>
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {/* ACCORDÉON 4 : HISTOIRE DE L'AIKIDO - Les Sept Plis du Hakama */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {!isAuthenticated && (
-          <SimpleAccordion
-            title="Histoire de l'Aikido"
-            emoji="📜"
-            subtitle="Hakama & O Sensei"
-            headerGradient="from-amber-600 via-orange-600 to-yellow-600"
-            defaultOpen={true}
-            testId="accordion-histoire"
-          >
+        <SimpleAccordion
+          title="Histoire de l'Aikido"
+          emoji="📜"
+          subtitle="Hakama & O Sensei"
+          headerGradient="from-amber-600 via-orange-600 to-yellow-600"
+          defaultOpen={true}
+          testId="accordion-histoire"
+        >
           <div id="bloc4-histoire" className="bg-gradient-to-br from-amber-900/30 via-slate-900/40 to-amber-900/30 rounded-b-2xl border-2 border-t-0 border-amber-500/40 p-4 md:p-6 shadow-xl">
             <HakamaHistory />
           </div>
-          </SimpleAccordion>
-        )}
+        </SimpleAccordion>
 
         {/* Trophies Dialog */}
         <Dialog open={showTrophiesDialog} onOpenChange={setShowTrophiesDialog}>
