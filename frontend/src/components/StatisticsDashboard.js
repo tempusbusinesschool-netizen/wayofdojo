@@ -969,9 +969,28 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+        {/* SECTION 4 : CONTENU PÉDAGOGIQUE - Accordéons */}
+        {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+        
+        {/* Titre de section pour utilisateurs connectés */}
+        {isAuthenticated && (
+          <section className="mb-6 mt-4" data-testid="section-pedagogique">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="h-1 flex-1 bg-gradient-to-r from-transparent via-cyan-500 to-cyan-500 rounded-full" />
+              <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                <span className="text-2xl">📚</span>
+                Apprendre l'Aikido
+              </h2>
+              <div className="h-1 flex-1 bg-gradient-to-l from-transparent via-cyan-500 to-cyan-500 rounded-full" />
+            </div>
+            <p className="text-center text-slate-400 text-sm mb-4">
+              Explore les techniques, les vertus et l'histoire de l'Aikido 🥋
+            </p>
+          </section>
+        )}
+
         {/* ACCORDÉON 2 : Entrainement + Grades détaillés */}
         {/* Visible pour tous - contenu pédagogique essentiel */}
-        {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         <SimpleAccordion
           title="Entrainement - Techniques d'Aikido"
           emoji="🥋"
