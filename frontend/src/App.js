@@ -587,25 +587,25 @@ function AppContent() {
                 <span className="text-xs text-slate-500 hidden sm:inline">Cadre • Contrôle • Conformité</span>
               </div>
               <TabsList className="bg-slate-800 border-slate-700 flex flex-wrap gap-1">
-                <TabsTrigger value="dashboard" className="data-[state=active]:bg-cyan-700 text-xs sm:text-sm">
-                  <LayoutDashboard className="w-4 h-4 sm:mr-2" />
-                  <span className="hidden sm:inline">Tableau de bord</span>
+                <TabsTrigger value="dashboard" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-cyan-600 data-[state=active]:to-blue-600 text-xs sm:text-sm">
+                  <LayoutDashboard className="w-4 h-4 sm:mr-2 text-cyan-400" />
+                  <span className="hidden sm:inline text-cyan-300">Tableau de bord</span>
                 </TabsTrigger>
-                <TabsTrigger value="users" className="data-[state=active]:bg-cyan-700 text-xs sm:text-sm">
-                  <Users className="w-4 h-4 sm:mr-2" />
-                  <span className="hidden sm:inline">Utilisateurs</span>
+                <TabsTrigger value="users" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-violet-600 data-[state=active]:to-purple-600 text-xs sm:text-sm">
+                  <Users className="w-4 h-4 sm:mr-2 text-violet-400" />
+                  <span className="hidden sm:inline text-violet-300">Utilisateurs</span>
                 </TabsTrigger>
-                <TabsTrigger value="dojos" className="data-[state=active]:bg-cyan-700 text-xs sm:text-sm">
-                  <Building2 className="w-4 h-4 sm:mr-2" />
-                  <span className="hidden sm:inline">Gestion Dojos</span>
+                <TabsTrigger value="dojos" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-orange-600 data-[state=active]:to-amber-600 text-xs sm:text-sm">
+                  <Building2 className="w-4 h-4 sm:mr-2 text-orange-400" />
+                  <span className="hidden sm:inline text-orange-300">Gestion Dojos</span>
                 </TabsTrigger>
-                <TabsTrigger value="subscriptions" className="data-[state=active]:bg-cyan-700 text-xs sm:text-sm">
-                  <CreditCard className="w-4 h-4 sm:mr-2" />
-                  <span className="hidden sm:inline">Abonnements</span>
+                <TabsTrigger value="subscriptions" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-600 data-[state=active]:to-green-600 text-xs sm:text-sm">
+                  <CreditCard className="w-4 h-4 sm:mr-2 text-emerald-400" />
+                  <span className="hidden sm:inline text-emerald-300">Abonnements</span>
                 </TabsTrigger>
-                <TabsTrigger value="legal" className="data-[state=active]:bg-cyan-700 text-xs sm:text-sm">
-                  <ScrollText className="w-4 h-4 sm:mr-2" />
-                  <span className="hidden sm:inline">Juridique</span>
+                <TabsTrigger value="legal" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-600 data-[state=active]:to-pink-600 text-xs sm:text-sm">
+                  <ScrollText className="w-4 h-4 sm:mr-2 text-rose-400" />
+                  <span className="hidden sm:inline text-rose-300">Juridique</span>
                 </TabsTrigger>
               </TabsList>
             </div>
