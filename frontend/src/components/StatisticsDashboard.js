@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { TrendingUp, BarChart3, Users, FileText, Download, Award, Sparkles, Shield, Clock, BookOpen, FileDown, ChevronDown } from "lucide-react";
+import { TrendingUp, BarChart3, Users, FileText, Download, Award, Sparkles, Shield, Clock, BookOpen, FileDown, ChevronDown, HelpCircle } from "lucide-react";
 import { toast } from "sonner";
 import VirtueActionsPanel from "./VirtueActionsPanel";
 import TimelinePanel from "./TimelinePanel";
@@ -17,6 +17,7 @@ import VirtuesSection from "./VirtuesSection";
 import HakamaHistory from "./HakamaHistory";
 import UserDashboardBlocks from "./UserDashboardBlocks";
 import ProgressionTunnel from "./ProgressionTunnel";
+import GuidedTour, { TourTriggerButton } from "./GuidedTour";
 import { AIKIDO_BELTS, getBeltByPoints } from "@/constants/aikidoBelts";
 import { DEPLACEMENTS_DATA } from "@/constants";
 
