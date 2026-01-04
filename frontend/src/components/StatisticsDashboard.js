@@ -740,7 +740,9 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {/* ACCORDÉON 1 : Ma Progression Ninja + Stats + Grades KYU */}
+        {/* Masqué pour utilisateurs connectés car déjà dans UserDashboardBlocks */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+        {!isAuthenticated && (
         <SimpleAccordion
           title="Ma Progression Ninja !"
           emoji="🎯"
