@@ -878,21 +878,19 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               </div>
             </div>
           </div>
-          </SimpleAccordion>
-        )}
+        </SimpleAccordion>
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {/* ACCORDÉON 2 : Entrainement + Grades détaillés */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {!isAuthenticated && (
-          <SimpleAccordion
-            title="Entrainement - Techniques d'Aikido"
-            emoji="🥋"
-            subtitle="Parcours & Déplacements"
-            headerGradient="from-cyan-600 via-blue-600 to-indigo-600"
-            defaultOpen={true}
-            testId="accordion-entrainement"
-          >
+        <SimpleAccordion
+          title="Entrainement - Techniques d'Aikido"
+          emoji="🥋"
+          subtitle="Parcours & Déplacements"
+          headerGradient="from-cyan-600 via-blue-600 to-indigo-600"
+          defaultOpen={true}
+          testId="accordion-entrainement"
+        >
           <div id="bloc2-entrainement" className="bg-gradient-to-br from-cyan-900/40 via-blue-900/40 to-indigo-900/40 rounded-b-2xl border-2 border-t-0 border-cyan-500/40 p-4 md:p-6 shadow-xl">
             
             {/* EN HAUT : Titre Entrainement */}
