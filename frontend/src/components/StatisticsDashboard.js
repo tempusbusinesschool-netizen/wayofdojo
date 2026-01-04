@@ -689,6 +689,19 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
             {/* ===== ÉCRAN DE BIENVENUE POUR UTILISATEUR CONNECTÉ - CARTES FLOTTANTES ===== */}
             {isAuthenticated && (
               <>
+                {/* Bouton d'aide flottant */}
+                <div className="flex justify-end mb-2">
+                  <Button
+                    onClick={() => setShowGuidedTour(true)}
+                    variant="ghost"
+                    size="sm"
+                    className="text-slate-400 hover:text-white hover:bg-slate-800 gap-2"
+                  >
+                    <HelpCircle className="w-4 h-4" />
+                    <span>Besoin d'aide ?</span>
+                  </Button>
+                </div>
+
                 <UserDashboardBlocks 
                   userName={userName}
                   statistics={statistics}
