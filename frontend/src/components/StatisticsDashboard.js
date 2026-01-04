@@ -691,38 +691,65 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
             {isAuthenticated && (
               <>
                 {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-                {/* BLOCS CARRÉS - Navigation rapide vers les étapes de l'application */}
+                {/* SECTION 1 : NAVIGATION RAPIDE - Blocs carrés colorés */}
                 {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-                <AppStepsNavigation />
-
-                {/* Bouton d'aide flottant */}
-                <div className="flex justify-end mb-2">
-                  <Button
-                    onClick={() => setShowGuidedTour(true)}
-                    variant="ghost"
-                    size="sm"
-                    className="text-slate-400 hover:text-white hover:bg-slate-800 gap-2"
-                  >
-                    <HelpCircle className="w-4 h-4" />
-                    <span>Besoin d'aide ?</span>
-                  </Button>
-                </div>
-
-                <UserDashboardBlocks 
-                  userName={userName}
-                  statistics={statistics}
-                  currentBelt={getBeltByPoints(statistics.total_points || 0)}
-                  totalPoints={statistics.total_points || 0}
-                  onOpenTimeline={() => setIsTimelinePanelOpen(true)}
-                  onOpenJournal={() => setIsJournalPanelOpen(true)}
-                  onDownloadPDF={handleDownloadPDF}
-                  onDownloadCSV={exportToCSV}
-                />
+                <section className="mb-8" data-testid="section-navigation">
+                  <AppStepsNavigation />
+                </section>
 
                 {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-                {/* TUNNEL DE PROGRESSION - Parcours ludique du jour */}
+                {/* SECTION 2 : MON PROFIL - Carte de bienvenue avec stats */}
                 {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-                <div className="mt-6">
+                <section className="mb-8 relative" data-testid="section-profil">
+                  {/* Titre de section */}
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="h-1 flex-1 bg-gradient-to-r from-transparent via-emerald-500 to-emerald-500 rounded-full" />
+                    <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                      <span className="text-2xl">🥷</span>
+                      Mon Profil Ninja
+                    </h2>
+                    <div className="h-1 flex-1 bg-gradient-to-l from-transparent via-emerald-500 to-emerald-500 rounded-full" />
+                  </div>
+                  
+                  {/* Bouton d'aide */}
+                  <div className="absolute top-0 right-0">
+                    <Button
+                      onClick={() => setShowGuidedTour(true)}
+                      variant="ghost"
+                      size="sm"
+                      className="text-slate-400 hover:text-white hover:bg-slate-800 gap-2"
+                    >
+                      <HelpCircle className="w-4 h-4" />
+                      <span>Aide</span>
+                    </Button>
+                  </div>
+
+                  <UserDashboardBlocks 
+                    userName={userName}
+                    statistics={statistics}
+                    currentBelt={getBeltByPoints(statistics.total_points || 0)}
+                    totalPoints={statistics.total_points || 0}
+                    onOpenTimeline={() => setIsTimelinePanelOpen(true)}
+                    onOpenJournal={() => setIsJournalPanelOpen(true)}
+                    onDownloadPDF={handleDownloadPDF}
+                    onDownloadCSV={exportToCSV}
+                  />
+                </section>
+
+                {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+                {/* SECTION 3 : DÉFIS DU JOUR - Tunnel de progression */}
+                {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+                <section className="mb-8" data-testid="section-defis">
+                  {/* Titre de section */}
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="h-1 flex-1 bg-gradient-to-r from-transparent via-pink-500 to-pink-500 rounded-full" />
+                    <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                      <span className="text-2xl">🎯</span>
+                      Mes Défis du Jour
+                    </h2>
+                    <div className="h-1 flex-1 bg-gradient-to-l from-transparent via-pink-500 to-pink-500 rounded-full" />
+                  </div>
+
                   <ProgressionTunnel
                     currentBelt={getBeltByPoints(statistics.total_points || 0)}
                     statistics={statistics}
@@ -737,7 +764,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                       // TODO: Envoyer notification aux parents
                     }}
                   />
-                </div>
+                </section>
               </>
             )}
 
