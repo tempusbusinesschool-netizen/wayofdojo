@@ -98,6 +98,26 @@ Application web pour le club d'Aikido "Aikido La Rivière". L'application doit s
     - Panel de détail avec défis et badges par vertu
     - Section Trophées Légendaires
 
+### January 2026 - Session 4 (Current) ✅ NEW
+- **REMPLACEMENT DE TEXTE** ✅
+  - "Pratiquées" → "Techniques enseignées au Dojo" dans :
+    - `UserDashboardBlocks.jsx`
+    - `GuidedTour.jsx`
+
+- **RÉORGANISATION DU DASHBOARD UTILISATEUR CONNECTÉ** ✅ (MAJOR FIX)
+  - **Problème résolu** : Les utilisateurs connectés voyaient à la fois les nouveaux composants interactifs ET les anciens accordéons, créant une duplication confuse.
+  - **Solution implémentée** : Conditionnement des accordéons selon l'authentification
+  - **Nouveau comportement** :
+    | Composant | Visiteur | Utilisateur connecté |
+    |-----------|----------|---------------------|
+    | Hero Banner | ✅ | ❌ |
+    | UserDashboardBlocks | ❌ | ✅ |
+    | ProgressionTunnel | ❌ | ✅ |
+    | Accordéon "Ma Progression Ninja" | ✅ | ❌ |
+    | Accordéon "Entrainement" | ✅ | ✅ |
+    | Accordéon "Les Super-Pouvoirs Ninja" | ✅ | ❌ |
+    | Accordéon "Histoire de l'Aikido" | ✅ | ✅ |
+
 ---
 
 ## Prioritized Backlog
