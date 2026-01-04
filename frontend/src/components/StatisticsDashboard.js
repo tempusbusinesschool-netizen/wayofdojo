@@ -665,21 +665,6 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                     </div>
                   </div>
                 </div>
-
-                {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-                {/* PRÉSENTATION EN BLOCS - CARTES FLOTTANTES */}
-                {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-                <VisitorBlocksVariantA 
-                  onOpenAuth={() => {
-                    const event = new CustomEvent('openAuthDialog');
-                    window.dispatchEvent(event);
-                  }}
-                  onOpenLogin={() => {
-                    const event = new CustomEvent('openLoginDialog');
-                    window.dispatchEvent(event);
-                  }}
-                />
-
               </>
             )}
 
