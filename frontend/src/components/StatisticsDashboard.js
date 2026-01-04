@@ -690,6 +690,11 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
             {/* ===== ÉCRAN DE BIENVENUE POUR UTILISATEUR CONNECTÉ - CARTES FLOTTANTES ===== */}
             {isAuthenticated && (
               <>
+                {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+                {/* BLOCS CARRÉS - Navigation rapide vers les étapes de l'application */}
+                {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+                <AppStepsNavigation />
+
                 {/* Bouton d'aide flottant */}
                 <div className="flex justify-end mb-2">
                   <Button
