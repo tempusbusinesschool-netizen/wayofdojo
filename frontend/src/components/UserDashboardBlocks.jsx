@@ -1,10 +1,10 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
-import { Sparkles, Target, Trophy, Download, Calendar, Flame } from 'lucide-react';
+import { Sparkles, Target, Trophy, Download, Calendar, Flame, Star, Award } from 'lucide-react';
 
 /**
  * UserDashboardBlocks - Présentation en cartes flottantes pour utilisateur connecté
- * Affiche les vraies statistiques de l'utilisateur
+ * Version améliorée avec design unifié
  */
 const UserDashboardBlocks = ({ 
   userName = "Ninja",
@@ -16,191 +16,199 @@ const UserDashboardBlocks = ({
   onDownloadPDF,
   onDownloadCSV
 }) => {
-  // Données des cartes avec les vraies stats de l'utilisateur
-  const userBlocks = [
-    { 
-      emoji: currentBelt?.emoji || "⚪", 
-      title: currentBelt?.name || "Ceinture Blanche", 
-      subtitle: currentBelt?.grade || "Débutant",
-      gradient: "from-amber-500 to-yellow-600",
-      glow: "shadow-amber-500/30",
-      value: null
-    },
-    { 
-      emoji: "🏆", 
-      title: `${statistics.mastered_techniques || 0}`, 
-      subtitle: "Maîtrisées",
-      gradient: "from-emerald-600 to-green-600",
-      glow: "shadow-emerald-500/30",
-      value: "techniques"
-    },
-    { 
-      emoji: "🎯", 
-      title: `${statistics.practiced_techniques || 0}`, 
-      subtitle: "Pratiquées",
-      gradient: "from-cyan-600 to-blue-600",
-      glow: "shadow-cyan-500/30",
-      value: "techniques"
-    },
-    { 
-      emoji: "📖", 
-      title: `${statistics.in_progress_techniques || 0}`, 
-      subtitle: "En cours",
-      gradient: "from-violet-600 to-purple-600",
-      glow: "shadow-violet-500/30",
-      value: "techniques"
-    },
-    { 
-      emoji: "⭐", 
-      title: `${totalPoints}`, 
-      subtitle: "Points",
-      gradient: "from-rose-600 to-pink-600",
-      glow: "shadow-rose-500/30",
-      value: "pts"
-    }
-  ];
-
   // Calcul de la progression
   const progressPercent = statistics.overall_progress || 0;
+  const masteredCount = statistics.mastered_techniques || 0;
+  const practicedCount = statistics.practiced_techniques || 0;
+  const inProgressCount = statistics.in_progress_techniques || 0;
 
   return (
     <div className="space-y-6" data-testid="user-dashboard-blocks">
-      {/* Header de bienvenue */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 rounded-3xl p-6 md:p-8 shadow-2xl">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-2 right-4 text-8xl">🥷</div>
-          <div className="absolute bottom-2 left-4 text-6xl">☯️</div>
-        </div>
+      
+      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+      {/* CARTE PRINCIPALE - Bienvenue + Stats + Actions */}
+      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800 rounded-3xl border border-slate-700 shadow-2xl">
         
-        <div className="relative">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            {/* Message de bienvenue */}
-            <div className="text-center md:text-left">
-              <p className="text-emerald-200 text-sm mb-1">Bienvenue dans ton espace,</p>
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-1">
-                {userName} ! 🎌
-              </h1>
-              <p className="text-white/80 text-sm">
-                Continue ton parcours ninja et deviens maître !
-              </p>
-            </div>
+        {/* Décoration de fond */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-emerald-500/10 to-cyan-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-br from-violet-500/10 to-pink-500/10 rounded-full blur-3xl" />
+        
+        <div className="relative p-6">
+          
+          {/* Header - Bienvenue + Ceinture + Progression */}
+          <div className="flex flex-col lg:flex-row items-center gap-6 mb-6">
             
-            {/* Badge progression circulaire */}
-            <div className="relative">
-              <div className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-white/20 backdrop-blur flex items-center justify-center">
-                <div className="text-center">
-                  <p className="text-3xl md:text-4xl font-black text-white">{progressPercent}%</p>
-                  <p className="text-emerald-100 text-xs">Progression</p>
+            {/* Avatar + Ceinture */}
+            <div className="flex items-center gap-4">
+              <div className="relative">
+                <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${currentBelt?.gradient || 'from-slate-600 to-slate-700'} flex items-center justify-center shadow-xl border-2 border-white/20`}>
+                  <span className="text-4xl">{currentBelt?.animalSpirit || '🥋'}</span>
+                </div>
+                <div className="absolute -bottom-2 -right-2 bg-amber-500 text-slate-900 px-2 py-0.5 rounded-full text-xs font-black">
+                  {currentBelt?.grade || '6e KYU'}
                 </div>
               </div>
-              <div className="absolute -top-1 -right-1 text-2xl animate-bounce">🔥</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Titre section stats */}
-      <div className="text-center">
-        <h2 className="text-xl md:text-2xl font-bold text-white mb-1">
-          📊 Ton Tableau de Bord
-        </h2>
-        <p className="text-slate-400 text-sm">Tes statistiques en temps réel</p>
-      </div>
-
-      {/* Cartes flottantes avec stats utilisateur */}
-      <div className="flex flex-wrap justify-center gap-4">
-        {userBlocks.map((block, idx) => (
-          <div 
-            key={idx}
-            className={`
-              relative overflow-hidden rounded-2xl p-5 min-w-[130px] max-w-[160px]
-              bg-gradient-to-br ${block.gradient}
-              shadow-xl ${block.glow}
-              transform hover:scale-110 hover:-translate-y-2 transition-all duration-300
-              cursor-pointer group
-            `}
-          >
-            {/* Effet brillant au hover */}
-            <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-all duration-300" />
-            
-            {/* Numéro de position */}
-            <div className="absolute top-2 right-2 w-6 h-6 bg-black/20 rounded-full flex items-center justify-center">
-              <span className="text-white/80 text-xs font-bold">{idx + 1}</span>
+              
+              <div>
+                <p className="text-slate-400 text-sm">Bienvenue,</p>
+                <h1 className="text-2xl md:text-3xl font-black text-white">
+                  {userName} <span className="text-2xl">🥷</span>
+                </h1>
+                <p className="text-emerald-400 font-semibold text-sm flex items-center gap-1">
+                  <span className={`w-2 h-2 rounded-full ${currentBelt?.bgColor || 'bg-white'}`}></span>
+                  {currentBelt?.name || 'Ceinture Blanche'}
+                </p>
+              </div>
             </div>
             
-            <div className="relative text-center">
-              <span className="text-4xl block mb-2 group-hover:animate-bounce">{block.emoji}</span>
-              <p className="text-white font-black text-xl">{block.title}</p>
-              <p className="text-white/70 text-xs">{block.subtitle}</p>
+            {/* Barre de progression circulaire */}
+            <div className="flex-1 flex justify-center lg:justify-end">
+              <div className="relative w-32 h-32">
+                {/* Cercle de fond */}
+                <svg className="w-full h-full transform -rotate-90">
+                  <circle
+                    cx="64"
+                    cy="64"
+                    r="56"
+                    stroke="currentColor"
+                    strokeWidth="8"
+                    fill="none"
+                    className="text-slate-700"
+                  />
+                  <circle
+                    cx="64"
+                    cy="64"
+                    r="56"
+                    stroke="url(#progressGradient)"
+                    strokeWidth="8"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeDasharray={`${progressPercent * 3.52} 352`}
+                    className="transition-all duration-1000"
+                  />
+                  <defs>
+                    <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#10b981" />
+                      <stop offset="50%" stopColor="#06b6d4" />
+                      <stop offset="100%" stopColor="#8b5cf6" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+                {/* Contenu central */}
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <span className="text-3xl font-black text-white">{progressPercent}%</span>
+                  <span className="text-slate-400 text-xs">Progression</span>
+                </div>
+                {/* Badge feu */}
+                <div className="absolute -top-1 -right-1 bg-orange-500 rounded-full p-1.5 shadow-lg animate-pulse">
+                  <Flame className="w-4 h-4 text-white" />
+                </div>
+              </div>
             </div>
           </div>
-        ))}
-      </div>
 
-      {/* Barre de progression globale */}
-      <div className="bg-slate-800/50 rounded-2xl p-5 border border-slate-700">
-        <div className="flex items-center justify-between mb-3">
-          <span className="text-white font-bold flex items-center gap-2">
-            <Target className="w-5 h-5 text-cyan-400" />
-            Progression vers le prochain grade
-          </span>
-          <span className="text-cyan-400 font-bold">{progressPercent}%</span>
-        </div>
-        <div className="h-4 bg-slate-700 rounded-full overflow-hidden">
-          <div 
-            className="h-full bg-gradient-to-r from-emerald-500 via-cyan-500 to-blue-500 rounded-full transition-all duration-1000"
-            style={{ width: `${Math.max(5, progressPercent)}%` }}
-          />
-        </div>
-        <div className="flex justify-between mt-2 text-xs text-slate-500">
-          <span>{currentBelt?.grade || "Débutant"}</span>
-          <span>Prochain niveau</span>
-        </div>
-      </div>
+          {/* Séparateur */}
+          <div className="h-px bg-gradient-to-r from-transparent via-slate-600 to-transparent mb-6" />
 
-      {/* Actions rapides */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-        <Button
-          onClick={onOpenTimeline}
-          className="bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white font-bold shadow-lg shadow-violet-500/30 h-auto py-3"
-        >
-          <div className="flex flex-col items-center gap-1">
-            <Calendar className="w-5 h-5" />
-            <span className="text-xs">Timeline</span>
+          {/* Stats en ligne */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            {/* Stat 1 - Maîtrisées */}
+            <div className="bg-gradient-to-br from-emerald-600/20 to-emerald-800/20 rounded-2xl p-4 border border-emerald-500/30 text-center group hover:scale-105 transition-transform">
+              <div className="w-12 h-12 mx-auto mb-2 rounded-xl bg-emerald-500/20 flex items-center justify-center group-hover:animate-bounce">
+                <Trophy className="w-6 h-6 text-emerald-400" />
+              </div>
+              <p className="text-3xl font-black text-emerald-400">{masteredCount}</p>
+              <p className="text-slate-400 text-xs">Maîtrisées</p>
+            </div>
+            
+            {/* Stat 2 - Pratiquées */}
+            <div className="bg-gradient-to-br from-cyan-600/20 to-cyan-800/20 rounded-2xl p-4 border border-cyan-500/30 text-center group hover:scale-105 transition-transform">
+              <div className="w-12 h-12 mx-auto mb-2 rounded-xl bg-cyan-500/20 flex items-center justify-center group-hover:animate-bounce">
+                <Target className="w-6 h-6 text-cyan-400" />
+              </div>
+              <p className="text-3xl font-black text-cyan-400">{practicedCount}</p>
+              <p className="text-slate-400 text-xs">Pratiquées</p>
+            </div>
+            
+            {/* Stat 3 - En cours */}
+            <div className="bg-gradient-to-br from-violet-600/20 to-violet-800/20 rounded-2xl p-4 border border-violet-500/30 text-center group hover:scale-105 transition-transform">
+              <div className="w-12 h-12 mx-auto mb-2 rounded-xl bg-violet-500/20 flex items-center justify-center group-hover:animate-bounce">
+                <Sparkles className="w-6 h-6 text-violet-400" />
+              </div>
+              <p className="text-3xl font-black text-violet-400">{inProgressCount}</p>
+              <p className="text-slate-400 text-xs">En cours</p>
+            </div>
+            
+            {/* Stat 4 - Points */}
+            <div className="bg-gradient-to-br from-amber-600/20 to-amber-800/20 rounded-2xl p-4 border border-amber-500/30 text-center group hover:scale-105 transition-transform">
+              <div className="w-12 h-12 mx-auto mb-2 rounded-xl bg-amber-500/20 flex items-center justify-center group-hover:animate-bounce">
+                <Star className="w-6 h-6 text-amber-400" />
+              </div>
+              <p className="text-3xl font-black text-amber-400">{totalPoints}</p>
+              <p className="text-slate-400 text-xs">Points</p>
+            </div>
           </div>
-        </Button>
-        <Button
-          onClick={onOpenJournal}
-          className="bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white font-bold shadow-lg shadow-pink-500/30 h-auto py-3"
-        >
-          <div className="flex flex-col items-center gap-1">
-            <Sparkles className="w-5 h-5" />
-            <span className="text-xs">Journal</span>
+
+          {/* Barre de progression vers prochain grade */}
+          <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700 mb-6">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-white font-semibold text-sm flex items-center gap-2">
+                <Award className="w-4 h-4 text-cyan-400" />
+                Prochain grade
+              </span>
+              <span className="text-cyan-400 font-bold text-sm">{progressPercent}%</span>
+            </div>
+            <div className="h-3 bg-slate-700 rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-gradient-to-r from-emerald-500 via-cyan-500 to-violet-500 rounded-full transition-all duration-1000"
+                style={{ width: `${Math.max(3, progressPercent)}%` }}
+              />
+            </div>
+            <div className="flex justify-between mt-1 text-xs text-slate-500">
+              <span>{currentBelt?.grade || '6e KYU'}</span>
+              <span>{currentBelt?.nextGrade || '5e KYU'}</span>
+            </div>
           </div>
-        </Button>
-        <Button
-          onClick={onDownloadPDF}
-          className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold shadow-lg shadow-cyan-500/30 h-auto py-3"
-        >
-          <div className="flex flex-col items-center gap-1">
-            <Download className="w-5 h-5" />
-            <span className="text-xs">PDF</span>
+
+          {/* Boutons d'action */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <Button
+              onClick={onOpenTimeline}
+              className="bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white font-bold shadow-lg shadow-violet-500/20 h-auto py-3 rounded-xl"
+            >
+              <Calendar className="w-4 h-4 mr-2" />
+              Timeline
+            </Button>
+            <Button
+              onClick={onOpenJournal}
+              className="bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white font-bold shadow-lg shadow-pink-500/20 h-auto py-3 rounded-xl"
+            >
+              <Sparkles className="w-4 h-4 mr-2" />
+              Journal
+            </Button>
+            <Button
+              onClick={onDownloadPDF}
+              className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold shadow-lg shadow-cyan-500/20 h-auto py-3 rounded-xl"
+            >
+              <Download className="w-4 h-4 mr-2" />
+              PDF
+            </Button>
+            <Button
+              onClick={onDownloadCSV}
+              className="bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 text-white font-bold shadow-lg shadow-emerald-500/20 h-auto py-3 rounded-xl"
+            >
+              <Download className="w-4 h-4 mr-2" />
+              CSV
+            </Button>
           </div>
-        </Button>
-        <Button
-          onClick={onDownloadCSV}
-          className="bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 text-white font-bold shadow-lg shadow-emerald-500/30 h-auto py-3"
-        >
-          <div className="flex flex-col items-center gap-1">
-            <Download className="w-5 h-5" />
-            <span className="text-xs">CSV</span>
-          </div>
-        </Button>
+
+        </div>
       </div>
 
       {/* Message motivation */}
-      <div className="text-center bg-gradient-to-r from-amber-600/20 via-orange-600/20 to-red-600/20 rounded-xl p-4 border border-amber-500/30">
-        <p className="text-amber-300 font-medium">
+      <div className="text-center bg-gradient-to-r from-emerald-600/10 via-cyan-600/10 to-violet-600/10 rounded-xl p-4 border border-emerald-500/20">
+        <p className="text-emerald-300 font-medium">
           🔥 Continue comme ça {userName} !
         </p>
         <p className="text-slate-400 text-sm mt-1">
