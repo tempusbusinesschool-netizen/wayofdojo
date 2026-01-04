@@ -679,7 +679,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 onOpenTimeline={() => setIsTimelinePanelOpen(true)}
                 onOpenJournal={() => setIsJournalPanelOpen(true)}
                 onDownloadPDF={handleDownloadPDF}
-                onDownloadCSV={handleDownloadCSV}
+                onDownloadCSV={exportToCSV}
               />
             )}
 
