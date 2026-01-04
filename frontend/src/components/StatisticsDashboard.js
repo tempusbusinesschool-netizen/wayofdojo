@@ -669,43 +669,18 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               </>
             )}
 
-            {/* ===== ÉCRAN DE BIENVENUE POUR UTILISATEUR CONNECTÉ ===== */}
+            {/* ===== ÉCRAN DE BIENVENUE POUR UTILISATEUR CONNECTÉ - CARTES FLOTTANTES ===== */}
             {isAuthenticated && (
-              <>
-                {/* WELCOME HERO */}
-                <div className="relative overflow-hidden bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-600 rounded-3xl p-6 md:p-10 mb-6 shadow-2xl">
-                  <div className="absolute inset-0 opacity-10">
-                    <div className="absolute top-4 right-8 text-9xl">🥷</div>
-                  </div>
-                  
-                  <div className="relative">
-                    <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-                      {/* Message de bienvenue */}
-                      <div className="text-center md:text-left">
-                        <p className="text-emerald-200 text-sm md:text-base mb-1">Bienvenue dans ton espace,</p>
-                        <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-2">
-                          {userName} ! 🎌
-                        </h1>
-                        <p className="text-white/80 text-sm md:text-base max-w-md">
-                          Continue ton parcours et deviens un vrai maître de l&apos;Aïkido !
-                        </p>
-                      </div>
-                      
-                      {/* Stats rapides */}
-                      <div className="flex gap-4">
-                        <div className="bg-white/20 backdrop-blur rounded-2xl p-4 text-center min-w-[100px]">
-                          <p className="text-3xl md:text-4xl font-black text-white">{statistics.overall_progress}%</p>
-                          <p className="text-emerald-100 text-xs">Progression</p>
-                        </div>
-                        <div className="bg-white/20 backdrop-blur rounded-2xl p-4 text-center min-w-[100px]">
-                          <p className="text-3xl md:text-4xl font-black text-white">{statistics.mastered_techniques}</p>
-                          <p className="text-emerald-100 text-xs">Maîtrisées</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </>
+              <UserDashboardBlocks 
+                userName={userName}
+                statistics={statistics}
+                currentBelt={getBeltByPoints(statistics.total_points || 0)}
+                totalPoints={statistics.total_points || 0}
+                onOpenTimeline={() => setIsTimelinePanelOpen(true)}
+                onOpenJournal={() => setIsJournalPanelOpen(true)}
+                onDownloadPDF={handleDownloadPDF}
+                onDownloadCSV={handleDownloadCSV}
+              />
             )}
 
           </div>
