@@ -18,6 +18,7 @@ import HakamaHistory from "./HakamaHistory";
 import UserDashboardBlocks from "./UserDashboardBlocks";
 import ProgressionTunnel from "./ProgressionTunnel";
 import GuidedTour, { TourTriggerButton } from "./GuidedTour";
+import AppStepsNavigation from "./AppStepsNavigation";
 import { AIKIDO_BELTS, getBeltByPoints } from "@/constants/aikidoBelts";
 import { DEPLACEMENTS_DATA } from "@/constants";
 
