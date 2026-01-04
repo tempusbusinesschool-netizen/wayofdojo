@@ -118,6 +118,21 @@ Application web pour le club d'Aikido "Aikido La Rivière". L'application doit s
     | Accordéon "Les Super-Pouvoirs Ninja" | ✅ | ❌ |
     | Accordéon "Histoire de l'Aikido" | ✅ | ✅ |
 
+- **BLOCS CARRÉS DE NAVIGATION** ✅ (NEW)
+  - Créé `AppStepsNavigation.jsx` - Navigation visuelle en haut de page pour utilisateurs connectés uniquement
+  - 5 blocs carrés colorés représentant les étapes de l'application :
+    1. 🥷 **Mon Profil** (vert) - Ceinture & Stats
+    2. 🎯 **Défis du Jour** (rose) - 5 défis quotidiens
+    3. 🥋 **Techniques** (cyan) - Par grade KYU
+    4. ☯️ **Les Vertus** (violet) - 7 super-pouvoirs
+    5. 📜 **Histoire** (orange) - Hakama & O Sensei
+  - Fonctionnalités :
+    - Numérotation des étapes (1-5)
+    - Effet hover avec scale et translate
+    - Clic pour scroll automatique vers la section
+    - Barre de progression arc-en-ciel
+    - Message d'aide contextuel
+
 ---
 
 ## Prioritized Backlog
