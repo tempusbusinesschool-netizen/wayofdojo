@@ -650,7 +650,7 @@ function AppContent() {
               <div className="mb-4 flex items-center justify-between bg-slate-800/50 rounded-lg p-3 border border-slate-700">
                 <span className="text-sm text-slate-300">
                   Filtre actif : <span className="font-semibold text-cyan-400">
-                    {techniqueFilter === 'mastered' && 'Techniques maîtrisées'}
+                    {techniqueFilter === 'mastered' && 'Progression'}
                     {techniqueFilter === 'in_progress' && 'Techniques en cours'}
                     {techniqueFilter === 'practiced' && 'Techniques pratiquées'}
                   </span>
