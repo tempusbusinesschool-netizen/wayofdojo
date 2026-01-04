@@ -668,65 +668,18 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 </div>
 
                 {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-                {/* 3 VARIANTES DE PRÉSENTATION EN BLOCS - CHOISISSEZ VOTRE PRÉFÉRÉE */}
+                {/* PRÉSENTATION EN BLOCS - CARTES FLOTTANTES */}
                 {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-                
-                {/* VARIANTE A - Cartes Flottantes */}
-                <div className="mb-8 p-4 border-2 border-dashed border-violet-500/50 rounded-2xl">
-                  <div className="text-center mb-4">
-                    <span className="bg-violet-600 text-white px-4 py-1 rounded-full text-sm font-bold">
-                      VARIANTE A - Cartes Flottantes
-                    </span>
-                  </div>
-                  <VisitorBlocksVariantA 
-                    onOpenAuth={() => {
-                      const event = new CustomEvent('openAuthDialog');
-                      window.dispatchEvent(event);
-                    }}
-                    onOpenLogin={() => {
-                      const event = new CustomEvent('openLoginDialog');
-                      window.dispatchEvent(event);
-                    }}
-                  />
-                </div>
-
-                {/* VARIANTE B - Bande Défilante */}
-                <div className="mb-8 p-4 border-2 border-dashed border-cyan-500/50 rounded-2xl">
-                  <div className="text-center mb-4">
-                    <span className="bg-cyan-600 text-white px-4 py-1 rounded-full text-sm font-bold">
-                      VARIANTE B - Bande Horizontale
-                    </span>
-                  </div>
-                  <VisitorBlocksVariantB 
-                    onOpenAuth={() => {
-                      const event = new CustomEvent('openAuthDialog');
-                      window.dispatchEvent(event);
-                    }}
-                    onOpenLogin={() => {
-                      const event = new CustomEvent('openLoginDialog');
-                      window.dispatchEvent(event);
-                    }}
-                  />
-                </div>
-
-                {/* VARIANTE C - Cartes 3D */}
-                <div className="mb-8 p-4 border-2 border-dashed border-amber-500/50 rounded-2xl">
-                  <div className="text-center mb-4">
-                    <span className="bg-amber-600 text-white px-4 py-1 rounded-full text-sm font-bold">
-                      VARIANTE C - Cartes 3D avec Progression
-                    </span>
-                  </div>
-                  <VisitorBlocksVariantC 
-                    onOpenAuth={() => {
-                      const event = new CustomEvent('openAuthDialog');
-                      window.dispatchEvent(event);
-                    }}
-                    onOpenLogin={() => {
-                      const event = new CustomEvent('openLoginDialog');
-                      window.dispatchEvent(event);
-                    }}
-                  />
-                </div>
+                <VisitorBlocksVariantA 
+                  onOpenAuth={() => {
+                    const event = new CustomEvent('openAuthDialog');
+                    window.dispatchEvent(event);
+                  }}
+                  onOpenLogin={() => {
+                    const event = new CustomEvent('openLoginDialog');
+                    window.dispatchEvent(event);
+                  }}
+                />
 
               </>
             )}
