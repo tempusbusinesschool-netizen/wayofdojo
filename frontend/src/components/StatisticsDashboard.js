@@ -1134,6 +1134,8 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
             <HakamaHistory />
           </div>
         </SimpleAccordion>
+          </>
+        )}
 
         {/* Trophies Dialog */}
         <Dialog open={showTrophiesDialog} onOpenChange={setShowTrophiesDialog}>
