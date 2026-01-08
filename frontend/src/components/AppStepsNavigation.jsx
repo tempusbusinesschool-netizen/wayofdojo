@@ -87,13 +87,13 @@ const AppStepsNavigation = ({ onStepClick, activeStep = null }) => {
     <div className="mb-6" data-testid="app-steps-navigation">
       {/* Titre de la section */}
       <div className="flex items-center justify-center gap-2 mb-4">
-        <span className="text-2xl">🗺️</span>
-        <h2 className="text-lg font-bold text-white">Mon Parcours Ninja</h2>
-        <span className="text-2xl">🗺️</span>
+        <span className="text-xl sm:text-2xl">🗺️</span>
+        <h2 className="text-base sm:text-lg font-bold text-white">Mon Parcours Ninja</h2>
+        <span className="text-xl sm:text-2xl">🗺️</span>
       </div>
       
-      {/* Grille des étapes */}
-      <div className="grid grid-cols-5 gap-3">
+      {/* Grille des étapes - 3 colonnes sur mobile, 5 sur desktop */}
+      <div className="grid grid-cols-3 sm:grid-cols-5 gap-2 sm:gap-3">
         {steps.map((step, index) => {
           const Icon = step.icon;
           const isActive = activeStep === step.id;
@@ -107,8 +107,8 @@ const AppStepsNavigation = ({ onStepClick, activeStep = null }) => {
                 relative group
                 aspect-square
                 bg-gradient-to-br ${step.gradient} ${step.hoverGradient}
-                rounded-2xl
-                p-3
+                rounded-xl sm:rounded-2xl
+                p-2 sm:p-3
                 flex flex-col items-center justify-center
                 transition-all duration-300
                 hover:scale-105 hover:-translate-y-1
@@ -119,21 +119,21 @@ const AppStepsNavigation = ({ onStepClick, activeStep = null }) => {
               `}
             >
               {/* Numéro d'étape */}
-              <div className="absolute top-2 left-2 w-5 h-5 rounded-full bg-white/20 flex items-center justify-center">
-                <span className="text-white text-xs font-bold">{index + 1}</span>
+              <div className="absolute top-1 left-1 sm:top-2 sm:left-2 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-white/20 flex items-center justify-center">
+                <span className="text-white text-[10px] sm:text-xs font-bold">{index + 1}</span>
               </div>
               
               {/* Emoji principal */}
-              <span className="text-3xl mb-1 group-hover:scale-110 transition-transform">
+              <span className="text-2xl sm:text-3xl mb-0.5 sm:mb-1 group-hover:scale-110 transition-transform">
                 {step.emoji}
               </span>
               
-              {/* Label */}
-              <span className="text-white font-bold text-xs text-center leading-tight">
-                {step.label}
+              {/* Label - court sur mobile */}
+              <span className="text-white font-bold text-[10px] sm:text-xs text-center leading-tight">
+                {step.shortLabel || step.label}
               </span>
               
-              {/* Description (visible au hover sur desktop) */}
+              {/* Description (visible uniquement sur desktop) */}
               <span className="text-white/70 text-[10px] text-center hidden sm:block mt-0.5">
                 {step.description}
               </span>
@@ -147,14 +147,14 @@ const AppStepsNavigation = ({ onStepClick, activeStep = null }) => {
         })}
       </div>
       
-      {/* Ligne de progression entre les étapes */}
+      {/* Ligne de progression entre les étapes - desktop uniquement */}
       <div className="hidden sm:flex items-center justify-center mt-3 px-8">
         <div className="flex-1 h-1 bg-gradient-to-r from-emerald-500 via-pink-500 via-cyan-500 via-violet-500 to-amber-500 rounded-full opacity-50" />
       </div>
       
-      {/* Message d'aide */}
-      <p className="text-center text-slate-400 text-xs mt-3">
-        👆 Clique sur une étape pour y accéder directement !
+      {/* Message d'aide - plus petit sur mobile */}
+      <p className="text-center text-slate-400 text-[10px] sm:text-xs mt-2 sm:mt-3">
+        👆 Clique sur une étape !
       </p>
     </div>
   );
