@@ -65,11 +65,13 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
     }
   ];
 
-  // Blocs version ADULTE (sobre, technique, professionnel)
+  // Blocs version ADULTE (sobre, technique, professionnel) avec Kanji
   const stepsAdulte = [
     {
       id: 'inscription',
       emoji: '📝',
+      kanji: '登',
+      kanjiMeaning: 'Inscription',
       title: 'Inscription',
       description: 'Créez votre compte',
       gradient: 'from-slate-600 to-slate-700',
@@ -79,6 +81,8 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
     {
       id: 'programme',
       emoji: '🥋',
+      kanji: '技',
+      kanjiMeaning: 'Technique',
       title: 'Programme',
       description: 'Techniques par grade',
       gradient: 'from-slate-600 to-slate-700',
@@ -88,6 +92,8 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
     {
       id: 'progression',
       emoji: '📊',
+      kanji: '進',
+      kanjiMeaning: 'Progression',
       title: 'Progression',
       description: 'Suivez votre parcours',
       gradient: 'from-slate-600 to-slate-700',
@@ -97,6 +103,8 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
     {
       id: 'vertus',
       emoji: '☯️',
+      kanji: '徳',
+      kanjiMeaning: 'Vertu',
       title: 'Les 7 Vertus',
       description: 'Philosophie de l\'Aikido',
       gradient: 'from-slate-600 to-slate-700',
@@ -106,6 +114,8 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
     {
       id: 'objectifs',
       emoji: '🎯',
+      kanji: '目',
+      kanjiMeaning: 'Objectif',
       title: 'Objectifs',
       description: 'Défis quotidiens',
       gradient: 'from-slate-600 to-slate-700',
@@ -115,6 +125,8 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
     {
       id: 'certifications',
       emoji: '📜',
+      kanji: '証',
+      kanjiMeaning: 'Certificat',
       title: 'Certifications',
       description: 'Validez vos acquis',
       gradient: 'from-slate-600 to-slate-700',
