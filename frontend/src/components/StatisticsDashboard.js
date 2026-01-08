@@ -678,13 +678,15 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                     {/* Hero Banner */}
                     <div className="relative overflow-hidden bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-500 rounded-3xl p-6 sm:p-8 md:p-12 mb-6 shadow-2xl">
                       <div className="absolute inset-0 opacity-10">
-                        <div className="absolute top-4 left-8 text-7xl sm:text-9xl">🥋</div>
+                        {visitorMode === 'enfant' && (
+                          <div className="absolute top-4 left-8 text-7xl sm:text-9xl">🥋</div>
+                        )}
                         <div className="absolute bottom-4 right-8 text-7xl sm:text-9xl">☯️</div>
                       </div>
                       
                       <div className="relative text-center">
                         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white mb-3 sm:mb-4">
-                          🥋 Aikido@Game
+                          {visitorMode === 'enfant' ? '🥋 ' : '☯️ '}Aikido@Game
                         </h1>
                         <p className="text-base sm:text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-4 sm:mb-6">
                           {visitorMode === 'enfant' 
