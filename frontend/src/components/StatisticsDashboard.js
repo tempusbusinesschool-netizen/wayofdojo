@@ -1015,28 +1015,28 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {/* SECTION 4 : CONTENU PÉDAGOGIQUE - Accordéons */}
+        {/* VISIBLE UNIQUEMENT POUR LES UTILISATEURS CONNECTÉS */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         
-        {/* Titre de section pour utilisateurs connectés */}
         {isAuthenticated && (
-          <section className="mb-4 sm:mb-6 mt-2 sm:mt-4" data-testid="section-pedagogique">
-            <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-6">
-              <div className="h-0.5 sm:h-1 flex-1 bg-gradient-to-r from-transparent via-cyan-500 to-cyan-500 rounded-full" />
-              <h2 className="text-base sm:text-xl font-bold text-white flex items-center gap-1 sm:gap-2 whitespace-nowrap">
-                <span className="text-xl sm:text-2xl">📚</span>
-                Apprendre l'Aikido
-              </h2>
-              <div className="h-0.5 sm:h-1 flex-1 bg-gradient-to-l from-transparent via-cyan-500 to-cyan-500 rounded-full" />
-            </div>
-            <p className="text-center text-slate-400 text-xs sm:text-sm mb-3 sm:mb-4">
-              Explore les techniques, les vertus et l'histoire 🥋
-            </p>
-          </section>
-        )}
+          <>
+            {/* Titre de section pour utilisateurs connectés */}
+            <section className="mb-4 sm:mb-6 mt-2 sm:mt-4" data-testid="section-pedagogique">
+              <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-6">
+                <div className="h-0.5 sm:h-1 flex-1 bg-gradient-to-r from-transparent via-cyan-500 to-cyan-500 rounded-full" />
+                <h2 className="text-base sm:text-xl font-bold text-white flex items-center gap-1 sm:gap-2 whitespace-nowrap">
+                  <span className="text-xl sm:text-2xl">📚</span>
+                  Apprendre l'Aikido
+                </h2>
+                <div className="h-0.5 sm:h-1 flex-1 bg-gradient-to-l from-transparent via-cyan-500 to-cyan-500 rounded-full" />
+              </div>
+              <p className="text-center text-slate-400 text-xs sm:text-sm mb-3 sm:mb-4">
+                Explore les techniques, les vertus et l'histoire 🥋
+              </p>
+            </section>
 
-        {/* ACCORDÉON 2 : Entrainement + Grades détaillés */}
-        {/* Visible pour tous - contenu pédagogique essentiel */}
-        <SimpleAccordion
+            {/* ACCORDÉON 2 : Entrainement + Grades détaillés */}
+            <SimpleAccordion
           title="Entrainement - Techniques d'Aikido"
           emoji="🥋"
           subtitle="Parcours & Déplacements"
