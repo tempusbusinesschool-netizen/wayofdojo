@@ -3917,6 +3917,524 @@ async def stripe_webhook(request):
         raise HTTPException(status_code=400, detail=str(e))
 
 
+# ============================================================================
+# GAMIFICATION ROUTES - Défis, XP, Badges
+# ============================================================================
+
+class ChallengeStatus(str, Enum):
+    PENDING = "pending"
+    COMPLETED = "completed"
+    VALIDATED = "validated"
+    REJECTED = "rejected"
+
+class ChallengeType(str, Enum):
+    DAILY = "daily"
+    WEEKLY = "weekly"
+    TECHNIQUE = "technique"
+    VIRTUE = "virtue"
+    ATTENDANCE = "attendance"
+
+class DailyChallengeCompletion(BaseModel):
+    challenge_id: str
+    challenge_type: ChallengeType
+    challenge_name: str
+    xp_reward: int = 10
+    needs_parent_validation: bool = False
+
+class UserGamificationStats(BaseModel):
+    user_id: str
+    total_xp: int = 0
+    level: int = 1
+    level_name: str = "Petit Scarabée"
+    streak_days: int = 0
+    last_activity_date: Optional[str] = None
+    badges: List[dict] = []
+    completed_challenges: List[dict] = []
+    pending_validations: List[dict] = []
+    attendance_count: int = 0
+    techniques_validated: int = 0
+
+class BadgeAward(BaseModel):
+    badge_id: str
+    badge_name: str
+    badge_icon: str
+    badge_description: str
+    awarded_at: Optional[str] = None
+
+class AttendanceRecord(BaseModel):
+    date: str  # YYYY-MM-DD
+    attended: bool = True
+
+# XP par niveau
+LEVEL_THRESHOLDS = [
+    {"level": 1, "name": "Petit Scarabée", "xp": 0},
+    {"level": 2, "name": "Jeune Poussin", "xp": 200},
+    {"level": 3, "name": "Apprenti Ninja", "xp": 500},
+    {"level": 4, "name": "Ninja Agile", "xp": 1000},
+    {"level": 5, "name": "Ninja Rapide", "xp": 2000},
+    {"level": 6, "name": "Super Ninja", "xp": 4000},
+    {"level": 7, "name": "Maître Ninja", "xp": 8000},
+    {"level": 8, "name": "Grand Maître", "xp": 15000},
+    {"level": 9, "name": "Légende Ninja", "xp": 30000},
+    {"level": 10, "name": "Dragon Suprême", "xp": 50000},
+]
+
+def get_level_from_xp(total_xp: int) -> dict:
+    """Calculate level and level name from total XP"""
+    current_level = LEVEL_THRESHOLDS[0]
+    for threshold in LEVEL_THRESHOLDS:
+        if total_xp >= threshold["xp"]:
+            current_level = threshold
+        else:
+            break
+    return current_level
+
+@api_router.get("/gamification/stats/{user_id}")
+async def get_user_gamification_stats(user_id: str, credentials: HTTPAuthorizationCredentials = Depends(security)):
+    """Get gamification stats for a user"""
+    if not credentials:
+        raise HTTPException(status_code=401, detail="Authentication required")
+    
+    # Fetch or create gamification stats
+    stats = await db.gamification_stats.find_one({"user_id": user_id}, {"_id": 0})
+    
+    if not stats:
+        # Create default stats for new user
+        stats = {
+            "user_id": user_id,
+            "total_xp": 0,
+            "level": 1,
+            "level_name": "Petit Scarabée",
+            "streak_days": 0,
+            "last_activity_date": None,
+            "badges": [],
+            "completed_challenges": [],
+            "pending_validations": [],
+            "attendance_count": 0,
+            "techniques_validated": 0,
+            "created_at": datetime.now(timezone.utc).isoformat()
+        }
+        await db.gamification_stats.insert_one(stats)
+        del stats["_id"] if "_id" in stats else None
+    
+    return stats
+
+@api_router.post("/gamification/challenge/complete")
+async def complete_challenge(
+    completion: DailyChallengeCompletion,
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+):
+    """Complete a daily challenge and earn XP"""
+    if not credentials:
+        raise HTTPException(status_code=401, detail="Authentication required")
+    
+    # Verify token and get user
+    try:
+        payload = jwt.decode(credentials.credentials, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+        user_id = payload.get("user_id")
+        if not user_id:
+            raise HTTPException(status_code=401, detail="Invalid token")
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(status_code=401, detail="Token expired")
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    
+    now = datetime.now(timezone.utc)
+    today = now.strftime("%Y-%m-%d")
+    
+    # Check if challenge already completed today
+    existing = await db.gamification_stats.find_one({
+        "user_id": user_id,
+        "completed_challenges": {
+            "$elemMatch": {
+                "challenge_id": completion.challenge_id,
+                "completed_date": today
+            }
+        }
+    })
+    
+    if existing:
+        raise HTTPException(status_code=400, detail="Challenge already completed today")
+    
+    # Prepare challenge record
+    challenge_record = {
+        "challenge_id": completion.challenge_id,
+        "challenge_type": completion.challenge_type,
+        "challenge_name": completion.challenge_name,
+        "xp_reward": completion.xp_reward,
+        "completed_date": today,
+        "completed_at": now.isoformat(),
+        "status": ChallengeStatus.VALIDATED if not completion.needs_parent_validation else ChallengeStatus.PENDING
+    }
+    
+    # Calculate XP to award
+    xp_to_award = completion.xp_reward if not completion.needs_parent_validation else 0
+    
+    # Update or create gamification stats
+    stats = await db.gamification_stats.find_one({"user_id": user_id})
+    
+    if not stats:
+        # Create new stats
+        new_total_xp = xp_to_award
+        level_info = get_level_from_xp(new_total_xp)
+        
+        stats = {
+            "user_id": user_id,
+            "total_xp": new_total_xp,
+            "level": level_info["level"],
+            "level_name": level_info["name"],
+            "streak_days": 1,
+            "last_activity_date": today,
+            "badges": [],
+            "completed_challenges": [challenge_record],
+            "pending_validations": [challenge_record] if completion.needs_parent_validation else [],
+            "attendance_count": 0,
+            "techniques_validated": 0,
+            "created_at": now.isoformat()
+        }
+        await db.gamification_stats.insert_one(stats)
+    else:
+        # Update existing stats
+        current_xp = stats.get("total_xp", 0)
+        new_total_xp = current_xp + xp_to_award
+        level_info = get_level_from_xp(new_total_xp)
+        
+        # Calculate streak
+        last_date = stats.get("last_activity_date")
+        current_streak = stats.get("streak_days", 0)
+        
+        if last_date:
+            last_datetime = datetime.strptime(last_date, "%Y-%m-%d")
+            days_diff = (now.date() - last_datetime.date()).days
+            
+            if days_diff == 1:
+                current_streak += 1
+            elif days_diff > 1:
+                current_streak = 1
+            # If same day, keep streak
+        else:
+            current_streak = 1
+        
+        # Update
+        update_query = {
+            "$set": {
+                "total_xp": new_total_xp,
+                "level": level_info["level"],
+                "level_name": level_info["name"],
+                "streak_days": current_streak,
+                "last_activity_date": today
+            },
+            "$push": {
+                "completed_challenges": challenge_record
+            }
+        }
+        
+        if completion.needs_parent_validation:
+            update_query["$push"]["pending_validations"] = challenge_record
+        
+        await db.gamification_stats.update_one(
+            {"user_id": user_id},
+            update_query
+        )
+        
+        stats["total_xp"] = new_total_xp
+        stats["level"] = level_info["level"]
+        stats["level_name"] = level_info["name"]
+        stats["streak_days"] = current_streak
+    
+    # Check for new badges
+    new_badges = await check_and_award_badges(user_id, stats)
+    
+    return {
+        "success": True,
+        "xp_awarded": xp_to_award,
+        "total_xp": stats.get("total_xp", 0) + xp_to_award,
+        "level": level_info["level"],
+        "level_name": level_info["name"],
+        "streak_days": stats.get("streak_days", 1),
+        "new_badges": new_badges,
+        "needs_validation": completion.needs_parent_validation
+    }
+
+async def check_and_award_badges(user_id: str, stats: dict) -> List[dict]:
+    """Check and award badges based on achievements"""
+    new_badges = []
+    current_badges = [b.get("badge_id") for b in stats.get("badges", [])]
+    
+    badges_to_check = [
+        {"badge_id": "first_step", "badge_name": "Premier Pas", "badge_icon": "👣", "badge_description": "Premier entraînement", "condition": lambda s: s.get("attendance_count", 0) >= 1},
+        {"badge_id": "streak_3", "badge_name": "Persévérant", "badge_icon": "🔥", "badge_description": "3 jours d'affilée", "condition": lambda s: s.get("streak_days", 0) >= 3},
+        {"badge_id": "streak_7", "badge_name": "Assidu", "badge_icon": "💪", "badge_description": "7 jours d'affilée", "condition": lambda s: s.get("streak_days", 0) >= 7},
+        {"badge_id": "streak_30", "badge_name": "Marathonien", "badge_icon": "🏃", "badge_description": "30 jours d'affilée", "condition": lambda s: s.get("streak_days", 0) >= 30},
+        {"badge_id": "xp_100", "badge_name": "Débutant", "badge_icon": "⭐", "badge_description": "100 XP gagnés", "condition": lambda s: s.get("total_xp", 0) >= 100},
+        {"badge_id": "xp_500", "badge_name": "Apprenti", "badge_icon": "🌟", "badge_description": "500 XP gagnés", "condition": lambda s: s.get("total_xp", 0) >= 500},
+        {"badge_id": "xp_1000", "badge_name": "Confirmé", "badge_icon": "✨", "badge_description": "1000 XP gagnés", "condition": lambda s: s.get("total_xp", 0) >= 1000},
+        {"badge_id": "level_5", "badge_name": "Ninja Rapide", "badge_icon": "🥷", "badge_description": "Niveau 5 atteint", "condition": lambda s: s.get("level", 1) >= 5},
+        {"badge_id": "level_10", "badge_name": "Dragon Suprême", "badge_icon": "🐉", "badge_description": "Niveau 10 atteint", "condition": lambda s: s.get("level", 1) >= 10},
+        {"badge_id": "tech_5", "badge_name": "Technicien", "badge_icon": "🥋", "badge_description": "5 techniques validées", "condition": lambda s: s.get("techniques_validated", 0) >= 5},
+        {"badge_id": "tech_10", "badge_name": "Expert", "badge_icon": "🎯", "badge_description": "10 techniques validées", "condition": lambda s: s.get("techniques_validated", 0) >= 10},
+    ]
+    
+    now = datetime.now(timezone.utc).isoformat()
+    
+    for badge in badges_to_check:
+        if badge["badge_id"] not in current_badges and badge["condition"](stats):
+            badge_award = {
+                "badge_id": badge["badge_id"],
+                "badge_name": badge["badge_name"],
+                "badge_icon": badge["badge_icon"],
+                "badge_description": badge["badge_description"],
+                "awarded_at": now
+            }
+            new_badges.append(badge_award)
+            
+            # Award badge in database
+            await db.gamification_stats.update_one(
+                {"user_id": user_id},
+                {"$push": {"badges": badge_award}}
+            )
+    
+    return new_badges
+
+@api_router.post("/gamification/attendance")
+async def record_attendance(
+    record: AttendanceRecord,
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+):
+    """Record attendance at dojo training"""
+    if not credentials:
+        raise HTTPException(status_code=401, detail="Authentication required")
+    
+    # Verify token and get user
+    try:
+        payload = jwt.decode(credentials.credentials, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+        user_id = payload.get("user_id")
+        if not user_id:
+            raise HTTPException(status_code=401, detail="Invalid token")
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(status_code=401, detail="Token expired")
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    
+    now = datetime.now(timezone.utc)
+    
+    # Check if already recorded for this date
+    existing = await db.attendance_records.find_one({
+        "user_id": user_id,
+        "date": record.date
+    })
+    
+    if existing:
+        return {"success": True, "message": "Attendance already recorded", "already_exists": True}
+    
+    # Record attendance
+    attendance_doc = {
+        "user_id": user_id,
+        "date": record.date,
+        "attended": record.attended,
+        "recorded_at": now.isoformat()
+    }
+    await db.attendance_records.insert_one(attendance_doc)
+    
+    # Update gamification stats
+    xp_reward = 25  # XP for attending class
+    
+    stats = await db.gamification_stats.find_one({"user_id": user_id})
+    
+    if stats:
+        new_total_xp = stats.get("total_xp", 0) + xp_reward
+        level_info = get_level_from_xp(new_total_xp)
+        
+        await db.gamification_stats.update_one(
+            {"user_id": user_id},
+            {
+                "$set": {
+                    "total_xp": new_total_xp,
+                    "level": level_info["level"],
+                    "level_name": level_info["name"]
+                },
+                "$inc": {"attendance_count": 1}
+            }
+        )
+    else:
+        # Create new stats
+        level_info = get_level_from_xp(xp_reward)
+        new_stats = {
+            "user_id": user_id,
+            "total_xp": xp_reward,
+            "level": level_info["level"],
+            "level_name": level_info["name"],
+            "streak_days": 1,
+            "last_activity_date": record.date,
+            "badges": [],
+            "completed_challenges": [],
+            "pending_validations": [],
+            "attendance_count": 1,
+            "techniques_validated": 0,
+            "created_at": now.isoformat()
+        }
+        await db.gamification_stats.insert_one(new_stats)
+    
+    # Check for attendance badges
+    updated_stats = await db.gamification_stats.find_one({"user_id": user_id}, {"_id": 0})
+    new_badges = await check_and_award_badges(user_id, updated_stats)
+    
+    return {
+        "success": True,
+        "xp_awarded": xp_reward,
+        "attendance_count": updated_stats.get("attendance_count", 1),
+        "new_badges": new_badges
+    }
+
+@api_router.post("/gamification/validate-challenge/{challenge_id}")
+async def validate_challenge_by_parent(
+    challenge_id: str,
+    user_id: str,
+    approved: bool = True,
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+):
+    """Parent validates a pending challenge"""
+    if not credentials:
+        raise HTTPException(status_code=401, detail="Authentication required")
+    
+    # TODO: Verify parent has permission to validate this user's challenges
+    
+    now = datetime.now(timezone.utc)
+    
+    # Find the pending validation
+    stats = await db.gamification_stats.find_one({"user_id": user_id})
+    
+    if not stats:
+        raise HTTPException(status_code=404, detail="User stats not found")
+    
+    pending = None
+    for p in stats.get("pending_validations", []):
+        if p.get("challenge_id") == challenge_id:
+            pending = p
+            break
+    
+    if not pending:
+        raise HTTPException(status_code=404, detail="Pending validation not found")
+    
+    # Update the challenge status
+    new_status = ChallengeStatus.VALIDATED if approved else ChallengeStatus.REJECTED
+    xp_to_award = pending.get("xp_reward", 0) if approved else 0
+    
+    # Remove from pending validations
+    await db.gamification_stats.update_one(
+        {"user_id": user_id},
+        {
+            "$pull": {"pending_validations": {"challenge_id": challenge_id}},
+            "$set": {
+                "completed_challenges.$[elem].status": new_status,
+                "completed_challenges.$[elem].validated_at": now.isoformat()
+            }
+        },
+        array_filters=[{"elem.challenge_id": challenge_id}]
+    )
+    
+    # Award XP if approved
+    if approved and xp_to_award > 0:
+        current_xp = stats.get("total_xp", 0)
+        new_total_xp = current_xp + xp_to_award
+        level_info = get_level_from_xp(new_total_xp)
+        
+        await db.gamification_stats.update_one(
+            {"user_id": user_id},
+            {
+                "$set": {
+                    "total_xp": new_total_xp,
+                    "level": level_info["level"],
+                    "level_name": level_info["name"]
+                }
+            }
+        )
+    
+    return {
+        "success": True,
+        "approved": approved,
+        "xp_awarded": xp_to_award if approved else 0
+    }
+
+@api_router.get("/gamification/leaderboard")
+async def get_leaderboard(limit: int = 10):
+    """Get top players leaderboard"""
+    leaderboard = await db.gamification_stats.find(
+        {},
+        {"_id": 0, "user_id": 1, "total_xp": 1, "level": 1, "level_name": 1}
+    ).sort("total_xp", -1).limit(limit).to_list(length=limit)
+    
+    # Add user names
+    for i, entry in enumerate(leaderboard):
+        user = await db.users.find_one(
+            {"id": entry["user_id"]},
+            {"_id": 0, "first_name": 1}
+        )
+        entry["rank"] = i + 1
+        entry["name"] = user.get("first_name", "Ninja") if user else "Ninja"
+    
+    return leaderboard
+
+@api_router.get("/gamification/daily-challenges")
+async def get_daily_challenges():
+    """Get available daily challenges"""
+    # These could be stored in DB and rotated daily
+    challenges = [
+        {
+            "id": "salut",
+            "name": "Salut Parfait",
+            "description": "Fais un salut (REI) parfait au début et à la fin du cours",
+            "xp_reward": 10,
+            "type": "daily",
+            "icon": "🙏",
+            "virtue": "Respect",
+            "needs_parent_validation": False
+        },
+        {
+            "id": "tai_sabaki",
+            "name": "Tai Sabaki",
+            "description": "Pratique un déplacement tai sabaki",
+            "xp_reward": 15,
+            "type": "daily",
+            "icon": "🦶",
+            "virtue": "Agilité",
+            "needs_parent_validation": True
+        },
+        {
+            "id": "ukemi_mae",
+            "name": "Chute Avant",
+            "description": "Réalise 5 chutes avant (mae ukemi) correctes",
+            "xp_reward": 20,
+            "type": "daily",
+            "icon": "🔄",
+            "virtue": "Courage",
+            "needs_parent_validation": True
+        },
+        {
+            "id": "aide",
+            "name": "Coup de Main",
+            "description": "Aide un camarade moins expérimenté",
+            "xp_reward": 25,
+            "type": "daily",
+            "icon": "🤝",
+            "virtue": "Bienveillance",
+            "needs_parent_validation": False
+        },
+        {
+            "id": "attention",
+            "name": "Main Levée",
+            "description": "Pose une question au sensei pendant le cours",
+            "xp_reward": 15,
+            "type": "daily",
+            "icon": "✋",
+            "virtue": "Attention",
+            "needs_parent_validation": False
+        }
+    ]
+    
+    return challenges
+
+
 # Include the router in the main app
 app.include_router(api_router)
 
