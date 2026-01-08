@@ -595,13 +595,13 @@ class GamificationTester:
         return passed == total
 
 if __name__ == "__main__":
-    tester = DojoTester()
-    success = tester.run_all_tests()
+    tester = GamificationTester()
+    success = tester.run_gamification_tests()
     
     # Save results to file
-    with open("/app/dojo_test_results.json", "w") as f:
+    with open("/app/gamification_test_results.json", "w") as f:
         json.dump(tester.test_results, f, indent=2)
     
-    print(f"\n📄 Detailed results saved to: /app/dojo_test_results.json")
+    print(f"\n📄 Detailed results saved to: /app/gamification_test_results.json")
     
     sys.exit(0 if success else 1)
