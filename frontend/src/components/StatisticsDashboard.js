@@ -113,6 +113,23 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
   const [roleLoading, setRoleLoading] = useState(false);
   const [showGuidedTour, setShowGuidedTour] = useState(false);
   
+  // État pour le mode visiteur (enfant/adulte) - stocké en localStorage
+  const [visitorMode, setVisitorMode] = useState(() => {
+    return localStorage.getItem('ninja-aikido-mode') || null;
+  });
+
+  // Handler pour changer de mode
+  const handleModeChange = (mode) => {
+    setVisitorMode(mode);
+    localStorage.setItem('ninja-aikido-mode', mode);
+  };
+
+  // Handler pour réinitialiser le mode (changer de mode)
+  const handleResetMode = () => {
+    localStorage.removeItem('ninja-aikido-mode');
+    setVisitorMode(null);
+  };
+  
   // Vérifier si l'utilisateur a déjà vu le tutoriel
   useEffect(() => {
     if (isAuthenticated) {
