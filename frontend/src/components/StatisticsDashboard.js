@@ -684,7 +684,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                       
                       <div className="relative text-center">
                         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white mb-3 sm:mb-4">
-                          🥋 NINJA-AIKIDO
+                          🥋 Aikido@Game
                         </h1>
                         <p className="text-base sm:text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-4 sm:mb-6">
                           {visitorMode === 'enfant' 

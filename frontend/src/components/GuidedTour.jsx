@@ -15,7 +15,7 @@ import {
 const TOUR_STEPS = [
   {
     id: 'welcome',
-    title: 'Bienvenue sur NINJA-AIKIDO ! 🥋',
+    title: 'Bienvenue sur Aikido@Game ! 🥋',
     emoji: '👋',
     content: (
       <div className="space-y-4">

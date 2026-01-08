@@ -18,7 +18,7 @@ const AgeSelector = ({ onSelect }) => {
       {/* Titre principal */}
       <div className="text-center mb-8">
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
-          🥋 Bienvenue sur <span className="bg-gradient-to-r from-amber-400 via-orange-400 to-red-400 bg-clip-text text-transparent">NINJA-AIKIDO</span>
+          🥋 Bienvenue sur <span className="bg-gradient-to-r from-amber-400 via-orange-400 to-red-400 bg-clip-text text-transparent">Aikido@Game</span>
         </h1>
         <p className="text-lg sm:text-xl text-slate-300 mb-2">
           Choisis ton mode pour commencer l'aventure !
