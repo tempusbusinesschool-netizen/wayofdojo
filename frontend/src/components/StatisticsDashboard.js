@@ -802,13 +802,15 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                     statistics={statistics}
                     virtueData={virtueData}
                     userName={userName}
+                    userId={userId}
+                    isAuthenticated={isAuthenticated}
+                    onRefreshStats={onRefreshData}
                     onCompleteChallenge={(challenge) => {
                       console.log("Challenge completed:", challenge);
-                      // TODO: Envoyer au backend pour persister
+                      onRefreshData?.();
                     }}
                     onRequestParentValidation={(challenge) => {
                       console.log("Parent validation requested:", challenge);
-                      // TODO: Envoyer notification aux parents
                     }}
                   />
                 </section>
