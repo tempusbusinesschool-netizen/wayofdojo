@@ -97,7 +97,7 @@ const VirtuePieChart = ({ virtueData }) => {
   );
 };
 
-function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterClick, activeFilter, isAdmin, onMembersClick, kyuLevels, userName, userBelt, onBeltChange, isAuthenticated, onRefreshData }) {
+function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterClick, activeFilter, isAdmin, onMembersClick, kyuLevels, userName, userBelt, onBeltChange, isAuthenticated, onRefreshData, onNavigate }) {
   const [showEmailDialog, setShowEmailDialog] = useState(false);
   const [showBeltDialog, setShowBeltDialog] = useState(false);
   const [showTrophiesDialog, setShowTrophiesDialog] = useState(false);
