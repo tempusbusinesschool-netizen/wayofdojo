@@ -700,15 +700,15 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
                 {/* SECTION 2 : MON PROFIL - Carte de bienvenue avec stats */}
                 {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-                <section className="mb-8 relative" data-testid="section-profil">
+                <section className="mb-6 sm:mb-8 relative" data-testid="section-profil">
                   {/* Titre de section */}
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="h-1 flex-1 bg-gradient-to-r from-transparent via-emerald-500 to-emerald-500 rounded-full" />
-                    <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                      <span className="text-2xl">🥷</span>
-                      Mon Profil Ninja
+                  <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                    <div className="h-0.5 sm:h-1 flex-1 bg-gradient-to-r from-transparent via-emerald-500 to-emerald-500 rounded-full" />
+                    <h2 className="text-base sm:text-xl font-bold text-white flex items-center gap-1 sm:gap-2 whitespace-nowrap">
+                      <span className="text-xl sm:text-2xl">🥷</span>
+                      <span className="hidden xs:inline">Mon </span>Profil Ninja
                     </h2>
-                    <div className="h-1 flex-1 bg-gradient-to-l from-transparent via-emerald-500 to-emerald-500 rounded-full" />
+                    <div className="h-0.5 sm:h-1 flex-1 bg-gradient-to-l from-transparent via-emerald-500 to-emerald-500 rounded-full" />
                   </div>
                   
                   {/* Bouton d'aide */}
@@ -717,10 +717,10 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                       onClick={() => setShowGuidedTour(true)}
                       variant="ghost"
                       size="sm"
-                      className="text-slate-400 hover:text-white hover:bg-slate-800 gap-2"
+                      className="text-slate-400 hover:text-white hover:bg-slate-800 gap-1 sm:gap-2 h-8 px-2 sm:px-3"
                     >
                       <HelpCircle className="w-4 h-4" />
-                      <span>Aide</span>
+                      <span className="hidden sm:inline">Aide</span>
                     </Button>
                   </div>
 
@@ -739,15 +739,15 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
                 {/* SECTION 3 : DÉFIS DU JOUR - Tunnel de progression */}
                 {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-                <section className="mb-8" data-testid="section-defis">
+                <section className="mb-6 sm:mb-8" data-testid="section-defis">
                   {/* Titre de section */}
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="h-1 flex-1 bg-gradient-to-r from-transparent via-pink-500 to-pink-500 rounded-full" />
-                    <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                      <span className="text-2xl">🎯</span>
-                      Mes Défis du Jour
+                  <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                    <div className="h-0.5 sm:h-1 flex-1 bg-gradient-to-r from-transparent via-pink-500 to-pink-500 rounded-full" />
+                    <h2 className="text-base sm:text-xl font-bold text-white flex items-center gap-1 sm:gap-2 whitespace-nowrap">
+                      <span className="text-xl sm:text-2xl">🎯</span>
+                      <span className="hidden xs:inline">Mes </span>Défis du Jour
                     </h2>
-                    <div className="h-1 flex-1 bg-gradient-to-l from-transparent via-pink-500 to-pink-500 rounded-full" />
+                    <div className="h-0.5 sm:h-1 flex-1 bg-gradient-to-l from-transparent via-pink-500 to-pink-500 rounded-full" />
                   </div>
 
                   <ProgressionTunnel
