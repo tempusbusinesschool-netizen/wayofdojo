@@ -974,17 +974,17 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         
         {/* Titre de section pour utilisateurs connectés */}
         {isAuthenticated && (
-          <section className="mb-6 mt-4" data-testid="section-pedagogique">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="h-1 flex-1 bg-gradient-to-r from-transparent via-cyan-500 to-cyan-500 rounded-full" />
-              <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                <span className="text-2xl">📚</span>
+          <section className="mb-4 sm:mb-6 mt-2 sm:mt-4" data-testid="section-pedagogique">
+            <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-6">
+              <div className="h-0.5 sm:h-1 flex-1 bg-gradient-to-r from-transparent via-cyan-500 to-cyan-500 rounded-full" />
+              <h2 className="text-base sm:text-xl font-bold text-white flex items-center gap-1 sm:gap-2 whitespace-nowrap">
+                <span className="text-xl sm:text-2xl">📚</span>
                 Apprendre l'Aikido
               </h2>
-              <div className="h-1 flex-1 bg-gradient-to-l from-transparent via-cyan-500 to-cyan-500 rounded-full" />
+              <div className="h-0.5 sm:h-1 flex-1 bg-gradient-to-l from-transparent via-cyan-500 to-cyan-500 rounded-full" />
             </div>
-            <p className="text-center text-slate-400 text-sm mb-4">
-              Explore les techniques, les vertus et l'histoire de l'Aikido 🥋
+            <p className="text-center text-slate-400 text-xs sm:text-sm mb-3 sm:mb-4">
+              Explore les techniques, les vertus et l'histoire 🥋
             </p>
           </section>
         )}
