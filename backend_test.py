@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Backend API Tests for Aikido Multi-Dojo Feature
-Testing the Multi-Dojo architecture endpoints
+Backend API Tests for Aikido Gamification System
+Testing the gamification endpoints and integration
 """
 
 import requests
@@ -16,9 +16,9 @@ BACKEND_URL = "https://aikido-path-1.preview.emergentagent.com/api"
 ADMIN_PASSWORD = "aikido2024"
 SUPER_ADMIN_PASSWORD = "superaikido2024"
 
-# Test user credentials for authentication
-TEST_USER_EMAIL = "test_virtue@example.com"
-TEST_USER_PASSWORD = "testpass123"
+# Test user credentials for gamification testing
+TEST_USER_EMAIL = "test@aikido.fr"
+TEST_USER_PASSWORD = "test123"
 
 class DojoTester:
     def __init__(self):
