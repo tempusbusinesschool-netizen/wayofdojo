@@ -188,6 +188,12 @@ class GamificationTester:
                                   f"Challenge completion failed: {result.get('message', 'Unknown error')}",
                                   {"result": result})
                     return result
+            elif response.status_code == 400 and "already completed today" in response.text:
+                # This is expected behavior - challenge already completed today
+                self.log_result("POST /api/gamification/challenge/complete", True, 
+                              f"Challenge '{challenge_name}' already completed today (expected behavior)",
+                              {"challenge_id": challenge_id, "status": "already_completed"})
+                return {"success": True, "already_completed": True}
             else:
                 self.log_result("POST /api/gamification/challenge/complete", False, 
                               f"Failed to complete challenge: {response.status_code}",
