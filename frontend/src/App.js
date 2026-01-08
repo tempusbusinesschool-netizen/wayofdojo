@@ -45,6 +45,16 @@ import {
   MaitrisePage
 } from "@/pages/enfant";
 
+// Import pages adulte
+import {
+  InscriptionPage,
+  ProgrammePage,
+  ProgressionPage,
+  VertusPage,
+  ObjectifsPage,
+  CertificationsPage
+} from "@/pages/adulte";
+
 // Import Auth Context
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import DojoManagement from "@/components/DojoManagement";
