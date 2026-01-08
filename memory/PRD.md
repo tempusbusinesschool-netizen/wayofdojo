@@ -134,6 +134,33 @@ Application web pour le club d'Aikido "Aikido La Rivière". L'application doit s
     - Barre de progression arc-en-ciel
     - Message d'aide contextuel
 
+- **ÉCRAN DE SÉLECTION MODE ENFANT/ADULTE** ✅ (NEW - 100% RGPD)
+  - Créé `AgeSelector.jsx` - Écran de choix du mode d'affichage
+  - 2 gros boutons visuellement distincts :
+    - 🧒 **"Je suis un Jeune Ninja"** (- 14 ans) - Gradient rose/violet avec étoiles animées
+    - 🧑 **"Je suis un Ninja Confirmé"** (+ 14 ans) - Gradient sombre avec bordure dorée
+  - Stockage en **localStorage** (aucune donnée personnelle envoyée au serveur)
+  - Note RGPD visible en bas de l'écran
+  - Bouton ⚙️ pour changer de mode à tout moment
+
+- **BLOCS VISITEUR ADAPTÉS AU MODE** ✅ (NEW)
+  - Créé `VisitorStepsBlocks.jsx` - 6 blocs présentant les étapes du jeu
+  - **Version ENFANT** (ludique, coloré) :
+    1. 🥷 Deviens un Ninja ! (vert)
+    2. 🎮 Joue chaque jour (rose)
+    3. ⭐ Gagne des étoiles (orange)
+    4. 🦸 Super-pouvoirs (violet)
+    5. 🏆 Débloque des badges (cyan)
+    6. 🐉 Objectif Dragon ! (rouge)
+  - **Version ADULTE** (sobre, professionnel) :
+    1. 📝 Inscription
+    2. 🥋 Programme
+    3. 📊 Progression
+    4. ☯️ Les 7 Vertus
+    5. 🎯 Objectifs
+    6. 📜 Certifications
+  - Messages et boutons adaptés au mode (tutoiement/vouvoiement)
+
 ---
 
 ## Prioritized Backlog
