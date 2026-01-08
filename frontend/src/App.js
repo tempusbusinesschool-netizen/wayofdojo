@@ -774,6 +774,48 @@ function AppContent() {
                 onOpenAuth={() => setShowAuthDialog(true)}
               />
             )}
+
+            {/* Pages de jeu (version adulte) */}
+            {activePage === 'inscription' && (
+              <InscriptionPage 
+                onBack={() => setActivePage(null)} 
+                isAuthenticated={isAuthenticated}
+                onOpenAuth={() => setShowAuthDialog(true)}
+              />
+            )}
+            {activePage === 'programme' && (
+              <ProgrammePage 
+                onBack={() => setActivePage(null)} 
+                isAuthenticated={isAuthenticated}
+                onOpenAuth={() => setShowAuthDialog(true)}
+              />
+            )}
+            {activePage === 'progression' && (
+              <ProgressionPage 
+                onBack={() => setActivePage(null)} 
+                isAuthenticated={isAuthenticated}
+                onOpenAuth={() => setShowAuthDialog(true)}
+              />
+            )}
+            {activePage === 'vertus' && (
+              <VertusPage 
+                onBack={() => setActivePage(null)} 
+              />
+            )}
+            {activePage === 'objectifs' && (
+              <ObjectifsPage 
+                onBack={() => setActivePage(null)} 
+                isAuthenticated={isAuthenticated}
+                onOpenAuth={() => setShowAuthDialog(true)}
+              />
+            )}
+            {activePage === 'certifications' && (
+              <CertificationsPage 
+                onBack={() => setActivePage(null)} 
+                isAuthenticated={isAuthenticated}
+                onOpenAuth={() => setShowAuthDialog(true)}
+              />
+            )}
             
             {/* Grade Sections - Visible uniquement pour les utilisateurs connectés */}
             {isAuthenticated && (
