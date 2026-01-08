@@ -16,7 +16,7 @@ const AgeSelector = ({ onSelect }) => {
   return (
     <div className="px-4 py-6 sm:py-8">
       {/* Hero Banner Bleu - Identique aux autres pages */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-500 rounded-3xl p-6 sm:p-8 md:p-10 mb-8 shadow-2xl">
+      <div className="relative overflow-hidden bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-500 rounded-3xl p-6 sm:p-8 md:p-10 mb-6 sm:mb-8 shadow-2xl">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-2 left-4 text-5xl sm:text-7xl">🥋</div>
           <div className="absolute bottom-2 right-4 text-5xl sm:text-7xl">☯️</div>
@@ -33,8 +33,8 @@ const AgeSelector = ({ onSelect }) => {
       </div>
 
       {/* Section de sélection */}
-      <div className="text-center mb-6 sm:mb-8">
-        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
+      <div className="text-center mb-6">
+        <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
           Choisis ton mode pour commencer !
         </h2>
         <p className="text-sm text-slate-400">
@@ -52,27 +52,27 @@ const AgeSelector = ({ onSelect }) => {
           className="group relative overflow-hidden rounded-2xl sm:rounded-3xl p-6 sm:p-8
             bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-500
             hover:from-pink-400 hover:via-purple-400 hover:to-indigo-400
-            transform hover:scale-105 hover:-translate-y-1
+            transform hover:scale-[1.02] sm:hover:scale-105
             transition-all duration-300 ease-out
             shadow-xl shadow-purple-500/40 hover:shadow-purple-500/60
-            border-2 sm:border-4 border-white/20 hover:border-white/40"
+            border-2 border-white/20 hover:border-white/40"
         >
           {/* Étoiles décoratives */}
-          <div className="absolute top-3 right-3 text-xl sm:text-2xl animate-pulse">✨</div>
-          <div className="absolute bottom-3 left-3 text-xl sm:text-2xl animate-bounce">⭐</div>
+          <div className="absolute top-3 right-3 text-lg sm:text-xl animate-pulse">✨</div>
+          <div className="absolute bottom-3 left-3 text-lg sm:text-xl">⭐</div>
           
           {/* Contenu */}
           <div className="relative z-10 text-center">
-            <div className="text-5xl sm:text-6xl mb-3 group-hover:scale-110 transition-transform">
+            <div className="text-4xl sm:text-5xl mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
               🧒
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-white mb-1">
+            <h2 className="text-lg sm:text-xl font-bold text-white mb-1">
               Jeune Ninja
             </h2>
-            <p className="text-white/80 text-sm">
+            <p className="text-white/80 text-xs sm:text-sm">
               Moins de 14 ans
             </p>
-            <div className="mt-3 flex justify-center gap-2 text-xl sm:text-2xl">
+            <div className="mt-2 sm:mt-3 flex justify-center gap-2 text-lg sm:text-xl">
               <span>🎮</span>
               <span>🏆</span>
               <span>🐉</span>
@@ -91,27 +91,27 @@ const AgeSelector = ({ onSelect }) => {
           className="group relative overflow-hidden rounded-2xl sm:rounded-3xl p-6 sm:p-8
             bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900
             hover:from-slate-600 hover:via-slate-700 hover:to-slate-800
-            transform hover:scale-105 hover:-translate-y-1
+            transform hover:scale-[1.02] sm:hover:scale-105
             transition-all duration-300 ease-out
             shadow-xl shadow-slate-900/60 hover:shadow-slate-700/60
-            border-2 sm:border-4 border-amber-500/30 hover:border-amber-400/50"
+            border-2 border-amber-500/30 hover:border-amber-400/50"
         >
           {/* Symboles décoratifs */}
-          <div className="absolute top-3 right-3 text-xl sm:text-2xl text-amber-400/60">☯️</div>
-          <div className="absolute bottom-3 left-3 text-xl sm:text-2xl text-amber-400/60">🥋</div>
+          <div className="absolute top-3 right-3 text-lg sm:text-xl text-amber-400/60">☯️</div>
+          <div className="absolute bottom-3 left-3 text-lg sm:text-xl text-amber-400/60">🥋</div>
           
           {/* Contenu */}
           <div className="relative z-10 text-center">
-            <div className="text-5xl sm:text-6xl mb-3 group-hover:scale-110 transition-transform">
+            <div className="text-4xl sm:text-5xl mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
               🧑
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-white mb-1">
+            <h2 className="text-lg sm:text-xl font-bold text-white mb-1">
               Ninja Confirmé
             </h2>
-            <p className="text-slate-400 text-sm">
+            <p className="text-slate-400 text-xs sm:text-sm">
               Plus de 14 ans
             </p>
-            <div className="mt-3 flex justify-center gap-2 text-xl sm:text-2xl">
+            <div className="mt-2 sm:mt-3 flex justify-center gap-2 text-lg sm:text-xl">
               <span>📊</span>
               <span>🎯</span>
               <span>📜</span>
@@ -125,79 +125,7 @@ const AgeSelector = ({ onSelect }) => {
       </div>
 
       {/* Note RGPD */}
-      <p className="mt-6 sm:mt-8 text-xs text-slate-500 text-center max-w-md mx-auto">
-        🔒 Aucune donnée personnelle n'est collectée. Ton choix est enregistré uniquement sur ton appareil.
-      </p>
-    </div>
-  );
-};
-
-export default AgeSelector;
-          {/* Contenu */}
-          <div className="relative z-10 text-center">
-            <div className="text-6xl sm:text-7xl mb-4 group-hover:scale-110 transition-transform">
-              🧒
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-              Je suis un Jeune Ninja
-            </h2>
-            <p className="text-white/80 text-sm sm:text-base">
-              Moins de 14 ans
-            </p>
-            <div className="mt-4 flex justify-center gap-2 text-2xl">
-              <span>🎮</span>
-              <span>🏆</span>
-              <span>🐉</span>
-            </div>
-          </div>
-          
-          {/* Effet de brillance */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent 
-            -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-        </button>
-
-        {/* Bouton ADULTE */}
-        <button
-          onClick={() => handleSelect('adulte')}
-          data-testid="mode-adulte-btn"
-          className="group relative overflow-hidden rounded-3xl p-8 sm:p-10
-            bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900
-            hover:from-slate-600 hover:via-slate-700 hover:to-slate-800
-            transform hover:scale-105 hover:-translate-y-2
-            transition-all duration-300 ease-out
-            shadow-2xl shadow-slate-900/60 hover:shadow-slate-700/60
-            border-4 border-amber-500/30 hover:border-amber-400/50"
-        >
-          {/* Symboles décoratifs */}
-          <div className="absolute top-4 right-4 text-2xl text-amber-400/60">☯️</div>
-          <div className="absolute bottom-4 left-4 text-2xl text-amber-400/60">🥋</div>
-          
-          {/* Contenu */}
-          <div className="relative z-10 text-center">
-            <div className="text-6xl sm:text-7xl mb-4 group-hover:scale-110 transition-transform">
-              🧑
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-              Je suis un Ninja Confirmé
-            </h2>
-            <p className="text-slate-400 text-sm sm:text-base">
-              Plus de 14 ans
-            </p>
-            <div className="mt-4 flex justify-center gap-2 text-2xl">
-              <span>📊</span>
-              <span>🎯</span>
-              <span>📜</span>
-            </div>
-          </div>
-          
-          {/* Effet de brillance */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-500/10 to-transparent 
-            -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-        </button>
-      </div>
-
-      {/* Note RGPD */}
-      <p className="mt-8 text-xs text-slate-500 text-center max-w-md">
+      <p className="mt-6 text-xs text-slate-500 text-center max-w-md mx-auto">
         🔒 Aucune donnée personnelle n'est collectée. Ton choix est enregistré uniquement sur ton appareil.
       </p>
     </div>
