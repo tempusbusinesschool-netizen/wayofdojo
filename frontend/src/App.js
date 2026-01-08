@@ -721,6 +721,7 @@ function AppContent() {
                   }, 100);
                 }}
                 kyuLevels={kyuLevels}
+                userId={user?.id}
                 userEmail={user?.email}
                 userName={user?.first_name}
                 userBelt={isAuthenticated ? userBelt : null}
