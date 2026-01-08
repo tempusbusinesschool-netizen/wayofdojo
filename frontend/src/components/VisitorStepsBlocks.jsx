@@ -236,6 +236,56 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
           : 'Inscrivez-vous gratuitement pour commencer'
         }
       </p>
+
+      {/* BOUTON CALL-TO-ACTION - Commencer l'aventure */}
+      <div className="mt-8 flex flex-col items-center gap-4">
+        <button
+          onClick={() => {
+            const event = new CustomEvent('openAuthDialog');
+            window.dispatchEvent(event);
+          }}
+          data-testid="cta-start-adventure"
+          className={`
+            group relative overflow-hidden
+            px-8 sm:px-12 py-4 sm:py-5
+            rounded-2xl sm:rounded-3xl
+            font-bold text-lg sm:text-xl
+            transform hover:scale-105 hover:-translate-y-1
+            transition-all duration-300
+            ${isEnfant 
+              ? 'bg-gradient-to-r from-amber-400 via-orange-400 to-red-400 text-slate-900 shadow-xl shadow-amber-500/40 hover:shadow-amber-500/60'
+              : 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-xl shadow-cyan-500/30 hover:shadow-cyan-500/50'
+            }
+          `}
+        >
+          {/* Effet de brillance */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent 
+            -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+          
+          <span className="relative flex items-center gap-2 sm:gap-3">
+            {isEnfant ? (
+              <>
+                <span className="text-2xl sm:text-3xl">🚀</span>
+                <span>Commencer l'aventure !</span>
+                <span className="text-2xl sm:text-3xl">🥷</span>
+              </>
+            ) : (
+              <>
+                <span className="text-xl sm:text-2xl">📝</span>
+                <span>Créer mon compte</span>
+              </>
+            )}
+          </span>
+        </button>
+
+        {/* Sous-texte */}
+        <p className={`text-center ${isEnfant ? 'text-slate-500 text-xs' : 'text-slate-600 text-xs'}`}>
+          {isEnfant 
+            ? '✨ C\'est gratuit et ça prend 30 secondes !'
+            : 'Inscription gratuite • Sans engagement'
+          }
+        </p>
+      </div>
     </div>
   );
 };
