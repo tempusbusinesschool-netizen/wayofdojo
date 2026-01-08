@@ -695,7 +695,7 @@ function AppContent() {
             )}
             
             {/* Statistics Dashboard */}
-            {showStats && (
+            {showStats && !activePage && (
               <StatisticsDashboard 
                 statistics={displayStatistics} 
                 membersStats={membersStats}
@@ -717,6 +717,51 @@ function AppContent() {
                 onBeltChange={handleUserBeltChange}
                 isAuthenticated={isAuthenticated}
                 onRefreshData={fetchData}
+                onNavigate={(pageId) => setActivePage(pageId)}
+              />
+            )}
+
+            {/* Pages de jeu (version enfant) */}
+            {activePage === 'commence' && (
+              <CommencePage 
+                onBack={() => setActivePage(null)} 
+                isAuthenticated={isAuthenticated}
+                onOpenAuth={() => setShowAuthDialog(true)}
+              />
+            )}
+            {activePage === 'apprends' && (
+              <ApprendsPage 
+                onBack={() => setActivePage(null)} 
+                isAuthenticated={isAuthenticated}
+                onOpenAuth={() => setShowAuthDialog(true)}
+              />
+            )}
+            {activePage === 'entraine' && (
+              <EntrainePage 
+                onBack={() => setActivePage(null)} 
+                isAuthenticated={isAuthenticated}
+                onOpenAuth={() => setShowAuthDialog(true)}
+              />
+            )}
+            {activePage === 'valide' && (
+              <ValidePage 
+                onBack={() => setActivePage(null)} 
+                isAuthenticated={isAuthenticated}
+                onOpenAuth={() => setShowAuthDialog(true)}
+              />
+            )}
+            {activePage === 'progresse' && (
+              <ProgressePage 
+                onBack={() => setActivePage(null)} 
+                isAuthenticated={isAuthenticated}
+                onOpenAuth={() => setShowAuthDialog(true)}
+              />
+            )}
+            {activePage === 'maitrise' && (
+              <MaitrisePage 
+                onBack={() => setActivePage(null)} 
+                isAuthenticated={isAuthenticated}
+                onOpenAuth={() => setShowAuthDialog(true)}
               />
             )}
             
