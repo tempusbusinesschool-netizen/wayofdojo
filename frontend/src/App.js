@@ -35,6 +35,16 @@ import {
   DojoMembersList
 } from "@/components";
 
+// Import pages enfant
+import {
+  CommencePage,
+  ApprendsPage,
+  EntrainePage,
+  ValidePage,
+  ProgressePage,
+  MaitrisePage
+} from "@/pages/enfant";
+
 // Import Auth Context
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
 import DojoManagement from "@/components/DojoManagement";
