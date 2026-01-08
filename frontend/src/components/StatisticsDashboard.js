@@ -818,9 +818,9 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {/* ACCORDÉON 1 : Ma Progression Ninja + Stats + Grades KYU */}
-        {/* Masqué pour utilisateurs connectés car déjà dans UserDashboardBlocks */}
+        {/* MASQUÉ pour tous les visiteurs - page d'accueil épurée avec 6 blocs uniquement */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {!isAuthenticated && (
+        {false && (
         <SimpleAccordion
           title="Ma Progression Ninja !"
           emoji="🎯"
