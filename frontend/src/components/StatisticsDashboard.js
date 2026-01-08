@@ -667,42 +667,68 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
             {/* ===== HERO POUR UTILISATEUR NON CONNECTÉ ===== */}
             {!isAuthenticated && (
               <>
-                <div className="relative overflow-hidden bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-500 rounded-3xl p-8 md:p-12 mb-6 shadow-2xl">
-                  <div className="absolute inset-0 opacity-10">
-                    <div className="absolute top-4 left-8 text-9xl">🥋</div>
-                    <div className="absolute bottom-4 right-8 text-9xl">☯️</div>
-                  </div>
-                  
-                  <div className="relative text-center">
-                    <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4">
-                      🥋 NINJA-AIKIDO
-                    </h1>
-                    <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-6">
-                      <strong>Développe ta maîtrise de l&apos;aïkido</strong> avec un entraînement interactif et progressif
-                    </p>
-                    <div className="flex flex-wrap gap-3 justify-center">
-                      <Button
-                        onClick={() => {
-                          const event = new CustomEvent('openAuthDialog');
-                          window.dispatchEvent(event);
-                        }}
-                        className="bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold px-6 py-3 rounded-xl text-lg shadow-lg"
+                {/* Écran de sélection du mode (si pas encore choisi) */}
+                {!visitorMode && (
+                  <AgeSelector onSelect={handleModeChange} />
+                )}
+
+                {/* Contenu après sélection du mode */}
+                {visitorMode && (
+                  <>
+                    {/* Hero Banner */}
+                    <div className="relative overflow-hidden bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-500 rounded-3xl p-6 sm:p-8 md:p-12 mb-6 shadow-2xl">
+                      <div className="absolute inset-0 opacity-10">
+                        <div className="absolute top-4 left-8 text-7xl sm:text-9xl">🥋</div>
+                        <div className="absolute bottom-4 right-8 text-7xl sm:text-9xl">☯️</div>
+                      </div>
+                      
+                      <div className="relative text-center">
+                        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white mb-3 sm:mb-4">
+                          🥋 NINJA-AIKIDO
+                        </h1>
+                        <p className="text-base sm:text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-4 sm:mb-6">
+                          {visitorMode === 'enfant' 
+                            ? <><strong>Deviens un vrai Ninja !</strong> Apprends l'Aikido en t'amusant 🎮</>
+                            : <><strong>Développez votre maîtrise de l'Aikido</strong> avec un entraînement structuré</>
+                          }
+                        </p>
+                        <div className="flex flex-wrap gap-2 sm:gap-3 justify-center">
+                          <Button
+                            onClick={() => {
+                              const event = new CustomEvent('openAuthDialog');
+                              window.dispatchEvent(event);
+                            }}
+                            className="bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold px-4 sm:px-6 py-2 sm:py-3 rounded-xl text-sm sm:text-lg shadow-lg"
+                          >
+                            {visitorMode === 'enfant' ? '🥷 Créer mon compte Ninja' : '📝 S\'inscrire gratuitement'}
+                          </Button>
+                          <Button
+                            variant="outline"
+                            onClick={() => {
+                              const event = new CustomEvent('openLoginDialog');
+                              window.dispatchEvent(event);
+                            }}
+                            className="border-2 border-white text-white hover:bg-white/20 font-bold px-4 sm:px-6 py-2 sm:py-3 rounded-xl text-sm sm:text-lg"
+                          >
+                            Se connecter
+                          </Button>
+                        </div>
+                      </div>
+
+                      {/* Bouton changer de mode */}
+                      <button
+                        onClick={handleResetMode}
+                        className="absolute top-3 right-3 sm:top-4 sm:right-4 text-white/60 hover:text-white transition-colors p-2 rounded-lg hover:bg-white/10"
+                        title="Changer de mode"
                       >
-                        🥷 S&apos;inscrire gratuitement
-                      </Button>
-                      <Button
-                        variant="outline"
-                        onClick={() => {
-                          const event = new CustomEvent('openLoginDialog');
-                          window.dispatchEvent(event);
-                        }}
-                        className="border-2 border-white text-white hover:bg-white/20 font-bold px-6 py-3 rounded-xl text-lg"
-                      >
-                        Se connecter
-                      </Button>
+                        <Settings className="w-4 h-4 sm:w-5 sm:h-5" />
+                      </button>
                     </div>
-                  </div>
-                </div>
+
+                    {/* Blocs d'étapes selon le mode */}
+                    <VisitorStepsBlocks mode={visitorMode} />
+                  </>
+                )}
               </>
             )}
 
