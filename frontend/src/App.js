@@ -91,6 +91,9 @@ function AppContent() {
   const [showPaywall, setShowPaywall] = useState(false);
   const [showDojoRegistration, setShowDojoRegistration] = useState(false);
   
+  // État pour la navigation vers les pages de jeu (enfant)
+  const [activePage, setActivePage] = useState(null); // null = accueil, 'commence', 'apprends', etc.
+  
   // Admin state - supports two types: 'admin' (plateforme) and 'espace_dojo' (club)
   const [adminType, setAdminType] = useState(() => {
     const stored = sessionStorage.getItem('aikido_admin');
