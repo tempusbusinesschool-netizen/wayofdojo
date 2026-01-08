@@ -133,10 +133,10 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
         {isEnfant ? (
           <>
             <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-              🎮 Comment ça marche ? 🎮
+              🎮 Ton Parcours Ninja en 6 étapes ! 🎮
             </h2>
             <p className="text-slate-400 text-sm sm:text-base">
-              Suis ces étapes pour devenir un vrai Ninja ! 🥷
+              Suis ce chemin pour devenir un vrai Maître ! 🥷
             </p>
           </>
         ) : (
