@@ -692,7 +692,8 @@ function AppContent() {
               />
             )}
             
-            {/* Grade Sections */}
+            {/* Grade Sections - Visible uniquement pour les utilisateurs connectés */}
+            {isAuthenticated && (
             <div className="space-y-2">
               {kyuLevels.map((kyu) => {
                 const filteredTechniques = filterTechniques(kyu.techniques);
