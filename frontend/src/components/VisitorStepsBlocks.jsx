@@ -204,26 +204,46 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
               </div>
             )}
 
-            {/* Emoji principal */}
-            <span className={`mb-1 sm:mb-2 group-hover:scale-110 transition-transform
-              ${isEnfant ? 'text-4xl sm:text-5xl' : 'text-3xl sm:text-4xl'}`}
-            >
-              {step.emoji}
-            </span>
+            {/* Contenu principal - différent selon le mode */}
+            {isEnfant ? (
+              <>
+                {/* Version ENFANT: Emoji principal */}
+                <span className="mb-1 sm:mb-2 group-hover:scale-110 transition-transform text-4xl sm:text-5xl">
+                  {step.emoji}
+                </span>
 
-            {/* Titre */}
-            <span className={`text-white font-bold text-center leading-tight
-              ${isEnfant ? 'text-xs sm:text-sm' : 'text-xs sm:text-sm'}`}
-            >
-              {step.title}
-            </span>
+                {/* Titre */}
+                <span className="text-white font-bold text-center leading-tight text-xs sm:text-sm">
+                  {step.title}
+                </span>
 
-            {/* Description */}
-            <span className={`text-center mt-0.5 sm:mt-1
-              ${isEnfant ? 'text-white/70 text-[10px] sm:text-xs' : 'text-slate-400 text-[10px] sm:text-xs'}`}
-            >
-              {step.description}
-            </span>
+                {/* Description */}
+                <span className="text-center mt-0.5 sm:mt-1 text-white/70 text-[10px] sm:text-xs">
+                  {step.description}
+                </span>
+              </>
+            ) : (
+              <>
+                {/* Version ADULTE: Grand Kanji central */}
+                <span className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white/90 
+                  group-hover:text-white group-hover:scale-110 transition-all duration-300
+                  drop-shadow-lg"
+                  style={{ fontFamily: "'Noto Serif JP', serif" }}
+                >
+                  {step.kanji}
+                </span>
+
+                {/* Titre sous le Kanji */}
+                <span className="text-white font-semibold text-center leading-tight text-xs sm:text-sm mt-2">
+                  {step.title}
+                </span>
+
+                {/* Description subtile */}
+                <span className="text-center mt-0.5 text-slate-400 text-[9px] sm:text-[10px] opacity-80">
+                  {step.description}
+                </span>
+              </>
+            )}
 
             {/* Effet de brillance au hover (version enfant) */}
             {isEnfant && (
