@@ -40,10 +40,10 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
       id: 'valide',
       emoji: '✅',
       title: 'Valide',
-      description: 'Fais valider par ton Sensei',
+      description: 'Fais valider par tes parents',
       gradient: 'from-pink-500 to-rose-600',
       shadowColor: 'shadow-pink-500/40',
-      decorEmoji: '👨‍🏫'
+      decorEmoji: '👨‍👩‍👧'
     },
     {
       id: 'progresse',
