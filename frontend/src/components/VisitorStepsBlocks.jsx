@@ -7,61 +7,61 @@ import React from 'react';
  */
 const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
   
-  // Blocs version ENFANT (ludique, coloré, emojis fun)
+  // Blocs version ENFANT - Option C : Étapes du jeu (gamification claire)
   const stepsEnfant = [
     {
-      id: 'deviens-ninja',
-      emoji: '🥷',
-      title: 'Deviens un Ninja !',
-      description: 'Crée ton personnage',
+      id: 'commence',
+      emoji: '🚀',
+      title: 'Commence',
+      description: 'Crée ton profil Ninja',
       gradient: 'from-emerald-500 to-teal-600',
       shadowColor: 'shadow-emerald-500/40',
       decorEmoji: '✨'
     },
     {
-      id: 'joue',
-      emoji: '🎮',
-      title: 'Joue chaque jour',
-      description: '5 missions fun',
-      gradient: 'from-pink-500 to-rose-600',
-      shadowColor: 'shadow-pink-500/40',
-      decorEmoji: '🎯'
-    },
-    {
-      id: 'etoiles',
-      emoji: '⭐',
-      title: 'Gagne des étoiles',
-      description: 'Collectionne les points',
-      gradient: 'from-amber-400 to-orange-500',
-      shadowColor: 'shadow-amber-500/40',
-      decorEmoji: '💫'
-    },
-    {
-      id: 'pouvoirs',
-      emoji: '🦸',
-      title: 'Super-pouvoirs',
-      description: '7 vertus magiques',
-      gradient: 'from-violet-500 to-purple-600',
-      shadowColor: 'shadow-violet-500/40',
-      decorEmoji: '☯️'
-    },
-    {
-      id: 'badges',
-      emoji: '🏆',
-      title: 'Débloque des badges',
-      description: 'Deviens un champion',
+      id: 'apprends',
+      emoji: '📚',
+      title: 'Apprends',
+      description: 'Découvre les techniques',
       gradient: 'from-cyan-500 to-blue-600',
       shadowColor: 'shadow-cyan-500/40',
-      decorEmoji: '🏅'
+      decorEmoji: '🥋'
     },
     {
-      id: 'dragon',
-      emoji: '🐉',
-      title: 'Objectif Dragon !',
-      description: 'Le niveau ultime',
+      id: 'entraine',
+      emoji: '💪',
+      title: 'Entraîne-toi',
+      description: 'Pratique au dojo',
+      gradient: 'from-amber-400 to-orange-500',
+      shadowColor: 'shadow-amber-500/40',
+      decorEmoji: '🔥'
+    },
+    {
+      id: 'valide',
+      emoji: '✅',
+      title: 'Valide',
+      description: 'Fais valider par ton Sensei',
+      gradient: 'from-pink-500 to-rose-600',
+      shadowColor: 'shadow-pink-500/40',
+      decorEmoji: '👨‍🏫'
+    },
+    {
+      id: 'progresse',
+      emoji: '🌟',
+      title: 'Progresse',
+      description: 'Gagne XP et monte de niveau',
+      gradient: 'from-violet-500 to-purple-600',
+      shadowColor: 'shadow-violet-500/40',
+      decorEmoji: '⬆️'
+    },
+    {
+      id: 'maitrise',
+      emoji: '👑',
+      title: 'Maîtrise',
+      description: 'Deviens un vrai Ninja !',
       gradient: 'from-red-500 to-orange-600',
       shadowColor: 'shadow-red-500/40',
-      decorEmoji: '🔥'
+      decorEmoji: '🐉'
     }
   ];
 
