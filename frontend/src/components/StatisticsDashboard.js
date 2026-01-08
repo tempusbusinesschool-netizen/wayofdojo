@@ -726,7 +726,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                     </div>
 
                     {/* Blocs d'étapes selon le mode */}
-                    <VisitorStepsBlocks mode={visitorMode} />
+                    <VisitorStepsBlocks mode={visitorMode} onStepClick={onNavigate} />
                   </>
                 )}
               </>
