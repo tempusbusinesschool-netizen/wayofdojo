@@ -4015,7 +4015,8 @@ async def get_user_gamification_stats(user_id: str, credentials: HTTPAuthorizati
             "created_at": datetime.now(timezone.utc).isoformat()
         }
         await db.gamification_stats.insert_one(stats)
-        del stats["_id"] if "_id" in stats else None
+        if "_id" in stats:
+            del stats["_id"]
     
     return stats
 
