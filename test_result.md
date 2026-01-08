@@ -365,6 +365,10 @@ metadata:
 
 test_plan:
   current_focus:
+    - "GET /api/gamification/daily-challenges"
+    - "GET /api/gamification/stats/{user_id}"
+    - "POST /api/gamification/challenge/complete"
+    - "POST /api/gamification/attendance"
     - "Comprendre l'Aïkido tab with Les Sept Plis du Hakama section"
     - "Onboarding Flow (4 screens)"
     - "Paywall Dialog (Ninja and Dojo plans)"
