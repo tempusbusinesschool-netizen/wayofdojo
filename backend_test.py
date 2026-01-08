@@ -210,6 +210,7 @@ class GamificationTester:
             current_attendance = current_stats.get("attendance_count", 0) if current_stats else 0
             
             attendance_data = {
+                "date": datetime.now().strftime("%Y-%m-%d"),
                 "attended": True,
                 "session_type": "regular_training",
                 "notes": "Test attendance for gamification system"
