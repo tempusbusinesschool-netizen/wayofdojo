@@ -434,8 +434,18 @@ function AppContent() {
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-3">
-                <div className="relative w-16 h-16">
+              {/* Logo cliquable - retour à la page d'accueil/sélection */}
+              <button
+                onClick={() => {
+                  // Efface le mode pour revenir à l'écran de sélection
+                  localStorage.removeItem('ninja-aikido-mode');
+                  // Force le rechargement de la page
+                  window.location.reload();
+                }}
+                className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer group"
+                title="Retour à l'accueil"
+              >
+                <div className="relative w-16 h-16 group-hover:scale-105 transition-transform">
                   {/* Yin-Yang style logo in yellow/gold */}
                   <div className="absolute inset-0 rounded-full bg-gradient-to-br from-amber-400 via-yellow-500 to-amber-600 shadow-lg shadow-amber-500/30"></div>
                   <div className="absolute inset-1 rounded-full bg-slate-900 flex items-center justify-center">
@@ -447,11 +457,11 @@ function AppContent() {
                     </div>
                   </div>
                 </div>
-                <div>
-                  <p className="text-sm text-amber-400 font-medium">Aikido</p>
-                  <p className="text-lg md:text-xl text-white font-bold">Techniques d'Aikido</p>
+                <div className="text-left">
+                  <p className="text-sm text-amber-400 font-medium group-hover:text-amber-300 transition-colors">Aikido@Game</p>
+                  <p className="text-lg md:text-xl text-white font-bold group-hover:text-slate-200 transition-colors">Votre parcours Aikido</p>
                 </div>
-              </div>
+              </button>
             </div>
             <div className="flex items-center gap-2">
               {/* User Auth Button */}
