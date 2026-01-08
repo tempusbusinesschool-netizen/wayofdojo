@@ -450,10 +450,15 @@ function AppContent() {
               {/* Logo cliquable - retour à la page d'accueil/sélection */}
               <button
                 onClick={() => {
-                  // Efface le mode pour revenir à l'écran de sélection
-                  localStorage.removeItem('ninja-aikido-mode');
-                  // Force le rechargement de la page
-                  window.location.reload();
+                  // Si on est sur une page de jeu, revenir à l'accueil
+                  if (activePage) {
+                    setActivePage(null);
+                  } else {
+                    // Efface le mode pour revenir à l'écran de sélection
+                    localStorage.removeItem('ninja-aikido-mode');
+                    // Force le rechargement de la page
+                    window.location.reload();
+                  }
                 }}
                 className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer group"
                 title="Retour à l'accueil"
