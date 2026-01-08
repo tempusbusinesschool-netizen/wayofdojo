@@ -1,4 +1,12 @@
-# BUDO JOURNEY - Product Requirements Document
+# Aikido@Game - Product Requirements Document
+
+## ⚠️ RÈGLE IMPORTANTE - NE JAMAIS MODIFIER
+**Le nom "Aikido@Game" est une MARQUE et doit TOUJOURS rester en anglais.**
+- Ne jamais traduire ce nom
+- Ne jamais le modifier
+- Garder la casse exacte : "Aikido@Game"
+
+---
 
 ## Original Problem Statement
 Application web pour le club d'Aikido "Aikido La Rivière". L'application doit servir de référence digitale pour le programme d'entraînement, gérer les adhésions du club et permettre aux utilisateurs de suivre leur progression personnelle avec une forte emphase sur la gamification.
@@ -15,6 +23,7 @@ Application web pour le club d'Aikido "Aikido La Rivière". L'application doit s
 - Architecture multi-dojo
 - Conformité RGPD
 - Interface moderne, sombre, ludique et colorée
+- **2 modes d'affichage** : Enfant (-14 ans) / Adulte (+14 ans) - choix stocké en localStorage (RGPD-compliant)
 
 ## Tech Stack
 - **Frontend**: React, TailwindCSS, Shadcn UI
