@@ -680,21 +680,29 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                     {/* Hero Banner */}
                     <div className="relative overflow-hidden bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-500 rounded-3xl p-6 sm:p-8 md:p-12 mb-6 shadow-2xl border-2 border-orange-400/60">
                       
-                      {/* Femme à gauche - taille +10%, fond gradient assorti */}
+                      {/* Femme à gauche - taille +10%, fondu progressif vers le centre */}
                       <div className="absolute left-0 bottom-0 hidden md:block z-20 pointer-events-none overflow-hidden rounded-bl-3xl">
                         <img 
                           src={AIKIDO_CHARACTERS.FEMME_SEULE} 
                           alt="Sensei Femme" 
                           className="h-44 lg:h-52 xl:h-60 object-cover object-top"
+                          style={{
+                            maskImage: 'linear-gradient(to right, black 60%, transparent 100%)',
+                            WebkitMaskImage: 'linear-gradient(to right, black 60%, transparent 100%)'
+                          }}
                         />
                       </div>
                       
-                      {/* Homme à droite - taille +10%, fond gradient assorti */}
+                      {/* Homme à droite - taille +10%, fondu progressif vers le centre */}
                       <div className="absolute right-0 bottom-0 hidden md:block z-20 pointer-events-none overflow-hidden rounded-br-3xl">
                         <img 
                           src={AIKIDO_CHARACTERS.HOMME_SEUL} 
                           alt="Sensei Homme" 
                           className="h-44 lg:h-52 xl:h-60 object-cover object-top"
+                          style={{
+                            maskImage: 'linear-gradient(to left, black 60%, transparent 100%)',
+                            WebkitMaskImage: 'linear-gradient(to left, black 60%, transparent 100%)'
+                          }}
                         />
                       </div>
                       
