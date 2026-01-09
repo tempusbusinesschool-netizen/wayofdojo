@@ -1,5 +1,9 @@
 import React from 'react';
 
+// Images des agents IA humoristiques
+const JEUNE_NINJA_IMG = "https://static.prod-images.emergentagent.com/jobs/0861cc2c-f338-47d7-8ee3-39d115cba3cc/images/a2433f72eacc15b9fe2fe99560b065863ed18c4c5b09aeeb62fd243715210579.png";
+const NINJA_CONFIRME_IMG = "https://static.prod-images.emergentagent.com/jobs/0861cc2c-f338-47d7-8ee3-39d115cba3cc/images/bb4bc2240c4c986f8c3067bf4bffa318345674b0d4d81fd7e9371a0bca1ce741.png";
+
 /**
  * AgeSelector - Écran de sélection du mode (Enfant/Adulte)
  * Stocke le choix en localStorage pour personnaliser l'expérience
@@ -42,14 +46,14 @@ const AgeSelector = ({ onSelect }) => {
         </p>
       </div>
 
-      {/* Les 2 gros boutons */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 max-w-3xl mx-auto">
+      {/* Les 2 gros boutons avec images IA */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 max-w-4xl mx-auto">
         
         {/* Bouton ENFANT */}
         <button
           onClick={() => handleSelect('enfant')}
           data-testid="mode-enfant-btn"
-          className="group relative overflow-hidden rounded-2xl sm:rounded-3xl p-6 sm:p-8
+          className="group relative overflow-hidden rounded-2xl sm:rounded-3xl
             bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-500
             hover:from-pink-400 hover:via-purple-400 hover:to-indigo-400
             transform hover:scale-[1.02] sm:hover:scale-105
@@ -57,22 +61,30 @@ const AgeSelector = ({ onSelect }) => {
             shadow-xl shadow-purple-500/40 hover:shadow-purple-500/60
             border-2 border-white/20 hover:border-white/40"
         >
-          {/* Étoiles décoratives */}
-          <div className="absolute top-3 right-3 text-lg sm:text-xl animate-pulse">✨</div>
-          <div className="absolute bottom-3 left-3 text-lg sm:text-xl">⭐</div>
+          {/* Image Agent IA */}
+          <div className="relative">
+            <img 
+              src={JEUNE_NINJA_IMG} 
+              alt="Jeune Ninja - Agent IA"
+              className="w-full h-48 sm:h-56 md:h-64 object-cover object-top"
+            />
+            {/* Overlay gradient pour lisibilité */}
+            <div className="absolute inset-0 bg-gradient-to-t from-purple-900/90 via-purple-900/30 to-transparent" />
+            
+            {/* Étoiles décoratives */}
+            <div className="absolute top-3 right-3 text-xl sm:text-2xl animate-pulse">✨</div>
+            <div className="absolute top-3 left-3 text-xl sm:text-2xl">⭐</div>
+          </div>
           
-          {/* Contenu */}
-          <div className="relative z-10 text-center">
-            <div className="text-4xl sm:text-5xl mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
-              🧒
-            </div>
-            <h2 className="text-lg sm:text-xl font-bold text-white mb-1">
+          {/* Contenu texte */}
+          <div className="relative z-10 p-4 sm:p-5 -mt-8">
+            <h2 className="text-xl sm:text-2xl font-bold text-white mb-1">
               Jeune Ninja
             </h2>
-            <p className="text-white/80 text-xs sm:text-sm">
+            <p className="text-white/80 text-sm mb-2">
               Moins de 14 ans
             </p>
-            <div className="mt-2 sm:mt-3 flex justify-center gap-2 text-lg sm:text-xl">
+            <div className="flex justify-center gap-2 text-xl">
               <span>🎮</span>
               <span>🏆</span>
               <span>🐉</span>
@@ -88,7 +100,7 @@ const AgeSelector = ({ onSelect }) => {
         <button
           onClick={() => handleSelect('adulte')}
           data-testid="mode-adulte-btn"
-          className="group relative overflow-hidden rounded-2xl sm:rounded-3xl p-6 sm:p-8
+          className="group relative overflow-hidden rounded-2xl sm:rounded-3xl
             bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900
             hover:from-slate-600 hover:via-slate-700 hover:to-slate-800
             transform hover:scale-[1.02] sm:hover:scale-105
@@ -96,22 +108,30 @@ const AgeSelector = ({ onSelect }) => {
             shadow-xl shadow-slate-900/60 hover:shadow-slate-700/60
             border-2 border-amber-500/30 hover:border-amber-400/50"
         >
-          {/* Symboles décoratifs */}
-          <div className="absolute top-3 right-3 text-lg sm:text-xl text-amber-400/60">☯️</div>
-          <div className="absolute bottom-3 left-3 text-lg sm:text-xl text-amber-400/60">🥋</div>
+          {/* Image Agent IA */}
+          <div className="relative">
+            <img 
+              src={NINJA_CONFIRME_IMG} 
+              alt="Ninja Confirmé - Agent IA"
+              className="w-full h-48 sm:h-56 md:h-64 object-cover object-top"
+            />
+            {/* Overlay gradient pour lisibilité */}
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/30 to-transparent" />
+            
+            {/* Symboles décoratifs */}
+            <div className="absolute top-3 right-3 text-xl sm:text-2xl text-amber-400/80">☯️</div>
+            <div className="absolute top-3 left-3 text-xl sm:text-2xl text-amber-400/80">🥋</div>
+          </div>
           
-          {/* Contenu */}
-          <div className="relative z-10 text-center">
-            <div className="text-4xl sm:text-5xl mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
-              🧑
-            </div>
-            <h2 className="text-lg sm:text-xl font-bold text-white mb-1">
+          {/* Contenu texte */}
+          <div className="relative z-10 p-4 sm:p-5 -mt-8">
+            <h2 className="text-xl sm:text-2xl font-bold text-white mb-1">
               Ninja Confirmé
             </h2>
-            <p className="text-slate-400 text-xs sm:text-sm">
+            <p className="text-slate-400 text-sm mb-2">
               Plus de 14 ans
             </p>
-            <div className="mt-2 sm:mt-3 flex justify-center gap-2 text-lg sm:text-xl">
+            <div className="flex justify-center gap-2 text-xl">
               <span>📊</span>
               <span>🎯</span>
               <span>📜</span>
