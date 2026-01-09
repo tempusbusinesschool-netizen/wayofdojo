@@ -14,11 +14,11 @@ export const AIKIDO_CHARACTERS = {
   // Duo adultes - Femme et homme pour les plus de 14 ans
   NINJA_CONFIRME: "https://static.prod-images.emergentagent.com/jobs/0861cc2c-f338-47d7-8ee3-39d115cba3cc/images/11511822157d76c591ac8107c5dc1cd0fbe68fdec64747472c56fa176ae705d0.png",
 
-  // Homme seul - pour superposition bandeau (détouré, fond transparent)
-  HOMME_SEUL: "https://static.prod-images.emergentagent.com/jobs/e17d73c6-86f0-4c7d-be1f-5c1a2a26eb2f/images/82c2c0b6c38871e6b9e3edf41035ef4d199564bd8aa31ad9fd01960267ae4b02.png",
+  // Homme seul - pour superposition bandeau (fond gradient bleu-cyan assorti)
+  HOMME_SEUL: "https://static.prod-images.emergentagent.com/jobs/e17d73c6-86f0-4c7d-be1f-5c1a2a26eb2f/images/d67c33c961c5b2b0f6b82a7f873c67abc96cda02952539c41b54a53f07c946c6.png",
   
-  // Femme seule - pour superposition bandeau (détourée, fond transparent)
-  FEMME_SEULE: "https://static.prod-images.emergentagent.com/jobs/e17d73c6-86f0-4c7d-be1f-5c1a2a26eb2f/images/b47b48233b25bf4dc206128c563176b6895004decd86a17b7b2757af0dcb4eec.png",
+  // Femme seule - pour superposition bandeau (fond gradient violet-bleu assorti)
+  FEMME_SEULE: "https://static.prod-images.emergentagent.com/jobs/e17d73c6-86f0-4c7d-be1f-5c1a2a26eb2f/images/554b5a071a6815e8e623bf918f7f37018f1095cef2b16278970a0f1206a10624.png",
 
   // ═══════════════════════════════════════════════════════════════
   // ENFANT - Différentes poses et émotions
