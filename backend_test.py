@@ -450,8 +450,8 @@ class GamificationTester:
         try:
             # First try to login
             response = self.session.post(f"{BACKEND_URL}/auth/login", json={
-                "email": TEST_USER_EMAIL,
-                "password": TEST_USER_PASSWORD
+                "email": PARENT_EMAIL,
+                "password": PARENT_PASSWORD
             })
             
             if response.status_code == 200:
@@ -459,7 +459,7 @@ class GamificationTester:
                 self.auth_token = data.get("token")
                 self.user_id = data.get("user", {}).get("id")
                 self.session.headers.update({"Authorization": f"Bearer {self.auth_token}"})
-                self.log_result("User Login", True, f"Successfully logged in test user: {TEST_USER_EMAIL}")
+                self.log_result("User Login", True, f"Successfully logged in test user: {PARENT_EMAIL}")
                 return True
             
             # If login fails, try to register
@@ -467,8 +467,8 @@ class GamificationTester:
                 register_response = self.session.post(f"{BACKEND_URL}/auth/register", json={
                     "first_name": "Test",
                     "last_name": "Aikido",
-                    "email": TEST_USER_EMAIL,
-                    "password": TEST_USER_PASSWORD
+                    "email": PARENT_EMAIL,
+                    "password": PARENT_PASSWORD
                 })
                 
                 if register_response.status_code == 200:
@@ -476,7 +476,7 @@ class GamificationTester:
                     self.auth_token = data.get("token")
                     self.user_id = data.get("user", {}).get("id")
                     self.session.headers.update({"Authorization": f"Bearer {self.auth_token}"})
-                    self.log_result("User Registration", True, f"Successfully registered test user: {TEST_USER_EMAIL}")
+                    self.log_result("User Registration", True, f"Successfully registered test user: {PARENT_EMAIL}")
                     return True
                 else:
                     self.log_result("User Registration", False, f"Failed to register: {register_response.status_code}", 
