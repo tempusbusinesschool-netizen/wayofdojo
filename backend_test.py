@@ -401,9 +401,18 @@ class ParentChildValidationTester:
         print("📊 Testing child stats after validation...")
         final_stats = self.test_get_child_stats()
         if final_stats and initial_stats:
-            final_xp = final_stats.get("total_xp", 0)
+            initial_xp = initial_stats.get("stats", {}).get("total_xp", 0) if initial_stats else 0
+            final_xp = final_stats.get("stats", {}).get("total_xp", 0) if final_stats else 0
             xp_gained = final_xp - initial_xp
             print(f"📈 Child XP Progress: {initial_xp} → {final_xp} (+{xp_gained})")
+            
+            # Check if child has the "Validé par les parents" badge
+            badges = final_stats.get("stats", {}).get("badges", [])
+            parent_badge = any(badge.get("badge_id") == "parent_approved" for badge in badges)
+            if parent_badge:
+                print("🏆 Child has earned 'Validé par les parents' badge!")
+            else:
+                print("⚠️ Child has not yet earned 'Validé par les parents' badge")
         
         # Step 8: Test unlinking (optional - for cleanup)
         print("🔓 Testing child unlinking...")
