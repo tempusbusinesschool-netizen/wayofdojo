@@ -4436,6 +4436,334 @@ async def get_daily_challenges():
     return challenges
 
 
+# ═══════════════════════════════════════════════════════════════════════════════════
+# PARENT-CHILD RELATIONSHIP ENDPOINTS
+# ═══════════════════════════════════════════════════════════════════════════════════
+
+class LinkChildRequest(BaseModel):
+    """Request to link a child to a parent account"""
+    child_email: str
+    
+class ParentValidationRequest(BaseModel):
+    """Request to validate/reject a child's challenge"""
+    approved: bool
+    comment: Optional[str] = None
+
+@api_router.post("/parent/link-child")
+async def link_child_to_parent(
+    request: LinkChildRequest,
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+):
+    """Link a child account to the parent's account"""
+    if not credentials:
+        raise HTTPException(status_code=401, detail="Authentication required")
+    
+    # Get parent from token
+    try:
+        payload = jwt.decode(credentials.credentials, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+        parent_id = payload.get("user_id")
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    
+    parent = await db.users.find_one({"id": parent_id}, {"_id": 0})
+    if not parent:
+        raise HTTPException(status_code=404, detail="Parent not found")
+    
+    # Find child by email
+    child = await db.users.find_one({"email": request.child_email.lower()}, {"_id": 0})
+    if not child:
+        raise HTTPException(status_code=404, detail="Compte enfant non trouvé avec cet email")
+    
+    # Check if child already has a parent
+    if child.get("parent_id") and child["parent_id"] != parent_id:
+        raise HTTPException(status_code=400, detail="Cet enfant est déjà lié à un autre parent")
+    
+    # Prevent self-linking
+    if child["id"] == parent_id:
+        raise HTTPException(status_code=400, detail="Vous ne pouvez pas vous lier à vous-même")
+    
+    # Update child with parent_id
+    await db.users.update_one(
+        {"id": child["id"]},
+        {"$set": {"parent_id": parent_id}}
+    )
+    
+    # Update parent with child_id (add to list)
+    await db.users.update_one(
+        {"id": parent_id},
+        {"$addToSet": {"children_ids": child["id"]}}
+    )
+    
+    return {
+        "success": True,
+        "message": f"Enfant {child['first_name']} lié avec succès",
+        "child": {
+            "id": child["id"],
+            "first_name": child["first_name"],
+            "last_name": child["last_name"],
+            "email": child["email"]
+        }
+    }
+
+@api_router.delete("/parent/unlink-child/{child_id}")
+async def unlink_child_from_parent(
+    child_id: str,
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+):
+    """Unlink a child from parent's account"""
+    if not credentials:
+        raise HTTPException(status_code=401, detail="Authentication required")
+    
+    try:
+        payload = jwt.decode(credentials.credentials, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+        parent_id = payload.get("user_id")
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    
+    # Remove parent_id from child
+    await db.users.update_one(
+        {"id": child_id, "parent_id": parent_id},
+        {"$unset": {"parent_id": ""}}
+    )
+    
+    # Remove child from parent's list
+    await db.users.update_one(
+        {"id": parent_id},
+        {"$pull": {"children_ids": child_id}}
+    )
+    
+    return {"success": True, "message": "Enfant délié avec succès"}
+
+@api_router.get("/parent/children")
+async def get_parent_children(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    """Get list of children linked to parent account"""
+    if not credentials:
+        raise HTTPException(status_code=401, detail="Authentication required")
+    
+    try:
+        payload = jwt.decode(credentials.credentials, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+        parent_id = payload.get("user_id")
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    
+    parent = await db.users.find_one({"id": parent_id}, {"_id": 0})
+    if not parent:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    children_ids = parent.get("children_ids", [])
+    
+    children = []
+    for child_id in children_ids:
+        child = await db.users.find_one({"id": child_id}, {"_id": 0, "password_hash": 0})
+        if child:
+            # Get child's gamification stats
+            stats = await db.gamification_stats.find_one({"user_id": child_id}, {"_id": 0})
+            children.append({
+                "id": child["id"],
+                "first_name": child["first_name"],
+                "last_name": child["last_name"],
+                "email": child["email"],
+                "belt_level": child.get("belt_level", "6e_kyu"),
+                "gamification": {
+                    "total_xp": stats.get("total_xp", 0) if stats else 0,
+                    "level": stats.get("level", 1) if stats else 1,
+                    "level_name": stats.get("level_name", "Petit Scarabée") if stats else "Petit Scarabée",
+                    "pending_validations": stats.get("pending_validations", []) if stats else []
+                }
+            })
+    
+    return {"children": children}
+
+@api_router.get("/parent/pending-validations")
+async def get_parent_pending_validations(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    """Get all pending validations for parent's children"""
+    if not credentials:
+        raise HTTPException(status_code=401, detail="Authentication required")
+    
+    try:
+        payload = jwt.decode(credentials.credentials, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+        parent_id = payload.get("user_id")
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    
+    parent = await db.users.find_one({"id": parent_id}, {"_id": 0})
+    if not parent:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    children_ids = parent.get("children_ids", [])
+    
+    all_pending = []
+    for child_id in children_ids:
+        child = await db.users.find_one({"id": child_id}, {"_id": 0})
+        stats = await db.gamification_stats.find_one({"user_id": child_id}, {"_id": 0})
+        
+        if stats and stats.get("pending_validations"):
+            for pending in stats["pending_validations"]:
+                all_pending.append({
+                    "child_id": child_id,
+                    "child_name": f"{child['first_name']} {child['last_name']}" if child else "Inconnu",
+                    "challenge_id": pending.get("challenge_id"),
+                    "challenge_name": pending.get("challenge_name"),
+                    "challenge_type": pending.get("challenge_type"),
+                    "xp_reward": pending.get("xp_reward", 0),
+                    "completed_at": pending.get("completed_at"),
+                    "status": pending.get("status", "pending")
+                })
+    
+    # Sort by completed_at (most recent first)
+    all_pending.sort(key=lambda x: x.get("completed_at", ""), reverse=True)
+    
+    return {"pending_validations": all_pending, "count": len(all_pending)}
+
+@api_router.post("/parent/validate/{child_id}/{challenge_id}")
+async def parent_validate_challenge(
+    child_id: str,
+    challenge_id: str,
+    request: ParentValidationRequest,
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+):
+    """Parent validates or rejects a child's challenge"""
+    if not credentials:
+        raise HTTPException(status_code=401, detail="Authentication required")
+    
+    try:
+        payload = jwt.decode(credentials.credentials, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+        parent_id = payload.get("user_id")
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    
+    # Verify parent-child relationship
+    parent = await db.users.find_one({"id": parent_id}, {"_id": 0})
+    if not parent or child_id not in parent.get("children_ids", []):
+        raise HTTPException(status_code=403, detail="Vous n'êtes pas autorisé à valider les défis de cet enfant")
+    
+    child = await db.users.find_one({"id": child_id}, {"_id": 0})
+    if not child:
+        raise HTTPException(status_code=404, detail="Enfant non trouvé")
+    
+    # Find the pending validation
+    stats = await db.gamification_stats.find_one({"user_id": child_id})
+    if not stats:
+        raise HTTPException(status_code=404, detail="Stats non trouvées pour cet enfant")
+    
+    pending = None
+    for p in stats.get("pending_validations", []):
+        if p.get("challenge_id") == challenge_id:
+            pending = p
+            break
+    
+    if not pending:
+        raise HTTPException(status_code=404, detail="Défi en attente non trouvé")
+    
+    now = datetime.now(timezone.utc)
+    new_status = ChallengeStatus.VALIDATED if request.approved else ChallengeStatus.REJECTED
+    xp_to_award = pending.get("xp_reward", 0) if request.approved else 0
+    
+    # Update challenge status in completed_challenges
+    await db.gamification_stats.update_one(
+        {"user_id": child_id},
+        {
+            "$pull": {"pending_validations": {"challenge_id": challenge_id}},
+            "$set": {
+                "completed_challenges.$[elem].status": new_status,
+                "completed_challenges.$[elem].validated_at": now.isoformat(),
+                "completed_challenges.$[elem].validated_by": parent_id,
+                "completed_challenges.$[elem].validation_comment": request.comment
+            }
+        },
+        array_filters=[{"elem.challenge_id": challenge_id}]
+    )
+    
+    # Award XP if approved
+    if request.approved and xp_to_award > 0:
+        current_xp = stats.get("total_xp", 0)
+        new_total_xp = current_xp + xp_to_award
+        level_info = get_level_from_xp(new_total_xp)
+        
+        await db.gamification_stats.update_one(
+            {"user_id": child_id},
+            {
+                "$set": {
+                    "total_xp": new_total_xp,
+                    "level": level_info["level"],
+                    "level_name": level_info["name"]
+                }
+            }
+        )
+        
+        # Check for badges
+        new_badges = []
+        existing_badges = [b.get("badge_id") for b in stats.get("badges", [])]
+        
+        if "parent_approved" not in existing_badges:
+            new_badge = {
+                "badge_id": "parent_approved",
+                "badge_name": "Validé par les parents",
+                "badge_icon": "👨‍👩‍👧",
+                "badge_description": "Premier défi validé par un parent",
+                "awarded_at": now.isoformat()
+            }
+            new_badges.append(new_badge)
+            await db.gamification_stats.update_one(
+                {"user_id": child_id},
+                {"$push": {"badges": new_badge}}
+            )
+    
+    return {
+        "success": True,
+        "approved": request.approved,
+        "child_name": f"{child['first_name']} {child['last_name']}",
+        "challenge_name": pending.get("challenge_name"),
+        "xp_awarded": xp_to_award if request.approved else 0,
+        "message": f"Défi {'validé' if request.approved else 'refusé'} pour {child['first_name']}"
+    }
+
+@api_router.get("/parent/child-stats/{child_id}")
+async def get_child_stats_for_parent(
+    child_id: str,
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+):
+    """Get detailed stats for a specific child"""
+    if not credentials:
+        raise HTTPException(status_code=401, detail="Authentication required")
+    
+    try:
+        payload = jwt.decode(credentials.credentials, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+        parent_id = payload.get("user_id")
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=401, detail="Invalid token")
+    
+    # Verify parent-child relationship
+    parent = await db.users.find_one({"id": parent_id}, {"_id": 0})
+    if not parent or child_id not in parent.get("children_ids", []):
+        raise HTTPException(status_code=403, detail="Accès non autorisé")
+    
+    child = await db.users.find_one({"id": child_id}, {"_id": 0, "password_hash": 0})
+    if not child:
+        raise HTTPException(status_code=404, detail="Enfant non trouvé")
+    
+    stats = await db.gamification_stats.find_one({"user_id": child_id}, {"_id": 0})
+    
+    return {
+        "child": {
+            "id": child["id"],
+            "first_name": child["first_name"],
+            "last_name": child["last_name"],
+            "belt_level": child.get("belt_level", "6e_kyu")
+        },
+        "stats": stats or {
+            "total_xp": 0,
+            "level": 1,
+            "level_name": "Petit Scarabée",
+            "streak_days": 0,
+            "badges": [],
+            "completed_challenges": [],
+            "pending_validations": [],
+            "attendance_count": 0
+        }
+    }
+
+
 # Include the router in the main app
 app.include_router(api_router)
 
