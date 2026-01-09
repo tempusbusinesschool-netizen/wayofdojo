@@ -680,23 +680,21 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                     {/* Hero Banner */}
                     <div className="relative overflow-hidden bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-500 rounded-3xl p-6 sm:p-8 md:p-12 mb-6 shadow-2xl border-2 border-orange-400/60">
                       
-                      {/* Femme à gauche (sans fond) */}
+                      {/* Femme à gauche */}
                       <div className="absolute left-2 bottom-0 hidden md:block z-20 pointer-events-none">
                         <img 
                           src={AIKIDO_CHARACTERS.FEMME_SEULE} 
                           alt="Sensei Femme" 
-                          className="h-36 lg:h-44 xl:h-52 object-contain drop-shadow-lg"
-                          style={{ filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.3))' }}
+                          className="h-40 lg:h-48 xl:h-56 object-contain"
                         />
                       </div>
                       
-                      {/* Homme à droite (sans fond) */}
+                      {/* Homme à droite */}
                       <div className="absolute right-2 bottom-0 hidden md:block z-20 pointer-events-none">
                         <img 
                           src={AIKIDO_CHARACTERS.HOMME_SEUL} 
                           alt="Sensei Homme" 
-                          className="h-36 lg:h-44 xl:h-52 object-contain drop-shadow-lg"
-                          style={{ filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.3))' }}
+                          className="h-40 lg:h-48 xl:h-56 object-contain"
                         />
                       </div>
                       
