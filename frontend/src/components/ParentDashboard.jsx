@@ -295,7 +295,11 @@ const ParentDashboard = ({ isAuthenticated, onRefreshData }) => {
         <CardContent>
           {children.length === 0 ? (
             <div className="text-center py-8">
-              <Users className="w-12 h-12 mx-auto mb-3 text-slate-600" />
+              <img 
+                src={AIKIDO_CHARACTERS.ENFANT_MEDITATION} 
+                alt="En attente" 
+                className="w-32 h-32 mx-auto mb-4 object-contain"
+              />
               <p className="text-slate-400 mb-4">Aucun enfant lié à votre compte</p>
               <Button
                 onClick={() => setShowLinkDialog(true)}
