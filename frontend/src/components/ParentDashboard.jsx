@@ -128,19 +128,27 @@ const ParentDashboard = ({ isAuthenticated, onRefreshData }) => {
       
       if (approved) {
         toast.success(
-          <div className="flex items-center gap-2">
-            <span className="text-2xl">✅</span>
+          <div className="flex items-center gap-3">
+            <img 
+              src={AIKIDO_CHARACTERS.ADULTES_VALIDATION} 
+              alt="Validé" 
+              className="w-16 h-16 object-contain"
+            />
             <div>
-              <p className="font-bold">{response.data.message}</p>
-              <p className="text-xs opacity-80">+{response.data.xp_awarded} XP accordés</p>
+              <p className="font-bold text-slate-900">{response.data.message}</p>
+              <p className="text-xs text-slate-600">+{response.data.xp_awarded} XP accordés à votre enfant 🎉</p>
             </div>
           </div>
         );
       } else {
         toast.info(
-          <div className="flex items-center gap-2">
-            <span className="text-2xl">❌</span>
-            <span>Défi refusé pour {response.data.child_name}</span>
+          <div className="flex items-center gap-3">
+            <img 
+              src={AIKIDO_CHARACTERS.ENFANT_CONFUS} 
+              alt="Refusé" 
+              className="w-14 h-14 object-contain"
+            />
+            <span className="text-slate-900">Défi refusé pour {response.data.child_name}</span>
           </div>
         );
       }
