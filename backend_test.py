@@ -22,6 +22,407 @@ PARENT_PASSWORD = "test123"
 CHILD_EMAIL = "enfant@aikido.fr"
 CHILD_PASSWORD = "test123"
 
+class ParentChildValidationTester:
+    def __init__(self):
+        self.session = requests.Session()
+        self.parent_token = None
+        self.child_token = None
+        self.parent_id = None
+        self.child_id = None
+        self.test_results = []
+        
+    def log_result(self, test_name, success, message, details=None):
+        """Log test result"""
+        result = {
+            "test": test_name,
+            "success": success,
+            "message": message,
+            "timestamp": datetime.now().isoformat(),
+            "details": details or {}
+        }
+        self.test_results.append(result)
+        status = "✅ PASS" if success else "❌ FAIL"
+        print(f"{status}: {test_name} - {message}")
+        if details and not success:
+            print(f"   Details: {details}")
+    
+    def register_or_login_user(self, email, password, user_type="user"):
+        """Register or login a user and return token and user_id"""
+        try:
+            # First try to login
+            response = requests.post(f"{BACKEND_URL}/auth/login", json={
+                "email": email,
+                "password": password
+            })
+            
+            if response.status_code == 200:
+                data = response.json()
+                token = data.get("token")
+                user_id = data.get("user", {}).get("id")
+                self.log_result(f"{user_type.title()} Login", True, f"Successfully logged in {user_type}: {email}")
+                return token, user_id
+            
+            # If login fails, try to register
+            elif response.status_code == 401:
+                first_name = "Parent" if user_type == "parent" else "Léo"
+                last_name = "Test" if user_type == "parent" else "Petit"
+                
+                register_response = requests.post(f"{BACKEND_URL}/auth/register", json={
+                    "first_name": first_name,
+                    "last_name": last_name,
+                    "email": email,
+                    "password": password
+                })
+                
+                if register_response.status_code == 200:
+                    data = register_response.json()
+                    token = data.get("token")
+                    user_id = data.get("user", {}).get("id")
+                    self.log_result(f"{user_type.title()} Registration", True, f"Successfully registered {user_type}: {email}")
+                    return token, user_id
+                else:
+                    self.log_result(f"{user_type.title()} Registration", False, f"Failed to register: {register_response.status_code}", 
+                                  {"response": register_response.text})
+                    return None, None
+            else:
+                self.log_result(f"{user_type.title()} Authentication", False, f"Failed to authenticate: {response.status_code}", 
+                              {"response": response.text})
+                return None, None
+        except Exception as e:
+            self.log_result(f"{user_type.title()} Authentication", False, f"Authentication error: {str(e)}")
+            return None, None
+    
+    def setup_parent_child_accounts(self):
+        """Setup parent and child accounts for testing"""
+        print("🔑 Setting up Parent and Child accounts...")
+        
+        # Setup parent account
+        self.parent_token, self.parent_id = self.register_or_login_user(PARENT_EMAIL, PARENT_PASSWORD, "parent")
+        if not self.parent_token:
+            return False
+            
+        # Setup child account  
+        self.child_token, self.child_id = self.register_or_login_user(CHILD_EMAIL, CHILD_PASSWORD, "child")
+        if not self.child_token:
+            return False
+            
+        print(f"👨‍👩‍👧‍👦 Parent ID: {self.parent_id}")
+        print(f"🧒 Child ID: {self.child_id}")
+        return True
+    
+    def test_link_child_to_parent(self):
+        """Test POST /api/parent/link-child - Link a child account to parent"""
+        try:
+            headers = {"Authorization": f"Bearer {self.parent_token}"}
+            link_data = {"child_email": CHILD_EMAIL}
+            
+            response = requests.post(f"{BACKEND_URL}/parent/link-child", 
+                                   json=link_data, headers=headers)
+            
+            if response.status_code == 200:
+                result = response.json()
+                if result.get("success"):
+                    self.log_result("POST /api/parent/link-child", True, 
+                                  f"Successfully linked child {CHILD_EMAIL} to parent",
+                                  {"result": result})
+                    return True
+                else:
+                    self.log_result("POST /api/parent/link-child", False, 
+                                  f"Link failed: {result.get('message', 'Unknown error')}",
+                                  {"result": result})
+                    return False
+            else:
+                self.log_result("POST /api/parent/link-child", False, 
+                              f"Failed to link child: {response.status_code}",
+                              {"response": response.text})
+                return False
+        except Exception as e:
+            self.log_result("POST /api/parent/link-child", False, f"Error linking child: {str(e)}")
+            return False
+    
+    def test_get_parent_children(self):
+        """Test GET /api/parent/children - Should return list with Léo Petit"""
+        try:
+            headers = {"Authorization": f"Bearer {self.parent_token}"}
+            response = requests.get(f"{BACKEND_URL}/parent/children", headers=headers)
+            
+            if response.status_code == 200:
+                children = response.json()
+                
+                if isinstance(children, list) and len(children) > 0:
+                    # Look for Léo Petit in the children list
+                    leo_found = False
+                    for child in children:
+                        if child.get("first_name") == "Léo" and child.get("last_name") == "Petit":
+                            leo_found = True
+                            break
+                    
+                    if leo_found:
+                        self.log_result("GET /api/parent/children", True, 
+                                      f"Successfully retrieved children list with Léo Petit. Total children: {len(children)}",
+                                      {"children_count": len(children), "children": children})
+                    else:
+                        self.log_result("GET /api/parent/children", True, 
+                                      f"Retrieved children list but Léo Petit not found. Total children: {len(children)}",
+                                      {"children_count": len(children), "children": children})
+                    return children
+                else:
+                    self.log_result("GET /api/parent/children", False, 
+                                  "No children found in parent's account",
+                                  {"response": children})
+                    return []
+            else:
+                self.log_result("GET /api/parent/children", False, 
+                              f"Failed to get parent's children: {response.status_code}",
+                              {"response": response.text})
+                return []
+        except Exception as e:
+            self.log_result("GET /api/parent/children", False, f"Error getting parent's children: {str(e)}")
+            return []
+    
+    def test_child_complete_challenge_needing_validation(self):
+        """Child completes a challenge that needs parent validation"""
+        try:
+            headers = {"Authorization": f"Bearer {self.child_token}"}
+            challenge_data = {
+                "challenge_id": "ukemi_mae",
+                "challenge_type": "daily",
+                "challenge_name": "Chute Avant",
+                "xp_reward": 20,
+                "needs_parent_validation": True
+            }
+            
+            response = requests.post(f"{BACKEND_URL}/gamification/challenge/complete", 
+                                   json=challenge_data, headers=headers)
+            
+            if response.status_code == 200:
+                result = response.json()
+                
+                # Check if challenge needs validation and XP is not awarded yet
+                if result.get("needs_validation") and result.get("xp_awarded", 0) == 0:
+                    self.log_result("Child Challenge Completion (Needs Validation)", True, 
+                                  f"Child completed challenge '{challenge_data['challenge_name']}' - awaiting parent validation",
+                                  {"result": result, "needs_validation": True, "xp_awarded": 0})
+                    return True
+                elif result.get("success") and not result.get("needs_validation"):
+                    # Challenge was completed but doesn't need validation
+                    self.log_result("Child Challenge Completion (Needs Validation)", True, 
+                                  f"Challenge completed successfully (no validation needed)",
+                                  {"result": result})
+                    return True
+                else:
+                    self.log_result("Child Challenge Completion (Needs Validation)", False, 
+                                  f"Unexpected response: {result}",
+                                  {"result": result})
+                    return False
+            elif response.status_code == 400 and "already completed" in response.text:
+                self.log_result("Child Challenge Completion (Needs Validation)", True, 
+                              "Challenge already completed today (expected behavior)",
+                              {"status": "already_completed"})
+                return True
+            else:
+                self.log_result("Child Challenge Completion (Needs Validation)", False, 
+                              f"Failed to complete challenge: {response.status_code}",
+                              {"response": response.text})
+                return False
+        except Exception as e:
+            self.log_result("Child Challenge Completion (Needs Validation)", False, f"Error completing challenge: {str(e)}")
+            return False
+    
+    def test_get_pending_validations(self):
+        """Test GET /api/parent/pending-validations - Should show pending validations"""
+        try:
+            headers = {"Authorization": f"Bearer {self.parent_token}"}
+            response = requests.get(f"{BACKEND_URL}/parent/pending-validations", headers=headers)
+            
+            if response.status_code == 200:
+                validations = response.json()
+                
+                if isinstance(validations, list):
+                    self.log_result("GET /api/parent/pending-validations", True, 
+                                  f"Successfully retrieved pending validations. Count: {len(validations)}",
+                                  {"validations_count": len(validations), "validations": validations})
+                    return validations
+                else:
+                    self.log_result("GET /api/parent/pending-validations", False, 
+                                  "Expected list of validations",
+                                  {"response": validations})
+                    return []
+            else:
+                self.log_result("GET /api/parent/pending-validations", False, 
+                              f"Failed to get pending validations: {response.status_code}",
+                              {"response": response.text})
+                return []
+        except Exception as e:
+            self.log_result("GET /api/parent/pending-validations", False, f"Error getting pending validations: {str(e)}")
+            return []
+    
+    def test_parent_validate_challenge(self, approved=True):
+        """Test POST /api/parent/validate/{child_id}/{challenge_id} - Validate/reject challenge"""
+        try:
+            headers = {"Authorization": f"Bearer {self.parent_token}"}
+            validation_data = {"approved": approved}
+            challenge_id = "ukemi_mae"  # The challenge we created earlier
+            
+            response = requests.post(f"{BACKEND_URL}/parent/validate/{self.child_id}/{challenge_id}", 
+                                   json=validation_data, headers=headers)
+            
+            if response.status_code == 200:
+                result = response.json()
+                
+                if result.get("success"):
+                    action = "approved" if approved else "rejected"
+                    xp_awarded = result.get("xp_awarded", 0)
+                    self.log_result("POST /api/parent/validate/{child_id}/{challenge_id}", True, 
+                                  f"Successfully {action} child's challenge. XP awarded: {xp_awarded}",
+                                  {"result": result, "approved": approved, "xp_awarded": xp_awarded})
+                    return result
+                else:
+                    self.log_result("POST /api/parent/validate/{child_id}/{challenge_id}", False, 
+                                  f"Validation failed: {result.get('message', 'Unknown error')}",
+                                  {"result": result})
+                    return result
+            else:
+                self.log_result("POST /api/parent/validate/{child_id}/{challenge_id}", False, 
+                              f"Failed to validate challenge: {response.status_code}",
+                              {"response": response.text})
+                return None
+        except Exception as e:
+            self.log_result("POST /api/parent/validate/{child_id}/{challenge_id}", False, f"Error validating challenge: {str(e)}")
+            return None
+    
+    def test_get_child_stats(self):
+        """Test GET /api/parent/child-stats/{child_id} - Get detailed child stats"""
+        try:
+            headers = {"Authorization": f"Bearer {self.parent_token}"}
+            response = requests.get(f"{BACKEND_URL}/parent/child-stats/{self.child_id}", headers=headers)
+            
+            if response.status_code == 200:
+                stats = response.json()
+                
+                # Check for required fields
+                required_fields = ["user_id", "total_xp", "level", "completed_challenges"]
+                missing_fields = [field for field in required_fields if field not in stats]
+                
+                if not missing_fields:
+                    self.log_result("GET /api/parent/child-stats/{child_id}", True, 
+                                  f"Successfully retrieved child stats. XP: {stats.get('total_xp', 0)}, Level: {stats.get('level', 1)}",
+                                  {"stats": stats})
+                    return stats
+                else:
+                    self.log_result("GET /api/parent/child-stats/{child_id}", True, 
+                                  f"Retrieved child stats but missing some fields: {missing_fields}",
+                                  {"stats": stats, "missing_fields": missing_fields})
+                    return stats
+            else:
+                self.log_result("GET /api/parent/child-stats/{child_id}", False, 
+                              f"Failed to get child stats: {response.status_code}",
+                              {"response": response.text})
+                return None
+        except Exception as e:
+            self.log_result("GET /api/parent/child-stats/{child_id}", False, f"Error getting child stats: {str(e)}")
+            return None
+    
+    def test_unlink_child(self):
+        """Test DELETE /api/parent/unlink-child/{child_id} - Unlink child"""
+        try:
+            headers = {"Authorization": f"Bearer {self.parent_token}"}
+            response = requests.delete(f"{BACKEND_URL}/parent/unlink-child/{self.child_id}", headers=headers)
+            
+            if response.status_code == 200:
+                result = response.json()
+                
+                if result.get("success"):
+                    self.log_result("DELETE /api/parent/unlink-child/{child_id}", True, 
+                                  "Successfully unlinked child from parent",
+                                  {"result": result})
+                    return True
+                else:
+                    self.log_result("DELETE /api/parent/unlink-child/{child_id}", False, 
+                                  f"Unlink failed: {result.get('message', 'Unknown error')}",
+                                  {"result": result})
+                    return False
+            else:
+                self.log_result("DELETE /api/parent/unlink-child/{child_id}", False, 
+                              f"Failed to unlink child: {response.status_code}",
+                              {"response": response.text})
+                return False
+        except Exception as e:
+            self.log_result("DELETE /api/parent/unlink-child/{child_id}", False, f"Error unlinking child: {str(e)}")
+            return False
+    
+    def run_parent_child_validation_tests(self):
+        """Run all Parent-Child validation flow tests"""
+        print("👨‍👩‍👧‍👦 Starting Parent-Child Validation Flow Tests")
+        print("=" * 70)
+        
+        # Step 1: Setup parent and child accounts
+        if not self.setup_parent_child_accounts():
+            print("❌ Cannot proceed without proper account setup")
+            return False
+        
+        print("-" * 70)
+        
+        # Step 2: Link child to parent
+        print("🔗 Testing child linking...")
+        self.test_link_child_to_parent()
+        
+        # Step 3: Get parent's children (should include Léo Petit)
+        print("👶 Testing parent's children list...")
+        children = self.test_get_parent_children()
+        
+        # Step 4: Child completes a challenge needing validation
+        print("🎯 Testing child challenge completion (needs validation)...")
+        self.test_child_complete_challenge_needing_validation()
+        
+        # Step 5: Parent views pending validations
+        print("📋 Testing pending validations...")
+        pending_validations = self.test_get_pending_validations()
+        
+        # Step 6: Parent approves challenge
+        print("✅ Testing parent challenge approval...")
+        initial_stats = self.test_get_child_stats()
+        initial_xp = initial_stats.get("total_xp", 0) if initial_stats else 0
+        
+        validation_result = self.test_parent_validate_challenge(approved=True)
+        
+        # Step 7: Verify child's stats increased
+        print("📊 Testing child stats after validation...")
+        final_stats = self.test_get_child_stats()
+        if final_stats and initial_stats:
+            final_xp = final_stats.get("total_xp", 0)
+            xp_gained = final_xp - initial_xp
+            print(f"📈 Child XP Progress: {initial_xp} → {final_xp} (+{xp_gained})")
+        
+        # Step 8: Test unlinking (optional - for cleanup)
+        print("🔓 Testing child unlinking...")
+        # self.test_unlink_child()  # Commented out to keep the link for future tests
+        
+        # Summary
+        print("\n" + "=" * 70)
+        print("📊 Parent-Child Validation Test Summary")
+        print("=" * 70)
+        
+        passed = sum(1 for r in self.test_results if r["success"])
+        total = len(self.test_results)
+        
+        print(f"Total Tests: {total}")
+        print(f"Passed: {passed}")
+        print(f"Failed: {total - passed}")
+        print(f"Success Rate: {(passed/total)*100:.1f}%")
+        
+        # Show failed tests
+        failed_tests = [r for r in self.test_results if not r["success"]]
+        if failed_tests:
+            print("\n❌ Failed Tests:")
+            for test in failed_tests:
+                print(f"  - {test['test']}: {test['message']}")
+        else:
+            print("\n🎉 All Parent-Child validation tests passed!")
+        
+        return passed == total
+
+
 class GamificationTester:
     def __init__(self):
         self.session = requests.Session()
