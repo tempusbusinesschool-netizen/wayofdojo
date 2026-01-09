@@ -2,7 +2,7 @@ import React from 'react';
 
 // Images des personnages 3D cartoon style Pixar en tenue d'Aikido
 const JEUNE_NINJA_IMG = "https://static.prod-images.emergentagent.com/jobs/0861cc2c-f338-47d7-8ee3-39d115cba3cc/images/e98cee48d958fe25573dd52619daa2ea362f90b6428469100ff587c113b46549.png";
-const NINJA_CONFIRME_IMG = "https://static.prod-images.emergentagent.com/jobs/0861cc2c-f338-47d7-8ee3-39d115cba3cc/images/77949f9eef8a042ef459c6541b0456c5fe1e0fa27e7b8493575da073c3ea1cbc.png";
+const NINJA_CONFIRME_IMG = "https://static.prod-images.emergentagent.com/jobs/0861cc2c-f338-47d7-8ee3-39d115cba3cc/images/11511822157d76c591ac8107c5dc1cd0fbe68fdec64747472c56fa176ae705d0.png";
 
 /**
  * AgeSelector - Écran de sélection du mode (Enfant/Adulte)
