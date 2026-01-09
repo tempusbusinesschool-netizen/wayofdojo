@@ -69,7 +69,7 @@ const AgeSelector = ({ onSelect }) => {
               className="w-full h-48 sm:h-56 md:h-64 object-cover object-top"
             />
             {/* Overlay gradient pour lisibilité */}
-            <div className="absolute inset-0 bg-gradient-to-t from-purple-900/90 via-purple-900/30 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-orange-900/90 via-orange-900/30 to-transparent" />
             
             {/* Étoiles décoratives */}
             <div className="absolute top-3 right-3 text-xl sm:text-2xl animate-pulse">✨</div>
