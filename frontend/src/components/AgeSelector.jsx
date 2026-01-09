@@ -23,26 +23,8 @@ const AgeSelector = ({ onSelect }) => {
 
   return (
     <div className="px-4 py-6 sm:py-8">
-      {/* Hero Banner Bleu - Avec personnages et idéogrammes japonais */}
+      {/* Hero Banner Bleu - Avec idéogrammes japonais */}
       <div className="relative overflow-hidden bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-500 rounded-3xl p-6 sm:p-8 md:p-10 mb-6 sm:mb-8 shadow-2xl border-2 border-orange-400/60">
-        
-        {/* Personnage Homme à gauche */}
-        <div className="absolute left-0 bottom-0 hidden sm:block z-20 pointer-events-none">
-          <img 
-            src={HOMME_IMG} 
-            alt="Sensei Homme" 
-            className="h-32 md:h-40 lg:h-48 object-contain opacity-90 transform translate-x-2"
-          />
-        </div>
-        
-        {/* Personnage Femme à droite */}
-        <div className="absolute right-0 bottom-0 hidden sm:block z-20 pointer-events-none">
-          <img 
-            src={FEMME_IMG} 
-            alt="Sensei Femme" 
-            className="h-32 md:h-40 lg:h-48 object-contain opacity-90 transform -translate-x-2"
-          />
-        </div>
         
         {/* Idéogrammes japonais en arrière-plan transparent */}
         <div className="absolute inset-0 overflow-hidden opacity-[0.08] pointer-events-none select-none">
