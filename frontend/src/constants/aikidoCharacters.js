@@ -14,11 +14,11 @@ export const AIKIDO_CHARACTERS = {
   // Duo adultes - Femme et homme pour les plus de 14 ans
   NINJA_CONFIRME: "https://static.prod-images.emergentagent.com/jobs/0861cc2c-f338-47d7-8ee3-39d115cba3cc/images/11511822157d76c591ac8107c5dc1cd0fbe68fdec64747472c56fa176ae705d0.png",
 
-  // Homme seul - pour superposition bandeau (détouré)
-  HOMME_SEUL: "https://static.prod-images.emergentagent.com/jobs/0861cc2c-f338-47d7-8ee3-39d115cba3cc/images/bb37b6ce0f3d3d743fca980cec1b6a9f44a00aa901e65bd2d1a73c1f1f3ad85e.png",
+  // Homme seul - pour superposition bandeau (détouré, sans fond)
+  HOMME_SEUL: "https://static.prod-images.emergentagent.com/jobs/0861cc2c-f338-47d7-8ee3-39d115cba3cc/images/48c787bef8c79781558820b385f0579431543699f167f6c4deefdef7e6b64cc9.png",
   
-  // Femme seule - pour superposition bandeau (détourée)
-  FEMME_SEULE: "https://static.prod-images.emergentagent.com/jobs/0861cc2c-f338-47d7-8ee3-39d115cba3cc/images/bd8e66e32da560ec778388784fb5210ccbbb39f86101cc5a981f30799603962e.png",
+  // Femme seule - pour superposition bandeau (détourée, sans fond)
+  FEMME_SEULE: "https://static.prod-images.emergentagent.com/jobs/0861cc2c-f338-47d7-8ee3-39d115cba3cc/images/d1e03839cfe00f302b276290aa124c3639f32c46ff1169dfb1a8fefa3a0dbdde.png",
 
   // ═══════════════════════════════════════════════════════════════
   // ENFANT - Différentes poses et émotions
