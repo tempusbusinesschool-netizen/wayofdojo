@@ -54,11 +54,11 @@ const AgeSelector = ({ onSelect }) => {
           onClick={() => handleSelect('enfant')}
           data-testid="mode-enfant-btn"
           className="group relative overflow-hidden rounded-2xl sm:rounded-3xl
-            bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-500
-            hover:from-pink-400 hover:via-purple-400 hover:to-indigo-400
+            bg-gradient-to-br from-orange-500 via-amber-500 to-yellow-500
+            hover:from-orange-400 hover:via-amber-400 hover:to-yellow-400
             transform hover:scale-[1.02] sm:hover:scale-105
             transition-all duration-300 ease-out
-            shadow-xl shadow-purple-500/40 hover:shadow-purple-500/60
+            shadow-xl shadow-orange-500/40 hover:shadow-orange-500/60
             border-2 border-white/20 hover:border-white/40"
         >
           {/* Image Agent IA */}
