@@ -17,6 +17,7 @@ import VirtuesSection from "./VirtuesSection";
 import HakamaHistory from "./HakamaHistory";
 import UserDashboardBlocks from "./UserDashboardBlocks";
 import ProgressionTunnel from "./ProgressionTunnel";
+import ParentDashboard from "./ParentDashboard";
 import GuidedTour, { TourTriggerButton } from "./GuidedTour";
 import AppStepsNavigation from "./AppStepsNavigation";
 import AgeSelector from "./AgeSelector";
