@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Backend API Tests for Aikido Gamification System
-Testing the gamification endpoints and integration
+Testing the gamification endpoints and Parent-Child validation flow
 """
 
 import requests
@@ -16,9 +16,11 @@ BACKEND_URL = "https://aikido-path-1.preview.emergentagent.com/api"
 ADMIN_PASSWORD = "aikido2024"
 SUPER_ADMIN_PASSWORD = "superaikido2024"
 
-# Test user credentials for gamification testing
-TEST_USER_EMAIL = "test@aikido.fr"
-TEST_USER_PASSWORD = "test123"
+# Test user credentials for Parent-Child validation testing
+PARENT_EMAIL = "test@aikido.fr"
+PARENT_PASSWORD = "test123"
+CHILD_EMAIL = "enfant@aikido.fr"
+CHILD_PASSWORD = "test123"
 
 class GamificationTester:
     def __init__(self):
