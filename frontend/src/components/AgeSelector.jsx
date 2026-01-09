@@ -1,8 +1,12 @@
 import React from 'react';
+import { AIKIDO_CHARACTERS } from '@/constants/aikidoCharacters';
 
 // Images des personnages 3D cartoon style Pixar en tenue d'Aikido
-const JEUNE_NINJA_IMG = "https://static.prod-images.emergentagent.com/jobs/0861cc2c-f338-47d7-8ee3-39d115cba3cc/images/7a1daf46a57ead9f272f2abfa021b9093277cf586a19a7ccea9471f4461c19ae.png";
-const NINJA_CONFIRME_IMG = "https://static.prod-images.emergentagent.com/jobs/0861cc2c-f338-47d7-8ee3-39d115cba3cc/images/11511822157d76c591ac8107c5dc1cd0fbe68fdec64747472c56fa176ae705d0.png";
+const JEUNE_NINJA_IMG = AIKIDO_CHARACTERS.JEUNE_NINJA;
+const NINJA_CONFIRME_IMG = AIKIDO_CHARACTERS.NINJA_CONFIRME;
+const HOMME_IMG = AIKIDO_CHARACTERS.HOMME_SEUL;
+const FEMME_IMG = AIKIDO_CHARACTERS.FEMME_SEULE;
+const ENFANT_SALUT_IMG = AIKIDO_CHARACTERS.ENFANT_SALUT;
 
 /**
  * AgeSelector - Écran de sélection du mode (Enfant/Adulte)
