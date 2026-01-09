@@ -680,23 +680,29 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                     {/* Hero Banner */}
                     <div className="relative overflow-hidden bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-500 rounded-3xl p-6 sm:p-8 md:p-12 mb-6 shadow-2xl border-2 border-orange-400/60">
                       
-                      {/* Femme à gauche - taille +10% */}
+                      {/* Femme à gauche - taille +10%, blend mode pour transparence */}
                       <div className="absolute left-2 bottom-0 hidden md:block z-20 pointer-events-none">
                         <img 
                           src={AIKIDO_CHARACTERS.FEMME_SEULE} 
                           alt="Sensei Femme" 
-                          className="h-44 lg:h-52 xl:h-60 object-contain drop-shadow-lg"
-                          style={{ filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.3))' }}
+                          className="h-44 lg:h-52 xl:h-60 object-contain"
+                          style={{ 
+                            mixBlendMode: 'multiply',
+                            filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))'
+                          }}
                         />
                       </div>
                       
-                      {/* Homme à droite - taille +10% */}
+                      {/* Homme à droite - taille +10%, blend mode pour transparence */}
                       <div className="absolute right-2 bottom-0 hidden md:block z-20 pointer-events-none">
                         <img 
                           src={AIKIDO_CHARACTERS.HOMME_SEUL} 
                           alt="Sensei Homme" 
-                          className="h-44 lg:h-52 xl:h-60 object-contain drop-shadow-lg"
-                          style={{ filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.3))' }}
+                          className="h-44 lg:h-52 xl:h-60 object-contain"
+                          style={{ 
+                            mixBlendMode: 'multiply',
+                            filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))'
+                          }}
                         />
                       </div>
                       
