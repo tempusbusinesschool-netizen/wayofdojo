@@ -147,7 +147,8 @@ class ParentChildValidationTester:
             response = requests.get(f"{BACKEND_URL}/parent/children", headers=headers)
             
             if response.status_code == 200:
-                children = response.json()
+                data = response.json()
+                children = data.get("children", [])
                 
                 if isinstance(children, list) and len(children) > 0:
                     # Look for Léo Petit in the children list
@@ -169,7 +170,7 @@ class ParentChildValidationTester:
                 else:
                     self.log_result("GET /api/parent/children", False, 
                                   "No children found in parent's account",
-                                  {"response": children})
+                                  {"response": data})
                     return []
             else:
                 self.log_result("GET /api/parent/children", False, 
