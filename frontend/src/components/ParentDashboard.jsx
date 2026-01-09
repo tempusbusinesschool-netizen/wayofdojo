@@ -230,9 +230,11 @@ const ParentDashboard = ({ isAuthenticated, onRefreshData }) => {
                   className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-4 bg-slate-800/50 rounded-xl border border-amber-700/30"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center">
-                      <span className="text-xl">👦</span>
-                    </div>
+                    <img 
+                      src={AIKIDO_CHARACTERS.ENFANT_SALUT} 
+                      alt="Enfant" 
+                      className="w-12 h-12 object-contain rounded-full bg-amber-500/20"
+                    />
                     <div>
                       <p className="font-semibold text-white">{validation.child_name}</p>
                       <p className="text-amber-300 text-sm">{validation.challenge_name}</p>
