@@ -63,7 +63,7 @@ const AgeSelector = ({ onSelect }) => {
           Choisis ton mode pour commencer !
         </h2>
         <p className="text-sm text-slate-400">
-          Tu pourras changer à tout moment ⚙️
+          Tu pourras changer à tout moment 🥋
         </p>
       </div>
 
