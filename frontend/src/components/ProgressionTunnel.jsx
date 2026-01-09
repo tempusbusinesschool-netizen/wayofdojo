@@ -146,16 +146,20 @@ const ProgressionTunnel = ({
         needs_parent_validation: challenge.needs_parent_validation || false
       });
 
-      // Afficher la notification de succès
+      // Afficher la notification de succès avec personnage
       if (challenge.needs_parent_validation) {
         // Ajouter aux pending
         setPendingIds(prev => [...prev, challenge.id]);
         toast.success(
-          <div className="flex items-center gap-2">
-            <span className="text-2xl">{challenge.animal}</span>
+          <div className="flex items-center gap-3">
+            <img 
+              src={AIKIDO_CHARACTERS.ENFANT_SALUT} 
+              alt="En attente" 
+              className="w-14 h-14 object-contain"
+            />
             <div>
-              <p className="font-bold">Bravo ! +{challenge.points} XP en attente</p>
-              <p className="text-xs opacity-80">En attente de validation parent</p>
+              <p className="font-bold text-slate-900">Bravo ! +{challenge.points} XP en attente</p>
+              <p className="text-xs text-slate-600">En attente de validation parent 👨‍👩‍👧</p>
             </div>
           </div>
         );
@@ -164,11 +168,15 @@ const ProgressionTunnel = ({
         // Ajouter aux complétés
         setCompletedTodayIds(prev => [...prev, challenge.id]);
         toast.success(
-          <div className="flex items-center gap-2">
-            <span className="text-2xl">{challenge.animal}</span>
+          <div className="flex items-center gap-3">
+            <img 
+              src={AIKIDO_CHARACTERS.ENFANT_CELEBRATION} 
+              alt="Célébration" 
+              className="w-14 h-14 object-contain animate-bounce"
+            />
             <div>
-              <p className="font-bold">Bravo ! +{challenge.points} XP gagnés !</p>
-              <p className="text-xs opacity-80">{challenge.title} validé</p>
+              <p className="font-bold text-slate-900">Bravo ! +{challenge.points} XP gagnés !</p>
+              <p className="text-xs text-slate-600">{challenge.title} validé ✅</p>
             </div>
           </div>
         );
