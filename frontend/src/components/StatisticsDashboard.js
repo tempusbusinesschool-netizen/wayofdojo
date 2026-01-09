@@ -815,6 +815,26 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                     }}
                   />
                 </section>
+
+                {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+                {/* SECTION 4 : ESPACE PARENT - Validation des défis des enfants */}
+                {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+                <section className="mb-6 sm:mb-8" data-testid="section-parent">
+                  {/* Titre de section */}
+                  <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                    <div className="h-0.5 sm:h-1 flex-1 bg-gradient-to-r from-purple-500 via-purple-500 to-transparent rounded-full" />
+                    <h2 className="text-base sm:text-lg font-black text-white whitespace-nowrap flex items-center gap-2">
+                      <span className="text-lg sm:text-xl">👨‍👩‍👧</span>
+                      <span className="hidden xs:inline">Espace </span>Parent
+                    </h2>
+                    <div className="h-0.5 sm:h-1 flex-1 bg-gradient-to-l from-transparent via-purple-500 to-purple-500 rounded-full" />
+                  </div>
+
+                  <ParentDashboard
+                    isAuthenticated={isAuthenticated}
+                    onRefreshData={onRefreshData}
+                  />
+                </section>
               </>
             )}
 
