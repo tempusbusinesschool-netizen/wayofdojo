@@ -680,39 +680,6 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                     {/* Hero Banner */}
                     <div className="relative overflow-hidden bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-500 rounded-3xl p-6 sm:p-8 md:p-12 mb-6 shadow-2xl border-2 border-orange-400/60">
                       
-                      {/* Personnage Homme à gauche (version adulte) */}
-                      {visitorMode === 'adulte' && (
-                        <div className="absolute left-0 bottom-0 hidden md:block z-20 pointer-events-none">
-                          <img 
-                            src={AIKIDO_CHARACTERS.HOMME_SEUL} 
-                            alt="Sensei Homme" 
-                            className="h-36 lg:h-44 xl:h-52 object-contain opacity-90"
-                          />
-                        </div>
-                      )}
-                      
-                      {/* Personnage Femme à droite (version adulte) */}
-                      {visitorMode === 'adulte' && (
-                        <div className="absolute right-0 bottom-0 hidden md:block z-20 pointer-events-none">
-                          <img 
-                            src={AIKIDO_CHARACTERS.FEMME_SEULE} 
-                            alt="Sensei Femme" 
-                            className="h-36 lg:h-44 xl:h-52 object-contain opacity-90"
-                          />
-                        </div>
-                      )}
-                      
-                      {/* Personnage Enfant à gauche (version enfant) */}
-                      {visitorMode === 'enfant' && (
-                        <div className="absolute left-0 bottom-0 hidden sm:block z-20 pointer-events-none">
-                          <img 
-                            src={AIKIDO_CHARACTERS.ENFANT_SALUT} 
-                            alt="Jeune Ninja" 
-                            className="h-32 md:h-40 lg:h-48 object-contain opacity-90"
-                          />
-                        </div>
-                      )}
-                      
                       {/* Idéogrammes japonais en arrière-plan */}
                       <div className="absolute inset-0 overflow-hidden opacity-[0.06] pointer-events-none select-none">
                         <div 
