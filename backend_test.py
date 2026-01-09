@@ -302,19 +302,22 @@ class ParentChildValidationTester:
             if response.status_code == 200:
                 stats = response.json()
                 
-                # Check for required fields
-                required_fields = ["user_id", "total_xp", "level", "completed_challenges"]
-                missing_fields = [field for field in required_fields if field not in stats]
+                # Check for some key fields (the API might return different structure)
+                has_stats = any(key in stats for key in ["total_xp", "level", "gamification", "belt_level"])
                 
-                if not missing_fields:
+                if has_stats:
+                    # Extract XP from different possible locations
+                    total_xp = stats.get("total_xp") or stats.get("gamification", {}).get("total_xp", 0)
+                    level = stats.get("level") or stats.get("gamification", {}).get("level", 1)
+                    
                     self.log_result("GET /api/parent/child-stats/{child_id}", True, 
-                                  f"Successfully retrieved child stats. XP: {stats.get('total_xp', 0)}, Level: {stats.get('level', 1)}",
+                                  f"Successfully retrieved child stats. XP: {total_xp}, Level: {level}",
                                   {"stats": stats})
                     return stats
                 else:
-                    self.log_result("GET /api/parent/child-stats/{child_id}", True, 
-                                  f"Retrieved child stats but missing some fields: {missing_fields}",
-                                  {"stats": stats, "missing_fields": missing_fields})
+                    self.log_result("GET /api/parent/child-stats/{child_id}", False, 
+                                  "No recognizable stats fields found",
+                                  {"stats": stats})
                     return stats
             else:
                 self.log_result("GET /api/parent/child-stats/{child_id}", False, 
