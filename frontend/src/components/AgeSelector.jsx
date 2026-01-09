@@ -19,8 +19,8 @@ const AgeSelector = ({ onSelect }) => {
 
   return (
     <div className="px-4 py-6 sm:py-8">
-      {/* Hero Banner Bleu - Avec idéogrammes japonais en fond */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-500 rounded-3xl p-6 sm:p-8 md:p-10 mb-6 sm:mb-8 shadow-2xl">
+      {/* Hero Banner Bleu - Avec idéogrammes japonais en fond et contour orangé */}
+      <div className="relative overflow-hidden bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-500 rounded-3xl p-6 sm:p-8 md:p-10 mb-6 sm:mb-8 shadow-2xl border-2 border-orange-400/60">
         {/* Idéogrammes japonais en arrière-plan transparent */}
         <div className="absolute inset-0 overflow-hidden opacity-[0.08] pointer-events-none select-none">
           <div 
@@ -48,7 +48,7 @@ const AgeSelector = ({ onSelect }) => {
         </div>
         
         <div className="relative text-center z-10">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-2 sm:mb-3">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-2 sm:mb-3">
             Aikido@Game
           </h1>
           <p className="text-base sm:text-lg text-white/90 max-w-xl mx-auto">
