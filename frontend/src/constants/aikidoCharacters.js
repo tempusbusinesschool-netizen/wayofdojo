@@ -14,6 +14,12 @@ export const AIKIDO_CHARACTERS = {
   // Duo adultes - Femme et homme pour les plus de 14 ans
   NINJA_CONFIRME: "https://static.prod-images.emergentagent.com/jobs/0861cc2c-f338-47d7-8ee3-39d115cba3cc/images/11511822157d76c591ac8107c5dc1cd0fbe68fdec64747472c56fa176ae705d0.png",
 
+  // Homme seul - pour superposition bandeau
+  HOMME_SEUL: "https://static.prod-images.emergentagent.com/jobs/0861cc2c-f338-47d7-8ee3-39d115cba3cc/images/1007f0d374573cfe0ebb3130057e27e2f7640082d8a3df91e43d81ceed93f9e1.png",
+  
+  // Femme seule - pour superposition bandeau
+  FEMME_SEULE: "https://static.prod-images.emergentagent.com/jobs/0861cc2c-f338-47d7-8ee3-39d115cba3cc/images/efcf4c2e0cbd0740e34283b662080053b8f1dc7a212e7a5f45d1a7597cdf6a2e.png",
+
   // ═══════════════════════════════════════════════════════════════
   // ENFANT - Différentes poses et émotions
   // ═══════════════════════════════════════════════════════════════
