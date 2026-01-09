@@ -680,17 +680,23 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                     {/* Hero Banner */}
                     <div className="relative overflow-hidden bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-500 rounded-3xl p-6 sm:p-8 md:p-12 mb-6 shadow-2xl border-2 border-orange-400/60">
                       
-                      {/* Personnages Homme et Femme à gauche (sans fond) */}
-                      <div className="absolute left-0 bottom-0 hidden md:flex items-end z-20 pointer-events-none">
-                        <img 
-                          src={AIKIDO_CHARACTERS.HOMME_SEUL} 
-                          alt="Sensei Homme" 
-                          className="h-32 lg:h-40 xl:h-48 object-contain"
-                        />
+                      {/* Femme à gauche (sans fond) */}
+                      <div className="absolute left-2 bottom-0 hidden md:block z-20 pointer-events-none">
                         <img 
                           src={AIKIDO_CHARACTERS.FEMME_SEULE} 
                           alt="Sensei Femme" 
-                          className="h-32 lg:h-40 xl:h-48 object-contain -ml-4"
+                          className="h-36 lg:h-44 xl:h-52 object-contain drop-shadow-lg"
+                          style={{ filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.3))' }}
+                        />
+                      </div>
+                      
+                      {/* Homme à droite (sans fond) */}
+                      <div className="absolute right-2 bottom-0 hidden md:block z-20 pointer-events-none">
+                        <img 
+                          src={AIKIDO_CHARACTERS.HOMME_SEUL} 
+                          alt="Sensei Homme" 
+                          className="h-36 lg:h-44 xl:h-52 object-contain drop-shadow-lg"
+                          style={{ filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.3))' }}
                         />
                       </div>
                       
@@ -714,7 +720,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                         </div>
                       </div>
                       
-                      <div className="relative text-center z-10 md:ml-48 lg:ml-56 xl:ml-64">
+                      <div className="relative text-center z-10">
                         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white mb-3 sm:mb-4">
                           Aikido@Game
                         </h1>
