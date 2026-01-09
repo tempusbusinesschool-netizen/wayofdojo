@@ -678,17 +678,64 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 {visitorMode && (
                   <>
                     {/* Hero Banner */}
-                    <div className="relative overflow-hidden bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-500 rounded-3xl p-6 sm:p-8 md:p-12 mb-6 shadow-2xl">
-                      <div className="absolute inset-0 opacity-10">
-                        {visitorMode === 'enfant' && (
-                          <div className="absolute top-4 left-8 text-7xl sm:text-9xl">🥋</div>
-                        )}
-                        <div className="absolute bottom-4 right-8 text-7xl sm:text-9xl">☯️</div>
+                    <div className="relative overflow-hidden bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-500 rounded-3xl p-6 sm:p-8 md:p-12 mb-6 shadow-2xl border-2 border-orange-400/60">
+                      
+                      {/* Personnage Homme à gauche (version adulte) */}
+                      {visitorMode === 'adulte' && (
+                        <div className="absolute left-0 bottom-0 hidden md:block z-20 pointer-events-none">
+                          <img 
+                            src={AIKIDO_CHARACTERS.HOMME_SEUL} 
+                            alt="Sensei Homme" 
+                            className="h-36 lg:h-44 xl:h-52 object-contain opacity-90"
+                          />
+                        </div>
+                      )}
+                      
+                      {/* Personnage Femme à droite (version adulte) */}
+                      {visitorMode === 'adulte' && (
+                        <div className="absolute right-0 bottom-0 hidden md:block z-20 pointer-events-none">
+                          <img 
+                            src={AIKIDO_CHARACTERS.FEMME_SEULE} 
+                            alt="Sensei Femme" 
+                            className="h-36 lg:h-44 xl:h-52 object-contain opacity-90"
+                          />
+                        </div>
+                      )}
+                      
+                      {/* Personnage Enfant à gauche (version enfant) */}
+                      {visitorMode === 'enfant' && (
+                        <div className="absolute left-0 bottom-0 hidden sm:block z-20 pointer-events-none">
+                          <img 
+                            src={AIKIDO_CHARACTERS.ENFANT_SALUT} 
+                            alt="Jeune Ninja" 
+                            className="h-32 md:h-40 lg:h-48 object-contain opacity-90"
+                          />
+                        </div>
+                      )}
+                      
+                      {/* Idéogrammes japonais en arrière-plan */}
+                      <div className="absolute inset-0 overflow-hidden opacity-[0.06] pointer-events-none select-none">
+                        <div 
+                          className="absolute inset-0 text-white font-serif whitespace-nowrap"
+                          style={{ 
+                            fontFamily: "'Noto Serif JP', serif",
+                            fontSize: '4rem',
+                            lineHeight: '1.2',
+                            letterSpacing: '0.5rem'
+                          }}
+                        >
+                          <div className="absolute top-0 left-0 transform -rotate-12">
+                            合気道 武道 氣 和 心 道 技 礼 仁 義
+                          </div>
+                          <div className="absolute bottom-0 right-10 transform rotate-6">
+                            武士道 精神 修行 稽古 先生 道場
+                          </div>
+                        </div>
                       </div>
                       
-                      <div className="relative text-center">
+                      <div className="relative text-center z-10">
                         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white mb-3 sm:mb-4">
-                          {visitorMode === 'enfant' ? '🥋 ' : '☯️ '}Aikido@Game
+                          Aikido@Game
                         </h1>
                         <p className="text-base sm:text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-4 sm:mb-6">
                           {visitorMode === 'enfant' 
