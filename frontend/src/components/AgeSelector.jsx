@@ -1,8 +1,8 @@
 import React from 'react';
 
-// Images des agents IA en tenue d'Aikido (gi blanc + hakama noir)
-const JEUNE_NINJA_IMG = "https://static.prod-images.emergentagent.com/jobs/0861cc2c-f338-47d7-8ee3-39d115cba3cc/images/33d2ef62684e8f023e5c695e0bb3d29d31a3120b47828ee4d6aa4126c386b209.png";
-const NINJA_CONFIRME_IMG = "https://static.prod-images.emergentagent.com/jobs/0861cc2c-f338-47d7-8ee3-39d115cba3cc/images/f524573ff36a530590b9c06bf9e7793cdbd7c488a08de20552f2809df8311168.png";
+// Images des personnages 3D cartoon style Pixar en tenue d'Aikido
+const JEUNE_NINJA_IMG = "https://static.prod-images.emergentagent.com/jobs/0861cc2c-f338-47d7-8ee3-39d115cba3cc/images/e98cee48d958fe25573dd52619daa2ea362f90b6428469100ff587c113b46549.png";
+const NINJA_CONFIRME_IMG = "https://static.prod-images.emergentagent.com/jobs/0861cc2c-f338-47d7-8ee3-39d115cba3cc/images/77949f9eef8a042ef459c6541b0456c5fe1e0fa27e7b8493575da073c3ea1cbc.png";
 
 /**
  * AgeSelector - Écran de sélection du mode (Enfant/Adulte)
