@@ -19,16 +19,37 @@ const AgeSelector = ({ onSelect }) => {
 
   return (
     <div className="px-4 py-6 sm:py-8">
-      {/* Hero Banner Bleu - Identique aux autres pages */}
+      {/* Hero Banner Bleu - Avec idéogrammes japonais en fond */}
       <div className="relative overflow-hidden bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-500 rounded-3xl p-6 sm:p-8 md:p-10 mb-6 sm:mb-8 shadow-2xl">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-2 left-4 text-5xl sm:text-7xl">🥋</div>
-          <div className="absolute bottom-2 right-4 text-5xl sm:text-7xl">☯️</div>
+        {/* Idéogrammes japonais en arrière-plan transparent */}
+        <div className="absolute inset-0 overflow-hidden opacity-[0.08] pointer-events-none select-none">
+          <div 
+            className="absolute inset-0 text-white font-serif whitespace-nowrap"
+            style={{ 
+              fontFamily: "'Noto Serif JP', serif",
+              fontSize: '4rem',
+              lineHeight: '1.2',
+              letterSpacing: '0.5rem'
+            }}
+          >
+            <div className="absolute top-0 left-0 transform -rotate-12">
+              合気道 武道 氣 和 心 道 技 礼 仁 義 忠 信 勇 徳 
+            </div>
+            <div className="absolute top-16 right-0 transform rotate-6">
+              武士道 精神 修行 稽古 先生 弟子 道場 
+            </div>
+            <div className="absolute bottom-0 left-10 transform -rotate-6">
+              平和 調和 氣合 呼吸 中心 一期一会
+            </div>
+            <div className="absolute bottom-16 right-10 transform rotate-12">
+              合気道 武道 氣 和 心 道 技 礼 仁 義
+            </div>
+          </div>
         </div>
         
-        <div className="relative text-center">
+        <div className="relative text-center z-10">
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-white mb-2 sm:mb-3">
-            🥋 Aikido@Game
+            Aikido@Game
           </h1>
           <p className="text-base sm:text-lg text-white/90 max-w-xl mx-auto">
             Votre parcours Aikido interactif et ludique
