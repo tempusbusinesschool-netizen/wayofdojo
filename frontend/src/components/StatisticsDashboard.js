@@ -24,6 +24,7 @@ import AgeSelector from "./AgeSelector";
 import VisitorStepsBlocks from "./VisitorStepsBlocks";
 import { AIKIDO_BELTS, getBeltByPoints } from "@/constants/aikidoBelts";
 import { DEPLACEMENTS_DATA } from "@/constants";
+import { AIKIDO_CHARACTERS } from "@/constants/aikidoCharacters";
 
 // 7 Virtues of Aikido with colors for pie chart
 const AIKIDO_VIRTUES = [
