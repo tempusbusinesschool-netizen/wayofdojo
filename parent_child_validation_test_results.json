@@ -1,0 +1,1724 @@
+[
+  {
+    "test": "Parent Login",
+    "success": true,
+    "message": "Successfully logged in parent: test@aikido.fr",
+    "timestamp": "2026-01-09T14:44:20.354867",
+    "details": {}
+  },
+  {
+    "test": "Child Login",
+    "success": true,
+    "message": "Successfully logged in child: enfant@aikido.fr",
+    "timestamp": "2026-01-09T14:44:20.616219",
+    "details": {}
+  },
+  {
+    "test": "POST /api/parent/link-child",
+    "success": true,
+    "message": "Successfully linked child enfant@aikido.fr to parent",
+    "timestamp": "2026-01-09T14:44:20.660152",
+    "details": {
+      "result": {
+        "success": true,
+        "message": "Enfant L\u00e9o li\u00e9 avec succ\u00e8s",
+        "child": {
+          "id": "f2dd0465-4494-4c9a-bf64-c78bb24043eb",
+          "first_name": "L\u00e9o",
+          "last_name": "Petit",
+          "email": "enfant@aikido.fr"
+        }
+      }
+    }
+  },
+  {
+    "test": "GET /api/parent/children",
+    "success": false,
+    "message": "No children found in parent's account",
+    "timestamp": "2026-01-09T14:44:20.739439",
+    "details": {
+      "response": {
+        "children": [
+          {
+            "id": "f2dd0465-4494-4c9a-bf64-c78bb24043eb",
+            "first_name": "L\u00e9o",
+            "last_name": "Petit",
+            "email": "enfant@aikido.fr",
+            "belt_level": "6e_kyu",
+            "gamification": {
+              "total_xp": 15,
+              "level": 1,
+              "level_name": "Petit Scarab\u00e9e",
+              "pending_validations": []
+            }
+          }
+        ]
+      }
+    }
+  },
+  {
+    "test": "Child Challenge Completion (Needs Validation)",
+    "success": true,
+    "message": "Child completed challenge 'Chute Avant' - awaiting parent validation",
+    "timestamp": "2026-01-09T14:44:20.823912",
+    "details": {
+      "result": {
+        "success": true,
+        "xp_awarded": 0,
+        "total_xp": 15,
+        "level": 1,
+        "level_name": "Petit Scarab\u00e9e",
+        "streak_days": 1,
+        "new_badges": [],
+        "needs_validation": true
+      },
+      "needs_validation": true,
+      "xp_awarded": 0
+    }
+  },
+  {
+    "test": "GET /api/parent/pending-validations",
+    "success": false,
+    "message": "Expected list of validations",
+    "timestamp": "2026-01-09T14:44:20.864039",
+    "details": {
+      "response": {
+        "pending_validations": [
+          {
+            "child_id": "f2dd0465-4494-4c9a-bf64-c78bb24043eb",
+            "child_name": "L\u00e9o Petit",
+            "challenge_id": "ukemi_mae",
+            "challenge_name": "Chute Avant",
+            "challenge_type": "daily",
+            "xp_reward": 20,
+            "completed_at": "2026-01-09T14:44:20.773899+00:00",
+            "status": "pending"
+          }
+        ],
+        "count": 1
+      }
+    }
+  },
+  {
+    "test": "GET /api/parent/child-stats/{child_id}",
+    "success": true,
+    "message": "Retrieved child stats but missing some fields: ['user_id', 'total_xp', 'level', 'completed_challenges']",
+    "timestamp": "2026-01-09T14:44:20.906938",
+    "details": {
+      "stats": {
+        "child": {
+          "id": "f2dd0465-4494-4c9a-bf64-c78bb24043eb",
+          "first_name": "L\u00e9o",
+          "last_name": "Petit",
+          "belt_level": "6e_kyu"
+        },
+        "stats": {
+          "user_id": "f2dd0465-4494-4c9a-bf64-c78bb24043eb",
+          "total_xp": 15,
+          "level": 1,
+          "level_name": "Petit Scarab\u00e9e",
+          "streak_days": 1,
+          "last_activity_date": "2026-01-09",
+          "badges": [
+            {
+              "badge_id": "parent_approved",
+              "badge_name": "Valid\u00e9 par les parents",
+              "badge_icon": "\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d\udc67",
+              "badge_description": "Premier d\u00e9fi valid\u00e9 par un parent",
+              "awarded_at": "2026-01-09T14:40:59.778647+00:00"
+            }
+          ],
+          "completed_challenges": [
+            {
+              "challenge_id": "tai_sabaki",
+              "challenge_type": "daily",
+              "challenge_name": "Tai Sabaki",
+              "xp_reward": 15,
+              "completed_date": "2026-01-09",
+              "completed_at": "2026-01-09T14:40:33.691803+00:00",
+              "status": "validated",
+              "validated_at": "2026-01-09T14:40:59.778647+00:00",
+              "validated_by": "0b19a4bd-5acd-43d7-9a26-d2976ce1baf7",
+              "validation_comment": "Bravo L\u00e9o !"
+            },
+            {
+              "challenge_id": "ukemi_mae",
+              "challenge_type": "daily",
+              "challenge_name": "Chute Avant",
+              "xp_reward": 20,
+              "completed_date": "2026-01-09",
+              "completed_at": "2026-01-09T14:44:20.773899+00:00",
+              "status": "pending"
+            }
+          ],
+          "pending_validations": [
+            {
+              "challenge_id": "ukemi_mae",
+              "challenge_type": "daily",
+              "challenge_name": "Chute Avant",
+              "xp_reward": 20,
+              "completed_date": "2026-01-09",
+              "completed_at": "2026-01-09T14:44:20.773899+00:00",
+              "status": "pending"
+            }
+          ],
+          "attendance_count": 0,
+          "techniques_validated": 0,
+          "created_at": "2026-01-09T14:40:33.691803+00:00"
+        }
+      },
+      "missing_fields": [
+        "user_id",
+        "total_xp",
+        "level",
+        "completed_challenges"
+      ]
+    }
+  },
+  {
+    "test": "POST /api/parent/validate/{child_id}/{challenge_id}",
+    "success": true,
+    "message": "Successfully approved child's challenge. XP awarded: 20",
+    "timestamp": "2026-01-09T14:44:20.946508",
+    "details": {
+      "result": {
+        "success": true,
+        "approved": true,
+        "child_name": "L\u00e9o Petit",
+        "challenge_name": "Chute Avant",
+        "xp_awarded": 20,
+        "message": "D\u00e9fi valid\u00e9 pour L\u00e9o"
+      },
+      "approved": true,
+      "xp_awarded": 20
+    }
+  },
+  {
+    "test": "GET /api/parent/child-stats/{child_id}",
+    "success": true,
+    "message": "Retrieved child stats but missing some fields: ['user_id', 'total_xp', 'level', 'completed_challenges']",
+    "timestamp": "2026-01-09T14:44:20.982674",
+    "details": {
+      "stats": {
+        "child": {
+          "id": "f2dd0465-4494-4c9a-bf64-c78bb24043eb",
+          "first_name": "L\u00e9o",
+          "last_name": "Petit",
+          "belt_level": "6e_kyu"
+        },
+        "stats": {
+          "user_id": "f2dd0465-4494-4c9a-bf64-c78bb24043eb",
+          "total_xp": 35,
+          "level": 1,
+          "level_name": "Petit Scarab\u00e9e",
+          "streak_days": 1,
+          "last_activity_date": "2026-01-09",
+          "badges": [
+            {
+              "badge_id": "parent_approved",
+              "badge_name": "Valid\u00e9 par les parents",
+              "badge_icon": "\ud83d\udc68\u200d\ud83d\udc69\u200d\ud83d\udc67",
+              "badge_description": "Premier d\u00e9fi valid\u00e9 par un parent",
+              "awarded_at": "2026-01-09T14:40:59.778647+00:00"
+            }
+          ],
+          "completed_challenges": [
+            {
+              "challenge_id": "tai_sabaki",
+              "challenge_type": "daily",
+              "challenge_name": "Tai Sabaki",
+              "xp_reward": 15,
+              "completed_date": "2026-01-09",
+              "completed_at": "2026-01-09T14:40:33.691803+00:00",
+              "status": "validated",
+              "validated_at": "2026-01-09T14:40:59.778647+00:00",
+              "validated_by": "0b19a4bd-5acd-43d7-9a26-d2976ce1baf7",
+              "validation_comment": "Bravo L\u00e9o !"
+            },
+            {
+              "challenge_id": "ukemi_mae",
+              "challenge_type": "daily",
+              "challenge_name": "Chute Avant",
+              "xp_reward": 20,
+              "completed_date": "2026-01-09",
+              "completed_at": "2026-01-09T14:44:20.773899+00:00",
+              "status": "validated",
+              "validated_at": "2026-01-09T14:44:20.942512+00:00",
+              "validated_by": "0b19a4bd-5acd-43d7-9a26-d2976ce1baf7",
+              "validation_comment": null
+            }
+          ],
+          "pending_validations": [],
+          "attendance_count": 0,
+          "techniques_validated": 0,
+          "created_at": "2026-01-09T14:40:33.691803+00:00"
+        }
+      },
+      "missing_fields": [
+        "user_id",
+        "total_xp",
+        "level",
+        "completed_challenges"
+      ]
+    }
+  },
+  {
+    "test": "User Login",
+    "success": true,
+    "message": "Successfully logged in test user: test@aikido.fr",
+    "timestamp": "2026-01-09T14:44:21.245279",
+    "details": {}
+  },
+  {
+    "test": "GET /api/gamification/daily-challenges",
+    "success": true,
+    "message": "Successfully retrieved 5 daily challenges",
+    "timestamp": "2026-01-09T14:44:21.254937",
+    "details": {
+      "challenges_count": 5,
+      "challenges": [
+        {
+          "id": "salut",
+          "name": "Salut Parfait",
+          "description": "Fais un salut (REI) parfait au d\u00e9but et \u00e0 la fin du cours",
+          "xp_reward": 10,
+          "type": "daily",
+          "icon": "\ud83d\ude4f",
+          "virtue": "Respect",
+          "needs_parent_validation": false
+        },
+        {
+          "id": "tai_sabaki",
+          "name": "Tai Sabaki",
+          "description": "Pratique un d\u00e9placement tai sabaki",
+          "xp_reward": 15,
+          "type": "daily",
+          "icon": "\ud83e\uddb6",
+          "virtue": "Agilit\u00e9",
+          "needs_parent_validation": true
+        },
+        {
+          "id": "ukemi_mae",
+          "name": "Chute Avant",
+          "description": "R\u00e9alise 5 chutes avant (mae ukemi) correctes",
+          "xp_reward": 20,
+          "type": "daily",
+          "icon": "\ud83d\udd04",
+          "virtue": "Courage",
+          "needs_parent_validation": true
+        }
+      ]
+    }
+  },
+  {
+    "test": "GET /api/gamification/stats/{user_id}",
+    "success": true,
+    "message": "Successfully retrieved user stats. XP: 120, Level: 1",
+    "timestamp": "2026-01-09T14:44:21.267787",
+    "details": {
+      "stats": {
+        "user_id": "0b19a4bd-5acd-43d7-9a26-d2976ce1baf7",
+        "total_xp": 120,
+        "level": 1,
+        "level_name": "Petit Scarab\u00e9e",
+        "streak_days": 1,
+        "last_activity_date": "2026-01-08",
+        "badges": [
+          {
+            "badge_id": "first_step",
+            "badge_name": "Premier Pas",
+            "badge_icon": "\ud83d\udc63",
+            "badge_description": "Premier entra\u00eenement",
+            "awarded_at": "2026-01-08T18:26:04.809286+00:00"
+          },
+          {
+            "badge_id": "xp_100",
+            "badge_name": "D\u00e9butant",
+            "badge_icon": "\u2b50",
+            "badge_description": "100 XP gagn\u00e9s",
+            "awarded_at": "2026-01-08T20:55:42.955822+00:00"
+          }
+        ],
+        "completed_challenges": [
+          {
+            "challenge_id": "salut",
+            "challenge_type": "daily",
+            "challenge_name": "Salut Parfait",
+            "xp_reward": 10,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T18:25:51.780145+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "aide",
+            "challenge_type": "daily",
+            "challenge_name": "Coup de Main",
+            "xp_reward": 25,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:48:06.122546+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention",
+            "challenge_type": "daily",
+            "challenge_name": "Attention Challenge Test",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.692970+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "tai_sabaki",
+            "challenge_type": "daily",
+            "challenge_name": "Tai Sabaki Practice",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.883123+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "respect_salut",
+            "challenge_type": "daily",
+            "challenge_name": "Perfect Bow",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.954313+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention_regarder",
+            "challenge_type": "daily",
+            "challenge_name": "Attentive Observation",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.981539+00:00",
+            "status": "validated"
+          }
+        ],
+        "pending_validations": [],
+        "attendance_count": 1,
+        "techniques_validated": 0,
+        "created_at": "2026-01-08T18:25:41.985656+00:00"
+      }
+    }
+  },
+  {
+    "test": "GET /api/gamification/stats/{user_id}",
+    "success": true,
+    "message": "Successfully retrieved user stats. XP: 120, Level: 1",
+    "timestamp": "2026-01-09T14:44:21.278184",
+    "details": {
+      "stats": {
+        "user_id": "0b19a4bd-5acd-43d7-9a26-d2976ce1baf7",
+        "total_xp": 120,
+        "level": 1,
+        "level_name": "Petit Scarab\u00e9e",
+        "streak_days": 1,
+        "last_activity_date": "2026-01-08",
+        "badges": [
+          {
+            "badge_id": "first_step",
+            "badge_name": "Premier Pas",
+            "badge_icon": "\ud83d\udc63",
+            "badge_description": "Premier entra\u00eenement",
+            "awarded_at": "2026-01-08T18:26:04.809286+00:00"
+          },
+          {
+            "badge_id": "xp_100",
+            "badge_name": "D\u00e9butant",
+            "badge_icon": "\u2b50",
+            "badge_description": "100 XP gagn\u00e9s",
+            "awarded_at": "2026-01-08T20:55:42.955822+00:00"
+          }
+        ],
+        "completed_challenges": [
+          {
+            "challenge_id": "salut",
+            "challenge_type": "daily",
+            "challenge_name": "Salut Parfait",
+            "xp_reward": 10,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T18:25:51.780145+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "aide",
+            "challenge_type": "daily",
+            "challenge_name": "Coup de Main",
+            "xp_reward": 25,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:48:06.122546+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention",
+            "challenge_type": "daily",
+            "challenge_name": "Attention Challenge Test",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.692970+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "tai_sabaki",
+            "challenge_type": "daily",
+            "challenge_name": "Tai Sabaki Practice",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.883123+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "respect_salut",
+            "challenge_type": "daily",
+            "challenge_name": "Perfect Bow",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.954313+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention_regarder",
+            "challenge_type": "daily",
+            "challenge_name": "Attentive Observation",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.981539+00:00",
+            "status": "validated"
+          }
+        ],
+        "pending_validations": [],
+        "attendance_count": 1,
+        "techniques_validated": 0,
+        "created_at": "2026-01-08T18:25:41.985656+00:00"
+      }
+    }
+  },
+  {
+    "test": "GET /api/gamification/stats/{user_id}",
+    "success": true,
+    "message": "Successfully retrieved user stats. XP: 135, Level: 1",
+    "timestamp": "2026-01-09T14:44:21.341308",
+    "details": {
+      "stats": {
+        "user_id": "0b19a4bd-5acd-43d7-9a26-d2976ce1baf7",
+        "total_xp": 135,
+        "level": 1,
+        "level_name": "Petit Scarab\u00e9e",
+        "streak_days": 2,
+        "last_activity_date": "2026-01-09",
+        "badges": [
+          {
+            "badge_id": "first_step",
+            "badge_name": "Premier Pas",
+            "badge_icon": "\ud83d\udc63",
+            "badge_description": "Premier entra\u00eenement",
+            "awarded_at": "2026-01-08T18:26:04.809286+00:00"
+          },
+          {
+            "badge_id": "xp_100",
+            "badge_name": "D\u00e9butant",
+            "badge_icon": "\u2b50",
+            "badge_description": "100 XP gagn\u00e9s",
+            "awarded_at": "2026-01-08T20:55:42.955822+00:00"
+          }
+        ],
+        "completed_challenges": [
+          {
+            "challenge_id": "salut",
+            "challenge_type": "daily",
+            "challenge_name": "Salut Parfait",
+            "xp_reward": 10,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T18:25:51.780145+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "aide",
+            "challenge_type": "daily",
+            "challenge_name": "Coup de Main",
+            "xp_reward": 25,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:48:06.122546+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention",
+            "challenge_type": "daily",
+            "challenge_name": "Attention Challenge Test",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.692970+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "tai_sabaki",
+            "challenge_type": "daily",
+            "challenge_name": "Tai Sabaki Practice",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.883123+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "respect_salut",
+            "challenge_type": "daily",
+            "challenge_name": "Perfect Bow",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.954313+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention_regarder",
+            "challenge_type": "daily",
+            "challenge_name": "Attentive Observation",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.981539+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention",
+            "challenge_type": "daily",
+            "challenge_name": "Attention Challenge Test",
+            "xp_reward": 15,
+            "completed_date": "2026-01-09",
+            "completed_at": "2026-01-09T14:44:21.284821+00:00",
+            "status": "validated"
+          }
+        ],
+        "pending_validations": [],
+        "attendance_count": 1,
+        "techniques_validated": 0,
+        "created_at": "2026-01-08T18:25:41.985656+00:00"
+      }
+    }
+  },
+  {
+    "test": "POST /api/gamification/challenge/complete",
+    "success": true,
+    "message": "Successfully completed challenge 'Attention Challenge Test'. XP gained: 15",
+    "timestamp": "2026-01-09T14:44:21.341342",
+    "details": {
+      "challenge_id": "attention",
+      "xp_gained": 15,
+      "result": {
+        "success": true,
+        "xp_awarded": 15,
+        "total_xp": 150,
+        "level": 1,
+        "level_name": "Petit Scarab\u00e9e",
+        "streak_days": 2,
+        "new_badges": [],
+        "needs_validation": false
+      }
+    }
+  },
+  {
+    "test": "GET /api/gamification/stats/{user_id}",
+    "success": true,
+    "message": "Successfully retrieved user stats. XP: 135, Level: 1",
+    "timestamp": "2026-01-09T14:44:21.351296",
+    "details": {
+      "stats": {
+        "user_id": "0b19a4bd-5acd-43d7-9a26-d2976ce1baf7",
+        "total_xp": 135,
+        "level": 1,
+        "level_name": "Petit Scarab\u00e9e",
+        "streak_days": 2,
+        "last_activity_date": "2026-01-09",
+        "badges": [
+          {
+            "badge_id": "first_step",
+            "badge_name": "Premier Pas",
+            "badge_icon": "\ud83d\udc63",
+            "badge_description": "Premier entra\u00eenement",
+            "awarded_at": "2026-01-08T18:26:04.809286+00:00"
+          },
+          {
+            "badge_id": "xp_100",
+            "badge_name": "D\u00e9butant",
+            "badge_icon": "\u2b50",
+            "badge_description": "100 XP gagn\u00e9s",
+            "awarded_at": "2026-01-08T20:55:42.955822+00:00"
+          }
+        ],
+        "completed_challenges": [
+          {
+            "challenge_id": "salut",
+            "challenge_type": "daily",
+            "challenge_name": "Salut Parfait",
+            "xp_reward": 10,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T18:25:51.780145+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "aide",
+            "challenge_type": "daily",
+            "challenge_name": "Coup de Main",
+            "xp_reward": 25,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:48:06.122546+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention",
+            "challenge_type": "daily",
+            "challenge_name": "Attention Challenge Test",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.692970+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "tai_sabaki",
+            "challenge_type": "daily",
+            "challenge_name": "Tai Sabaki Practice",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.883123+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "respect_salut",
+            "challenge_type": "daily",
+            "challenge_name": "Perfect Bow",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.954313+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention_regarder",
+            "challenge_type": "daily",
+            "challenge_name": "Attentive Observation",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.981539+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention",
+            "challenge_type": "daily",
+            "challenge_name": "Attention Challenge Test",
+            "xp_reward": 15,
+            "completed_date": "2026-01-09",
+            "completed_at": "2026-01-09T14:44:21.284821+00:00",
+            "status": "validated"
+          }
+        ],
+        "pending_validations": [],
+        "attendance_count": 1,
+        "techniques_validated": 0,
+        "created_at": "2026-01-08T18:25:41.985656+00:00"
+      }
+    }
+  },
+  {
+    "test": "GET /api/gamification/stats/{user_id}",
+    "success": true,
+    "message": "Successfully retrieved user stats. XP: 160, Level: 1",
+    "timestamp": "2026-01-09T14:44:21.380608",
+    "details": {
+      "stats": {
+        "user_id": "0b19a4bd-5acd-43d7-9a26-d2976ce1baf7",
+        "total_xp": 160,
+        "level": 1,
+        "level_name": "Petit Scarab\u00e9e",
+        "streak_days": 2,
+        "last_activity_date": "2026-01-09",
+        "badges": [
+          {
+            "badge_id": "first_step",
+            "badge_name": "Premier Pas",
+            "badge_icon": "\ud83d\udc63",
+            "badge_description": "Premier entra\u00eenement",
+            "awarded_at": "2026-01-08T18:26:04.809286+00:00"
+          },
+          {
+            "badge_id": "xp_100",
+            "badge_name": "D\u00e9butant",
+            "badge_icon": "\u2b50",
+            "badge_description": "100 XP gagn\u00e9s",
+            "awarded_at": "2026-01-08T20:55:42.955822+00:00"
+          }
+        ],
+        "completed_challenges": [
+          {
+            "challenge_id": "salut",
+            "challenge_type": "daily",
+            "challenge_name": "Salut Parfait",
+            "xp_reward": 10,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T18:25:51.780145+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "aide",
+            "challenge_type": "daily",
+            "challenge_name": "Coup de Main",
+            "xp_reward": 25,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:48:06.122546+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention",
+            "challenge_type": "daily",
+            "challenge_name": "Attention Challenge Test",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.692970+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "tai_sabaki",
+            "challenge_type": "daily",
+            "challenge_name": "Tai Sabaki Practice",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.883123+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "respect_salut",
+            "challenge_type": "daily",
+            "challenge_name": "Perfect Bow",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.954313+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention_regarder",
+            "challenge_type": "daily",
+            "challenge_name": "Attentive Observation",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.981539+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention",
+            "challenge_type": "daily",
+            "challenge_name": "Attention Challenge Test",
+            "xp_reward": 15,
+            "completed_date": "2026-01-09",
+            "completed_at": "2026-01-09T14:44:21.284821+00:00",
+            "status": "validated"
+          }
+        ],
+        "pending_validations": [],
+        "attendance_count": 2,
+        "techniques_validated": 0,
+        "created_at": "2026-01-08T18:25:41.985656+00:00"
+      }
+    }
+  },
+  {
+    "test": "POST /api/gamification/attendance",
+    "success": true,
+    "message": "Successfully marked attendance. XP gained: 25, Attendance count: +1",
+    "timestamp": "2026-01-09T14:44:21.380642",
+    "details": {
+      "xp_gained": 25,
+      "attendance_gained": 1,
+      "result": {
+        "success": true,
+        "xp_awarded": 25,
+        "attendance_count": 2,
+        "new_badges": []
+      }
+    }
+  },
+  {
+    "test": "GET /api/gamification/stats/{user_id}",
+    "success": true,
+    "message": "Successfully retrieved user stats. XP: 160, Level: 1",
+    "timestamp": "2026-01-09T14:44:21.391055",
+    "details": {
+      "stats": {
+        "user_id": "0b19a4bd-5acd-43d7-9a26-d2976ce1baf7",
+        "total_xp": 160,
+        "level": 1,
+        "level_name": "Petit Scarab\u00e9e",
+        "streak_days": 2,
+        "last_activity_date": "2026-01-09",
+        "badges": [
+          {
+            "badge_id": "first_step",
+            "badge_name": "Premier Pas",
+            "badge_icon": "\ud83d\udc63",
+            "badge_description": "Premier entra\u00eenement",
+            "awarded_at": "2026-01-08T18:26:04.809286+00:00"
+          },
+          {
+            "badge_id": "xp_100",
+            "badge_name": "D\u00e9butant",
+            "badge_icon": "\u2b50",
+            "badge_description": "100 XP gagn\u00e9s",
+            "awarded_at": "2026-01-08T20:55:42.955822+00:00"
+          }
+        ],
+        "completed_challenges": [
+          {
+            "challenge_id": "salut",
+            "challenge_type": "daily",
+            "challenge_name": "Salut Parfait",
+            "xp_reward": 10,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T18:25:51.780145+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "aide",
+            "challenge_type": "daily",
+            "challenge_name": "Coup de Main",
+            "xp_reward": 25,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:48:06.122546+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention",
+            "challenge_type": "daily",
+            "challenge_name": "Attention Challenge Test",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.692970+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "tai_sabaki",
+            "challenge_type": "daily",
+            "challenge_name": "Tai Sabaki Practice",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.883123+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "respect_salut",
+            "challenge_type": "daily",
+            "challenge_name": "Perfect Bow",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.954313+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention_regarder",
+            "challenge_type": "daily",
+            "challenge_name": "Attentive Observation",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.981539+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention",
+            "challenge_type": "daily",
+            "challenge_name": "Attention Challenge Test",
+            "xp_reward": 15,
+            "completed_date": "2026-01-09",
+            "completed_at": "2026-01-09T14:44:21.284821+00:00",
+            "status": "validated"
+          }
+        ],
+        "pending_validations": [],
+        "attendance_count": 2,
+        "techniques_validated": 0,
+        "created_at": "2026-01-08T18:25:41.985656+00:00"
+      }
+    }
+  },
+  {
+    "test": "GET /api/gamification/stats/{user_id}",
+    "success": true,
+    "message": "Successfully retrieved user stats. XP: 175, Level: 1",
+    "timestamp": "2026-01-09T14:44:21.411285",
+    "details": {
+      "stats": {
+        "user_id": "0b19a4bd-5acd-43d7-9a26-d2976ce1baf7",
+        "total_xp": 175,
+        "level": 1,
+        "level_name": "Petit Scarab\u00e9e",
+        "streak_days": 2,
+        "last_activity_date": "2026-01-09",
+        "badges": [
+          {
+            "badge_id": "first_step",
+            "badge_name": "Premier Pas",
+            "badge_icon": "\ud83d\udc63",
+            "badge_description": "Premier entra\u00eenement",
+            "awarded_at": "2026-01-08T18:26:04.809286+00:00"
+          },
+          {
+            "badge_id": "xp_100",
+            "badge_name": "D\u00e9butant",
+            "badge_icon": "\u2b50",
+            "badge_description": "100 XP gagn\u00e9s",
+            "awarded_at": "2026-01-08T20:55:42.955822+00:00"
+          }
+        ],
+        "completed_challenges": [
+          {
+            "challenge_id": "salut",
+            "challenge_type": "daily",
+            "challenge_name": "Salut Parfait",
+            "xp_reward": 10,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T18:25:51.780145+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "aide",
+            "challenge_type": "daily",
+            "challenge_name": "Coup de Main",
+            "xp_reward": 25,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:48:06.122546+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention",
+            "challenge_type": "daily",
+            "challenge_name": "Attention Challenge Test",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.692970+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "tai_sabaki",
+            "challenge_type": "daily",
+            "challenge_name": "Tai Sabaki Practice",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.883123+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "respect_salut",
+            "challenge_type": "daily",
+            "challenge_name": "Perfect Bow",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.954313+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention_regarder",
+            "challenge_type": "daily",
+            "challenge_name": "Attentive Observation",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.981539+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention",
+            "challenge_type": "daily",
+            "challenge_name": "Attention Challenge Test",
+            "xp_reward": 15,
+            "completed_date": "2026-01-09",
+            "completed_at": "2026-01-09T14:44:21.284821+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "tai_sabaki",
+            "challenge_type": "daily",
+            "challenge_name": "Tai Sabaki Practice",
+            "xp_reward": 15,
+            "completed_date": "2026-01-09",
+            "completed_at": "2026-01-09T14:44:21.396510+00:00",
+            "status": "validated"
+          }
+        ],
+        "pending_validations": [],
+        "attendance_count": 2,
+        "techniques_validated": 0,
+        "created_at": "2026-01-08T18:25:41.985656+00:00"
+      }
+    }
+  },
+  {
+    "test": "POST /api/gamification/challenge/complete",
+    "success": true,
+    "message": "Successfully completed challenge 'Tai Sabaki Practice'. XP gained: 15",
+    "timestamp": "2026-01-09T14:44:21.411316",
+    "details": {
+      "challenge_id": "tai_sabaki",
+      "xp_gained": 15,
+      "result": {
+        "success": true,
+        "xp_awarded": 15,
+        "total_xp": 190,
+        "level": 1,
+        "level_name": "Petit Scarab\u00e9e",
+        "streak_days": 2,
+        "new_badges": [],
+        "needs_validation": false
+      }
+    }
+  },
+  {
+    "test": "GET /api/gamification/stats/{user_id}",
+    "success": true,
+    "message": "Successfully retrieved user stats. XP: 175, Level: 1",
+    "timestamp": "2026-01-09T14:44:21.422047",
+    "details": {
+      "stats": {
+        "user_id": "0b19a4bd-5acd-43d7-9a26-d2976ce1baf7",
+        "total_xp": 175,
+        "level": 1,
+        "level_name": "Petit Scarab\u00e9e",
+        "streak_days": 2,
+        "last_activity_date": "2026-01-09",
+        "badges": [
+          {
+            "badge_id": "first_step",
+            "badge_name": "Premier Pas",
+            "badge_icon": "\ud83d\udc63",
+            "badge_description": "Premier entra\u00eenement",
+            "awarded_at": "2026-01-08T18:26:04.809286+00:00"
+          },
+          {
+            "badge_id": "xp_100",
+            "badge_name": "D\u00e9butant",
+            "badge_icon": "\u2b50",
+            "badge_description": "100 XP gagn\u00e9s",
+            "awarded_at": "2026-01-08T20:55:42.955822+00:00"
+          }
+        ],
+        "completed_challenges": [
+          {
+            "challenge_id": "salut",
+            "challenge_type": "daily",
+            "challenge_name": "Salut Parfait",
+            "xp_reward": 10,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T18:25:51.780145+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "aide",
+            "challenge_type": "daily",
+            "challenge_name": "Coup de Main",
+            "xp_reward": 25,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:48:06.122546+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention",
+            "challenge_type": "daily",
+            "challenge_name": "Attention Challenge Test",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.692970+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "tai_sabaki",
+            "challenge_type": "daily",
+            "challenge_name": "Tai Sabaki Practice",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.883123+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "respect_salut",
+            "challenge_type": "daily",
+            "challenge_name": "Perfect Bow",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.954313+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention_regarder",
+            "challenge_type": "daily",
+            "challenge_name": "Attentive Observation",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.981539+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention",
+            "challenge_type": "daily",
+            "challenge_name": "Attention Challenge Test",
+            "xp_reward": 15,
+            "completed_date": "2026-01-09",
+            "completed_at": "2026-01-09T14:44:21.284821+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "tai_sabaki",
+            "challenge_type": "daily",
+            "challenge_name": "Tai Sabaki Practice",
+            "xp_reward": 15,
+            "completed_date": "2026-01-09",
+            "completed_at": "2026-01-09T14:44:21.396510+00:00",
+            "status": "validated"
+          }
+        ],
+        "pending_validations": [],
+        "attendance_count": 2,
+        "techniques_validated": 0,
+        "created_at": "2026-01-08T18:25:41.985656+00:00"
+      }
+    }
+  },
+  {
+    "test": "GET /api/gamification/stats/{user_id}",
+    "success": true,
+    "message": "Successfully retrieved user stats. XP: 190, Level: 1",
+    "timestamp": "2026-01-09T14:44:21.443264",
+    "details": {
+      "stats": {
+        "user_id": "0b19a4bd-5acd-43d7-9a26-d2976ce1baf7",
+        "total_xp": 190,
+        "level": 1,
+        "level_name": "Petit Scarab\u00e9e",
+        "streak_days": 2,
+        "last_activity_date": "2026-01-09",
+        "badges": [
+          {
+            "badge_id": "first_step",
+            "badge_name": "Premier Pas",
+            "badge_icon": "\ud83d\udc63",
+            "badge_description": "Premier entra\u00eenement",
+            "awarded_at": "2026-01-08T18:26:04.809286+00:00"
+          },
+          {
+            "badge_id": "xp_100",
+            "badge_name": "D\u00e9butant",
+            "badge_icon": "\u2b50",
+            "badge_description": "100 XP gagn\u00e9s",
+            "awarded_at": "2026-01-08T20:55:42.955822+00:00"
+          }
+        ],
+        "completed_challenges": [
+          {
+            "challenge_id": "salut",
+            "challenge_type": "daily",
+            "challenge_name": "Salut Parfait",
+            "xp_reward": 10,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T18:25:51.780145+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "aide",
+            "challenge_type": "daily",
+            "challenge_name": "Coup de Main",
+            "xp_reward": 25,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:48:06.122546+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention",
+            "challenge_type": "daily",
+            "challenge_name": "Attention Challenge Test",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.692970+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "tai_sabaki",
+            "challenge_type": "daily",
+            "challenge_name": "Tai Sabaki Practice",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.883123+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "respect_salut",
+            "challenge_type": "daily",
+            "challenge_name": "Perfect Bow",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.954313+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention_regarder",
+            "challenge_type": "daily",
+            "challenge_name": "Attentive Observation",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.981539+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention",
+            "challenge_type": "daily",
+            "challenge_name": "Attention Challenge Test",
+            "xp_reward": 15,
+            "completed_date": "2026-01-09",
+            "completed_at": "2026-01-09T14:44:21.284821+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "tai_sabaki",
+            "challenge_type": "daily",
+            "challenge_name": "Tai Sabaki Practice",
+            "xp_reward": 15,
+            "completed_date": "2026-01-09",
+            "completed_at": "2026-01-09T14:44:21.396510+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "respect_salut",
+            "challenge_type": "daily",
+            "challenge_name": "Perfect Bow",
+            "xp_reward": 15,
+            "completed_date": "2026-01-09",
+            "completed_at": "2026-01-09T14:44:21.427987+00:00",
+            "status": "validated"
+          }
+        ],
+        "pending_validations": [],
+        "attendance_count": 2,
+        "techniques_validated": 0,
+        "created_at": "2026-01-08T18:25:41.985656+00:00"
+      }
+    }
+  },
+  {
+    "test": "POST /api/gamification/challenge/complete",
+    "success": true,
+    "message": "Successfully completed challenge 'Perfect Bow'. XP gained: 15",
+    "timestamp": "2026-01-09T14:44:21.443299",
+    "details": {
+      "challenge_id": "respect_salut",
+      "xp_gained": 15,
+      "result": {
+        "success": true,
+        "xp_awarded": 15,
+        "total_xp": 205,
+        "level": 1,
+        "level_name": "Petit Scarab\u00e9e",
+        "streak_days": 2,
+        "new_badges": [],
+        "needs_validation": false
+      }
+    }
+  },
+  {
+    "test": "GET /api/gamification/stats/{user_id}",
+    "success": true,
+    "message": "Successfully retrieved user stats. XP: 190, Level: 1",
+    "timestamp": "2026-01-09T14:44:21.458091",
+    "details": {
+      "stats": {
+        "user_id": "0b19a4bd-5acd-43d7-9a26-d2976ce1baf7",
+        "total_xp": 190,
+        "level": 1,
+        "level_name": "Petit Scarab\u00e9e",
+        "streak_days": 2,
+        "last_activity_date": "2026-01-09",
+        "badges": [
+          {
+            "badge_id": "first_step",
+            "badge_name": "Premier Pas",
+            "badge_icon": "\ud83d\udc63",
+            "badge_description": "Premier entra\u00eenement",
+            "awarded_at": "2026-01-08T18:26:04.809286+00:00"
+          },
+          {
+            "badge_id": "xp_100",
+            "badge_name": "D\u00e9butant",
+            "badge_icon": "\u2b50",
+            "badge_description": "100 XP gagn\u00e9s",
+            "awarded_at": "2026-01-08T20:55:42.955822+00:00"
+          }
+        ],
+        "completed_challenges": [
+          {
+            "challenge_id": "salut",
+            "challenge_type": "daily",
+            "challenge_name": "Salut Parfait",
+            "xp_reward": 10,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T18:25:51.780145+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "aide",
+            "challenge_type": "daily",
+            "challenge_name": "Coup de Main",
+            "xp_reward": 25,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:48:06.122546+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention",
+            "challenge_type": "daily",
+            "challenge_name": "Attention Challenge Test",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.692970+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "tai_sabaki",
+            "challenge_type": "daily",
+            "challenge_name": "Tai Sabaki Practice",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.883123+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "respect_salut",
+            "challenge_type": "daily",
+            "challenge_name": "Perfect Bow",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.954313+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention_regarder",
+            "challenge_type": "daily",
+            "challenge_name": "Attentive Observation",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.981539+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention",
+            "challenge_type": "daily",
+            "challenge_name": "Attention Challenge Test",
+            "xp_reward": 15,
+            "completed_date": "2026-01-09",
+            "completed_at": "2026-01-09T14:44:21.284821+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "tai_sabaki",
+            "challenge_type": "daily",
+            "challenge_name": "Tai Sabaki Practice",
+            "xp_reward": 15,
+            "completed_date": "2026-01-09",
+            "completed_at": "2026-01-09T14:44:21.396510+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "respect_salut",
+            "challenge_type": "daily",
+            "challenge_name": "Perfect Bow",
+            "xp_reward": 15,
+            "completed_date": "2026-01-09",
+            "completed_at": "2026-01-09T14:44:21.427987+00:00",
+            "status": "validated"
+          }
+        ],
+        "pending_validations": [],
+        "attendance_count": 2,
+        "techniques_validated": 0,
+        "created_at": "2026-01-08T18:25:41.985656+00:00"
+      }
+    }
+  },
+  {
+    "test": "GET /api/gamification/stats/{user_id}",
+    "success": true,
+    "message": "Successfully retrieved user stats. XP: 205, Level: 2",
+    "timestamp": "2026-01-09T14:44:21.478729",
+    "details": {
+      "stats": {
+        "user_id": "0b19a4bd-5acd-43d7-9a26-d2976ce1baf7",
+        "total_xp": 205,
+        "level": 2,
+        "level_name": "Jeune Poussin",
+        "streak_days": 2,
+        "last_activity_date": "2026-01-09",
+        "badges": [
+          {
+            "badge_id": "first_step",
+            "badge_name": "Premier Pas",
+            "badge_icon": "\ud83d\udc63",
+            "badge_description": "Premier entra\u00eenement",
+            "awarded_at": "2026-01-08T18:26:04.809286+00:00"
+          },
+          {
+            "badge_id": "xp_100",
+            "badge_name": "D\u00e9butant",
+            "badge_icon": "\u2b50",
+            "badge_description": "100 XP gagn\u00e9s",
+            "awarded_at": "2026-01-08T20:55:42.955822+00:00"
+          }
+        ],
+        "completed_challenges": [
+          {
+            "challenge_id": "salut",
+            "challenge_type": "daily",
+            "challenge_name": "Salut Parfait",
+            "xp_reward": 10,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T18:25:51.780145+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "aide",
+            "challenge_type": "daily",
+            "challenge_name": "Coup de Main",
+            "xp_reward": 25,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:48:06.122546+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention",
+            "challenge_type": "daily",
+            "challenge_name": "Attention Challenge Test",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.692970+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "tai_sabaki",
+            "challenge_type": "daily",
+            "challenge_name": "Tai Sabaki Practice",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.883123+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "respect_salut",
+            "challenge_type": "daily",
+            "challenge_name": "Perfect Bow",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.954313+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention_regarder",
+            "challenge_type": "daily",
+            "challenge_name": "Attentive Observation",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.981539+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention",
+            "challenge_type": "daily",
+            "challenge_name": "Attention Challenge Test",
+            "xp_reward": 15,
+            "completed_date": "2026-01-09",
+            "completed_at": "2026-01-09T14:44:21.284821+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "tai_sabaki",
+            "challenge_type": "daily",
+            "challenge_name": "Tai Sabaki Practice",
+            "xp_reward": 15,
+            "completed_date": "2026-01-09",
+            "completed_at": "2026-01-09T14:44:21.396510+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "respect_salut",
+            "challenge_type": "daily",
+            "challenge_name": "Perfect Bow",
+            "xp_reward": 15,
+            "completed_date": "2026-01-09",
+            "completed_at": "2026-01-09T14:44:21.427987+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention_regarder",
+            "challenge_type": "daily",
+            "challenge_name": "Attentive Observation",
+            "xp_reward": 15,
+            "completed_date": "2026-01-09",
+            "completed_at": "2026-01-09T14:44:21.464576+00:00",
+            "status": "validated"
+          }
+        ],
+        "pending_validations": [],
+        "attendance_count": 2,
+        "techniques_validated": 0,
+        "created_at": "2026-01-08T18:25:41.985656+00:00"
+      }
+    }
+  },
+  {
+    "test": "POST /api/gamification/challenge/complete",
+    "success": true,
+    "message": "Successfully completed challenge 'Attentive Observation'. XP gained: 15",
+    "timestamp": "2026-01-09T14:44:21.478758",
+    "details": {
+      "challenge_id": "attention_regarder",
+      "xp_gained": 15,
+      "result": {
+        "success": true,
+        "xp_awarded": 15,
+        "total_xp": 220,
+        "level": 2,
+        "level_name": "Jeune Poussin",
+        "streak_days": 2,
+        "new_badges": [],
+        "needs_validation": false
+      }
+    }
+  },
+  {
+    "test": "Multiple Challenge Completion",
+    "success": true,
+    "message": "Successfully tested 3 different challenges",
+    "timestamp": "2026-01-09T14:44:21.478773",
+    "details": {
+      "completed_challenges": [
+        "tai_sabaki",
+        "respect_salut",
+        "attention_regarder"
+      ]
+    }
+  },
+  {
+    "test": "GET /api/gamification/stats/{user_id}",
+    "success": true,
+    "message": "Successfully retrieved user stats. XP: 205, Level: 2",
+    "timestamp": "2026-01-09T14:44:21.488433",
+    "details": {
+      "stats": {
+        "user_id": "0b19a4bd-5acd-43d7-9a26-d2976ce1baf7",
+        "total_xp": 205,
+        "level": 2,
+        "level_name": "Jeune Poussin",
+        "streak_days": 2,
+        "last_activity_date": "2026-01-09",
+        "badges": [
+          {
+            "badge_id": "first_step",
+            "badge_name": "Premier Pas",
+            "badge_icon": "\ud83d\udc63",
+            "badge_description": "Premier entra\u00eenement",
+            "awarded_at": "2026-01-08T18:26:04.809286+00:00"
+          },
+          {
+            "badge_id": "xp_100",
+            "badge_name": "D\u00e9butant",
+            "badge_icon": "\u2b50",
+            "badge_description": "100 XP gagn\u00e9s",
+            "awarded_at": "2026-01-08T20:55:42.955822+00:00"
+          }
+        ],
+        "completed_challenges": [
+          {
+            "challenge_id": "salut",
+            "challenge_type": "daily",
+            "challenge_name": "Salut Parfait",
+            "xp_reward": 10,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T18:25:51.780145+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "aide",
+            "challenge_type": "daily",
+            "challenge_name": "Coup de Main",
+            "xp_reward": 25,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:48:06.122546+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention",
+            "challenge_type": "daily",
+            "challenge_name": "Attention Challenge Test",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.692970+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "tai_sabaki",
+            "challenge_type": "daily",
+            "challenge_name": "Tai Sabaki Practice",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.883123+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "respect_salut",
+            "challenge_type": "daily",
+            "challenge_name": "Perfect Bow",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.954313+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention_regarder",
+            "challenge_type": "daily",
+            "challenge_name": "Attentive Observation",
+            "xp_reward": 15,
+            "completed_date": "2026-01-08",
+            "completed_at": "2026-01-08T20:55:42.981539+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention",
+            "challenge_type": "daily",
+            "challenge_name": "Attention Challenge Test",
+            "xp_reward": 15,
+            "completed_date": "2026-01-09",
+            "completed_at": "2026-01-09T14:44:21.284821+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "tai_sabaki",
+            "challenge_type": "daily",
+            "challenge_name": "Tai Sabaki Practice",
+            "xp_reward": 15,
+            "completed_date": "2026-01-09",
+            "completed_at": "2026-01-09T14:44:21.396510+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "respect_salut",
+            "challenge_type": "daily",
+            "challenge_name": "Perfect Bow",
+            "xp_reward": 15,
+            "completed_date": "2026-01-09",
+            "completed_at": "2026-01-09T14:44:21.427987+00:00",
+            "status": "validated"
+          },
+          {
+            "challenge_id": "attention_regarder",
+            "challenge_type": "daily",
+            "challenge_name": "Attentive Observation",
+            "xp_reward": 15,
+            "completed_date": "2026-01-09",
+            "completed_at": "2026-01-09T14:44:21.464576+00:00",
+            "status": "validated"
+          }
+        ],
+        "pending_validations": [],
+        "attendance_count": 2,
+        "techniques_validated": 0,
+        "created_at": "2026-01-08T18:25:41.985656+00:00"
+      }
+    }
+  }
+]
