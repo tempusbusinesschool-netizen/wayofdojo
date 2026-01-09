@@ -18,7 +18,7 @@ export const AIKIDO_CHARACTERS = {
   HOMME_SEUL: "https://static.prod-images.emergentagent.com/jobs/e17d73c6-86f0-4c7d-be1f-5c1a2a26eb2f/images/d67c33c961c5b2b0f6b82a7f873c67abc96cda02952539c41b54a53f07c946c6.png",
   
   // Femme seule - pour superposition bandeau (fond gradient violet-bleu assorti)
-  FEMME_SEULE: "https://static.prod-images.emergentagent.com/jobs/e17d73c6-86f0-4c7d-be1f-5c1a2a26eb2f/images/554b5a071a6815e8e623bf918f7f37018f1095cef2b16278970a0f1206a10624.png",
+  FEMME_SEULE: "https://static.prod-images.emergentagent.com/jobs/e17d73c6-86f0-4c7d-be1f-5c1a2a26eb2f/images/393dcee3f75c4b122d92b2a69b81645efa9cb00a4a2244a70ea83305d682369e.png",
 
   // ═══════════════════════════════════════════════════════════════
   // ENFANT - Différentes poses et émotions
