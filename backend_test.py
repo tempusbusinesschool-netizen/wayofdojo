@@ -742,16 +742,38 @@ class GamificationTester:
             print("\n🎉 All gamification tests passed!")
         
         return passed == total
-        return passed == total
+
 
 if __name__ == "__main__":
-    tester = GamificationTester()
-    success = tester.run_gamification_tests()
+    # Run Parent-Child Validation Tests
+    print("🚀 Starting Aikido@Game Backend API Tests")
+    print("=" * 80)
     
-    # Save results to file
-    with open("/app/gamification_test_results.json", "w") as f:
-        json.dump(tester.test_results, f, indent=2)
+    parent_child_tester = ParentChildValidationTester()
+    parent_child_success = parent_child_tester.run_parent_child_validation_tests()
     
-    print(f"\n📄 Detailed results saved to: /app/gamification_test_results.json")
+    print("\n" + "=" * 80)
     
-    sys.exit(0 if success else 1)
+    # Run Basic Gamification Tests
+    gamification_tester = GamificationTester()
+    gamification_success = gamification_tester.run_gamification_tests()
+    
+    # Combine results
+    all_results = parent_child_tester.test_results + gamification_tester.test_results
+    
+    # Save combined results to file
+    with open("/app/parent_child_validation_test_results.json", "w") as f:
+        json.dump(all_results, f, indent=2)
+    
+    print(f"\n📄 Detailed results saved to: /app/parent_child_validation_test_results.json")
+    
+    overall_success = parent_child_success and gamification_success
+    
+    print("\n" + "🏁" * 20)
+    print("FINAL TEST SUMMARY")
+    print("🏁" * 20)
+    print(f"Parent-Child Validation: {'✅ PASS' if parent_child_success else '❌ FAIL'}")
+    print(f"Basic Gamification: {'✅ PASS' if gamification_success else '❌ FAIL'}")
+    print(f"Overall Result: {'🎉 ALL TESTS PASSED' if overall_success else '⚠️ SOME TESTS FAILED'}")
+    
+    sys.exit(0 if overall_success else 1)
