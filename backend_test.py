@@ -237,7 +237,8 @@ class ParentChildValidationTester:
             response = requests.get(f"{BACKEND_URL}/parent/pending-validations", headers=headers)
             
             if response.status_code == 200:
-                validations = response.json()
+                data = response.json()
+                validations = data.get("pending_validations", [])
                 
                 if isinstance(validations, list):
                     self.log_result("GET /api/parent/pending-validations", True, 
@@ -247,7 +248,7 @@ class ParentChildValidationTester:
                 else:
                     self.log_result("GET /api/parent/pending-validations", False, 
                                   "Expected list of validations",
-                                  {"response": validations})
+                                  {"response": data})
                     return []
             else:
                 self.log_result("GET /api/parent/pending-validations", False, 
