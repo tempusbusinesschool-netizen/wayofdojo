@@ -683,58 +683,77 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                       {/* Version MOBILE - Landing page commerciale */}
                       <div className="block sm:hidden">
                         {/* Header commercial avec gradient subtil */}
-                        <div className="relative bg-gradient-to-b from-slate-800 to-slate-900 rounded-2xl mx-2 p-6 border border-slate-700/50">
+                        <div className="relative bg-gradient-to-b from-slate-800 to-slate-900 rounded-2xl mx-2 p-5 border border-slate-700/50">
                           
-                          {/* Bouton changer de mode */}
-                          <button
-                            onClick={handleResetMode}
-                            className="absolute top-3 right-3 text-slate-500 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-slate-700/50"
-                            title="Changer de mode"
-                          >
-                            <Settings className="w-4 h-4" />
-                          </button>
-
-                          {/* Logo et titre */}
+                          {/* Logo et titre compact */}
                           <div className="text-center mb-4">
-                            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 shadow-lg shadow-amber-500/30 mb-3">
-                              <span className="text-3xl">🥋</span>
+                            <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 shadow-lg shadow-amber-500/30 mb-2">
+                              <span className="text-2xl">🥋</span>
                             </div>
-                            <h1 className="text-2xl font-black text-white">
+                            <h1 className="text-xl font-black text-white">
                               Aikido@Game
                             </h1>
-                            <p className="text-amber-400 text-sm font-medium mt-1">
-                              {visitorMode === 'enfant' ? 'Édition Jeune Ninja' : 'Édition Confirmé'}
-                            </p>
+                          </div>
+
+                          {/* Deux gros blocs de sélection Jeune/Confirmé */}
+                          <div className="grid grid-cols-2 gap-3 mb-4">
+                            {/* Bloc Jeune Ninja */}
+                            <button
+                              onClick={() => {
+                                localStorage.setItem('ninja-aikido-mode', 'enfant');
+                                window.location.reload();
+                              }}
+                              className={`relative overflow-hidden rounded-xl p-3 transition-all duration-300 ${
+                                visitorMode === 'enfant' 
+                                  ? 'bg-gradient-to-br from-orange-500 to-red-500 ring-2 ring-orange-400 scale-[1.02]' 
+                                  : 'bg-slate-700/50 hover:bg-slate-700'
+                              }`}
+                            >
+                              <div className="text-center">
+                                <span className="text-3xl mb-1 block">🥷</span>
+                                <p className="text-white font-bold text-sm">Jeune Ninja</p>
+                                <p className="text-white/60 text-[10px]">6-12 ans</p>
+                              </div>
+                              {visitorMode === 'enfant' && (
+                                <div className="absolute top-1 right-1 w-2 h-2 bg-white rounded-full"></div>
+                              )}
+                            </button>
+
+                            {/* Bloc Ninja Confirmé */}
+                            <button
+                              onClick={() => {
+                                localStorage.setItem('ninja-aikido-mode', 'adulte');
+                                window.location.reload();
+                              }}
+                              className={`relative overflow-hidden rounded-xl p-3 transition-all duration-300 ${
+                                visitorMode === 'adulte' 
+                                  ? 'bg-gradient-to-br from-blue-600 to-indigo-600 ring-2 ring-blue-400 scale-[1.02]' 
+                                  : 'bg-slate-700/50 hover:bg-slate-700'
+                              }`}
+                            >
+                              <div className="text-center">
+                                <span className="text-3xl mb-1 block">🎯</span>
+                                <p className="text-white font-bold text-sm">Ninja Confirmé</p>
+                                <p className="text-white/60 text-[10px]">Ados & Adultes</p>
+                              </div>
+                              {visitorMode === 'adulte' && (
+                                <div className="absolute top-1 right-1 w-2 h-2 bg-white rounded-full"></div>
+                              )}
+                            </button>
                           </div>
 
                           {/* Proposition de valeur */}
-                          <div className="text-center mb-5">
-                            <p className="text-white text-base font-semibold mb-2">
+                          <div className="text-center mb-4">
+                            <p className="text-white text-sm font-semibold mb-1">
                               {visitorMode === 'enfant' 
                                 ? 'Apprends l\'Aikido en t\'amusant !' 
                                 : 'Progressez dans votre pratique'}
                             </p>
-                            <p className="text-slate-400 text-sm">
+                            <p className="text-slate-400 text-xs">
                               {visitorMode === 'enfant' 
-                                ? 'Gagne des points, débloque des niveaux et deviens un vrai Ninja !' 
-                                : 'Suivez votre progression, maîtrisez les techniques, atteignez vos objectifs.'}
+                                ? 'Gagne des points et deviens un vrai Ninja !' 
+                                : 'Suivez votre progression et atteignez vos objectifs.'}
                             </p>
-                          </div>
-
-                          {/* Points clés - version compacte */}
-                          <div className="grid grid-cols-3 gap-2 mb-5">
-                            <div className="text-center p-2 bg-slate-800/50 rounded-xl">
-                              <span className="text-lg">📊</span>
-                              <p className="text-[10px] text-slate-400 mt-1">Progression</p>
-                            </div>
-                            <div className="text-center p-2 bg-slate-800/50 rounded-xl">
-                              <span className="text-lg">🎯</span>
-                              <p className="text-[10px] text-slate-400 mt-1">Défis</p>
-                            </div>
-                            <div className="text-center p-2 bg-slate-800/50 rounded-xl">
-                              <span className="text-lg">🏆</span>
-                              <p className="text-[10px] text-slate-400 mt-1">Récompenses</p>
-                            </div>
                           </div>
 
                           {/* CTA Principal */}
@@ -743,7 +762,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                               const event = new CustomEvent('openAuthDialog');
                               window.dispatchEvent(event);
                             }}
-                            className="w-full bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-300 hover:to-orange-400 text-slate-900 font-bold py-4 rounded-xl text-base shadow-lg shadow-amber-500/30 mb-3"
+                            className="w-full bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-300 hover:to-orange-400 text-slate-900 font-bold py-3 rounded-xl text-sm shadow-lg shadow-amber-500/30 mb-2"
                           >
                             {visitorMode === 'enfant' ? '🚀 Commencer l\'aventure' : '📝 Créer mon compte gratuit'}
                           </Button>
@@ -755,14 +774,14 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                               const event = new CustomEvent('openLoginDialog');
                               window.dispatchEvent(event);
                             }}
-                            className="w-full text-slate-400 hover:text-white hover:bg-slate-700/50 font-medium py-3 rounded-xl text-sm"
+                            className="w-full text-slate-400 hover:text-white hover:bg-slate-700/50 font-medium py-2 rounded-xl text-xs"
                           >
                             Déjà inscrit ? Se connecter
                           </Button>
 
                           {/* Badge de confiance */}
-                          <p className="text-center text-slate-500 text-[10px] mt-3">
-                            ✓ Gratuit • ✓ Sans engagement • ✓ Conforme RGPD
+                          <p className="text-center text-slate-500 text-[10px] mt-2">
+                            ✓ Gratuit • ✓ Sans engagement
                           </p>
                         </div>
                       </div>
