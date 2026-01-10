@@ -1125,21 +1125,27 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
 
             {/* Section Mon Parcours Aïkido - Version ludique pour enfants */}
             {currentBelt && (
-              <BeltProgressCard 
-                currentBelt={currentBelt}
-                totalPoints={statistics.total_points || 0}
-                onBeltClick={() => setShowBeltDialog(true)}
-              />
+              <div id="section-techniques-maitrisees">
+                <BeltProgressCard 
+                  currentBelt={currentBelt}
+                  totalPoints={statistics.total_points || 0}
+                  onBeltClick={() => setShowBeltDialog(true)}
+                />
+              </div>
             )}
 
-            {/* Grade Cards Grid (détails des techniques par niveau) */}
-            <GradeCardsGrid 
-              techniquesByLevel={statistics.techniques_by_level}
-              onGradeClick={onGradeClick}
-            />
+            {/* Grade Cards Grid (détails des techniques par niveau) - Section Dojo */}
+            <div id="section-techniques-dojo">
+              <GradeCardsGrid 
+                techniquesByLevel={statistics.techniques_by_level}
+                onGradeClick={onGradeClick}
+              />
+            </div>
 
-          {/* Section Déplacements */}
-          <DeplacementsSection />
+          {/* Section Déplacements - Techniques en cours */}
+          <div id="section-techniques-encours">
+            <DeplacementsSection />
+          </div>
 
           {/* Fun footer message */}
           <div className="mt-6 text-center">
