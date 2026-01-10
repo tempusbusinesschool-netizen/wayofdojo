@@ -1,30 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, ChevronDown, ChevronUp, Lock, Loader2 } from 'lucide-react';
+import { ArrowLeft, Loader2, Lock } from 'lucide-react';
+import GradeSection from '@/components/GradeSection';
+import TechniqueModal from '@/components/TechniqueModal';
 
 /**
  * ProgrammePage - Programme technique par grade (version adulte)
- * Kanji: 技 (technique, art)
+ * Utilise GradeSection et TechniqueCard pour l'affichage des techniques
+ * avec la possibilité de voir les détails et marquer comme maîtrisée
  */
 const ProgrammePage = ({ onBack, isAuthenticated, onOpenAuth }) => {
-  const [expandedGrade, setExpandedGrade] = useState(null);
   const [grades, setGrades] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  // Mapping des grades pour l'affichage
-  const gradeDisplayInfo = {
-    '5e KYU': { belt: 'Ceinture Jaune', color: 'from-amber-400 to-yellow-500', emoji: '🟡', duration: '~6 mois' },
-    '4e KYU': { belt: 'Ceinture Orange', color: 'from-orange-400 to-orange-500', emoji: '🟠', duration: '~6 mois' },
-    '3e KYU': { belt: 'Ceinture Verte', color: 'from-green-400 to-emerald-500', emoji: '🟢', duration: '~1 an' },
-    '2e KYU': { belt: 'Ceinture Bleue', color: 'from-blue-400 to-blue-500', emoji: '🔵', duration: '~1 an' },
-    '1er KYU': { belt: 'Ceinture Marron', color: 'from-amber-700 to-amber-800', emoji: '🟤', duration: '~1 an' },
-    'SHODAN (1er Dan)': { belt: '1er Dan - Ceinture Noire', color: 'from-slate-900 to-black', emoji: '⚫', duration: '~3-4 ans' },
-    'NIDAN (2e Dan)': { belt: '2ème Dan', color: 'from-slate-800 to-slate-900', emoji: '⚫', duration: '~2 ans après Shodan' },
-    'SANDAN (3e Dan)': { belt: '3ème Dan', color: 'from-slate-700 to-slate-800', emoji: '⚫', duration: '~3 ans après Nidan' },
-    'YONDAN (4e Dan)': { belt: '4ème Dan', color: 'from-slate-600 to-slate-700', emoji: '⚫', duration: '~4 ans après Sandan' },
-    'BOKKEN (Aïkiken)': { belt: 'Travail au sabre', color: 'from-amber-600 to-amber-800', emoji: '⚔️', duration: 'Transversal' },
-  };
+  const [selectedTechnique, setSelectedTechnique] = useState(null);
+  const [showTechniqueModal, setShowTechniqueModal] = useState(false);
 
   // Récupérer les données depuis l'API
   useEffect(() => {
@@ -33,6 +22,7 @@ const ProgrammePage = ({ onBack, isAuthenticated, onOpenAuth }) => {
         const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/kyu-levels`);
         if (response.ok) {
           const data = await response.json();
+          // Trier par order décroissant (5e KYU en premier)
           const sortedGrades = data.sort((a, b) => b.order - a.order);
           setGrades(sortedGrades);
         }
@@ -45,13 +35,18 @@ const ProgrammePage = ({ onBack, isAuthenticated, onOpenAuth }) => {
     fetchGrades();
   }, []);
 
-  const getGradeInfo = (gradeName) => {
-    return gradeDisplayInfo[gradeName] || {
-      belt: gradeName,
-      color: 'from-slate-400 to-slate-500',
-      emoji: '⚪',
-      duration: ''
-    };
+  const handleViewTechnique = (technique) => {
+    setSelectedTechnique(technique);
+    setShowTechniqueModal(true);
+  };
+
+  const handleUpdateMastery = async (techniqueId, newLevel) => {
+    if (!isAuthenticated) {
+      onOpenAuth();
+      return;
+    }
+    // TODO: Implémenter la mise à jour de la maîtrise
+    console.log('Update mastery:', techniqueId, newLevel);
   };
 
   if (loading) {
@@ -87,85 +82,58 @@ const ProgrammePage = ({ onBack, isAuthenticated, onOpenAuth }) => {
             </div>
             <div>
               <h1 className="text-3xl md:text-4xl font-bold text-white">Programme Technique</h1>
-              <p className="text-slate-400">Progression par grade</p>
+              <p className="text-slate-400">
+                {grades.reduce((sum, g) => sum + (g.techniques?.length || 0), 0)} techniques • {grades.length} niveaux
+              </p>
             </div>
           </div>
 
           <p className="text-lg text-slate-300 max-w-2xl">
-            Le programme technique d'Aikido est structuré en grades (kyu), du 6ème kyu (débutant) 
-            jusqu'au 1er kyu, avant le passage au grade Dan (ceinture noire).
+            Le programme technique d'Aikido est structuré en grades (kyu), du 5ème kyu (débutant) 
+            jusqu'au 1er kyu, puis les grades Dan (ceinture noire).
           </p>
         </div>
       </div>
 
-      {/* Grades */}
+      {/* Message pour les visiteurs */}
+      {!isAuthenticated && (
+        <div className="bg-gradient-to-r from-cyan-900/30 to-blue-900/30 border border-cyan-700/50 rounded-xl p-4 flex items-center gap-3">
+          <Lock className="w-5 h-5 text-cyan-400 flex-shrink-0" />
+          <p className="text-slate-300 text-sm">
+            <button onClick={onOpenAuth} className="text-cyan-400 hover:text-cyan-300 font-medium underline">
+              Connectez-vous
+            </button> pour suivre votre progression et marquer les techniques comme maîtrisées.
+          </p>
+        </div>
+      )}
+
+      {/* Grades avec GradeSection */}
       <div className="space-y-4">
-        {grades.map((grade) => {
-          const gradeInfo = getGradeInfo(grade.name);
-          
-          return (
-            <Card 
-              key={grade.id} 
-              className="bg-slate-800/50 border-slate-700 overflow-hidden"
-            >
-              <button
-                onClick={() => setExpandedGrade(expandedGrade === grade.id ? null : grade.id)}
-                className="w-full"
-              >
-                <CardHeader className="flex flex-row items-center justify-between p-4 hover:bg-slate-700/30 transition-colors">
-                  <div className="flex items-center gap-4">
-                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${gradeInfo.color} flex items-center justify-center text-2xl`}>
-                      {gradeInfo.emoji}
-                    </div>
-                    <div className="text-left">
-                      <CardTitle className="text-white text-lg">{grade.name}</CardTitle>
-                      <p className="text-slate-400 text-sm">{gradeInfo.belt} • {gradeInfo.duration}</p>
-                    </div>
-                  </div>
-                  {expandedGrade === grade.id ? (
-                    <ChevronUp className="w-5 h-5 text-slate-400" />
-                  ) : (
-                    <ChevronDown className="w-5 h-5 text-slate-400" />
-                  )}
-                </CardHeader>
-              </button>
-              
-              {expandedGrade === grade.id && (
-                <CardContent className="p-4 pt-0 border-t border-slate-700">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
-                    {grade.techniques?.map((tech, idx) => (
-                      <div 
-                        key={idx}
-                        className="p-3 bg-slate-900/50 rounded-lg border border-slate-700"
-                      >
-                        <p className="font-medium text-white">{tech.name}</p>
-                        <p className="text-sm text-slate-400">{tech.description}</p>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              )}
-            </Card>
-          );
-        })}
+        {grades.map((grade) => (
+          <GradeSection
+            key={grade.id}
+            kyu={grade}
+            onViewTechnique={handleViewTechnique}
+            onUpdateMastery={handleUpdateMastery}
+            isFiltered={false}
+            originalCount={grade.techniques?.length || 0}
+          />
+        ))}
       </div>
 
-      {/* CTA */}
-      {!isAuthenticated && (
-        <Card className="bg-gradient-to-r from-cyan-900/30 to-blue-900/30 border-cyan-700/50">
-          <CardContent className="p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <Lock className="w-6 h-6 text-cyan-400" />
-              <p className="text-slate-300">Connectez-vous pour suivre votre progression dans chaque grade</p>
-            </div>
-            <Button
-              onClick={onOpenAuth}
-              className="bg-cyan-600 hover:bg-cyan-500 text-white"
-            >
-              S'inscrire gratuitement
-            </Button>
-          </CardContent>
-        </Card>
+      {/* Modal technique */}
+      {showTechniqueModal && selectedTechnique && (
+        <TechniqueModal
+          technique={selectedTechnique}
+          isOpen={showTechniqueModal}
+          onClose={() => {
+            setShowTechniqueModal(false);
+            setSelectedTechnique(null);
+          }}
+          onUpdateMastery={handleUpdateMastery}
+          isAuthenticated={isAuthenticated}
+          onOpenAuth={onOpenAuth}
+        />
       )}
     </div>
   );
