@@ -117,19 +117,64 @@ const AgeSelector = ({ onSelect }) => {
           </p>
           
           {/* STATISTIQUES DYNAMIQUES depuis la base de données */}
-          <div className="flex flex-wrap justify-center gap-6 sm:gap-10 mb-8">
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-8 mb-6">
             <div className="text-center bg-white/10 backdrop-blur-sm rounded-xl px-4 py-3 border border-white/20">
-              <p className="text-3xl sm:text-4xl font-black text-amber-300">{stats.total_techniques}+</p>
-              <p className="text-white/80 text-sm font-medium">Techniques</p>
+              <p className="text-2xl sm:text-3xl font-black text-amber-300">{stats.total_techniques}+</p>
+              <p className="text-white/80 text-xs sm:text-sm font-medium">Techniques</p>
             </div>
             <div className="text-center bg-white/10 backdrop-blur-sm rounded-xl px-4 py-3 border border-white/20">
-              <p className="text-3xl sm:text-4xl font-black text-white">{stats.total_grades || 7}</p>
-              <p className="text-white/80 text-sm font-medium">{stats.grades_label || "Grades"}</p>
+              <p className="text-2xl sm:text-3xl font-black text-white">{stats.total_grades || 7}</p>
+              <p className="text-white/80 text-xs sm:text-sm font-medium">{stats.grades_label || "Grades"}</p>
             </div>
             <div className="text-center bg-white/10 backdrop-blur-sm rounded-xl px-4 py-3 border border-white/20">
-              <p className="text-3xl sm:text-4xl font-black text-cyan-300">∞</p>
-              <p className="text-white/80 text-sm font-medium">Défis</p>
+              <p className="text-2xl sm:text-3xl font-black text-cyan-300">{stats.total_challenges || 84}</p>
+              <p className="text-white/80 text-xs sm:text-sm font-medium">Défis</p>
             </div>
+          </div>
+          
+          {/* EXPLICATION DU BUDO - Section éducative */}
+          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-white/10 mb-6 max-w-3xl mx-auto">
+            <div className="text-center mb-4">
+              <span className="text-3xl sm:text-4xl">🥋</span>
+              <h3 className="text-lg sm:text-xl font-bold text-amber-300 mt-2">
+                Budō (武道) - La Voie Martiale
+              </h3>
+              <p className="text-white/70 text-xs sm:text-sm mt-1">
+                L'Aïkido n'est pas un sport, c'est un <strong className="text-white">Budo</strong>
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+              {/* Colonne Budo */}
+              <div className="bg-amber-500/10 rounded-xl p-3 border border-amber-500/30">
+                <p className="font-bold text-amber-300 mb-2 flex items-center gap-2">
+                  <span>☯️</span> Budō - Voie de vie
+                </p>
+                <ul className="text-white/80 text-xs space-y-1">
+                  <li>• Développement personnel et moral</li>
+                  <li>• Maîtrise de soi, discipline, respect</li>
+                  <li>• Victoire sur soi-même</li>
+                  <li>• Chemin de progression à long terme</li>
+                </ul>
+              </div>
+              
+              {/* Colonne Sport */}
+              <div className="bg-slate-500/10 rounded-xl p-3 border border-slate-500/30">
+                <p className="font-bold text-slate-400 mb-2 flex items-center gap-2">
+                  <span>🥊</span> Sport de combat
+                </p>
+                <ul className="text-white/50 text-xs space-y-1">
+                  <li>• Performance sportive</li>
+                  <li>• Gagner selon des règles</li>
+                  <li>• Victoire sur l'adversaire</li>
+                  <li>• Résultats mesurables</li>
+                </ul>
+              </div>
+            </div>
+            
+            <p className="text-center text-white/60 text-xs mt-4 italic">
+              "La voie (道) est un chemin de vie autant que physique"
+            </p>
           </div>
           
           {/* CTA Buttons */}
