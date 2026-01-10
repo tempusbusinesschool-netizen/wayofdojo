@@ -48,73 +48,64 @@ const AgeSelector = ({ onSelect }) => {
 
   return (
     <div className="px-4 py-6 sm:py-8">
-      {/* VARIANTE 1 - Design épuré avec fond sombre et accent doré */}
-      <div className="relative overflow-hidden bg-slate-800 rounded-3xl mb-6 sm:mb-8 shadow-2xl border border-slate-700">
+      {/* VARIANTE 2 - Design minimaliste avec grande typographie */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl mb-6 sm:mb-8 shadow-2xl">
         
-        {/* Bande dorée décorative en haut */}
-        <div className="h-1 bg-gradient-to-r from-amber-400 via-yellow-500 to-amber-400" />
+        {/* Cercle décoratif en arrière-plan */}
+        <div className="absolute -top-20 -right-20 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl" />
+        <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-cyan-500/10 rounded-full blur-3xl" />
         
-        <div className="p-6 sm:p-8 md:p-10">
-          {/* Logo et titre alignés */}
-          <div className="flex flex-col items-center mb-6">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg shadow-amber-500/30">
-                <span className="text-3xl sm:text-4xl">🥋</span>
-              </div>
-              <div>
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-white">
-                  Aikido@Game
-                </h1>
-                <p className="text-amber-400 text-sm font-medium">
-                  Votre parcours Aikido interactif
-                </p>
-              </div>
-            </div>
-            
-            {/* Badge */}
-            <span className="px-4 py-1.5 bg-amber-400/10 border border-amber-400/30 rounded-full text-amber-400 text-xs font-medium">
-              🥋 La 1ère app européenne de gamification à la pratique de l'Aikido
-            </span>
+        <div className="relative p-8 sm:p-10 md:p-12">
+          {/* Titre très grand */}
+          <div className="text-center mb-8">
+            <p className="text-amber-400 text-sm font-medium tracking-widest uppercase mb-2">
+              🥋 La 1ère app européenne de gamification Aikido
+            </p>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white mb-4 tracking-tight">
+              Aikido<span className="text-amber-400">@</span>Game
+            </h1>
+            <p className="text-slate-400 text-lg sm:text-xl max-w-xl mx-auto">
+              Votre parcours Aikido interactif et ludique
+            </p>
           </div>
           
-          {/* Statistiques en ligne */}
-          <div className="flex justify-center gap-8 sm:gap-12 mb-6">
+          {/* Statistiques avec séparateurs */}
+          <div className="flex justify-center items-center gap-6 sm:gap-10 mb-8">
             <div className="text-center">
-              <p className="text-3xl sm:text-4xl font-black text-amber-400">{stats.total_techniques}+</p>
-              <p className="text-slate-400 text-xs sm:text-sm">Techniques</p>
+              <p className="text-4xl sm:text-5xl font-black text-amber-400">{stats.total_techniques}+</p>
+              <p className="text-slate-500 text-sm mt-1">Techniques</p>
             </div>
+            <div className="w-px h-16 bg-slate-700" />
             <div className="text-center">
-              <p className="text-3xl sm:text-4xl font-black text-white">{stats.total_grades || 7}</p>
-              <p className="text-slate-400 text-xs sm:text-sm">{stats.grades_label || "Grades"}</p>
+              <p className="text-4xl sm:text-5xl font-black text-white">{stats.total_grades || 7}</p>
+              <p className="text-slate-500 text-sm mt-1">{stats.grades_label || "Grades"}</p>
             </div>
+            <div className="w-px h-16 bg-slate-700" />
             <div className="text-center">
-              <p className="text-3xl sm:text-4xl font-black text-cyan-400">{stats.total_challenges || 84}</p>
-              <p className="text-slate-400 text-xs sm:text-sm">Défis</p>
+              <p className="text-4xl sm:text-5xl font-black text-cyan-400">{stats.total_challenges || 84}</p>
+              <p className="text-slate-500 text-sm mt-1">Défis</p>
             </div>
           </div>
           
-          {/* Bouton Budo */}
+          {/* Bouton Budo centré */}
           <div className="text-center mb-6">
             <button
               onClick={() => setShowBudoDialog(true)}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-full text-slate-300 hover:text-white text-sm transition-all"
+              className="group inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-amber-500/20 to-orange-500/20 hover:from-amber-500/30 hover:to-orange-500/30 rounded-2xl text-white text-sm border border-amber-500/30 transition-all"
             >
-              <span>☯️</span>
-              <span>L'Aïkido n'est pas seulement un sport, c'est un <strong>Budo</strong> !</span>
-              <span>→</span>
+              <span className="text-xl">☯️</span>
+              <span>L'Aïkido n'est pas seulement un sport, c'est un <strong className="text-amber-400">Budo</strong> !</span>
+              <span className="group-hover:translate-x-1 transition-transform">→</span>
             </button>
           </div>
           
-          {/* Trust badges */}
-          <div className="flex flex-wrap justify-center gap-4 text-slate-500 text-xs">
-            <span>✓ 100% Gratuit</span>
-            <span>✓ Sans publicité</span>
-            <span>🔒 Conforme RGPD</span>
+          {/* Trust badges en ligne */}
+          <div className="flex justify-center gap-6 text-slate-500 text-xs">
+            <span className="flex items-center gap-1"><span className="text-green-500">✓</span> 100% Gratuit</span>
+            <span className="flex items-center gap-1"><span className="text-green-500">✓</span> Sans publicité</span>
+            <span className="flex items-center gap-1"><span className="text-amber-500">🔒</span> Conforme RGPD</span>
           </div>
         </div>
-        
-        {/* Bande dorée décorative en bas */}
-        <div className="h-1 bg-gradient-to-r from-amber-400 via-yellow-500 to-amber-400" />
       </div>
 
       {/* Section de sélection */}
