@@ -367,7 +367,7 @@ const VirtuesGamification = ({
           <span className="text-4xl">{specialTitle?.emoji || "🥋"}</span>
           <div>
             <h3 className="text-xl md:text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-orange-400 to-red-400">
-              {specialTitle?.title || "Petit Ninja"}
+              {specialTitle?.title || "Jeune Ninja"}
             </h3>
             <p className="text-amber-300 text-sm">{totalXp} XP Total</p>
           </div>

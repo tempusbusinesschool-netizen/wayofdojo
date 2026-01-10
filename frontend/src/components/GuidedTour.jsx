@@ -20,7 +20,7 @@ const TOUR_STEPS = [
     content: (
       <div className="space-y-4">
         <p className="text-lg">
-          Félicitations pour ton inscription ! Tu es maintenant un <strong className="text-emerald-400">Petit Ninja</strong> prêt à commencer son aventure.
+          Félicitations pour ton inscription ! Tu es maintenant un <strong className="text-emerald-400">Jeune Ninja</strong> prêt à commencer son aventure.
         </p>
         <div className="bg-slate-800 rounded-xl p-4 border border-slate-700">
           <p className="text-slate-300">

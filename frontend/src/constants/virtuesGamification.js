@@ -540,7 +540,7 @@ export const GLOBAL_TROPHIES = [
 // ═══════════════════════════════════════════════════════════════════════════════
 
 export const SPECIAL_TITLES = [
-  { id: "debutant", title: "Petit Ninja", condition: "default", emoji: "🥋" },
+  { id: "debutant", title: "Jeune Ninja", condition: "default", emoji: "🥋" },
   { id: "apprenti", title: "Apprenti Ninja", condition: "total_xp_100", emoji: "🌱" },
   { id: "ninja", title: "Ninja", condition: "total_xp_500", emoji: "🥷" },
   { id: "ninja_star", title: "Ninja Étoilé", condition: "total_xp_1000", emoji: "⭐" },
