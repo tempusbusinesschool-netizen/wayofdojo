@@ -20,7 +20,8 @@ const AgeSelector = ({ onSelect }) => {
   const [stats, setStats] = useState({ 
     total_techniques: 200, 
     grades_label: "6 Kyu + 1 Dan",
-    total_grades: 7
+    total_grades: 7,
+    total_challenges: 84
   });
 
   useEffect(() => {
