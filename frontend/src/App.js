@@ -152,6 +152,25 @@ function AppContent() {
     fetchDojos();
   }, [showDojoManagement]);
   
+  // Écouteurs d'événements pour ouvrir les dialogues d'authentification depuis les composants enfants
+  useEffect(() => {
+    const handleOpenAuthDialog = () => {
+      setShowAuthDialog(true);
+    };
+    
+    const handleOpenLoginDialog = () => {
+      setShowLoginDialog(true);
+    };
+    
+    window.addEventListener('openAuthDialog', handleOpenAuthDialog);
+    window.addEventListener('openLoginDialog', handleOpenLoginDialog);
+    
+    return () => {
+      window.removeEventListener('openAuthDialog', handleOpenAuthDialog);
+      window.removeEventListener('openLoginDialog', handleOpenLoginDialog);
+    };
+  }, []);
+  
   // Selected dojo for Espace Dojo
   const [selectedDojoForAdmin, setSelectedDojoForAdmin] = useState(() => {
     const storedId = sessionStorage.getItem('aikido_dojo_id');
