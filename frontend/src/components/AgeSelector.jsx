@@ -289,6 +289,121 @@ const AgeSelector = ({ onSelect }) => {
       <p className="mt-6 text-xs text-slate-500 text-center max-w-md mx-auto">
         🔒 Aucune donnée personnelle n'est collectée. Ton choix est enregistré uniquement sur ton appareil.
       </p>
+
+      {/* Dialog Budo */}
+      <Dialog open={showBudoDialog} onOpenChange={setShowBudoDialog}>
+        <DialogContent className="bg-slate-900 border-slate-700 text-white max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-amber-400 flex items-center gap-3">
+              <span className="text-3xl">🥋</span>
+              Budō (武道) - La Voie Martiale
+            </DialogTitle>
+          </DialogHeader>
+          
+          <div className="space-y-6 py-4">
+            {/* Introduction */}
+            <div className="text-center">
+              <p className="text-lg text-white/90">
+                L'Aïkido n'est pas un sport, c'est un <strong className="text-amber-400">Budo</strong>
+              </p>
+              <p className="text-sm text-slate-400 mt-2">
+                Le mot signifie littéralement « voie martiale »
+              </p>
+            </div>
+
+            {/* Comparaison */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Colonne Budo */}
+              <div className="bg-amber-500/10 rounded-xl p-4 border border-amber-500/30">
+                <h4 className="font-bold text-amber-300 mb-3 flex items-center gap-2 text-lg">
+                  <span>☯️</span> Budō - Voie de vie
+                </h4>
+                
+                <div className="space-y-3 text-sm">
+                  <div>
+                    <p className="font-semibold text-white">Objectif principal</p>
+                    <p className="text-white/70">Développement personnel et moral</p>
+                  </div>
+                  
+                  <div>
+                    <p className="font-semibold text-white">Caractéristiques</p>
+                    <ul className="text-white/70 space-y-1 mt-1">
+                      <li>• Maîtrise de soi, discipline, respect</li>
+                      <li>• Victoire sur soi-même</li>
+                      <li>• Progression à long terme</li>
+                      <li>• Code éthique (respect, humilité)</li>
+                      <li>• Accent sur la forme, la posture, l'intention</li>
+                    </ul>
+                  </div>
+                  
+                  <div>
+                    <p className="font-semibold text-white">Exemples</p>
+                    <p className="text-white/70">Aïkido, Judo, Kendō, Karaté-dō, Kyūdō</p>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Colonne Sport */}
+              <div className="bg-slate-700/30 rounded-xl p-4 border border-slate-600/30">
+                <h4 className="font-bold text-slate-400 mb-3 flex items-center gap-2 text-lg">
+                  <span>🥊</span> Sports de combat
+                </h4>
+                
+                <div className="space-y-3 text-sm">
+                  <div>
+                    <p className="font-semibold text-slate-300">Objectif principal</p>
+                    <p className="text-slate-400">Performance sportive, gagner un combat</p>
+                  </div>
+                  
+                  <div>
+                    <p className="font-semibold text-slate-300">Caractéristiques</p>
+                    <ul className="text-slate-400 space-y-1 mt-1">
+                      <li>• Victoire sur l'adversaire</li>
+                      <li>• Règlement sportif strict</li>
+                      <li>• Résultat mesurable (points, KO)</li>
+                      <li>• Performance & classement</li>
+                      <li>• Moins de dimension philosophique</li>
+                    </ul>
+                  </div>
+                  
+                  <div>
+                    <p className="font-semibold text-slate-300">Exemples</p>
+                    <p className="text-slate-400">Boxe, MMA, Kickboxing, Lutte</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Résumé */}
+            <div className="bg-gradient-to-r from-violet-500/10 via-blue-500/10 to-cyan-500/10 rounded-xl p-4 border border-white/10">
+              <h4 className="font-bold text-white mb-3 text-center">⚖️ Résumé</h4>
+              <div className="grid grid-cols-2 gap-4 text-sm">
+                <div className="text-center">
+                  <p className="font-semibold text-amber-300">Budō</p>
+                  <p className="text-white/70">Voie de développement personnel</p>
+                  <p className="text-white/70">Tradition & philosophie</p>
+                  <p className="text-white/70">Victoire sur soi-même</p>
+                  <p className="text-white/70">Éthique centrale</p>
+                </div>
+                <div className="text-center">
+                  <p className="font-semibold text-slate-400">Sport de combat</p>
+                  <p className="text-slate-500">Discipline sportive</p>
+                  <p className="text-slate-500">Performance & résultat</p>
+                  <p className="text-slate-500">Victoire sur l'adversaire</p>
+                  <p className="text-slate-500">Règles sportives</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Citation finale */}
+            <div className="text-center">
+              <p className="text-lg text-amber-300 italic">
+                👉 On parle de « voie », un chemin de vie autant que physique.
+              </p>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
