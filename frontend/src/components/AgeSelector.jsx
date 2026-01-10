@@ -48,133 +48,73 @@ const AgeSelector = ({ onSelect }) => {
 
   return (
     <div className="px-4 py-6 sm:py-8">
-      {/* VARIANTE D - Hero Banner COMPLET avec statistiques 200+ techniques, personnages et CTA */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-500 rounded-3xl p-6 sm:p-8 md:p-12 mb-6 sm:mb-8 shadow-2xl border-2 border-orange-400/60">
+      {/* VARIANTE 1 - Design épuré avec fond sombre et accent doré */}
+      <div className="relative overflow-hidden bg-slate-800 rounded-3xl mb-6 sm:mb-8 shadow-2xl border border-slate-700">
         
-        {/* Personnage Femme à gauche */}
-        <div className="absolute left-0 bottom-0 hidden xl:block z-20 pointer-events-none overflow-hidden rounded-bl-3xl">
-          <img 
-            src={FEMME_IMG} 
-            alt="Sensei Femme" 
-            className="h-56 object-cover object-top"
-            style={{
-              maskImage: 'linear-gradient(to right, black 50%, transparent 100%)',
-              WebkitMaskImage: 'linear-gradient(to right, black 50%, transparent 100%)'
-            }}
-          />
-        </div>
+        {/* Bande dorée décorative en haut */}
+        <div className="h-1 bg-gradient-to-r from-amber-400 via-yellow-500 to-amber-400" />
         
-        {/* Personnage Homme à droite */}
-        <div className="absolute right-0 bottom-0 hidden xl:block z-20 pointer-events-none overflow-hidden rounded-br-3xl">
-          <img 
-            src={HOMME_IMG} 
-            alt="Sensei Homme" 
-            className="h-56 object-cover object-top"
-            style={{
-              maskImage: 'linear-gradient(to left, black 50%, transparent 100%)',
-              WebkitMaskImage: 'linear-gradient(to left, black 50%, transparent 100%)'
-            }}
-          />
-        </div>
-        
-        {/* Idéogrammes japonais en arrière-plan transparent */}
-        <div className="absolute inset-0 overflow-hidden opacity-[0.06] pointer-events-none select-none">
-          <div 
-            className="absolute inset-0 text-white font-serif whitespace-nowrap"
-            style={{ 
-              fontFamily: "'Noto Serif JP', serif",
-              fontSize: '4rem',
-              lineHeight: '1.2',
-              letterSpacing: '0.5rem'
-            }}
-          >
-            <div className="absolute top-0 left-0 transform -rotate-12">
-              合気道 武道 氣 和 心 道 技 礼 仁 義 忠 信 勇 徳 
+        <div className="p-6 sm:p-8 md:p-10">
+          {/* Logo et titre alignés */}
+          <div className="flex flex-col items-center mb-6">
+            <div className="flex items-center gap-4 mb-4">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg shadow-amber-500/30">
+                <span className="text-3xl sm:text-4xl">🥋</span>
+              </div>
+              <div>
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-white">
+                  Aikido@Game
+                </h1>
+                <p className="text-amber-400 text-sm font-medium">
+                  Votre parcours Aikido interactif
+                </p>
+              </div>
             </div>
-            <div className="absolute bottom-16 right-10 transform rotate-12">
-              合気道 武道 氣 和 心 道 技 礼 仁 義
-            </div>
-          </div>
-        </div>
-        
-        <div className="relative z-10">
-          {/* Badge */}
-          <div className="text-center mb-4">
-            <span className="inline-block px-4 py-1.5 bg-amber-400 text-slate-900 rounded-full text-xs font-bold shadow-lg">
+            
+            {/* Badge */}
+            <span className="px-4 py-1.5 bg-amber-400/10 border border-amber-400/30 rounded-full text-amber-400 text-xs font-medium">
               🥋 La 1ère app européenne de gamification à la pratique de l'Aikido
             </span>
           </div>
           
-          {/* Titre principal */}
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white text-center mb-4">
-            Aikido@Game
-          </h1>
-          
-          {/* Sous-titre */}
-          <p className="text-lg sm:text-xl text-white/90 text-center max-w-2xl mx-auto mb-6">
-            <strong>Transformez votre pratique en aventure.</strong>
-            <span className="block text-white/70 mt-1">
-              Progressez, relevez des défis, atteignez vos objectifs.
-            </span>
-          </p>
-          
-          {/* STATISTIQUES DYNAMIQUES depuis la base de données */}
-          <div className="flex flex-wrap justify-center gap-4 sm:gap-8 mb-6">
-            <div className="text-center bg-white/10 backdrop-blur-sm rounded-xl px-4 py-3 border border-white/20">
-              <p className="text-2xl sm:text-3xl font-black text-amber-300">{stats.total_techniques}+</p>
-              <p className="text-white/80 text-xs sm:text-sm font-medium">Techniques</p>
+          {/* Statistiques en ligne */}
+          <div className="flex justify-center gap-8 sm:gap-12 mb-6">
+            <div className="text-center">
+              <p className="text-3xl sm:text-4xl font-black text-amber-400">{stats.total_techniques}+</p>
+              <p className="text-slate-400 text-xs sm:text-sm">Techniques</p>
             </div>
-            <div className="text-center bg-white/10 backdrop-blur-sm rounded-xl px-4 py-3 border border-white/20">
-              <p className="text-2xl sm:text-3xl font-black text-white">{stats.total_grades || 7}</p>
-              <p className="text-white/80 text-xs sm:text-sm font-medium">{stats.grades_label || "Grades"}</p>
+            <div className="text-center">
+              <p className="text-3xl sm:text-4xl font-black text-white">{stats.total_grades || 7}</p>
+              <p className="text-slate-400 text-xs sm:text-sm">{stats.grades_label || "Grades"}</p>
             </div>
-            <div className="text-center bg-white/10 backdrop-blur-sm rounded-xl px-4 py-3 border border-white/20">
-              <p className="text-2xl sm:text-3xl font-black text-cyan-300">{stats.total_challenges || 84}</p>
-              <p className="text-white/80 text-xs sm:text-sm font-medium">Défis</p>
+            <div className="text-center">
+              <p className="text-3xl sm:text-4xl font-black text-cyan-400">{stats.total_challenges || 84}</p>
+              <p className="text-slate-400 text-xs sm:text-sm">Défis</p>
             </div>
           </div>
           
-          {/* Bouton pour voir l'explication du Budo */}
+          {/* Bouton Budo */}
           <div className="text-center mb-6">
             <button
               onClick={() => setShowBudoDialog(true)}
-              className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full text-white/80 hover:text-white text-sm border border-white/20 hover:border-white/40 transition-all"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-full text-slate-300 hover:text-white text-sm transition-all"
             >
               <span>☯️</span>
               <span>L'Aïkido n'est pas seulement un sport, c'est un <strong>Budo</strong> !</span>
-              <span className="text-xs">→</span>
-            </button>
-          </div>
-          
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
-            <button 
-              onClick={() => handleSelect('enfant')}
-              className="px-8 py-4 bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold rounded-xl text-lg shadow-lg shadow-amber-500/30 transition-all hover:scale-105"
-            >
-              🥷 Mode Jeune Ninja
-            </button>
-            <button 
-              onClick={() => handleSelect('adulte')}
-              className="px-8 py-4 bg-white/20 hover:bg-white/30 text-white font-bold rounded-xl text-lg border-2 border-white/40 backdrop-blur-sm transition-all hover:scale-105"
-            >
-              🎯 Mode Confirmé
+              <span>→</span>
             </button>
           </div>
           
           {/* Trust badges */}
-          <div className="flex flex-wrap justify-center gap-3">
-            <span className="px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full text-white/80 text-xs border border-white/20">
-              ✓ 100% Gratuit
-            </span>
-            <span className="px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full text-white/80 text-xs border border-white/20">
-              ✓ Sans publicité
-            </span>
-            <span className="px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full text-white/80 text-xs border border-white/20">
-              🔒 Conforme RGPD
-            </span>
+          <div className="flex flex-wrap justify-center gap-4 text-slate-500 text-xs">
+            <span>✓ 100% Gratuit</span>
+            <span>✓ Sans publicité</span>
+            <span>🔒 Conforme RGPD</span>
           </div>
         </div>
+        
+        {/* Bande dorée décorative en bas */}
+        <div className="h-1 bg-gradient-to-r from-amber-400 via-yellow-500 to-amber-400" />
       </div>
 
       {/* Section de sélection */}
