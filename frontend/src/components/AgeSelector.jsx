@@ -115,15 +115,15 @@ const AgeSelector = ({ onSelect }) => {
             </span>
           </p>
           
-          {/* STATISTIQUES IMPRESSIONNANTES - 200+ techniques ! */}
+          {/* STATISTIQUES DYNAMIQUES depuis la base de données */}
           <div className="flex flex-wrap justify-center gap-6 sm:gap-10 mb-8">
             <div className="text-center bg-white/10 backdrop-blur-sm rounded-xl px-4 py-3 border border-white/20">
-              <p className="text-3xl sm:text-4xl font-black text-amber-300">200+</p>
+              <p className="text-3xl sm:text-4xl font-black text-amber-300">{stats.total_techniques}+</p>
               <p className="text-white/80 text-sm font-medium">Techniques</p>
             </div>
             <div className="text-center bg-white/10 backdrop-blur-sm rounded-xl px-4 py-3 border border-white/20">
-              <p className="text-3xl sm:text-4xl font-black text-white">6</p>
-              <p className="text-white/80 text-sm font-medium">Ceintures</p>
+              <p className="text-3xl sm:text-4xl font-black text-white">{stats.total_grades || 7}</p>
+              <p className="text-white/80 text-sm font-medium">{stats.grades_label || "Grades"}</p>
             </div>
             <div className="text-center bg-white/10 backdrop-blur-sm rounded-xl px-4 py-3 border border-white/20">
               <p className="text-3xl sm:text-4xl font-black text-cyan-300">∞</p>
