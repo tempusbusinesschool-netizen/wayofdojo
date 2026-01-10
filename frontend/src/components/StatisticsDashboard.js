@@ -677,74 +677,29 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 {/* Contenu après sélection du mode */}
                 {visitorMode && (
                   <>
-                    {/* Hero Banner */}
-                    <div className="relative overflow-hidden bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-500 rounded-3xl p-6 sm:p-8 md:p-12 mb-6 shadow-2xl border-2 border-orange-400/60">
-                      
-                      {/* Femme à gauche - taille +10%, fondu progressif vers le centre */}
-                      <div className="absolute left-0 bottom-0 hidden md:block z-20 pointer-events-none overflow-hidden rounded-bl-3xl">
-                        <img 
-                          src={AIKIDO_CHARACTERS.FEMME_SEULE} 
-                          alt="Sensei Femme" 
-                          className="h-44 lg:h-52 xl:h-60 object-cover object-top"
-                          style={{
-                            maskImage: 'linear-gradient(to right, black 60%, transparent 100%)',
-                            WebkitMaskImage: 'linear-gradient(to right, black 60%, transparent 100%)'
-                          }}
-                        />
-                      </div>
-                      
-                      {/* Homme à droite - taille +10%, fondu progressif vers le centre */}
-                      <div className="absolute right-0 bottom-0 hidden md:block z-20 pointer-events-none overflow-hidden rounded-br-3xl">
-                        <img 
-                          src={AIKIDO_CHARACTERS.HOMME_SEUL} 
-                          alt="Sensei Homme" 
-                          className="h-44 lg:h-52 xl:h-60 object-cover object-top"
-                          style={{
-                            maskImage: 'linear-gradient(to left, black 60%, transparent 100%)',
-                            WebkitMaskImage: 'linear-gradient(to left, black 60%, transparent 100%)'
-                          }}
-                        />
-                      </div>
-                      
-                      {/* Idéogrammes japonais en arrière-plan */}
-                      <div className="absolute inset-0 overflow-hidden opacity-[0.06] pointer-events-none select-none">
-                        <div 
-                          className="absolute inset-0 text-white font-serif whitespace-nowrap"
-                          style={{ 
-                            fontFamily: "'Noto Serif JP', serif",
-                            fontSize: '4rem',
-                            lineHeight: '1.2',
-                            letterSpacing: '0.5rem'
-                          }}
-                        >
-                          <div className="absolute top-0 left-0 transform -rotate-12">
-                            合気道 武道 氣 和 心 道 技 礼 仁 義
-                          </div>
-                          <div className="absolute bottom-0 right-10 transform rotate-6">
-                            武士道 精神 修行 稽古 先生 道場
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="relative text-center z-10">
-                        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black text-white mb-3 sm:mb-4">
+                    {/* Hero Banner - Version responsive */}
+                    {/* Sur mobile: fond simple sans rectangle, sur desktop: rectangle avec gradient */}
+                    <div className="relative overflow-hidden mb-4 sm:mb-6">
+                      {/* Version MOBILE - fond transparent avec texte simple */}
+                      <div className="block sm:hidden text-center py-4 px-2">
+                        <h1 className="text-2xl font-black text-white mb-2">
                           Aikido@Game
                         </h1>
-                        <p className="text-base sm:text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-4 sm:mb-6">
+                        <p className="text-sm text-slate-300 mb-4 px-2">
                           {visitorMode === 'enfant' 
-                            ? <><strong>Deviens un vrai Ninja !</strong> Apprends l'Aikido en t'amusant 🎮</>
-                            : <><strong>Développez votre maîtrise de l'Aikido</strong> avec un entraînement structuré</>
+                            ? <>Deviens un vrai Ninja ! 🥷</>
+                            : <>Développez votre maîtrise</>
                           }
                         </p>
-                        <div className="flex flex-wrap gap-2 sm:gap-3 justify-center">
+                        <div className="flex flex-col gap-2 px-4">
                           <Button
                             onClick={() => {
                               const event = new CustomEvent('openAuthDialog');
                               window.dispatchEvent(event);
                             }}
-                            className="bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold px-4 sm:px-6 py-2 sm:py-3 rounded-xl text-sm sm:text-lg shadow-lg"
+                            className="bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold py-3 rounded-xl text-sm shadow-lg w-full"
                           >
-                            {visitorMode === 'enfant' ? '🥷 Créer mon compte Ninja' : '📝 S\'inscrire gratuitement'}
+                            {visitorMode === 'enfant' ? '🥷 Créer mon compte' : '📝 S\'inscrire'}
                           </Button>
                           <Button
                             variant="outline"
@@ -752,21 +707,112 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                               const event = new CustomEvent('openLoginDialog');
                               window.dispatchEvent(event);
                             }}
-                            className="border-2 border-white text-white hover:bg-white/20 font-bold px-4 sm:px-6 py-2 sm:py-3 rounded-xl text-sm sm:text-lg"
+                            className="border-2 border-slate-600 text-slate-300 hover:bg-slate-800 font-bold py-3 rounded-xl text-sm w-full"
                           >
                             Se connecter
                           </Button>
                         </div>
+                        {/* Bouton changer de mode - mobile */}
+                        <button
+                          onClick={handleResetMode}
+                          className="absolute top-2 right-2 text-slate-500 hover:text-white transition-colors p-2 rounded-lg hover:bg-slate-800"
+                          title="Changer de mode"
+                        >
+                          <Settings className="w-4 h-4" />
+                        </button>
                       </div>
 
-                      {/* Bouton changer de mode */}
-                      <button
-                        onClick={handleResetMode}
-                        className="absolute top-3 right-3 sm:top-4 sm:right-4 text-white/60 hover:text-white transition-colors p-2 rounded-lg hover:bg-white/10"
-                        title="Changer de mode"
-                      >
-                        <Settings className="w-4 h-4 sm:w-5 sm:h-5" />
-                      </button>
+                      {/* Version DESKTOP - rectangle avec gradient et personnages */}
+                      <div className="hidden sm:block relative overflow-hidden bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-500 rounded-3xl p-8 md:p-12 shadow-2xl border-2 border-orange-400/60">
+                        
+                        {/* Femme à gauche - taille +10%, fondu progressif vers le centre */}
+                        <div className="absolute left-0 bottom-0 hidden md:block z-20 pointer-events-none overflow-hidden rounded-bl-3xl">
+                          <img 
+                            src={AIKIDO_CHARACTERS.FEMME_SEULE} 
+                            alt="Sensei Femme" 
+                            className="h-44 lg:h-52 xl:h-60 object-cover object-top"
+                            style={{
+                              maskImage: 'linear-gradient(to right, black 60%, transparent 100%)',
+                              WebkitMaskImage: 'linear-gradient(to right, black 60%, transparent 100%)'
+                            }}
+                          />
+                        </div>
+                        
+                        {/* Homme à droite - taille +10%, fondu progressif vers le centre */}
+                        <div className="absolute right-0 bottom-0 hidden md:block z-20 pointer-events-none overflow-hidden rounded-br-3xl">
+                          <img 
+                            src={AIKIDO_CHARACTERS.HOMME_SEUL} 
+                            alt="Sensei Homme" 
+                            className="h-44 lg:h-52 xl:h-60 object-cover object-top"
+                            style={{
+                              maskImage: 'linear-gradient(to left, black 60%, transparent 100%)',
+                              WebkitMaskImage: 'linear-gradient(to left, black 60%, transparent 100%)'
+                            }}
+                          />
+                        </div>
+                        
+                        {/* Idéogrammes japonais en arrière-plan */}
+                        <div className="absolute inset-0 overflow-hidden opacity-[0.06] pointer-events-none select-none">
+                          <div 
+                            className="absolute inset-0 text-white font-serif whitespace-nowrap"
+                            style={{ 
+                              fontFamily: "'Noto Serif JP', serif",
+                              fontSize: '4rem',
+                              lineHeight: '1.2',
+                              letterSpacing: '0.5rem'
+                            }}
+                          >
+                            <div className="absolute top-0 left-0 transform -rotate-12">
+                              合気道 武道 氣 和 心 道 技 礼 仁 義
+                            </div>
+                            <div className="absolute bottom-0 right-10 transform rotate-6">
+                              武士道 精神 修行 稽古 先生 道場
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="relative text-center z-10">
+                          <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-4">
+                            Aikido@Game
+                          </h1>
+                          <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-6">
+                            {visitorMode === 'enfant' 
+                              ? <><strong>Deviens un vrai Ninja !</strong> Apprends l'Aikido en t'amusant 🎮</>
+                              : <><strong>Développez votre maîtrise de l'Aikido</strong> avec un entraînement structuré</>
+                            }
+                          </p>
+                          <div className="flex flex-wrap gap-3 justify-center">
+                            <Button
+                              onClick={() => {
+                                const event = new CustomEvent('openAuthDialog');
+                                window.dispatchEvent(event);
+                              }}
+                              className="bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold px-6 py-3 rounded-xl text-lg shadow-lg"
+                            >
+                              {visitorMode === 'enfant' ? '🥷 Créer mon compte Ninja' : '📝 S\'inscrire gratuitement'}
+                            </Button>
+                            <Button
+                              variant="outline"
+                              onClick={() => {
+                                const event = new CustomEvent('openLoginDialog');
+                                window.dispatchEvent(event);
+                              }}
+                              className="border-2 border-white text-white hover:bg-white/20 font-bold px-6 py-3 rounded-xl text-lg"
+                            >
+                              Se connecter
+                            </Button>
+                          </div>
+                        </div>
+
+                        {/* Bouton changer de mode - desktop */}
+                        <button
+                          onClick={handleResetMode}
+                          className="absolute top-4 right-4 text-white/60 hover:text-white transition-colors p-2 rounded-lg hover:bg-white/10"
+                          title="Changer de mode"
+                        >
+                          <Settings className="w-5 h-5" />
+                        </button>
+                      </div>
                     </div>
 
                     {/* Blocs d'étapes selon le mode */}
