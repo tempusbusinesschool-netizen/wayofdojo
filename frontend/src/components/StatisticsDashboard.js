@@ -855,7 +855,6 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                         >
                           {visitorMode === 'enfant' ? '🚀 Commencer l\'aventure' : '📝 Créer mon compte gratuit'}
                         </Button>
-                        </Button>
 
                         {/* Badge de confiance */}
                         <p className="text-center text-slate-500 text-[10px] mt-2">
