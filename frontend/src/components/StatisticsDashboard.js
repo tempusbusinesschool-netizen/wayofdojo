@@ -678,48 +678,93 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 {visitorMode && (
                   <>
                     {/* Hero Banner - Version responsive */}
-                    {/* Sur mobile: fond simple sans rectangle, sur desktop: rectangle avec gradient */}
+                    {/* Sur mobile: landing page commerciale claire, sur desktop: rectangle avec gradient */}
                     <div className="relative overflow-hidden mb-4 sm:mb-6">
-                      {/* Version MOBILE - fond transparent avec texte simple */}
-                      <div className="block sm:hidden text-center py-4 px-2">
-                        <h1 className="text-2xl font-black text-white mb-2">
-                          Aikido@Game
-                        </h1>
-                        <p className="text-sm text-slate-300 mb-4 px-2">
-                          {visitorMode === 'enfant' 
-                            ? <>Deviens un vrai Ninja ! 🥷</>
-                            : <>Développez votre maîtrise</>
-                          }
-                        </p>
-                        <div className="flex flex-col gap-2 px-4">
+                      {/* Version MOBILE - Landing page commerciale */}
+                      <div className="block sm:hidden">
+                        {/* Header commercial avec gradient subtil */}
+                        <div className="relative bg-gradient-to-b from-slate-800 to-slate-900 rounded-2xl mx-2 p-6 border border-slate-700/50">
+                          
+                          {/* Bouton changer de mode */}
+                          <button
+                            onClick={handleResetMode}
+                            className="absolute top-3 right-3 text-slate-500 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-slate-700/50"
+                            title="Changer de mode"
+                          >
+                            <Settings className="w-4 h-4" />
+                          </button>
+
+                          {/* Logo et titre */}
+                          <div className="text-center mb-4">
+                            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 shadow-lg shadow-amber-500/30 mb-3">
+                              <span className="text-3xl">🥋</span>
+                            </div>
+                            <h1 className="text-2xl font-black text-white">
+                              Aikido@Game
+                            </h1>
+                            <p className="text-amber-400 text-sm font-medium mt-1">
+                              {visitorMode === 'enfant' ? 'Édition Jeune Ninja' : 'Édition Confirmé'}
+                            </p>
+                          </div>
+
+                          {/* Proposition de valeur */}
+                          <div className="text-center mb-5">
+                            <p className="text-white text-base font-semibold mb-2">
+                              {visitorMode === 'enfant' 
+                                ? 'Apprends l\'Aikido en t\'amusant !' 
+                                : 'Progressez dans votre pratique'}
+                            </p>
+                            <p className="text-slate-400 text-sm">
+                              {visitorMode === 'enfant' 
+                                ? 'Gagne des points, débloque des niveaux et deviens un vrai Ninja !' 
+                                : 'Suivez votre progression, maîtrisez les techniques, atteignez vos objectifs.'}
+                            </p>
+                          </div>
+
+                          {/* Points clés - version compacte */}
+                          <div className="grid grid-cols-3 gap-2 mb-5">
+                            <div className="text-center p-2 bg-slate-800/50 rounded-xl">
+                              <span className="text-lg">📊</span>
+                              <p className="text-[10px] text-slate-400 mt-1">Progression</p>
+                            </div>
+                            <div className="text-center p-2 bg-slate-800/50 rounded-xl">
+                              <span className="text-lg">🎯</span>
+                              <p className="text-[10px] text-slate-400 mt-1">Défis</p>
+                            </div>
+                            <div className="text-center p-2 bg-slate-800/50 rounded-xl">
+                              <span className="text-lg">🏆</span>
+                              <p className="text-[10px] text-slate-400 mt-1">Récompenses</p>
+                            </div>
+                          </div>
+
+                          {/* CTA Principal */}
                           <Button
                             onClick={() => {
                               const event = new CustomEvent('openAuthDialog');
                               window.dispatchEvent(event);
                             }}
-                            className="bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold py-3 rounded-xl text-sm shadow-lg w-full"
+                            className="w-full bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-300 hover:to-orange-400 text-slate-900 font-bold py-4 rounded-xl text-base shadow-lg shadow-amber-500/30 mb-3"
                           >
-                            {visitorMode === 'enfant' ? '🥷 Créer mon compte' : '📝 S\'inscrire'}
+                            {visitorMode === 'enfant' ? '🚀 Commencer l\'aventure' : '📝 Créer mon compte gratuit'}
                           </Button>
+
+                          {/* CTA Secondaire */}
                           <Button
-                            variant="outline"
+                            variant="ghost"
                             onClick={() => {
                               const event = new CustomEvent('openLoginDialog');
                               window.dispatchEvent(event);
                             }}
-                            className="border-2 border-slate-600 text-slate-300 hover:bg-slate-800 font-bold py-3 rounded-xl text-sm w-full"
+                            className="w-full text-slate-400 hover:text-white hover:bg-slate-700/50 font-medium py-3 rounded-xl text-sm"
                           >
-                            Se connecter
+                            Déjà inscrit ? Se connecter
                           </Button>
+
+                          {/* Badge de confiance */}
+                          <p className="text-center text-slate-500 text-[10px] mt-3">
+                            ✓ Gratuit • ✓ Sans engagement • ✓ Conforme RGPD
+                          </p>
                         </div>
-                        {/* Bouton changer de mode - mobile */}
-                        <button
-                          onClick={handleResetMode}
-                          className="absolute top-2 right-2 text-slate-500 hover:text-white transition-colors p-2 rounded-lg hover:bg-slate-800"
-                          title="Changer de mode"
-                        >
-                          <Settings className="w-4 h-4" />
-                        </button>
                       </div>
 
                       {/* Version DESKTOP - rectangle avec gradient et personnages */}
