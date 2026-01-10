@@ -95,6 +95,102 @@ const ProgrammePage = ({ onBack, isAuthenticated, onOpenAuth }) => {
         { name: 'Préparation Shodan', desc: 'Révision complète' },
       ]
     },
+    // ═══════════════════════════════════════════════════════════════
+    // GRADES DAN - Ceintures Noires
+    // ═══════════════════════════════════════════════════════════════
+    {
+      id: 'shodan',
+      name: 'Shodan',
+      belt: '1er Dan - Ceinture Noire',
+      color: 'from-slate-900 to-black',
+      emoji: '⚫',
+      duration: '~3-4 ans après début',
+      isDan: true,
+      techniques: [
+        { name: 'Suwariwaza', desc: 'Pratique à genoux - maîtrise' },
+        { name: 'Tachiwaza complet', desc: 'Saisies et frappes' },
+        { name: 'Hanmi Handachi Waza', desc: 'Techniques mixtes assis/debout' },
+        { name: 'Ushiro Waza', desc: 'Techniques sur attaques arrière' },
+        { name: 'Randori 2 adversaires', desc: 'Combat libre 2 attaquants' },
+        { name: 'Tanto Dori', desc: 'Défense contre couteau' },
+        { name: 'Jo Dori / Jo Nage', desc: 'Défense et projection avec bâton' },
+      ]
+    },
+    {
+      id: 'nidan',
+      name: 'Nidan',
+      belt: '2ème Dan',
+      color: 'from-slate-800 to-slate-900',
+      emoji: '⚫',
+      duration: '~2 ans après Shodan',
+      isDan: true,
+      techniques: [
+        { name: 'Suwariwaza avancé', desc: 'Maîtrise complète à genoux' },
+        { name: 'Engagement physique', desc: 'Fluidité et puissance' },
+        { name: 'Hanmi Handachi avancé', desc: 'Techniques mixtes évoluées' },
+        { name: 'Ushiro Waza complet', desc: 'Toutes attaques arrière' },
+        { name: 'Randori 2 adversaires', desc: 'Avec variations' },
+        { name: 'Tanto Dori avancé', desc: 'Situations variées' },
+        { name: 'Jo Dori avancé', desc: 'Techniques évoluées au bâton' },
+      ]
+    },
+    {
+      id: 'sandan',
+      name: 'Sandan',
+      belt: '3ème Dan',
+      color: 'from-slate-700 to-slate-800',
+      emoji: '⚫',
+      duration: '~3 ans après Nidan',
+      isDan: true,
+      techniques: [
+        { name: 'Maîtrise d\'Irimi', desc: 'Entrée parfaite' },
+        { name: 'Ma-ai', desc: 'Distance de combat optimale' },
+        { name: 'Rythme du mouvement', desc: 'Timing et fluidité' },
+        { name: 'Randori 3 adversaires', desc: 'Combat libre avancé' },
+        { name: 'Tachi Dori', desc: 'Désarmement sabre' },
+        { name: 'Kumitachi', desc: 'Combat sabre codifié' },
+        { name: 'Kumijo', desc: 'Combat bâton codifié' },
+      ]
+    },
+    {
+      id: 'yondan',
+      name: 'Yondan',
+      belt: '4ème Dan',
+      color: 'from-slate-600 to-slate-700',
+      emoji: '⚫',
+      duration: '~4 ans après Sandan',
+      isDan: true,
+      techniques: [
+        { name: 'Randori 3+ adversaires', desc: 'Multi-attaquants avancé' },
+        { name: 'Futari Dori', desc: 'Techniques sur 2 saisies simultanées' },
+        { name: 'Tanto Dori complet', desc: 'Maîtrise défense couteau' },
+        { name: 'Jo Dori/Nage complet', desc: 'Maîtrise complète bâton' },
+        { name: 'Tachi Dori complet', desc: 'Maîtrise désarmement sabre' },
+        { name: 'Kumitachi avancé', desc: 'Sabre - niveau expert' },
+        { name: 'Kumijo avancé', desc: 'Bâton - niveau expert' },
+      ]
+    },
+    // ═══════════════════════════════════════════════════════════════
+    // ARMES - Bokken (Aïkiken)
+    // ═══════════════════════════════════════════════════════════════
+    {
+      id: 'bokken',
+      name: 'Bokken (Aïkiken)',
+      belt: 'Travail au sabre',
+      color: 'from-amber-600 to-amber-800',
+      emoji: '⚔️',
+      duration: 'Transversal',
+      isWeapon: true,
+      techniques: [
+        { name: 'Shōmen Giri', desc: 'Coupe verticale' },
+        { name: 'Kesa Giri', desc: 'Coupe diagonale' },
+        { name: 'Yoko Giri', desc: 'Coupe horizontale' },
+        { name: 'Tsuki', desc: 'Estoc' },
+        { name: 'Ken Suburi (1-7)', desc: '7 exercices de base' },
+        { name: 'Kamae', desc: 'Gardes (Seigan, Hassō, Jōdan, Gedan, Waki)' },
+        { name: 'Parades et contres', desc: 'Ukeru, Gonosen' },
+      ]
+    },
   ];
 
   return (
