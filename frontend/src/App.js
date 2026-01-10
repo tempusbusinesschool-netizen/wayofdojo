@@ -504,7 +504,7 @@ function AppContent() {
                     </div>
                   </div>
                 </div>
-                <div className="text-left hidden xs:block">
+                <div className="text-left hidden sm:block">
                   <p className="text-xs sm:text-sm text-amber-400 font-medium group-hover:text-amber-300 transition-colors">Aikido@Game</p>
                   <p className="text-sm sm:text-lg md:text-xl text-white font-bold group-hover:text-slate-200 transition-colors">Votre parcours</p>
                 </div>
