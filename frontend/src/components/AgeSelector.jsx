@@ -141,7 +141,7 @@ const AgeSelector = ({ onSelect }) => {
               className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full text-white/80 hover:text-white text-sm border border-white/20 hover:border-white/40 transition-all"
             >
               <span>☯️</span>
-              <span>L'Aïkido est un <strong>Budo</strong>, pas un sport</span>
+              <span>L'Aïkido n'est pas seulement un sport, c'est un <strong>Budo</strong> !</span>
               <span className="text-xs">→</span>
             </button>
           </div>
@@ -304,7 +304,7 @@ const AgeSelector = ({ onSelect }) => {
             {/* Introduction */}
             <div className="text-center">
               <p className="text-lg text-white/90">
-                L'Aïkido n'est pas un sport, c'est un <strong className="text-amber-400">Budo</strong>
+                L'Aïkido n'est pas seulement un sport, c'est un <strong className="text-white">Art martial</strong>, mieux encore c'est un <strong className="text-amber-400">Budo</strong> !
               </p>
               <p className="text-sm text-slate-400 mt-2">
                 Le mot signifie littéralement « voie martiale »
