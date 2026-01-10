@@ -713,41 +713,51 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                         <div className="flex flex-col gap-3 mb-4">
                           {/* Bloc Ninja Confirmé - EN HAUT */}
                           <button
-                            onClick={() => {
-                              localStorage.setItem('ninja-aikido-mode', 'adulte');
-                              window.location.reload();
-                            }}
-                            className={`group relative overflow-hidden rounded-2xl transition-all duration-300 ${
+                            onClick={() => handleModeChange('adulte')}
+                            disabled={isTransitioning}
+                            className={`group relative overflow-hidden rounded-2xl transition-all duration-500 ease-out transform ${
                               visitorMode === 'adulte' 
-                                ? 'ring-2 ring-amber-400 scale-[1.02]' 
-                                : 'opacity-70'
-                            }`}
+                                ? 'ring-2 ring-amber-400 scale-[1.02] shadow-lg shadow-amber-400/30' 
+                                : 'opacity-70 hover:opacity-90 hover:scale-[1.01]'
+                            } ${isTransitioning ? 'pointer-events-none' : ''}`}
                           >
                             {/* Image de fond */}
                             <div className="relative">
                               <img 
                                 src={AIKIDO_CHARACTERS.NINJA_CONFIRME} 
                                 alt="Ninja Confirmé"
-                                className="w-full h-28 object-cover object-top"
+                                className="w-full h-28 object-cover object-top transition-transform duration-500 group-hover:scale-105"
                               />
                               {/* Overlay gradient */}
-                              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-800/50 to-transparent" />
+                              <div className={`absolute inset-0 transition-all duration-500 ${
+                                visitorMode === 'adulte' 
+                                  ? 'bg-gradient-to-t from-slate-900/90 via-slate-800/40 to-transparent' 
+                                  : 'bg-gradient-to-t from-slate-900/95 via-slate-800/50 to-transparent'
+                              }`} />
                               
-                              {/* Symboles décoratifs */}
-                              <div className="absolute top-2 right-2 text-sm text-amber-400/80">☯️</div>
-                              <div className="absolute top-2 left-2 text-sm text-amber-400/80">🥋</div>
+                              {/* Symboles décoratifs avec animation */}
+                              <div className={`absolute top-2 right-2 text-sm transition-all duration-300 ${
+                                visitorMode === 'adulte' ? 'text-amber-400 scale-110' : 'text-amber-400/60'
+                              }`}>☯️</div>
+                              <div className={`absolute top-2 left-2 text-sm transition-all duration-300 ${
+                                visitorMode === 'adulte' ? 'text-amber-400 scale-110' : 'text-amber-400/60'
+                              }`}>🥋</div>
                               
-                              {/* Indicateur sélectionné */}
+                              {/* Indicateur sélectionné avec animation pulse */}
                               {visitorMode === 'adulte' && (
-                                <div className="absolute top-2 right-2 w-3 h-3 bg-amber-400 rounded-full shadow-lg"></div>
+                                <div className="absolute top-2 right-8 w-3 h-3 bg-amber-400 rounded-full shadow-lg animate-pulse"></div>
                               )}
                             </div>
                             
-                            {/* Contenu texte */}
+                            {/* Contenu texte avec transition */}
                             <div className="absolute bottom-0 left-0 right-0 p-2 text-center">
-                              <p className="text-white font-bold text-sm">Ninja Confirmé</p>
+                              <p className={`font-bold text-sm transition-all duration-300 ${
+                                visitorMode === 'adulte' ? 'text-amber-300 scale-105' : 'text-white'
+                              }`}>Ninja Confirmé</p>
                               <p className="text-slate-400 text-[10px]">Plus de 14 ans</p>
-                              <div className="flex justify-center gap-1 text-xs mt-1">
+                              <div className={`flex justify-center gap-1 text-xs mt-1 transition-all duration-300 ${
+                                visitorMode === 'adulte' ? 'scale-110' : ''
+                              }`}>
                                 <span>📊</span>
                                 <span>🎯</span>
                                 <span>📜</span>
@@ -757,44 +767,54 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
 
                           {/* Bloc Jeune Ninja - EN BAS */}
                           <button
-                            onClick={() => {
-                              localStorage.setItem('ninja-aikido-mode', 'enfant');
-                              window.location.reload();
-                            }}
-                            className={`group relative overflow-hidden rounded-2xl transition-all duration-300 ${
+                            onClick={() => handleModeChange('enfant')}
+                            disabled={isTransitioning}
+                            className={`group relative overflow-hidden rounded-2xl transition-all duration-500 ease-out transform ${
                               visitorMode === 'enfant' 
-                                ? 'ring-2 ring-orange-400 scale-[1.02]' 
-                                : 'opacity-70'
-                            }`}
+                                ? 'ring-2 ring-orange-400 scale-[1.02] shadow-lg shadow-orange-400/30' 
+                                : 'opacity-70 hover:opacity-90 hover:scale-[1.01]'
+                            } ${isTransitioning ? 'pointer-events-none' : ''}`}
                           >
                             {/* Image de fond */}
                             <div className="relative">
                               <img 
                                 src={AIKIDO_CHARACTERS.JEUNE_NINJA} 
                                 alt="Jeune Ninja"
-                                className="w-full h-28 object-cover object-top"
+                                className="w-full h-28 object-cover object-top transition-transform duration-500 group-hover:scale-105"
                               />
                               {/* Overlay gradient */}
-                              <div className="absolute inset-0 bg-gradient-to-t from-orange-900/95 via-orange-800/50 to-transparent" />
+                              <div className={`absolute inset-0 transition-all duration-500 ${
+                                visitorMode === 'enfant' 
+                                  ? 'bg-gradient-to-t from-orange-900/90 via-orange-800/40 to-transparent' 
+                                  : 'bg-gradient-to-t from-orange-900/95 via-orange-800/50 to-transparent'
+                              }`} />
                               
-                              {/* Étoiles décoratives */}
-                              <div className="absolute top-2 right-2 text-sm">✨</div>
-                              <div className="absolute top-2 left-2 text-sm">⭐</div>
+                              {/* Étoiles décoratives avec animation */}
+                              <div className={`absolute top-2 right-2 text-sm transition-all duration-300 ${
+                                visitorMode === 'enfant' ? 'scale-125 animate-pulse' : ''
+                              }`}>✨</div>
+                              <div className={`absolute top-2 left-2 text-sm transition-all duration-300 ${
+                                visitorMode === 'enfant' ? 'scale-125 animate-pulse' : ''
+                              }`}>⭐</div>
                               
-                              {/* Indicateur sélectionné */}
+                              {/* Indicateur sélectionné avec animation */}
                               {visitorMode === 'enfant' && (
-                                <div className="absolute top-2 right-2 w-3 h-3 bg-white rounded-full shadow-lg"></div>
+                                <div className="absolute top-2 right-8 w-3 h-3 bg-white rounded-full shadow-lg animate-pulse"></div>
                               )}
                             </div>
                             
-                            {/* Contenu texte */}
+                            {/* Contenu texte avec transition */}
                             <div className="absolute bottom-0 left-0 right-0 p-2 text-center">
-                              <p className="text-white font-bold text-sm">Jeune Ninja</p>
+                              <p className={`font-bold text-sm transition-all duration-300 ${
+                                visitorMode === 'enfant' ? 'text-orange-300 scale-105' : 'text-white'
+                              }`}>Jeune Ninja</p>
                               <p className="text-white/70 text-[10px]">Moins de 14 ans</p>
-                              <div className="flex justify-center gap-1 text-xs mt-1">
-                                <span>🎮</span>
-                                <span>🏆</span>
-                                <span>🐉</span>
+                              <div className={`flex justify-center gap-1 text-xs mt-1 transition-all duration-300 ${
+                                visitorMode === 'enfant' ? 'scale-110' : ''
+                              }`}>
+                                <span className={visitorMode === 'enfant' ? 'animate-bounce' : ''}>🎮</span>
+                                <span className={visitorMode === 'enfant' ? 'animate-bounce' : ''} style={{ animationDelay: '100ms' }}>🏆</span>
+                                <span className={visitorMode === 'enfant' ? 'animate-bounce' : ''} style={{ animationDelay: '200ms' }}>🐉</span>
                               </div>
                             </div>
                           </button>
