@@ -95,10 +95,10 @@ const AgeSelector = ({ onSelect }) => {
         </div>
         
         <div className="relative z-10">
-          {/* Badge NOUVEAU */}
+          {/* Badge */}
           <div className="text-center mb-4">
             <span className="inline-block px-4 py-1.5 bg-amber-400 text-slate-900 rounded-full text-xs font-bold shadow-lg">
-              🥋 La 1ère app de gamification Aikido
+              🥋 La 1ère app européenne de gamification à la pratique de l'Aikido
             </span>
           </div>
           
