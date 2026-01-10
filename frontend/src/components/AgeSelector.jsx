@@ -23,11 +23,37 @@ const AgeSelector = ({ onSelect }) => {
 
   return (
     <div className="px-4 py-6 sm:py-8">
-      {/* VARIANTE A - Hero Banner Minimaliste avec accroche commerciale */}
+      {/* VARIANTE B - Hero Banner avec personnages et statistiques */}
       <div className="relative overflow-hidden bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-500 rounded-3xl p-6 sm:p-8 md:p-12 mb-6 sm:mb-8 shadow-2xl border-2 border-orange-400/60">
         
+        {/* Personnage Femme à gauche */}
+        <div className="absolute left-0 bottom-0 hidden lg:block z-20 pointer-events-none overflow-hidden rounded-bl-3xl">
+          <img 
+            src={FEMME_IMG} 
+            alt="Sensei Femme" 
+            className="h-52 xl:h-64 object-cover object-top"
+            style={{
+              maskImage: 'linear-gradient(to right, black 50%, transparent 100%)',
+              WebkitMaskImage: 'linear-gradient(to right, black 50%, transparent 100%)'
+            }}
+          />
+        </div>
+        
+        {/* Personnage Homme à droite */}
+        <div className="absolute right-0 bottom-0 hidden lg:block z-20 pointer-events-none overflow-hidden rounded-br-3xl">
+          <img 
+            src={HOMME_IMG} 
+            alt="Sensei Homme" 
+            className="h-52 xl:h-64 object-cover object-top"
+            style={{
+              maskImage: 'linear-gradient(to left, black 50%, transparent 100%)',
+              WebkitMaskImage: 'linear-gradient(to left, black 50%, transparent 100%)'
+            }}
+          />
+        </div>
+        
         {/* Idéogrammes japonais en arrière-plan transparent */}
-        <div className="absolute inset-0 overflow-hidden opacity-[0.08] pointer-events-none select-none">
+        <div className="absolute inset-0 overflow-hidden opacity-[0.06] pointer-events-none select-none">
           <div 
             className="absolute inset-0 text-white font-serif whitespace-nowrap"
             style={{ 
@@ -40,12 +66,6 @@ const AgeSelector = ({ onSelect }) => {
             <div className="absolute top-0 left-0 transform -rotate-12">
               合気道 武道 氣 和 心 道 技 礼 仁 義 忠 信 勇 徳 
             </div>
-            <div className="absolute top-16 right-0 transform rotate-6">
-              武士道 精神 修行 稽古 先生 弟子 道場 
-            </div>
-            <div className="absolute bottom-0 left-10 transform -rotate-6">
-              平和 調和 氣合 呼吸 中心 一期一会
-            </div>
             <div className="absolute bottom-16 right-10 transform rotate-12">
               合気道 武道 氣 和 心 道 技 礼 仁 義
             </div>
@@ -53,42 +73,41 @@ const AgeSelector = ({ onSelect }) => {
         </div>
         
         <div className="relative text-center z-10">
-          {/* Badge */}
-          <div className="inline-block mb-4">
-            <span className="px-4 py-1.5 bg-white/20 backdrop-blur-sm rounded-full text-white/90 text-sm font-medium border border-white/30">
-              🥋 La 1ère app de gamification Aikido
-            </span>
-          </div>
-          
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4">
             Aikido@Game
           </h1>
           <p className="text-lg sm:text-xl text-white/90 max-w-2xl mx-auto mb-6">
-            <strong>Transformez votre pratique en aventure.</strong>
-            <br className="hidden sm:block" />
-            <span className="text-white/80">Progressez, relevez des défis, atteignez vos objectifs.</span>
+            <strong>Votre parcours Aikido interactif et ludique</strong>
           </p>
           
-          {/* 3 points clés */}
-          <div className="flex flex-wrap justify-center gap-4 sm:gap-8 mb-6">
-            <div className="flex items-center gap-2 text-white/90">
-              <span className="text-2xl">📊</span>
-              <span className="text-sm font-medium">Suivi de progression</span>
+          {/* Statistiques impressionnantes */}
+          <div className="flex flex-wrap justify-center gap-6 sm:gap-10 mb-6">
+            <div className="text-center">
+              <p className="text-3xl sm:text-4xl font-black text-white">50+</p>
+              <p className="text-white/70 text-sm">Techniques</p>
             </div>
-            <div className="flex items-center gap-2 text-white/90">
-              <span className="text-2xl">🎯</span>
-              <span className="text-sm font-medium">Défis quotidiens</span>
+            <div className="text-center">
+              <p className="text-3xl sm:text-4xl font-black text-amber-300">6</p>
+              <p className="text-white/70 text-sm">Ceintures</p>
             </div>
-            <div className="flex items-center gap-2 text-white/90">
-              <span className="text-2xl">🏆</span>
-              <span className="text-sm font-medium">Récompenses</span>
+            <div className="text-center">
+              <p className="text-3xl sm:text-4xl font-black text-white">∞</p>
+              <p className="text-white/70 text-sm">Défis</p>
             </div>
           </div>
           
-          {/* Badge de confiance */}
-          <p className="text-white/60 text-xs">
-            ✓ 100% Gratuit • ✓ Sans publicité • ✓ Conforme RGPD
-          </p>
+          {/* Badges de confiance */}
+          <div className="flex flex-wrap justify-center gap-3">
+            <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-white text-xs border border-white/30">
+              ✓ 100% Gratuit
+            </span>
+            <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-white text-xs border border-white/30">
+              ✓ Sans publicité
+            </span>
+            <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-white text-xs border border-white/30">
+              🔒 Conforme RGPD
+            </span>
+          </div>
         </div>
       </div>
 
