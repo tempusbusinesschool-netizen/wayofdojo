@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowLeft, ChevronDown, ChevronUp, Lock, BookOpen, Target, Lightbulb, Loader2 } from 'lucide-react';
+import { ArrowLeft, ChevronDown, ChevronUp, Lock, Loader2 } from 'lucide-react';
 
 /**
  * ProgrammePage - Programme technique par grade (version adulte)
- * Récupère les données complètes depuis l'API /api/kyu-levels
+ * Présentation en grille de cartes - Style original
  * Kanji: 技 (technique, art)
  */
 const ProgrammePage = ({ onBack, isAuthenticated, onOpenAuth }) => {
   const [expandedGrade, setExpandedGrade] = useState(null);
-  const [expandedTechnique, setExpandedTechnique] = useState(null);
   const [grades, setGrades] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -108,13 +107,13 @@ const ProgrammePage = ({ onBack, isAuthenticated, onOpenAuth }) => {
             </div>
             <div>
               <h1 className="text-3xl md:text-4xl font-bold text-white">Programme Technique</h1>
-              <p className="text-slate-400">Progression par grade - {grades.length} niveaux</p>
+              <p className="text-slate-400">Progression par grade</p>
             </div>
           </div>
 
           <p className="text-lg text-slate-300 max-w-2xl">
-            Le programme technique d'Aikido comprend <strong className="text-cyan-400">{grades.reduce((sum, g) => sum + (g.techniques?.length || 0), 0)} techniques</strong> réparties 
-            sur {grades.length} niveaux, du 5ème Kyu au 4ème Dan, plus le travail aux armes (Bokken).
+            Le programme technique d'Aikido est structuré en grades Kyu (6ème au 1er), 
+            puis en grades Dan (ceintures noires), du Shodan au Yondan et au-delà.
           </p>
         </div>
       </div>
@@ -128,9 +127,7 @@ const ProgrammePage = ({ onBack, isAuthenticated, onOpenAuth }) => {
           return (
             <Card 
               key={grade.id} 
-              className={`bg-slate-800/50 border-slate-700 overflow-hidden transition-all duration-300 ${
-                isExpanded ? 'ring-2 ring-cyan-500/50' : ''
-              }`}
+              className="bg-slate-800/50 border-slate-700 overflow-hidden"
             >
               <button
                 onClick={() => setExpandedGrade(isExpanded ? null : grade.id)}
@@ -138,22 +135,16 @@ const ProgrammePage = ({ onBack, isAuthenticated, onOpenAuth }) => {
               >
                 <CardHeader className="flex flex-row items-center justify-between p-4 hover:bg-slate-700/30 transition-colors">
                   <div className="flex items-center gap-4">
-                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${gradeInfo.color} flex items-center justify-center text-2xl shadow-lg`}>
+                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${gradeInfo.color} flex items-center justify-center text-2xl`}>
                       {gradeInfo.emoji}
                     </div>
                     <div className="text-left">
-                      <CardTitle className="text-white text-lg flex items-center gap-2">
-                        {grade.name}
-                        {gradeInfo.isDan && <span className="text-xs bg-black/50 px-2 py-0.5 rounded-full">DAN</span>}
-                        {gradeInfo.isWeapon && <span className="text-xs bg-amber-600/50 px-2 py-0.5 rounded-full">ARMES</span>}
-                      </CardTitle>
-                      <p className="text-slate-400 text-sm">
-                        {gradeInfo.belt} • {gradeInfo.duration} • <span className="text-cyan-400">{grade.techniques?.length || 0} techniques</span>
-                      </p>
+                      <CardTitle className="text-white text-lg">{grade.name}</CardTitle>
+                      <p className="text-slate-400 text-sm">{gradeInfo.belt} • {gradeInfo.duration}</p>
                     </div>
                   </div>
                   {isExpanded ? (
-                    <ChevronUp className="w-5 h-5 text-cyan-400" />
+                    <ChevronUp className="w-5 h-5 text-slate-400" />
                   ) : (
                     <ChevronDown className="w-5 h-5 text-slate-400" />
                   )}
@@ -162,83 +153,41 @@ const ProgrammePage = ({ onBack, isAuthenticated, onOpenAuth }) => {
               
               {isExpanded && (
                 <CardContent className="p-4 pt-0 border-t border-slate-700">
-                  <div className="space-y-3 mt-4">
-                    {grade.techniques?.map((tech, idx) => {
-                      const isTechExpanded = expandedTechnique === `${grade.id}-${idx}`;
-                      
-                      return (
-                        <div 
-                          key={idx}
-                          className={`bg-slate-900/50 rounded-lg border transition-all duration-300 ${
-                            isTechExpanded ? 'border-cyan-500/50 ring-1 ring-cyan-500/30' : 'border-slate-700'
-                          }`}
-                        >
-                          {/* Technique Header */}
-                          <button
-                            onClick={() => setExpandedTechnique(isTechExpanded ? null : `${grade.id}-${idx}`)}
-                            className="w-full p-3 flex items-start justify-between hover:bg-slate-800/50 transition-colors rounded-lg"
-                          >
-                            <div className="text-left flex-1">
-                              <p className="font-medium text-white flex items-center gap-2">
-                                <span className="text-cyan-400 text-sm">{idx + 1}.</span>
-                                {tech.name}
-                              </p>
-                              <p className="text-sm text-slate-400 mt-1">{tech.description}</p>
-                            </div>
-                            {(tech.key_points?.length > 0 || tech.practice_tips?.length > 0) && (
-                              <div className="ml-2 flex-shrink-0">
-                                {isTechExpanded ? (
-                                  <ChevronUp className="w-4 h-4 text-cyan-400" />
-                                ) : (
-                                  <ChevronDown className="w-4 h-4 text-slate-500" />
-                                )}
-                              </div>
-                            )}
-                          </button>
-                          
-                          {/* Technique Details */}
-                          {isTechExpanded && (tech.key_points?.length > 0 || tech.practice_tips?.length > 0) && (
-                            <div className="px-3 pb-3 space-y-3 border-t border-slate-700/50 mt-1 pt-3">
-                              {/* Points Clés */}
-                              {tech.key_points?.length > 0 && (
-                                <div className="bg-slate-800/50 rounded-lg p-3">
-                                  <h4 className="text-sm font-semibold text-amber-400 flex items-center gap-2 mb-2">
-                                    <Target className="w-4 h-4" />
-                                    Points clés
-                                  </h4>
-                                  <ul className="space-y-1">
-                                    {tech.key_points.map((point, i) => (
-                                      <li key={i} className="text-sm text-slate-300 flex items-start gap-2">
-                                        <span className="text-amber-400 mt-1">•</span>
-                                        {point}
-                                      </li>
-                                    ))}
-                                  </ul>
-                                </div>
-                              )}
-                              
-                              {/* Conseils de pratique */}
-                              {tech.practice_tips?.length > 0 && (
-                                <div className="bg-slate-800/50 rounded-lg p-3">
-                                  <h4 className="text-sm font-semibold text-emerald-400 flex items-center gap-2 mb-2">
-                                    <Lightbulb className="w-4 h-4" />
-                                    Conseils de pratique
-                                  </h4>
-                                  <ul className="space-y-1">
-                                    {tech.practice_tips.map((tip, i) => (
-                                      <li key={i} className="text-sm text-slate-300 flex items-start gap-2">
-                                        <span className="text-emerald-400 mt-1">💡</span>
-                                        {tip}
-                                      </li>
-                                    ))}
-                                  </ul>
-                                </div>
-                              )}
-                            </div>
-                          )}
-                        </div>
-                      );
-                    })}
+                  {/* Grille de techniques - Style original */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
+                    {grade.techniques?.map((tech, idx) => (
+                      <div 
+                        key={idx}
+                        className="p-3 bg-slate-900/50 rounded-lg border border-slate-700 hover:border-cyan-500/50 transition-colors"
+                      >
+                        <p className="font-medium text-white">{tech.name}</p>
+                        <p className="text-sm text-slate-400 mt-1">{tech.description}</p>
+                        
+                        {/* Points clés - affichés en compact */}
+                        {tech.key_points && tech.key_points.length > 0 && (
+                          <div className="mt-2 pt-2 border-t border-slate-700/50">
+                            <p className="text-xs text-amber-400 font-medium mb-1">Points clés :</p>
+                            <ul className="text-xs text-slate-500 space-y-0.5">
+                              {tech.key_points.map((point, i) => (
+                                <li key={i}>• {point}</li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                        
+                        {/* Conseils - affichés en compact */}
+                        {tech.practice_tips && tech.practice_tips.length > 0 && (
+                          <div className="mt-2 pt-2 border-t border-slate-700/50">
+                            <p className="text-xs text-emerald-400 font-medium mb-1">Conseils :</p>
+                            <ul className="text-xs text-slate-500 space-y-0.5">
+                              {tech.practice_tips.map((tip, i) => (
+                                <li key={i}>💡 {tip}</li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+                    ))}
                   </div>
                 </CardContent>
               )}
