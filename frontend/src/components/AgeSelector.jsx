@@ -23,8 +23,8 @@ const AgeSelector = ({ onSelect }) => {
 
   return (
     <div className="px-4 py-6 sm:py-8">
-      {/* Hero Banner Bleu - Avec idéogrammes japonais */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-500 rounded-3xl p-6 sm:p-8 md:p-10 mb-6 sm:mb-8 shadow-2xl border-2 border-orange-400/60">
+      {/* VARIANTE A - Hero Banner Minimaliste avec accroche commerciale */}
+      <div className="relative overflow-hidden bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-500 rounded-3xl p-6 sm:p-8 md:p-12 mb-6 sm:mb-8 shadow-2xl border-2 border-orange-400/60">
         
         {/* Idéogrammes japonais en arrière-plan transparent */}
         <div className="absolute inset-0 overflow-hidden opacity-[0.08] pointer-events-none select-none">
@@ -53,11 +53,41 @@ const AgeSelector = ({ onSelect }) => {
         </div>
         
         <div className="relative text-center z-10">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-2 sm:mb-3">
+          {/* Badge */}
+          <div className="inline-block mb-4">
+            <span className="px-4 py-1.5 bg-white/20 backdrop-blur-sm rounded-full text-white/90 text-sm font-medium border border-white/30">
+              🥋 La 1ère app de gamification Aikido
+            </span>
+          </div>
+          
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4">
             Aikido@Game
           </h1>
-          <p className="text-base sm:text-lg text-white/90 max-w-xl mx-auto">
-            Votre parcours Aikido interactif et ludique
+          <p className="text-lg sm:text-xl text-white/90 max-w-2xl mx-auto mb-6">
+            <strong>Transformez votre pratique en aventure.</strong>
+            <br className="hidden sm:block" />
+            <span className="text-white/80">Progressez, relevez des défis, atteignez vos objectifs.</span>
+          </p>
+          
+          {/* 3 points clés */}
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-8 mb-6">
+            <div className="flex items-center gap-2 text-white/90">
+              <span className="text-2xl">📊</span>
+              <span className="text-sm font-medium">Suivi de progression</span>
+            </div>
+            <div className="flex items-center gap-2 text-white/90">
+              <span className="text-2xl">🎯</span>
+              <span className="text-sm font-medium">Défis quotidiens</span>
+            </div>
+            <div className="flex items-center gap-2 text-white/90">
+              <span className="text-2xl">🏆</span>
+              <span className="text-sm font-medium">Récompenses</span>
+            </div>
+          </div>
+          
+          {/* Badge de confiance */}
+          <p className="text-white/60 text-xs">
+            ✓ 100% Gratuit • ✓ Sans publicité • ✓ Conforme RGPD
           </p>
         </div>
       </div>
