@@ -799,18 +799,6 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                           {visitorMode === 'enfant' ? '🚀 Commencer l\'aventure' : '📝 Créer mon compte gratuit'}
                         </Button>
 
-                        {/* CTA Secondaire */}
-                        <Button
-                          variant="ghost"
-                          onClick={() => {
-                            const event = new CustomEvent('openLoginDialog');
-                            window.dispatchEvent(event);
-                          }}
-                          className="w-full text-slate-400 hover:text-white hover:bg-slate-700/50 font-medium py-2 rounded-xl text-xs"
-                        >
-                          Déjà inscrit ? Se connecter
-                        </Button>
-
                         {/* Badge de confiance */}
                         <p className="text-center text-slate-500 text-[10px] mt-2">
                           ✓ Gratuit • ✓ Sans engagement
