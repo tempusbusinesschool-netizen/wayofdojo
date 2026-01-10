@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AIKIDO_CHARACTERS } from '@/constants/aikidoCharacters';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import axios from 'axios';
 
 const API = process.env.REACT_APP_BACKEND_URL || '';
