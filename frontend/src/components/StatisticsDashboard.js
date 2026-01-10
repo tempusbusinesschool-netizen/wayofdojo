@@ -826,9 +826,9 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 </section>
 
                 {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-                {/* SECTION 3 : DÉFIS DU JOUR - Tunnel de progression */}
+                {/* SECTION 3 : DÉFIS DU JOUR - Tunnel de progression (gagne des points !) */}
                 {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-                <section className="mb-6 sm:mb-8" data-testid="section-defis">
+                <section id="section-points" className="mb-6 sm:mb-8" data-testid="section-defis">
                   {/* Titre de section */}
                   <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
                     <div className="h-0.5 sm:h-1 flex-1 bg-gradient-to-r from-transparent via-pink-500 to-pink-500 rounded-full" />
