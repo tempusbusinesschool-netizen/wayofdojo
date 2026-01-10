@@ -119,17 +119,43 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
   const [visitorMode, setVisitorMode] = useState(() => {
     return localStorage.getItem('ninja-aikido-mode') || null;
   });
+  
+  // État pour l'animation de transition entre modes
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [pendingMode, setPendingMode] = useState(null);
 
-  // Handler pour changer de mode
+  // Handler pour changer de mode avec animation fluide
   const handleModeChange = (mode) => {
-    setVisitorMode(mode);
-    localStorage.setItem('ninja-aikido-mode', mode);
+    if (mode === visitorMode) return; // Pas de changement si même mode
+    
+    setIsTransitioning(true);
+    setPendingMode(mode);
+    
+    // Après l'animation de fade-out, changer le mode
+    setTimeout(() => {
+      setVisitorMode(mode);
+      localStorage.setItem('ninja-aikido-mode', mode);
+      
+      // Puis fade-in
+      setTimeout(() => {
+        setIsTransitioning(false);
+        setPendingMode(null);
+      }, 50);
+    }, 300);
   };
 
   // Handler pour réinitialiser le mode (changer de mode)
   const handleResetMode = () => {
-    localStorage.removeItem('ninja-aikido-mode');
-    setVisitorMode(null);
+    setIsTransitioning(true);
+    
+    setTimeout(() => {
+      localStorage.removeItem('ninja-aikido-mode');
+      setVisitorMode(null);
+      
+      setTimeout(() => {
+        setIsTransitioning(false);
+      }, 50);
+    }, 300);
   };
   
   // Vérifier si l'utilisateur a déjà vu le tutoriel
