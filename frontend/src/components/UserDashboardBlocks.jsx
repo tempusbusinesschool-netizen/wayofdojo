@@ -4,7 +4,7 @@ import { Sparkles, Target, Trophy, Download, Calendar, Flame, Star, Award } from
 
 /**
  * UserDashboardBlocks - Présentation en cartes flottantes pour utilisateur connecté
- * Version améliorée avec design unifié
+ * Version améliorée avec design unifié et navigation vers les sections
  */
 const UserDashboardBlocks = ({ 
   userName = "Ninja",
@@ -14,13 +14,27 @@ const UserDashboardBlocks = ({
   onOpenTimeline,
   onOpenJournal,
   onDownloadPDF,
-  onDownloadCSV
+  onDownloadCSV,
+  onNavigateToSection // Callback pour naviguer vers une section
 }) => {
   // Calcul de la progression
   const progressPercent = statistics.overall_progress || 0;
   const masteredCount = statistics.mastered_techniques || 0;
   const practicedCount = statistics.practiced_techniques || 0;
   const inProgressCount = statistics.in_progress_techniques || 0;
+
+  // Fonction pour naviguer vers une section
+  const handleSectionClick = (sectionId) => {
+    if (onNavigateToSection) {
+      onNavigateToSection(sectionId);
+    } else {
+      // Fallback: scroll direct vers l'élément
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  };
 
   return (
     <div className="space-y-6" data-testid="user-dashboard-blocks">
