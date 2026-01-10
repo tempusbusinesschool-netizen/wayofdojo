@@ -125,43 +125,59 @@ const UserDashboardBlocks = ({
           {/* Séparateur */}
           <div className="h-px bg-gradient-to-r from-transparent via-slate-600 to-transparent mb-6" />
 
-          {/* Stats en ligne */}
+          {/* Stats en ligne - Cliquables pour naviguer vers les sections */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            {/* Stat 1 - Progression */}
-            <div className="bg-gradient-to-br from-emerald-600/20 to-emerald-800/20 rounded-2xl p-4 border border-emerald-500/30 text-center group hover:scale-105 transition-transform">
+            {/* Stat 1 - Progression (techniques maîtrisées) */}
+            <button
+              onClick={() => handleSectionClick('section-techniques-maitrisees')}
+              className="bg-gradient-to-br from-emerald-600/20 to-emerald-800/20 rounded-2xl p-4 border border-emerald-500/30 text-center group hover:scale-105 transition-transform cursor-pointer hover:border-emerald-400/50 hover:shadow-lg hover:shadow-emerald-500/20"
+            >
               <div className="w-12 h-12 mx-auto mb-2 rounded-xl bg-emerald-500/20 flex items-center justify-center group-hover:animate-bounce">
                 <Trophy className="w-6 h-6 text-emerald-400" />
               </div>
               <p className="text-3xl font-black text-emerald-400">{masteredCount}</p>
               <p className="text-slate-400 text-xs">Progression</p>
-            </div>
+              <p className="text-emerald-400/70 text-[10px] mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Cliquer pour voir →</p>
+            </button>
             
-            {/* Stat 2 - Pratiquées */}
-            <div className="bg-gradient-to-br from-cyan-600/20 to-cyan-800/20 rounded-2xl p-4 border border-cyan-500/30 text-center group hover:scale-105 transition-transform">
+            {/* Stat 2 - Techniques enseignées au Dojo (pratiquées) */}
+            <button
+              onClick={() => handleSectionClick('section-techniques-dojo')}
+              className="bg-gradient-to-br from-cyan-600/20 to-cyan-800/20 rounded-2xl p-4 border border-cyan-500/30 text-center group hover:scale-105 transition-transform cursor-pointer hover:border-cyan-400/50 hover:shadow-lg hover:shadow-cyan-500/20"
+            >
               <div className="w-12 h-12 mx-auto mb-2 rounded-xl bg-cyan-500/20 flex items-center justify-center group-hover:animate-bounce">
                 <Target className="w-6 h-6 text-cyan-400" />
               </div>
               <p className="text-3xl font-black text-cyan-400">{practicedCount}</p>
               <p className="text-slate-400 text-xs">Techniques enseignées au Dojo</p>
-            </div>
+              <p className="text-cyan-400/70 text-[10px] mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Cliquer pour voir →</p>
+            </button>
             
-            {/* Stat 3 - En cours */}
-            <div className="bg-gradient-to-br from-violet-600/20 to-violet-800/20 rounded-2xl p-4 border border-violet-500/30 text-center group hover:scale-105 transition-transform">
+            {/* Stat 3 - En cours (apprentissage) */}
+            <button
+              onClick={() => handleSectionClick('section-techniques-encours')}
+              className="bg-gradient-to-br from-violet-600/20 to-violet-800/20 rounded-2xl p-4 border border-violet-500/30 text-center group hover:scale-105 transition-transform cursor-pointer hover:border-violet-400/50 hover:shadow-lg hover:shadow-violet-500/20"
+            >
               <div className="w-12 h-12 mx-auto mb-2 rounded-xl bg-violet-500/20 flex items-center justify-center group-hover:animate-bounce">
                 <Sparkles className="w-6 h-6 text-violet-400" />
               </div>
               <p className="text-3xl font-black text-violet-400">{inProgressCount}</p>
               <p className="text-slate-400 text-xs">En cours</p>
-            </div>
+              <p className="text-violet-400/70 text-[10px] mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Cliquer pour voir →</p>
+            </button>
             
             {/* Stat 4 - Points */}
-            <div className="bg-gradient-to-br from-amber-600/20 to-amber-800/20 rounded-2xl p-4 border border-amber-500/30 text-center group hover:scale-105 transition-transform">
+            <button
+              onClick={() => handleSectionClick('section-points')}
+              className="bg-gradient-to-br from-amber-600/20 to-amber-800/20 rounded-2xl p-4 border border-amber-500/30 text-center group hover:scale-105 transition-transform cursor-pointer hover:border-amber-400/50 hover:shadow-lg hover:shadow-amber-500/20"
+            >
               <div className="w-12 h-12 mx-auto mb-2 rounded-xl bg-amber-500/20 flex items-center justify-center group-hover:animate-bounce">
                 <Star className="w-6 h-6 text-amber-400" />
               </div>
               <p className="text-3xl font-black text-amber-400">{totalPoints}</p>
               <p className="text-slate-400 text-xs">Points</p>
-            </div>
+              <p className="text-amber-400/70 text-[10px] mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Cliquer pour voir →</p>
+            </button>
           </div>
 
           {/* Barre de progression vers prochain grade */}
