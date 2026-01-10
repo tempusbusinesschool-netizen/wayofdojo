@@ -44,7 +44,103 @@ const ApprendsPage = ({ onBack, isAuthenticated, onOpenAuth }) => {
       emoji: '🟠', 
       color: 'from-orange-400 to-red-500',
       unlocked: false,
-      techniques: []
+      techniques: [
+        { id: 9, name: 'Nikyo', desc: 'Deuxième contrôle - fais attention au poignet !', icon: '✋', learned: false },
+        { id: 10, name: 'Sankyo', desc: 'Troisième contrôle - la spirale magique', icon: '🌪️', learned: false },
+      ]
+    },
+    { 
+      id: '3kyu', 
+      name: 'Ceinture Verte', 
+      emoji: '🟢', 
+      color: 'from-green-400 to-emerald-500',
+      unlocked: false,
+      techniques: [
+        { id: 11, name: 'Yonkyo', desc: 'Quatrième contrôle - le point secret !', icon: '🎯', learned: false },
+        { id: 12, name: 'Kote Gaeshi', desc: 'Retourne le poignet de ton adversaire', icon: '🔃', learned: false },
+      ]
+    },
+    { 
+      id: '2kyu', 
+      name: 'Ceinture Bleue', 
+      emoji: '🔵', 
+      color: 'from-blue-400 to-blue-600',
+      unlocked: false,
+      techniques: [
+        { id: 13, name: 'Kokyu Nage', desc: 'Projette avec ta respiration !', icon: '💨', learned: false },
+        { id: 14, name: 'Kaiten Nage', desc: 'La roue qui tourne', icon: '🎡', learned: false },
+      ]
+    },
+    { 
+      id: '1kyu', 
+      name: 'Ceinture Marron', 
+      emoji: '🟤', 
+      color: 'from-amber-700 to-amber-800',
+      unlocked: false,
+      techniques: [
+        { id: 15, name: 'Jiyu Waza', desc: 'Techniques libres - sois créatif !', icon: '🎨', learned: false },
+        { id: 16, name: 'Randori', desc: 'Combat contre plusieurs ninjas !', icon: '⚔️', learned: false },
+      ]
+    },
+    // ═══════════════════════════════════════════════════════════════
+    // GRADES DAN - Les Maîtres Ninjas ! 🥷
+    // ═══════════════════════════════════════════════════════════════
+    { 
+      id: 'shodan', 
+      name: '1er Dan - Ceinture Noire', 
+      emoji: '⚫', 
+      color: 'from-slate-900 to-black',
+      unlocked: false,
+      isDan: true,
+      techniques: [
+        { id: 17, name: 'Maître Débutant', desc: 'Tu deviens un vrai sensei !', icon: '🥷', learned: false },
+        { id: 18, name: 'Randori 2 ninjas', desc: 'Affronte 2 adversaires à la fois !', icon: '👥', learned: false },
+      ]
+    },
+    { 
+      id: 'nidan', 
+      name: '2ème Dan', 
+      emoji: '⚫', 
+      color: 'from-slate-800 to-slate-900',
+      unlocked: false,
+      isDan: true,
+      techniques: [
+        { id: 19, name: 'Maître Confirmé', desc: 'Tes techniques sont fluides comme l\'eau', icon: '🌊', learned: false },
+      ]
+    },
+    { 
+      id: 'sandan', 
+      name: '3ème Dan', 
+      emoji: '⚫', 
+      color: 'from-slate-700 to-slate-800',
+      unlocked: false,
+      isDan: true,
+      techniques: [
+        { id: 20, name: 'Maître Expert', desc: 'Randori contre 3 ninjas !', icon: '👥👤', learned: false },
+      ]
+    },
+    { 
+      id: 'yondan', 
+      name: '4ème Dan', 
+      emoji: '⚫', 
+      color: 'from-slate-600 to-slate-700',
+      unlocked: false,
+      isDan: true,
+      techniques: [
+        { id: 21, name: 'Grand Maître', desc: 'Tu maîtrises toutes les armes !', icon: '⚔️🗡️', learned: false },
+      ]
+    },
+    { 
+      id: 'bokken', 
+      name: 'Sabre Bokken', 
+      emoji: '⚔️', 
+      color: 'from-amber-600 to-amber-800',
+      unlocked: false,
+      isWeapon: true,
+      techniques: [
+        { id: 22, name: 'Ken Suburi', desc: 'Les 7 coupes de base au sabre', icon: '🗡️', learned: false },
+        { id: 23, name: 'Kamae', desc: 'Les gardes du samouraï', icon: '🛡️', learned: false },
+      ]
     },
   ];
 
