@@ -5,14 +5,12 @@ import { ArrowLeft, ChevronDown, ChevronUp, Lock, Loader2 } from 'lucide-react';
 
 /**
  * ProgrammePage - Programme technique par grade (version adulte)
- * Présentation en grille de cartes - Style original
  * Kanji: 技 (technique, art)
  */
 const ProgrammePage = ({ onBack, isAuthenticated, onOpenAuth }) => {
   const [expandedGrade, setExpandedGrade] = useState(null);
   const [grades, setGrades] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   // Mapping des grades pour l'affichage
   const gradeDisplayInfo = {
@@ -21,33 +19,29 @@ const ProgrammePage = ({ onBack, isAuthenticated, onOpenAuth }) => {
     '3e KYU': { belt: 'Ceinture Verte', color: 'from-green-400 to-emerald-500', emoji: '🟢', duration: '~1 an' },
     '2e KYU': { belt: 'Ceinture Bleue', color: 'from-blue-400 to-blue-500', emoji: '🔵', duration: '~1 an' },
     '1er KYU': { belt: 'Ceinture Marron', color: 'from-amber-700 to-amber-800', emoji: '🟤', duration: '~1 an' },
-    'SHODAN (1er Dan)': { belt: '1er Dan - Ceinture Noire', color: 'from-slate-900 to-black', emoji: '⚫', duration: '~3-4 ans', isDan: true },
-    'NIDAN (2e Dan)': { belt: '2ème Dan', color: 'from-slate-800 to-slate-900', emoji: '⚫', duration: '~2 ans après Shodan', isDan: true },
-    'SANDAN (3e Dan)': { belt: '3ème Dan', color: 'from-slate-700 to-slate-800', emoji: '⚫', duration: '~3 ans après Nidan', isDan: true },
-    'YONDAN (4e Dan)': { belt: '4ème Dan', color: 'from-slate-600 to-slate-700', emoji: '⚫', duration: '~4 ans après Sandan', isDan: true },
-    'BOKKEN (Aïkiken)': { belt: 'Travail au sabre', color: 'from-amber-600 to-amber-800', emoji: '⚔️', duration: 'Transversal', isWeapon: true },
+    'SHODAN (1er Dan)': { belt: '1er Dan - Ceinture Noire', color: 'from-slate-900 to-black', emoji: '⚫', duration: '~3-4 ans' },
+    'NIDAN (2e Dan)': { belt: '2ème Dan', color: 'from-slate-800 to-slate-900', emoji: '⚫', duration: '~2 ans après Shodan' },
+    'SANDAN (3e Dan)': { belt: '3ème Dan', color: 'from-slate-700 to-slate-800', emoji: '⚫', duration: '~3 ans après Nidan' },
+    'YONDAN (4e Dan)': { belt: '4ème Dan', color: 'from-slate-600 to-slate-700', emoji: '⚫', duration: '~4 ans après Sandan' },
+    'BOKKEN (Aïkiken)': { belt: 'Travail au sabre', color: 'from-amber-600 to-amber-800', emoji: '⚔️', duration: 'Transversal' },
   };
 
   // Récupérer les données depuis l'API
   useEffect(() => {
     const fetchGrades = async () => {
       try {
-        setLoading(true);
         const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/kyu-levels`);
-        if (!response.ok) throw new Error('Erreur lors du chargement des données');
-        const data = await response.json();
-        
-        // Trier par order décroissant (5e KYU en premier, puis 4e, etc.)
-        const sortedGrades = data.sort((a, b) => b.order - a.order);
-        setGrades(sortedGrades);
+        if (response.ok) {
+          const data = await response.json();
+          const sortedGrades = data.sort((a, b) => b.order - a.order);
+          setGrades(sortedGrades);
+        }
       } catch (err) {
         console.error('Erreur:', err);
-        setError(err.message);
       } finally {
         setLoading(false);
       }
     };
-
     fetchGrades();
   }, []);
 
@@ -63,21 +57,7 @@ const ProgrammePage = ({ onBack, isAuthenticated, onOpenAuth }) => {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="text-center">
-          <Loader2 className="w-12 h-12 text-cyan-500 animate-spin mx-auto mb-4" />
-          <p className="text-slate-400">Chargement du programme...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="text-center py-12">
-        <p className="text-red-400 mb-4">Erreur: {error}</p>
-        <Button onClick={() => window.location.reload()} variant="outline">
-          Réessayer
-        </Button>
+        <Loader2 className="w-8 h-8 text-cyan-500 animate-spin" />
       </div>
     );
   }
@@ -112,8 +92,8 @@ const ProgrammePage = ({ onBack, isAuthenticated, onOpenAuth }) => {
           </div>
 
           <p className="text-lg text-slate-300 max-w-2xl">
-            Le programme technique d'Aikido est structuré en grades Kyu (6ème au 1er), 
-            puis en grades Dan (ceintures noires), du Shodan au Yondan et au-delà.
+            Le programme technique d'Aikido est structuré en grades (kyu), du 6ème kyu (débutant) 
+            jusqu'au 1er kyu, avant le passage au grade Dan (ceinture noire).
           </p>
         </div>
       </div>
@@ -122,7 +102,6 @@ const ProgrammePage = ({ onBack, isAuthenticated, onOpenAuth }) => {
       <div className="space-y-4">
         {grades.map((grade) => {
           const gradeInfo = getGradeInfo(grade.name);
-          const isExpanded = expandedGrade === grade.id;
           
           return (
             <Card 
@@ -130,7 +109,7 @@ const ProgrammePage = ({ onBack, isAuthenticated, onOpenAuth }) => {
               className="bg-slate-800/50 border-slate-700 overflow-hidden"
             >
               <button
-                onClick={() => setExpandedGrade(isExpanded ? null : grade.id)}
+                onClick={() => setExpandedGrade(expandedGrade === grade.id ? null : grade.id)}
                 className="w-full"
               >
                 <CardHeader className="flex flex-row items-center justify-between p-4 hover:bg-slate-700/30 transition-colors">
@@ -143,7 +122,7 @@ const ProgrammePage = ({ onBack, isAuthenticated, onOpenAuth }) => {
                       <p className="text-slate-400 text-sm">{gradeInfo.belt} • {gradeInfo.duration}</p>
                     </div>
                   </div>
-                  {isExpanded ? (
+                  {expandedGrade === grade.id ? (
                     <ChevronUp className="w-5 h-5 text-slate-400" />
                   ) : (
                     <ChevronDown className="w-5 h-5 text-slate-400" />
@@ -151,41 +130,16 @@ const ProgrammePage = ({ onBack, isAuthenticated, onOpenAuth }) => {
                 </CardHeader>
               </button>
               
-              {isExpanded && (
+              {expandedGrade === grade.id && (
                 <CardContent className="p-4 pt-0 border-t border-slate-700">
-                  {/* Grille de techniques - Style original */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-4">
                     {grade.techniques?.map((tech, idx) => (
                       <div 
                         key={idx}
-                        className="p-3 bg-slate-900/50 rounded-lg border border-slate-700 hover:border-cyan-500/50 transition-colors"
+                        className="p-3 bg-slate-900/50 rounded-lg border border-slate-700"
                       >
                         <p className="font-medium text-white">{tech.name}</p>
-                        <p className="text-sm text-slate-400 mt-1">{tech.description}</p>
-                        
-                        {/* Points clés - affichés en compact */}
-                        {tech.key_points && tech.key_points.length > 0 && (
-                          <div className="mt-2 pt-2 border-t border-slate-700/50">
-                            <p className="text-xs text-amber-400 font-medium mb-1">Points clés :</p>
-                            <ul className="text-xs text-slate-500 space-y-0.5">
-                              {tech.key_points.map((point, i) => (
-                                <li key={i}>• {point}</li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
-                        
-                        {/* Conseils - affichés en compact */}
-                        {tech.practice_tips && tech.practice_tips.length > 0 && (
-                          <div className="mt-2 pt-2 border-t border-slate-700/50">
-                            <p className="text-xs text-emerald-400 font-medium mb-1">Conseils :</p>
-                            <ul className="text-xs text-slate-500 space-y-0.5">
-                              {tech.practice_tips.map((tip, i) => (
-                                <li key={i}>💡 {tip}</li>
-                              ))}
-                            </ul>
-                          </div>
-                        )}
+                        <p className="text-sm text-slate-400">{tech.description}</p>
                       </div>
                     ))}
                   </div>
