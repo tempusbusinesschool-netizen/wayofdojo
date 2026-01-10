@@ -680,110 +680,141 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                     {/* Hero Banner - Version responsive */}
                     {/* Sur mobile: landing page commerciale claire, sur desktop: rectangle avec gradient */}
                     <div className="relative overflow-hidden mb-4 sm:mb-6">
-                      {/* Version MOBILE - Landing page commerciale */}
-                      <div className="block sm:hidden">
-                        {/* Header commercial avec gradient subtil */}
-                        <div className="relative bg-gradient-to-b from-slate-800 to-slate-900 rounded-2xl mx-2 p-5 border border-slate-700/50">
-                          
-                          {/* Logo et titre compact */}
-                          <div className="text-center mb-4">
-                            <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 shadow-lg shadow-amber-500/30 mb-2">
-                              <span className="text-2xl">🥋</span>
-                            </div>
-                            <h1 className="text-xl font-black text-white">
-                              Aikido@Game
-                            </h1>
-                          </div>
-
-                          {/* Deux gros blocs de sélection Jeune/Confirmé */}
-                          <div className="grid grid-cols-2 gap-3 mb-4">
-                            {/* Bloc Jeune Ninja */}
-                            <button
-                              onClick={() => {
-                                localStorage.setItem('ninja-aikido-mode', 'enfant');
-                                window.location.reload();
-                              }}
-                              className={`relative overflow-hidden rounded-xl p-3 transition-all duration-300 ${
-                                visitorMode === 'enfant' 
-                                  ? 'bg-gradient-to-br from-orange-500 to-red-500 ring-2 ring-orange-400 scale-[1.02]' 
-                                  : 'bg-slate-700/50 hover:bg-slate-700'
-                              }`}
-                            >
-                              <div className="text-center">
-                                <span className="text-3xl mb-1 block">🥷</span>
-                                <p className="text-white font-bold text-sm">Jeune Ninja</p>
-                                <p className="text-white/60 text-[10px]">6-12 ans</p>
-                              </div>
+                      {/* Version MOBILE - Landing page avec les 2 gros blocs */}
+                      <div className="block sm:hidden px-2">
+                        
+                        {/* Deux gros blocs de sélection Jeune/Confirmé - MEMES VISUELS que page principale */}
+                        <div className="grid grid-cols-2 gap-3 mb-4">
+                          {/* Bloc Jeune Ninja - avec image */}
+                          <button
+                            onClick={() => {
+                              localStorage.setItem('ninja-aikido-mode', 'enfant');
+                              window.location.reload();
+                            }}
+                            className={`group relative overflow-hidden rounded-2xl transition-all duration-300 ${
+                              visitorMode === 'enfant' 
+                                ? 'ring-2 ring-orange-400 scale-[1.02]' 
+                                : 'opacity-70'
+                            }`}
+                          >
+                            {/* Image de fond */}
+                            <div className="relative">
+                              <img 
+                                src={AIKIDO_CHARACTERS.JEUNE_NINJA} 
+                                alt="Jeune Ninja"
+                                className="w-full h-32 object-cover object-top"
+                              />
+                              {/* Overlay gradient */}
+                              <div className="absolute inset-0 bg-gradient-to-t from-orange-900/95 via-orange-800/50 to-transparent" />
+                              
+                              {/* Étoiles décoratives */}
+                              <div className="absolute top-2 right-2 text-sm">✨</div>
+                              <div className="absolute top-2 left-2 text-sm">⭐</div>
+                              
+                              {/* Indicateur sélectionné */}
                               {visitorMode === 'enfant' && (
-                                <div className="absolute top-1 right-1 w-2 h-2 bg-white rounded-full"></div>
+                                <div className="absolute top-2 right-2 w-3 h-3 bg-white rounded-full shadow-lg"></div>
                               )}
-                            </button>
-
-                            {/* Bloc Ninja Confirmé */}
-                            <button
-                              onClick={() => {
-                                localStorage.setItem('ninja-aikido-mode', 'adulte');
-                                window.location.reload();
-                              }}
-                              className={`relative overflow-hidden rounded-xl p-3 transition-all duration-300 ${
-                                visitorMode === 'adulte' 
-                                  ? 'bg-gradient-to-br from-blue-600 to-indigo-600 ring-2 ring-blue-400 scale-[1.02]' 
-                                  : 'bg-slate-700/50 hover:bg-slate-700'
-                              }`}
-                            >
-                              <div className="text-center">
-                                <span className="text-3xl mb-1 block">🎯</span>
-                                <p className="text-white font-bold text-sm">Ninja Confirmé</p>
-                                <p className="text-white/60 text-[10px]">Ados & Adultes</p>
+                            </div>
+                            
+                            {/* Contenu texte */}
+                            <div className="absolute bottom-0 left-0 right-0 p-2 text-center">
+                              <p className="text-white font-bold text-sm">Jeune Ninja</p>
+                              <p className="text-white/70 text-[10px]">Moins de 14 ans</p>
+                              <div className="flex justify-center gap-1 text-xs mt-1">
+                                <span>🎮</span>
+                                <span>🏆</span>
+                                <span>🐉</span>
                               </div>
+                            </div>
+                          </button>
+
+                          {/* Bloc Ninja Confirmé - avec image */}
+                          <button
+                            onClick={() => {
+                              localStorage.setItem('ninja-aikido-mode', 'adulte');
+                              window.location.reload();
+                            }}
+                            className={`group relative overflow-hidden rounded-2xl transition-all duration-300 ${
+                              visitorMode === 'adulte' 
+                                ? 'ring-2 ring-amber-400 scale-[1.02]' 
+                                : 'opacity-70'
+                            }`}
+                          >
+                            {/* Image de fond */}
+                            <div className="relative">
+                              <img 
+                                src={AIKIDO_CHARACTERS.NINJA_CONFIRME} 
+                                alt="Ninja Confirmé"
+                                className="w-full h-32 object-cover object-top"
+                              />
+                              {/* Overlay gradient */}
+                              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-800/50 to-transparent" />
+                              
+                              {/* Symboles décoratifs */}
+                              <div className="absolute top-2 right-2 text-sm text-amber-400/80">☯️</div>
+                              <div className="absolute top-2 left-2 text-sm text-amber-400/80">🥋</div>
+                              
+                              {/* Indicateur sélectionné */}
                               {visitorMode === 'adulte' && (
-                                <div className="absolute top-1 right-1 w-2 h-2 bg-white rounded-full"></div>
+                                <div className="absolute top-2 right-2 w-3 h-3 bg-amber-400 rounded-full shadow-lg"></div>
                               )}
-                            </button>
-                          </div>
+                            </div>
+                            
+                            {/* Contenu texte */}
+                            <div className="absolute bottom-0 left-0 right-0 p-2 text-center">
+                              <p className="text-white font-bold text-sm">Ninja Confirmé</p>
+                              <p className="text-slate-400 text-[10px]">Plus de 14 ans</p>
+                              <div className="flex justify-center gap-1 text-xs mt-1">
+                                <span>📊</span>
+                                <span>🎯</span>
+                                <span>📜</span>
+                              </div>
+                            </div>
+                          </button>
+                        </div>
 
-                          {/* Proposition de valeur */}
-                          <div className="text-center mb-4">
-                            <p className="text-white text-sm font-semibold mb-1">
-                              {visitorMode === 'enfant' 
-                                ? 'Apprends l\'Aikido en t\'amusant !' 
-                                : 'Progressez dans votre pratique'}
-                            </p>
-                            <p className="text-slate-400 text-xs">
-                              {visitorMode === 'enfant' 
-                                ? 'Gagne des points et deviens un vrai Ninja !' 
-                                : 'Suivez votre progression et atteignez vos objectifs.'}
-                            </p>
-                          </div>
-
-                          {/* CTA Principal */}
-                          <Button
-                            onClick={() => {
-                              const event = new CustomEvent('openAuthDialog');
-                              window.dispatchEvent(event);
-                            }}
-                            className="w-full bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-300 hover:to-orange-400 text-slate-900 font-bold py-3 rounded-xl text-sm shadow-lg shadow-amber-500/30 mb-2"
-                          >
-                            {visitorMode === 'enfant' ? '🚀 Commencer l\'aventure' : '📝 Créer mon compte gratuit'}
-                          </Button>
-
-                          {/* CTA Secondaire */}
-                          <Button
-                            variant="ghost"
-                            onClick={() => {
-                              const event = new CustomEvent('openLoginDialog');
-                              window.dispatchEvent(event);
-                            }}
-                            className="w-full text-slate-400 hover:text-white hover:bg-slate-700/50 font-medium py-2 rounded-xl text-xs"
-                          >
-                            Déjà inscrit ? Se connecter
-                          </Button>
-
-                          {/* Badge de confiance */}
-                          <p className="text-center text-slate-500 text-[10px] mt-2">
-                            ✓ Gratuit • ✓ Sans engagement
+                        {/* Proposition de valeur */}
+                        <div className="text-center mb-4 px-2">
+                          <p className="text-white text-sm font-semibold mb-1">
+                            {visitorMode === 'enfant' 
+                              ? 'Apprends l\'Aikido en t\'amusant !' 
+                              : 'Progressez dans votre pratique'}
+                          </p>
+                          <p className="text-slate-400 text-xs">
+                            {visitorMode === 'enfant' 
+                              ? 'Gagne des points et deviens un vrai Ninja !' 
+                              : 'Suivez votre progression et atteignez vos objectifs.'}
                           </p>
                         </div>
+
+                        {/* CTA Principal */}
+                        <Button
+                          onClick={() => {
+                            const event = new CustomEvent('openAuthDialog');
+                            window.dispatchEvent(event);
+                          }}
+                          className="w-full bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-300 hover:to-orange-400 text-slate-900 font-bold py-3 rounded-xl text-sm shadow-lg shadow-amber-500/30 mb-2"
+                        >
+                          {visitorMode === 'enfant' ? '🚀 Commencer l\'aventure' : '📝 Créer mon compte gratuit'}
+                        </Button>
+
+                        {/* CTA Secondaire */}
+                        <Button
+                          variant="ghost"
+                          onClick={() => {
+                            const event = new CustomEvent('openLoginDialog');
+                            window.dispatchEvent(event);
+                          }}
+                          className="w-full text-slate-400 hover:text-white hover:bg-slate-700/50 font-medium py-2 rounded-xl text-xs"
+                        >
+                          Déjà inscrit ? Se connecter
+                        </Button>
+
+                        {/* Badge de confiance */}
+                        <p className="text-center text-slate-500 text-[10px] mt-2">
+                          ✓ Gratuit • ✓ Sans engagement
+                        </p>
                       </div>
 
                       {/* Version DESKTOP - rectangle avec gradient et personnages */}
