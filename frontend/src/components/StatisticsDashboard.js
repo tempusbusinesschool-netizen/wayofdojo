@@ -683,9 +683,9 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                       {/* Version MOBILE - Landing page avec les 2 gros blocs */}
                       <div className="block sm:hidden px-2">
                         
-                        {/* Deux gros blocs de sélection - Ninja Confirmé en haut, Jeune Ninja en bas */}
-                        <div className="grid grid-cols-2 gap-3 mb-4">
-                          {/* Bloc Ninja Confirmé - avec image (EN PREMIER) */}
+                        {/* Deux gros blocs de sélection - Ninja Confirmé en haut, Jeune Ninja en bas (empilés verticalement) */}
+                        <div className="flex flex-col gap-3 mb-4">
+                          {/* Bloc Ninja Confirmé - EN HAUT */}
                           <button
                             onClick={() => {
                               localStorage.setItem('ninja-aikido-mode', 'adulte');
@@ -702,7 +702,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                               <img 
                                 src={AIKIDO_CHARACTERS.NINJA_CONFIRME} 
                                 alt="Ninja Confirmé"
-                                className="w-full h-32 object-cover object-top"
+                                className="w-full h-28 object-cover object-top"
                               />
                               {/* Overlay gradient */}
                               <div className="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-800/50 to-transparent" />
@@ -729,7 +729,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                             </div>
                           </button>
 
-                          {/* Bloc Jeune Ninja - avec image (EN SECOND) */}
+                          {/* Bloc Jeune Ninja - EN BAS */}
                           <button
                             onClick={() => {
                               localStorage.setItem('ninja-aikido-mode', 'enfant');
@@ -746,7 +746,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                               <img 
                                 src={AIKIDO_CHARACTERS.JEUNE_NINJA} 
                                 alt="Jeune Ninja"
-                                className="w-full h-32 object-cover object-top"
+                                className="w-full h-28 object-cover object-top"
                               />
                               {/* Overlay gradient */}
                               <div className="absolute inset-0 bg-gradient-to-t from-orange-900/95 via-orange-800/50 to-transparent" />
