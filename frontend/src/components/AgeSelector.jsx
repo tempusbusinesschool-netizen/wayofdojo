@@ -134,49 +134,16 @@ const AgeSelector = ({ onSelect }) => {
             </div>
           </div>
           
-          {/* EXPLICATION DU BUDO - Section éducative */}
-          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-4 sm:p-6 border border-white/10 mb-6 max-w-3xl mx-auto">
-            <div className="text-center mb-4">
-              <span className="text-3xl sm:text-4xl">🥋</span>
-              <h3 className="text-lg sm:text-xl font-bold text-amber-300 mt-2">
-                Budō (武道) - La Voie Martiale
-              </h3>
-              <p className="text-white/70 text-xs sm:text-sm mt-1">
-                L'Aïkido n'est pas un sport, c'est un <strong className="text-white">Budo</strong>
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
-              {/* Colonne Budo */}
-              <div className="bg-amber-500/10 rounded-xl p-3 border border-amber-500/30">
-                <p className="font-bold text-amber-300 mb-2 flex items-center gap-2">
-                  <span>☯️</span> Budō - Voie de vie
-                </p>
-                <ul className="text-white/80 text-xs space-y-1">
-                  <li>• Développement personnel et moral</li>
-                  <li>• Maîtrise de soi, discipline, respect</li>
-                  <li>• Victoire sur soi-même</li>
-                  <li>• Chemin de progression à long terme</li>
-                </ul>
-              </div>
-              
-              {/* Colonne Sport */}
-              <div className="bg-slate-500/10 rounded-xl p-3 border border-slate-500/30">
-                <p className="font-bold text-slate-400 mb-2 flex items-center gap-2">
-                  <span>🥊</span> Sport de combat
-                </p>
-                <ul className="text-white/50 text-xs space-y-1">
-                  <li>• Performance sportive</li>
-                  <li>• Gagner selon des règles</li>
-                  <li>• Victoire sur l'adversaire</li>
-                  <li>• Résultats mesurables</li>
-                </ul>
-              </div>
-            </div>
-            
-            <p className="text-center text-white/60 text-xs mt-4 italic">
-              "La voie (道) est un chemin de vie autant que physique"
-            </p>
+          {/* Bouton pour voir l'explication du Budo */}
+          <div className="text-center mb-6">
+            <button
+              onClick={() => setShowBudoDialog(true)}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full text-white/80 hover:text-white text-sm border border-white/20 hover:border-white/40 transition-all"
+            >
+              <span>☯️</span>
+              <span>L'Aïkido est un <strong>Budo</strong>, pas un sport</span>
+              <span className="text-xs">→</span>
+            </button>
           </div>
           
           {/* CTA Buttons */}
