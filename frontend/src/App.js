@@ -473,9 +473,9 @@ function AppContent() {
       
       {/* Header */}
       <header className="sticky top-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
+        <div className="max-w-7xl mx-auto px-2 sm:px-4 py-2 sm:py-4">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
               {/* Logo cliquable - retour à la page d'accueil/sélection */}
               <button
                 onClick={() => {
@@ -489,32 +489,32 @@ function AppContent() {
                     window.location.reload();
                   }
                 }}
-                className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer group"
+                className="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-opacity cursor-pointer group"
                 title="Retour à l'accueil"
               >
-                <div className="relative w-16 h-16 group-hover:scale-105 transition-transform">
+                <div className="relative w-10 h-10 sm:w-16 sm:h-16 group-hover:scale-105 transition-transform flex-shrink-0">
                   {/* Yin-Yang style logo in yellow/gold */}
                   <div className="absolute inset-0 rounded-full bg-gradient-to-br from-amber-400 via-yellow-500 to-amber-600 shadow-lg shadow-amber-500/30"></div>
-                  <div className="absolute inset-1 rounded-full bg-slate-900 flex items-center justify-center">
-                    <div className="relative w-10 h-10">
-                      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-gradient-to-b from-amber-400 to-yellow-500"></div>
-                      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-5 h-5 rounded-full bg-slate-900 border-2 border-amber-500"></div>
-                      <div className="absolute top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-slate-900"></div>
-                      <div className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-amber-400"></div>
+                  <div className="absolute inset-0.5 sm:inset-1 rounded-full bg-slate-900 flex items-center justify-center">
+                    <div className="relative w-6 h-6 sm:w-10 sm:h-10">
+                      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3 h-3 sm:w-5 sm:h-5 rounded-full bg-gradient-to-b from-amber-400 to-yellow-500"></div>
+                      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3 h-3 sm:w-5 sm:h-5 rounded-full bg-slate-900 border sm:border-2 border-amber-500"></div>
+                      <div className="absolute top-0.5 sm:top-1 left-1/2 -translate-x-1/2 w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-slate-900"></div>
+                      <div className="absolute bottom-0.5 sm:bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-amber-400"></div>
                     </div>
                   </div>
                 </div>
-                <div className="text-left">
-                  <p className="text-sm text-amber-400 font-medium group-hover:text-amber-300 transition-colors">Aikido@Game</p>
-                  <p className="text-lg md:text-xl text-white font-bold group-hover:text-slate-200 transition-colors">Votre parcours Aikido</p>
+                <div className="text-left hidden xs:block">
+                  <p className="text-xs sm:text-sm text-amber-400 font-medium group-hover:text-amber-300 transition-colors">Aikido@Game</p>
+                  <p className="text-sm sm:text-lg md:text-xl text-white font-bold group-hover:text-slate-200 transition-colors">Votre parcours</p>
                 </div>
               </button>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
               {/* User Auth Button */}
               {isAuthenticated ? (
-                <div className="flex items-center gap-2">
-                  <Badge className="bg-emerald-600 text-white hidden sm:flex">
+                <div className="flex items-center gap-1 sm:gap-2">
+                  <Badge className="bg-emerald-600 text-white hidden sm:flex text-xs">
                     <User className="w-3 h-3 mr-1" />
                     {user?.first_name}
                   </Badge>
@@ -522,9 +522,9 @@ function AppContent() {
                     variant="ghost"
                     size="sm"
                     onClick={logout}
-                    className="text-slate-400 hover:text-white hover:bg-slate-700"
+                    className="text-slate-400 hover:text-white hover:bg-slate-700 h-8 px-2 sm:px-3"
                   >
-                    <LogOut className="w-4 h-4 mr-1" />
+                    <LogOut className="w-4 h-4 sm:mr-1" />
                     <span className="hidden sm:inline">Déconnexion</span>
                   </Button>
                   {/* Show upgrade button for users without subscription */}
@@ -532,44 +532,45 @@ function AppContent() {
                     variant="ghost"
                     size="sm"
                     onClick={() => setShowPaywall(true)}
-                    className="text-amber-400 hover:text-amber-300 hover:bg-amber-900/20"
+                    className="text-amber-400 hover:text-amber-300 hover:bg-amber-900/20 h-8 px-2"
                     title="Voir les offres"
                   >
                     <Sparkles className="w-4 h-4" />
                   </Button>
                 </div>
               ) : (
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1 sm:gap-2">
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => setShowAuthDialog(true)}
-                    className="border-amber-600 text-amber-400 hover:bg-amber-900/30"
+                    className="border-amber-600 text-amber-400 hover:bg-amber-900/30 h-8 px-2 sm:px-3 text-xs sm:text-sm"
                   >
-                    🥷 S&apos;inscrire gratuitement
+                    <span className="hidden sm:inline">🥷 S&apos;inscrire</span>
+                    <span className="sm:hidden">🥷</span>
                   </Button>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => setShowLoginDialog(true)}
-                    className="border-emerald-600 text-emerald-400 hover:bg-emerald-900/30"
+                    className="border-emerald-600 text-emerald-400 hover:bg-emerald-900/30 h-8 px-2 sm:px-3 text-xs sm:text-sm"
                   >
-                    <LogIn className="w-4 h-4 mr-1" />
-                    Se connecter
+                    <LogIn className="w-4 h-4 sm:mr-1" />
+                    <span className="hidden sm:inline">Connexion</span>
                   </Button>
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => setShowDojoRegistration(true)}
-                    className="border-cyan-600 text-cyan-400 hover:bg-cyan-900/30 hidden sm:flex"
+                    className="border-cyan-600 text-cyan-400 hover:bg-cyan-900/30 hidden md:flex h-8 px-3 text-sm"
                   >
-                    🏯 Inscription Dojo
+                    🏯 Dojo
                   </Button>
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => setShowPaywall(true)}
-                    className="text-slate-400 hover:text-amber-400"
+                    className="text-slate-400 hover:text-amber-400 h-8 px-2 hidden sm:flex"
                   >
                     <Sparkles className="w-4 h-4" />
                   </Button>
@@ -581,10 +582,10 @@ function AppContent() {
                   variant="ghost"
                   size="sm"
                   onClick={() => setShowAdminLogin(true)}
-                  className="text-slate-400 hover:text-white hover:bg-slate-700"
+                  className="text-slate-400 hover:text-white hover:bg-slate-700 h-8 px-2 sm:px-3"
                 >
                   <Lock className="w-4 h-4 sm:mr-1" />
-                  <span className="hidden sm:inline">Espace de gestion</span>
+                  <span className="hidden md:inline">Espace de gestion</span>
                 </Button>
               )}
 
@@ -593,7 +594,7 @@ function AppContent() {
                   variant="ghost"
                   size="sm"
                   onClick={handleAdminLogout}
-                  className="text-red-400 hover:text-red-300 hover:bg-red-900/20"
+                  className="text-red-400 hover:text-red-300 hover:bg-red-900/20 h-8 px-2 sm:px-3"
                 >
                   <LogOut className="w-4 h-4 sm:mr-1" />
                   <span className="hidden sm:inline">Déconnexion</span>
