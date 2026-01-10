@@ -48,85 +48,170 @@ const AgeSelector = ({ onSelect }) => {
 
   return (
     <div className="px-4 py-6 sm:py-8">
-      {/* VARIANTE 3 - Design carte premium avec dégradé subtil */}
-      <div className="relative overflow-hidden rounded-3xl mb-6 sm:mb-8 shadow-2xl bg-gradient-to-b from-slate-800 to-slate-900 border border-slate-700/50">
-        
-        {/* Motif japonais subtil en fond */}
-        <div className="absolute inset-0 opacity-[0.03]" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-        }} />
-        
-        <div className="relative p-6 sm:p-8 md:p-10">
-          
-          {/* En-tête avec logo et badge */}
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg">
-                <span className="text-2xl">🥋</span>
+      
+      {/* VERSION MOBILE - Design carte premium compact */}
+      <div className="block sm:hidden">
+        <div className="relative overflow-hidden rounded-2xl mb-6 shadow-xl bg-gradient-to-b from-slate-800 to-slate-900 border border-slate-700/50">
+          <div className="p-5">
+            {/* En-tête mobile */}
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg">
+                  <span className="text-xl">🥋</span>
+                </div>
+                <h1 className="text-xl font-black text-white">Aikido@Game</h1>
               </div>
-              <div>
-                <h1 className="text-2xl sm:text-3xl font-black text-white">
-                  Aikido@Game
-                </h1>
+              <span className="px-2 py-1 bg-amber-400/10 border border-amber-400/30 rounded-lg text-amber-400 text-[10px]">
+                🇪🇺 1ère app EU
+              </span>
+            </div>
+            
+            {/* Statistiques mobile */}
+            <div className="grid grid-cols-3 gap-2 mb-4">
+              <div className="bg-slate-800/50 rounded-xl p-3 text-center border border-slate-700/50">
+                <p className="text-2xl font-black text-amber-400">{stats.total_techniques}+</p>
+                <p className="text-slate-400 text-[10px]">Techniques</p>
+              </div>
+              <div className="bg-slate-800/50 rounded-xl p-3 text-center border border-slate-700/50">
+                <p className="text-2xl font-black text-white">{stats.total_grades || 7}</p>
+                <p className="text-slate-400 text-[10px]">{stats.grades_label || "Grades"}</p>
+              </div>
+              <div className="bg-slate-800/50 rounded-xl p-3 text-center border border-slate-700/50">
+                <p className="text-2xl font-black text-cyan-400">{stats.total_challenges || 84}</p>
+                <p className="text-slate-400 text-[10px]">Défis</p>
               </div>
             </div>
-            <span className="self-start sm:self-auto px-3 py-1 bg-amber-400/10 border border-amber-400/30 rounded-lg text-amber-400 text-xs">
-              🇪🇺 1ère app européenne
-            </span>
-          </div>
-          
-          {/* Accroche principale */}
-          <div className="text-center mb-8">
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
-              Votre parcours Aikido <span className="text-amber-400">interactif</span> et <span className="text-cyan-400">ludique</span>
-            </h2>
-            <p className="text-slate-400">
-              Progressez, relevez des défis, atteignez vos objectifs
-            </p>
-          </div>
-          
-          {/* Statistiques en cartes */}
-          <div className="grid grid-cols-3 gap-3 sm:gap-4 mb-8">
-            <div className="bg-slate-800/50 rounded-2xl p-4 text-center border border-slate-700/50 hover:border-amber-500/30 transition-colors">
-              <p className="text-3xl sm:text-4xl font-black text-amber-400">{stats.total_techniques}+</p>
-              <p className="text-slate-400 text-xs sm:text-sm mt-1">Techniques</p>
-            </div>
-            <div className="bg-slate-800/50 rounded-2xl p-4 text-center border border-slate-700/50 hover:border-white/30 transition-colors">
-              <p className="text-3xl sm:text-4xl font-black text-white">{stats.total_grades || 7}</p>
-              <p className="text-slate-400 text-xs sm:text-sm mt-1">{stats.grades_label || "Grades"}</p>
-            </div>
-            <div className="bg-slate-800/50 rounded-2xl p-4 text-center border border-slate-700/50 hover:border-cyan-500/30 transition-colors">
-              <p className="text-3xl sm:text-4xl font-black text-cyan-400">{stats.total_challenges || 84}</p>
-              <p className="text-slate-400 text-xs sm:text-sm mt-1">Défis</p>
-            </div>
-          </div>
-          
-          {/* Bouton Budo avec style premium */}
-          <div className="text-center mb-6">
+            
+            {/* Bouton Budo mobile */}
             <button
               onClick={() => setShowBudoDialog(true)}
-              className="inline-flex items-center gap-3 px-5 py-3 bg-gradient-to-r from-slate-700 to-slate-800 hover:from-slate-600 hover:to-slate-700 rounded-xl text-white text-sm border border-slate-600 shadow-lg transition-all hover:scale-[1.02]"
+              className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-slate-700/50 hover:bg-slate-700 rounded-xl text-white text-xs border border-slate-600 transition-all mb-3"
             >
-              <span className="w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center">☯️</span>
-              <span>L'Aïkido n'est pas seulement un sport, c'est un <strong className="text-amber-400">Budo</strong> !</span>
-              <span className="text-slate-400">→</span>
+              <span>☯️</span>
+              <span>L'Aïkido est un <strong className="text-amber-400">Budo</strong>, pas seulement un sport</span>
             </button>
+            
+            {/* Trust badges mobile */}
+            <div className="flex justify-center gap-3 text-slate-500 text-[10px]">
+              <span>✓ Gratuit</span>
+              <span>✓ Sans pub</span>
+              <span>🔒 RGPD</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* VERSION PC - Bloc bleu avec personnages et statistiques */}
+      <div className="hidden sm:block">
+        <div className="relative overflow-hidden bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-500 rounded-3xl p-8 md:p-12 mb-6 sm:mb-8 shadow-2xl border-2 border-orange-400/60">
+          
+          {/* Personnage Femme à gauche */}
+          <div className="absolute left-0 bottom-0 hidden lg:block z-20 pointer-events-none overflow-hidden rounded-bl-3xl">
+            <img 
+              src={FEMME_IMG} 
+              alt="Sensei Femme" 
+              className="h-52 xl:h-64 object-cover object-top"
+              style={{
+                maskImage: 'linear-gradient(to right, black 50%, transparent 100%)',
+                WebkitMaskImage: 'linear-gradient(to right, black 50%, transparent 100%)'
+              }}
+            />
           </div>
           
-          {/* Trust badges */}
-          <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
-            <span className="flex items-center gap-2 text-slate-400 text-xs">
-              <span className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center text-green-400">✓</span>
-              100% Gratuit
-            </span>
-            <span className="flex items-center gap-2 text-slate-400 text-xs">
-              <span className="w-5 h-5 rounded-full bg-green-500/20 flex items-center justify-center text-green-400">✓</span>
-              Sans publicité
-            </span>
-            <span className="flex items-center gap-2 text-slate-400 text-xs">
-              <span className="w-5 h-5 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-400">🔒</span>
-              Conforme RGPD
-            </span>
+          {/* Personnage Homme à droite */}
+          <div className="absolute right-0 bottom-0 hidden lg:block z-20 pointer-events-none overflow-hidden rounded-br-3xl">
+            <img 
+              src={HOMME_IMG} 
+              alt="Sensei Homme" 
+              className="h-52 xl:h-64 object-cover object-top"
+              style={{
+                maskImage: 'linear-gradient(to left, black 50%, transparent 100%)',
+                WebkitMaskImage: 'linear-gradient(to left, black 50%, transparent 100%)'
+              }}
+            />
+          </div>
+          
+          {/* Idéogrammes japonais en arrière-plan */}
+          <div className="absolute inset-0 overflow-hidden opacity-[0.06] pointer-events-none select-none">
+            <div 
+              className="absolute inset-0 text-white font-serif whitespace-nowrap"
+              style={{ 
+                fontFamily: "'Noto Serif JP', serif",
+                fontSize: '4rem',
+                lineHeight: '1.2',
+                letterSpacing: '0.5rem'
+              }}
+            >
+              <div className="absolute top-0 left-0 transform -rotate-12">
+                合気道 武道 氣 和 心 道 技 礼 仁 義 忠 信 勇 徳 
+              </div>
+              <div className="absolute bottom-16 right-10 transform rotate-12">
+                合気道 武道 氣 和 心 道 技 礼 仁 義
+              </div>
+            </div>
+          </div>
+          
+          <div className="relative z-10">
+            {/* Badge */}
+            <div className="text-center mb-4">
+              <span className="inline-block px-4 py-1.5 bg-amber-400 text-slate-900 rounded-full text-xs font-bold shadow-lg">
+                🥋 La 1ère app européenne de gamification à la pratique de l'Aikido
+              </span>
+            </div>
+            
+            {/* Titre principal */}
+            <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-white text-center mb-4">
+              Aikido@Game
+            </h1>
+            
+            {/* Sous-titre */}
+            <p className="text-lg md:text-xl text-white/90 text-center max-w-2xl mx-auto mb-6">
+              <strong>Transformez votre pratique en aventure.</strong>
+              <span className="block text-white/70 mt-1">
+                Progressez, relevez des défis, atteignez vos objectifs.
+              </span>
+            </p>
+            
+            {/* STATISTIQUES DYNAMIQUES - 206+ techniques ! */}
+            <div className="flex flex-wrap justify-center gap-4 md:gap-8 mb-6">
+              <div className="text-center bg-white/10 backdrop-blur-sm rounded-xl px-5 py-3 border border-white/20">
+                <p className="text-3xl md:text-4xl font-black text-amber-300">{stats.total_techniques}+</p>
+                <p className="text-white/80 text-sm font-medium">Techniques</p>
+              </div>
+              <div className="text-center bg-white/10 backdrop-blur-sm rounded-xl px-5 py-3 border border-white/20">
+                <p className="text-3xl md:text-4xl font-black text-white">{stats.total_grades || 7}</p>
+                <p className="text-white/80 text-sm font-medium">{stats.grades_label || "Grades"}</p>
+              </div>
+              <div className="text-center bg-white/10 backdrop-blur-sm rounded-xl px-5 py-3 border border-white/20">
+                <p className="text-3xl md:text-4xl font-black text-cyan-300">{stats.total_challenges || 84}</p>
+                <p className="text-white/80 text-sm font-medium">Défis</p>
+              </div>
+            </div>
+            
+            {/* Bouton Budo */}
+            <div className="text-center mb-6">
+              <button
+                onClick={() => setShowBudoDialog(true)}
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full text-white/90 hover:text-white text-sm border border-white/20 hover:border-white/40 transition-all"
+              >
+                <span>☯️</span>
+                <span>L'Aïkido n'est pas seulement un sport, c'est un <strong>Budo</strong> !</span>
+                <span>→</span>
+              </button>
+            </div>
+            
+            {/* Trust badges */}
+            <div className="flex flex-wrap justify-center gap-3">
+              <span className="px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full text-white/80 text-xs border border-white/20">
+                ✓ 100% Gratuit
+              </span>
+              <span className="px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full text-white/80 text-xs border border-white/20">
+                ✓ Sans publicité
+              </span>
+              <span className="px-3 py-1 bg-white/10 backdrop-blur-sm rounded-full text-white/80 text-xs border border-white/20">
+                🔒 Conforme RGPD
+              </span>
+            </div>
           </div>
         </div>
       </div>
