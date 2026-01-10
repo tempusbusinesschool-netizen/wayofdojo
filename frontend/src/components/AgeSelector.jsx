@@ -124,11 +124,6 @@ const AgeSelector = ({ onSelect }) => {
                   </p>
                 </div>
               </div>
-              
-              {/* Badge */}
-              <span className="px-4 py-1.5 bg-amber-400/10 border border-amber-400/30 rounded-full text-amber-400 text-xs font-medium">
-                🥋 La 1ère app européenne de gamification à la pratique de l'Aikido
-              </span>
             </div>
             
             {/* Statistiques en ligne */}
