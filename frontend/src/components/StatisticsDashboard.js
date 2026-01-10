@@ -820,8 +820,10 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                           </button>
                         </div>
 
-                        {/* Proposition de valeur */}
-                        <div className="text-center mb-4 px-2">
+                        {/* Proposition de valeur avec animation de transition */}
+                        <div className={`text-center mb-4 px-2 transition-all duration-500 ease-out ${
+                          isTransitioning ? 'opacity-0 transform translate-y-2' : 'opacity-100 transform translate-y-0'
+                        }`}>
                           <p className="text-white text-sm font-semibold mb-1">
                             {visitorMode === 'enfant' 
                               ? 'Apprends l\'Aikido en t\'amusant !' 
@@ -834,15 +836,25 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                           </p>
                         </div>
 
-                        {/* CTA Principal */}
+                        {/* CTA Principal avec animation */}
                         <Button
                           onClick={() => {
                             const event = new CustomEvent('openAuthDialog');
                             window.dispatchEvent(event);
                           }}
-                          className="w-full bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-300 hover:to-orange-400 text-slate-900 font-bold py-3 rounded-xl text-sm shadow-lg shadow-amber-500/30 mb-2"
+                          disabled={isTransitioning}
+                          className={`w-full font-bold py-3 rounded-xl text-sm shadow-lg mb-2 transition-all duration-500 ease-out transform ${
+                            isTransitioning 
+                              ? 'opacity-0 scale-95' 
+                              : 'opacity-100 scale-100'
+                          } ${
+                            visitorMode === 'enfant'
+                              ? 'bg-gradient-to-r from-orange-400 to-pink-500 hover:from-orange-300 hover:to-pink-400 text-white shadow-orange-500/30'
+                              : 'bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-300 hover:to-orange-400 text-slate-900 shadow-amber-500/30'
+                          }`}
                         >
                           {visitorMode === 'enfant' ? '🚀 Commencer l\'aventure' : '📝 Créer mon compte gratuit'}
+                        </Button>
                         </Button>
 
                         {/* Badge de confiance */}
