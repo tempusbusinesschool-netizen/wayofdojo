@@ -2193,6 +2193,36 @@ async def get_statistics():
         "techniques_by_level": techniques_by_level
     }
 
+@api_router.get("/public-stats")
+async def get_public_stats():
+    """Get public statistics for landing page - total techniques, grades count"""
+    kyu_levels = await db.kyu_levels.find({}, {"_id": 0}).to_list(100)
+    
+    total_techniques = 0
+    total_grades = len(kyu_levels)
+    
+    # Count Kyu and Dan separately
+    kyu_count = 0
+    dan_count = 0
+    
+    for kyu in kyu_levels:
+        kyu_total = len(kyu.get('techniques', []))
+        total_techniques += kyu_total
+        
+        name = kyu.get('name', '').lower()
+        if 'dan' in name or 'shodan' in name:
+            dan_count += 1
+        else:
+            kyu_count += 1
+    
+    return {
+        "total_techniques": total_techniques,
+        "total_grades": total_grades,
+        "kyu_count": kyu_count,
+        "dan_count": dan_count,
+        "grades_label": f"{kyu_count} Kyu + {dan_count} Dan" if dan_count > 0 else f"{kyu_count} Kyu"
+    }
+
 
 # ═══════════════════════════════════════════════════════════════════════════════════
 # ADHÉRENTS API ROUTES
