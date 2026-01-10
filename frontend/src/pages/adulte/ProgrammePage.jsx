@@ -223,8 +223,8 @@ const ProgrammePage = ({ onBack, isAuthenticated, onOpenAuth }) => {
           </div>
 
           <p className="text-lg text-slate-300 max-w-2xl">
-            Le programme technique d'Aikido est structuré en grades (kyu), du 6ème kyu (débutant) 
-            jusqu'au 1er kyu, avant le passage au grade Dan (ceinture noire).
+            Le programme technique d'Aikido est structuré en grades Kyu (6ème au 1er), 
+            puis en grades Dan (ceintures noires), du Shodan au Yondan et au-delà.
           </p>
         </div>
       </div>
