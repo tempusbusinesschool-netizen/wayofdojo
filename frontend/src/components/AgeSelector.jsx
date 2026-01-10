@@ -24,6 +24,7 @@ const AgeSelector = ({ onSelect }) => {
     total_grades: 7,
     total_challenges: 84
   });
+  const [showBudoDialog, setShowBudoDialog] = useState(false);
 
   useEffect(() => {
     // Récupérer les statistiques publiques depuis l'API
