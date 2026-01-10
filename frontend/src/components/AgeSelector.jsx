@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { AIKIDO_CHARACTERS } from '@/constants/aikidoCharacters';
+import axios from 'axios';
+
+const API = process.env.REACT_APP_BACKEND_URL || '';
 
 // Images des personnages 3D cartoon style Pixar en tenue d'Aikido
 const JEUNE_NINJA_IMG = AIKIDO_CHARACTERS.JEUNE_NINJA;
@@ -14,6 +17,25 @@ const ENFANT_SALUT_IMG = AIKIDO_CHARACTERS.ENFANT_SALUT;
  * 100% RGPD-compatible : aucune donnée envoyée au serveur
  */
 const AgeSelector = ({ onSelect }) => {
+  const [stats, setStats] = useState({ 
+    total_techniques: 200, 
+    grades_label: "6 Kyu + 1 Dan",
+    total_grades: 7
+  });
+
+  useEffect(() => {
+    // Récupérer les statistiques publiques depuis l'API
+    const fetchStats = async () => {
+      try {
+        const response = await axios.get(`${API}/api/public-stats`);
+        setStats(response.data);
+      } catch (error) {
+        console.log("Using default stats");
+      }
+    };
+    fetchStats();
+  }, []);
+
   const handleSelect = (mode) => {
     localStorage.setItem('ninja-aikido-mode', mode);
     if (onSelect) {
