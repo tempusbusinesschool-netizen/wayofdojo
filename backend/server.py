@@ -2195,7 +2195,7 @@ async def get_statistics():
 
 @api_router.get("/public-stats")
 async def get_public_stats():
-    """Get public statistics for landing page - total techniques, grades count"""
+    """Get public statistics for landing page - total techniques, grades count, challenges"""
     kyu_levels = await db.kyu_levels.find({}, {"_id": 0}).to_list(100)
     
     total_techniques = 0
@@ -2215,12 +2215,16 @@ async def get_public_stats():
         else:
             kyu_count += 1
     
+    # Number of challenges (7 virtues x 5 daily + 3 weekly each = ~56 + badges)
+    total_challenges = 84  # Based on virtuesGamification.js count
+    
     return {
         "total_techniques": total_techniques,
         "total_grades": total_grades,
         "kyu_count": kyu_count,
         "dan_count": dan_count,
-        "grades_label": f"{kyu_count} Kyu + {dan_count} Dan" if dan_count > 0 else f"{kyu_count} Kyu"
+        "grades_label": f"{kyu_count} Kyu + {dan_count} Dan" if dan_count > 0 else f"{kyu_count} Kyu",
+        "total_challenges": total_challenges
     }
 
 
