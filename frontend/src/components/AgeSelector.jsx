@@ -23,34 +23,8 @@ const AgeSelector = ({ onSelect }) => {
 
   return (
     <div className="px-4 py-6 sm:py-8">
-      {/* VARIANTE B - Hero Banner avec personnages et statistiques */}
+      {/* VARIANTE C - Hero Banner avec CTA intégrés et témoignage */}
       <div className="relative overflow-hidden bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-500 rounded-3xl p-6 sm:p-8 md:p-12 mb-6 sm:mb-8 shadow-2xl border-2 border-orange-400/60">
-        
-        {/* Personnage Femme à gauche */}
-        <div className="absolute left-0 bottom-0 hidden lg:block z-20 pointer-events-none overflow-hidden rounded-bl-3xl">
-          <img 
-            src={FEMME_IMG} 
-            alt="Sensei Femme" 
-            className="h-52 xl:h-64 object-cover object-top"
-            style={{
-              maskImage: 'linear-gradient(to right, black 50%, transparent 100%)',
-              WebkitMaskImage: 'linear-gradient(to right, black 50%, transparent 100%)'
-            }}
-          />
-        </div>
-        
-        {/* Personnage Homme à droite */}
-        <div className="absolute right-0 bottom-0 hidden lg:block z-20 pointer-events-none overflow-hidden rounded-br-3xl">
-          <img 
-            src={HOMME_IMG} 
-            alt="Sensei Homme" 
-            className="h-52 xl:h-64 object-cover object-top"
-            style={{
-              maskImage: 'linear-gradient(to left, black 50%, transparent 100%)',
-              WebkitMaskImage: 'linear-gradient(to left, black 50%, transparent 100%)'
-            }}
-          />
-        </div>
         
         {/* Idéogrammes japonais en arrière-plan transparent */}
         <div className="absolute inset-0 overflow-hidden opacity-[0.06] pointer-events-none select-none">
@@ -72,41 +46,75 @@ const AgeSelector = ({ onSelect }) => {
           </div>
         </div>
         
-        <div className="relative text-center z-10">
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 sm:mb-4">
-            Aikido@Game
-          </h1>
-          <p className="text-lg sm:text-xl text-white/90 max-w-2xl mx-auto mb-6">
-            <strong>Votre parcours Aikido interactif et ludique</strong>
-          </p>
-          
-          {/* Statistiques impressionnantes */}
-          <div className="flex flex-wrap justify-center gap-6 sm:gap-10 mb-6">
-            <div className="text-center">
-              <p className="text-3xl sm:text-4xl font-black text-white">50+</p>
-              <p className="text-white/70 text-sm">Techniques</p>
+        <div className="relative z-10">
+          {/* Layout en 2 colonnes sur desktop */}
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+            
+            {/* Colonne gauche - Texte */}
+            <div className="text-center lg:text-left lg:max-w-xl">
+              <div className="inline-block mb-3">
+                <span className="px-3 py-1 bg-amber-400 text-slate-900 rounded-full text-xs font-bold">
+                  NOUVEAU
+                </span>
+              </div>
+              
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4">
+                Aikido@Game
+              </h1>
+              
+              <p className="text-lg sm:text-xl text-white/90 mb-6">
+                <strong>La gamification au service de votre progression.</strong>
+                <span className="block text-white/70 mt-2">
+                  Suivez vos techniques, relevez des défis quotidiens, gagnez des récompenses.
+                </span>
+              </p>
+              
+              {/* CTA Buttons */}
+              <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start mb-6">
+                <button 
+                  onClick={() => handleSelect('enfant')}
+                  className="px-6 py-3 bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold rounded-xl shadow-lg shadow-amber-500/30 transition-all hover:scale-105"
+                >
+                  🥷 Mode Jeune Ninja
+                </button>
+                <button 
+                  onClick={() => handleSelect('adulte')}
+                  className="px-6 py-3 bg-white/20 hover:bg-white/30 text-white font-bold rounded-xl border-2 border-white/40 backdrop-blur-sm transition-all hover:scale-105"
+                >
+                  🎯 Mode Confirmé
+                </button>
+              </div>
+              
+              {/* Trust badges */}
+              <p className="text-white/60 text-xs">
+                ✓ 100% Gratuit • ✓ Sans publicité • ✓ Conforme RGPD
+              </p>
             </div>
-            <div className="text-center">
-              <p className="text-3xl sm:text-4xl font-black text-amber-300">6</p>
-              <p className="text-white/70 text-sm">Ceintures</p>
+            
+            {/* Colonne droite - Témoignage / Social proof */}
+            <div className="hidden lg:block">
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20 max-w-sm">
+                <div className="flex items-start gap-4">
+                  <img 
+                    src={ENFANT_SALUT_IMG} 
+                    alt="Témoignage"
+                    className="w-16 h-16 rounded-full object-cover border-2 border-amber-400"
+                  />
+                  <div>
+                    <p className="text-white/90 text-sm italic mb-2">
+                      "Mon fils adore ! Il progresse tout en s'amusant et me montre fièrement ses badges chaque soir."
+                    </p>
+                    <p className="text-amber-400 text-xs font-semibold">
+                      — Parent d'un Jeune Ninja
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1 mt-3 justify-end">
+                  <span className="text-amber-400">★★★★★</span>
+                  <span className="text-white/50 text-xs ml-2">5/5</span>
+                </div>
+              </div>
             </div>
-            <div className="text-center">
-              <p className="text-3xl sm:text-4xl font-black text-white">∞</p>
-              <p className="text-white/70 text-sm">Défis</p>
-            </div>
-          </div>
-          
-          {/* Badges de confiance */}
-          <div className="flex flex-wrap justify-center gap-3">
-            <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-white text-xs border border-white/30">
-              ✓ 100% Gratuit
-            </span>
-            <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-white text-xs border border-white/30">
-              ✓ Sans publicité
-            </span>
-            <span className="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-white text-xs border border-white/30">
-              🔒 Conforme RGPD
-            </span>
           </div>
         </div>
       </div>
