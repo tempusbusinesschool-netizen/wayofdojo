@@ -683,53 +683,9 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                       {/* Version MOBILE - Landing page avec les 2 gros blocs */}
                       <div className="block sm:hidden px-2">
                         
-                        {/* Deux gros blocs de sélection Jeune/Confirmé - MEMES VISUELS que page principale */}
+                        {/* Deux gros blocs de sélection - Ninja Confirmé en haut, Jeune Ninja en bas */}
                         <div className="grid grid-cols-2 gap-3 mb-4">
-                          {/* Bloc Jeune Ninja - avec image */}
-                          <button
-                            onClick={() => {
-                              localStorage.setItem('ninja-aikido-mode', 'enfant');
-                              window.location.reload();
-                            }}
-                            className={`group relative overflow-hidden rounded-2xl transition-all duration-300 ${
-                              visitorMode === 'enfant' 
-                                ? 'ring-2 ring-orange-400 scale-[1.02]' 
-                                : 'opacity-70'
-                            }`}
-                          >
-                            {/* Image de fond */}
-                            <div className="relative">
-                              <img 
-                                src={AIKIDO_CHARACTERS.JEUNE_NINJA} 
-                                alt="Jeune Ninja"
-                                className="w-full h-32 object-cover object-top"
-                              />
-                              {/* Overlay gradient */}
-                              <div className="absolute inset-0 bg-gradient-to-t from-orange-900/95 via-orange-800/50 to-transparent" />
-                              
-                              {/* Étoiles décoratives */}
-                              <div className="absolute top-2 right-2 text-sm">✨</div>
-                              <div className="absolute top-2 left-2 text-sm">⭐</div>
-                              
-                              {/* Indicateur sélectionné */}
-                              {visitorMode === 'enfant' && (
-                                <div className="absolute top-2 right-2 w-3 h-3 bg-white rounded-full shadow-lg"></div>
-                              )}
-                            </div>
-                            
-                            {/* Contenu texte */}
-                            <div className="absolute bottom-0 left-0 right-0 p-2 text-center">
-                              <p className="text-white font-bold text-sm">Jeune Ninja</p>
-                              <p className="text-white/70 text-[10px]">Moins de 14 ans</p>
-                              <div className="flex justify-center gap-1 text-xs mt-1">
-                                <span>🎮</span>
-                                <span>🏆</span>
-                                <span>🐉</span>
-                              </div>
-                            </div>
-                          </button>
-
-                          {/* Bloc Ninja Confirmé - avec image */}
+                          {/* Bloc Ninja Confirmé - avec image (EN PREMIER) */}
                           <button
                             onClick={() => {
                               localStorage.setItem('ninja-aikido-mode', 'adulte');
@@ -769,6 +725,50 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                                 <span>📊</span>
                                 <span>🎯</span>
                                 <span>📜</span>
+                              </div>
+                            </div>
+                          </button>
+
+                          {/* Bloc Jeune Ninja - avec image (EN SECOND) */}
+                          <button
+                            onClick={() => {
+                              localStorage.setItem('ninja-aikido-mode', 'enfant');
+                              window.location.reload();
+                            }}
+                            className={`group relative overflow-hidden rounded-2xl transition-all duration-300 ${
+                              visitorMode === 'enfant' 
+                                ? 'ring-2 ring-orange-400 scale-[1.02]' 
+                                : 'opacity-70'
+                            }`}
+                          >
+                            {/* Image de fond */}
+                            <div className="relative">
+                              <img 
+                                src={AIKIDO_CHARACTERS.JEUNE_NINJA} 
+                                alt="Jeune Ninja"
+                                className="w-full h-32 object-cover object-top"
+                              />
+                              {/* Overlay gradient */}
+                              <div className="absolute inset-0 bg-gradient-to-t from-orange-900/95 via-orange-800/50 to-transparent" />
+                              
+                              {/* Étoiles décoratives */}
+                              <div className="absolute top-2 right-2 text-sm">✨</div>
+                              <div className="absolute top-2 left-2 text-sm">⭐</div>
+                              
+                              {/* Indicateur sélectionné */}
+                              {visitorMode === 'enfant' && (
+                                <div className="absolute top-2 right-2 w-3 h-3 bg-white rounded-full shadow-lg"></div>
+                              )}
+                            </div>
+                            
+                            {/* Contenu texte */}
+                            <div className="absolute bottom-0 left-0 right-0 p-2 text-center">
+                              <p className="text-white font-bold text-sm">Jeune Ninja</p>
+                              <p className="text-white/70 text-[10px]">Moins de 14 ans</p>
+                              <div className="flex justify-center gap-1 text-xs mt-1">
+                                <span>🎮</span>
+                                <span>🏆</span>
+                                <span>🐉</span>
                               </div>
                             </div>
                           </button>
