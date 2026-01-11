@@ -88,6 +88,12 @@ Build a web application for an Aikido club named "Aikido@Game" that serves as a 
 - [x] Stripe (test keys) for payments
 - [x] reportlab for PDF generation
 
+### Documentation - Jan 11, 2025
+- [x] Mode d'Emploi (User Manual) PDF generated
+  - 10 sections with screenshots and French explanations
+  - Covers: Introduction, Homepage, Visitor mode, Programme, Techniques, Registration, Dashboard, Progression blocks, Teacher space, Glossary
+  - Available at: `/Mode_Emploi_AikidoGame.pdf`
+
 ---
 
 ## 🚧 In Progress / Pending
