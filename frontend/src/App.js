@@ -41,7 +41,6 @@ import LoginTransition from "@/components/LoginTransition";
 import ParentLoginDialog from "@/components/ParentLoginDialog";
 import ParentDashboard from "@/components/ParentDashboard";
 import MaitreTanaka from "@/components/MaitreTanaka";
-import TanakaEventDemo from "@/components/TanakaEventDemo";
 
 // Import pages enfant
 import {
@@ -1927,11 +1926,6 @@ function AppContent() {
           first_name: user?.first_name,
           belt_level: userBelt
         } : null}
-      />
-      
-      {/* Demo panel for Tanaka events - visible in child mode */}
-      <TanakaEventDemo 
-        isVisible={localStorage.getItem('ninja-aikido-mode') === 'jeune'}
       />
       
       {/* Footer */}
