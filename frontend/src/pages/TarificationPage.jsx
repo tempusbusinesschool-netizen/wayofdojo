@@ -147,7 +147,7 @@ const TarificationPage = ({ onBack, onSelectPlan, user, token, onLoginRequired }
               </div>
               <div className="flex items-center justify-between">
                 <h2 className="text-2xl font-bold text-white">Utilisateur unique</h2>
-                <span className="text-amber-400 font-semibold text-sm">À partir de 4,50 €/mois</span>
+                <span className="text-amber-400 font-semibold text-sm">À partir de 5,99 €/mois</span>
               </div>
               <p className="text-slate-400">1 personne = 1 accès</p>
             </div>
@@ -177,7 +177,7 @@ const TarificationPage = ({ onBack, onSelectPlan, user, token, onLoginRequired }
                   <p className="text-slate-400 text-sm">Sans engagement</p>
                 </div>
                 <div className="text-right">
-                  <span className="text-3xl font-bold text-white">4,50</span>
+                  <span className="text-3xl font-bold text-white">5,99</span>
                   <span className="text-slate-400">€/mois</span>
                 </div>
               </button>
@@ -500,7 +500,7 @@ const TarificationPage = ({ onBack, onSelectPlan, user, token, onLoginRequired }
               </summary>
               <p className="text-slate-400 mt-4">
                 <strong>Utilisateur unique</strong> : Profitez de 30 jours gratuits. Après cette période, 
-                choisissez entre l'abonnement mensuel (4,50€/mois) ou annuel (39,90€/an).<br/><br/>
+                choisissez entre l'abonnement mensuel (5,99€/mois) ou annuel (39,90€/an).<br/><br/>
                 <strong>Club</strong> : Essayez gratuitement pendant 30 jours. L'engagement de 12 mois 
                 démarre après validation.
               </p>
