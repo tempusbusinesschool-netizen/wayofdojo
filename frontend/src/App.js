@@ -1983,9 +1983,15 @@ function AppContent() {
 // APP WRAPPER WITH AUTH PROVIDER
 // ═══════════════════════════════════════════════════════════════════════════════════
 function App() {
+  // Check if child mode is active for Tanaka events
+  const isChildMode = typeof window !== 'undefined' && 
+    localStorage.getItem('ninja-aikido-mode') === 'jeune';
+  
   return (
     <AuthProvider>
-      <AppContent />
+      <TanakaEventProvider enabled={isChildMode}>
+        <AppContent />
+      </TanakaEventProvider>
     </AuthProvider>
   );
 }
