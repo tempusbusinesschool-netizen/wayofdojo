@@ -122,6 +122,37 @@ function AppContent() {
   const isSuperAdmin = isAdmin;
   const isAdminDojo = isEspaceDojo;
   
+  // Enseignant state
+  const [showEnseignantLogin, setShowEnseignantLogin] = useState(false);
+  const [enseignantMode, setEnseignantMode] = useState(false);
+  const [enseignantInfo, setEnseignantInfo] = useState(null);
+  const [enseignantToken, setEnseignantToken] = useState(null);
+  
+  // Check if enseignant is already logged in
+  useEffect(() => {
+    const storedToken = localStorage.getItem('enseignant_token');
+    const storedInfo = localStorage.getItem('enseignant_info');
+    if (storedToken && storedInfo) {
+      setEnseignantToken(storedToken);
+      setEnseignantInfo(JSON.parse(storedInfo));
+      setEnseignantMode(true);
+    }
+  }, []);
+  
+  // Handle enseignant login success
+  const handleEnseignantLoginSuccess = (info, token) => {
+    setEnseignantInfo(info);
+    setEnseignantToken(token);
+    setEnseignantMode(true);
+  };
+  
+  // Handle enseignant logout
+  const handleEnseignantLogout = () => {
+    setEnseignantInfo(null);
+    setEnseignantToken(null);
+    setEnseignantMode(false);
+  };
+  
   // Handle onboarding completion
   const handleOnboardingComplete = () => {
     localStorage.setItem('aikido_onboarding_seen', 'true');
