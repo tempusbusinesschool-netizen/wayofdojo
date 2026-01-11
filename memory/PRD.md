@@ -12,13 +12,13 @@ Build a web application for an Aikido club named "Aikido@Game" that serves as a 
 - Implement a comprehensive point system
 
 ### 2. User Roles
-| Role | Description |
-|------|-------------|
-| Pratiquant | Regular user/student |
-| Parent | Parent account for children validation |
-| Enseignant | Teacher role |
-| Admin | Club-level admin (Espace Dojo) |
-| Super Admin | Platform-level admin |
+| Role | Description | Status |
+|------|-------------|--------|
+| Pratiquant | Regular user/student | ✅ Implemented |
+| Parent | Parent account for children validation | ✅ Implemented |
+| Enseignant | Teacher role - observations & messages | ✅ Implemented (Jan 11, 2025) |
+| Admin | Club-level admin (Espace Dojo) | ✅ Implemented |
+| Super Admin | Platform-level admin | ✅ Implemented |
 
 ### 3. Architecture
 - Multi-dojo architecture
@@ -39,6 +39,25 @@ Build a web application for an Aikido club named "Aikido@Game" that serves as a 
 
 ## ✅ Completed Features
 
+### Enseignant (Teacher) System - Jan 11, 2025
+- [x] Backend API endpoints for enseignant management
+- [x] Enseignant login with JWT authentication
+- [x] Observations system (free comments on students)
+- [x] Messaging system (enseignant → parents)
+- [x] EnseignantLoginDialog component
+- [x] EnseignantDashboard with:
+  - Stats cards (students, observations, messages)
+  - Student list with quick actions
+  - Observation creation with categories
+  - Message sending interface
+- [x] "Enseignant" button in header (orange)
+
+### Page Programme - Jan 11, 2025
+- [x] Uses GradeSection and TechniqueCard components
+- [x] Fetches data from /api/kyu-levels (206 techniques)
+- [x] Displays full technique details (description, key points, practice tips)
+- [x] TechniqueModal with mastery levels
+
 ### Landing Page & UI (Jan 2025)
 - [x] Age selector with two distinct visitor experiences
 - [x] Dark elegant PC design with golden accents
@@ -46,11 +65,14 @@ Build a web application for an Aikido club named "Aikido@Game" that serves as a 
 - [x] Dynamic stats display (206+ Techniques, 10 Grades, 84 Challenges)
 - [x] Budo vs Sport explanation modal
 - [x] Responsive header for mobile
-- [x] Character images with matching gradient backgrounds
-- [x] Mobile visitor blocks order: "Ninja Confirmé" on top, "Jeune Ninja" below
+- [x] Smooth transition animation between modes (Jeune Ninja ↔ Ninja Confirmé)
 
 ### Backend API
-- [x] `/api/public-stats` endpoint - Returns total techniques, grades (Kyu/Dan), challenges
+- [x] `/api/public-stats` - Public statistics
+- [x] `/api/enseignants` - Teacher management
+- [x] `/api/observations` - Student observations
+- [x] `/api/messages` - Parent-teacher messaging
+- [x] `/api/users` - User list for teachers
 - [x] Gamification logic
 - [x] Parent-child validation flow
 
@@ -60,6 +82,7 @@ Build a web application for an Aikido club named "Aikido@Game" that serves as a 
 
 ### Security
 - [x] Removed auto-fill test password buttons from admin login
+- [x] JWT authentication for enseignants
 
 ### Integration
 - [x] Stripe (test keys) for payments
@@ -71,7 +94,6 @@ Build a web application for an Aikido club named "Aikido@Game" that serves as a 
 
 ### P1 - High Priority
 - [ ] Finalize Stripe Integration (live keys + webhooks)
-- [ ] Implement "Enseignant" (teacher) user role
 
 ### P2 - Medium Priority
 - [ ] "Forgot Password" flow
@@ -96,27 +118,43 @@ Build a web application for an Aikido club named "Aikido@Game" that serves as a 
 ```
 /app/
 ├── backend/
-│   └── server.py              # FastAPI server with /api/public-stats
+│   └── server.py              # FastAPI server
+│       ├── /api/enseignants   # Teacher management
+│       ├── /api/observations  # Student observations
+│       ├── /api/messages      # Parent-teacher messaging
+│       ├── /api/users         # User list
+│       └── /api/public-stats  # Public statistics
 └── frontend/
     └── src/
         ├── components/
-        │   ├── AgeSelector.jsx           # Landing page (PC dark elegant + mobile)
-        │   ├── StatisticsDashboard.js    # Visitor page after mode selection
-        │   ├── UserDashboardBlocks.jsx   # Dashboard with clickable scroll links
-        │   ├── AdminLoginDialog.js       # Secured admin login
+        │   ├── EnseignantLoginDialog.jsx  # Teacher login modal
+        │   ├── EnseignantDashboard.jsx    # Teacher dashboard
+        │   ├── GradeSection.js            # Grade display with techniques
+        │   ├── TechniqueCard.js           # Technique card with mastery
+        │   ├── TechniqueModal.js          # Technique details modal
         │   └── ...
-        ├── constants/
-        │   ├── aikidoCharacters.js       # Character image URLs
-        │   └── virtuesGamification.js    # Gamification text
-        └── App.js                        # Main app with auth event listeners
+        ├── pages/
+        │   ├── adulte/
+        │   │   └── ProgrammePage.jsx      # Programme with GradeSection
+        │   └── enfant/
+        │       └── ApprendsPage.jsx       # Children's learning page
+        └── App.js                         # Main app with enseignant routing
 ```
 
 ---
 
 ## 🔐 Test Credentials
+
+### Users
 - **User**: `test@aikido.fr` / `test123`
+- **Élève Test**: `eleve.test@aikido.fr` / `eleve123`
+
+### Admin
 - **Super Admin**: Password `aikido2024`
 - **Espace Dojo**: `contact@aikido-lariviere.fr` / `aikido2024`
+
+### Enseignant
+- **Jean Sensei**: `jean.sensei@aikido.fr` / `sensei123`
 
 ---
 
@@ -127,4 +165,4 @@ Build a web application for an Aikido club named "Aikido@Game" that serves as a 
 
 ---
 
-*Last updated: January 10, 2025*
+*Last updated: January 11, 2025*
