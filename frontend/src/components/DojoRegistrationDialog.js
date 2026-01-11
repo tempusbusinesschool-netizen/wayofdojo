@@ -273,14 +273,15 @@ function DojoRegistrationDialog({ isOpen, onClose, onSuccess }) {
             ) : step === 1 ? (
               "Continuer →"
             ) : (
-              "🏯 Créer mon espace Dojo"
+              "🏯 Créer mon espace Club"
             )}
           </Button>
         </div>
         
         {/* Info */}
         <p className="text-center text-xs text-slate-500 mt-4">
-          En créant votre espace Dojo, vous bénéficiez de 10 jours d'essai gratuit.
+          En créant votre espace Club, vous bénéficiez de 10 jours d'essai gratuit.
+          Tarifs : 19,90€/mois (&lt;50 adhérents) • 29,90€/mois (50-150) • Devis (&gt;150)
         </p>
       </DialogContent>
     </Dialog>
