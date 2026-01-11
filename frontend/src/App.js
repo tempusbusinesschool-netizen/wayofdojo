@@ -655,6 +655,19 @@ function AppContent() {
                   <span className="hidden lg:inline">Guide</span>
                 </Button>
               )}
+              
+              {/* Bouton Tarifs */}
+              {!enseignantMode && !isAdminMode && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowTarification(true)}
+                  className="text-emerald-400 hover:text-emerald-300 hover:bg-emerald-900/20 h-8 px-2 sm:px-3"
+                >
+                  <CreditCard className="w-4 h-4 sm:mr-1" />
+                  <span className="hidden lg:inline">Tarifs</span>
+                </Button>
+              )}
 
               {isAdmin && (
                 <Button
