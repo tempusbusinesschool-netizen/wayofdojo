@@ -253,6 +253,9 @@ Build a web application for an Aikido club named "Aikido@Game" that serves as a 
 ### Enseignant
 - **Jean Sensei**: `jean.sensei@aikido.fr` / `sensei123`
 
+### Parent
+- **Marie Dupont**: `parent.test@aikido.fr` / `parent123`
+
 ---
 
 ## 📝 Notes
