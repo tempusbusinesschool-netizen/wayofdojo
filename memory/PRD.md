@@ -117,6 +117,24 @@ Build a web application for an Aikido club named "Aikido@Game" that serves as a 
 
 ---
 
+## 💰 Pricing Structure (Updated Jan 11, 2025)
+
+### Abonnement Ninja individuel
+- **Description**: Parcours personnel de révision et de motivation
+- **Trial**: 3 mois gratuits
+- **Price**: 4,50 € TTC / mois
+- **Commitment**: Sans engagement, résiliable à tout moment
+
+### Abonnement Dojo
+- **Description**: Outil de gestion et d'animation de club
+- **Trial**: 10 jours gratuits
+- **Price**: 19,90 € TTC / mois
+- **Commitment**: Engagement 12 mois avec reconduction tacite annuelle
+
+**Important**: Les abonnements ne permettent aucune évaluation technique, certification ou délivrance de grade.
+
+---
+
 ## 📋 Backlog / Future Tasks
 
 ### P3 - Low Priority
