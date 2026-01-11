@@ -318,4 +318,4 @@ L'application crée une **triple valeur** :
 ---
 
 *Document généré le 11 janvier 2025*
-*Aikido@Game - La première app de gamification Aïkido en Europe*
+*Aikido@Game*
