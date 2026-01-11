@@ -134,8 +134,8 @@ const ModeEmploiPage = ({ onBack }) => {
       color: 'from-blue-500 to-indigo-400',
       content: {
         title: "Créez votre compte",
-        subtitle: "Gratuit et en quelques secondes",
-        description: "L'inscription est simple, rapide et totalement gratuite. Vos données sont protégées conformément au RGPD.",
+        subtitle: "3 mois offerts pour démarrer",
+        description: "L'inscription est simple et rapide. Profitez de 3 mois gratuits pour découvrir toutes les fonctionnalités. Vos données sont protégées conformément au RGPD.",
         steps: [
           { num: 1, text: "Cliquez sur « S'inscrire »" },
           { num: 2, text: "Remplissez vos informations" },
@@ -143,10 +143,10 @@ const ModeEmploiPage = ({ onBack }) => {
           { num: 4, text: "Validez et commencez !" }
         ],
         benefits: [
-          "Suivi de progression personnalisé",
+          "3 mois d'essai offerts",
           "Accès aux 84 défis",
           "Système de points et badges",
-          "Sauvegarde automatique"
+          "Puis 4,50€/mois sans engagement"
         ]
       }
     },
