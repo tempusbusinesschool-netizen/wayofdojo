@@ -283,7 +283,10 @@ const TarificationPage = ({ onBack, onSelectPlan, user, token, onLoginRequired }
               <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center mb-4">
                 <Building2 className="w-7 h-7 text-white" />
               </div>
-              <h2 className="text-2xl font-bold text-white">Club</h2>
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold text-white">Club d'Aikido</h2>
+                <span className="text-cyan-400 font-semibold text-sm">À partir de 19,90 €/mois</span>
+              </div>
               <p className="text-slate-400">Licences illimitées + gestion adhérents</p>
             </div>
 
