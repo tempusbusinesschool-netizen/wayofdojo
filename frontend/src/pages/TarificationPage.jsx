@@ -316,7 +316,7 @@ const TarificationPage = ({ onBack, onSelectPlan, user, token, onLoginRequired }
                   >
                     <p className="text-xs text-slate-400">{value.label}</p>
                     {value.price ? (
-                      <p className="text-lg font-bold text-white">{value.price}€</p>
+                      <p className="text-lg font-bold text-white">{value.price.toFixed(2).replace('.', ',')}€</p>
                     ) : (
                       <p className="text-sm font-semibold text-cyan-400">{value.label2}</p>
                     )}
