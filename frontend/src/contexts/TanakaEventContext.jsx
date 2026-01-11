@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useCallback, useRef, useEffect } from 'react';
 import { toast } from 'sonner';
+import { setTanakaEventCallback } from '@/hooks/useGamification';
 
 /**
  * TanakaEventContext - Manages Maître Tanaka's reactions to gamification events
