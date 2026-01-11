@@ -289,9 +289,25 @@ Build a web application for an Aikido club named "Aikido@Game" that serves as a 
 - [x] Integrated in all login dialogs:
   - Adhérent login ✅
   - Parent login ✅
-  - Enseignant login (pending)
+  - Enseignant login ✅
 - [x] Token expires after 1 hour
 - [x] Secure token generation with `secrets.token_urlsafe(32)`
+
+### Stripe Webhooks (Jan 11, 2025)
+- [x] `POST /api/webhook/stripe` - Handle Stripe events
+- [x] Events handled:
+  - `checkout.session.completed` - Payment successful
+  - `customer.subscription.deleted` - Subscription cancelled
+  - `invoice.payment_failed` - Recurring payment failed
+- [x] Auto-activates subscription on successful payment
+- [x] Creates payment history records
+- [x] Logs all webhook events
+
+### Email Testing
+- [x] Resend API key configured
+- [x] Test email sent successfully to `tempusbusinesschool@gmail.com`
+- ⚠️ **Note**: Resend in test mode - can only send to owner's email
+- 📝 **To enable all recipients**: Verify domain at resend.com/domains
 
 ### Parent Notifications
 - [x] Auto-notify parents when:
