@@ -1697,6 +1697,13 @@ function AppContent() {
         onClose={() => setShowAdminLogin(false)}
         onSuccess={handleAdminLogin}
       />
+      
+      {/* Enseignant Login Dialog */}
+      <EnseignantLoginDialog
+        isOpen={showEnseignantLogin}
+        onClose={() => setShowEnseignantLogin(false)}
+        onLoginSuccess={handleEnseignantLoginSuccess}
+      />
 
       {/* Auth Dialog (Inscription) */}
       <AuthDialog
