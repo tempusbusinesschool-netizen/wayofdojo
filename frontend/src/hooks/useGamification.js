@@ -84,14 +84,44 @@ export const useGamification = (userId, isAuthenticated) => {
       });
 
       // Rafraîchir les stats après complétion
-      await fetchUserStats();
+      const newStats = await fetchUserStats();
+      
+      // 🥋 Trigger Tanaka event for challenge completion
+      if (tanakaEventCallback) {
+        const isFirst = !userStats?.completed_challenges || userStats.completed_challenges.length === 0;
+        const isHard = (challenge.xp_reward || challenge.points) >= 50;
+        tanakaEventCallback('challenge_complete', {
+          challengeName: challenge.name || challenge.title,
+          isFirst,
+          isHard
+        });
+        
+        // Check for level up
+        if (newStats && userStats && newStats.level > userStats.level) {
+          setTimeout(() => {
+            tanakaEventCallback('level_up', {
+              level: newStats.level,
+              levelName: newStats.level_name
+            });
+          }, 3000); // Delay to not overlap with challenge audio
+        }
+        
+        // Check for streak milestone
+        if (newStats && [3, 7, 14, 30].includes(newStats.streak_days)) {
+          setTimeout(() => {
+            tanakaEventCallback('streak_milestone', {
+              days: newStats.streak_days
+            });
+          }, 6000); // Additional delay
+        }
+      }
       
       return response.data;
     } catch (err) {
       console.error('Error completing challenge:', err);
       throw err;
     }
-  }, [isAuthenticated, fetchUserStats]);
+  }, [isAuthenticated, fetchUserStats, userStats]);
 
   // Marquer la présence
   const markAttendance = useCallback(async () => {
