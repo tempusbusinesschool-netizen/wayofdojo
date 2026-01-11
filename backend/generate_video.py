@@ -17,8 +17,8 @@ ELEVENLABS_API_KEY = os.environ.get('ELEVENLABS_API_KEY', 'sk_6aa387a6c62b497228
 IMAGES_PATH = Path("/app/backend/guide_images")
 OUTPUT_PATH = Path("/app/frontend/public/Aikido_Game_Video.mp4")
 
-# French voice - Thomas (natural French male voice)
-VOICE_ID = "GBv7mTt0atIp3Br8iCZE"
+# French voice - Charlotte (dynamic French female voice)
+VOICE_ID = "XB0fDUnXU5powFXDhCwa"
 
 # Video sections with narration text (kept short for 2-3 min video)
 VIDEO_SECTIONS = [
