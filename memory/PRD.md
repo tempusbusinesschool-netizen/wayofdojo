@@ -128,6 +128,12 @@ Build a web application for an Aikido club named "Aikido@Game" that serves as a 
   - "Administration" → Espace de gestion
 - [x] Replaced "Retour à l'app" with "Précédent" throughout the app
 - [x] Auto-redirect after login based on user profile (subscription status)
+- [x] Login transition animation with framer-motion:
+  - Animated logo with spring effect
+  - Expanding background circles
+  - Personalized welcome message
+  - Progress bar with gradient
+  - Smooth redirect to dashboard or tarification
 
 ---
 
