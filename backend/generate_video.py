@@ -76,7 +76,7 @@ VIDEO_SECTIONS = [
 ]
 
 # Closing section
-CLOSING_NARRATION = "Aikido at Game. 100% gratuit, sans publicité et conforme RGPD. " \
+CLOSING_NARRATION = "Aikido at Game. 3 mois offerts pour les nouveaux Ninjas. Sans publicité et conforme RGPD. " \
                     "Commencez votre parcours dès aujourd'hui ! Rendez-vous sur notre site."
 
 
