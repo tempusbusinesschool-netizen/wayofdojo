@@ -175,14 +175,14 @@ Build a web application for an Aikido club named "Aikido@Game" that serves as a 
 
 ### Licence Utilisateur unique
 - **Public cible**: Particuliers, pratiquants, éducateurs, étudiants, coachs
-- **Trial**: 3 mois gratuits
+- **Trial**: 30 jours gratuits
 - **Mensuel**: 4,50 € TTC / mois (sans engagement)
 - **Annuel**: 39,90 € TTC / an (soit 3,33€/mois)
 - **Option**: Tarif solidaire (étudiants, demandeurs d'emploi)
 
 ### Licence Club
 - **Public cible**: Clubs d'aïkido, fédérations, associations, collectivités
-- **Trial**: 10 jours gratuits
+- **Trial**: 30 jours gratuits
 - **Petits clubs** (<50 adhérents): 19,90 € TTC / mois
 - **Clubs moyens** (50-150): 29,90 € TTC / mois
 - **Grandes structures** (>150): Sur devis
