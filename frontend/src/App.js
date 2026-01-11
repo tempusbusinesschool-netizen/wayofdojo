@@ -693,6 +693,11 @@ function AppContent() {
         </div>
       )}
       
+      {/* Mode d'Emploi Page - Affichage plein écran */}
+      {showModeEmploi && (
+        <ModeEmploiPage onBack={() => setShowModeEmploi(false)} />
+      )}
+      
       {/* Enseignant Dashboard - Affichage complet quand connecté en mode enseignant */}
       {enseignantMode && enseignantInfo && enseignantToken && (
         <EnseignantDashboard
