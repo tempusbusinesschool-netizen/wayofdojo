@@ -4927,7 +4927,16 @@ async def register_dojo(data: DojoRegistrationRequest):
 
 @api_router.post("/webhook/stripe")
 async def stripe_webhook(request):
-    """Handle Stripe webhooks"""
+    """
+    Handle Stripe webhooks
+    Events handled:
+    - checkout.session.completed - Payment successful
+    - customer.subscription.created - New subscription
+    - customer.subscription.updated - Subscription changed
+    - customer.subscription.deleted - Subscription cancelled
+    - invoice.payment_succeeded - Recurring payment successful
+    - invoice.payment_failed - Recurring payment failed
+    """
     from fastapi import Request
     body = await request.body()
     signature = request.headers.get("Stripe-Signature")
@@ -4940,32 +4949,87 @@ async def stripe_webhook(request):
     
     try:
         webhook_response = await stripe_checkout.handle_webhook(body, signature)
+        event_type = webhook_response.event_type
+        session_id = webhook_response.session_id
+        
+        logger.info(f"Stripe webhook received: {event_type} for session {session_id}")
         
         if webhook_response.payment_status == "paid":
-            # Update transaction and subscription
-            session_id = webhook_response.session_id
-            
+            # Update transaction status
             await db.payment_transactions.update_one(
                 {"session_id": session_id},
                 {"$set": {
                     "payment_status": "paid",
+                    "event_type": event_type,
                     "updated_at": datetime.now(timezone.utc).isoformat()
                 }}
             )
             
+            # Find transaction and activate subscription
             transaction = await db.payment_transactions.find_one({"session_id": session_id})
             if transaction:
+                user_id = transaction.get("user_id")
+                plan_id = transaction.get("plan_id")
+                
+                # Update subscription to active
                 await db.subscriptions.update_one(
-                    {"user_id": transaction["user_id"]},
+                    {"user_id": user_id},
                     {"$set": {
                         "status": "active",
                         "card_added": True,
-                        "activated_at": datetime.now(timezone.utc).isoformat()
-                    }}
+                        "plan_id": plan_id,
+                        "activated_at": datetime.now(timezone.utc).isoformat(),
+                        "stripe_session_id": session_id
+                    }},
+                    upsert=True
                 )
+                
+                # Log successful payment
+                logger.info(f"✅ Payment successful for user {user_id}, plan {plan_id}")
+                
+                # Create payment history record
+                await db.payment_history.insert_one({
+                    "id": str(uuid.uuid4()),
+                    "user_id": user_id,
+                    "plan_id": plan_id,
+                    "amount": transaction.get("amount"),
+                    "currency": transaction.get("currency", "eur"),
+                    "status": "succeeded",
+                    "stripe_session_id": session_id,
+                    "event_type": event_type,
+                    "created_at": datetime.now(timezone.utc).isoformat()
+                })
         
-        logger.info(f"Stripe webhook processed: {webhook_response.event_type}")
-        return {"status": "success"}
+        elif event_type == "customer.subscription.deleted":
+            # Handle subscription cancellation
+            if session_id:
+                transaction = await db.payment_transactions.find_one({"session_id": session_id})
+                if transaction:
+                    await db.subscriptions.update_one(
+                        {"user_id": transaction["user_id"]},
+                        {"$set": {
+                            "status": "cancelled",
+                            "cancelled_at": datetime.now(timezone.utc).isoformat()
+                        }}
+                    )
+                    logger.info(f"Subscription cancelled for user {transaction['user_id']}")
+        
+        elif event_type == "invoice.payment_failed":
+            # Handle failed recurring payment
+            logger.warning(f"Payment failed for session {session_id}")
+            if session_id:
+                transaction = await db.payment_transactions.find_one({"session_id": session_id})
+                if transaction:
+                    await db.subscriptions.update_one(
+                        {"user_id": transaction["user_id"]},
+                        {"$set": {
+                            "status": "payment_failed",
+                            "payment_failed_at": datetime.now(timezone.utc).isoformat()
+                        }}
+                    )
+        
+        logger.info(f"Stripe webhook processed successfully: {event_type}")
+        return {"status": "success", "event": event_type}
         
     except Exception as e:
         logger.error(f"Stripe webhook error: {str(e)}")
