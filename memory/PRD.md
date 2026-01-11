@@ -121,6 +121,14 @@ Build a web application for an Aikido club named "Aikido@Game" that serves as a 
 - [x] Frontend subscription service created
 - [x] TarificationPage integrated with Stripe checkout
 
+### UX Improvements - Jan 11, 2025
+- [x] Header navigation restructured with dropdown menus:
+  - "Créer un compte" → Inscription Adhérent / Inscription Club
+  - "Se connecter" → Connexion Adhérent / Connexion Enseignant
+  - "Administration" → Espace de gestion
+- [x] Replaced "Retour à l'app" with "Précédent" throughout the app
+- [x] Auto-redirect after login based on user profile (subscription status)
+
 ---
 
 ## 🚧 In Progress / Pending
