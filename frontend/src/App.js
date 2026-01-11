@@ -676,7 +676,17 @@ function AppContent() {
         </div>
       )}
       
-      {/* Main Content */}
+      {/* Enseignant Dashboard - Affichage complet quand connecté en mode enseignant */}
+      {enseignantMode && enseignantInfo && enseignantToken && (
+        <EnseignantDashboard
+          enseignant={enseignantInfo}
+          token={enseignantToken}
+          onLogout={handleEnseignantLogout}
+        />
+      )}
+      
+      {/* Main Content - Masqué quand en mode enseignant */}
+      {!enseignantMode && (
       <main className="max-w-7xl mx-auto px-4 py-6">
         {/* Tabs for Techniques and Members */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
