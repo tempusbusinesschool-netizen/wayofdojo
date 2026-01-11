@@ -729,11 +729,15 @@ async def send_message(data: MessageCreate, enseignant: dict = Depends(require_e
     if not recipient:
         raise HTTPException(status_code=404, detail="Destinataire non trouvé")
     
+    # Récupérer les infos de l'enseignant
+    enseignant_info = await db.enseignants.find_one({"id": enseignant["id"]})
+    enseignant_name = f"{enseignant_info['first_name']} {enseignant_info['last_name']}" if enseignant_info else "Enseignant"
+    
     new_message = {
         "id": str(uuid.uuid4()),
         "sender_id": enseignant["id"],
         "sender_type": "enseignant",
-        "sender_name": f"Enseignant",  # On pourrait récupérer le nom complet
+        "sender_name": enseignant_name,
         "recipient_id": data.recipient_id,
         "recipient_type": "user",
         "subject": data.subject,
@@ -745,6 +749,30 @@ async def send_message(data: MessageCreate, enseignant: dict = Depends(require_e
     
     await db.messages.insert_one(new_message)
     logger.info(f"Message envoyé par enseignant {enseignant['id']} à {data.recipient_id}")
+    
+    # Send email notification to parent(s) if the recipient has linked parents
+    try:
+        # Find parents who have this user as their child
+        parents = await db.parents.find(
+            {"child_user_ids": data.recipient_id},
+            {"_id": 0, "email": 1, "first_name": 1, "last_name": 1}
+        ).to_list(10)
+        
+        child_name = f"{recipient.get('first_name', '')} {recipient.get('last_name', '')}".strip() or "votre enfant"
+        
+        for parent in parents:
+            parent_name = f"{parent.get('first_name', '')} {parent.get('last_name', '')}".strip() or "Parent"
+            await send_parent_message_notification(
+                parent_email=parent["email"],
+                parent_name=parent_name,
+                child_name=child_name,
+                teacher_name=enseignant_name,
+                message_subject=data.subject,
+                message_preview=data.content[:150]
+            )
+            logger.info(f"Notification message envoyée au parent {parent['email']}")
+    except Exception as e:
+        logger.error(f"Erreur lors de l'envoi de notification parent: {e}")
     
     return {"success": True, "message_id": new_message["id"]}
 
