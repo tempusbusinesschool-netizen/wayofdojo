@@ -4926,7 +4926,7 @@ async def register_dojo(data: DojoRegistrationRequest):
     }
 
 @api_router.post("/webhook/stripe")
-async def stripe_webhook(request):
+async def stripe_webhook(request: Request):
     """
     Handle Stripe webhooks
     Events handled:
@@ -4937,7 +4937,6 @@ async def stripe_webhook(request):
     - invoice.payment_succeeded - Recurring payment successful
     - invoice.payment_failed - Recurring payment failed
     """
-    from fastapi import Request
     body = await request.body()
     signature = request.headers.get("Stripe-Signature")
     
