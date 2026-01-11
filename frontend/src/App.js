@@ -75,7 +75,7 @@ const API = `${BACKEND_URL}/api`;
 // MAIN APP CONTENT (with auth)
 // ═══════════════════════════════════════════════════════════════════════════════════
 function AppContent() {
-  const { user, isAuthenticated, logout, loading: authLoading } = useAuth();
+  const { user, isAuthenticated, logout, loading: authLoading, token } = useAuth();
   
   const [kyuLevels, setKyuLevels] = useState([]);
   const [userProgression, setUserProgression] = useState({});
