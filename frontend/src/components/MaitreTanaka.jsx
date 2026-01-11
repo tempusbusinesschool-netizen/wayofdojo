@@ -291,21 +291,26 @@ const MaitreTanaka = ({ childContext = null, isVisible = true }) => {
                 >
                   {msg.role === 'master' && (
                     <div className="flex items-center gap-2 mb-1">
-                      <span className="text-lg">🥋</span>
+                      <img 
+                        src={TANAKA_IMAGE} 
+                        alt="" 
+                        className="w-6 h-6 rounded-full object-cover"
+                        onError={(e) => { e.target.outerHTML = '<span class="text-lg">🥋</span>'; }}
+                      />
                       <span className="text-xs text-amber-400 font-medium">Maître Tanaka</span>
                     </div>
                   )}
                   <p className="text-sm">{msg.text}</p>
                   
-                  {/* Replay button for master messages with audio */}
-                  {msg.role === 'master' && msg.audio && (
+                  {/* Replay button for master messages with audio or pre-recorded */}
+                  {msg.role === 'master' && (msg.audio || msg.preRecorded) && (
                     <button
-                      onClick={() => playAudio(msg.audio)}
+                      onClick={() => msg.preRecorded ? playPreRecordedPhrase(msg.preRecorded) : playAudio(msg.audio)}
                       className="mt-2 text-xs text-amber-400 hover:text-amber-300 flex items-center gap-1"
                       disabled={isPlaying}
                     >
                       <Volume2 className="w-3 h-3" />
-                      Réécouter
+                      {isPlaying ? 'En cours...' : 'Réécouter'}
                     </button>
                   )}
                 </div>
