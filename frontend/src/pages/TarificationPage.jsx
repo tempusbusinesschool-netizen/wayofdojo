@@ -245,11 +245,21 @@ const TarificationPage = ({ onBack, onSelectPlan, user, token, onLoginRequired }
 
             {/* CTA */}
             <Button
-              onClick={() => handleSelectPlan('utilisateur_unique')}
-              className="w-full py-6 text-lg font-semibold bg-gradient-to-r from-amber-500 to-orange-500 hover:opacity-90 transition-opacity"
+              onClick={() => handleSelectPlan(getPlanId('individual'))}
+              disabled={loading === getPlanId('individual')}
+              className="w-full py-6 text-lg font-semibold bg-gradient-to-r from-amber-500 to-orange-500 hover:opacity-90 transition-opacity disabled:opacity-50"
             >
-              Commencer 3 mois gratuits
-              <ChevronRight className="w-5 h-5 ml-2" />
+              {loading === getPlanId('individual') ? (
+                <>
+                  <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                  Traitement...
+                </>
+              ) : (
+                <>
+                  Commencer 3 mois gratuits
+                  <ChevronRight className="w-5 h-5 ml-2" />
+                </>
+              )}
             </Button>
           </div>
 
