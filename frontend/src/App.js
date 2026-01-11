@@ -581,66 +581,29 @@ function AppContent() {
                   </Button>
                 </div>
               ) : (
-                <div className="flex items-center gap-1 sm:gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setShowAuthDialog(true)}
-                    className="border-amber-600 text-amber-400 hover:bg-amber-900/30 h-8 px-2 sm:px-3 text-xs sm:text-sm"
-                  >
-                    <span className="hidden sm:inline">🥷 S&apos;inscrire</span>
-                    <span className="sm:hidden">🥷</span>
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setShowLoginDialog(true)}
-                    className="border-emerald-600 text-emerald-400 hover:bg-emerald-900/30 h-8 px-2 sm:px-3 text-xs sm:text-sm"
-                  >
-                    <LogIn className="w-4 h-4 sm:mr-1" />
-                    <span className="hidden sm:inline">Connexion</span>
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setShowDojoRegistration(true)}
-                    className="border-cyan-600 text-cyan-400 hover:bg-cyan-900/30 hidden md:flex h-8 px-3 text-sm"
-                  >
-                    🏯 Dojo
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setShowPaywall(true)}
-                    className="text-slate-400 hover:text-amber-400 h-8 px-2 hidden sm:flex"
-                  >
-                    <Sparkles className="w-4 h-4" />
-                  </Button>
-                </div>
+                <HeaderNavigation
+                  isAuthenticated={isAuthenticated}
+                  user={user}
+                  onLogout={logout}
+                  onRegisterUser={() => setShowAuthDialog(true)}
+                  onRegisterDojo={() => setShowDojoRegistration(true)}
+                  onLoginUser={() => setShowLoginDialog(true)}
+                  onLoginEnseignant={() => setShowEnseignantLogin(true)}
+                  onAdminAccess={() => setShowAdminLogin(true)}
+                  isAdmin={isAdmin}
+                  isAdminMode={isAdminMode}
+                />
               )}
               
-              {!isAdmin && (
+              {/* Bouton Espace de gestion - Mobile */}
+              {!isAdmin && !isAdminMode && (
                 <Button
                   variant="ghost"
                   size="sm"
                   onClick={() => setShowAdminLogin(true)}
-                  className="text-slate-400 hover:text-white hover:bg-slate-700 h-8 px-2 sm:px-3"
+                  className="text-slate-400 hover:text-white hover:bg-slate-700 h-8 px-2 md:hidden"
                 >
-                  <Lock className="w-4 h-4 sm:mr-1" />
-                  <span className="hidden md:inline">Espace de gestion</span>
-                </Button>
-              )}
-              
-              {/* Bouton Espace Enseignant */}
-              {!enseignantMode && !isAdminMode && (
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => setShowEnseignantLogin(true)}
-                  className="text-amber-400 hover:text-amber-300 hover:bg-amber-900/20 h-8 px-2 sm:px-3"
-                >
-                  <BookOpen className="w-4 h-4 sm:mr-1" />
-                  <span className="hidden md:inline">Enseignant</span>
+                  <Lock className="w-4 h-4" />
                 </Button>
               )}
               
