@@ -6,6 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Label } from '@/components/ui/label';
 import { GraduationCap, Mail, Lock, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
+import ForgotPasswordDialog from './ForgotPasswordDialog';
 
 /**
  * EnseignantLoginDialog - Modal de connexion pour les enseignants
@@ -14,6 +15,7 @@ const EnseignantLoginDialog = ({ isOpen, onClose, onLoginSuccess }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
