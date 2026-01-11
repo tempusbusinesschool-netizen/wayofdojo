@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { toast } from 'sonner';
+import ForgotPasswordDialog from './ForgotPasswordDialog';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
@@ -14,6 +15,7 @@ const ParentLoginDialog = ({ isOpen, onClose, onSuccess }) => {
   const [mode, setMode] = useState('login'); // login or register
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
