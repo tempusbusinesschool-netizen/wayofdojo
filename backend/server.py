@@ -3908,7 +3908,15 @@ class DojoRegistrationRequest(BaseModel):
 @api_router.get("/subscription-plans")
 async def get_subscription_plans():
     """Récupérer les plans d'abonnement disponibles"""
-    return SUBSCRIPTION_PLANS
+    # Return plans organized by category
+    individual_plans = {k: v for k, v in SUBSCRIPTION_PLANS.items() if k.startswith("utilisateur")}
+    club_plans = {k: v for k, v in SUBSCRIPTION_PLANS.items() if k.startswith("club")}
+    
+    return {
+        "individual": individual_plans,
+        "club": club_plans,
+        "all": SUBSCRIPTION_PLANS
+    }
 
 @api_router.post("/subscriptions/checkout")
 async def create_subscription_checkout(data: SubscriptionCheckoutRequest, user: dict = Depends(require_auth)):
@@ -3919,6 +3927,13 @@ async def create_subscription_checkout(data: SubscriptionCheckoutRequest, user: 
     
     plan = SUBSCRIPTION_PLANS[data.plan_id]
     
+    # Check if plan requires a quote (club_grand)
+    if plan.get("requires_quote", False):
+        raise HTTPException(
+            status_code=400, 
+            detail="Ce plan nécessite un devis personnalisé. Contactez-nous à contact@aikidoatgame.com"
+        )
+    
     # Check if user already has an active subscription
     existing_sub = await db.subscriptions.find_one({
         "user_id": user["id"],
@@ -3926,7 +3941,7 @@ async def create_subscription_checkout(data: SubscriptionCheckoutRequest, user: 
     })
     
     if existing_sub:
-        raise HTTPException(status_code=400, detail="Tu as déjà un abonnement actif")
+        raise HTTPException(status_code=400, detail="Vous avez déjà un abonnement actif")
     
     # For trial period without card, we create the subscription directly
     trial_end = datetime.now(timezone.utc) + timedelta(days=plan["trial_days"])
@@ -3937,6 +3952,8 @@ async def create_subscription_checkout(data: SubscriptionCheckoutRequest, user: 
         "user_email": user["email"],
         "plan_id": data.plan_id,
         "plan_name": plan["name"],
+        "display_name": plan.get("display_name", plan["name"]),
+        "billing_period": plan.get("billing_period", "monthly"),
         "status": "trialing",
         "trial_start": datetime.now(timezone.utc).isoformat(),
         "trial_end": trial_end.isoformat(),
@@ -3945,7 +3962,8 @@ async def create_subscription_checkout(data: SubscriptionCheckoutRequest, user: 
         "commitment_months": plan["commitment_months"],
         "created_at": datetime.now(timezone.utc).isoformat(),
         "stripe_session_id": None,
-        "card_added": False
+        "card_added": False,
+        "features": plan.get("features", [])
     }
     
     await db.subscriptions.insert_one(subscription)
@@ -3963,14 +3981,23 @@ async def create_subscription_checkout(data: SubscriptionCheckoutRequest, user: 
     
     logger.info(f"User {user['id']} started trial for plan {data.plan_id}")
     
+    # Determine trial message based on plan
+    if plan["trial_days"] >= 30:
+        trial_msg = f"{plan['trial_days'] // 30} mois"
+    else:
+        trial_msg = f"{plan['trial_days']} jours"
+    
     return {
         "trial_started": True,
-        "message": f"🎉 Ton essai gratuit de {plan['trial_days']} jours a commencé !",
+        "message": f"🎉 Votre essai gratuit de {trial_msg} a commencé !",
         "subscription": {
             "id": subscription["id"],
             "plan": plan["name"],
+            "display_name": plan.get("display_name", plan["name"]),
             "trial_end": trial_end.isoformat(),
-            "status": "trialing"
+            "status": "trialing",
+            "price": plan["price"],
+            "billing_period": plan.get("billing_period", "monthly")
         }
     }
 
