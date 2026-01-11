@@ -3769,27 +3769,122 @@ async def seed_data():
 
 from emergentintegrations.payments.stripe.checkout import StripeCheckout, CheckoutSessionResponse, CheckoutStatusResponse, CheckoutSessionRequest
 
-# Subscription Plans
+# Subscription Plans - Updated Jan 2025
 SUBSCRIPTION_PLANS = {
-    "ninja": {
-        "id": "ninja",
-        "name": "Ninja individuel",
+    # Licence Utilisateur unique
+    "utilisateur_mensuel": {
+        "id": "utilisateur_mensuel",
+        "name": "Utilisateur unique - Mensuel",
+        "display_name": "Utilisateur unique",
         "price": 4.50,
         "currency": "eur",
-        "trial_days": 14,  # 14 jours d'essai gratuit
-        "commitment_months": 0,  # No commitment
-        "description": "Ton parcours personnel, sans engagement",
-        "cancellation_info": "Annulation possible à tout moment pendant les 14 jours d'essai"
+        "billing_period": "monthly",
+        "trial_days": 90,  # 3 mois d'essai gratuit
+        "commitment_months": 0,  # Sans engagement
+        "description": "Parcours personnel de révision et de motivation",
+        "cancellation_info": "Sans engagement, résiliable à tout moment",
+        "target_audience": ["Particuliers", "Pratiquants", "Éducateurs", "Étudiants", "Coachs"],
+        "features": [
+            "Accès complet à l'application",
+            "Parcours pédagogiques",
+            "Scénarios Serious Game",
+            "Mises à jour incluses",
+            "Support utilisateur"
+        ]
     },
-    "dojo": {
-        "id": "dojo",
-        "name": "Offre Dojo",
-        "price": 65.00,
+    "utilisateur_annuel": {
+        "id": "utilisateur_annuel",
+        "name": "Utilisateur unique - Annuel",
+        "display_name": "Utilisateur unique",
+        "price": 39.90,
         "currency": "eur",
-        "trial_days": 14,  # 14 jours d'essai gratuit
-        "commitment_months": 12,  # 12 months commitment
-        "description": "Un outil de gestion et d'animation pour les clubs",
-        "cancellation_info": "Annulation possible à tout moment pendant les 14 jours d'essai"
+        "billing_period": "yearly",
+        "trial_days": 90,  # 3 mois d'essai gratuit
+        "commitment_months": 12,  # 1 an
+        "description": "Parcours personnel - Économisez 26%",
+        "cancellation_info": "Résiliable à l'échéance annuelle",
+        "savings_percent": 26,
+        "target_audience": ["Particuliers", "Pratiquants", "Éducateurs", "Étudiants", "Coachs"],
+        "features": [
+            "Accès complet à l'application",
+            "Parcours pédagogiques",
+            "Scénarios Serious Game",
+            "Mises à jour incluses",
+            "Support utilisateur"
+        ]
+    },
+    # Licence Club
+    "club_petit": {
+        "id": "club_petit",
+        "name": "Club - Petit (<50 adhérents)",
+        "display_name": "Club",
+        "price": 19.90,
+        "currency": "eur",
+        "billing_period": "monthly",
+        "trial_days": 10,  # 10 jours d'essai gratuit
+        "commitment_months": 12,  # Engagement 12 mois
+        "max_members": 50,
+        "description": "Licences illimitées + gestion adhérents",
+        "cancellation_info": "Engagement 12 mois avec reconduction tacite annuelle",
+        "target_audience": ["Clubs d'aïkido", "Associations sportives", "Petites structures"],
+        "features": [
+            "Accès illimité pour les adhérents",
+            "Espace administrateur",
+            "Gestion des adhérents",
+            "Suivi des parcours",
+            "Statistiques d'usage",
+            "Accompagnement prise en main"
+        ]
+    },
+    "club_moyen": {
+        "id": "club_moyen",
+        "name": "Club - Moyen (50-150 adhérents)",
+        "display_name": "Club",
+        "price": 29.90,
+        "currency": "eur",
+        "billing_period": "monthly",
+        "trial_days": 10,  # 10 jours d'essai gratuit
+        "commitment_months": 12,  # Engagement 12 mois
+        "min_members": 50,
+        "max_members": 150,
+        "description": "Licences illimitées + gestion adhérents",
+        "cancellation_info": "Engagement 12 mois avec reconduction tacite annuelle",
+        "target_audience": ["Clubs moyens", "Fédérations locales", "Associations"],
+        "features": [
+            "Accès illimité pour les adhérents",
+            "Espace administrateur",
+            "Gestion des adhérents",
+            "Suivi des parcours",
+            "Statistiques d'usage",
+            "Supports pédagogiques",
+            "Accompagnement prise en main"
+        ]
+    },
+    "club_grand": {
+        "id": "club_grand",
+        "name": "Club - Grand (>150 adhérents)",
+        "display_name": "Club",
+        "price": 0.0,  # Sur devis
+        "currency": "eur",
+        "billing_period": "yearly",
+        "trial_days": 10,
+        "commitment_months": 12,
+        "min_members": 150,
+        "max_members": None,  # Illimité
+        "description": "Sur devis - Contactez-nous",
+        "cancellation_info": "Engagement 12 mois avec reconduction tacite annuelle",
+        "requires_quote": True,
+        "target_audience": ["Grandes structures", "Fédérations", "Collectivités"],
+        "features": [
+            "Accès illimité pour les adhérents",
+            "Espace administrateur",
+            "Gestion des adhérents",
+            "Suivi des parcours",
+            "Statistiques d'usage",
+            "Supports pédagogiques",
+            "Accompagnement personnalisé",
+            "Formation sur site"
+        ]
     }
 }
 
