@@ -320,3 +320,31 @@ Stored in `/audio/tanaka/` - No API calls needed for common events:
 ### Service Files
 - `/app/backend/generate_tanaka_phrases.py` - Script to generate audio
 - `/app/frontend/src/services/tanakaVoiceService.js` - Frontend service
+
+### 3D Images Collection (Jan 11, 2025)
+8 images 3D de Maître Tanaka pour différentes situations :
+| Image | Fichier | Utilisation |
+|-------|---------|-------------|
+| Portrait | `portrait.png` | Header dialogue, bouton flottant |
+| Enseignement | `teaching.png` | Technique maîtrisée |
+| Félicitations | `congratulating.png` | Défi complété, ceinture, level up |
+| Méditation | `meditation.png` | Encouragements calmes |
+| Réflexion | `thinking.png` | En attente de réponse |
+| Révérence | `bowing.png` | Bienvenue, bon retour |
+| Pointant | `pointing.png` | XP gagné, conseils |
+| Pouce levé | `thumbs_up.png` | Séries, badges |
+
+### Gamification Event Integration (Jan 11, 2025)
+- [x] `TanakaEventContext.jsx` - React Context pour les événements
+- [x] `TanakaEventDemo.jsx` - Panneau de test (bouton 🧪)
+- [x] Notifications toast avec image 3D + audio automatique
+- [x] Événements supportés :
+  - `challenge_complete` - Défi accompli
+  - `challenge_first` - Premier défi
+  - `belt_earned` - Nouvelle ceinture (7 niveaux)
+  - `streak_milestone` - Série de pratique (3, 7, 14, 30 jours)
+  - `level_up` - Montée de niveau
+  - `xp_gained` - XP gagnés
+  - `technique_mastered` - Technique maîtrisée
+  - `badge_earned` - Badge obtenu
+  - `welcome_back` - Bon retour
