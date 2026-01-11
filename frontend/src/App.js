@@ -1684,6 +1684,7 @@ function AppContent() {
           )}
         </Tabs>
       </main>
+      )}
       
       {/* Technique Modal */}
       <TechniqueModal
