@@ -99,9 +99,13 @@ Build a web application for an Aikido club named "Aikido@Game" that serves as a 
   - Sidebar navigation with section indicators
 - [x] Promotional Video with ElevenLabs AI Voice (French)
   - 2-3 min animated slideshow with screenshots
-  - Professional French narration (Thomas voice)
+  - Professional French narration (Charlotte - female voice)
   - Available at: `/Aikido_Game_Video.mp4`
   - Perfect for social media sharing
+- [x] Pricing Page (TarificationPage.jsx)
+  - Interactive pricing grid with Ninja and Dojo plans
+  - Accessible via "Tarifs" button in header
+  - FAQ section included
 
 ---
 
