@@ -106,11 +106,26 @@ const EnseignantLoginDialog = ({ isOpen, onClose, onLoginSuccess }) => {
               'Se connecter'
             )}
           </Button>
+          
+          <button
+            type="button"
+            onClick={() => setShowForgotPassword(true)}
+            className="w-full text-sm text-amber-400 hover:text-amber-300 transition-colors"
+          >
+            Mot de passe oublié ?
+          </button>
         </form>
 
         <p className="text-xs text-slate-500 text-center mt-4">
           Accès réservé aux enseignants du dojo
         </p>
+        
+        {/* Forgot Password Dialog */}
+        <ForgotPasswordDialog 
+          isOpen={showForgotPassword}
+          onClose={() => setShowForgotPassword(false)}
+          userType="enseignant"
+        />
       </DialogContent>
     </Dialog>
   );
