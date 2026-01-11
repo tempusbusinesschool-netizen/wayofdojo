@@ -33,24 +33,28 @@ function CGVPage({ isOpen, onClose }) {
             
             <section>
               <h2 className="text-lg font-semibold text-white mb-3">Article 2 - Offres et tarifs</h2>
-              <p>L'Application propose deux formules d'abonnement :</p>
+              <p>L'Application propose deux formules de licence :</p>
               
               <div className="mt-4 p-4 bg-amber-900/20 border border-amber-500/30 rounded-lg">
-                <h3 className="font-semibold text-amber-400">🥷 Abonnement Ninja individuel</h3>
-                <p className="text-slate-400 text-sm mt-1">Parcours personnel de révision et de motivation</p>
+                <h3 className="font-semibold text-amber-400">🥷 Licence Utilisateur unique</h3>
+                <p className="text-slate-400 text-sm mt-1">1 personne = 1 accès (particuliers, pratiquants, éducateurs, étudiants, coachs)</p>
                 <ul className="mt-2 space-y-1">
                   <li>• Période d'essai : <strong>3 mois gratuits</strong></li>
-                  <li>• Tarif après essai : <strong>4,50 € TTC / mois</strong></li>
+                  <li>• Abonnement mensuel : <strong>4,50 € TTC / mois</strong></li>
+                  <li>• Abonnement annuel : <strong>39,90 € TTC / an</strong> (soit 3,33€/mois)</li>
+                  <li>• Option tarif solidaire : étudiants et demandeurs d'emploi sur demande</li>
                   <li>• <strong>Sans engagement</strong>, résiliable à tout moment</li>
                 </ul>
               </div>
               
               <div className="mt-4 p-4 bg-cyan-900/20 border border-cyan-500/30 rounded-lg">
-                <h3 className="font-semibold text-cyan-400">🏯 Abonnement Dojo</h3>
-                <p className="text-slate-400 text-sm mt-1">Outil de gestion et d'animation de club</p>
+                <h3 className="font-semibold text-cyan-400">🏯 Licence Club</h3>
+                <p className="text-slate-400 text-sm mt-1">Licences illimitées + gestion adhérents (clubs, fédérations, associations, collectivités)</p>
                 <ul className="mt-2 space-y-1">
                   <li>• Période d'essai : <strong>10 jours gratuits</strong></li>
-                  <li>• Tarif après essai : <strong>19,90 € TTC / mois</strong></li>
+                  <li>• Petits clubs (&lt;50 adhérents) : <strong>19,90 € TTC / mois</strong></li>
+                  <li>• Clubs moyens (50-150 adhérents) : <strong>29,90 € TTC / mois</strong></li>
+                  <li>• Grandes structures (&gt;150 adhérents) : <strong>sur devis</strong></li>
                   <li>• <strong>Engagement 12 mois</strong> avec reconduction tacite annuelle</li>
                 </ul>
               </div>
@@ -59,7 +63,7 @@ function CGVPage({ isOpen, onClose }) {
                 <h3 className="font-semibold text-red-400">⚠️ Important</h3>
                 <p className="mt-2">
                   Les abonnements <strong>ne permettent aucune évaluation technique, certification ou délivrance de grade</strong>.
-                  Aikido@Game est un outil complémentaire à la pratique en dojo.
+                  Aikido@Game ne remplace pas la pratique en dojo, mais l'enrichit par une approche contemporaine.
                 </p>
               </div>
               
@@ -73,10 +77,10 @@ function CGVPage({ isOpen, onClose }) {
             <section>
               <h2 className="text-lg font-semibold text-white mb-3">Article 3 - Période d'essai</h2>
               <p>
-                <strong>Abonnement Ninja :</strong> Période d'essai gratuite de <strong>3 mois</strong>.
+                <strong>Licence Utilisateur unique :</strong> Période d'essai gratuite de <strong>3 mois</strong>.
               </p>
               <p className="mt-2">
-                <strong>Abonnement Dojo :</strong> Période d'essai gratuite de <strong>10 jours</strong>.
+                <strong>Licence Club :</strong> Période d'essai gratuite de <strong>10 jours</strong>.
               </p>
               <p className="mt-2">
                 Pendant cette période, l'utilisateur bénéficie de l'ensemble des fonctionnalités de l'offre souscrite.
@@ -89,6 +93,22 @@ function CGVPage({ isOpen, onClose }) {
                 <strong>À l'issue de la période d'essai :</strong> L'abonnement est automatiquement converti en abonnement 
                 payant si l'utilisateur a enregistré un moyen de paiement. Dans le cas contraire, l'accès 
                 aux fonctionnalités premium est suspendu.
+              </p>
+            </section>
+            
+            <section>
+              <h2 className="text-lg font-semibold text-white mb-3">Article 4 - Cadre éthique et déontologique</h2>
+              <p>
+                Chaque utilisateur et club s'engage à respecter la <strong>charte éthique</strong> et les valeurs du Budo :
+              </p>
+              <ul className="mt-2 space-y-1">
+                <li>• Promouvoir la non-violence, le respect, l'inclusion et l'égalité</li>
+                <li>• Usage éducatif et non violent de l'application</li>
+                <li>• Interdiction de détourner l'outil à des fins coercitives, de domination ou d'exclusion</li>
+              </ul>
+              <p className="mt-4">
+                En cas de manquement grave à ces engagements, HUMAN KNOWLEDGE SAS se réserve le droit 
+                d'appliquer des sanctions : avertissement, suspension ou résiliation de licence.
               </p>
             </section>
             
