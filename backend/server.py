@@ -821,6 +821,29 @@ async def create_observation(data: ObservationCreate, enseignant: dict = Depends
     await db.observations.insert_one(new_observation)
     logger.info(f"Observation créée par enseignant {enseignant['id']} pour élève {data.student_id}")
     
+    # Send email notification to parent(s) if the student has linked parents
+    try:
+        # Find parents who have this student as their child
+        parents = await db.parents.find(
+            {"child_user_ids": data.student_id},
+            {"_id": 0, "email": 1, "first_name": 1, "last_name": 1}
+        ).to_list(10)
+        
+        for parent in parents:
+            parent_name = f"{parent.get('first_name', '')} {parent.get('last_name', '')}".strip() or "Parent"
+            await send_parent_observation_notification(
+                parent_email=parent["email"],
+                parent_name=parent_name,
+                child_name=new_observation["student_name"],
+                teacher_name=enseignant_name,
+                observation_type=data.category,
+                observation_content=data.content,
+                observation_date=datetime.now(timezone.utc).strftime("%d/%m/%Y à %H:%M")
+            )
+            logger.info(f"Notification envoyée au parent {parent['email']} pour observation")
+    except Exception as e:
+        logger.error(f"Erreur lors de l'envoi de notification parent: {e}")
+    
     return {"success": True, "observation": {k: v for k, v in new_observation.items() if k != "_id"}}
 
 
