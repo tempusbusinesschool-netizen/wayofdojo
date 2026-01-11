@@ -162,6 +162,29 @@ function AppContent() {
     setEnseignantMode(false);
   };
   
+  // Auto-redirect after login based on user profile
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      // Close any open dialogs
+      setShowLoginDialog(false);
+      setShowAuthDialog(false);
+      
+      // Check if user has a subscription
+      const hasSubscription = user.subscription_status === 'active' || user.subscription_status === 'trialing';
+      
+      // Navigate to appropriate page based on user profile
+      if (hasSubscription) {
+        // User has subscription - go to their dashboard
+        setActivePage(null); // Show main dashboard with progress
+        toast.success(`Bienvenue ${user.first_name} ! 👋`);
+      } else {
+        // Show paywall for non-subscribed users
+        toast.success(`Bienvenue ${user.first_name} ! Commencez votre essai gratuit.`);
+        setTimeout(() => setShowTarification(true), 500);
+      }
+    }
+  }, [isAuthenticated, user?.id]);
+  
   // Handle onboarding completion
   const handleOnboardingComplete = () => {
     localStorage.setItem('aikido_onboarding_seen', 'true');
