@@ -133,6 +133,9 @@ function AppContent() {
   // Mode d'emploi state
   const [showModeEmploi, setShowModeEmploi] = useState(false);
   
+  // Tarification state
+  const [showTarification, setShowTarification] = useState(false);
+  
   // Check if enseignant is already logged in
   useEffect(() => {
     const storedToken = localStorage.getItem('enseignant_token');
