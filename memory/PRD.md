@@ -271,3 +271,34 @@ Build a web application for an Aikido club named "Aikido@Game" that serves as a 
 - [x] Fixed deployment failure caused by missing `Header` import in `server.py`
   - Error: `NameError: name 'Header' is not defined` at line 902
   - Fix: Added `Header` to FastAPI imports
+
+## 🎙️ Maître Tanaka - Agent Vocal (Jan 11, 2025)
+### Description
+Interactive voice agent "Maître Tanaka" - a wise old Aikido master who guides children through voice conversations.
+
+### Technical Stack
+- **ElevenLabs STT** (Speech-to-Text): Transcribes child's voice input
+- **OpenAI GPT-4o-mini** (via Emergent LLM Key): Generates contextual responses
+- **ElevenLabs TTS** (Text-to-Speech): Converts responses to master's voice
+
+### Features
+- [x] Backend module: `/app/backend/voice_agent.py`
+- [x] API endpoints:
+  - `POST /api/voice-agent/stt` - Speech to text
+  - `POST /api/voice-agent/tts` - Text to speech  
+  - `POST /api/voice-agent/chat` - Text chat with audio response
+  - `POST /api/voice-agent/conversation` - Full voice conversation
+  - `GET /api/voice-agent/voices` - List available voices
+  - `GET /api/voice-agent/health` - Health check
+- [x] Frontend component: `/app/frontend/src/components/MaitreTanaka.jsx`
+- [x] Floating button visible on child pages (mode "jeune ninja")
+- [x] Voice recording and playback
+- [x] Conversation history with replay button
+- [x] Context-aware responses (child's name, belt level)
+
+### Personality
+Maître Tanaka speaks:
+- As a 75-year-old wise Japanese master
+- With encouragement and patience
+- Using metaphors from nature (water, mountain, bamboo)
+- In French, accessible to children (8-14 years)
