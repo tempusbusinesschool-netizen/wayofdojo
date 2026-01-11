@@ -94,6 +94,7 @@ Build a web application for an Aikido club named "Aikido@Game" that serves as a 
 
 ### P1 - High Priority
 - [ ] Finalize Stripe Integration (live keys + webhooks)
+- [ ] Build Parent role interface (read messages/observations)
 
 ### P2 - Medium Priority
 - [ ] "Forgot Password" flow
