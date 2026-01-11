@@ -373,6 +373,16 @@ export const TanakaEventProvider = ({ children, enabled = true }) => {
     audioFiles: TANAKA_AUDIO
   };
 
+  // Register callback for gamification hook
+  useEffect(() => {
+    if (enabled) {
+      setTanakaEventCallback(triggerEvent);
+    }
+    return () => {
+      setTanakaEventCallback(null);
+    };
+  }, [enabled, triggerEvent]);
+
   return (
     <TanakaEventContext.Provider value={value}>
       {children}
