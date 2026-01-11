@@ -24,7 +24,7 @@ const ModeEmploiPage = ({ onBack }) => {
           { icon: Star, text: "206+ techniques à maîtriser", color: "text-amber-400" },
           { icon: Award, text: "10 grades (6 Kyu + 4 Dan)", color: "text-cyan-400" },
           { icon: Target, text: "84 défis à relever", color: "text-emerald-400" },
-          { icon: Shield, text: "100% gratuit et conforme RGPD", color: "text-purple-400" }
+          { icon: Shield, text: "3 mois offerts • Sans pub • RGPD", color: "text-purple-400" }
         ],
         tip: "L'Aikido n'est pas seulement un sport, c'est un Budo - une voie martiale qui développe le corps et l'esprit."
       }
@@ -55,7 +55,7 @@ const ModeEmploiPage = ({ onBack }) => {
           }
         ],
         navigation: [
-          { name: "S'inscrire", desc: "Créer un compte gratuit" },
+          { name: "S'inscrire", desc: "Créer un compte (3 mois offerts)" },
           { name: "Connexion", desc: "Accéder à votre espace" },
           { name: "Dojo", desc: "Espace du club" },
           { name: "Enseignant", desc: "Accès professeur" }
@@ -83,7 +83,7 @@ const ModeEmploiPage = ({ onBack }) => {
           "Gagner des points et badges",
           "Sauvegarder vos favoris"
         ],
-        cta: "Pour débloquer toutes les fonctionnalités, créez un compte gratuit !"
+        cta: "Pour débloquer toutes les fonctionnalités, inscrivez-vous et profitez de 3 mois offerts !"
       }
     },
     {
