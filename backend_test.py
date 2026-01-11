@@ -10,7 +10,7 @@ import sys
 from datetime import datetime
 
 # Backend URL from frontend .env
-BACKEND_URL = "https://aikidotracker.preview.emergentagent.com/api"
+BACKEND_URL = "https://martial-journey-1.preview.emergentagent.com/api"
 
 # Test credentials
 ADMIN_PASSWORD = "aikido2024"
