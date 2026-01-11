@@ -257,7 +257,7 @@ function DojoRegistrationDialog({ isOpen, onClose, onSuccess }) {
               onClick={() => setStep(1)}
               className="text-slate-400 hover:text-white"
             >
-              ← Retour
+              ← Précédent
             </Button>
           )}
           <Button

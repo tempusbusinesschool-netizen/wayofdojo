@@ -70,7 +70,7 @@ const VertusPage = ({ onBack }) => {
           className="text-slate-400 hover:text-white hover:bg-slate-800"
         >
           <ArrowLeft className="w-5 h-5 mr-2" />
-          Retour
+          Précédent
         </Button>
       </div>
 
