@@ -32,7 +32,9 @@ import {
   CGUDialog,
   MentionsLegalesDialog,
   HakamaSection,
-  DojoMembersList
+  DojoMembersList,
+  EnseignantLoginDialog,
+  EnseignantDashboard
 } from "@/components";
 
 // Import pages enfant
