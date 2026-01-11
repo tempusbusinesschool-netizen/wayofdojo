@@ -9,27 +9,29 @@ import { Check, X, CreditCard, Gift, ArrowLeft } from "lucide-react";
 const API = process.env.REACT_APP_BACKEND_URL + "/api";
 
 const PLANS = {
-  ninja: {
-    id: "ninja",
-    name: "Ninja individuel",
+  utilisateur_unique: {
+    id: "utilisateur_unique",
+    name: "Utilisateur unique",
     emoji: "🥷",
     tagline: "Ton parcours personnel, sans engagement",
     price: "4,50 €",
     period: "/mois",
+    annualPrice: "39,90 €",
+    annualPeriod: "/an",
     trial: "3 mois gratuits",
     trialDays: 90,
     features: [
-      { text: "Accès complet aux techniques de révision", included: true },
-      { text: "Suivi personnel de progression", included: true },
-      { text: "Journal privé de pratique", included: true },
-      { text: "Défis communautaires non évaluatifs", included: true },
-      { text: "Parcours autour des valeurs", included: true },
-      { text: "Gamification douce (régularité, engagement)", included: true }
+      { text: "Accès complet à l'application", included: true },
+      { text: "Parcours pédagogiques", included: true },
+      { text: "Scénarios Serious Game", included: true },
+      { text: "Mises à jour incluses", included: true },
+      { text: "Support utilisateur", included: true },
+      { text: "Tarif solidaire disponible (étudiants)", included: true }
     ],
     conditions: [
       "3 mois d'essai gratuit",
       "Annulation possible pendant l'essai",
-      "Puis 4,50 € TTC / mois",
+      "Puis 4,50 € TTC / mois ou 39,90 € / an",
       "Sans engagement, résiliable à tout moment"
     ],
     cta: "Commencer mes 3 mois gratuits",
@@ -38,31 +40,32 @@ const PLANS = {
     borderColor: "border-amber-500/50",
     bgColor: "bg-amber-900/20"
   },
-  dojo: {
-    id: "dojo",
-    name: "Offre Dojo",
+  club: {
+    id: "club",
+    name: "Club",
     emoji: "🏯",
-    tagline: "Un outil de gestion et d'animation pour les clubs",
-    badge: "Réservé aux clubs et enseignants",
+    tagline: "Licences illimitées + gestion des adhérents",
+    badge: "Clubs, fédérations, associations",
     price: "19,90 €",
     period: "/mois",
+    priceNote: "< 50 adhérents",
     trial: "10 jours gratuits",
     trialDays: 10,
     features: [
-      { text: "Espace de gestion du dojo", included: true },
-      { text: "Gestion des adhérents (nombre illimité)", included: true },
-      { text: "Suivi de l'assiduité et de l'engagement", included: true },
-      { text: "Défis collectifs internes", included: true },
-      { text: "Validation symbolique « dojo-friendly »", included: true },
-      { text: "Statistiques globales du club", included: true },
+      { text: "Accès illimité pour les adhérents", included: true },
+      { text: "Espace administrateur", included: true },
+      { text: "Gestion des adhérents", included: true },
+      { text: "Suivi des parcours", included: true },
+      { text: "Statistiques d'usage", included: true },
+      { text: "Accompagnement à la prise en main", included: true },
       { text: "Aucune évaluation technique", included: false },
       { text: "Aucun grade, diplôme ou certification", included: false }
     ],
     conditions: [
       "10 jours d'essai gratuit",
-      "Annulation possible pendant l'essai",
-      "Puis 19,90 € TTC / mois",
-      "Engagement 12 mois avec reconduction tacite annuelle"
+      "Tarifs selon taille : 19,90€ (<50) / 29,90€ (50-150) / Devis (>150)",
+      "Engagement 12 mois",
+      "Reconduction tacite annuelle"
     ],
     cta: "Essayer 10 jours gratuits",
     footer: "Un outil pour structurer et animer, sans interférer avec l'enseignement.",
