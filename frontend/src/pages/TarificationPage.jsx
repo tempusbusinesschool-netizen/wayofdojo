@@ -30,7 +30,7 @@ const TarificationPage = ({ onBack, onSelectPlan, user, token, onLoginRequired }
   const clubPricing = {
     small: { label: '< 25 adhérents', price: 19.90, planId: 'club_petit' },
     medium: { label: '25 - 50 adhérents', price: 29.90, planId: 'club_moyen' },
-    large: { label: '> 50 adhérents', price: null, label2: 'Sur devis', planId: 'club_grand' }
+    large: { label: '> 50 adhérents', price: 49.90, planId: 'club_grand' }
   };
 
   const handleSelectPlan = async (planId, withCard = true) => {
