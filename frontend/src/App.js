@@ -129,6 +129,9 @@ function AppContent() {
   const [enseignantInfo, setEnseignantInfo] = useState(null);
   const [enseignantToken, setEnseignantToken] = useState(null);
   
+  // Mode d'emploi state
+  const [showModeEmploi, setShowModeEmploi] = useState(false);
+  
   // Check if enseignant is already logged in
   useEffect(() => {
     const storedToken = localStorage.getItem('enseignant_token');
