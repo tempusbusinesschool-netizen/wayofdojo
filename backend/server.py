@@ -1298,6 +1298,18 @@ async def get_me(user: dict = Depends(require_auth)):
         "created_at": user.get("created_at")
     }
 
+
+@api_router.get("/users")
+async def get_users(dojo_id: Optional[str] = None):
+    """Récupérer la liste des utilisateurs (pour les enseignants)"""
+    query = {}
+    if dojo_id:
+        query["dojo_id"] = dojo_id
+    
+    users = await db.users.find(query, {"_id": 0, "password_hash": 0}).to_list(500)
+    return {"users": users}
+
+
 @api_router.put("/auth/progression/{technique_id}")
 async def update_user_progression(technique_id: str, data: UserProgressionUpdate, user: dict = Depends(require_auth)):
     """Mettre à jour la progression d'un utilisateur pour une technique"""
