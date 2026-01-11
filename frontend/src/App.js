@@ -800,8 +800,8 @@ function AppContent() {
         />
       )}
       
-      {/* Main Content - Masqué quand en mode enseignant, mode d'emploi ou tarification */}
-      {!enseignantMode && !showModeEmploi && !showTarification && (
+      {/* Main Content - Masqué quand en mode enseignant, mode d'emploi, tarification ou parent */}
+      {!enseignantMode && !showModeEmploi && !showTarification && !parentMode && (
       <main className="max-w-7xl mx-auto px-4 py-6">
         {/* Tabs for Techniques and Members */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
