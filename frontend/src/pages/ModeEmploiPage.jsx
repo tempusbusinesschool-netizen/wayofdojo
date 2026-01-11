@@ -146,7 +146,7 @@ const ModeEmploiPage = ({ onBack }) => {
           "3 mois d'essai offerts",
           "Accès aux 84 défis",
           "Système de points et badges",
-          "Puis 4,50€/mois sans engagement"
+          "Mensuel 4,50€ ou Annuel 39,90€"
         ]
       }
     },
@@ -499,7 +499,7 @@ const ModeEmploiPage = ({ onBack }) => {
                   </div>
                 </div>
                 <div className="bg-gradient-to-r from-emerald-500/20 to-teal-500/20 rounded-xl p-5 border border-emerald-500/30">
-                  <h4 className="text-emerald-400 font-semibold mb-3">Avantages de l'abonnement Ninja</h4>
+                  <h4 className="text-emerald-400 font-semibold mb-3">Avantages de la licence</h4>
                   <div className="grid grid-cols-2 gap-2">
                     {section.content.benefits.map((benefit, i) => (
                       <div key={i} className="flex items-center gap-2 text-slate-300">
