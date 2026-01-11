@@ -365,6 +365,11 @@ Stored in `/audio/tanaka/` - No API calls needed for common events:
 - [x] `TanakaEventContext.jsx` - React Context pour les événements
 - [x] `TanakaEventDemo.jsx` - Panneau de test (bouton 🧪)
 - [x] Notifications toast avec image 3D + audio automatique
+- [x] **Connected to real gamification system** via `useGamification.js` hook
+- [x] Auto-triggers when:
+  - Challenge completed → Audio + notification
+  - Level up detected → Congratulation
+  - Streak milestone (3, 7, 14, 30 days) → Encouragement
 - [x] Événements supportés :
   - `challenge_complete` - Défi accompli
   - `challenge_first` - Premier défi
