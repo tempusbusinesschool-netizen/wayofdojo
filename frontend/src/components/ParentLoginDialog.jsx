@@ -242,6 +242,16 @@ const ParentLoginDialog = ({ isOpen, onClose, onSuccess }) => {
             )}
           </Button>
 
+          {mode === 'login' && (
+            <button
+              type="button"
+              onClick={() => setShowForgotPassword(true)}
+              className="w-full text-sm text-purple-400 hover:text-purple-300 transition-colors"
+            >
+              Mot de passe oublié ?
+            </button>
+          )}
+
           <div className="text-center pt-4 border-t border-slate-700">
             <p className="text-slate-400 text-sm">
               {mode === 'login' ? 'Pas encore de compte ?' : 'Déjà un compte ?'}
@@ -265,6 +275,13 @@ const ParentLoginDialog = ({ isOpen, onClose, onSuccess }) => {
             au vôtre. Vous pourrez ensuite suivre ses observations et messages.
           </p>
         </div>
+        
+        {/* Forgot Password Dialog */}
+        <ForgotPasswordDialog 
+          isOpen={showForgotPassword}
+          onClose={() => setShowForgotPassword(false)}
+          userType="parent"
+        />
       </DialogContent>
     </Dialog>
   );
