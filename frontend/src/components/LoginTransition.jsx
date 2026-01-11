@@ -95,7 +95,7 @@ const LoginTransition = ({ isVisible, userName, destination, onComplete }) => {
                   transition={{ duration: 0.4 }}
                 >
                   <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-                    Bienvenue{userName ? `, ${userName}` : ''} ! 
+                    {userName ? `${userName} est connecté...` : 'Connexion réussie !'} 
                     <motion.span
                       initial={{ opacity: 0, scale: 0 }}
                       animate={{ opacity: 1, scale: 1 }}
