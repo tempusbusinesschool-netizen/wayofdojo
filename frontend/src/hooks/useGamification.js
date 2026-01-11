@@ -4,6 +4,13 @@ import axios from 'axios';
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
+// Tanaka event callback (will be set from context)
+let tanakaEventCallback = null;
+
+export const setTanakaEventCallback = (callback) => {
+  tanakaEventCallback = callback;
+};
+
 /**
  * useGamification - Hook pour gérer les données de gamification
  * Gère les défis quotidiens, stats utilisateur, et complétion de défis
