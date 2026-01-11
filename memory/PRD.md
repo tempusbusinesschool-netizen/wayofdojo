@@ -124,7 +124,7 @@ Build a web application for an Aikido club named "Aikido@Game" that serves as a 
 ### UX Improvements - Jan 11, 2025
 - [x] Header navigation restructured with dropdown menus:
   - "Créer un compte" → Inscription Adhérent / Inscription Club
-  - "Se connecter" → Connexion Adhérent / Connexion Enseignant
+  - "Se connecter" → Connexion Adhérent / Connexion Enseignant / **Connexion Parent**
   - "Administration" → Espace de gestion
 - [x] Replaced "Retour à l'app" with "Précédent" throughout the app
 - [x] Auto-redirect after login based on user profile (subscription status)
@@ -141,7 +141,7 @@ Build a web application for an Aikido club named "Aikido@Game" that serves as a 
 
 ### P1 - High Priority
 - [x] Stripe Integration with new pricing plans (COMPLETED)
-- [ ] Build Parent role interface (read messages/observations)
+- [x] Build Parent role interface (read messages/observations) (COMPLETED - Jan 11, 2025)
 
 ### P2 - Medium Priority
 - [ ] "Forgot Password" flow
