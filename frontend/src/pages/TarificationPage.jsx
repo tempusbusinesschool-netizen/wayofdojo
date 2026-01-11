@@ -523,6 +523,101 @@ const TarificationPage = ({ onBack, onSelectPlan, user, token, onLoginRequired }
           <p className="mt-1">Un outil professionnel, éthique et au service du vivre ensemble</p>
         </div>
       </div>
+
+      {/* Quote Request Dialog */}
+      <Dialog open={showQuoteDialog} onOpenChange={setShowQuoteDialog}>
+        <DialogContent className="bg-slate-800 border-slate-700 text-white max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-bold text-cyan-400">
+              Demande de devis personnalisé
+            </DialogTitle>
+          </DialogHeader>
+          
+          <form onSubmit={handleQuoteSubmit} className="space-y-4 mt-4">
+            <div>
+              <label className="text-sm text-slate-400">Nom du club / structure *</label>
+              <Input
+                required
+                value={quoteForm.club_name}
+                onChange={(e) => setQuoteForm({...quoteForm, club_name: e.target.value})}
+                className="bg-slate-700 border-slate-600 text-white"
+                placeholder="Ex: Aikido Paris Centre"
+              />
+            </div>
+            
+            <div>
+              <label className="text-sm text-slate-400">Nom du contact *</label>
+              <Input
+                required
+                value={quoteForm.contact_name}
+                onChange={(e) => setQuoteForm({...quoteForm, contact_name: e.target.value})}
+                className="bg-slate-700 border-slate-600 text-white"
+                placeholder="Ex: Jean Dupont"
+              />
+            </div>
+            
+            <div>
+              <label className="text-sm text-slate-400">Email *</label>
+              <Input
+                required
+                type="email"
+                value={quoteForm.email}
+                onChange={(e) => setQuoteForm({...quoteForm, email: e.target.value})}
+                className="bg-slate-700 border-slate-600 text-white"
+                placeholder="contact@monclub.fr"
+              />
+            </div>
+            
+            <div>
+              <label className="text-sm text-slate-400">Téléphone</label>
+              <Input
+                value={quoteForm.phone}
+                onChange={(e) => setQuoteForm({...quoteForm, phone: e.target.value})}
+                className="bg-slate-700 border-slate-600 text-white"
+                placeholder="06 12 34 56 78"
+              />
+            </div>
+            
+            <div>
+              <label className="text-sm text-slate-400">Nombre d'adhérents estimé *</label>
+              <Input
+                required
+                type="number"
+                min="150"
+                value={quoteForm.estimated_members}
+                onChange={(e) => setQuoteForm({...quoteForm, estimated_members: parseInt(e.target.value)})}
+                className="bg-slate-700 border-slate-600 text-white"
+              />
+            </div>
+            
+            <div>
+              <label className="text-sm text-slate-400">Message (optionnel)</label>
+              <Textarea
+                value={quoteForm.message}
+                onChange={(e) => setQuoteForm({...quoteForm, message: e.target.value})}
+                className="bg-slate-700 border-slate-600 text-white"
+                placeholder="Précisez vos besoins spécifiques..."
+                rows={3}
+              />
+            </div>
+            
+            <Button
+              type="submit"
+              disabled={loading === 'quote'}
+              className="w-full bg-gradient-to-r from-cyan-500 to-blue-500 hover:opacity-90"
+            >
+              {loading === 'quote' ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Envoi en cours...
+                </>
+              ) : (
+                'Envoyer ma demande'
+              )}
+            </Button>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
