@@ -387,7 +387,7 @@ const TarificationPage = ({ onBack, onSelectPlan, user, token, onLoginRequired }
                 </>
               ) : (
                 <>
-                  {selectedClubSize === 'large' ? 'Demander un devis' : 'Essayer 30 jours gratuits'}
+                  Essayer 30 jours gratuits
                   <ChevronRight className="w-5 h-5 ml-2" />
                 </>
               )}
