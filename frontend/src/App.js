@@ -40,6 +40,7 @@ import HeaderNavigation from "@/components/HeaderNavigation";
 import LoginTransition from "@/components/LoginTransition";
 import ParentLoginDialog from "@/components/ParentLoginDialog";
 import ParentDashboard from "@/components/ParentDashboard";
+import MaitreTanaka from "@/components/MaitreTanaka";
 
 // Import pages enfant
 import {
