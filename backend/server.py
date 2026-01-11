@@ -567,6 +567,303 @@ async def delete_dojo_member(member_id: str):
     
     return {"success": True, "message": "Adhérent supprimé"}
 
+
+# ═══════════════════════════════════════════════════════════════════════════════════
+# ENSEIGNANT (TEACHER) SYSTEM
+# ═══════════════════════════════════════════════════════════════════════════════════
+
+class EnseignantCreate(BaseModel):
+    """Modèle pour créer un enseignant"""
+    first_name: str = Field(..., min_length=2, max_length=50)
+    last_name: str = Field(..., min_length=2, max_length=50)
+    email: EmailStr
+    password: str = Field(..., min_length=6)
+    dojo_id: str
+
+class EnseignantLogin(BaseModel):
+    """Login enseignant"""
+    email: EmailStr
+    password: str
+
+class MessageCreate(BaseModel):
+    """Message de l'enseignant vers un parent"""
+    recipient_id: str  # ID du parent ou de l'utilisateur
+    subject: str = Field(..., min_length=1, max_length=200)
+    content: str = Field(..., min_length=1, max_length=2000)
+
+class ObservationCreate(BaseModel):
+    """Observation sur un élève"""
+    student_id: str  # ID de l'élève (user ou dojo_member)
+    student_type: str = "user"  # "user" ou "dojo_member"
+    content: str = Field(..., min_length=1, max_length=2000)
+    category: Optional[str] = "general"  # general, technique, comportement, progression
+
+
+@api_router.post("/enseignants")
+async def create_enseignant(data: EnseignantCreate, dojo_password: str = None):
+    """Créer un enseignant (Admin du Dojo uniquement)"""
+    # Vérifier que le dojo existe
+    dojo = await db.dojos.find_one({"id": data.dojo_id})
+    if not dojo:
+        raise HTTPException(status_code=404, detail="Dojo non trouvé")
+    
+    # Vérifier le mot de passe admin du dojo
+    if dojo_password != dojo.get("admin_password"):
+        raise HTTPException(status_code=403, detail="Mot de passe admin du dojo incorrect")
+    
+    # Vérifier si l'email existe déjà
+    existing = await db.enseignants.find_one({"email": data.email})
+    if existing:
+        raise HTTPException(status_code=400, detail="Un enseignant avec cet email existe déjà")
+    
+    new_enseignant = {
+        "id": str(uuid.uuid4()),
+        "first_name": data.first_name,
+        "last_name": data.last_name,
+        "email": data.email,
+        "password_hash": hash_password(data.password),
+        "dojo_id": data.dojo_id,
+        "dojo_name": dojo.get("name"),
+        "is_active": True,
+        "created_at": datetime.now(timezone.utc).isoformat()
+    }
+    
+    await db.enseignants.insert_one(new_enseignant)
+    logger.info(f"Nouvel enseignant créé: {data.first_name} {data.last_name} pour dojo {data.dojo_id}")
+    
+    return {
+        "success": True, 
+        "enseignant": {
+            "id": new_enseignant["id"],
+            "first_name": new_enseignant["first_name"],
+            "last_name": new_enseignant["last_name"],
+            "email": new_enseignant["email"],
+            "dojo_id": new_enseignant["dojo_id"],
+            "dojo_name": new_enseignant["dojo_name"]
+        }
+    }
+
+
+@api_router.post("/enseignants/login")
+async def login_enseignant(data: EnseignantLogin):
+    """Connexion enseignant"""
+    enseignant = await db.enseignants.find_one({"email": data.email})
+    if not enseignant:
+        raise HTTPException(status_code=401, detail="Email ou mot de passe incorrect")
+    
+    if not verify_password(data.password, enseignant["password_hash"]):
+        raise HTTPException(status_code=401, detail="Email ou mot de passe incorrect")
+    
+    if not enseignant.get("is_active", True):
+        raise HTTPException(status_code=403, detail="Compte enseignant désactivé")
+    
+    # Générer un token JWT
+    token_data = {
+        "id": enseignant["id"],
+        "email": enseignant["email"],
+        "role": "enseignant",
+        "dojo_id": enseignant["dojo_id"],
+        "exp": datetime.now(timezone.utc) + timedelta(hours=JWT_EXPIRATION_HOURS)
+    }
+    token = jwt.encode(token_data, JWT_SECRET, algorithm=JWT_ALGORITHM)
+    
+    return {
+        "success": True,
+        "token": token,
+        "enseignant": {
+            "id": enseignant["id"],
+            "first_name": enseignant["first_name"],
+            "last_name": enseignant["last_name"],
+            "email": enseignant["email"],
+            "dojo_id": enseignant["dojo_id"],
+            "dojo_name": enseignant.get("dojo_name")
+        }
+    }
+
+
+@api_router.get("/enseignants/{dojo_id}")
+async def get_dojo_enseignants(dojo_id: str):
+    """Récupérer les enseignants d'un dojo"""
+    enseignants = await db.enseignants.find(
+        {"dojo_id": dojo_id, "is_active": True},
+        {"_id": 0, "password_hash": 0}
+    ).to_list(50)
+    return {"enseignants": enseignants}
+
+
+async def require_enseignant_auth(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    """Middleware pour vérifier l'authentification enseignant"""
+    if not credentials:
+        raise HTTPException(status_code=401, detail="Token manquant")
+    
+    try:
+        payload = jwt.decode(credentials.credentials, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+        if payload.get("role") != "enseignant":
+            raise HTTPException(status_code=403, detail="Accès réservé aux enseignants")
+        return payload
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(status_code=401, detail="Token expiré")
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=401, detail="Token invalide")
+
+
+# ═══════════════════════════════════════════════════════════════════════════════════
+# MESSAGES (ENSEIGNANT <-> PARENTS)
+# ═══════════════════════════════════════════════════════════════════════════════════
+
+@api_router.post("/messages")
+async def send_message(data: MessageCreate, enseignant: dict = Depends(require_enseignant_auth)):
+    """Envoyer un message à un parent (Enseignant uniquement)"""
+    # Vérifier que le destinataire existe
+    recipient = await db.users.find_one({"id": data.recipient_id})
+    if not recipient:
+        raise HTTPException(status_code=404, detail="Destinataire non trouvé")
+    
+    new_message = {
+        "id": str(uuid.uuid4()),
+        "sender_id": enseignant["id"],
+        "sender_type": "enseignant",
+        "sender_name": f"Enseignant",  # On pourrait récupérer le nom complet
+        "recipient_id": data.recipient_id,
+        "recipient_type": "user",
+        "subject": data.subject,
+        "content": data.content,
+        "is_read": False,
+        "dojo_id": enseignant["dojo_id"],
+        "created_at": datetime.now(timezone.utc).isoformat()
+    }
+    
+    await db.messages.insert_one(new_message)
+    logger.info(f"Message envoyé par enseignant {enseignant['id']} à {data.recipient_id}")
+    
+    return {"success": True, "message_id": new_message["id"]}
+
+
+@api_router.get("/messages/inbox")
+async def get_inbox(user: dict = Depends(require_auth)):
+    """Récupérer les messages reçus (pour un parent/utilisateur)"""
+    messages = await db.messages.find(
+        {"recipient_id": user["id"]},
+        {"_id": 0}
+    ).sort("created_at", -1).to_list(100)
+    
+    return {"messages": messages}
+
+
+@api_router.get("/messages/sent")
+async def get_sent_messages(enseignant: dict = Depends(require_enseignant_auth)):
+    """Récupérer les messages envoyés (pour un enseignant)"""
+    messages = await db.messages.find(
+        {"sender_id": enseignant["id"]},
+        {"_id": 0}
+    ).sort("created_at", -1).to_list(100)
+    
+    return {"messages": messages}
+
+
+@api_router.patch("/messages/{message_id}/read")
+async def mark_message_read(message_id: str, user: dict = Depends(require_auth)):
+    """Marquer un message comme lu"""
+    result = await db.messages.update_one(
+        {"id": message_id, "recipient_id": user["id"]},
+        {"$set": {"is_read": True, "read_at": datetime.now(timezone.utc).isoformat()}}
+    )
+    
+    if result.modified_count == 0:
+        raise HTTPException(status_code=404, detail="Message non trouvé")
+    
+    return {"success": True}
+
+
+# ═══════════════════════════════════════════════════════════════════════════════════
+# OBSERVATIONS (ENSEIGNANT -> ÉLÈVES)
+# ═══════════════════════════════════════════════════════════════════════════════════
+
+@api_router.post("/observations")
+async def create_observation(data: ObservationCreate, enseignant: dict = Depends(require_enseignant_auth)):
+    """Ajouter une observation sur un élève (Enseignant uniquement)"""
+    # Vérifier que l'élève existe
+    if data.student_type == "user":
+        student = await db.users.find_one({"id": data.student_id})
+    else:
+        student = await db.dojo_members.find_one({"id": data.student_id})
+    
+    if not student:
+        raise HTTPException(status_code=404, detail="Élève non trouvé")
+    
+    # Récupérer les infos de l'enseignant pour le nom
+    enseignant_info = await db.enseignants.find_one({"id": enseignant["id"]})
+    enseignant_name = f"{enseignant_info['first_name']} {enseignant_info['last_name']}" if enseignant_info else "Enseignant"
+    
+    new_observation = {
+        "id": str(uuid.uuid4()),
+        "enseignant_id": enseignant["id"],
+        "enseignant_name": enseignant_name,
+        "student_id": data.student_id,
+        "student_type": data.student_type,
+        "student_name": student.get("display_name") or student.get("first_name") or student.get("email", "Élève"),
+        "content": data.content,
+        "category": data.category,
+        "dojo_id": enseignant["dojo_id"],
+        "created_at": datetime.now(timezone.utc).isoformat()
+    }
+    
+    await db.observations.insert_one(new_observation)
+    logger.info(f"Observation créée par enseignant {enseignant['id']} pour élève {data.student_id}")
+    
+    return {"success": True, "observation": {k: v for k, v in new_observation.items() if k != "_id"}}
+
+
+@api_router.get("/observations/student/{student_id}")
+async def get_student_observations(student_id: str, user: dict = Depends(require_auth)):
+    """Récupérer les observations d'un élève (visible par le parent et l'élève lui-même)"""
+    # Vérifier que l'utilisateur a le droit de voir les observations
+    # (soit c'est l'élève lui-même, soit c'est le parent)
+    is_self = user["id"] == student_id
+    is_parent = student_id in user.get("children", [])
+    
+    if not is_self and not is_parent:
+        # Vérifier aussi si c'est un dojo_member lié à cet utilisateur
+        member = await db.dojo_members.find_one({"id": student_id})
+        if not member or member.get("linked_user_id") != user["id"]:
+            raise HTTPException(status_code=403, detail="Accès non autorisé")
+    
+    observations = await db.observations.find(
+        {"student_id": student_id},
+        {"_id": 0}
+    ).sort("created_at", -1).to_list(100)
+    
+    return {"observations": observations}
+
+
+@api_router.get("/observations/dojo/{dojo_id}")
+async def get_dojo_observations(dojo_id: str, enseignant: dict = Depends(require_enseignant_auth)):
+    """Récupérer toutes les observations d'un dojo (Enseignant uniquement)"""
+    if enseignant["dojo_id"] != dojo_id:
+        raise HTTPException(status_code=403, detail="Accès non autorisé à ce dojo")
+    
+    observations = await db.observations.find(
+        {"dojo_id": dojo_id},
+        {"_id": 0}
+    ).sort("created_at", -1).to_list(500)
+    
+    return {"observations": observations}
+
+
+@api_router.delete("/observations/{observation_id}")
+async def delete_observation(observation_id: str, enseignant: dict = Depends(require_enseignant_auth)):
+    """Supprimer une observation (Enseignant uniquement, ses propres observations)"""
+    result = await db.observations.delete_one({
+        "id": observation_id,
+        "enseignant_id": enseignant["id"]
+    })
+    
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Observation non trouvée ou non autorisé")
+    
+    return {"success": True}
+
+
 @api_router.post("/dojos/{dojo_id}/assign-user/{user_id}")
 async def assign_user_to_dojo(dojo_id: str, user_id: str, auth: SuperAdminAuth):
     """Assigner un utilisateur à un dojo (Super Admin uniquement)"""
