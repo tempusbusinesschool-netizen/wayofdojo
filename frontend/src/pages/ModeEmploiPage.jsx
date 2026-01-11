@@ -295,7 +295,7 @@ const ModeEmploiPage = ({ onBack }) => {
             onClick={onBack}
             className="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-slate-900 font-semibold rounded-lg transition-all hover:scale-105"
           >
-            Retour à l'app
+            Précédent
           </button>
         </div>
       </header>

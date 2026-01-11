@@ -110,7 +110,7 @@ const TarificationPage = ({ onBack, onSelectPlan, user, token, onLoginRequired }
               onClick={onBack}
               className="mb-6 text-slate-400 hover:text-white"
             >
-              ← Retour
+              ← Précédent
             </Button>
           )}
           <Badge className="bg-amber-500/20 text-amber-300 border-amber-500/30 mb-4">
