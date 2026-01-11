@@ -13,3 +13,5 @@ export { default as StatisticsDashboard } from './StatisticsDashboard';
 export { default as HakamaSection } from './HakamaSection';
 export { default as DojoMemberForm } from './DojoMemberForm';
 export { default as DojoMembersList } from './DojoMembersList';
+export { default as EnseignantLoginDialog } from './EnseignantLoginDialog';
+export { default as EnseignantDashboard } from './EnseignantDashboard';
