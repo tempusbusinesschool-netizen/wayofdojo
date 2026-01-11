@@ -1923,10 +1923,7 @@ function AppContent() {
         }
         childContext={isAuthenticated ? {
           first_name: user?.first_name,
-          belt_level: userBelt,
-          level: gamificationStats?.level,
-          level_name: gamificationStats?.level_name,
-          total_xp: gamificationStats?.total_xp
+          belt_level: userBelt
         } : null}
       />
       
