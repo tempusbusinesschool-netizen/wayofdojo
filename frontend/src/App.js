@@ -145,6 +145,11 @@ function AppContent() {
   const [loginDestination, setLoginDestination] = useState('dashboard');
   const [transitionUserName, setTransitionUserName] = useState('');
   
+  // Parent mode state
+  const [showParentLogin, setShowParentLogin] = useState(false);
+  const [parentMode, setParentMode] = useState(false);
+  const [parentInfo, setParentInfo] = useState(null);
+  
   // Check if enseignant is already logged in
   useEffect(() => {
     const storedToken = localStorage.getItem('enseignant_token');
