@@ -16,8 +16,8 @@ const PLANS = {
     tagline: "Ton parcours personnel, sans engagement",
     price: "4,50 €",
     period: "/mois",
-    trial: "14 jours gratuits",
-    trialDays: 14,
+    trial: "3 mois gratuits",
+    trialDays: 90,
     features: [
       { text: "Accès complet aux techniques de révision", included: true },
       { text: "Suivi personnel de progression", included: true },
@@ -27,12 +27,12 @@ const PLANS = {
       { text: "Gamification douce (régularité, engagement)", included: true }
     ],
     conditions: [
-      "14 jours d'essai gratuit",
+      "3 mois d'essai gratuit",
       "Annulation possible pendant l'essai",
-      "Puis 4,50 € / mois",
+      "Puis 4,50 € TTC / mois",
       "Sans engagement, résiliable à tout moment"
     ],
-    cta: "Commencer mon essai gratuit",
+    cta: "Commencer mes 3 mois gratuits",
     footer: "Un outil pour rester aligné avec ta pratique, pas pour te juger.",
     gradient: "from-amber-500 to-orange-500",
     borderColor: "border-amber-500/50",
@@ -44,10 +44,10 @@ const PLANS = {
     emoji: "🏯",
     tagline: "Un outil de gestion et d'animation pour les clubs",
     badge: "Réservé aux clubs et enseignants",
-    price: "65 €",
+    price: "19,90 €",
     period: "/mois",
-    trial: "14 jours gratuits",
-    trialDays: 14,
+    trial: "10 jours gratuits",
+    trialDays: 10,
     features: [
       { text: "Espace de gestion du dojo", included: true },
       { text: "Gestion des adhérents (nombre illimité)", included: true },
@@ -59,12 +59,12 @@ const PLANS = {
       { text: "Aucun grade, diplôme ou certification", included: false }
     ],
     conditions: [
-      "14 jours d'essai gratuit",
+      "10 jours d'essai gratuit",
       "Annulation possible pendant l'essai",
-      "Puis 65 € / mois",
-      "Engagement 12 mois après l'essai"
+      "Puis 19,90 € TTC / mois",
+      "Engagement 12 mois avec reconduction tacite annuelle"
     ],
-    cta: "Commencer mon essai gratuit",
+    cta: "Essayer 10 jours gratuits",
     footer: "Un outil pour structurer et animer, sans interférer avec l'enseignement.",
     gradient: "from-cyan-500 to-blue-500",
     borderColor: "border-cyan-500/50",
