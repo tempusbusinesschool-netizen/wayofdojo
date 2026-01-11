@@ -302,3 +302,21 @@ Maître Tanaka speaks:
 - With encouragement and patience
 - Using metaphors from nature (water, mountain, bamboo)
 - In French, accessible to children (8-14 years)
+
+### 3D Visuals (Jan 11, 2025)
+- **Portrait**: `/images/tanaka/portrait.png` - Close-up for dialog header
+- **Teaching**: `/images/tanaka/teaching.png` - Full body in dojo
+- **Congratulating**: `/images/tanaka/congratulating.png` - Celebration pose
+
+### Pre-recorded Phrases (26 audio files)
+Stored in `/audio/tanaka/` - No API calls needed for common events:
+- **Greetings**: welcome, hello_morning, hello_afternoon, goodbye
+- **Challenges**: challenge_complete, challenge_first, challenge_hard
+- **Belts**: belt_white → belt_black (7 levels)
+- **Streaks**: streak_3, streak_7, streak_14, streak_30
+- **Encouragements**: encourage_practice, encourage_patience, encourage_comeback
+- **Progress**: xp_gained, level_up, technique_mastered, badge_earned, fail_encourage
+
+### Service Files
+- `/app/backend/generate_tanaka_phrases.py` - Script to generate audio
+- `/app/frontend/src/services/tanakaVoiceService.js` - Frontend service
