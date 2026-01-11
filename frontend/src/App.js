@@ -638,6 +638,19 @@ function AppContent() {
                   <span className="hidden md:inline">Enseignant</span>
                 </Button>
               )}
+              
+              {/* Bouton Mode d'Emploi */}
+              {!enseignantMode && !isAdminMode && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowModeEmploi(true)}
+                  className="text-cyan-400 hover:text-cyan-300 hover:bg-cyan-900/20 h-8 px-2 sm:px-3"
+                >
+                  <ScrollText className="w-4 h-4 sm:mr-1" />
+                  <span className="hidden lg:inline">Guide</span>
+                </Button>
+              )}
 
               {isAdmin && (
                 <Button
