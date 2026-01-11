@@ -38,6 +38,8 @@ import {
 } from "@/components";
 import HeaderNavigation from "@/components/HeaderNavigation";
 import LoginTransition from "@/components/LoginTransition";
+import ParentLoginDialog from "@/components/ParentLoginDialog";
+import ParentDashboard from "@/components/ParentDashboard";
 
 // Import pages enfant
 import {
