@@ -159,6 +159,14 @@ function AppContent() {
       setEnseignantInfo(JSON.parse(storedInfo));
       setEnseignantMode(true);
     }
+    
+    // Check if parent is already logged in
+    const parentToken = localStorage.getItem('parent_token');
+    const parentInfoStored = localStorage.getItem('parent_info');
+    if (parentToken && parentInfoStored) {
+      setParentInfo(JSON.parse(parentInfoStored));
+      setParentMode(true);
+    }
   }, []);
   
   // Handle enseignant login success
@@ -168,8 +176,26 @@ function AppContent() {
     setEnseignantMode(true);
   };
   
+  // Handle parent login success
+  const handleParentLoginSuccess = (data) => {
+    setParentInfo(data.parent);
+    setParentMode(true);
+    toast.success(`Bienvenue ${data.parent.first_name} !`);
+  };
+  
+  // Handle parent logout
+  const handleParentLogout = () => {
+    localStorage.removeItem('parent_token');
+    localStorage.removeItem('parent_info');
+    setParentInfo(null);
+    setParentMode(false);
+    toast.success('Déconnexion réussie');
+  };
+  
   // Handle enseignant logout
   const handleEnseignantLogout = () => {
+    localStorage.removeItem('enseignant_token');
+    localStorage.removeItem('enseignant_info');
     setEnseignantInfo(null);
     setEnseignantToken(null);
     setEnseignantMode(false);
