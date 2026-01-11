@@ -64,6 +64,7 @@ import {
 
 // Import Auth Context
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
+import { TanakaEventProvider, useTanakaEvent } from "@/contexts/TanakaEventContext";
 import DojoManagement from "@/components/DojoManagement";
 import OnboardingFlow from "@/components/OnboardingFlow";
 import PaywallDialog from "@/components/PaywallDialog";
