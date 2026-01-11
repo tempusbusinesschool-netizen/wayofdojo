@@ -33,7 +33,7 @@ const TarificationPage = ({ onBack, onSelectPlan, user, token, onLoginRequired }
     large: { label: '> 150 adhérents', price: null, label2: 'Sur devis', planId: 'club_grand' }
   };
 
-  const handleSelectPlan = async (planId, withCard = false) => {
+  const handleSelectPlan = async (planId, withCard = true) => {
     // Check if user is logged in
     if (!user || !token) {
       toast.error('Veuillez vous connecter pour souscrire');
@@ -53,8 +53,11 @@ const TarificationPage = ({ onBack, onSelectPlan, user, token, onLoginRequired }
       if (withCard) {
         // Checkout with Stripe
         const result = await subscriptionService.checkoutWithCard(planId, token);
-        if (result.checkout_url) {
-          window.location.href = result.checkout_url;
+        // API returns 'url' not 'checkout_url'
+        if (result.url) {
+          window.location.href = result.url;
+        } else {
+          toast.error('Erreur lors de la création de la session de paiement');
         }
       } else {
         // Start trial without card
