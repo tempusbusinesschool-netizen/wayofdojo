@@ -36,6 +36,7 @@ import {
   EnseignantLoginDialog,
   EnseignantDashboard
 } from "@/components";
+import HeaderNavigation from "@/components/HeaderNavigation";
 
 // Import pages enfant
 import {
