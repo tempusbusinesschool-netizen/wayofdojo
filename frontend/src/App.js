@@ -65,6 +65,7 @@ import PaywallDialog from "@/components/PaywallDialog";
 import DojoRegistrationDialog from "@/components/DojoRegistrationDialog";
 import LoginDialog from "@/components/LoginDialog";
 import { CGUPage, CGVPage, ChartePage, MentionsLegalesPage, RGPDPage } from "@/components/legal";
+import ModeEmploiPage from "@/pages/ModeEmploiPage";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
