@@ -396,3 +396,23 @@ Stored in `/audio/tanaka/` - No API calls needed for common events:
   - `technique_mastered` - Technique maîtrisée
   - `badge_earned` - Badge obtenu
   - `welcome_back` - Bon retour
+
+## 📅 Updates - December 2025
+
+### Trial Period Update (Dec 2025)
+- [x] Updated all trial period text from "3 mois" / "10 jours" to **"30 jours gratuits"**
+- [x] Modified in `TarificationPage.jsx`:
+  - Badge "30 jours gratuits" (Utilisateur unique)
+  - Badge "30 jours gratuits" (Club d'Aikido)
+  - CTA "Commencer 30 jours gratuits"
+  - CTA "Essayer 30 jours gratuits"
+  - FAQ section updated to reflect 30 days trial
+- [x] PRD pricing structure updated
+
+### Production Cleanup (Dec 2025)
+- [x] Removed `TanakaEventDemo.jsx` test panel from `App.js`
+- [x] Removed unused import of `TanakaEventDemo`
+
+---
+
+*Last updated: December 2025*
