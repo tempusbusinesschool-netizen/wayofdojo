@@ -93,6 +93,15 @@ Build a web application for an Aikido club named "Aikido@Game" that serves as a 
   - 10 sections with screenshots and French explanations
   - Covers: Introduction, Homepage, Visitor mode, Programme, Techniques, Registration, Dashboard, Progression blocks, Teacher space, Glossary
   - Available at: `/Mode_Emploi_AikidoGame.pdf`
+- [x] Mode d'Emploi Interactive Web Page
+  - Colorful, animated 10-section interactive guide
+  - Accessible via "Guide" button in header
+  - Sidebar navigation with section indicators
+- [x] Promotional Video with ElevenLabs AI Voice (French)
+  - 2-3 min animated slideshow with screenshots
+  - Professional French narration (Thomas voice)
+  - Available at: `/Aikido_Game_Video.mp4`
+  - Perfect for social media sharing
 
 ---
 
