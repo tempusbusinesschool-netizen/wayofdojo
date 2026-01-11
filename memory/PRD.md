@@ -39,6 +39,28 @@ Build a web application for an Aikido club named "Aikido@Game" that serves as a 
 
 ## ✅ Completed Features
 
+### Parent Role System - Jan 11, 2025
+- [x] Backend API endpoints:
+  - `POST /api/parents/register` - Parent registration
+  - `POST /api/parents/login` - Parent authentication
+  - `GET /api/parents/me` - Parent profile with children
+  - `GET /api/parents/messages` - View messages from teachers
+  - `GET /api/parents/observations` - View observations about children
+  - `PATCH /api/parents/messages/{id}/read` - Mark message as read
+  - `POST /api/parents/link-child` - Link child to parent
+- [x] ParentLoginDialog component:
+  - Login/Register toggle
+  - Form validation
+  - "How it works" info section
+- [x] ParentDashboard with:
+  - Overview tab (children list, recent activity)
+  - Messages tab (inbox with read/unread status)
+  - Observations tab (categorized by type)
+  - Child detail modal
+  - Message detail modal
+- [x] "Connexion Parent" added to header dropdown
+- [x] Purple/pink gradient theme for parent interface
+
 ### Enseignant (Teacher) System - Jan 11, 2025
 - [x] Backend API endpoints for enseignant management
 - [x] Enseignant login with JWT authentication
