@@ -362,11 +362,21 @@ const TarificationPage = ({ onBack, onSelectPlan, user, token, onLoginRequired }
 
             {/* CTA */}
             <Button
-              onClick={() => handleSelectPlan('club', selectedClubSize)}
-              className="w-full py-6 text-lg font-semibold bg-gradient-to-r from-cyan-500 to-blue-500 hover:opacity-90 transition-opacity"
+              onClick={() => handleSelectPlan(clubPricing[selectedClubSize].planId)}
+              disabled={loading === clubPricing[selectedClubSize].planId}
+              className="w-full py-6 text-lg font-semibold bg-gradient-to-r from-cyan-500 to-blue-500 hover:opacity-90 transition-opacity disabled:opacity-50"
             >
-              {selectedClubSize === 'large' ? 'Demander un devis' : 'Essayer 10 jours gratuits'}
-              <ChevronRight className="w-5 h-5 ml-2" />
+              {loading === clubPricing[selectedClubSize].planId ? (
+                <>
+                  <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                  Traitement...
+                </>
+              ) : (
+                <>
+                  {selectedClubSize === 'large' ? 'Demander un devis' : 'Essayer 10 jours gratuits'}
+                  <ChevronRight className="w-5 h-5 ml-2" />
+                </>
+              )}
             </Button>
           </div>
         </div>
