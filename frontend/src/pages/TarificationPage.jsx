@@ -352,12 +352,17 @@ const TarificationPage = ({ onBack, onSelectPlan, user, token, onLoginRequired }
             {/* Features */}
             <ul className="space-y-3 mb-8">
               {[
+                { text: 'Accès complet à l\'application', included: true },
                 { text: 'Accès illimité pour les adhérents', included: true },
+                { text: 'Parcours pédagogiques', included: true },
+                { text: 'Scénarios Serious Game', included: true },
                 { text: 'Espace administrateur', included: true },
                 { text: 'Gestion des adhérents', included: true },
                 { text: 'Suivi des parcours', included: true },
                 { text: 'Statistiques d\'usage', included: true },
                 { text: 'Supports pédagogiques', included: true },
+                { text: 'Mises à jour incluses', included: true },
+                { text: 'Support utilisateur', included: true },
                 { text: 'Accompagnement prise en main', included: true },
               ].map((feature, index) => (
                 <li key={index} className="flex items-center gap-3">
