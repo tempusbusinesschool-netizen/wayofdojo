@@ -24,6 +24,16 @@ from reportlab.lib.units import cm
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, Image
 from reportlab.lib.enums import TA_CENTER, TA_LEFT
 
+# Import email service
+from email_service import (
+    send_password_reset_email,
+    send_parent_observation_notification,
+    send_parent_message_notification,
+    generate_reset_token,
+    get_token_expiry,
+    is_token_expired
+)
+
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
