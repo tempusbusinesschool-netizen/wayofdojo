@@ -272,6 +272,33 @@ Build a web application for an Aikido club named "Aikido@Game" that serves as a 
   - Error: `NameError: name 'Header' is not defined` at line 902
   - Fix: Added `Header` to FastAPI imports
 
+## 📧 Email Notifications System (Jan 11, 2025)
+### Resend Integration
+- [x] `/app/backend/email_service.py` - Email service module
+- [x] HTML email templates in French:
+  - Password reset email (professional design)
+  - Parent observation notification
+  - Parent message notification
+
+### Password Reset Flow
+- [x] Backend endpoints:
+  - `POST /api/auth/forgot-password` - Request reset link
+  - `POST /api/auth/reset-password` - Reset with token
+  - `GET /api/auth/verify-reset-token/{token}` - Verify token validity
+- [x] Frontend component: `ForgotPasswordDialog.jsx`
+- [x] Integrated in all login dialogs:
+  - Adhérent login ✅
+  - Parent login ✅
+  - Enseignant login (pending)
+- [x] Token expires after 1 hour
+- [x] Secure token generation with `secrets.token_urlsafe(32)`
+
+### Parent Notifications
+- [x] Auto-notify parents when:
+  - Teacher adds observation about their child
+  - Teacher sends message about their child
+- [x] Email includes child name, teacher name, content preview
+
 ## 🎙️ Maître Tanaka - Agent Vocal (Jan 11, 2025)
 ### Description
 Interactive voice agent "Maître Tanaka" - a wise old Aikido master who guides children through voice conversations.
