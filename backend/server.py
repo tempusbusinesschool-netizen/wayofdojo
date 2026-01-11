@@ -1709,6 +1709,132 @@ async def get_me(user: dict = Depends(require_auth)):
     }
 
 
+# ═══════════════════════════════════════════════════════════════════════════════════
+# PASSWORD RESET ENDPOINTS
+# ═══════════════════════════════════════════════════════════════════════════════════
+
+class ForgotPasswordRequest(BaseModel):
+    email: EmailStr
+    user_type: str = "user"  # user, parent, enseignant
+
+class ResetPasswordRequest(BaseModel):
+    token: str
+    new_password: str
+
+@api_router.post("/auth/forgot-password")
+async def forgot_password(data: ForgotPasswordRequest):
+    """Demander un lien de réinitialisation de mot de passe"""
+    user = None
+    user_name = "Utilisateur"
+    collection_name = "users"
+    
+    # Find user based on type
+    if data.user_type == "parent":
+        user = await db.parents.find_one({"email": data.email}, {"_id": 0})
+        collection_name = "parents"
+    elif data.user_type == "enseignant":
+        user = await db.enseignants.find_one({"email": data.email}, {"_id": 0})
+        collection_name = "enseignants"
+    else:
+        user = await db.users.find_one({"email": data.email}, {"_id": 0})
+        collection_name = "users"
+    
+    if not user:
+        # Don't reveal if email exists for security
+        return {"success": True, "message": "Si cet email existe, un lien de réinitialisation a été envoyé."}
+    
+    user_name = f"{user.get('first_name', '')} {user.get('last_name', '')}".strip() or "Utilisateur"
+    
+    # Generate reset token
+    reset_token = generate_reset_token()
+    token_expiry = get_token_expiry()
+    
+    # Store token in database
+    await db.password_resets.delete_many({"email": data.email})  # Remove old tokens
+    await db.password_resets.insert_one({
+        "email": data.email,
+        "user_type": data.user_type,
+        "collection": collection_name,
+        "token": reset_token,
+        "expires_at": token_expiry.isoformat(),
+        "created_at": datetime.now(timezone.utc).isoformat()
+    })
+    
+    # Generate reset link (frontend will handle this route)
+    frontend_url = os.environ.get("FRONTEND_URL", "https://martial-journey-1.preview.emergentagent.com")
+    reset_link = f"{frontend_url}?reset_token={reset_token}&email={data.email}"
+    
+    # Send email
+    await send_password_reset_email(
+        to_email=data.email,
+        user_name=user_name,
+        reset_link=reset_link
+    )
+    
+    logger.info(f"Password reset email sent to {data.email}")
+    return {"success": True, "message": "Si cet email existe, un lien de réinitialisation a été envoyé."}
+
+
+@api_router.post("/auth/reset-password")
+async def reset_password(data: ResetPasswordRequest):
+    """Réinitialiser le mot de passe avec un token"""
+    # Find reset token
+    reset_record = await db.password_resets.find_one({"token": data.token}, {"_id": 0})
+    
+    if not reset_record:
+        raise HTTPException(status_code=400, detail="Token invalide ou expiré")
+    
+    # Check if token is expired
+    if is_token_expired(reset_record["expires_at"]):
+        await db.password_resets.delete_one({"token": data.token})
+        raise HTTPException(status_code=400, detail="Token expiré. Veuillez refaire une demande.")
+    
+    # Validate password
+    if len(data.new_password) < 6:
+        raise HTTPException(status_code=400, detail="Le mot de passe doit contenir au moins 6 caractères")
+    
+    # Hash new password
+    new_hash = hash_password(data.new_password)
+    
+    # Update password in the appropriate collection
+    collection = reset_record["collection"]
+    if collection == "parents":
+        await db.parents.update_one(
+            {"email": reset_record["email"]},
+            {"$set": {"password_hash": new_hash}}
+        )
+    elif collection == "enseignants":
+        await db.enseignants.update_one(
+            {"email": reset_record["email"]},
+            {"$set": {"password_hash": new_hash}}
+        )
+    else:
+        await db.users.update_one(
+            {"email": reset_record["email"]},
+            {"$set": {"password_hash": new_hash}}
+        )
+    
+    # Delete used token
+    await db.password_resets.delete_one({"token": data.token})
+    
+    logger.info(f"Password reset completed for {reset_record['email']}")
+    return {"success": True, "message": "Mot de passe réinitialisé avec succès"}
+
+
+@api_router.get("/auth/verify-reset-token/{token}")
+async def verify_reset_token(token: str):
+    """Vérifier si un token de réinitialisation est valide"""
+    reset_record = await db.password_resets.find_one({"token": token}, {"_id": 0})
+    
+    if not reset_record:
+        return {"valid": False, "message": "Token invalide"}
+    
+    if is_token_expired(reset_record["expires_at"]):
+        return {"valid": False, "message": "Token expiré"}
+    
+    return {"valid": True, "email": reset_record["email"]}
+
+
 @api_router.get("/users")
 async def get_users(dojo_id: Optional[str] = None):
     """Récupérer la liste des utilisateurs (pour les enseignants)"""
