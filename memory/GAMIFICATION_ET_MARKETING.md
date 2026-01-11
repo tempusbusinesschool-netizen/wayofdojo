@@ -181,7 +181,7 @@ Total XP = (Défis quotidiens × jours) + (Défis hebdomadaires) + (Techniques m
 
 ### 🎯 Proposition de valeur unique
 
-**Aikido@Game** est la **première application de gamification dédiée à l'Aïkido** en Europe, transformant l'apprentissage d'un art martial traditionnel en une expérience ludique et engageante.
+**Aikido@Game** transforme l'apprentissage d'un art martial traditionnel en une expérience ludique et engageante.
 
 ---
 
