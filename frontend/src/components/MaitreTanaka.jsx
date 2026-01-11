@@ -241,8 +241,17 @@ const MaitreTanaka = ({ childContext = null, isVisible = true }) => {
           {/* Header */}
           <div className="bg-gradient-to-r from-amber-600 to-orange-600 p-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-2xl">
-                🥋
+              <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-white/30 shadow-lg">
+                <img 
+                  src={TANAKA_IMAGE} 
+                  alt="Maître Tanaka" 
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.parentElement.innerHTML = '🥋';
+                    e.target.parentElement.classList.add('flex', 'items-center', 'justify-center', 'text-2xl', 'bg-white/20');
+                  }}
+                />
               </div>
               <div>
                 <h3 className="font-bold text-white text-lg">Maître Tanaka</h3>
