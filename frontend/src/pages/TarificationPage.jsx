@@ -2,84 +2,24 @@ import React, { useState } from 'react';
 import { 
   Check, X, Zap, Building2, Crown, Shield, CreditCard, 
   Clock, Users, Award, Target, ChevronRight, Sparkles,
-  Calendar, Star, Lock
+  Calendar, Star, Lock, GraduationCap, Heart, User,
+  BookOpen, BarChart3, Headphones, FileText
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 
 const TarificationPage = ({ onBack, onSelectPlan }) => {
-  const [billingCycle, setBillingCycle] = useState('monthly');
-  const [selectedPlan, setSelectedPlan] = useState(null);
+  const [selectedClubSize, setSelectedClubSize] = useState('small');
 
-  const plans = [
-    {
-      id: 'ninja',
-      name: 'Ninja',
-      subtitle: 'Abonnement individuel',
-      description: 'Parcours personnel de révision et de motivation',
-      icon: Zap,
-      color: 'from-amber-500 to-orange-500',
-      bgColor: 'bg-amber-500/10',
-      borderColor: 'border-amber-500/30',
-      price: 4.50,
-      currency: '€',
-      period: '/mois',
-      trial: '3 mois gratuits',
-      trialDays: 90,
-      commitment: 'Sans engagement',
-      commitmentDetail: 'Résiliable à tout moment',
-      features: [
-        { text: 'Accès à 206+ techniques', included: true },
-        { text: 'Suivi de progression personnel', included: true },
-        { text: '84 défis à relever', included: true },
-        { text: 'Tableau de bord personnalisé', included: true },
-        { text: 'Système de points et badges', included: true },
-        { text: 'Mode Jeune Ninja / Ninja Confirmé', included: true },
-        { text: 'Sauvegarde automatique', included: true },
-        { text: 'Support par email', included: true },
-        { text: 'Gestion de club', included: false },
-        { text: 'Multi-utilisateurs', included: false },
-      ],
-      cta: 'Commencer 3 mois gratuits',
-      popular: true
-    },
-    {
-      id: 'dojo',
-      name: 'Dojo',
-      subtitle: 'Abonnement club',
-      description: 'Outil de gestion et d\'animation de club',
-      icon: Building2,
-      color: 'from-purple-500 to-indigo-500',
-      bgColor: 'bg-purple-500/10',
-      borderColor: 'border-purple-500/30',
-      price: 19.90,
-      currency: '€',
-      period: '/mois',
-      trial: '10 jours gratuits',
-      trialDays: 10,
-      commitment: 'Engagement 12 mois',
-      commitmentDetail: 'Reconduction tacite annuelle',
-      features: [
-        { text: 'Toutes les fonctionnalités Ninja', included: true },
-        { text: 'Gestion des adhérents illimitée', included: true },
-        { text: 'Espace Enseignant dédié', included: true },
-        { text: 'Observations sur les élèves', included: true },
-        { text: 'Messagerie Parents/Enseignants', included: true },
-        { text: 'Statistiques du club', included: true },
-        { text: 'Export des données', included: true },
-        { text: 'Support prioritaire', included: true },
-        { text: 'Formation personnalisée', included: true },
-        { text: 'Logo personnalisé', included: true },
-      ],
-      cta: 'Essayer 10 jours gratuits',
-      popular: false
-    }
-  ];
+  const clubPricing = {
+    small: { label: '< 50 adhérents', price: 19.90 },
+    medium: { label: '50 - 150 adhérents', price: 29.90 },
+    large: { label: '> 150 adhérents', price: null, label2: 'Sur devis' }
+  };
 
-  const handleSelectPlan = (planId) => {
-    setSelectedPlan(planId);
+  const handleSelectPlan = (planId, variant = null) => {
     if (onSelectPlan) {
-      onSelectPlan(planId);
+      onSelectPlan(planId, variant);
     }
   };
 
@@ -99,104 +39,296 @@ const TarificationPage = ({ onBack, onSelectPlan }) => {
           )}
           <Badge className="bg-amber-500/20 text-amber-300 border-amber-500/30 mb-4">
             <Sparkles className="w-3 h-3 mr-1" />
-            Offres spéciales lancement
+            Offres de lancement
           </Badge>
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Choisissez votre <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">parcours</span>
+            Choisissez votre <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">licence</span>
           </h1>
           <p className="text-xl text-slate-400 max-w-2xl mx-auto">
-            Commencez gratuitement et progressez à votre rythme dans l'apprentissage de l'Aikido
+            Un outil professionnel, éthique et respectueux de la tradition martiale
           </p>
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12">
-          {plans.map((plan) => {
-            const IconComponent = plan.icon;
-            return (
-              <div
-                key={plan.id}
-                className={`relative rounded-2xl ${plan.bgColor} ${plan.borderColor} border-2 p-8 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl ${
-                  plan.popular ? 'ring-2 ring-amber-500 ring-offset-2 ring-offset-slate-900' : ''
-                }`}
-              >
-                {plan.popular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                    <Badge className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-1">
-                      <Star className="w-3 h-3 mr-1" />
-                      Le plus populaire
-                    </Badge>
-                  </div>
-                )}
+        <div className="grid lg:grid-cols-2 gap-8 max-w-5xl mx-auto mb-12">
+          
+          {/* Licence Utilisateur unique */}
+          <div className="relative rounded-2xl bg-amber-500/10 border-2 border-amber-500/30 p-8 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl ring-2 ring-amber-500 ring-offset-2 ring-offset-slate-900">
+            <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+              <Badge className="bg-gradient-to-r from-amber-500 to-orange-500 text-white px-4 py-1">
+                <Star className="w-3 h-3 mr-1" />
+                Particuliers
+              </Badge>
+            </div>
 
-                {/* Plan Header */}
-                <div className="flex items-start justify-between mb-6">
-                  <div>
-                    <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${plan.color} flex items-center justify-center mb-4`}>
-                      <IconComponent className="w-7 h-7 text-white" />
-                    </div>
-                    <h2 className="text-2xl font-bold text-white">{plan.name}</h2>
-                    <p className="text-slate-400">{plan.subtitle}</p>
-                  </div>
-                </div>
-
-                {/* Price */}
-                <div className="mb-6">
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-5xl font-bold text-white">{plan.price.toFixed(2).replace('.', ',')}</span>
-                    <span className="text-xl text-slate-400">{plan.currency}</span>
-                    <span className="text-slate-400">{plan.period}</span>
-                  </div>
-                  <p className="text-sm text-slate-500 mt-1">TTC</p>
-                </div>
-
-                {/* Trial Badge */}
-                <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r ${plan.color} mb-6`}>
-                  <Clock className="w-4 h-4 text-white" />
-                  <span className="text-white font-semibold">{plan.trial}</span>
-                </div>
-
-                {/* Description */}
-                <p className="text-slate-300 mb-6">{plan.description}</p>
-
-                {/* Commitment */}
-                <div className="flex items-center gap-2 mb-6 text-sm">
-                  <Calendar className="w-4 h-4 text-slate-400" />
-                  <span className="text-slate-400">{plan.commitment}</span>
-                  <span className="text-slate-500">• {plan.commitmentDetail}</span>
-                </div>
-
-                {/* Features */}
-                <ul className="space-y-3 mb-8">
-                  {plan.features.map((feature, index) => (
-                    <li key={index} className="flex items-center gap-3">
-                      {feature.included ? (
-                        <div className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                          <Check className="w-3 h-3 text-emerald-400" />
-                        </div>
-                      ) : (
-                        <div className="w-5 h-5 rounded-full bg-slate-700/50 flex items-center justify-center">
-                          <X className="w-3 h-3 text-slate-500" />
-                        </div>
-                      )}
-                      <span className={feature.included ? 'text-slate-300' : 'text-slate-500'}>
-                        {feature.text}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-
-                {/* CTA Button */}
-                <Button
-                  onClick={() => handleSelectPlan(plan.id)}
-                  className={`w-full py-6 text-lg font-semibold bg-gradient-to-r ${plan.color} hover:opacity-90 transition-opacity`}
-                >
-                  {plan.cta}
-                  <ChevronRight className="w-5 h-5 ml-2" />
-                </Button>
+            {/* Header */}
+            <div className="mb-6">
+              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center mb-4">
+                <User className="w-7 h-7 text-white" />
               </div>
-            );
-          })}
+              <h2 className="text-2xl font-bold text-white">Utilisateur unique</h2>
+              <p className="text-slate-400">1 personne = 1 accès</p>
+            </div>
+
+            {/* Target audience */}
+            <div className="mb-6 p-4 bg-slate-800/50 rounded-xl">
+              <p className="text-xs text-amber-400 font-semibold mb-2">PUBLIC CIBLE</p>
+              <div className="flex flex-wrap gap-2">
+                {['Particuliers', 'Pratiquants', 'Éducateurs', 'Étudiants', 'Coachs'].map((item) => (
+                  <span key={item} className="text-xs px-2 py-1 bg-slate-700 rounded-full text-slate-300">{item}</span>
+                ))}
+              </div>
+            </div>
+
+            {/* Pricing options */}
+            <div className="space-y-4 mb-6">
+              <div className="flex items-center justify-between p-4 bg-slate-800/50 rounded-xl border border-amber-500/20">
+                <div>
+                  <p className="text-white font-semibold">Mensuel</p>
+                  <p className="text-slate-400 text-sm">Sans engagement</p>
+                </div>
+                <div className="text-right">
+                  <span className="text-3xl font-bold text-white">4,50</span>
+                  <span className="text-slate-400">€/mois</span>
+                </div>
+              </div>
+              
+              <div className="flex items-center justify-between p-4 bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-xl border border-amber-500/30">
+                <div>
+                  <p className="text-white font-semibold">Annuel</p>
+                  <p className="text-emerald-400 text-sm">Économisez 26%</p>
+                </div>
+                <div className="text-right">
+                  <span className="text-3xl font-bold text-white">39,90</span>
+                  <span className="text-slate-400">€/an</span>
+                  <p className="text-xs text-slate-500">soit 3,33€/mois</p>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between p-4 bg-purple-500/10 rounded-xl border border-purple-500/20">
+                <div className="flex items-center gap-2">
+                  <Heart className="w-4 h-4 text-purple-400" />
+                  <div>
+                    <p className="text-white font-semibold">Tarif solidaire</p>
+                    <p className="text-slate-400 text-sm">Étudiants & demandeurs d'emploi</p>
+                  </div>
+                </div>
+                <Badge className="bg-purple-500/20 text-purple-300 border-purple-500/30">
+                  Sur demande
+                </Badge>
+              </div>
+            </div>
+
+            {/* Trial */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 mb-6">
+              <Clock className="w-4 h-4 text-white" />
+              <span className="text-white font-semibold">3 mois d'essai gratuits</span>
+            </div>
+
+            {/* Features */}
+            <ul className="space-y-3 mb-8">
+              {[
+                { text: 'Accès complet à l\'application', included: true },
+                { text: 'Parcours pédagogiques', included: true },
+                { text: 'Scénarios Serious Game', included: true },
+                { text: 'Mises à jour incluses', included: true },
+                { text: 'Support utilisateur', included: true },
+                { text: 'Gestion des adhérents', included: false },
+                { text: 'Espace administrateur', included: false },
+              ].map((feature, index) => (
+                <li key={index} className="flex items-center gap-3">
+                  {feature.included ? (
+                    <div className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center">
+                      <Check className="w-3 h-3 text-emerald-400" />
+                    </div>
+                  ) : (
+                    <div className="w-5 h-5 rounded-full bg-slate-700/50 flex items-center justify-center">
+                      <X className="w-3 h-3 text-slate-500" />
+                    </div>
+                  )}
+                  <span className={feature.included ? 'text-slate-300' : 'text-slate-500'}>
+                    {feature.text}
+                  </span>
+                </li>
+              ))}
+            </ul>
+
+            {/* CTA */}
+            <Button
+              onClick={() => handleSelectPlan('utilisateur_unique')}
+              className="w-full py-6 text-lg font-semibold bg-gradient-to-r from-amber-500 to-orange-500 hover:opacity-90 transition-opacity"
+            >
+              Commencer 3 mois gratuits
+              <ChevronRight className="w-5 h-5 ml-2" />
+            </Button>
+          </div>
+
+          {/* Licence Club */}
+          <div className="relative rounded-2xl bg-cyan-500/10 border-2 border-cyan-500/30 p-8 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl">
+            <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+              <Badge className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white px-4 py-1">
+                <Building2 className="w-3 h-3 mr-1" />
+                Clubs & Associations
+              </Badge>
+            </div>
+
+            {/* Header */}
+            <div className="mb-6">
+              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center mb-4">
+                <Building2 className="w-7 h-7 text-white" />
+              </div>
+              <h2 className="text-2xl font-bold text-white">Club</h2>
+              <p className="text-slate-400">Licences illimitées + gestion adhérents</p>
+            </div>
+
+            {/* Target audience */}
+            <div className="mb-6 p-4 bg-slate-800/50 rounded-xl">
+              <p className="text-xs text-cyan-400 font-semibold mb-2">PUBLIC CIBLE</p>
+              <div className="flex flex-wrap gap-2">
+                {['Clubs d\'aïkido', 'Fédérations', 'Associations', 'Structures éducatives', 'Collectivités'].map((item) => (
+                  <span key={item} className="text-xs px-2 py-1 bg-slate-700 rounded-full text-slate-300">{item}</span>
+                ))}
+              </div>
+            </div>
+
+            {/* Club size selector */}
+            <div className="mb-6">
+              <p className="text-sm text-slate-400 mb-3">Taille de votre structure :</p>
+              <div className="grid grid-cols-3 gap-2">
+                {Object.entries(clubPricing).map(([key, value]) => (
+                  <button
+                    key={key}
+                    onClick={() => setSelectedClubSize(key)}
+                    className={`p-3 rounded-lg text-center transition-all ${
+                      selectedClubSize === key
+                        ? 'bg-cyan-500/20 border-2 border-cyan-500'
+                        : 'bg-slate-800/50 border-2 border-transparent hover:border-slate-600'
+                    }`}
+                  >
+                    <p className="text-xs text-slate-400">{value.label}</p>
+                    {value.price ? (
+                      <p className="text-lg font-bold text-white">{value.price}€</p>
+                    ) : (
+                      <p className="text-sm font-semibold text-cyan-400">{value.label2}</p>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Selected price display */}
+            <div className="mb-6 p-4 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-xl border border-cyan-500/30">
+              <div className="flex items-baseline gap-1">
+                {clubPricing[selectedClubSize].price ? (
+                  <>
+                    <span className="text-4xl font-bold text-white">
+                      {clubPricing[selectedClubSize].price.toFixed(2).replace('.', ',')}
+                    </span>
+                    <span className="text-xl text-slate-400">€</span>
+                    <span className="text-slate-400">/mois</span>
+                  </>
+                ) : (
+                  <span className="text-2xl font-bold text-cyan-400">Contactez-nous pour un devis</span>
+                )}
+              </div>
+              <p className="text-sm text-slate-500 mt-1">TTC • Engagement 12 mois</p>
+            </div>
+
+            {/* Trial */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 mb-6">
+              <Clock className="w-4 h-4 text-white" />
+              <span className="text-white font-semibold">10 jours d'essai gratuits</span>
+            </div>
+
+            {/* Features */}
+            <ul className="space-y-3 mb-8">
+              {[
+                { text: 'Accès illimité pour les adhérents', included: true },
+                { text: 'Espace administrateur', included: true },
+                { text: 'Gestion des adhérents', included: true },
+                { text: 'Suivi des parcours', included: true },
+                { text: 'Statistiques d\'usage', included: true },
+                { text: 'Supports pédagogiques', included: true },
+                { text: 'Accompagnement prise en main', included: true },
+              ].map((feature, index) => (
+                <li key={index} className="flex items-center gap-3">
+                  <div className="w-5 h-5 rounded-full bg-emerald-500/20 flex items-center justify-center">
+                    <Check className="w-3 h-3 text-emerald-400" />
+                  </div>
+                  <span className="text-slate-300">{feature.text}</span>
+                </li>
+              ))}
+            </ul>
+
+            {/* CTA */}
+            <Button
+              onClick={() => handleSelectPlan('club', selectedClubSize)}
+              className="w-full py-6 text-lg font-semibold bg-gradient-to-r from-cyan-500 to-blue-500 hover:opacity-90 transition-opacity"
+            >
+              {selectedClubSize === 'large' ? 'Demander un devis' : 'Essayer 10 jours gratuits'}
+              <ChevronRight className="w-5 h-5 ml-2" />
+            </Button>
+          </div>
+        </div>
+
+        {/* Value for clubs */}
+        <div className="max-w-5xl mx-auto mb-12">
+          <h3 className="text-xl font-bold text-center mb-6 text-cyan-400">
+            ✨ Valeur ajoutée pour les clubs
+          </h3>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            {[
+              { icon: Sparkles, text: 'Modernisation de l\'offre' },
+              { icon: Users, text: 'Attractivité jeunes' },
+              { icon: BookOpen, text: 'Outil pédagogique' },
+              { icon: Award, text: 'Valorisation institutionnelle' },
+              { icon: Target, text: 'Projets éducatifs' },
+              { icon: BarChart3, text: 'Reporting financeurs' },
+            ].map((item, index) => {
+              const IconComp = item.icon;
+              return (
+                <div key={index} className="flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg">
+                  <IconComp className="w-5 h-5 text-cyan-400" />
+                  <span className="text-slate-300 text-sm">{item.text}</span>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Ethical Notice */}
+        <div className="max-w-4xl mx-auto mb-12">
+          <div className="bg-gradient-to-r from-purple-500/10 to-indigo-500/10 rounded-2xl p-6 border border-purple-500/20">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-full bg-purple-500/20 flex items-center justify-center flex-shrink-0">
+                <Shield className="w-6 h-6 text-purple-400" />
+              </div>
+              <div>
+                <h3 className="text-lg font-semibold text-white mb-3">Cadre éthique & déontologique</h3>
+                <p className="text-slate-400 text-sm mb-4">
+                  Chaque utilisateur et club s'engage à respecter les valeurs du Budo :
+                </p>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <p className="text-emerald-400 text-sm font-semibold mb-2">✓ Promouvoir</p>
+                    <ul className="text-slate-400 text-sm space-y-1">
+                      <li>• Non-violence</li>
+                      <li>• Respect</li>
+                      <li>• Inclusion & égalité</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="text-red-400 text-sm font-semibold mb-2">✗ Interdit</p>
+                    <ul className="text-slate-400 text-sm space-y-1">
+                      <li>• Détournement de l'outil</li>
+                      <li>• Usage à des fins de domination</li>
+                      <li>• Exclusion ou discrimination</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Important Notice */}
@@ -204,13 +336,13 @@ const TarificationPage = ({ onBack, onSelectPlan }) => {
           <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
             <div className="flex items-start gap-4">
               <div className="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center flex-shrink-0">
-                <Shield className="w-5 h-5 text-amber-400" />
+                <FileText className="w-5 h-5 text-amber-400" />
               </div>
               <div>
                 <h3 className="text-lg font-semibold text-white mb-2">Important</h3>
                 <p className="text-slate-400 text-sm">
-                  Les abonnements ne permettent aucune évaluation technique, certification ou délivrance de grade. 
-                  Aikido@Game est un outil de révision et de motivation complémentaire à la pratique en dojo.
+                  Les abonnements <strong>ne permettent aucune évaluation technique, certification ou délivrance de grade</strong>. 
+                  Aikido@Game ne remplace pas la pratique en dojo, mais l'enrichit par une approche contemporaine.
                 </p>
               </div>
             </div>
@@ -233,7 +365,7 @@ const TarificationPage = ({ onBack, onSelectPlan }) => {
           </div>
         </div>
 
-        {/* FAQ Section */}
+        {/* FAQ */}
         <div className="max-w-3xl mx-auto">
           <h2 className="text-2xl font-bold text-center mb-8">Questions fréquentes</h2>
           <div className="space-y-4">
@@ -243,21 +375,21 @@ const TarificationPage = ({ onBack, onSelectPlan }) => {
                 <ChevronRight className="w-5 h-5 transform group-open:rotate-90 transition-transform" />
               </summary>
               <p className="text-slate-400 mt-4">
-                <strong>Ninja</strong> : Profitez de 3 mois complets sans frais. Après cette période, vous serez facturé 4,50€/mois. 
-                Vous pouvez annuler à tout moment.<br/><br/>
-                <strong>Dojo</strong> : Essayez gratuitement pendant 10 jours. Sans annulation, l'abonnement de 19,90€/mois 
-                démarre avec un engagement de 12 mois.
+                <strong>Utilisateur unique</strong> : Profitez de 3 mois complets sans frais. Après cette période, 
+                choisissez entre l'abonnement mensuel (4,50€/mois) ou annuel (39,90€/an).<br/><br/>
+                <strong>Club</strong> : Essayez gratuitement pendant 10 jours. L'engagement de 12 mois 
+                démarre après validation.
               </p>
             </details>
             
             <details className="bg-slate-800/50 rounded-xl p-5 border border-slate-700 group">
               <summary className="flex items-center justify-between cursor-pointer text-white font-medium">
-                Puis-je changer d'offre ?
+                Qu'est-ce que le tarif solidaire ?
                 <ChevronRight className="w-5 h-5 transform group-open:rotate-90 transition-transform" />
               </summary>
               <p className="text-slate-400 mt-4">
-                Oui, vous pouvez passer de Ninja à Dojo à tout moment. La différence de tarif sera calculée au prorata. 
-                Le passage de Dojo à Ninja est possible à l'échéance de votre engagement.
+                Nous proposons un tarif réduit pour les étudiants et demandeurs d'emploi. 
+                Contactez-nous avec un justificatif pour en bénéficier.
               </p>
             </details>
             
@@ -267,9 +399,8 @@ const TarificationPage = ({ onBack, onSelectPlan }) => {
                 <ChevronRight className="w-5 h-5 transform group-open:rotate-90 transition-transform" />
               </summary>
               <p className="text-slate-400 mt-4">
-                <strong>Ninja</strong> : Résiliez à tout moment depuis votre tableau de bord. L'accès reste actif jusqu'à la fin 
-                de la période payée.<br/><br/>
-                <strong>Dojo</strong> : Envoyez votre demande de résiliation au moins 30 jours avant l'échéance annuelle 
+                <strong>Utilisateur unique (mensuel)</strong> : Résiliez à tout moment depuis votre tableau de bord.<br/><br/>
+                <strong>Club</strong> : Envoyez votre demande au moins 30 jours avant l'échéance annuelle 
                 par email à contact@aikidoatgame.com.
               </p>
             </details>
@@ -279,7 +410,7 @@ const TarificationPage = ({ onBack, onSelectPlan }) => {
         {/* Footer */}
         <div className="text-center mt-12 text-sm text-slate-500">
           <p>HUMAN KNOWLEDGE • Aikido@Game</p>
-          <p className="mt-1">Tous les prix sont en euros TTC</p>
+          <p className="mt-1">Un outil professionnel, éthique et au service du vivre ensemble</p>
         </div>
       </div>
     </div>
