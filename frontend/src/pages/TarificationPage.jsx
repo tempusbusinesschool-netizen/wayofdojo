@@ -158,8 +158,15 @@ const TarificationPage = ({ onBack, onSelectPlan, user, token, onLoginRequired }
 
             {/* Pricing options */}
             <div className="space-y-4 mb-6">
-              <div className="flex items-center justify-between p-4 bg-slate-800/50 rounded-xl border border-amber-500/20">
-                <div>
+              <button
+                onClick={() => setBillingType('monthly')}
+                className={`w-full flex items-center justify-between p-4 rounded-xl border transition-all ${
+                  billingType === 'monthly' 
+                    ? 'bg-amber-500/20 border-amber-500' 
+                    : 'bg-slate-800/50 border-amber-500/20 hover:border-amber-500/50'
+                }`}
+              >
+                <div className="text-left">
                   <p className="text-white font-semibold">Mensuel</p>
                   <p className="text-slate-400 text-sm">Sans engagement</p>
                 </div>
@@ -167,10 +174,17 @@ const TarificationPage = ({ onBack, onSelectPlan, user, token, onLoginRequired }
                   <span className="text-3xl font-bold text-white">4,50</span>
                   <span className="text-slate-400">€/mois</span>
                 </div>
-              </div>
+              </button>
               
-              <div className="flex items-center justify-between p-4 bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-xl border border-amber-500/30">
-                <div>
+              <button
+                onClick={() => setBillingType('yearly')}
+                className={`w-full flex items-center justify-between p-4 rounded-xl border transition-all ${
+                  billingType === 'yearly' 
+                    ? 'bg-gradient-to-r from-amber-500/20 to-orange-500/20 border-amber-500' 
+                    : 'bg-gradient-to-r from-amber-500/10 to-orange-500/10 border-amber-500/30 hover:border-amber-500/50'
+                }`}
+              >
+                <div className="text-left">
                   <p className="text-white font-semibold">Annuel</p>
                   <p className="text-emerald-400 text-sm">Économisez 26%</p>
                 </div>
@@ -179,7 +193,7 @@ const TarificationPage = ({ onBack, onSelectPlan, user, token, onLoginRequired }
                   <span className="text-slate-400">€/an</span>
                   <p className="text-xs text-slate-500">soit 3,33€/mois</p>
                 </div>
-              </div>
+              </button>
 
               <div className="flex items-center justify-between p-4 bg-purple-500/10 rounded-xl border border-purple-500/20">
                 <div className="flex items-center gap-2">
