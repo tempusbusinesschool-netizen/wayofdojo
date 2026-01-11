@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { 
   UserPlus, LogIn, Building2, GraduationCap, Settings, 
-  ChevronDown, User, Lock
+  ChevronDown, User, Lock, Heart
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
