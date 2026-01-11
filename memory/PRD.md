@@ -112,7 +112,7 @@ Build a web application for an Aikido club named "Aikido@Game" that serves as a 
 ## 🚧 In Progress / Pending
 
 ### P1 - High Priority
-- [ ] Finalize Stripe Integration (live keys + webhooks)
+- [x] Stripe Integration with new pricing plans (COMPLETED)
 - [ ] Build Parent role interface (read messages/observations)
 
 ### P2 - Medium Priority
