@@ -175,21 +175,38 @@ function AppContent() {
       setShowLoginDialog(false);
       setShowAuthDialog(false);
       
+      // Set user name for transition
+      setTransitionUserName(user.first_name || '');
+      
       // Check if user has a subscription
       const hasSubscription = user.subscription_status === 'active' || user.subscription_status === 'trialing';
       
-      // Navigate to appropriate page based on user profile
+      // Determine destination based on user profile
       if (hasSubscription) {
-        // User has subscription - go to their dashboard
-        setActivePage(null); // Show main dashboard with progress
-        toast.success(`Bienvenue ${user.first_name} ! 👋`);
+        setLoginDestination('dashboard');
       } else {
-        // Show paywall for non-subscribed users
-        toast.success(`Bienvenue ${user.first_name} ! Commencez votre essai gratuit.`);
-        setTimeout(() => setShowTarification(true), 500);
+        setLoginDestination('tarification');
       }
+      
+      // Show transition animation
+      setShowLoginTransition(true);
     }
   }, [isAuthenticated, user?.id]);
+  
+  // Handle login transition complete
+  const handleLoginTransitionComplete = () => {
+    // Navigate to appropriate page after animation
+    if (loginDestination === 'dashboard') {
+      setActivePage(null); // Show main dashboard with progress
+    } else if (loginDestination === 'tarification') {
+      setShowTarification(true);
+    }
+    
+    // Hide transition after a short delay
+    setTimeout(() => {
+      setShowLoginTransition(false);
+    }, 300);
+  };
   
   // Handle onboarding completion
   const handleOnboardingComplete = () => {
