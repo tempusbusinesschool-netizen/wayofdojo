@@ -864,6 +864,355 @@ async def delete_observation(observation_id: str, enseignant: dict = Depends(req
     return {"success": True}
 
 
+# ============================================
+# PARENT ROLE ENDPOINTS
+# ============================================
+
+class ParentRegister(BaseModel):
+    """Inscription Parent"""
+    first_name: str = Field(..., min_length=2)
+    last_name: str = Field(..., min_length=2)
+    email: EmailStr
+    password: str = Field(..., min_length=6)
+    phone: Optional[str] = None
+
+class ParentLogin(BaseModel):
+    """Connexion Parent"""
+    email: EmailStr
+    password: str
+
+class LinkChildRequest(BaseModel):
+    """Lier un enfant au compte parent"""
+    child_email: str  # Email de l'enfant (utilisateur existant)
+    # OU
+    child_first_name: Optional[str] = None
+    child_last_name: Optional[str] = None
+    dojo_id: Optional[str] = None
+
+def create_parent_token(parent: dict) -> str:
+    """Créer un token JWT pour un parent"""
+    payload = {
+        "parent_id": parent["id"],
+        "email": parent["email"],
+        "role": "parent",
+        "exp": datetime.now(timezone.utc) + timedelta(days=30)
+    }
+    return jwt.encode(payload, JWT_SECRET, algorithm="HS256")
+
+async def require_parent_auth(authorization: str = Header(None)):
+    """Middleware d'authentification pour les parents"""
+    if not authorization or not authorization.startswith("Bearer "):
+        raise HTTPException(status_code=401, detail="Token d'authentification requis")
+    
+    token = authorization.replace("Bearer ", "")
+    try:
+        payload = jwt.decode(token, JWT_SECRET, algorithms=["HS256"])
+        if payload.get("role") != "parent":
+            raise HTTPException(status_code=403, detail="Accès réservé aux parents")
+        
+        parent = await db.parents.find_one({"id": payload["parent_id"]}, {"_id": 0, "password_hash": 0})
+        if not parent:
+            raise HTTPException(status_code=404, detail="Parent non trouvé")
+        
+        return parent
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(status_code=401, detail="Token expiré")
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=401, detail="Token invalide")
+
+@api_router.post("/parents/register")
+async def register_parent(data: ParentRegister):
+    """Inscription d'un nouveau compte parent"""
+    # Vérifier si l'email existe déjà
+    existing = await db.parents.find_one({"email": data.email.lower()})
+    if existing:
+        raise HTTPException(status_code=400, detail="Un compte parent avec cet email existe déjà")
+    
+    # Vérifier aussi dans les utilisateurs normaux
+    existing_user = await db.users.find_one({"email": data.email.lower()})
+    if existing_user:
+        raise HTTPException(status_code=400, detail="Cet email est déjà utilisé par un compte adhérent")
+    
+    new_parent = {
+        "id": str(uuid.uuid4()),
+        "first_name": data.first_name,
+        "last_name": data.last_name,
+        "email": data.email.lower(),
+        "password_hash": hash_password(data.password),
+        "phone": data.phone,
+        "children": [],  # Liste des IDs des enfants liés
+        "is_active": True,
+        "created_at": datetime.now(timezone.utc).isoformat()
+    }
+    
+    await db.parents.insert_one(new_parent)
+    
+    token = create_parent_token(new_parent)
+    
+    logger.info(f"Nouveau parent inscrit: {data.first_name} {data.last_name}")
+    
+    return {
+        "success": True,
+        "token": token,
+        "parent": {
+            "id": new_parent["id"],
+            "first_name": new_parent["first_name"],
+            "last_name": new_parent["last_name"],
+            "email": new_parent["email"],
+            "children": []
+        }
+    }
+
+@api_router.post("/parents/login")
+async def login_parent(data: ParentLogin):
+    """Connexion parent"""
+    parent = await db.parents.find_one({"email": data.email.lower()})
+    if not parent:
+        raise HTTPException(status_code=401, detail="Email ou mot de passe incorrect")
+    
+    if not verify_password(data.password, parent["password_hash"]):
+        raise HTTPException(status_code=401, detail="Email ou mot de passe incorrect")
+    
+    if not parent.get("is_active", True):
+        raise HTTPException(status_code=403, detail="Compte désactivé")
+    
+    token = create_parent_token(parent)
+    
+    # Récupérer les informations des enfants
+    children = []
+    for child_id in parent.get("children", []):
+        child = await db.users.find_one({"id": child_id}, {"_id": 0, "password_hash": 0})
+        if child:
+            children.append({
+                "id": child["id"],
+                "first_name": child.get("first_name", ""),
+                "last_name": child.get("last_name", ""),
+                "belt_level": child.get("belt_level", "6e_kyu"),
+                "dojo_name": child.get("dojo_name", "")
+            })
+    
+    return {
+        "success": True,
+        "token": token,
+        "parent": {
+            "id": parent["id"],
+            "first_name": parent["first_name"],
+            "last_name": parent["last_name"],
+            "email": parent["email"],
+            "children": children
+        }
+    }
+
+@api_router.get("/parents/me")
+async def get_parent_profile(parent: dict = Depends(require_parent_auth)):
+    """Récupérer le profil du parent connecté"""
+    # Récupérer les informations complètes des enfants
+    children = []
+    for child_id in parent.get("children", []):
+        child = await db.users.find_one({"id": child_id}, {"_id": 0, "password_hash": 0})
+        if child:
+            children.append({
+                "id": child["id"],
+                "first_name": child.get("first_name", ""),
+                "last_name": child.get("last_name", ""),
+                "email": child.get("email", ""),
+                "belt_level": child.get("belt_level", "6e_kyu"),
+                "dojo_id": child.get("dojo_id", ""),
+                "dojo_name": child.get("dojo_name", "")
+            })
+    
+    return {
+        "parent": parent,
+        "children": children
+    }
+
+@api_router.post("/parents/link-child")
+async def link_child_to_parent(data: LinkChildRequest, parent: dict = Depends(require_parent_auth)):
+    """Lier un enfant (utilisateur existant) au compte parent"""
+    
+    # Rechercher l'enfant par email
+    if data.child_email:
+        child = await db.users.find_one({"email": data.child_email.lower()})
+        if not child:
+            raise HTTPException(status_code=404, detail="Aucun adhérent trouvé avec cet email")
+    else:
+        # Rechercher par nom dans un dojo spécifique
+        if not data.child_first_name or not data.child_last_name:
+            raise HTTPException(status_code=400, detail="Email ou nom/prénom requis")
+        
+        query = {
+            "first_name": {"$regex": data.child_first_name, "$options": "i"},
+            "last_name": {"$regex": data.child_last_name, "$options": "i"}
+        }
+        if data.dojo_id:
+            query["dojo_id"] = data.dojo_id
+        
+        child = await db.users.find_one(query)
+        if not child:
+            raise HTTPException(status_code=404, detail="Aucun adhérent trouvé avec ces informations")
+    
+    child_id = child["id"]
+    
+    # Vérifier si déjà lié
+    if child_id in parent.get("children", []):
+        raise HTTPException(status_code=400, detail="Cet enfant est déjà lié à votre compte")
+    
+    # Vérifier si l'enfant n'est pas déjà lié à un autre parent
+    other_parent = await db.parents.find_one({
+        "id": {"$ne": parent["id"]},
+        "children": child_id
+    })
+    if other_parent:
+        raise HTTPException(status_code=400, detail="Cet adhérent est déjà lié à un autre compte parent")
+    
+    # Lier l'enfant
+    await db.parents.update_one(
+        {"id": parent["id"]},
+        {"$push": {"children": child_id}}
+    )
+    
+    # Mettre à jour l'utilisateur enfant avec la référence du parent
+    await db.users.update_one(
+        {"id": child_id},
+        {"$set": {"parent_id": parent["id"]}}
+    )
+    
+    logger.info(f"Enfant {child['first_name']} {child['last_name']} lié au parent {parent['first_name']} {parent['last_name']}")
+    
+    return {
+        "success": True,
+        "message": f"{child['first_name']} a été ajouté à votre compte",
+        "child": {
+            "id": child["id"],
+            "first_name": child.get("first_name", ""),
+            "last_name": child.get("last_name", ""),
+            "belt_level": child.get("belt_level", "6e_kyu"),
+            "dojo_name": child.get("dojo_name", "")
+        }
+    }
+
+@api_router.delete("/parents/unlink-child/{child_id}")
+async def unlink_child_from_parent(child_id: str, parent: dict = Depends(require_parent_auth)):
+    """Délier un enfant du compte parent"""
+    
+    if child_id not in parent.get("children", []):
+        raise HTTPException(status_code=404, detail="Cet enfant n'est pas lié à votre compte")
+    
+    # Retirer l'enfant de la liste
+    await db.parents.update_one(
+        {"id": parent["id"]},
+        {"$pull": {"children": child_id}}
+    )
+    
+    # Retirer la référence du parent chez l'enfant
+    await db.users.update_one(
+        {"id": child_id},
+        {"$unset": {"parent_id": ""}}
+    )
+    
+    return {"success": True, "message": "Enfant retiré de votre compte"}
+
+@api_router.get("/parents/messages")
+async def get_parent_messages(parent: dict = Depends(require_parent_auth)):
+    """Récupérer tous les messages reçus par le parent"""
+    
+    # Messages adressés directement au parent
+    messages = await db.messages.find(
+        {"recipient_id": parent["id"]},
+        {"_id": 0}
+    ).sort("created_at", -1).to_list(100)
+    
+    # Compter les non-lus
+    unread_count = sum(1 for m in messages if not m.get("read", False))
+    
+    return {
+        "messages": messages,
+        "unread_count": unread_count
+    }
+
+@api_router.get("/parents/observations")
+async def get_parent_observations(parent: dict = Depends(require_parent_auth)):
+    """Récupérer toutes les observations des enfants du parent"""
+    
+    children_ids = parent.get("children", [])
+    if not children_ids:
+        return {"observations": [], "children_data": {}}
+    
+    # Récupérer les observations de tous les enfants
+    observations = await db.observations.find(
+        {"student_id": {"$in": children_ids}},
+        {"_id": 0}
+    ).sort("created_at", -1).to_list(200)
+    
+    # Récupérer les informations des enfants
+    children_data = {}
+    for child_id in children_ids:
+        child = await db.users.find_one({"id": child_id}, {"_id": 0, "password_hash": 0})
+        if child:
+            children_data[child_id] = {
+                "first_name": child.get("first_name", ""),
+                "last_name": child.get("last_name", ""),
+                "belt_level": child.get("belt_level", "6e_kyu")
+            }
+    
+    return {
+        "observations": observations,
+        "children_data": children_data
+    }
+
+@api_router.get("/parents/child/{child_id}/progress")
+async def get_child_progress(child_id: str, parent: dict = Depends(require_parent_auth)):
+    """Récupérer la progression d'un enfant spécifique"""
+    
+    if child_id not in parent.get("children", []):
+        raise HTTPException(status_code=403, detail="Vous n'avez pas accès aux données de cet enfant")
+    
+    child = await db.users.find_one({"id": child_id}, {"_id": 0, "password_hash": 0})
+    if not child:
+        raise HTTPException(status_code=404, detail="Enfant non trouvé")
+    
+    # Récupérer les observations de l'enfant
+    observations = await db.observations.find(
+        {"student_id": child_id},
+        {"_id": 0}
+    ).sort("created_at", -1).to_list(50)
+    
+    # Calculer les statistiques de progression
+    progression = child.get("progression", {})
+    techniques_mastered = sum(1 for p in progression.values() if p.get("mastery_level", 0) >= 3)
+    techniques_in_progress = sum(1 for p in progression.values() if 0 < p.get("mastery_level", 0) < 3)
+    
+    return {
+        "child": {
+            "id": child["id"],
+            "first_name": child.get("first_name", ""),
+            "last_name": child.get("last_name", ""),
+            "belt_level": child.get("belt_level", "6e_kyu"),
+            "dojo_name": child.get("dojo_name", ""),
+            "created_at": child.get("created_at", "")
+        },
+        "observations": observations,
+        "stats": {
+            "techniques_mastered": techniques_mastered,
+            "techniques_in_progress": techniques_in_progress,
+            "total_observations": len(observations)
+        }
+    }
+
+@api_router.patch("/parents/messages/{message_id}/read")
+async def mark_message_as_read(message_id: str, parent: dict = Depends(require_parent_auth)):
+    """Marquer un message comme lu"""
+    result = await db.messages.update_one(
+        {"id": message_id, "recipient_id": parent["id"]},
+        {"$set": {"read": True, "read_at": datetime.now(timezone.utc).isoformat()}}
+    )
+    
+    if result.modified_count == 0:
+        raise HTTPException(status_code=404, detail="Message non trouvé")
+    
+    return {"success": True}
+
+
 @api_router.post("/dojos/{dojo_id}/assign-user/{user_id}")
 async def assign_user_to_dojo(dojo_id: str, user_id: str, auth: SuperAdminAuth):
     """Assigner un utilisateur à un dojo (Super Admin uniquement)"""
