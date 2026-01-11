@@ -621,6 +621,19 @@ function AppContent() {
                   <span className="hidden md:inline">Espace de gestion</span>
                 </Button>
               )}
+              
+              {/* Bouton Espace Enseignant */}
+              {!enseignantMode && !isAdminMode && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowEnseignantLogin(true)}
+                  className="text-amber-400 hover:text-amber-300 hover:bg-amber-900/20 h-8 px-2 sm:px-3"
+                >
+                  <BookOpen className="w-4 h-4 sm:mr-1" />
+                  <span className="hidden md:inline">Enseignant</span>
+                </Button>
+              )}
 
               {isAdmin && (
                 <Button
