@@ -2,8 +2,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Mic, MicOff, Volume2, X, Loader2, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
+import { playTanakaPhrase, getGreetingPhrase } from '@/services/tanakaVoiceService';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api/voice-agent';
+
+// Maître Tanaka 3D image
+const TANAKA_IMAGE = "/images/tanaka/portrait.png";
 
 /**
  * MaitreTanaka - Floating voice agent for children
@@ -27,18 +31,40 @@ const MaitreTanaka = ({ childContext = null, isVisible = true }) => {
     conversationEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [conversation]);
 
-  // Initialize session
+  // Initialize session with pre-recorded welcome
   useEffect(() => {
     if (isOpen && !sessionId) {
       setSessionId(`tanaka_${Date.now()}`);
-      // Add welcome message
+      
+      // Play pre-recorded welcome message
+      const welcomeText = "Bienvenue dans mon dojo virtuel, jeune ninja ! 🥋 Je suis Maître Tanaka. Appuie sur le microphone pour me parler.";
       setConversation([{
         role: 'master',
-        text: "Bienvenue dans mon dojo virtuel, jeune ninja ! 🥋 Je suis Maître Tanaka. Appuie sur le microphone pour me parler.",
-        audio: null
+        text: welcomeText,
+        preRecorded: 'welcome'
       }]);
+      
+      // Auto-play welcome audio
+      setTimeout(() => {
+        playPreRecordedPhrase('welcome');
+      }, 500);
     }
   }, [isOpen, sessionId]);
+
+  // Play a pre-recorded phrase
+  const playPreRecordedPhrase = async (phraseKey) => {
+    try {
+      setIsPlaying(true);
+      const result = await playTanakaPhrase(phraseKey);
+      if (result.audio) {
+        audioRef.current = result.audio;
+        result.audio.onended = () => setIsPlaying(false);
+      }
+    } catch (error) {
+      console.error('Error playing pre-recorded phrase:', error);
+      setIsPlaying(false);
+    }
+  };
 
   const startRecording = async () => {
     try {
