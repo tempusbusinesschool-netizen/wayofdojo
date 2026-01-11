@@ -145,7 +145,10 @@ const TarificationPage = ({ onBack, onSelectPlan, user, token, onLoginRequired }
               <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center mb-4">
                 <User className="w-7 h-7 text-white" />
               </div>
-              <h2 className="text-2xl font-bold text-white">Utilisateur unique</h2>
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-bold text-white">Utilisateur unique</h2>
+                <span className="text-amber-400 font-semibold text-sm">À partir de 4,50 €/mois</span>
+              </div>
               <p className="text-slate-400">1 personne = 1 accès</p>
             </div>
 
