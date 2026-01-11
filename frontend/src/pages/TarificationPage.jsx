@@ -3,24 +3,100 @@ import {
   Check, X, Zap, Building2, Crown, Shield, CreditCard, 
   Clock, Users, Award, Target, ChevronRight, Sparkles,
   Calendar, Star, Lock, GraduationCap, Heart, User,
-  BookOpen, BarChart3, Headphones, FileText
+  BookOpen, BarChart3, Headphones, FileText, Loader2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { toast } from 'sonner';
+import subscriptionService from '@/services/subscriptionService';
 
-const TarificationPage = ({ onBack, onSelectPlan }) => {
+const TarificationPage = ({ onBack, onSelectPlan, user, token, onLoginRequired }) => {
   const [selectedClubSize, setSelectedClubSize] = useState('small');
+  const [loading, setLoading] = useState(null);
+  const [showQuoteDialog, setShowQuoteDialog] = useState(false);
+  const [billingType, setBillingType] = useState('monthly'); // monthly or yearly
+  const [quoteForm, setQuoteForm] = useState({
+    club_name: '',
+    contact_name: '',
+    email: '',
+    phone: '',
+    estimated_members: 200,
+    message: ''
+  });
 
   const clubPricing = {
-    small: { label: '< 50 adhérents', price: 19.90 },
-    medium: { label: '50 - 150 adhérents', price: 29.90 },
-    large: { label: '> 150 adhérents', price: null, label2: 'Sur devis' }
+    small: { label: '< 50 adhérents', price: 19.90, planId: 'club_petit' },
+    medium: { label: '50 - 150 adhérents', price: 29.90, planId: 'club_moyen' },
+    large: { label: '> 150 adhérents', price: null, label2: 'Sur devis', planId: 'club_grand' }
   };
 
-  const handleSelectPlan = (planId, variant = null) => {
-    if (onSelectPlan) {
-      onSelectPlan(planId, variant);
+  const handleSelectPlan = async (planId, withCard = false) => {
+    // Check if user is logged in
+    if (!user || !token) {
+      toast.error('Veuillez vous connecter pour souscrire');
+      if (onLoginRequired) onLoginRequired();
+      return;
     }
+
+    // Handle quote request for large clubs
+    if (planId === 'club_grand') {
+      setShowQuoteDialog(true);
+      return;
+    }
+
+    setLoading(planId);
+
+    try {
+      if (withCard) {
+        // Checkout with Stripe
+        const result = await subscriptionService.checkoutWithCard(planId, token);
+        if (result.checkout_url) {
+          window.location.href = result.checkout_url;
+        }
+      } else {
+        // Start trial without card
+        const result = await subscriptionService.startTrial(planId, token);
+        toast.success(result.message);
+        if (onSelectPlan) onSelectPlan(planId, result);
+      }
+    } catch (error) {
+      toast.error(error.message || 'Une erreur est survenue');
+    } finally {
+      setLoading(null);
+    }
+  };
+
+  const handleQuoteSubmit = async (e) => {
+    e.preventDefault();
+    setLoading('quote');
+
+    try {
+      const result = await subscriptionService.requestQuote(quoteForm);
+      toast.success(result.message);
+      setShowQuoteDialog(false);
+      setQuoteForm({
+        club_name: '',
+        contact_name: '',
+        email: '',
+        phone: '',
+        estimated_members: 200,
+        message: ''
+      });
+    } catch (error) {
+      toast.error(error.message || 'Erreur lors de l\'envoi du devis');
+    } finally {
+      setLoading(null);
+    }
+  };
+
+  const getPlanId = (type) => {
+    if (type === 'individual') {
+      return billingType === 'yearly' ? 'utilisateur_annuel' : 'utilisateur_mensuel';
+    }
+    return clubPricing[selectedClubSize].planId;
   };
 
   return (
