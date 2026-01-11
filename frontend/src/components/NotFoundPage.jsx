@@ -38,7 +38,7 @@ const NotFoundPage = ({ onGoHome, onGoBack }) => {
             className="border-slate-600 text-slate-300 hover:bg-slate-800"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Retour
+            Précédent
           </Button>
         )}
         {onGoHome && (
@@ -47,7 +47,7 @@ const NotFoundPage = ({ onGoHome, onGoBack }) => {
             className="bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-400 hover:to-amber-400 text-white"
           >
             <Home className="w-4 h-4 mr-2" />
-            Retour à l'accueil
+            Accueil
           </Button>
         )}
       </div>
