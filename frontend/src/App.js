@@ -1831,6 +1831,13 @@ function AppContent() {
         onLoginSuccess={handleEnseignantLoginSuccess}
       />
 
+      {/* Parent Login Dialog */}
+      <ParentLoginDialog
+        isOpen={showParentLogin}
+        onClose={() => setShowParentLogin(false)}
+        onSuccess={handleParentLoginSuccess}
+      />
+
       {/* Auth Dialog (Inscription) */}
       <AuthDialog
         isOpen={showAuthDialog}
