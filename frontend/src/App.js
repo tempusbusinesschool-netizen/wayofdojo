@@ -138,6 +138,11 @@ function AppContent() {
   // Tarification state
   const [showTarification, setShowTarification] = useState(false);
   
+  // Login transition state
+  const [showLoginTransition, setShowLoginTransition] = useState(false);
+  const [loginDestination, setLoginDestination] = useState('dashboard');
+  const [transitionUserName, setTransitionUserName] = useState('');
+  
   // Check if enseignant is already logged in
   useEffect(() => {
     const storedToken = localStorage.getItem('enseignant_token');
