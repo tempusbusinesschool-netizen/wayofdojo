@@ -715,6 +715,11 @@ function AppContent() {
         <ModeEmploiPage onBack={() => setShowModeEmploi(false)} />
       )}
       
+      {/* Tarification Page - Affichage plein écran */}
+      {showTarification && (
+        <TarificationPage onBack={() => setShowTarification(false)} />
+      )}
+      
       {/* Enseignant Dashboard - Affichage complet quand connecté en mode enseignant */}
       {enseignantMode && enseignantInfo && enseignantToken && (
         <EnseignantDashboard
