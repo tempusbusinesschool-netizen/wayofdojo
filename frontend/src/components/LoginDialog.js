@@ -6,10 +6,12 @@ import { Label } from "@/components/ui/label";
 import { Mail, Lock, LogIn } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
+import ForgotPasswordDialog from "./ForgotPasswordDialog";
 
 function LoginDialog({ isOpen, onClose }) {
   const { login } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
   
   // Login form
   const [loginEmail, setLoginEmail] = useState("");
