@@ -5635,6 +5635,10 @@ async def get_child_stats_for_parent(
 # Include the router in the main app
 app.include_router(api_router)
 
+# Import and include voice agent router
+from voice_agent import voice_router
+app.include_router(voice_router)
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
