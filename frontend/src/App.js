@@ -770,7 +770,7 @@ function AppContent() {
           token={token}
           onLoginRequired={() => {
             setShowTarification(false);
-            setShowAuth(true);
+            setShowAuthDialog(true);
           }}
           onSelectPlan={(planId, result) => {
             console.log('Plan selected:', planId, result);
