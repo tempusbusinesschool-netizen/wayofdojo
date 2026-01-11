@@ -717,7 +717,27 @@ function AppContent() {
       
       {/* Tarification Page - Affichage plein écran */}
       {showTarification && (
-        <TarificationPage onBack={() => setShowTarification(false)} />
+        <TarificationPage 
+          onBack={() => setShowTarification(false)}
+          user={user}
+          token={token}
+          onLoginRequired={() => {
+            setShowTarification(false);
+            setShowAuth(true);
+          }}
+          onSelectPlan={(planId, result) => {
+            console.log('Plan selected:', planId, result);
+            // Refresh user data after subscription
+            if (result?.subscription) {
+              setUser(prev => ({
+                ...prev,
+                subscription_status: result.subscription.status,
+                subscription_plan: planId
+              }));
+            }
+            setShowTarification(false);
+          }}
+        />
       )}
       
       {/* Enseignant Dashboard - Affichage complet quand connecté en mode enseignant */}
