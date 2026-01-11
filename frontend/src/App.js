@@ -784,6 +784,13 @@ function AppContent() {
         />
       )}
       
+      {/* Parent Dashboard - Affichage complet quand connecté en mode parent */}
+      {parentMode && parentInfo && (
+        <ParentDashboard
+          onLogout={handleParentLogout}
+        />
+      )}
+      
       {/* Enseignant Dashboard - Affichage complet quand connecté en mode enseignant */}
       {enseignantMode && enseignantInfo && enseignantToken && (
         <EnseignantDashboard
