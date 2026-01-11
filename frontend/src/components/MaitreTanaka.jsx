@@ -219,9 +219,18 @@ const MaitreTanaka = ({ childContext = null, isVisible = true }) => {
             {/* Pulse animation */}
             <div className="absolute inset-0 bg-amber-500 rounded-full animate-ping opacity-25"></div>
             
-            {/* Main button */}
-            <div className="relative w-16 h-16 bg-gradient-to-br from-amber-500 to-orange-600 rounded-full shadow-lg flex items-center justify-center transform transition-transform group-hover:scale-110">
-              <span className="text-3xl">🥋</span>
+            {/* Main button with 3D image */}
+            <div className="relative w-16 h-16 rounded-full shadow-lg overflow-hidden border-2 border-amber-400 transform transition-transform group-hover:scale-110">
+              <img 
+                src={TANAKA_IMAGE} 
+                alt="Maître Tanaka" 
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  e.target.parentElement.classList.add('bg-gradient-to-br', 'from-amber-500', 'to-orange-600', 'flex', 'items-center', 'justify-center');
+                  e.target.parentElement.innerHTML = '<span class="text-3xl">🥋</span>';
+                }}
+              />
             </div>
             
             {/* Label */}
