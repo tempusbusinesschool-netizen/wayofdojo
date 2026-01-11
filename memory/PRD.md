@@ -266,3 +266,8 @@ Build a web application for an Aikido club named "Aikido@Game" that serves as a 
 ---
 
 *Last updated: January 11, 2025*
+
+## 🐛 Bug Fixes - Jan 11, 2025
+- [x] Fixed deployment failure caused by missing `Header` import in `server.py`
+  - Error: `NameError: name 'Header' is not defined` at line 902
+  - Fix: Added `Header` to FastAPI imports
