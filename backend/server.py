@@ -4005,6 +4005,40 @@ class SubscriptionCheckoutWithCardRequest(BaseModel):
     plan_id: str
     origin_url: str
 
+class QuoteRequest(BaseModel):
+    club_name: str
+    contact_name: str
+    email: EmailStr
+    phone: Optional[str] = None
+    estimated_members: int
+    message: Optional[str] = None
+
+@api_router.post("/subscriptions/request-quote")
+async def request_quote(data: QuoteRequest):
+    """Demander un devis pour les grandes structures (>150 adhérents)"""
+    
+    quote_request = {
+        "id": str(uuid.uuid4()),
+        "club_name": data.club_name,
+        "contact_name": data.contact_name,
+        "email": data.email,
+        "phone": data.phone,
+        "estimated_members": data.estimated_members,
+        "message": data.message,
+        "status": "pending",
+        "created_at": datetime.now(timezone.utc).isoformat()
+    }
+    
+    await db.quote_requests.insert_one(quote_request)
+    
+    logger.info(f"New quote request from {data.club_name} ({data.email})")
+    
+    return {
+        "success": True,
+        "message": "Votre demande de devis a été envoyée. Nous vous contacterons sous 48h.",
+        "quote_id": quote_request["id"]
+    }
+
 @api_router.post("/subscriptions/checkout-with-card")
 async def create_subscription_checkout_with_card(data: SubscriptionCheckoutWithCardRequest, user: dict = Depends(require_auth)):
     """Créer une session de checkout Stripe avec carte bancaire pour un abonnement"""
@@ -4014,6 +4048,13 @@ async def create_subscription_checkout_with_card(data: SubscriptionCheckoutWithC
     
     plan = SUBSCRIPTION_PLANS[data.plan_id]
     
+    # Check if plan requires a quote
+    if plan.get("requires_quote", False):
+        raise HTTPException(
+            status_code=400, 
+            detail="Ce plan nécessite un devis personnalisé. Utilisez /subscriptions/request-quote"
+        )
+    
     # Check if user already has an active subscription
     existing_sub = await db.subscriptions.find_one({
         "user_id": user["id"],
@@ -4021,7 +4062,7 @@ async def create_subscription_checkout_with_card(data: SubscriptionCheckoutWithC
     })
     
     if existing_sub:
-        raise HTTPException(status_code=400, detail="Tu as déjà un abonnement actif")
+        raise HTTPException(status_code=400, detail="Vous avez déjà un abonnement actif")
     
     # Get Stripe API key
     stripe_api_key = os.environ.get("STRIPE_API_KEY")
@@ -4033,12 +4074,19 @@ async def create_subscription_checkout_with_card(data: SubscriptionCheckoutWithC
     
     stripe_checkout = StripeCheckout(api_key=stripe_api_key, webhook_url=webhook_url)
     
-    # Create checkout session
-    success_url = f"{data.origin_url}?subscription=success&plan={data.plan_id}"
+    # Create checkout session with session_id placeholder
+    success_url = f"{data.origin_url}?subscription=success&plan={data.plan_id}&session_id={{CHECKOUT_SESSION_ID}}"
     cancel_url = f"{data.origin_url}?subscription=cancelled"
     
     # Calculate trial end date
     trial_end = datetime.now(timezone.utc) + timedelta(days=plan["trial_days"])
+    
+    # Determine billing description
+    billing_period = plan.get("billing_period", "monthly")
+    if billing_period == "yearly":
+        billing_desc = "Abonnement annuel"
+    else:
+        billing_desc = "Abonnement mensuel"
     
     checkout_request = CheckoutSessionRequest(
         amount=float(plan["price"]),
@@ -4050,7 +4098,10 @@ async def create_subscription_checkout_with_card(data: SubscriptionCheckoutWithC
             "user_email": user["email"],
             "plan_id": data.plan_id,
             "plan_name": plan["name"],
+            "display_name": plan.get("display_name", plan["name"]),
+            "billing_period": billing_period,
             "trial_days": str(plan["trial_days"]),
+            "commitment_months": str(plan["commitment_months"]),
             "type": "subscription_with_trial"
         }
     )
@@ -4065,6 +4116,8 @@ async def create_subscription_checkout_with_card(data: SubscriptionCheckoutWithC
             "user_email": user["email"],
             "plan_id": data.plan_id,
             "plan_name": plan["name"],
+            "display_name": plan.get("display_name", plan["name"]),
+            "billing_period": billing_period,
             "status": "pending_payment",
             "trial_start": datetime.now(timezone.utc).isoformat(),
             "trial_end": trial_end.isoformat(),
@@ -4074,7 +4127,8 @@ async def create_subscription_checkout_with_card(data: SubscriptionCheckoutWithC
             "created_at": datetime.now(timezone.utc).isoformat(),
             "stripe_session_id": session.session_id,
             "card_added": True,
-            "payment_method": "card"
+            "payment_method": "card",
+            "features": plan.get("features", [])
         }
         
         await db.subscriptions.insert_one(subscription)
