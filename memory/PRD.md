@@ -103,9 +103,23 @@ Build a web application for an Aikido club named "Aikido@Game" that serves as a 
   - Available at: `/Aikido_Game_Video.mp4`
   - Perfect for social media sharing
 - [x] Pricing Page (TarificationPage.jsx)
-  - Interactive pricing grid with Ninja and Dojo plans
+  - Interactive pricing grid with Utilisateur unique and Club plans
   - Accessible via "Tarifs" button in header
   - FAQ section included
+  - Stripe checkout integration
+  - Quote request system for large clubs
+
+### Stripe Integration - Jan 11, 2025
+- [x] Backend subscription plans updated with 5 plans:
+  - utilisateur_mensuel (4.50€/month, 90 days trial)
+  - utilisateur_annuel (39.90€/year, 90 days trial)
+  - club_petit (19.90€/month, 10 days trial)
+  - club_moyen (29.90€/month, 10 days trial)
+  - club_grand (quote required)
+- [x] Checkout endpoints: `/api/subscriptions/checkout` and `/api/subscriptions/checkout-with-card`
+- [x] Quote request endpoint: `/api/subscriptions/request-quote`
+- [x] Frontend subscription service created
+- [x] TarificationPage integrated with Stripe checkout
 
 ---
 
