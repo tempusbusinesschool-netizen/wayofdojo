@@ -1911,16 +1911,16 @@ function AppContent() {
       />
       
       {/* Maître Tanaka - Agent Vocal pour les enfants */}
-      {/* Visible sur les pages enfant ou si mode jeune ninja actif */}
+      {/* Visible sur les pages enfant ou si mode jeune ninja actif (y compris page d'accueil) */}
       <MaitreTanaka 
         isVisible={
+          (localStorage.getItem('ninja-aikido-mode') === 'jeune') || 
           activePage === 'commence' ||
           activePage === 'apprends' ||
           activePage === 'entraine' ||
           activePage === 'valide' ||
           activePage === 'progresse' ||
-          activePage === 'maitrise' ||
-          localStorage.getItem('ninja-aikido-mode') === 'jeune'
+          activePage === 'maitrise'
         }
         childContext={isAuthenticated ? {
           first_name: user?.first_name,
