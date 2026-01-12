@@ -222,6 +222,27 @@ const AgeSelector = ({ onSelect }) => {
             </div>
           </div>
           
+          {/* Maître Tanaka - en bas à droite de la carte */}
+          <div className="absolute bottom-2 right-2 z-20">
+            <div className="relative">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 border-amber-400 shadow-lg bg-gradient-to-br from-amber-500 to-orange-600">
+                <img 
+                  src="/images/tanaka/portrait.png" 
+                  alt="Maître Tanaka" 
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.parentElement.innerHTML = '<span class="text-3xl flex items-center justify-center h-full">🥋</span>';
+                  }}
+                />
+              </div>
+              {/* Bulle "Parle-moi" */}
+              <div className="absolute -top-2 -left-2 bg-red-500 text-white text-[10px] sm:text-xs px-2 py-0.5 rounded-full font-bold whitespace-nowrap animate-bounce shadow-lg">
+                Parle-moi !
+              </div>
+            </div>
+          </div>
+          
           {/* Effet de brillance */}
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent 
             -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
