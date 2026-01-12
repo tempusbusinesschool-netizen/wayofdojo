@@ -921,13 +921,12 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                         {/* Homme à droite - fondu progressif vers le centre */}
                         <div className={`absolute right-0 bottom-0 hidden md:block z-20 pointer-events-none overflow-hidden rounded-br-3xl ${visitorMode === 'enfant' ? 'opacity-0' : ''}`}>
                           <img 
-                            src={AIKIDO_CHARACTERS.FEMME_SEULE} 
+                            src={AIKIDO_CHARACTERS.HOMME_SEUL} 
                             alt="Sensei Homme" 
                             className="h-52 lg:h-60 xl:h-[17rem] object-cover object-top"
                             style={{
                               maskImage: 'linear-gradient(to left, black 45%, transparent 100%)',
-                              WebkitMaskImage: 'linear-gradient(to left, black 45%, transparent 100%)',
-                              transform: 'scaleX(-1)'
+                              WebkitMaskImage: 'linear-gradient(to left, black 45%, transparent 100%)'
                             }}
                           />
                         </div>
