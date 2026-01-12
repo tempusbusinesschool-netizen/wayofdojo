@@ -911,9 +911,11 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                             <img 
                               src={AIKIDO_CHARACTERS.NINJA_COUPLE_TRANSPARENT} 
                               alt="Couple Aikido" 
-                              className="h-44 lg:h-52 xl:h-60 object-cover object-top drop-shadow-2xl"
+                              className="h-44 lg:h-52 xl:h-60 object-contain"
                               style={{
-                                filter: 'drop-shadow(0 10px 25px rgba(0,0,0,0.5))'
+                                filter: 'drop-shadow(0 10px 25px rgba(0,0,0,0.5))',
+                                background: 'transparent',
+                                mixBlendMode: 'normal'
                               }}
                             />
                           </div>
