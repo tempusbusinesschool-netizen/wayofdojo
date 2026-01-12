@@ -925,8 +925,8 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                             alt="Sensei Homme" 
                             className="h-48 lg:h-56 xl:h-64 object-cover object-top"
                             style={{
-                              maskImage: 'linear-gradient(to left, black 0%, black 15%, transparent 100%)',
-                              WebkitMaskImage: 'linear-gradient(to left, black 0%, black 15%, transparent 100%)'
+                              maskImage: 'linear-gradient(to left, black 0%, black 85%, transparent 100%)',
+                              WebkitMaskImage: 'linear-gradient(to left, black 0%, black 85%, transparent 100%)'
                             }}
                           />
                         </div>
