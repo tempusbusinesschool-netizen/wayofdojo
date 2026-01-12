@@ -905,11 +905,11 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                           </div>
                         )}
                         
-                        {/* Image du couple Ninja Confirmé en haut à droite - UNIQUEMENT pour mode enfant */}
+                        {/* Image du couple Ninja - fond transparent - en haut à droite - UNIQUEMENT pour mode enfant */}
                         {visitorMode === 'enfant' && (
                           <div className="absolute -top-6 -right-6 z-20 hidden md:block pointer-events-none">
                             <img 
-                              src={AIKIDO_CHARACTERS.NINJA_CONFIRME} 
+                              src={AIKIDO_CHARACTERS.NINJA_COUPLE_TRANSPARENT} 
                               alt="Couple Aikido" 
                               className="h-44 lg:h-52 xl:h-60 object-cover object-top drop-shadow-2xl"
                               style={{
