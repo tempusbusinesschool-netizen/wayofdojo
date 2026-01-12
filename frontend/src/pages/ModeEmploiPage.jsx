@@ -336,10 +336,11 @@ const ModeEmploiPage = ({ onBack }) => {
             {/* Section Header */}
             <div className={`bg-gradient-to-r ${section.color} p-6 rounded-2xl mb-8 shadow-xl`}>
               <div className="flex items-center gap-4">
-                <div className="p-4 bg-white/20 rounded-xl backdrop-blur-sm">
-                  <IconComponent size={40} className="text-white" />
+                {/* Big Section Number */}
+                <div className="w-20 h-20 bg-white/20 rounded-2xl backdrop-blur-sm flex items-center justify-center">
+                  <span className="text-5xl font-black text-white drop-shadow-lg">{currentSection + 1}</span>
                 </div>
-                <div>
+                <div className="flex-1">
                   <span className="text-white/70 text-sm">Section {currentSection + 1}/{sections.length}</span>
                   <h1 className="text-3xl font-bold text-white">{section.content.title}</h1>
                   <p className="text-white/80">{section.content.subtitle}</p>
