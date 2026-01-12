@@ -1,0 +1,154 @@
+{
+  "identity": {
+    "persona": "E1",
+    "philosophy": "Fusion over Imitation. Emotion First. Content is King.",
+    "anti_patterns": [
+      "Generic Bootstrap layouts",
+      "Inter font for headings",
+      "Gradient overload",
+      "Symmetry addiction"
+    ]
+  },
+  "typography": {
+    "kids_mode": {
+      "headings": {
+        "family": "Fredoka",
+        "weights": ["600", "700"],
+        "usage": "Main titles, Module names",
+        "letter_spacing": "tracking-wide"
+      },
+      "body": {
+        "family": "Quicksand",
+        "weights": ["500", "700"],
+        "usage": "Descriptions, Instructions"
+      }
+    },
+    "adults_mode": {
+      "headings": {
+        "family": "Cinzel",
+        "weights": ["700", "900"],
+        "usage": "Main titles, Ranks",
+        "letter_spacing": "tracking-tighter"
+      },
+      "body": {
+        "family": "Manrope",
+        "weights": ["400", "600"],
+        "usage": "Technical descriptions, Progress"
+      }
+    }
+  },
+  "colors": {
+    "palette_strategy": "Dual Mode Dojo",
+    "kids_theme": {
+      "name": "Jeune Ninja",
+      "background": "#FFFBF0",
+      "foreground": "#2D3436",
+      "primary": "#FF6B35",
+      "secondary": "#7CB518",
+      "accent": "#FDCB6E",
+      "card_bg": "#FFFFFF",
+      "border": "#FFEAA7"
+    },
+    "adults_theme": {
+      "name": "Ninja Confirmé",
+      "background": "#0F172A",
+      "foreground": "#F8FAFC",
+      "primary": "#6366F1",
+      "secondary": "#0EA5E9",
+      "accent": "#10B981",
+      "card_bg": "#1E293B",
+      "border": "#334155"
+    },
+    "common": {
+      "success": "#10B981",
+      "warning": "#F59E0B",
+      "error": "#EF4444"
+    }
+  },
+  "layout_strategy": {
+    "mobile_first": true,
+    "spacing_scale": "Generous (p-6, p-8)",
+    "grid_system": "Bento Grid (Mode A)",
+    "breakpoints": {
+      "sm": "640px",
+      "md": "768px",
+      "lg": "1024px"
+    }
+  },
+  "pages": {
+    "selection_page": {
+      "name": "Dojo Entrance",
+      "structure": "Split Screen Vertical (Mobile)",
+      "components": [
+        {
+          "name": "ModeCard",
+          "props": {
+            "variant": "kid | adult",
+            "image": "3D Character Asset",
+            "action": "Select Mode"
+          },
+          "styling": "h-[45vh] w-full flex flex-col justify-center items-center relative overflow-hidden transition-all duration-500 hover:h-[55vh]"
+        }
+      ]
+    },
+    "dashboard_page": {
+      "name": "Training Scroll",
+      "structure": "Vertical Bento Grid",
+      "modules": [
+        "Commence (Start)",
+        "Apprends (Learn)",
+        "Entraine (Train)",
+        "Valide (Validate)",
+        "Progresse (Progress)",
+        "Maitrise (Master)"
+      ],
+      "components": [
+        {
+          "name": "ModuleCard",
+          "styling": "rounded-2xl p-6 shadow-lg border-l-4 transition-transform hover:scale-[1.02] active:scale-95"
+        },
+        {
+          "name": "TanakaWidget",
+          "visibility": "Kids Mode Only",
+          "position": "fixed bottom-4 right-4 z-50",
+          "styling": "w-16 h-16 rounded-full border-4 border-white shadow-xl bg-cover"
+        }
+      ]
+    }
+  },
+  "components": {
+    "ui_library": "shadcn/ui",
+    "customizations": [
+      {
+        "component": "Button",
+        "style": "rounded-full font-bold uppercase tracking-widest shadow-lg hover:shadow-xl transition-all"
+      },
+      {
+        "component": "Card",
+        "style": "backdrop-blur-md bg-opacity-90 border-opacity-50"
+      }
+    ],
+    "animations": {
+      "library": "framer-motion",
+      "presets": {
+        "fade_in": { "initial": { "opacity": 0 }, "animate": { "opacity": 1 } },
+        "slide_up": { "initial": { "y": 20, "opacity": 0 }, "animate": { "y": 0, "opacity": 1 } },
+        "hover_scale": { "scale": 1.05 }
+      }
+    }
+  },
+  "assets": {
+    "instructions": "Use existing 3D character assets for 'Jeune Ninja' and 'Ninja Confirmé'. Use existing 'Maître Tanaka' portrait.",
+    "placeholders": {
+      "kid_mode_bg": "https://images.pexels.com/photos/7233323/pexels-photo-7233323.jpeg",
+      "adult_mode_bg": "https://images.pexels.com/photos/7859016/pexels-photo-7859016.jpeg"
+    }
+  },
+  "universal_guidelines": [
+    "Do not use gradients for text readability.",
+    "Ensure 44px+ touch targets for all mobile interactions.",
+    "Use 'sonner' for toast notifications.",
+    "Respect 'prefers-reduced-motion'.",
+    "Add data-testid to all interactive elements."
+  ]
+}
