@@ -713,67 +713,13 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                       {/* Version MOBILE - Landing page avec les 2 gros blocs */}
                       <div className="block sm:hidden px-2">
                         
-                        {/* Deux gros blocs de sélection - Ninja Confirmé en haut, Jeune Ninja en bas (empilés verticalement) */}
-                        <div className="flex flex-col gap-3 mb-4">
-                          {/* Bloc Ninja Confirmé - EN HAUT */}
-                          <button
-                            onClick={() => handleModeChange('adulte')}
-                            disabled={isTransitioning}
-                            className={`group relative overflow-hidden rounded-2xl transition-all duration-500 ease-out transform ${
-                              visitorMode === 'adulte' 
-                                ? 'ring-2 ring-amber-400 scale-[1.02] shadow-lg shadow-amber-400/30' 
-                                : 'opacity-70 hover:opacity-90 hover:scale-[1.01]'
-                            } ${isTransitioning ? 'pointer-events-none' : ''}`}
-                          >
-                            {/* Image de fond */}
-                            <div className="relative">
-                              <img 
-                                src={AIKIDO_CHARACTERS.NINJA_CONFIRME} 
-                                alt="Ninja Confirmé"
-                                className="w-full h-28 object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                              />
-                              {/* Overlay gradient */}
-                              <div className={`absolute inset-0 transition-all duration-500 ${
-                                visitorMode === 'adulte' 
-                                  ? 'bg-gradient-to-t from-slate-900/90 via-slate-800/40 to-transparent' 
-                                  : 'bg-gradient-to-t from-slate-900/95 via-slate-800/50 to-transparent'
-                              }`} />
-                              
-                              {/* Symboles décoratifs avec animation */}
-                              <div className={`absolute top-2 right-2 text-sm transition-all duration-300 ${
-                                visitorMode === 'adulte' ? 'text-amber-400 scale-110' : 'text-amber-400/60'
-                              }`}>☯️</div>
-                              <div className={`absolute top-2 left-2 text-sm transition-all duration-300 ${
-                                visitorMode === 'adulte' ? 'text-amber-400 scale-110' : 'text-amber-400/60'
-                              }`}>🥋</div>
-                              
-                              {/* Indicateur sélectionné avec animation pulse */}
-                              {visitorMode === 'adulte' && (
-                                <div className="absolute top-2 right-8 w-3 h-3 bg-amber-400 rounded-full shadow-lg animate-pulse"></div>
-                              )}
-                            </div>
-                            
-                            {/* Contenu texte avec transition */}
-                            <div className="absolute bottom-0 left-0 right-0 p-2 text-center">
-                              <p className={`font-bold text-sm transition-all duration-300 ${
-                                visitorMode === 'adulte' ? 'text-amber-300 scale-105' : 'text-white'
-                              }`}>Ninja Confirmé</p>
-                              <p className="text-slate-400 text-[10px]">Plus de 14 ans</p>
-                              <div className={`flex justify-center gap-1 text-xs mt-1 transition-all duration-300 ${
-                                visitorMode === 'adulte' ? 'scale-110' : ''
-                              }`}>
-                                <span>📊</span>
-                                <span>🎯</span>
-                                <span>📜</span>
-                              </div>
-                            </div>
-                          </button>
-
-                          {/* Bloc Jeune Ninja - EN BAS */}
+                        {/* Deux blocs de sélection CÔTE À CÔTE horizontalement */}
+                        <div className="grid grid-cols-2 gap-2 mb-4">
+                          {/* Bloc Jeune Ninja - GAUCHE */}
                           <button
                             onClick={() => handleModeChange('enfant')}
                             disabled={isTransitioning}
-                            className={`group relative overflow-hidden rounded-2xl transition-all duration-500 ease-out transform ${
+                            className={`group relative overflow-hidden rounded-xl transition-all duration-500 ease-out transform ${
                               visitorMode === 'enfant' 
                                 ? 'ring-2 ring-orange-400 scale-[1.02] shadow-lg shadow-orange-400/30' 
                                 : 'opacity-70 hover:opacity-90 hover:scale-[1.01]'
@@ -784,7 +730,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                               <img 
                                 src={AIKIDO_CHARACTERS.JEUNE_NINJA} 
                                 alt="Jeune Ninja"
-                                className="w-full h-28 object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                                className="w-full h-24 object-cover object-top transition-transform duration-500 group-hover:scale-105"
                               />
                               {/* Overlay gradient */}
                               <div className={`absolute inset-0 transition-all duration-500 ${
@@ -793,33 +739,70 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                                   : 'bg-gradient-to-t from-orange-900/95 via-orange-800/50 to-transparent'
                               }`} />
                               
-                              {/* Étoiles décoratives avec animation */}
-                              <div className={`absolute top-2 right-2 text-sm transition-all duration-300 ${
+                              {/* Étoiles décoratives */}
+                              <div className={`absolute top-1 right-1 text-xs transition-all duration-300 ${
                                 visitorMode === 'enfant' ? 'scale-125 animate-pulse' : ''
                               }`}>✨</div>
-                              <div className={`absolute top-2 left-2 text-sm transition-all duration-300 ${
-                                visitorMode === 'enfant' ? 'scale-125 animate-pulse' : ''
-                              }`}>⭐</div>
                               
-                              {/* Indicateur sélectionné avec animation */}
-                              {visitorMode === 'enfant' && (
-                                <div className="absolute top-2 right-8 w-3 h-3 bg-white rounded-full shadow-lg animate-pulse"></div>
-                              )}
+                              {/* Maître Tanaka mini */}
+                              <div className="absolute bottom-1 right-1 w-8 h-8 rounded-full overflow-hidden border-2 border-amber-400 shadow-lg bg-gradient-to-br from-amber-500 to-orange-600">
+                                <img 
+                                  src="/images/tanaka/portrait.png" 
+                                  alt="Maître Tanaka" 
+                                  className="w-full h-full object-cover"
+                                  onError={(e) => {
+                                    e.target.style.display = 'none';
+                                    e.target.parentElement.innerHTML = '<span class="text-xs flex items-center justify-center h-full">🥋</span>';
+                                  }}
+                                />
+                              </div>
                             </div>
                             
-                            {/* Contenu texte avec transition */}
-                            <div className="absolute bottom-0 left-0 right-0 p-2 text-center">
-                              <p className={`font-bold text-sm transition-all duration-300 ${
-                                visitorMode === 'enfant' ? 'text-orange-300 scale-105' : 'text-white'
+                            {/* Contenu texte */}
+                            <div className="absolute bottom-0 left-0 right-0 p-1.5 text-center">
+                              <p className={`font-bold text-xs transition-all duration-300 ${
+                                visitorMode === 'enfant' ? 'text-orange-300' : 'text-white'
                               }`}>Jeune Ninja</p>
-                              <p className="text-white/70 text-[10px]">Moins de 14 ans</p>
-                              <div className={`flex justify-center gap-1 text-xs mt-1 transition-all duration-300 ${
-                                visitorMode === 'enfant' ? 'scale-110' : ''
-                              }`}>
-                                <span className={visitorMode === 'enfant' ? 'animate-bounce' : ''}>🎮</span>
-                                <span className={visitorMode === 'enfant' ? 'animate-bounce' : ''} style={{ animationDelay: '100ms' }}>🏆</span>
-                                <span className={visitorMode === 'enfant' ? 'animate-bounce' : ''} style={{ animationDelay: '200ms' }}>🐉</span>
-                              </div>
+                              <p className="text-white/70 text-[8px]">- de 14 ans</p>
+                            </div>
+                          </button>
+
+                          {/* Bloc Ninja Confirmé - DROITE */}
+                          <button
+                            onClick={() => handleModeChange('adulte')}
+                            disabled={isTransitioning}
+                            className={`group relative overflow-hidden rounded-xl transition-all duration-500 ease-out transform ${
+                              visitorMode === 'adulte' 
+                                ? 'ring-2 ring-amber-400 scale-[1.02] shadow-lg shadow-amber-400/30' 
+                                : 'opacity-70 hover:opacity-90 hover:scale-[1.01]'
+                            } ${isTransitioning ? 'pointer-events-none' : ''}`}
+                          >
+                            {/* Image de fond */}
+                            <div className="relative">
+                              <img 
+                                src={AIKIDO_CHARACTERS.NINJA_CONFIRME} 
+                                alt="Ninja Confirmé"
+                                className="w-full h-24 object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                              />
+                              {/* Overlay gradient */}
+                              <div className={`absolute inset-0 transition-all duration-500 ${
+                                visitorMode === 'adulte' 
+                                  ? 'bg-gradient-to-t from-slate-900/90 via-slate-800/40 to-transparent' 
+                                  : 'bg-gradient-to-t from-slate-900/95 via-slate-800/50 to-transparent'
+                              }`} />
+                              
+                              {/* Symbole décoratif */}
+                              <div className={`absolute top-1 right-1 text-xs transition-all duration-300 ${
+                                visitorMode === 'adulte' ? 'text-amber-400 scale-110' : 'text-amber-400/60'
+                              }`}>☯️</div>
+                            </div>
+                            
+                            {/* Contenu texte */}
+                            <div className="absolute bottom-0 left-0 right-0 p-1.5 text-center">
+                              <p className={`font-bold text-xs transition-all duration-300 ${
+                                visitorMode === 'adulte' ? 'text-amber-300' : 'text-white'
+                              }`}>Ninja Confirmé</p>
+                              <p className="text-slate-400 text-[8px]">+ de 14 ans</p>
                             </div>
                           </button>
                         </div>
