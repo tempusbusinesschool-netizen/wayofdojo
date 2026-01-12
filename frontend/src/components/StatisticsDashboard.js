@@ -905,7 +905,35 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                           </div>
                         )}
                         
-                        {/* Femme à gauche - taille +10%, fondu progressif vers le centre */}
+                        {/* Personnages 3D en haut à droite - UNIQUEMENT pour mode enfant */}
+                        {visitorMode === 'enfant' && (
+                          <div className="absolute -top-4 -right-4 z-20 hidden md:flex items-start pointer-events-none">
+                            {/* Femme Aikido */}
+                            <div className="relative -mr-8">
+                              <img 
+                                src={AIKIDO_CHARACTERS.FEMME_SEULE} 
+                                alt="Sensei Femme" 
+                                className="h-36 lg:h-44 xl:h-52 object-cover object-top drop-shadow-2xl"
+                                style={{
+                                  filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.4))'
+                                }}
+                              />
+                            </div>
+                            {/* Homme Aikido */}
+                            <div className="relative">
+                              <img 
+                                src={AIKIDO_CHARACTERS.HOMME_SEUL} 
+                                alt="Sensei Homme" 
+                                className="h-36 lg:h-44 xl:h-52 object-cover object-top drop-shadow-2xl"
+                                style={{
+                                  filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.4))'
+                                }}
+                              />
+                            </div>
+                          </div>
+                        )}
+                        
+                        {/* Femme à gauche - taille +10%, fondu progressif vers le centre - UNIQUEMENT pour mode adulte */}
                         <div className={`absolute left-0 bottom-0 hidden md:block z-20 pointer-events-none overflow-hidden rounded-bl-3xl ${visitorMode === 'enfant' ? 'opacity-0' : ''}`}>
                           <img 
                             src={AIKIDO_CHARACTERS.FEMME_SEULE} 
