@@ -1918,7 +1918,7 @@ function AppContent() {
       {/* Visible sur les pages enfant ou si mode jeune ninja actif (y compris page d'accueil) */}
       <MaitreTanaka 
         isVisible={
-          (localStorage.getItem('ninja-aikido-mode') === 'jeune') || 
+          ninjaMode === 'jeune' || 
           activePage === 'commence' ||
           activePage === 'apprends' ||
           activePage === 'entraine' ||
