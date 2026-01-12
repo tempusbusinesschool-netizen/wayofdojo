@@ -319,7 +319,13 @@ const ModeEmploiPage = ({ onBack }) => {
                       : 'hover:bg-slate-700/50 text-slate-300'
                   }`}
                 >
-                  <SectionIcon size={20} />
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center font-bold text-lg ${
+                    currentSection === index 
+                      ? 'bg-white/20 text-white' 
+                      : 'bg-slate-700 text-amber-400'
+                  }`}>
+                    {index + 1}
+                  </div>
                   <span className="font-medium">{sec.title}</span>
                   {currentSection === index && (
                     <ChevronRight size={16} className="ml-auto" />
