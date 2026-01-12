@@ -925,6 +925,7 @@ function AppContent() {
                 isAuthenticated={isAuthenticated}
                 onRefreshData={fetchData}
                 onNavigate={(pageId) => setActivePage(pageId)}
+                onNinjaModeChange={(mode) => setNinjaMode(mode)}
               />
             )}
 
