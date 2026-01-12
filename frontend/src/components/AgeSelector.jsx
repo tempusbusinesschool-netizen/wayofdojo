@@ -93,7 +93,7 @@ const AgeSelector = ({ onSelect }) => {
             
             {/* Trust badges mobile */}
             <div className="flex justify-center gap-3 text-slate-500 text-[10px]">
-              <span>✓ 3 mois offerts</span>
+              <span>✓ 30 jours offerts</span>
               <span>✓ Sans pub</span>
               <span>🔒 RGPD</span>
             </div>
@@ -156,7 +156,7 @@ const AgeSelector = ({ onSelect }) => {
             
             {/* Trust badges */}
             <div className="flex flex-wrap justify-center gap-4 text-slate-500 text-xs">
-              <span>✓ 3 mois offerts</span>
+              <span>✓ 30 jours offerts</span>
               <span>✓ Sans publicité</span>
               <span>🔒 Conforme RGPD</span>
             </div>
