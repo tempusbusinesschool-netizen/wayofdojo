@@ -135,6 +135,8 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
     setTimeout(() => {
       setVisitorMode(mode);
       localStorage.setItem('ninja-aikido-mode', mode);
+      // Notifier le parent du changement de mode
+      if (onNinjaModeChange) onNinjaModeChange(mode);
       
       // Puis fade-in
       setTimeout(() => {
