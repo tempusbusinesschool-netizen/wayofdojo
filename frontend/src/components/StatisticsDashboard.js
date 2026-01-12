@@ -905,12 +905,12 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                           </div>
                         )}
                         
-                        {/* Femme à gauche - taille +10%, fondu progressif vers le centre - UNIQUEMENT pour mode adulte */}
+                        {/* Femme à gauche - taille +25%, fondu progressif vers le centre - UNIQUEMENT pour mode adulte */}
                         <div className={`absolute left-0 bottom-0 hidden md:block z-20 pointer-events-none overflow-hidden rounded-bl-3xl ${visitorMode === 'enfant' ? 'opacity-0' : ''}`}>
                           <img 
                             src={AIKIDO_CHARACTERS.FEMME_SEULE} 
                             alt="Sensei Femme" 
-                            className="h-44 lg:h-52 xl:h-60 object-cover object-top"
+                            className="h-52 lg:h-60 xl:h-72 object-cover object-top"
                             style={{
                               maskImage: 'linear-gradient(to right, black 60%, transparent 100%)',
                               WebkitMaskImage: 'linear-gradient(to right, black 60%, transparent 100%)'
@@ -918,12 +918,12 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                           />
                         </div>
                         
-                        {/* Homme à droite - taille +10%, fondu progressif vers le centre */}
+                        {/* Homme à droite - taille +25%, fondu progressif vers le centre */}
                         <div className={`absolute right-0 bottom-0 hidden md:block z-20 pointer-events-none overflow-hidden rounded-br-3xl ${visitorMode === 'enfant' ? 'opacity-0' : ''}`}>
                           <img 
                             src={AIKIDO_CHARACTERS.HOMME_SEUL} 
                             alt="Sensei Homme" 
-                            className="h-44 lg:h-52 xl:h-60 object-cover object-top"
+                            className="h-52 lg:h-60 xl:h-72 object-cover object-top"
                             style={{
                               maskImage: 'linear-gradient(to left, black 60%, transparent 100%)',
                               WebkitMaskImage: 'linear-gradient(to left, black 60%, transparent 100%)'
