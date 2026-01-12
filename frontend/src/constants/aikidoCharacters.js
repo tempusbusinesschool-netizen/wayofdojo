@@ -15,7 +15,7 @@ export const AIKIDO_CHARACTERS = {
   NINJA_CONFIRME: "https://static.prod-images.emergentagent.com/jobs/0861cc2c-f338-47d7-8ee3-39d115cba3cc/images/11511822157d76c591ac8107c5dc1cd0fbe68fdec64747472c56fa176ae705d0.png",
 
   // Duo adultes - Version fond transparent pour superposition
-  NINJA_COUPLE_TRANSPARENT: "https://customer-assets.emergentagent.com/job_55bfe3ca-3833-4a7d-bc9d-de68c64ba12a/artifacts/n0z3rn83_COUPLE%20EMERGENT.webp",
+  NINJA_COUPLE_TRANSPARENT: "https://customer-assets.emergentagent.com/job_55bfe3ca-3833-4a7d-bc9d-de68c64ba12a/artifacts/f7nis2ns_COUPLE%20PNG.png",
 
   // Homme seul - pour superposition bandeau (fond gradient bleu-cyan assorti)
   HOMME_SEUL: "https://static.prod-images.emergentagent.com/jobs/e17d73c6-86f0-4c7d-be1f-5c1a2a26eb2f/images/d67c33c961c5b2b0f6b82a7f873c67abc96cda02952539c41b54a53f07c946c6.png",
