@@ -252,7 +252,7 @@ const AgeSelector = ({ onSelect }) => {
         <button
           onClick={() => handleSelect('adulte')}
           data-testid="mode-adulte-btn"
-          className="group relative overflow-hidden rounded-2xl sm:rounded-3xl
+          className="group relative overflow-hidden rounded-xl sm:rounded-3xl
             bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900
             hover:from-slate-600 hover:via-slate-700 hover:to-slate-800
             transform hover:scale-[1.02] sm:hover:scale-105
@@ -265,25 +265,25 @@ const AgeSelector = ({ onSelect }) => {
             <img 
               src={NINJA_CONFIRME_IMG} 
               alt="Ninja Confirmé - Agent IA"
-              className="w-full h-48 sm:h-56 md:h-64 object-cover object-top"
+              className="w-full h-32 sm:h-56 md:h-64 object-cover object-top"
             />
             {/* Overlay gradient pour lisibilité */}
             <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/30 to-transparent" />
             
             {/* Symboles décoratifs */}
-            <div className="absolute top-3 right-3 text-xl sm:text-2xl text-amber-400/80">☯️</div>
-            <div className="absolute top-3 left-3 text-xl sm:text-2xl text-amber-400/80">🥋</div>
+            <div className="absolute top-2 right-2 sm:top-3 sm:right-3 text-base sm:text-2xl text-amber-400/80">☯️</div>
+            <div className="absolute top-2 left-2 sm:top-3 sm:left-3 text-base sm:text-2xl text-amber-400/80">🥋</div>
           </div>
           
           {/* Contenu texte */}
-          <div className="relative z-10 p-4 sm:p-5 -mt-8">
-            <h2 className="text-xl sm:text-2xl font-bold text-white mb-1">
+          <div className="relative z-10 p-2 sm:p-5 -mt-6 sm:-mt-8">
+            <h2 className="text-sm sm:text-2xl font-bold text-white mb-0.5 sm:mb-1">
               Ninja Confirmé
             </h2>
-            <p className="text-slate-400 text-sm mb-2">
+            <p className="text-slate-400 text-[10px] sm:text-sm mb-1 sm:mb-2">
               Plus de 14 ans
             </p>
-            <div className="flex justify-center gap-2 text-xl">
+            <div className="flex justify-center gap-1 sm:gap-2 text-sm sm:text-xl">
               <span>📊</span>
               <span>🎯</span>
               <span>📜</span>
