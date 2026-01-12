@@ -923,7 +923,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                           <img 
                             src={AIKIDO_CHARACTERS.HOMME_SEUL} 
                             alt="Sensei Homme" 
-                            className="h-52 lg:h-60 xl:h-[17rem] object-cover object-top"
+                            className="h-48 lg:h-56 xl:h-64 object-cover object-top"
                             style={{
                               maskImage: 'linear-gradient(to left, black 45%, transparent 100%)',
                               WebkitMaskImage: 'linear-gradient(to left, black 45%, transparent 100%)'
