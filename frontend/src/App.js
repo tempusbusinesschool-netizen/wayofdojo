@@ -1915,9 +1915,10 @@ function AppContent() {
       />
       
       {/* Maître Tanaka - Agent Vocal pour les enfants */}
-      {/* Visible sur les pages enfant ou si mode enfant actif (y compris page d'accueil) */}
+      {/* Visible sur: page de sélection d'âge (visiteur), mode enfant, et pages enfant */}
       <MaitreTanaka 
         isVisible={
+          (!isAuthenticated && ninjaMode === null) ||  // Page de sélection d'âge (pour attirer les enfants)
           ninjaMode === 'enfant' || 
           activePage === 'commence' ||
           activePage === 'apprends' ||
