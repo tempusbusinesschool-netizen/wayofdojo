@@ -914,8 +914,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                               className="h-44 lg:h-52 xl:h-60 object-contain"
                               style={{
                                 filter: 'drop-shadow(0 10px 25px rgba(0,0,0,0.5))',
-                                background: 'transparent',
-                                mixBlendMode: 'normal'
+                                mixBlendMode: 'multiply'
                               }}
                             />
                           </div>
