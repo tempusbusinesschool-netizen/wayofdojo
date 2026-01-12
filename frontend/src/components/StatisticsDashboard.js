@@ -905,31 +905,17 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                           </div>
                         )}
                         
-                        {/* Personnages 3D en haut à droite - UNIQUEMENT pour mode enfant */}
+                        {/* Image du couple Ninja Confirmé en haut à droite - UNIQUEMENT pour mode enfant */}
                         {visitorMode === 'enfant' && (
-                          <div className="absolute -top-4 -right-4 z-20 hidden md:flex items-start pointer-events-none">
-                            {/* Femme Aikido */}
-                            <div className="relative -mr-8">
-                              <img 
-                                src={AIKIDO_CHARACTERS.FEMME_SEULE} 
-                                alt="Sensei Femme" 
-                                className="h-36 lg:h-44 xl:h-52 object-cover object-top drop-shadow-2xl"
-                                style={{
-                                  filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.4))'
-                                }}
-                              />
-                            </div>
-                            {/* Homme Aikido */}
-                            <div className="relative">
-                              <img 
-                                src={AIKIDO_CHARACTERS.HOMME_SEUL} 
-                                alt="Sensei Homme" 
-                                className="h-36 lg:h-44 xl:h-52 object-cover object-top drop-shadow-2xl"
-                                style={{
-                                  filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.4))'
-                                }}
-                              />
-                            </div>
+                          <div className="absolute -top-6 -right-6 z-20 hidden md:block pointer-events-none">
+                            <img 
+                              src={AIKIDO_CHARACTERS.NINJA_CONFIRME} 
+                              alt="Couple Aikido" 
+                              className="h-44 lg:h-52 xl:h-60 object-cover object-top drop-shadow-2xl"
+                              style={{
+                                filter: 'drop-shadow(0 10px 25px rgba(0,0,0,0.5))'
+                              }}
+                            />
                           </div>
                         )}
                         
