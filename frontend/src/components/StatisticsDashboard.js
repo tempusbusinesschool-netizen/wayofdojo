@@ -869,8 +869,44 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                       {/* Version DESKTOP - rectangle avec gradient et personnages */}
                       <div className="hidden sm:block relative overflow-hidden bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-500 rounded-3xl p-8 md:p-12 shadow-2xl border-2 border-orange-400/60">
                         
+                        {/* Maître Tanaka en haut à gauche - UNIQUEMENT pour mode enfant */}
+                        {visitorMode === 'enfant' && (
+                          <div className="absolute top-4 left-4 z-30">
+                            <div className="relative group cursor-pointer" onClick={() => {
+                              const tanakaBtn = document.querySelector('[data-testid="maitre-tanaka-button"]');
+                              if (tanakaBtn) tanakaBtn.click();
+                            }}>
+                              {/* Cercle lumineux animé derrière */}
+                              <div className="absolute inset-0 bg-amber-400 rounded-full animate-ping opacity-30"></div>
+                              
+                              {/* Image de Tanaka */}
+                              <div className="relative w-24 h-24 lg:w-32 lg:h-32 rounded-full overflow-hidden border-4 border-amber-400 shadow-2xl shadow-amber-500/50 transform group-hover:scale-110 transition-transform duration-300">
+                                <img 
+                                  src="/images/tanaka/portrait.png" 
+                                  alt="Maître Tanaka" 
+                                  className="w-full h-full object-cover"
+                                  onError={(e) => {
+                                    e.target.style.display = 'none';
+                                    e.target.parentElement.innerHTML = '<div class="w-full h-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-4xl">🥋</div>';
+                                  }}
+                                />
+                              </div>
+                              
+                              {/* Bulle de dialogue */}
+                              <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-3 py-1 rounded-full font-bold animate-bounce shadow-lg whitespace-nowrap">
+                                Parle-moi !
+                              </div>
+                              
+                              {/* Nom */}
+                              <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 bg-slate-900/80 backdrop-blur-sm text-amber-300 text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap">
+                                Maître Tanaka
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                        
                         {/* Femme à gauche - taille +10%, fondu progressif vers le centre */}
-                        <div className="absolute left-0 bottom-0 hidden md:block z-20 pointer-events-none overflow-hidden rounded-bl-3xl">
+                        <div className={`absolute left-0 bottom-0 hidden md:block z-20 pointer-events-none overflow-hidden rounded-bl-3xl ${visitorMode === 'enfant' ? 'opacity-0' : ''}`}>
                           <img 
                             src={AIKIDO_CHARACTERS.FEMME_SEULE} 
                             alt="Sensei Femme" 
@@ -883,7 +919,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                         </div>
                         
                         {/* Homme à droite - taille +10%, fondu progressif vers le centre */}
-                        <div className="absolute right-0 bottom-0 hidden md:block z-20 pointer-events-none overflow-hidden rounded-br-3xl">
+                        <div className={`absolute right-0 bottom-0 hidden md:block z-20 pointer-events-none overflow-hidden rounded-br-3xl ${visitorMode === 'enfant' ? 'opacity-0' : ''}`}>
                           <img 
                             src={AIKIDO_CHARACTERS.HOMME_SEUL} 
                             alt="Sensei Homme" 
