@@ -905,20 +905,6 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                           </div>
                         )}
                         
-                        {/* Image du couple Ninja - fond transparent - en haut à droite - UNIQUEMENT pour mode enfant */}
-                        {visitorMode === 'enfant' && (
-                          <div className="absolute -top-6 -right-6 z-20 hidden md:block pointer-events-none">
-                            <img 
-                              src={AIKIDO_CHARACTERS.NINJA_COUPLE_TRANSPARENT} 
-                              alt="Couple Aikido" 
-                              className="h-44 lg:h-52 xl:h-60 object-contain"
-                              style={{
-                                filter: 'drop-shadow(0 10px 25px rgba(0,0,0,0.5))'
-                              }}
-                            />
-                          </div>
-                        )}
-                        
                         {/* Femme à gauche - taille +10%, fondu progressif vers le centre - UNIQUEMENT pour mode adulte */}
                         <div className={`absolute left-0 bottom-0 hidden md:block z-20 pointer-events-none overflow-hidden rounded-bl-3xl ${visitorMode === 'enfant' ? 'opacity-0' : ''}`}>
                           <img 
