@@ -14,6 +14,9 @@ export const AIKIDO_CHARACTERS = {
   // Duo adultes - Femme et homme pour les plus de 14 ans
   NINJA_CONFIRME: "https://static.prod-images.emergentagent.com/jobs/0861cc2c-f338-47d7-8ee3-39d115cba3cc/images/11511822157d76c591ac8107c5dc1cd0fbe68fdec64747472c56fa176ae705d0.png",
 
+  // Duo adultes - Version fond transparent pour superposition
+  NINJA_COUPLE_TRANSPARENT: "https://static.prod-images.emergentagent.com/jobs/55bfe3ca-3833-4a7d-bc9d-de68c64ba12a/images/18e7c422c32efff80dc9e7a6a35e443e0fd101a80d4bdbf8e44935e04519ea37.png",
+
   // Homme seul - pour superposition bandeau (fond gradient bleu-cyan assorti)
   HOMME_SEUL: "https://static.prod-images.emergentagent.com/jobs/e17d73c6-86f0-4c7d-be1f-5c1a2a26eb2f/images/d67c33c961c5b2b0f6b82a7f873c67abc96cda02952539c41b54a53f07c946c6.png",
   
