@@ -177,14 +177,14 @@ const AgeSelector = ({ onSelect }) => {
         </p>
       </div>
 
-      {/* Les 2 gros boutons avec images IA */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 max-w-4xl mx-auto">
+      {/* Les 2 gros boutons avec images IA - HORIZONTAUX sur mobile et PC */}
+      <div className="grid grid-cols-2 gap-3 sm:gap-6 max-w-4xl mx-auto">
         
         {/* Bouton ENFANT */}
         <button
           onClick={() => handleSelect('enfant')}
           data-testid="mode-enfant-btn"
-          className="group relative overflow-hidden rounded-2xl sm:rounded-3xl
+          className="group relative overflow-hidden rounded-xl sm:rounded-3xl
             bg-gradient-to-br from-orange-500 via-amber-500 to-yellow-500
             hover:from-orange-400 hover:via-amber-400 hover:to-yellow-400
             transform hover:scale-[1.02] sm:hover:scale-105
@@ -197,25 +197,25 @@ const AgeSelector = ({ onSelect }) => {
             <img 
               src={JEUNE_NINJA_IMG} 
               alt="Jeune Ninja - Agent IA"
-              className="w-full h-48 sm:h-56 md:h-64 object-cover object-top"
+              className="w-full h-32 sm:h-56 md:h-64 object-cover object-top"
             />
             {/* Overlay gradient pour lisibilité */}
             <div className="absolute inset-0 bg-gradient-to-t from-orange-900/90 via-orange-900/30 to-transparent" />
             
             {/* Étoiles décoratives */}
-            <div className="absolute top-3 right-3 text-xl sm:text-2xl animate-pulse">✨</div>
-            <div className="absolute top-3 left-3 text-xl sm:text-2xl">⭐</div>
+            <div className="absolute top-2 right-2 sm:top-3 sm:right-3 text-base sm:text-2xl animate-pulse">✨</div>
+            <div className="absolute top-2 left-2 sm:top-3 sm:left-3 text-base sm:text-2xl">⭐</div>
           </div>
           
           {/* Contenu texte */}
-          <div className="relative z-10 p-4 sm:p-5 -mt-8">
-            <h2 className="text-xl sm:text-2xl font-bold text-white mb-1">
+          <div className="relative z-10 p-2 sm:p-5 -mt-6 sm:-mt-8">
+            <h2 className="text-sm sm:text-2xl font-bold text-white mb-0.5 sm:mb-1">
               Jeune Ninja
             </h2>
-            <p className="text-white/80 text-sm mb-2">
+            <p className="text-white/80 text-[10px] sm:text-sm mb-1 sm:mb-2">
               Moins de 14 ans
             </p>
-            <div className="flex justify-center gap-2 text-xl">
+            <div className="flex justify-center gap-1 sm:gap-2 text-sm sm:text-xl">
               <span>🎮</span>
               <span>🏆</span>
               <span>🐉</span>
@@ -223,21 +223,21 @@ const AgeSelector = ({ onSelect }) => {
           </div>
           
           {/* Maître Tanaka - en bas à droite de la carte */}
-          <div className="absolute bottom-2 right-2 z-20">
+          <div className="absolute bottom-1 right-1 sm:bottom-2 sm:right-2 z-20">
             <div className="relative">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 border-amber-400 shadow-lg bg-gradient-to-br from-amber-500 to-orange-600">
+              <div className="w-10 h-10 sm:w-20 sm:h-20 rounded-full overflow-hidden border-2 border-amber-400 shadow-lg bg-gradient-to-br from-amber-500 to-orange-600">
                 <img 
                   src="/images/tanaka/portrait.png" 
                   alt="Maître Tanaka" 
                   className="w-full h-full object-cover"
                   onError={(e) => {
                     e.target.style.display = 'none';
-                    e.target.parentElement.innerHTML = '<span class="text-3xl flex items-center justify-center h-full">🥋</span>';
+                    e.target.parentElement.innerHTML = '<span class="text-xl sm:text-3xl flex items-center justify-center h-full">🥋</span>';
                   }}
                 />
               </div>
-              {/* Bulle "Parle-moi" */}
-              <div className="absolute -top-2 -left-2 bg-red-500 text-white text-[10px] sm:text-xs px-2 py-0.5 rounded-full font-bold whitespace-nowrap animate-bounce shadow-lg">
+              {/* Bulle "Parle-moi" - cachée sur mobile */}
+              <div className="hidden sm:block absolute -top-2 -left-2 bg-red-500 text-white text-[10px] sm:text-xs px-2 py-0.5 rounded-full font-bold whitespace-nowrap animate-bounce shadow-lg">
                 Parle-moi !
               </div>
             </div>
