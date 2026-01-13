@@ -34,6 +34,11 @@ class ErrorBoundary extends React.Component {
             <p className="text-slate-400 mb-4">
               Pas de panique ! Rechargez la page pour continuer.
             </p>
+            {this.state.error && (
+              <p className="text-red-400 text-xs mb-4 bg-red-900/20 p-2 rounded overflow-auto max-h-32">
+                {this.state.error.toString()}
+              </p>
+            )}
             <button
               onClick={() => window.location.reload()}
               className="bg-cyan-600 hover:bg-cyan-500 text-white font-bold px-6 py-2 rounded-lg"
