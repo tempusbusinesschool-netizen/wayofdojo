@@ -124,6 +124,7 @@ const JourneyPath = ({
 }) => {
   const [selectedStep, setSelectedStep] = useState(null);
   const [showStepDialog, setShowStepDialog] = useState(false);
+  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
 
   // Vérifie si une étape est débloquée
   const isStepUnlocked = (step) => {
@@ -134,6 +135,23 @@ const JourneyPath = ({
 
   // Vérifie si une étape est complétée
   const isStepCompleted = (stepId) => completedSteps.includes(stepId);
+
+  // Jouer l'audio de Tanaka
+  const playTanakaAudio = async (audioKey) => {
+    if (isPlayingAudio) return;
+    try {
+      setIsPlayingAudio(true);
+      const result = await playTanakaPhrase(audioKey);
+      if (result?.audio) {
+        result.audio.onended = () => setIsPlayingAudio(false);
+      } else {
+        setIsPlayingAudio(false);
+      }
+    } catch (error) {
+      console.error('Error playing Tanaka audio:', error);
+      setIsPlayingAudio(false);
+    }
+  };
 
   // Ouvre le dialogue d'une étape
   const handleStepClick = (step) => {
@@ -154,25 +172,72 @@ const JourneyPath = ({
 
   return (
     <div className="w-full" data-testid="journey-path">
-      {/* Titre de section */}
-      <div className="text-center mb-6">
+      {/* En-tête avec Maître Tanaka */}
+      <div className="mb-6">
+        {/* Carte de bienvenue de Tanaka */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/20 to-orange-500/20 px-4 py-2 rounded-full border border-amber-500/30 mb-3"
+          className="bg-gradient-to-r from-amber-600/20 via-orange-600/20 to-amber-600/20 rounded-2xl p-4 sm:p-6 border border-amber-500/30 mb-6"
         >
-          <Sparkles className="w-4 h-4 text-amber-400" />
-          <span className="text-amber-300 font-semibold text-sm">Ton Parcours Ninja</span>
-          <Sparkles className="w-4 h-4 text-amber-400" />
+          <div className="flex flex-col sm:flex-row items-center gap-4">
+            {/* Avatar de Tanaka */}
+            <div className="relative flex-shrink-0">
+              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-3 border-amber-400 shadow-xl shadow-amber-500/30">
+                <img 
+                  src={TANAKA_IMAGE} 
+                  alt="Maître Tanaka" 
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.parentElement.innerHTML = '<div class="w-full h-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-4xl">🥋</div>';
+                  }}
+                />
+              </div>
+              {/* Badge animé */}
+              <div className="absolute -bottom-1 -right-1 bg-emerald-500 rounded-full p-1 animate-pulse">
+                <Sparkles className="w-4 h-4 text-white" />
+              </div>
+            </div>
+            
+            {/* Message de Tanaka */}
+            <div className="flex-1 text-center sm:text-left">
+              <div className="flex items-center justify-center sm:justify-start gap-2 mb-2">
+                <h3 className="text-lg sm:text-xl font-bold text-amber-400">Maître Tanaka</h3>
+                <span className="text-xs bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full">Ton guide</span>
+              </div>
+              <p className="text-white text-sm sm:text-base leading-relaxed">
+                Bienvenue <span className="text-amber-400 font-semibold">{userName}</span> ! 
+                Je suis ton guide sur la Voie de l'Aïkido. 
+                Suis ce parcours pour découvrir tous les secrets du Ninja ! 🥷✨
+              </p>
+              
+              {/* Bouton écouter (optionnel) */}
+              <button
+                onClick={() => playTanakaAudio('welcome')}
+                disabled={isPlayingAudio}
+                className="mt-3 inline-flex items-center gap-2 text-amber-400 hover:text-amber-300 text-sm transition-colors disabled:opacity-50"
+              >
+                <Volume2 className={`w-4 h-4 ${isPlayingAudio ? 'animate-pulse' : ''}`} />
+                {isPlayingAudio ? 'En cours...' : 'Écouter Maître Tanaka'}
+              </button>
+            </div>
+          </div>
         </motion.div>
-        
-        <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-          Par où commencer, {userName} ? 🤔
-        </h2>
-        <p className="text-slate-400 text-sm sm:text-base max-w-xl mx-auto">
-          Suis ce chemin étape par étape pour devenir un vrai Maître Ninja ! 
-          Chaque étape te rapporte des points XP ⭐
-        </p>
+
+        {/* Titre du parcours */}
+        <div className="text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
+            className="inline-flex items-center gap-2 bg-gradient-to-r from-violet-500/20 to-purple-500/20 px-4 py-2 rounded-full border border-violet-500/30 mb-3"
+          >
+            <Sparkles className="w-4 h-4 text-violet-400" />
+            <span className="text-violet-300 font-semibold text-sm">Ton Parcours en {JOURNEY_STEPS.length} étapes</span>
+            <Sparkles className="w-4 h-4 text-violet-400" />
+          </motion.div>
+        </div>
       </div>
 
       {/* Barre de progression globale */}
