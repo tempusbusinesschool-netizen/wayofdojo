@@ -337,26 +337,34 @@ const ModeEmploiPage = ({ onBack }) => {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 min-h-screen p-6 lg:p-10">
+        {/* Overlay pour fermer la sidebar sur mobile */}
+        {sidebarOpen && (
+          <div 
+            className="fixed inset-0 bg-black/50 z-30 lg:hidden"
+            onClick={() => setSidebarOpen(false)}
+          />
+        )}
+        
+        <main className="flex-1 min-h-screen p-3 sm:p-6 lg:p-10 w-full overflow-x-hidden">
           <div className={`max-w-4xl mx-auto transition-all duration-300 ${animateContent ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
             {/* Section Header */}
-            <div className={`bg-gradient-to-r ${section.color} p-6 rounded-2xl mb-8 shadow-xl`}>
-              <div className="flex items-center gap-4">
+            <div className={`bg-gradient-to-r ${section.color} p-4 sm:p-6 rounded-xl sm:rounded-2xl mb-4 sm:mb-8 shadow-xl`}>
+              <div className="flex items-center gap-3 sm:gap-4">
                 {/* Big Section Number */}
-                <div className="w-20 h-20 bg-white/20 rounded-2xl backdrop-blur-sm flex items-center justify-center">
-                  <span className="text-5xl font-black text-white drop-shadow-lg">{currentSection + 1}</span>
+                <div className="w-12 h-12 sm:w-20 sm:h-20 bg-white/20 rounded-xl sm:rounded-2xl backdrop-blur-sm flex items-center justify-center flex-shrink-0">
+                  <span className="text-2xl sm:text-5xl font-black text-white drop-shadow-lg">{currentSection + 1}</span>
                 </div>
-                <div className="flex-1">
-                  <span className="text-white/70 text-sm">Section {currentSection + 1}/{sections.length}</span>
-                  <h1 className="text-3xl font-bold text-white">{section.content.title}</h1>
-                  <p className="text-white/80">{section.content.subtitle}</p>
+                <div className="flex-1 min-w-0">
+                  <span className="text-white/70 text-xs sm:text-sm">Section {currentSection + 1}/{sections.length}</span>
+                  <h1 className="text-lg sm:text-3xl font-bold text-white truncate">{section.content.title}</h1>
+                  <p className="text-white/80 text-xs sm:text-base truncate">{section.content.subtitle}</p>
                 </div>
               </div>
             </div>
 
             {/* Description */}
-            <div className="bg-slate-800/50 rounded-2xl p-6 mb-6 border border-slate-700">
-              <p className="text-lg text-slate-300 leading-relaxed">
+            <div className="bg-slate-800/50 rounded-xl sm:rounded-2xl p-4 sm:p-6 mb-4 sm:mb-6 border border-slate-700">
+              <p className="text-sm sm:text-lg text-slate-300 leading-relaxed">
                 {section.content.description}
               </p>
             </div>
@@ -364,39 +372,39 @@ const ModeEmploiPage = ({ onBack }) => {
             {/* Dynamic Content based on section */}
             {section.id === 'intro' && (
               <>
-                <div className="grid grid-cols-2 gap-4 mb-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-4 sm:mb-6">
                   {section.content.features.map((feature, i) => (
-                    <div key={i} className="bg-slate-800/50 rounded-xl p-5 border border-slate-700 hover:border-amber-500/50 transition-colors">
-                      <feature.icon className={`${feature.color} mb-3`} size={28} />
-                      <p className="text-white font-medium">{feature.text}</p>
+                    <div key={i} className="bg-slate-800/50 rounded-xl p-3 sm:p-5 border border-slate-700 hover:border-amber-500/50 transition-colors">
+                      <feature.icon className={`${feature.color} mb-2 sm:mb-3`} size={24} />
+                      <p className="text-white font-medium text-sm sm:text-base">{feature.text}</p>
                     </div>
                   ))}
                 </div>
-                <div className="bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-xl p-5 border border-amber-500/30">
-                  <p className="text-amber-200 italic">💡 {section.content.tip}</p>
+                <div className="bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-xl p-4 sm:p-5 border border-amber-500/30">
+                  <p className="text-amber-200 italic text-sm sm:text-base">💡 {section.content.tip}</p>
                 </div>
               </>
             )}
 
             {section.id === 'accueil' && (
               <>
-                <div className="grid md:grid-cols-2 gap-6 mb-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
                   {section.content.modes.map((mode, i) => (
-                    <div key={i} className={`bg-gradient-to-br ${mode.color} rounded-2xl p-6 shadow-xl`}>
-                      <mode.icon className="text-white mb-3" size={32} />
-                      <h3 className="text-xl font-bold text-white">{mode.name}</h3>
-                      <span className="text-white/70 text-sm">{mode.age}</span>
-                      <p className="text-white/90 mt-3">{mode.description}</p>
+                    <div key={i} className={`bg-gradient-to-br ${mode.color} rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-xl`}>
+                      <mode.icon className="text-white mb-2 sm:mb-3" size={28} />
+                      <h3 className="text-lg sm:text-xl font-bold text-white">{mode.name}</h3>
+                      <span className="text-white/70 text-xs sm:text-sm">{mode.age}</span>
+                      <p className="text-white/90 mt-2 sm:mt-3 text-sm sm:text-base">{mode.description}</p>
                     </div>
                   ))}
                 </div>
-                <div className="bg-slate-800/50 rounded-xl p-5 border border-slate-700">
-                  <h4 className="text-amber-400 font-semibold mb-3">Navigation principale</h4>
-                  <div className="grid grid-cols-2 gap-3">
+                <div className="bg-slate-800/50 rounded-xl p-4 sm:p-5 border border-slate-700">
+                  <h4 className="text-amber-400 font-semibold mb-3 text-sm sm:text-base">Navigation principale</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                     {section.content.navigation.map((nav, i) => (
-                      <div key={i} className="flex items-center gap-2 text-slate-300">
-                        <ChevronRight size={16} className="text-cyan-400" />
-                        <span><strong>{nav.name}</strong> - {nav.desc}</span>
+                      <div key={i} className="flex items-center gap-2 text-slate-300 text-xs sm:text-base">
+                        <ChevronRight size={14} className="text-cyan-400 flex-shrink-0" />
+                        <span className="truncate"><strong>{nav.name}</strong> - {nav.desc}</span>
                       </div>
                     ))}
                   </div>
