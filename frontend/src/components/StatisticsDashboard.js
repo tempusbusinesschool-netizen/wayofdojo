@@ -116,6 +116,13 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
   const [roleLoading, setRoleLoading] = useState(false);
   const [showGuidedTour, setShowGuidedTour] = useState(false);
   
+  // État pour le parcours guidé (Journey Path)
+  const [journeyCompletedSteps, setJourneyCompletedSteps] = useState(() => {
+    const saved = localStorage.getItem('aikido_journey_completed_steps');
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [showJourneyPath, setShowJourneyPath] = useState(true);
+  
   // État pour le mode visiteur (enfant/adulte) - stocké en localStorage
   const [visitorMode, setVisitorMode] = useState(() => {
     return localStorage.getItem('ninja-aikido-mode') || null;
