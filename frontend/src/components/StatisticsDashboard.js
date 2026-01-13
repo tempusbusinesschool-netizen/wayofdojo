@@ -1055,11 +1055,28 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
             {isAuthenticated && (
               <>
                 {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-                {/* SECTION 1 : NAVIGATION RAPIDE - Blocs carrés colorés */}
+                {/* SECTION 0 : PARCOURS GUIDÉ - Pour les nouveaux utilisateurs */}
                 {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-                <section className="mb-8" data-testid="section-navigation">
-                  <AppStepsNavigation />
+                <section className="mb-8" data-testid="section-parcours">
+                  <JourneyPath
+                    userName={userName}
+                    completedSteps={journeyCompletedSteps}
+                    currentStep={journeyCompletedSteps.length + 1}
+                    totalPoints={statistics.total_points || 0}
+                    onStepClick={handleJourneyStepComplete}
+                    onNavigate={handleJourneyNavigate}
+                    isEnfantMode={true}
+                  />
                 </section>
+
+                {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+                {/* SECTION 1 : NAVIGATION RAPIDE - Blocs carrés colorés (masqué par défaut) */}
+                {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+                {!showJourneyPath && (
+                  <section className="mb-8" data-testid="section-navigation">
+                    <AppStepsNavigation />
+                  </section>
+                )}
 
                 {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
                 {/* SECTION 2 : MON PROFIL - Carte de bienvenue avec stats */}
