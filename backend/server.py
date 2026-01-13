@@ -1653,7 +1653,9 @@ async def register(data: UserRegister):
         "belt_awarded_at": datetime.now(timezone.utc).isoformat(),
         "belt_awarded_by": "system",  # Initial belt is system-assigned
         "dojo_id": "aikido-la-riviere",  # Default dojo
-        "dojo_name": "Aikido La Rivière"
+        "dojo_name": "Aikido La Rivière",
+        "subscription_status": "none",  # No subscription by default
+        "subscription_plan": None
     }
     
     await db.users.insert_one(user)
@@ -1671,7 +1673,9 @@ async def register(data: UserRegister):
             "last_name": user["last_name"],
             "email": user["email"],
             "dojo_id": user["dojo_id"],
-            "dojo_name": user["dojo_name"]
+            "dojo_name": user["dojo_name"],
+            "subscription_status": user.get("subscription_status", "none"),
+            "subscription_plan": user.get("subscription_plan")
         }
     }
 
