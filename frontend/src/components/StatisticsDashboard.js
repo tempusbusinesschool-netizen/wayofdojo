@@ -170,12 +170,14 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
     }, 300);
   };
   
-  // Vérifier si l'utilisateur a déjà vu le tutoriel
+  // Note: Le tutoriel GuidedTour est maintenant remplacé par JourneyPath
+  // L'utilisateur peut toujours y accéder via le bouton "Aide"
+  // useEffect pour l'affichage automatique désactivé
+  /*
   useEffect(() => {
     if (isAuthenticated) {
       const tourCompleted = localStorage.getItem('aikido_tour_completed');
       if (!tourCompleted) {
-        // Afficher le tutoriel après un court délai
         const timer = setTimeout(() => {
           setShowGuidedTour(true);
         }, 1500);
@@ -183,6 +185,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
       }
     }
   }, [isAuthenticated]);
+  */
   
   // Fonction pour marquer une étape du parcours comme complétée
   const handleJourneyStepComplete = (step) => {
