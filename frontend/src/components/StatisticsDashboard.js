@@ -1067,12 +1067,13 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
                 <section className="mb-8" data-testid="section-parcours">
                   <JourneyPath
-                    userName={userName}
+                    userName={displayUserName}
                     completedSteps={journeyCompletedSteps}
                     currentStep={journeyCompletedSteps.length + 1}
                     totalPoints={statistics.total_points || 0}
                     onStepClick={handleJourneyStepComplete}
                     onNavigate={handleJourneyNavigate}
+                    onUserNameChange={handleUserNameChange}
                     isEnfantMode={true}
                   />
                 </section>
