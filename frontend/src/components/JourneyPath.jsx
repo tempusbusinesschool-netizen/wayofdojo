@@ -324,34 +324,39 @@ const JourneyPath = ({
             </motion.div>
           </div>
 
-          {/* Message de Tanaka */}
+          {/* Message de Tanaka - Encadré Orange/Ambre */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.7 }}
-            className="mt-6 bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20"
+            className="mt-6 bg-gradient-to-r from-amber-500/30 via-orange-500/30 to-amber-500/30 backdrop-blur-sm rounded-2xl p-4 sm:p-5 border-2 border-amber-400/50 shadow-lg shadow-amber-500/20"
           >
-            <div className="flex items-start gap-3">
-              <div className="flex-shrink-0 w-10 h-10 rounded-full overflow-hidden border-2 border-amber-400/50">
+            <div className="flex items-start gap-4">
+              {/* Portrait de Tanaka */}
+              <div className="flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden border-3 border-amber-400 shadow-lg shadow-amber-500/30">
                 <img 
                   src={TANAKA_IMAGE} 
-                  alt="" 
+                  alt="Maître Tanaka" 
                   className="w-full h-full object-cover"
-                  onError={(e) => { e.target.outerHTML = '<div class="w-full h-full bg-amber-500 flex items-center justify-center text-lg">🥋</div>'; }}
+                  onError={(e) => { e.target.outerHTML = '<div class="w-full h-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-2xl">🥋</div>'; }}
                 />
               </div>
               <div className="flex-1">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-amber-300 font-semibold text-sm">Maître Tanaka dit :</span>
+                {/* Nom et bouton écouter */}
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="text-amber-300 font-bold text-base sm:text-lg">Maître Tanaka</span>
                   <button
                     onClick={() => playTanakaAudio(currentActiveStep.tanakaAudioKey || 'welcome')}
                     disabled={isPlayingAudio}
-                    className="text-amber-300/70 hover:text-amber-200 transition-colors disabled:opacity-50"
+                    className="flex items-center gap-1.5 bg-amber-500/30 hover:bg-amber-500/50 text-amber-200 px-3 py-1 rounded-full text-sm transition-all disabled:opacity-50"
+                    title="Écouter Maître Tanaka"
                   >
                     <Volume2 className={`w-4 h-4 ${isPlayingAudio ? 'animate-pulse' : ''}`} />
+                    <span className="hidden sm:inline">{isPlayingAudio ? 'Écoute...' : 'Écouter'}</span>
                   </button>
                 </div>
-                <p className="text-white/90 text-sm sm:text-base italic leading-relaxed">
+                {/* Message en italique */}
+                <p className="text-white text-sm sm:text-base italic leading-relaxed">
                   "{allCompleted 
                     ? `Félicitations ${userName} ! Tu as parcouru tout le chemin de l'initiation ! Ta véritable aventure de Ninja commence maintenant ! 🥋✨`
                     : currentActiveStep.tanakaMessage}"
