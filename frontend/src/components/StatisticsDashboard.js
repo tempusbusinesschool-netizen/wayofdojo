@@ -1440,7 +1440,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                   <span className="text-amber-300">📖 {points.learning}pts</span>
                   <span className="text-blue-300">🎯 {points.practiced}pts</span>
                   <span className="text-emerald-300">🏆 {points.mastered}pts</span>
-                  <span className="text-yellow-300">{currentBelt.emoji} {points.belt}pts</span>
+                  <span className="text-yellow-300">{currentBelt?.emoji || '🥋'} {points.belt}pts</span>
                 </div>
               </div>
             </div>
