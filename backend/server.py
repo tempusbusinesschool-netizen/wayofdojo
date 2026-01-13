@@ -1707,7 +1707,9 @@ async def get_me(user: dict = Depends(require_auth)):
         "first_name": user["first_name"],
         "last_name": user["last_name"],
         "email": user["email"],
-        "created_at": user.get("created_at")
+        "created_at": user.get("created_at"),
+        "subscription_status": user.get("subscription_status", "none"),
+        "subscription_plan": user.get("subscription_plan")
     }
 
 
