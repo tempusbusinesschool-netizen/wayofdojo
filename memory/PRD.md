@@ -416,3 +416,30 @@ Stored in `/audio/tanaka/` - No API calls needed for common events:
 ---
 
 *Last updated: December 2025*
+## 📅 Updates - January 2026
+
+### Critical Bug Fix: Login/Registration Crash (Jan 13, 2026)
+- [x] **Fixed** `TypeError: Cannot read properties of undefined (reading 'emoji')` crash on login
+- [x] **Root cause**: Database stored `belt_level` as "blanche" instead of "6e_kyu" format
+- [x] **Solution**:
+  - Added `normalizeBeltKey()` function in `aikidoBelts.js` to handle legacy belt values
+  - Updated `App.js` to use `normalizeBeltKey()` when reading belt data
+  - Added stronger protection in `StatisticsDashboard.js` for currentBelt
+  - Fixed database entries to use correct belt key format
+- [x] Login and registration flows now work correctly
+- [x] Transition animation displays properly ("Ninja est connecté...")
+
+### Legacy Belt Value Mapping
+| Old Value | New Key |
+|-----------|---------|
+| blanche | 6e_kyu |
+| jaune | 5e_kyu |
+| orange | 4e_kyu |
+| verte | 3e_kyu |
+| bleue | 2e_kyu |
+| marron | 1er_kyu |
+| noire | shodan |
+
+---
+
+*Last updated: January 13, 2026*
