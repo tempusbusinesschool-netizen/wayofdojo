@@ -183,8 +183,8 @@ const JourneyPath = ({
         </div>
       </div>
 
-      {/* Grille des étapes */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+      {/* Grille des étapes - 4 colonnes sur desktop, 2 sur mobile */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
         {JOURNEY_STEPS.map((step, index) => {
           const unlocked = isStepUnlocked(step);
           const completed = isStepCompleted(step.id);
