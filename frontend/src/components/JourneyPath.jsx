@@ -358,8 +358,9 @@ const JourneyPath = ({
                     className="space-y-4"
                   >
                     <div className="bg-slate-800/50 rounded-xl p-4 border border-amber-500/30">
-                      <p className="text-white text-lg leading-relaxed">
-                        "Bienvenue dans mon dojo virtuel ! 🥋
+                      {/* Afficher l'email de bienvenue */}
+                      <p className="text-emerald-400 font-bold text-lg mb-3">
+                        "Bienvenue <span className="text-amber-400">{userEmail || 'nouveau ninja'}</span> ! 🥋"
                       </p>
                       <p className="text-white/80 mt-2">
                         Je suis <span className="text-amber-400 font-bold">Maître Tanaka</span>, et je serai ton guide sur la Voie de l'Aïkido.
@@ -402,10 +403,13 @@ const JourneyPath = ({
                   >
                     <div className="bg-slate-800/50 rounded-xl p-4 border border-amber-500/30">
                       <p className="text-white text-lg leading-relaxed">
-                        "Très bien ! Mais dis-moi, jeune ninja...
+                        "Très bien ! Mais dis-moi...
                       </p>
                       <p className="text-amber-400 font-bold text-xl mt-3 text-center">
                         Quel est ton prénom ? 🤔"
+                      </p>
+                      <p className="text-slate-400 text-sm mt-2 text-center">
+                        (Je l'utiliserai pour te parler)
                       </p>
                     </div>
                     
