@@ -4,7 +4,7 @@ import {
   ChevronRight, Lock, CheckCircle2, Play, Star, 
   Sparkles, Target, Trophy, Gift, Flame, Rocket,
   Heart, Volume2, User, Swords, BookOpen, Award,
-  MessageCircle, Mic
+  MessageCircle, Mic, RotateCcw
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
