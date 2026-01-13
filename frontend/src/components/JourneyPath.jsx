@@ -619,7 +619,7 @@ const JourneyPath = ({
       {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
       {/* BARRE DE PROGRESSION */}
       {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-      <div className="bg-slate-800/50 rounded-xl p-4 mb-6 border border-slate-700">
+      <div className="bg-slate-800/50 rounded-xl p-4 mb-4 border border-slate-700">
         <div className="flex items-center justify-between mb-2">
           <span className="text-white font-semibold flex items-center gap-2">
             <Flame className="w-4 h-4 text-orange-400" />
@@ -637,6 +637,18 @@ const JourneyPath = ({
             className="h-full bg-gradient-to-r from-emerald-500 via-cyan-500 to-violet-500 rounded-full"
           />
         </div>
+      </div>
+
+      {/* Bouton Réinitialiser le parcours (pour les tests) */}
+      <div className="flex justify-end mb-4">
+        <button
+          onClick={handleResetJourney}
+          className="flex items-center gap-2 text-slate-500 hover:text-red-400 text-xs sm:text-sm transition-colors px-3 py-1.5 rounded-lg hover:bg-red-500/10 border border-transparent hover:border-red-500/30"
+          data-testid="reset-journey-btn"
+        >
+          <RotateCcw className="w-3.5 h-3.5" />
+          <span>Réinitialiser le parcours</span>
+        </button>
       </div>
 
       {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
