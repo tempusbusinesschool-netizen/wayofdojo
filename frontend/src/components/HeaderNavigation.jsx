@@ -97,35 +97,35 @@ const HeaderNavigation = ({
         </Button>
         
         {openMenu === 'login' && (
-          <div className="absolute top-full left-0 mt-1 w-52 bg-slate-800 border border-slate-700 rounded-lg shadow-xl z-50 overflow-hidden">
+          <div className="absolute top-full right-0 sm:left-0 sm:right-auto mt-1 w-48 sm:w-52 bg-slate-800 border border-slate-700 rounded-lg shadow-xl z-50 overflow-hidden">
             <button
               onClick={() => { onLoginUser(); setOpenMenu(null); }}
-              className="w-full flex items-center gap-3 px-4 py-3 text-left text-slate-200 hover:bg-emerald-900/30 transition-colors"
+              className="w-full flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 text-left text-slate-200 hover:bg-emerald-900/30 transition-colors"
             >
-              <User className="w-4 h-4 text-emerald-400" />
-              <div>
-                <div className="font-medium">Connexion Adhérent</div>
-                <div className="text-xs text-slate-400">Accès espace personnel</div>
+              <User className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+              <div className="min-w-0">
+                <div className="font-medium text-sm sm:text-base truncate">Adhérent</div>
+                <div className="text-[10px] sm:text-xs text-slate-400 truncate">Espace personnel</div>
               </div>
             </button>
             <button
               onClick={() => { onLoginEnseignant(); setOpenMenu(null); }}
-              className="w-full flex items-center gap-3 px-4 py-3 text-left text-slate-200 hover:bg-amber-900/30 transition-colors border-t border-slate-700"
+              className="w-full flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 text-left text-slate-200 hover:bg-amber-900/30 transition-colors border-t border-slate-700"
             >
-              <GraduationCap className="w-4 h-4 text-amber-400" />
-              <div>
-                <div className="font-medium">Connexion Enseignant</div>
-                <div className="text-xs text-slate-400">Espace professeur</div>
+              <GraduationCap className="w-4 h-4 text-amber-400 flex-shrink-0" />
+              <div className="min-w-0">
+                <div className="font-medium text-sm sm:text-base truncate">Enseignant</div>
+                <div className="text-[10px] sm:text-xs text-slate-400 truncate">Espace professeur</div>
               </div>
             </button>
             <button
               onClick={() => { onLoginParent(); setOpenMenu(null); }}
-              className="w-full flex items-center gap-3 px-4 py-3 text-left text-slate-200 hover:bg-purple-900/30 transition-colors border-t border-slate-700"
+              className="w-full flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 text-left text-slate-200 hover:bg-purple-900/30 transition-colors border-t border-slate-700"
             >
-              <Heart className="w-4 h-4 text-purple-400" />
-              <div>
-                <div className="font-medium">Connexion Parent</div>
-                <div className="text-xs text-slate-400">Suivi de mes enfants</div>
+              <Heart className="w-4 h-4 text-purple-400 flex-shrink-0" />
+              <div className="min-w-0">
+                <div className="font-medium text-sm sm:text-base truncate">Parent</div>
+                <div className="text-[10px] sm:text-xs text-slate-400 truncate">Suivi enfants</div>
               </div>
             </button>
           </div>
