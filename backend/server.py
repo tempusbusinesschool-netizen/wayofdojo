@@ -1693,7 +1693,9 @@ async def login(data: UserLogin):
             "id": user["id"],
             "first_name": user["first_name"],
             "last_name": user["last_name"],
-            "email": user["email"]
+            "email": user["email"],
+            "subscription_status": user.get("subscription_status", "none"),
+            "subscription_plan": user.get("subscription_plan")
         }
     }
 
