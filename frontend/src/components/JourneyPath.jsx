@@ -250,6 +250,7 @@ const JourneyPath = ({
   const handleNameSubmit = () => {
     if (tempUserName.trim()) {
       localStorage.setItem('aikido_user_firstname', tempUserName.trim());
+      localStorage.setItem('aikido_tanaka_intro_seen', 'true');
       if (onUserNameChange) {
         onUserNameChange(tempUserName.trim());
       }
