@@ -278,6 +278,19 @@ const JourneyPath = ({
     }
   };
 
+  // Réinitialiser le parcours (pour les tests)
+  const handleResetJourney = () => {
+    if (window.confirm('⚠️ Réinitialiser le parcours ?\n\nCela va effacer ta progression et te ramener à l\'étape 1.\n\nContinuer ?')) {
+      // Effacer les données du localStorage
+      localStorage.removeItem('aikido_journey_completed_steps');
+      localStorage.removeItem('aikido_tanaka_intro_seen');
+      localStorage.removeItem('aikido_user_firstname');
+      
+      // Recharger la page pour réinitialiser l'état
+      window.location.reload();
+    }
+  };
+
   // Trouver l'étape actuelle (première non complétée)
   const currentActiveStep = JOURNEY_STEPS.find(step => !isStepCompleted(step.id)) || JOURNEY_STEPS[JOURNEY_STEPS.length - 1];
   const allCompleted = completedSteps.length >= JOURNEY_STEPS.length;
