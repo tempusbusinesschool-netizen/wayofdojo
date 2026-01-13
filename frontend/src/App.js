@@ -378,7 +378,8 @@ function AppContent() {
         // Get user belt
         if (responses[6]) {
           const beltData = responses[6].data;
-          setUserBelt(beltData.belt_level || "6e_kyu");
+          // Normalize belt_level to handle legacy values
+          setUserBelt(normalizeBeltKey(beltData.belt_level));
         }
         
         // Merge user progression into kyu levels
