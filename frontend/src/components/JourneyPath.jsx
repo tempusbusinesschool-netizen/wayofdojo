@@ -254,10 +254,14 @@ const JourneyPath = ({
   // Valider le prénom
   const handleNameSubmit = () => {
     if (tempUserName.trim()) {
-      localStorage.setItem('aikido_user_firstname', tempUserName.trim());
+      const firstName = tempUserName.trim();
+      // Enregistrer le prénom dans localStorage
+      localStorage.setItem('aikido_user_firstname', firstName);
       localStorage.setItem('aikido_tanaka_intro_seen', 'true');
+      setRegisteredFirstName(firstName);
+      
       if (onUserNameChange) {
-        onUserNameChange(tempUserName.trim());
+        onUserNameChange(firstName);
       }
       setShowIntroDialog(false);
       setTanakaAnimationState('idle');
@@ -300,8 +304,8 @@ const JourneyPath = ({
   const currentActiveStep = JOURNEY_STEPS.find(step => !isStepCompleted(step.id)) || JOURNEY_STEPS[JOURNEY_STEPS.length - 1];
   const allCompleted = completedSteps.length >= JOURNEY_STEPS.length;
   
-  // Nom à afficher (utilise le localStorage si disponible)
-  const displayName = userName || localStorage.getItem('aikido_user_firstname') || 'Ninja';
+  // Nom à afficher : UNIQUEMENT le prénom enregistré (demandé par Tanaka)
+  const displayName = registeredFirstName || localStorage.getItem('aikido_user_firstname') || 'Ninja';
 
   return (
     <div className="w-full" data-testid="journey-path">
