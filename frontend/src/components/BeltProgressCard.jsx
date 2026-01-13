@@ -8,6 +8,16 @@ import { getNextBelt } from '@/constants/aikidoBelts';
  */
 const BeltProgressCard = ({ currentBelt, totalPoints = 0, onBeltClick }) => {
   const [isAnimating, setIsAnimating] = useState(false);
+  
+  // Protection si currentBelt n'est pas défini
+  if (!currentBelt) {
+    return (
+      <div className="mb-6 p-5 md:p-8 rounded-3xl bg-slate-800/50 border-2 border-slate-700 text-center">
+        <p className="text-slate-400">Chargement de ta ceinture...</p>
+      </div>
+    );
+  }
+  
   const nextBelt = getNextBelt(currentBelt);
   
   // Calculer la progression vers le prochain grade
