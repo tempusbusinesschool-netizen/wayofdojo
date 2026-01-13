@@ -184,6 +184,62 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
     }
   }, [isAuthenticated]);
   
+  // Fonction pour marquer une étape du parcours comme complétée
+  const handleJourneyStepComplete = (step) => {
+    if (!journeyCompletedSteps.includes(step.id)) {
+      const newCompleted = [...journeyCompletedSteps, step.id];
+      setJourneyCompletedSteps(newCompleted);
+      localStorage.setItem('aikido_journey_completed_steps', JSON.stringify(newCompleted));
+      toast.success(`🎉 Étape "${step.title}" complétée ! +${step.xpReward} XP`);
+    }
+  };
+
+  // Fonction pour naviguer vers une section depuis le parcours
+  const handleJourneyNavigate = (target) => {
+    // Marquer l'étape actuelle comme complétée si c'est la première visite
+    const stepMap = {
+      'dashboard': 1,
+      'profil': 2,
+      'defis': 3,
+      'vertus': 4,
+      'histoire': 5,
+      'badges': 6
+    };
+    
+    const stepId = stepMap[target];
+    if (stepId && !journeyCompletedSteps.includes(stepId)) {
+      const newCompleted = [...journeyCompletedSteps, stepId];
+      setJourneyCompletedSteps(newCompleted);
+      localStorage.setItem('aikido_journey_completed_steps', JSON.stringify(newCompleted));
+    }
+
+    // Navigation vers la section
+    if (target === 'dashboard') {
+      // Fermer le parcours et montrer le dashboard
+      setShowJourneyPath(false);
+    } else if (target === 'profil') {
+      const el = document.getElementById('section-profil');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    } else if (target === 'defis') {
+      const el = document.getElementById('section-points');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    } else if (target === 'vertus') {
+      setAccordionOpen(prev => ({ ...prev, valeurs: true }));
+      setTimeout(() => {
+        const el = document.getElementById('section-valeurs');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else if (target === 'histoire') {
+      setAccordionOpen(prev => ({ ...prev, histoire: true }));
+      setTimeout(() => {
+        const el = document.getElementById('section-histoire');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else if (target === 'badges') {
+      setShowTrophiesDialog(true);
+    }
+  };
+  
   // États pour les accordéons
   const [accordionOpen, setAccordionOpen] = useState({
     progression: true,
