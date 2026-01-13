@@ -380,7 +380,7 @@ const JourneyPath = ({
       <AnimatePresence>
         {showStepDialog && selectedStep && (
           <Dialog open={showStepDialog} onOpenChange={setShowStepDialog}>
-            <DialogContent className="sm:max-w-md p-0 bg-slate-900 border-slate-700 overflow-hidden">
+            <DialogContent className="sm:max-w-lg p-0 bg-slate-900 border-slate-700 overflow-hidden">
               {/* Header avec gradient */}
               <div className={`bg-gradient-to-r ${selectedStep.gradient} p-6 relative`}>
                 <div className="flex items-center gap-4">
@@ -412,6 +412,42 @@ const JourneyPath = ({
 
               {/* Contenu */}
               <div className="p-6 space-y-4">
+                
+                {/* Message de Maître Tanaka */}
+                {selectedStep.tanakaMessage && (
+                  <div className="bg-gradient-to-r from-amber-600/20 to-orange-600/20 rounded-xl p-4 border border-amber-500/30">
+                    <div className="flex items-start gap-3">
+                      <div className="flex-shrink-0 w-12 h-12 rounded-full overflow-hidden border-2 border-amber-400">
+                        <img 
+                          src={TANAKA_IMAGE} 
+                          alt="Maître Tanaka" 
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            e.target.style.display = 'none';
+                            e.target.parentElement.innerHTML = '<div class="w-full h-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-xl">🥋</div>';
+                          }}
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-amber-400 font-semibold text-sm">Maître Tanaka</span>
+                          <button
+                            onClick={() => playTanakaAudio(selectedStep.tanakaAudioKey)}
+                            disabled={isPlayingAudio}
+                            className="text-amber-400/70 hover:text-amber-300 transition-colors disabled:opacity-50"
+                            title="Écouter"
+                          >
+                            <Volume2 className={`w-4 h-4 ${isPlayingAudio ? 'animate-pulse' : ''}`} />
+                          </button>
+                        </div>
+                        <p className="text-amber-100 text-sm leading-relaxed italic">
+                          "{selectedStep.tanakaMessage}"
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 <p className="text-slate-300">{selectedStep.description}</p>
 
                 {/* Tips */}
