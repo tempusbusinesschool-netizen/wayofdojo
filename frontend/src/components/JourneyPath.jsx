@@ -186,18 +186,20 @@ const JourneyPath = ({
   const [tempUserName, setTempUserName] = useState('');
   const [tanakaAnimationState, setTanakaAnimationState] = useState('idle'); // idle, talking, waving
   
-  // Vérifier si c'est la première visite (pas de prénom enregistré)
+  // Vérifier si c'est la première visite (pas de prénom personnalisé enregistré)
   useEffect(() => {
     const savedName = localStorage.getItem('aikido_user_firstname');
-    if (!savedName && !userName) {
-      // Première visite - afficher le dialogue d'intro
+    const hasSeenIntro = localStorage.getItem('aikido_tanaka_intro_seen');
+    
+    // Afficher le dialogue si l'utilisateur n'a jamais vu l'intro de Tanaka
+    if (!hasSeenIntro) {
       const timer = setTimeout(() => {
         setShowIntroDialog(true);
         setTanakaAnimationState('waving');
       }, 1000);
       return () => clearTimeout(timer);
     }
-  }, [userName]);
+  }, []);
 
   // Animation de Tanaka
   useEffect(() => {
