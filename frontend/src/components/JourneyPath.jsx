@@ -170,64 +170,201 @@ const JourneyPath = ({
     }
   };
 
+  // Trouver l'étape actuelle (première non complétée)
+  const currentActiveStep = JOURNEY_STEPS.find(step => !isStepCompleted(step.id)) || JOURNEY_STEPS[JOURNEY_STEPS.length - 1];
+  const allCompleted = completedSteps.length >= JOURNEY_STEPS.length;
+
   return (
     <div className="w-full" data-testid="journey-path">
-      {/* En-tête avec Maître Tanaka */}
-      <div className="mb-6">
-        {/* Carte de bienvenue de Tanaka */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="bg-gradient-to-r from-amber-600/20 via-orange-600/20 to-amber-600/20 rounded-2xl p-4 sm:p-6 border border-amber-500/30 mb-6"
-        >
-          <div className="flex flex-col sm:flex-row items-center gap-4">
-            {/* Avatar de Tanaka */}
+      
+      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+      {/* GROS BLOC DE DÉMARRAGE - Étape actuelle avec Tanaka */}
+      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
+        className={`relative overflow-hidden rounded-3xl mb-8 ${
+          allCompleted 
+            ? 'bg-gradient-to-br from-emerald-600 via-teal-600 to-cyan-600' 
+            : `bg-gradient-to-br ${currentActiveStep.gradient}`
+        } shadow-2xl`}
+      >
+        {/* Effets de fond */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-black/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+        </div>
+
+        <div className="relative p-6 sm:p-8">
+          <div className="flex flex-col lg:flex-row items-center gap-6">
+            
+            {/* GROS NUMÉRO D'ÉTAPE */}
             <div className="relative flex-shrink-0">
-              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-3 border-amber-400 shadow-xl shadow-amber-500/30">
+              <motion.div
+                initial={{ scale: 0, rotate: -180 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.2 }}
+                className="relative"
+              >
+                {/* Cercle avec numéro */}
+                <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-white/20 backdrop-blur-sm border-4 border-white/40 flex items-center justify-center shadow-2xl">
+                  {allCompleted ? (
+                    <div className="text-center">
+                      <Trophy className="w-12 h-12 sm:w-16 sm:h-16 text-white mx-auto" />
+                      <span className="text-white text-xs font-bold">TERMINÉ</span>
+                    </div>
+                  ) : (
+                    <span className="text-6xl sm:text-7xl font-black text-white drop-shadow-lg">
+                      {currentActiveStep.id}
+                    </span>
+                  )}
+                </div>
+                
+                {/* Badge XP */}
+                {!allCompleted && (
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ delay: 0.5 }}
+                    className="absolute -bottom-2 -right-2 bg-amber-500 text-slate-900 px-3 py-1 rounded-full font-bold text-sm flex items-center gap-1 shadow-lg"
+                  >
+                    <Star className="w-4 h-4" />
+                    +{currentActiveStep.xpReward} XP
+                  </motion.div>
+                )}
+              </motion.div>
+            </div>
+
+            {/* CONTENU PRINCIPAL */}
+            <div className="flex-1 text-center lg:text-left">
+              {/* Badge étape */}
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3 }}
+                className="inline-flex items-center gap-2 bg-white/20 px-4 py-1.5 rounded-full mb-3"
+              >
+                <span className="text-white/90 text-sm font-semibold">
+                  {allCompleted ? '🎉 Parcours Complété !' : `Étape ${currentActiveStep.id} sur ${JOURNEY_STEPS.length}`}
+                </span>
+              </motion.div>
+
+              {/* Titre */}
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+                className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-2 drop-shadow-lg"
+              >
+                {allCompleted ? 'Bravo ' + userName + ' !' : currentActiveStep.title}
+              </motion.h2>
+
+              {/* Sous-titre */}
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="text-white/80 text-lg sm:text-xl mb-4"
+              >
+                {allCompleted 
+                  ? 'Tu as complété tout le parcours d\'initiation ! 🏆' 
+                  : currentActiveStep.subtitle}
+              </motion.p>
+
+              {/* Bouton d'action */}
+              {!allCompleted && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6 }}
+                >
+                  <Button
+                    onClick={() => handleStepClick(currentActiveStep)}
+                    size="lg"
+                    className="bg-white text-slate-900 hover:bg-white/90 font-bold text-lg px-8 py-6 rounded-2xl shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all"
+                  >
+                    <Play className="w-6 h-6 mr-2" />
+                    Commencer cette étape
+                    <ChevronRight className="w-6 h-6 ml-2" />
+                  </Button>
+                </motion.div>
+              )}
+            </div>
+
+            {/* MAÎTRE TANAKA */}
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.4, type: "spring" }}
+              className="flex-shrink-0 relative"
+            >
+              {/* Cercle lumineux derrière Tanaka */}
+              <div className="absolute inset-0 bg-amber-400/20 rounded-full blur-2xl scale-110" />
+              
+              <div className="relative">
+                {/* Portrait de Tanaka */}
+                <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden border-4 border-amber-400/50 shadow-2xl shadow-amber-500/30">
+                  <img 
+                    src={TANAKA_IMAGE} 
+                    alt="Maître Tanaka" 
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      e.target.parentElement.innerHTML = '<div class="w-full h-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-5xl">🥋</div>';
+                    }}
+                  />
+                </div>
+                
+                {/* Badge Maître Tanaka */}
+                <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-amber-500 text-slate-900 px-4 py-1 rounded-full font-bold text-sm whitespace-nowrap shadow-lg">
+                  Maître Tanaka
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Message de Tanaka */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7 }}
+            className="mt-6 bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/20"
+          >
+            <div className="flex items-start gap-3">
+              <div className="flex-shrink-0 w-10 h-10 rounded-full overflow-hidden border-2 border-amber-400/50">
                 <img 
                   src={TANAKA_IMAGE} 
-                  alt="Maître Tanaka" 
+                  alt="" 
                   className="w-full h-full object-cover"
-                  onError={(e) => {
-                    e.target.style.display = 'none';
-                    e.target.parentElement.innerHTML = '<div class="w-full h-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-4xl">🥋</div>';
-                  }}
+                  onError={(e) => { e.target.outerHTML = '<div class="w-full h-full bg-amber-500 flex items-center justify-center text-lg">🥋</div>'; }}
                 />
               </div>
-              {/* Badge animé */}
-              <div className="absolute -bottom-1 -right-1 bg-emerald-500 rounded-full p-1 animate-pulse">
-                <Sparkles className="w-4 h-4 text-white" />
+              <div className="flex-1">
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-amber-300 font-semibold text-sm">Maître Tanaka dit :</span>
+                  <button
+                    onClick={() => playTanakaAudio(currentActiveStep.tanakaAudioKey || 'welcome')}
+                    disabled={isPlayingAudio}
+                    className="text-amber-300/70 hover:text-amber-200 transition-colors disabled:opacity-50"
+                  >
+                    <Volume2 className={`w-4 h-4 ${isPlayingAudio ? 'animate-pulse' : ''}`} />
+                  </button>
+                </div>
+                <p className="text-white/90 text-sm sm:text-base italic leading-relaxed">
+                  "{allCompleted 
+                    ? `Félicitations ${userName} ! Tu as parcouru tout le chemin de l'initiation ! Ta véritable aventure de Ninja commence maintenant ! 🥋✨`
+                    : currentActiveStep.tanakaMessage}"
+                </p>
               </div>
             </div>
-            
-            {/* Message de Tanaka */}
-            <div className="flex-1 text-center sm:text-left">
-              <div className="flex items-center justify-center sm:justify-start gap-2 mb-2">
-                <h3 className="text-lg sm:text-xl font-bold text-amber-400">Maître Tanaka</h3>
-                <span className="text-xs bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full">Ton guide</span>
-              </div>
-              <p className="text-white text-sm sm:text-base leading-relaxed">
-                Bienvenue <span className="text-amber-400 font-semibold">{userName}</span> ! 
-                Je suis ton guide sur la Voie de l'Aïkido. 
-                Suis ce parcours pour découvrir tous les secrets du Ninja ! 🥷✨
-              </p>
-              
-              {/* Bouton écouter (optionnel) */}
-              <button
-                onClick={() => playTanakaAudio('welcome')}
-                disabled={isPlayingAudio}
-                className="mt-3 inline-flex items-center gap-2 text-amber-400 hover:text-amber-300 text-sm transition-colors disabled:opacity-50"
-              >
-                <Volume2 className={`w-4 h-4 ${isPlayingAudio ? 'animate-pulse' : ''}`} />
-                {isPlayingAudio ? 'En cours...' : 'Écouter Maître Tanaka'}
-              </button>
-            </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        </div>
+      </motion.div>
 
-        {/* Titre du parcours */}
-        <div className="text-center">
-          <motion.div
+      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+      {/* BARRE DE PROGRESSION */}
+      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
