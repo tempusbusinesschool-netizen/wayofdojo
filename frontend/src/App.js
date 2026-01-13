@@ -1853,8 +1853,8 @@ function AppContent() {
         isOpen={showAuthDialog}
         onClose={() => setShowAuthDialog(false)}
         onSuccess={(firstName) => {
-          setLoginTransitionUserName(firstName);
-          setLoginTransitionDestination('dashboard');
+          setTransitionUserName(firstName);
+          setLoginDestination('tarification');
           setShowLoginTransition(true);
         }}
       />
