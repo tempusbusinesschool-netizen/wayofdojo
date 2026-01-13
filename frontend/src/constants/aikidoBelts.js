@@ -122,8 +122,35 @@ export const AIKIDO_BELTS = {
   }
 };
 
-// Get belt by grade key
-export const getBeltByKey = (key) => AIKIDO_BELTS[key] || AIKIDO_BELTS["6e_kyu"];
+// Mapping for legacy belt values (from old database format)
+const LEGACY_BELT_MAPPING = {
+  'blanche': '6e_kyu',
+  'jaune': '5e_kyu',
+  'orange': '4e_kyu',
+  'verte': '3e_kyu',
+  'bleue': '2e_kyu',
+  'marron': '1er_kyu',
+  'noire': 'shodan',
+};
+
+// Normalize belt key (handles both old and new formats)
+export const normalizeBeltKey = (key) => {
+  if (!key) return '6e_kyu';
+  // If it's already a valid key, return it
+  if (AIKIDO_BELTS[key]) return key;
+  // Check if it's a legacy value
+  if (LEGACY_BELT_MAPPING[key.toLowerCase()]) {
+    return LEGACY_BELT_MAPPING[key.toLowerCase()];
+  }
+  // Default fallback
+  return '6e_kyu';
+};
+
+// Get belt by grade key (with legacy support)
+export const getBeltByKey = (key) => {
+  const normalizedKey = normalizeBeltKey(key);
+  return AIKIDO_BELTS[normalizedKey] || AIKIDO_BELTS["6e_kyu"];
+};
 
 // Get belt by points
 export const getBeltByPoints = (points) => {
