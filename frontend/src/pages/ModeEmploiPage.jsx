@@ -301,9 +301,9 @@ const ModeEmploiPage = ({ onBack }) => {
       </header>
 
       <div className="flex pt-16">
-        {/* Sidebar */}
-        <aside className={`fixed lg:static inset-y-0 left-0 z-40 w-72 bg-slate-800/50 backdrop-blur-sm border-r border-slate-700 transform transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'} pt-16 lg:pt-0`}>
-          <nav className="p-4 space-y-2 h-full overflow-y-auto">
+        {/* Sidebar - cachée par défaut sur mobile */}
+        <aside className={`fixed lg:static inset-y-0 left-0 z-40 w-64 sm:w-72 bg-slate-800/95 backdrop-blur-sm border-r border-slate-700 transform transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0 pt-16 lg:pt-0`}>
+          <nav className="p-3 sm:p-4 space-y-2 h-full overflow-y-auto">
             <div className="text-xs uppercase tracking-wider text-slate-400 mb-4 px-3">
               Sections du guide
             </div>
