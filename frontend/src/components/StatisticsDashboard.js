@@ -123,6 +123,20 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
   });
   const [showJourneyPath, setShowJourneyPath] = useState(true);
   
+  // État pour le prénom personnalisé (modifiable par Tanaka)
+  const [customUserName, setCustomUserName] = useState(() => {
+    return localStorage.getItem('aikido_user_firstname') || '';
+  });
+  
+  // Nom à afficher (priorité: customUserName > userName prop)
+  const displayUserName = customUserName || userName || 'Ninja';
+  
+  // Callback pour changer le prénom depuis JourneyPath
+  const handleUserNameChange = (newName) => {
+    setCustomUserName(newName);
+    localStorage.setItem('aikido_user_firstname', newName);
+  };
+  
   // État pour le mode visiteur (enfant/adulte) - stocké en localStorage
   const [visitorMode, setVisitorMode] = useState(() => {
     return localStorage.getItem('ninja-aikido-mode') || null;
