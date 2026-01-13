@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ChevronRight, Lock, CheckCircle2, Play, Star, 
   Sparkles, Target, Trophy, Gift, Flame, Rocket,
-  BookOpen, Users, Award, Heart
+  Heart
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
