@@ -7,7 +7,7 @@ import {
 
 const ModeEmploiPage = ({ onBack }) => {
   const [currentSection, setCurrentSection] = useState(0);
-  const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [sidebarOpen, setSidebarOpen] = useState(false); // Fermée par défaut sur mobile
   const [animateContent, setAnimateContent] = useState(true);
 
   const sections = [
