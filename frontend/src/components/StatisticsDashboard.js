@@ -281,8 +281,10 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
     }
   };
 
-  // Get current belt info from userBelt prop
-  const currentBelt = userBelt ? AIKIDO_BELTS[userBelt] : AIKIDO_BELTS["6e_kyu"];
+  // Get current belt info from userBelt prop - with fallback protection
+  const currentBelt = (userBelt && AIKIDO_BELTS[userBelt]) 
+    ? AIKIDO_BELTS[userBelt] 
+    : AIKIDO_BELTS["6e_kyu"];
 
   // Calculate points based on technique mastery AND belt
   // En apprentissage = 1 point, Pratiqué = 2 points, Maîtrisé = 3 points
