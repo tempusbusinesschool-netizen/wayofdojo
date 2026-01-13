@@ -7,7 +7,7 @@ import { User, Mail, Lock, UserPlus } from "lucide-react";
 import { toast } from "sonner";
 import { useAuth } from "@/contexts/AuthContext";
 
-function AuthDialog({ isOpen, onClose }) {
+function AuthDialog({ isOpen, onClose, onSuccess }) {
   const { register } = useAuth();
   const [loading, setLoading] = useState(false);
   
@@ -42,6 +42,10 @@ function AuthDialog({ isOpen, onClose }) {
       toast.success("Compte créé avec succès !");
       onClose();
       resetForms();
+      // Déclencher l'animation de transition
+      if (onSuccess) {
+        onSuccess(registerFirstName);
+      }
     } catch (error) {
       const errorMessage = error.response?.data?.detail;
       if (errorMessage) {
