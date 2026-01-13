@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ChevronRight, Lock, CheckCircle2, Play, Star, 
   Sparkles, Target, Trophy, Gift, Flame, Rocket,
-  Heart, Volume2
+  Heart, Volume2, User, Swords, BookOpen, Award,
+  MessageCircle, Mic
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
 import { playTanakaPhrase } from '@/services/tanakaVoiceService';
 
 // Image de Maître Tanaka
@@ -14,117 +16,200 @@ const TANAKA_IMAGE = "/images/tanaka/portrait.png";
 
 /**
  * JourneyPath - Parcours de jeu ludique et guidé pour les nouveaux utilisateurs
- * 4 étapes progressives pour découvrir l'application
- * Guidé par Maître Tanaka !
+ * Inclut tous les thèmes de l'application avec Maître Tanaka comme guide interactif
  */
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// DÉFINITION DES ÉTAPES DU PARCOURS - Basé sur tous les thèmes de l'application
+// ═══════════════════════════════════════════════════════════════════════════════
 
 const JOURNEY_STEPS = [
   {
     id: 1,
     slug: 'bienvenue',
     title: 'Bienvenue !',
-    subtitle: 'Découvre ton espace',
+    subtitle: 'Rencontre Maître Tanaka',
     emoji: '👋',
     icon: Rocket,
     gradient: 'from-emerald-500 to-teal-600',
     shadowColor: 'shadow-emerald-500/40',
     unlockCondition: 'always',
     xpReward: 10,
-    description: 'Bienvenue dans ton aventure Aikido ! Ici tu vas apprendre, progresser et devenir un vrai Ninja.',
-    tanakaMessage: "Bienvenue dans mon dojo virtuel, jeune ninja ! 🥋 Je suis Maître Tanaka et je serai ton guide sur la Voie de l'Aïkido. Ensemble, nous allons découvrir les secrets des grands maîtres !",
+    description: 'Fais connaissance avec Maître Tanaka, ton guide sur la Voie de l\'Aïkido !',
+    tanakaMessage: "Bienvenue dans mon dojo virtuel ! 🥋 Je suis Maître Tanaka. Ensemble, nous allons découvrir les secrets de l'Aïkido. Prêt pour l'aventure ?",
     tanakaAudioKey: 'welcome',
-    actions: [
-      { label: 'Explorer le tableau de bord', type: 'navigate', target: 'dashboard' },
-    ],
-    tips: [
-      '🎯 Ton objectif : gagner des points en pratiquant',
-      '📊 Ici tu vois ta progression en temps réel',
-      '🔥 Plus tu pratiques, plus tu montes de grade !'
-    ]
+    actions: [{ label: 'Commencer l\'aventure', type: 'navigate', target: 'dashboard' }],
+    tips: ['🎯 Découvre ton tableau de bord', '📊 Suis ta progression', '🔥 Gagne des points XP !']
   },
   {
     id: 2,
+    slug: 'profil',
+    title: 'Mon Profil',
+    subtitle: 'Ta carte de ninja',
+    emoji: '🥷',
+    icon: User,
+    gradient: 'from-violet-500 to-purple-600',
+    shadowColor: 'shadow-violet-500/40',
+    unlockCondition: 'step_1_completed',
+    xpReward: 15,
+    description: 'Découvre ton profil de ninja avec ta ceinture, tes stats et ton animal gardien !',
+    tanakaMessage: "Chaque ninja a sa propre identité ! Ta ceinture montre ton niveau, et ton animal gardien t'accompagne dans ton voyage. Quel sera le tien ?",
+    tanakaAudioKey: 'encourage_practice',
+    actions: [{ label: 'Voir mon profil', type: 'navigate', target: 'profil' }],
+    tips: ['🥋 Ta ceinture actuelle', '🐉 Ton animal gardien', '⭐ Tes points XP']
+  },
+  {
+    id: 3,
     slug: 'defis',
-    title: 'Mes Défis',
+    title: 'Les Défis',
     subtitle: 'Relève les défis quotidiens',
     emoji: '🎯',
     icon: Target,
     gradient: 'from-pink-500 to-rose-600',
     shadowColor: 'shadow-pink-500/40',
-    unlockCondition: 'step_1_completed',
+    unlockCondition: 'step_2_completed',
     xpReward: 20,
-    description: 'Chaque jour, tu as des défis à relever ! Complète-les pour gagner des points et progresser.',
-    tanakaMessage: "Ho ho ho ! Les défis quotidiens sont le cœur de ton entraînement, jeune ninja ! Chaque défi accompli te rapproche de la maîtrise. N'oublie pas : la persévérance est la clé ! 💪",
-    tanakaAudioKey: 'encouragement',
-    actions: [
-      { label: 'Voir mes défis', type: 'navigate', target: 'defis' },
-    ],
-    tips: [
-      '⭐ Des défis variés à compléter chaque jour',
-      '👨‍👩‍👧 Tes parents peuvent valider tes défis',
-      '🏆 Gagne des points à chaque défi validé !'
-    ]
+    description: 'Chaque jour, des défis t\'attendent ! Complète-les pour gagner des XP et progresser.',
+    tanakaMessage: "Ho ho ho ! Les défis quotidiens sont le cœur de ton entraînement ! Chaque défi accompli te rapproche de la maîtrise. La persévérance est la clé ! 💪",
+    tanakaAudioKey: 'challenge_first',
+    actions: [{ label: 'Voir mes défis', type: 'navigate', target: 'defis' }],
+    tips: ['⭐ Défis quotidiens', '🏆 Défis hebdomadaires', '🔥 Séries de jours consécutifs']
   },
   {
-    id: 3,
+    id: 4,
     slug: 'vertus',
     title: 'Les 7 Vertus',
-    subtitle: 'Cultive les valeurs du Ninja',
+    subtitle: 'Les super-pouvoirs du ninja',
     emoji: '☯️',
     icon: Heart,
     gradient: 'from-amber-500 to-orange-600',
     shadowColor: 'shadow-amber-500/40',
-    unlockCondition: 'step_2_completed',
+    unlockCondition: 'step_3_completed',
     xpReward: 25,
-    description: 'L\'Aikido, c\'est plus que des techniques ! Découvre les 7 vertus qui font un vrai Ninja.',
-    tanakaMessage: "Ah, les 7 Vertus du Ninja... 🙏 Ce sont les piliers de notre art ! Le Respect, la Persévérance, la Maîtrise de soi, l'Humilité, la Bienveillance, l'Attention et la Responsabilité. Médite sur ces valeurs, jeune disciple !",
-    tanakaAudioKey: 'wisdom',
-    actions: [
-      { label: 'Découvrir les vertus', type: 'navigate', target: 'vertus' },
-    ],
-    tips: [
-      '🙏 Respect, Courage, Bienveillance...',
-      '💪 Chaque vertu te donne des super-pouvoirs',
-      '🌟 Monte de niveau dans chaque vertu !'
-    ]
+    description: 'Découvre les 7 vertus magiques : Respect, Courage, Maîtrise, Humilité, Bienveillance, Attention et Responsabilité !',
+    tanakaMessage: "Les 7 Vertus sont les piliers de l'Aïkido ! 🙏 Chaque vertu a son animal gardien qui évolue avec toi. Le Lion du Respect, le Tigre du Courage, la Tortue de la Maîtrise... Lequel vas-tu faire grandir en premier ?",
+    tanakaAudioKey: 'encourage_patience',
+    actions: [{ label: 'Découvrir les vertus', type: 'navigate', target: 'vertus' }],
+    tips: ['🦁 Respect - Lion Noble', '🐯 Courage - Tigre Brave', '🐢 Maîtrise - Tortue Zen', '🐰 Humilité - Lapin Sage', '🐼 Bienveillance - Panda Gentil', '🦉 Attention - Hibou Vigilant', '🦅 Responsabilité - Aigle']
   },
   {
-    id: 4,
-    slug: 'progression',
-    title: 'Ma Progression',
-    subtitle: 'Suis ton évolution',
-    emoji: '📈',
+    id: 5,
+    slug: 'techniques',
+    title: 'Les Techniques',
+    subtitle: 'Apprends les mouvements',
+    emoji: '🥋',
+    icon: Swords,
+    gradient: 'from-cyan-500 to-blue-600',
+    shadowColor: 'shadow-cyan-500/40',
+    unlockCondition: 'step_4_completed',
+    xpReward: 25,
+    description: 'Découvre les techniques d\'Aïkido par grade : Tai Sabaki, Ukemi, Ikkyo, Shiho Nage et bien plus !',
+    tanakaMessage: "Maintenant, passons aux techniques ! Chaque ceinture a ses propres mouvements à maîtriser. Commence par les bases : les déplacements (Tai Sabaki) et les chutes (Ukemi). Ensuite, tu apprendras les vraies techniques !",
+    tanakaAudioKey: 'technique_mastered',
+    actions: [{ label: 'Voir les techniques', type: 'navigate', target: 'techniques' }],
+    tips: ['🦶 Tai Sabaki - Déplacements', '🔄 Ukemi - Chutes', '💪 Ikkyo, Nikyo, Sankyo...', '🌀 Shiho Nage, Irimi Nage...']
+  },
+  {
+    id: 6,
+    slug: 'ceintures',
+    title: 'Les Ceintures',
+    subtitle: 'Ta progression de grade',
+    emoji: '🎖️',
+    icon: Award,
+    gradient: 'from-slate-500 to-slate-700',
+    shadowColor: 'shadow-slate-500/40',
+    unlockCondition: 'step_5_completed',
+    xpReward: 20,
+    description: 'De la ceinture Blanche à la ceinture Noire : 7 grades à conquérir, chacun avec sa vertu et son animal !',
+    tanakaMessage: "Le chemin des ceintures est long mais magnifique ! ⚪ Blanche, 🟡 Jaune, 🟠 Orange, 🟢 Verte, 🔵 Bleue, 🟤 Marron, ⚫ Noire... Chaque couleur représente une étape de ta transformation !",
+    tanakaAudioKey: 'belt_white',
+    actions: [{ label: 'Voir les ceintures', type: 'navigate', target: 'ceintures' }],
+    tips: ['⚪ 6e kyu - Scarabée', '🟡 5e kyu - Respect', '🟠 4e kyu - Courage', '🟢 3e kyu - Bienveillance', '🔵 2e kyu - Sincérité', '🟤 1er kyu - Honneur', '⚫ Shodan - Dragon !']
+  },
+  {
+    id: 7,
+    slug: 'histoire',
+    title: 'L\'Histoire',
+    subtitle: 'Les origines de l\'Aïkido',
+    emoji: '📜',
+    icon: BookOpen,
+    gradient: 'from-amber-600 to-yellow-700',
+    shadowColor: 'shadow-amber-600/40',
+    unlockCondition: 'step_6_completed',
+    xpReward: 15,
+    description: 'Découvre l\'histoire fascinante de l\'Aïkido, O\'Sensei Morihei Ueshiba, et la signification du Hakama !',
+    tanakaMessage: "Connais-tu O'Sensei Morihei Ueshiba ? Il a créé l'Aïkido pour transformer les arts martiaux en art de paix ! Son message : 'La vraie victoire est la victoire sur soi-même.' Quelle sagesse !",
+    tanakaAudioKey: 'encourage_patience',
+    actions: [{ label: 'Lire l\'histoire', type: 'navigate', target: 'histoire' }],
+    tips: ['🇯🇵 Origine japonaise', '👴 O\'Sensei - Le fondateur', '☮️ Art de paix et d\'harmonie', '👘 Le Hakama traditionnel']
+  },
+  {
+    id: 8,
+    slug: 'trophees',
+    title: 'Mes Trophées',
+    subtitle: 'Badges et récompenses',
+    emoji: '🏆',
     icon: Trophy,
-    gradient: 'from-violet-500 to-purple-600',
-    shadowColor: 'shadow-violet-500/40',
-    unlockCondition: 'step_3_completed',
+    gradient: 'from-yellow-500 to-amber-600',
+    shadowColor: 'shadow-yellow-500/40',
+    unlockCondition: 'step_7_completed',
     xpReward: 30,
-    description: 'Tu as découvert les bases ! Maintenant, suis ta progression et monte de ceinture !',
-    tanakaMessage: "Félicitations, jeune ninja ! 🎉 Tu as parcouru tout le chemin de l'initiation ! Maintenant, ta véritable aventure commence. Regarde ta progression grandir et vise la ceinture noire ! Je crois en toi ! 🥋✨",
-    tanakaAudioKey: 'congratulations',
-    actions: [
-      { label: 'Voir ma progression', type: 'navigate', target: 'profil' },
-    ],
-    tips: [
-      '🥋 Ta ceinture évolue avec tes points',
-      '📊 Suis tes statistiques détaillées',
-      '👑 Deviens un Maître Ninja !'
-    ]
+    description: 'Tu as découvert tout le parcours ! Maintenant, collectionne les badges, monte de niveau et deviens une Légende du Dojo !',
+    tanakaMessage: "Félicitations, jeune ninja ! 🎉 Tu as parcouru tout le chemin de l'initiation ! Maintenant, ta véritable aventure commence. Collectionne les badges, fais évoluer tes animaux gardiens, et vise le titre de 'Légende du Dojo' ! Je crois en toi ! 🥋✨",
+    tanakaAudioKey: 'level_up',
+    actions: [{ label: 'Voir mes trophées', type: 'navigate', target: 'trophees' }],
+    tips: ['🎖️ Badges à collectionner', '🐾 Animaux qui évoluent', '👑 Titres spéciaux', '🏯 Grand Maître des Vertus !']
   }
 ];
 
+// ═══════════════════════════════════════════════════════════════════════════════
+// COMPOSANT PRINCIPAL
+// ═══════════════════════════════════════════════════════════════════════════════
+
 const JourneyPath = ({ 
-  userName = "Ninja",
-  completedSteps = [], // Array of completed step IDs
-  currentStep = 1,     // Current active step
+  userName = "",
+  completedSteps = [],
+  currentStep = 1,
   totalPoints = 0,
-  onStepClick,         // Callback when user clicks a step
-  onNavigate,          // Callback to navigate to a section
-  isEnfantMode = true  // Mode enfant ou adulte
+  onStepClick,
+  onNavigate,
+  onUserNameChange, // Callback pour changer le prénom
+  isEnfantMode = true
 }) => {
   const [selectedStep, setSelectedStep] = useState(null);
   const [showStepDialog, setShowStepDialog] = useState(false);
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
+  
+  // État pour le dialogue d'introduction de Tanaka
+  const [showIntroDialog, setShowIntroDialog] = useState(false);
+  const [introStep, setIntroStep] = useState(1); // 1 = présentation, 2 = demande prénom
+  const [tempUserName, setTempUserName] = useState('');
+  const [tanakaAnimationState, setTanakaAnimationState] = useState('idle'); // idle, talking, waving
+  
+  // Vérifier si c'est la première visite (pas de prénom enregistré)
+  useEffect(() => {
+    const savedName = localStorage.getItem('aikido_user_firstname');
+    if (!savedName && !userName) {
+      // Première visite - afficher le dialogue d'intro
+      const timer = setTimeout(() => {
+        setShowIntroDialog(true);
+        setTanakaAnimationState('waving');
+      }, 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [userName]);
+
+  // Animation de Tanaka
+  useEffect(() => {
+    if (tanakaAnimationState === 'talking') {
+      const timer = setTimeout(() => setTanakaAnimationState('idle'), 3000);
+      return () => clearTimeout(timer);
+    }
+    if (tanakaAnimationState === 'waving') {
+      const timer = setTimeout(() => setTanakaAnimationState('talking'), 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [tanakaAnimationState]);
 
   // Vérifie si une étape est débloquée
   const isStepUnlocked = (step) => {
@@ -141,15 +226,35 @@ const JourneyPath = ({
     if (isPlayingAudio) return;
     try {
       setIsPlayingAudio(true);
+      setTanakaAnimationState('talking');
       const result = await playTanakaPhrase(audioKey);
       if (result?.audio) {
-        result.audio.onended = () => setIsPlayingAudio(false);
+        result.audio.onended = () => {
+          setIsPlayingAudio(false);
+          setTanakaAnimationState('idle');
+        };
       } else {
         setIsPlayingAudio(false);
+        setTanakaAnimationState('idle');
       }
     } catch (error) {
       console.error('Error playing Tanaka audio:', error);
       setIsPlayingAudio(false);
+      setTanakaAnimationState('idle');
+    }
+  };
+
+  // Valider le prénom
+  const handleNameSubmit = () => {
+    if (tempUserName.trim()) {
+      localStorage.setItem('aikido_user_firstname', tempUserName.trim());
+      if (onUserNameChange) {
+        onUserNameChange(tempUserName.trim());
+      }
+      setShowIntroDialog(false);
+      setTanakaAnimationState('idle');
+      // Jouer un audio de bienvenue personnalisé
+      playTanakaAudio('welcome');
     }
   };
 
@@ -173,12 +278,123 @@ const JourneyPath = ({
   // Trouver l'étape actuelle (première non complétée)
   const currentActiveStep = JOURNEY_STEPS.find(step => !isStepCompleted(step.id)) || JOURNEY_STEPS[JOURNEY_STEPS.length - 1];
   const allCompleted = completedSteps.length >= JOURNEY_STEPS.length;
+  
+  // Nom à afficher (utilise le localStorage si disponible)
+  const displayName = userName || localStorage.getItem('aikido_user_firstname') || 'Ninja';
 
   return (
     <div className="w-full" data-testid="journey-path">
       
       {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-      {/* GROS BLOC DE DÉMARRAGE - Étape actuelle avec Tanaka */}
+      {/* DIALOGUE D'INTRODUCTION DE TANAKA - Première visite */}
+      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+      <AnimatePresence>
+        {showIntroDialog && (
+          <Dialog open={showIntroDialog} onOpenChange={setShowIntroDialog}>
+            <DialogContent className="sm:max-w-lg p-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-amber-500/50 overflow-hidden">
+              {/* Tanaka animé */}
+              <div className="relative bg-gradient-to-r from-amber-600/30 via-orange-600/30 to-amber-600/30 p-6 text-center">
+                <motion.div
+                  animate={{
+                    scale: tanakaAnimationState === 'waving' ? [1, 1.05, 1] : 1,
+                    rotate: tanakaAnimationState === 'waving' ? [0, -5, 5, 0] : 0,
+                  }}
+                  transition={{ duration: 0.5, repeat: tanakaAnimationState === 'waving' ? 3 : 0 }}
+                  className="relative inline-block"
+                >
+                  <div className="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-amber-400 shadow-2xl shadow-amber-500/40">
+                    <img 
+                      src={TANAKA_IMAGE} 
+                      alt="Maître Tanaka" 
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  {/* Indicateur de parole */}
+                  {tanakaAnimationState === 'talking' && (
+                    <motion.div
+                      animate={{ scale: [1, 1.2, 1] }}
+                      transition={{ duration: 0.5, repeat: Infinity }}
+                      className="absolute -bottom-2 -right-2 bg-emerald-500 rounded-full p-2"
+                    >
+                      <MessageCircle className="w-5 h-5 text-white" />
+                    </motion.div>
+                  )}
+                </motion.div>
+                <h2 className="text-2xl font-bold text-amber-400 mt-4">Maître Tanaka</h2>
+                <p className="text-amber-200/70 text-sm">Ton guide sur la Voie de l'Aïkido</p>
+              </div>
+
+              {/* Contenu */}
+              <div className="p-6">
+                {introStep === 1 ? (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="space-y-4"
+                  >
+                    <div className="bg-slate-800/50 rounded-xl p-4 border border-amber-500/30">
+                      <p className="text-white text-lg leading-relaxed">
+                        "Bienvenue dans mon dojo virtuel ! 🥋
+                      </p>
+                      <p className="text-white/80 mt-2">
+                        Je suis <span className="text-amber-400 font-bold">Maître Tanaka</span>, et je serai ton guide sur la Voie de l'Aïkido.
+                      </p>
+                      <p className="text-white/80 mt-2">
+                        Ensemble, nous allons découvrir les secrets des grands maîtres, les 7 vertus magiques, et tu deviendras un vrai ninja !"
+                      </p>
+                    </div>
+                    <Button
+                      onClick={() => setIntroStep(2)}
+                      className="w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-white font-bold py-4"
+                    >
+                      <Sparkles className="w-5 h-5 mr-2" />
+                      Enchanté, Maître Tanaka !
+                    </Button>
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="space-y-4"
+                  >
+                    <div className="bg-slate-800/50 rounded-xl p-4 border border-amber-500/30">
+                      <p className="text-white text-lg leading-relaxed">
+                        "Très bien ! Mais dis-moi, jeune ninja...
+                      </p>
+                      <p className="text-amber-400 font-bold text-xl mt-3 text-center">
+                        Quel est ton prénom ? 🤔"
+                      </p>
+                    </div>
+                    
+                    <div className="space-y-3">
+                      <Input
+                        type="text"
+                        placeholder="Entre ton prénom ici..."
+                        value={tempUserName}
+                        onChange={(e) => setTempUserName(e.target.value)}
+                        onKeyPress={(e) => e.key === 'Enter' && handleNameSubmit()}
+                        className="bg-slate-800 border-amber-500/50 text-white text-lg py-6 text-center placeholder:text-slate-500"
+                        autoFocus
+                      />
+                      <Button
+                        onClick={handleNameSubmit}
+                        disabled={!tempUserName.trim()}
+                        className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold py-4 disabled:opacity-50"
+                      >
+                        <Play className="w-5 h-5 mr-2" />
+                        C'est parti, Maître Tanaka !
+                      </Button>
+                    </div>
+                  </motion.div>
+                )}
+              </div>
+            </DialogContent>
+          </Dialog>
+        )}
+      </AnimatePresence>
+
+      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+      {/* GROS BLOC DE DÉMARRAGE - Étape actuelle avec Tanaka animé */}
       {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
       <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
@@ -207,7 +423,6 @@ const JourneyPath = ({
                 transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.2 }}
                 className="relative"
               >
-                {/* Cercle avec numéro */}
                 <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-white/20 backdrop-blur-sm border-4 border-white/40 flex items-center justify-center shadow-2xl">
                   {allCompleted ? (
                     <div className="text-center">
@@ -221,7 +436,6 @@ const JourneyPath = ({
                   )}
                 </div>
                 
-                {/* Badge XP */}
                 {!allCompleted && (
                   <motion.div
                     initial={{ scale: 0 }}
@@ -238,7 +452,6 @@ const JourneyPath = ({
 
             {/* CONTENU PRINCIPAL */}
             <div className="flex-1 text-center lg:text-left">
-              {/* Badge étape */}
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -250,17 +463,15 @@ const JourneyPath = ({
                 </span>
               </motion.div>
 
-              {/* Titre */}
               <motion.h2
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
                 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-2 drop-shadow-lg"
               >
-                {allCompleted ? 'Bravo ' + userName + ' !' : currentActiveStep.title}
+                {allCompleted ? `Bravo ${displayName} !` : currentActiveStep.title}
               </motion.h2>
 
-              {/* Sous-titre */}
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -272,7 +483,6 @@ const JourneyPath = ({
                   : currentActiveStep.subtitle}
               </motion.p>
 
-              {/* Bouton d'action */}
               {!allCompleted && (
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -292,35 +502,49 @@ const JourneyPath = ({
               )}
             </div>
 
-            {/* MAÎTRE TANAKA */}
+            {/* MAÎTRE TANAKA ANIMÉ */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.4, type: "spring" }}
               className="flex-shrink-0 relative"
             >
-              {/* Cercle lumineux derrière Tanaka */}
               <div className="absolute inset-0 bg-amber-400/20 rounded-full blur-2xl scale-110" />
               
-              <div className="relative">
-                {/* Portrait de Tanaka */}
+              <motion.div
+                animate={{
+                  y: [0, -5, 0],
+                  rotate: tanakaAnimationState === 'talking' ? [0, -2, 2, 0] : 0,
+                }}
+                transition={{ 
+                  y: { duration: 3, repeat: Infinity, ease: "easeInOut" },
+                  rotate: { duration: 0.3, repeat: tanakaAnimationState === 'talking' ? Infinity : 0 }
+                }}
+                className="relative"
+              >
                 <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden border-4 border-amber-400/50 shadow-2xl shadow-amber-500/30">
                   <img 
                     src={TANAKA_IMAGE} 
                     alt="Maître Tanaka" 
                     className="w-full h-full object-cover"
-                    onError={(e) => {
-                      e.target.style.display = 'none';
-                      e.target.parentElement.innerHTML = '<div class="w-full h-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-5xl">🥋</div>';
-                    }}
                   />
                 </div>
                 
-                {/* Badge Maître Tanaka */}
                 <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-amber-500 text-slate-900 px-4 py-1 rounded-full font-bold text-sm whitespace-nowrap shadow-lg">
                   Maître Tanaka
                 </div>
-              </div>
+
+                {/* Indicateur audio */}
+                {isPlayingAudio && (
+                  <motion.div
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 0.5, repeat: Infinity }}
+                    className="absolute -top-2 -right-2 bg-emerald-500 rounded-full p-2"
+                  >
+                    <Volume2 className="w-4 h-4 text-white" />
+                  </motion.div>
+                )}
+              </motion.div>
             </motion.div>
           </div>
 
@@ -332,33 +556,24 @@ const JourneyPath = ({
             className="mt-6 bg-gradient-to-r from-amber-500/30 via-orange-500/30 to-amber-500/30 backdrop-blur-sm rounded-2xl p-4 sm:p-5 border-2 border-amber-400/50 shadow-lg shadow-amber-500/20"
           >
             <div className="flex items-start gap-4">
-              {/* Portrait de Tanaka */}
-              <div className="flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden border-3 border-amber-400 shadow-lg shadow-amber-500/30">
-                <img 
-                  src={TANAKA_IMAGE} 
-                  alt="Maître Tanaka" 
-                  className="w-full h-full object-cover"
-                  onError={(e) => { e.target.outerHTML = '<div class="w-full h-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-2xl">🥋</div>'; }}
-                />
+              <div className="flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden border-3 border-amber-400">
+                <img src={TANAKA_IMAGE} alt="Maître Tanaka" className="w-full h-full object-cover" />
               </div>
               <div className="flex-1">
-                {/* Nom et bouton écouter */}
                 <div className="flex items-center gap-3 mb-2">
                   <span className="text-amber-300 font-bold text-base sm:text-lg">Maître Tanaka</span>
                   <button
                     onClick={() => playTanakaAudio(currentActiveStep.tanakaAudioKey || 'welcome')}
                     disabled={isPlayingAudio}
                     className="flex items-center gap-1.5 bg-amber-500/30 hover:bg-amber-500/50 text-amber-200 px-3 py-1 rounded-full text-sm transition-all disabled:opacity-50"
-                    title="Écouter Maître Tanaka"
                   >
                     <Volume2 className={`w-4 h-4 ${isPlayingAudio ? 'animate-pulse' : ''}`} />
                     <span className="hidden sm:inline">{isPlayingAudio ? 'Écoute...' : 'Écouter'}</span>
                   </button>
                 </div>
-                {/* Message en italique */}
                 <p className="text-white text-sm sm:text-base italic leading-relaxed">
-                  "{allCompleted 
-                    ? `Félicitations ${userName} ! Tu as parcouru tout le chemin de l'initiation ! Ta véritable aventure de Ninja commence maintenant ! 🥋✨`
+                  "{displayName}, {allCompleted 
+                    ? `tu as parcouru tout le chemin de l'initiation ! Ta véritable aventure de Ninja commence maintenant ! 🥋✨`
                     : currentActiveStep.tanakaMessage}"
                 </p>
               </div>
@@ -391,40 +606,33 @@ const JourneyPath = ({
       </div>
 
       {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-      {/* GRILLE DES ÉTAPES */}
+      {/* GRILLE DES 8 ÉTAPES */}
       {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
         {JOURNEY_STEPS.map((step, index) => {
           const unlocked = isStepUnlocked(step);
           const completed = isStepCompleted(step.id);
-          const isCurrent = currentStep === step.id;
-          const Icon = step.icon;
+          const isCurrent = currentActiveStep.id === step.id && !completed;
 
           return (
             <motion.button
               key={step.id}
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: index * 0.1 }}
+              transition={{ delay: index * 0.05 }}
               onClick={() => handleStepClick(step)}
               disabled={!unlocked}
               data-testid={`journey-step-${step.slug}`}
               className={`
-                relative group
-                aspect-square
-                rounded-2xl sm:rounded-3xl
-                p-3 sm:p-4
-                flex flex-col items-center justify-center
-                transition-all duration-300
-                overflow-hidden
+                relative group aspect-square rounded-2xl sm:rounded-3xl p-3 sm:p-4
+                flex flex-col items-center justify-center transition-all duration-300 overflow-hidden
                 ${unlocked 
                   ? `bg-gradient-to-br ${step.gradient} shadow-xl ${step.shadowColor} border-2 border-white/20 hover:border-white/40 hover:scale-105 hover:-translate-y-2 cursor-pointer`
                   : 'bg-slate-800/50 border-2 border-slate-700 cursor-not-allowed opacity-60'
                 }
-                ${isCurrent && !completed ? 'ring-4 ring-white/50 ring-offset-2 ring-offset-slate-900' : ''}
+                ${isCurrent ? 'ring-4 ring-white/50 ring-offset-2 ring-offset-slate-900' : ''}
               `}
             >
-              {/* Badge de statut */}
               <div className="absolute top-2 right-2">
                 {completed ? (
                   <div className="bg-emerald-500 rounded-full p-1">
@@ -441,29 +649,24 @@ const JourneyPath = ({
                 ) : null}
               </div>
 
-              {/* Numéro d'étape */}
               <div className={`absolute top-2 left-2 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold
                 ${unlocked ? 'bg-white/20 text-white' : 'bg-slate-700 text-slate-500'}`}
               >
                 {step.id}
               </div>
 
-              {/* Emoji principal */}
-              <span className={`text-4xl sm:text-5xl mb-2 ${!unlocked ? 'grayscale opacity-50' : ''} group-hover:scale-110 transition-transform`}>
+              <span className={`text-3xl sm:text-4xl mb-2 ${!unlocked ? 'grayscale opacity-50' : ''} group-hover:scale-110 transition-transform`}>
                 {step.emoji}
               </span>
 
-              {/* Titre */}
               <span className={`font-bold text-center text-xs sm:text-sm ${unlocked ? 'text-white' : 'text-slate-500'}`}>
                 {step.title}
               </span>
 
-              {/* Sous-titre */}
               <span className={`text-center text-[10px] sm:text-xs mt-0.5 ${unlocked ? 'text-white/70' : 'text-slate-600'}`}>
                 {step.subtitle}
               </span>
 
-              {/* Points XP */}
               {unlocked && !completed && (
                 <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-amber-500/80 text-slate-900 px-2 py-0.5 rounded-full text-[10px] font-bold flex items-center gap-1">
                   <Star className="w-3 h-3" />
@@ -471,7 +674,6 @@ const JourneyPath = ({
                 </div>
               )}
 
-              {/* Effet de brillance au hover */}
               {unlocked && (
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
               )}
@@ -480,39 +682,13 @@ const JourneyPath = ({
         })}
       </div>
 
-      {/* Ligne de connexion entre les étapes (desktop) */}
-      <div className="hidden lg:flex items-center justify-center mt-4 px-8">
-        <div className="flex-1 h-2 bg-gradient-to-r from-emerald-500 via-pink-500 via-amber-500 via-violet-500 via-cyan-500 to-red-500 rounded-full opacity-60" />
-      </div>
-
-      {/* Message d'encouragement */}
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5 }}
-        className="text-center mt-6 bg-gradient-to-r from-violet-600/10 via-pink-600/10 to-amber-600/10 rounded-xl p-4 border border-violet-500/20"
-      >
-        {completedSteps.length === 0 ? (
-          <p className="text-violet-300 font-medium">
-            🚀 Clique sur l'étape <strong className="text-emerald-400">1. Bienvenue</strong> pour commencer ton aventure !
-          </p>
-        ) : completedSteps.length < JOURNEY_STEPS.length ? (
-          <p className="text-violet-300 font-medium">
-            💪 Super {userName} ! Continue ton parcours, tu es à <strong className="text-amber-400">{Math.round((completedSteps.length / JOURNEY_STEPS.length) * 100)}%</strong> !
-          </p>
-        ) : (
-          <p className="text-emerald-300 font-medium">
-            🎉 Félicitations {userName} ! Tu as complété tout le parcours ! Tu es prêt pour l'aventure ! 🏆
-          </p>
-        )}
-      </motion.div>
-
-      {/* Dialog de détail d'une étape */}
+      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+      {/* DIALOG DE DÉTAIL D'UNE ÉTAPE */}
+      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
       <AnimatePresence>
         {showStepDialog && selectedStep && (
           <Dialog open={showStepDialog} onOpenChange={setShowStepDialog}>
             <DialogContent className="sm:max-w-lg p-0 bg-slate-900 border-slate-700 overflow-hidden">
-              {/* Header avec gradient */}
               <div className={`bg-gradient-to-r ${selectedStep.gradient} p-6 relative`}>
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center">
@@ -534,58 +710,43 @@ const JourneyPath = ({
                   </div>
                 </div>
                 
-                {/* Récompense XP */}
                 <div className="absolute top-4 right-4 bg-amber-500 text-slate-900 px-3 py-1 rounded-full text-sm font-bold flex items-center gap-1">
                   <Gift className="w-4 h-4" />
                   +{selectedStep.xpReward} XP
                 </div>
               </div>
 
-              {/* Contenu */}
               <div className="p-6 space-y-4">
-                
-                {/* Message de Maître Tanaka */}
-                {selectedStep.tanakaMessage && (
-                  <div className="bg-gradient-to-r from-amber-600/20 to-orange-600/20 rounded-xl p-4 border border-amber-500/30">
-                    <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 w-12 h-12 rounded-full overflow-hidden border-2 border-amber-400">
-                        <img 
-                          src={TANAKA_IMAGE} 
-                          alt="Maître Tanaka" 
-                          className="w-full h-full object-cover"
-                          onError={(e) => {
-                            e.target.style.display = 'none';
-                            e.target.parentElement.innerHTML = '<div class="w-full h-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-xl">🥋</div>';
-                          }}
-                        />
+                {/* Message de Tanaka */}
+                <div className="bg-gradient-to-r from-amber-600/20 to-orange-600/20 rounded-xl p-4 border border-amber-500/30">
+                  <div className="flex items-start gap-3">
+                    <div className="flex-shrink-0 w-12 h-12 rounded-full overflow-hidden border-2 border-amber-400">
+                      <img src={TANAKA_IMAGE} alt="Maître Tanaka" className="w-full h-full object-cover" />
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-amber-400 font-semibold text-sm">Maître Tanaka</span>
+                        <button
+                          onClick={() => playTanakaAudio(selectedStep.tanakaAudioKey)}
+                          disabled={isPlayingAudio}
+                          className="text-amber-400/70 hover:text-amber-300 transition-colors disabled:opacity-50"
+                        >
+                          <Volume2 className={`w-4 h-4 ${isPlayingAudio ? 'animate-pulse' : ''}`} />
+                        </button>
                       </div>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="text-amber-400 font-semibold text-sm">Maître Tanaka</span>
-                          <button
-                            onClick={() => playTanakaAudio(selectedStep.tanakaAudioKey)}
-                            disabled={isPlayingAudio}
-                            className="text-amber-400/70 hover:text-amber-300 transition-colors disabled:opacity-50"
-                            title="Écouter"
-                          >
-                            <Volume2 className={`w-4 h-4 ${isPlayingAudio ? 'animate-pulse' : ''}`} />
-                          </button>
-                        </div>
-                        <p className="text-amber-100 text-sm leading-relaxed italic">
-                          "{selectedStep.tanakaMessage}"
-                        </p>
-                      </div>
+                      <p className="text-amber-100 text-sm leading-relaxed italic">
+                        "{displayName}, {selectedStep.tanakaMessage}"
+                      </p>
                     </div>
                   </div>
-                )}
+                </div>
 
                 <p className="text-slate-300">{selectedStep.description}</p>
 
-                {/* Tips */}
                 <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700">
                   <h3 className="text-white font-semibold mb-3 flex items-center gap-2">
                     <Sparkles className="w-4 h-4 text-amber-400" />
-                    Ce que tu vas apprendre :
+                    Ce que tu vas découvrir :
                   </h3>
                   <ul className="space-y-2">
                     {selectedStep.tips.map((tip, idx) => (
@@ -597,7 +758,6 @@ const JourneyPath = ({
                   </ul>
                 </div>
 
-                {/* Actions */}
                 <div className="space-y-2">
                   {selectedStep.actions.map((action, idx) => (
                     <Button
