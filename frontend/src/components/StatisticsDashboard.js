@@ -1084,6 +1084,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 <section className="mb-8" data-testid="section-parcours">
                   <JourneyPath
                     userName={displayUserName}
+                    userEmail={userEmail}
                     completedSteps={journeyCompletedSteps}
                     currentStep={journeyCompletedSteps.length + 1}
                     totalPoints={statistics.total_points || 0}
