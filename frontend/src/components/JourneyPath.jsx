@@ -3,14 +3,19 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ChevronRight, Lock, CheckCircle2, Play, Star, 
   Sparkles, Target, Trophy, Gift, Flame, Rocket,
-  Heart
+  Heart, Volume2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { playTanakaPhrase } from '@/services/tanakaVoiceService';
+
+// Image de Maître Tanaka
+const TANAKA_IMAGE = "/images/tanaka/portrait.png";
 
 /**
  * JourneyPath - Parcours de jeu ludique et guidé pour les nouveaux utilisateurs
  * 4 étapes progressives pour découvrir l'application
+ * Guidé par Maître Tanaka !
  */
 
 const JOURNEY_STEPS = [
@@ -23,9 +28,11 @@ const JOURNEY_STEPS = [
     icon: Rocket,
     gradient: 'from-emerald-500 to-teal-600',
     shadowColor: 'shadow-emerald-500/40',
-    unlockCondition: 'always', // Toujours débloqué
+    unlockCondition: 'always',
     xpReward: 10,
     description: 'Bienvenue dans ton aventure Aikido ! Ici tu vas apprendre, progresser et devenir un vrai Ninja.',
+    tanakaMessage: "Bienvenue dans mon dojo virtuel, jeune ninja ! 🥋 Je suis Maître Tanaka et je serai ton guide sur la Voie de l'Aïkido. Ensemble, nous allons découvrir les secrets des grands maîtres !",
+    tanakaAudioKey: 'welcome',
     actions: [
       { label: 'Explorer le tableau de bord', type: 'navigate', target: 'dashboard' },
     ],
@@ -47,6 +54,8 @@ const JOURNEY_STEPS = [
     unlockCondition: 'step_1_completed',
     xpReward: 20,
     description: 'Chaque jour, tu as des défis à relever ! Complète-les pour gagner des points et progresser.',
+    tanakaMessage: "Ho ho ho ! Les défis quotidiens sont le cœur de ton entraînement, jeune ninja ! Chaque défi accompli te rapproche de la maîtrise. N'oublie pas : la persévérance est la clé ! 💪",
+    tanakaAudioKey: 'encouragement',
     actions: [
       { label: 'Voir mes défis', type: 'navigate', target: 'defis' },
     ],
@@ -68,6 +77,8 @@ const JOURNEY_STEPS = [
     unlockCondition: 'step_2_completed',
     xpReward: 25,
     description: 'L\'Aikido, c\'est plus que des techniques ! Découvre les 7 vertus qui font un vrai Ninja.',
+    tanakaMessage: "Ah, les 7 Vertus du Ninja... 🙏 Ce sont les piliers de notre art ! Le Respect, la Persévérance, la Maîtrise de soi, l'Humilité, la Bienveillance, l'Attention et la Responsabilité. Médite sur ces valeurs, jeune disciple !",
+    tanakaAudioKey: 'wisdom',
     actions: [
       { label: 'Découvrir les vertus', type: 'navigate', target: 'vertus' },
     ],
@@ -89,6 +100,8 @@ const JOURNEY_STEPS = [
     unlockCondition: 'step_3_completed',
     xpReward: 30,
     description: 'Tu as découvert les bases ! Maintenant, suis ta progression et monte de ceinture !',
+    tanakaMessage: "Félicitations, jeune ninja ! 🎉 Tu as parcouru tout le chemin de l'initiation ! Maintenant, ta véritable aventure commence. Regarde ta progression grandir et vise la ceinture noire ! Je crois en toi ! 🥋✨",
+    tanakaAudioKey: 'congratulations',
     actions: [
       { label: 'Voir ma progression', type: 'navigate', target: 'profil' },
     ],
