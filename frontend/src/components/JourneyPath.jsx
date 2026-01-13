@@ -10,7 +10,7 @@ import { Dialog, DialogContent } from '@/components/ui/dialog';
 
 /**
  * JourneyPath - Parcours de jeu ludique et guidé pour les nouveaux utilisateurs
- * 6 étapes progressives pour découvrir l'application
+ * 4 étapes progressives pour découvrir l'application
  */
 
 const JOURNEY_STEPS = [
@@ -37,27 +37,6 @@ const JOURNEY_STEPS = [
   },
   {
     id: 2,
-    slug: 'profil',
-    title: 'Mon Profil',
-    subtitle: 'Personnalise ton avatar',
-    emoji: '🥷',
-    icon: Users,
-    gradient: 'from-violet-500 to-purple-600',
-    shadowColor: 'shadow-violet-500/40',
-    unlockCondition: 'step_1_completed',
-    xpReward: 15,
-    description: 'Crée ton profil de Ninja ! Choisis ton avatar et ton pseudo pour te démarquer.',
-    actions: [
-      { label: 'Voir mon profil', type: 'navigate', target: 'profil' },
-    ],
-    tips: [
-      '🐉 Choisis un animal gardien qui te ressemble',
-      '✨ Ton pseudo sera visible par les autres',
-      '🥋 Ta ceinture actuelle s\'affiche ici'
-    ]
-  },
-  {
-    id: 3,
     slug: 'defis',
     title: 'Mes Défis',
     subtitle: 'Relève les défis quotidiens',
@@ -65,20 +44,20 @@ const JOURNEY_STEPS = [
     icon: Target,
     gradient: 'from-pink-500 to-rose-600',
     shadowColor: 'shadow-pink-500/40',
-    unlockCondition: 'step_2_completed',
+    unlockCondition: 'step_1_completed',
     xpReward: 20,
-    description: 'Chaque jour, tu as 5 défis à relever ! Complète-les pour gagner des points et progresser.',
+    description: 'Chaque jour, tu as des défis à relever ! Complète-les pour gagner des points et progresser.',
     actions: [
       { label: 'Voir mes défis', type: 'navigate', target: 'defis' },
     ],
     tips: [
-      '⭐ 5 défis par jour à compléter',
-      '👨‍👩‍👧 Tes parents valident tes défis',
+      '⭐ Des défis variés à compléter chaque jour',
+      '👨‍👩‍👧 Tes parents peuvent valider tes défis',
       '🏆 Gagne des points à chaque défi validé !'
     ]
   },
   {
-    id: 4,
+    id: 3,
     slug: 'vertus',
     title: 'Les 7 Vertus',
     subtitle: 'Cultive les valeurs du Ninja',
@@ -86,7 +65,7 @@ const JOURNEY_STEPS = [
     icon: Heart,
     gradient: 'from-amber-500 to-orange-600',
     shadowColor: 'shadow-amber-500/40',
-    unlockCondition: 'step_3_completed',
+    unlockCondition: 'step_2_completed',
     xpReward: 25,
     description: 'L\'Aikido, c\'est plus que des techniques ! Découvre les 7 vertus qui font un vrai Ninja.',
     actions: [
@@ -99,44 +78,23 @@ const JOURNEY_STEPS = [
     ]
   },
   {
-    id: 5,
-    slug: 'histoire',
-    title: 'L\'Histoire',
-    subtitle: 'Découvre l\'Aikido',
-    emoji: '📚',
-    icon: BookOpen,
-    gradient: 'from-cyan-500 to-blue-600',
-    shadowColor: 'shadow-cyan-500/40',
-    unlockCondition: 'step_4_completed',
-    xpReward: 20,
-    description: 'Plonge dans l\'histoire fascinante de l\'Aikido et de son fondateur O\'Sensei !',
-    actions: [
-      { label: 'Lire l\'histoire', type: 'navigate', target: 'histoire' },
-    ],
-    tips: [
-      '🇯🇵 L\'Aikido vient du Japon',
-      '👴 O\'Sensei Morihei Ueshiba l\'a créé',
-      '☮️ C\'est un art de paix et d\'harmonie'
-    ]
-  },
-  {
-    id: 6,
-    slug: 'recompenses',
-    title: 'Mes Récompenses',
-    subtitle: 'Débloque des badges',
-    emoji: '🏆',
+    id: 4,
+    slug: 'progression',
+    title: 'Ma Progression',
+    subtitle: 'Suis ton évolution',
+    emoji: '📈',
     icon: Trophy,
-    gradient: 'from-red-500 to-orange-600',
-    shadowColor: 'shadow-red-500/40',
-    unlockCondition: 'step_5_completed',
+    gradient: 'from-violet-500 to-purple-600',
+    shadowColor: 'shadow-violet-500/40',
+    unlockCondition: 'step_3_completed',
     xpReward: 30,
-    description: 'Tu as complété le parcours ! Maintenant, collectionne les badges et monte de grade !',
+    description: 'Tu as découvert les bases ! Maintenant, suis ta progression et monte de ceinture !',
     actions: [
-      { label: 'Voir mes badges', type: 'navigate', target: 'badges' },
+      { label: 'Voir ma progression', type: 'navigate', target: 'profil' },
     ],
     tips: [
-      '🎖️ Gagne des badges en relevant des défis',
-      '⬆️ Monte de ceinture avec assez de points',
+      '🥋 Ta ceinture évolue avec tes points',
+      '📊 Suis tes statistiques détaillées',
       '👑 Deviens un Maître Ninja !'
     ]
   }
