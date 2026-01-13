@@ -216,9 +216,13 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
     // Marquer l'étape actuelle comme complétée si c'est la première visite
     const stepMap = {
       'dashboard': 1,
-      'defis': 2,
-      'vertus': 3,
-      'profil': 4
+      'profil': 2,
+      'defis': 3,
+      'vertus': 4,
+      'techniques': 5,
+      'ceintures': 6,
+      'histoire': 7,
+      'trophees': 8
     };
     
     const stepId = stepMap[target];
@@ -229,11 +233,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
     }
 
     // Navigation vers la section
-    if (target === 'dashboard') {
-      // Scroll vers le profil
-      const el = document.getElementById('section-profil');
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    } else if (target === 'profil') {
+    if (target === 'dashboard' || target === 'profil') {
       const el = document.getElementById('section-profil');
       if (el) el.scrollIntoView({ behavior: 'smooth' });
     } else if (target === 'defis') {
@@ -245,6 +245,22 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         const el = document.getElementById('section-valeurs');
         if (el) el.scrollIntoView({ behavior: 'smooth' });
       }, 100);
+    } else if (target === 'techniques') {
+      setAccordionOpen(prev => ({ ...prev, entrainement: true }));
+      setTimeout(() => {
+        const el = document.getElementById('section-entrainement');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else if (target === 'ceintures') {
+      setShowBeltDialog(true);
+    } else if (target === 'histoire') {
+      setAccordionOpen(prev => ({ ...prev, histoire: true }));
+      setTimeout(() => {
+        const el = document.getElementById('section-histoire');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else if (target === 'trophees') {
+      setShowTrophiesDialog(true);
     }
   };
   
