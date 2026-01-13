@@ -9,6 +9,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Swords, Users, BarChart3, LogOut, Baby, User, LogIn, Lock, ScrollText, Eye, Award, Building2, Sparkles, BookOpen, LayoutDashboard, Settings, AlertTriangle, CreditCard, Shield, KeyRound } from "lucide-react";
 
+// Import belt utilities for normalization
+import { normalizeBeltKey } from "@/constants/aikidoBelts";
+
 // Aikido Belt System - for display
 const AIKIDO_BELTS = {
   "6e_kyu": { name: "Blanche", grade: "6e kyu", emoji: "⚪", color: "#E5E7EB" },
