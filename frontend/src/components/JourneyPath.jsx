@@ -168,6 +168,7 @@ const JOURNEY_STEPS = [
 
 const JourneyPath = ({ 
   userName = "",
+  userEmail = "", // Email de l'utilisateur pour l'accueil
   completedSteps = [],
   currentStep = 1,
   totalPoints = 0,
@@ -186,9 +187,13 @@ const JourneyPath = ({
   const [tempUserName, setTempUserName] = useState('');
   const [tanakaAnimationState, setTanakaAnimationState] = useState('idle'); // idle, talking, waving
   
+  // Prénom enregistré (depuis localStorage)
+  const [registeredFirstName, setRegisteredFirstName] = useState(() => {
+    return localStorage.getItem('aikido_user_firstname') || '';
+  });
+  
   // Vérifier si c'est la première visite (pas de prénom personnalisé enregistré)
   useEffect(() => {
-    const savedName = localStorage.getItem('aikido_user_firstname');
     const hasSeenIntro = localStorage.getItem('aikido_tanaka_intro_seen');
     
     // Afficher le dialogue si l'utilisateur n'a jamais vu l'intro de Tanaka
