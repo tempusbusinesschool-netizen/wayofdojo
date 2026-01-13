@@ -1848,6 +1848,11 @@ function AppContent() {
       <AuthDialog
         isOpen={showAuthDialog}
         onClose={() => setShowAuthDialog(false)}
+        onSuccess={(firstName) => {
+          setLoginTransitionUserName(firstName);
+          setLoginTransitionDestination('dashboard');
+          setShowLoginTransition(true);
+        }}
       />
 
       {/* Login Dialog (Connexion) */}
