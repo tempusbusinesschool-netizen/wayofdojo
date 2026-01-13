@@ -346,8 +346,26 @@ const JourneyPath = ({
                         Ensemble, nous allons découvrir les secrets des grands maîtres, les 7 vertus magiques, et tu deviendras un vrai ninja !"
                       </p>
                     </div>
+                    
+                    {/* Bouton Écouter Tanaka */}
                     <Button
-                      onClick={() => setIntroStep(2)}
+                      onClick={() => {
+                        playTanakaAudio('welcome');
+                        setTanakaAnimationState('talking');
+                      }}
+                      disabled={isPlayingAudio}
+                      variant="outline"
+                      className="w-full border-amber-500/50 text-amber-400 hover:bg-amber-500/20 py-3"
+                    >
+                      <Volume2 className={`w-5 h-5 mr-2 ${isPlayingAudio ? 'animate-pulse' : ''}`} />
+                      {isPlayingAudio ? '🔊 Tanaka parle...' : '🔊 Écouter Maître Tanaka'}
+                    </Button>
+                    
+                    <Button
+                      onClick={() => {
+                        playTanakaAudio('welcome');
+                        setIntroStep(2);
+                      }}
                       className="w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-white font-bold py-4"
                     >
                       <Sparkles className="w-5 h-5 mr-2" />
