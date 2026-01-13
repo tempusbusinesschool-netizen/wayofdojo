@@ -202,11 +202,9 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
     // Marquer l'étape actuelle comme complétée si c'est la première visite
     const stepMap = {
       'dashboard': 1,
-      'profil': 2,
-      'defis': 3,
-      'vertus': 4,
-      'histoire': 5,
-      'badges': 6
+      'defis': 2,
+      'vertus': 3,
+      'profil': 4
     };
     
     const stepId = stepMap[target];
@@ -218,8 +216,9 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
 
     // Navigation vers la section
     if (target === 'dashboard') {
-      // Fermer le parcours et montrer le dashboard
-      setShowJourneyPath(false);
+      // Scroll vers le profil
+      const el = document.getElementById('section-profil');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
     } else if (target === 'profil') {
       const el = document.getElementById('section-profil');
       if (el) el.scrollIntoView({ behavior: 'smooth' });
@@ -232,14 +231,6 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         const el = document.getElementById('section-valeurs');
         if (el) el.scrollIntoView({ behavior: 'smooth' });
       }, 100);
-    } else if (target === 'histoire') {
-      setAccordionOpen(prev => ({ ...prev, histoire: true }));
-      setTimeout(() => {
-        const el = document.getElementById('section-histoire');
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-    } else if (target === 'badges') {
-      setShowTrophiesDialog(true);
     }
   };
   
