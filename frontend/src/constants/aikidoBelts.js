@@ -133,6 +133,7 @@ export const getBeltByPoints = (points) => {
 
 // Get next belt
 export const getNextBelt = (currentBelt) => {
+  if (!currentBelt) return AIKIDO_BELTS["5e_kyu"]; // Default to first progression
   const belts = Object.values(AIKIDO_BELTS).sort((a, b) => a.order - b.order);
   const currentIndex = belts.findIndex(b => b.order === currentBelt.order);
   return currentIndex < belts.length - 1 ? belts[currentIndex + 1] : null;
