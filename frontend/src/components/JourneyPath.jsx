@@ -255,13 +255,44 @@ const JourneyPath = ({
     }
   };
 
-  // Navigue vers une section
+  // Navigue vers une section AVEC animation de transition sphère
   const handleAction = (action) => {
+    // Fermer le dialogue d'abord
     setShowStepDialog(false);
-    if (onNavigate && action.type === 'navigate') {
-      onNavigate(action.target);
+    
+    // Si une étape est sélectionnée et non complétée, lancer la transition
+    if (selectedStep && !isStepCompleted(selectedStep.id)) {
+      // Sauvegarder l'action pour l'exécuter après la transition
+      setPendingAction(action);
+      setTransitionStep(selectedStep);
+      setShowStepTransition(true);
+    } else {
+      // Étape déjà complétée ou pas d'étape, naviguer directement
+      if (onNavigate && action.type === 'navigate') {
+        onNavigate(action.target);
+      }
     }
   };
+
+  // Callback appelé quand l'animation de transition est terminée
+  const handleTransitionComplete = useCallback(() => {
+    // Marquer l'étape comme complétée
+    if (transitionStep && onStepComplete && !isStepCompleted(transitionStep.id)) {
+      onStepComplete(transitionStep.id);
+    }
+    
+    // Cacher la transition après un court délai
+    setTimeout(() => {
+      setShowStepTransition(false);
+      setTransitionStep(null);
+      
+      // Exécuter l'action de navigation si elle existe
+      if (pendingAction && onNavigate && pendingAction.type === 'navigate') {
+        onNavigate(pendingAction.target);
+      }
+      setPendingAction(null);
+    }, 300);
+  }, [transitionStep, pendingAction, onNavigate, onStepComplete]);
 
   // Réinitialiser le parcours (pour les tests)
   const handleResetJourney = () => {
