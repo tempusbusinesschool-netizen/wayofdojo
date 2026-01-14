@@ -1104,7 +1104,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                     completedSteps={journeyCompletedSteps}
                     currentStep={journeyCompletedSteps.length + 1}
                     totalPoints={statistics.total_points || 0}
-                    onStepClick={handleJourneyStepComplete}
+                    onStepClick={handleJourneyStepClick}
                     onStepComplete={handleJourneyStepCompleteById}
                     onNavigate={handleJourneyNavigate}
                     onUserNameChange={handleUserNameChange}
