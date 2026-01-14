@@ -144,6 +144,7 @@ const JourneyPath = ({
   currentStep = 1,
   totalPoints = 0,
   onStepClick,
+  onStepComplete, // Callback pour marquer une étape comme complétée
   onNavigate,
   onUserNameChange, // Callback pour changer le prénom
   isEnfantMode = true
