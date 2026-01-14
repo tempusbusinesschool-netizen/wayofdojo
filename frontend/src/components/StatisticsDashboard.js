@@ -201,23 +201,32 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
   }, [isAuthenticated]);
   */
   
-  // Fonction pour marquer une étape du parcours comme complétée (par objet step)
-  const handleJourneyStepComplete = (step) => {
-    if (!journeyCompletedSteps.includes(step.id)) {
-      const newCompleted = [...journeyCompletedSteps, step.id];
-      setJourneyCompletedSteps(newCompleted);
-      localStorage.setItem('aikido_journey_completed_steps', JSON.stringify(newCompleted));
-      toast.success(`🎉 Étape "${step.title}" complétée ! +${step.xpReward} XP`);
-    }
+  // Callback quand on clique sur une étape (ouvre juste le dialogue, ne marque PAS comme complétée)
+  const handleJourneyStepClick = (step) => {
+    // Ne marque pas comme complétée ici - c'est fait via l'animation de transition
+    console.log(`Étape ${step.id} cliquée: ${step.title}`);
   };
 
-  // Fonction pour marquer une étape comme complétée (par ID seulement) - utilisé par l'animation de transition
+  // Fonction pour marquer une étape comme complétée (par ID) - appelé APRÈS l'animation de transition
   const handleJourneyStepCompleteById = (stepId) => {
     if (!journeyCompletedSteps.includes(stepId)) {
       const newCompleted = [...journeyCompletedSteps, stepId];
       setJourneyCompletedSteps(newCompleted);
       localStorage.setItem('aikido_journey_completed_steps', JSON.stringify(newCompleted));
+      
+      // Afficher le toast de succès
+      const stepNames = {
+        1: 'Commence',
+        2: 'Apprends',
+        3: 'Entraîne-toi',
+        4: 'Valide',
+        5: 'Progresse',
+        6: 'Maîtrise'
+      };
+      const xpRewards = { 1: 10, 2: 15, 3: 20, 4: 25, 5: 25, 6: 30 };
+      toast.success(`🎉 Étape "${stepNames[stepId]}" complétée ! +${xpRewards[stepId]} XP`);
     }
+  };
   };
 
   // Fonction pour naviguer vers une section depuis le parcours
