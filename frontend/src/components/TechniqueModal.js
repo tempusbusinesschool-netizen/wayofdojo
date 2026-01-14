@@ -173,8 +173,20 @@ function TechniqueModal({ technique, kyuName, kyuColor, isOpen, onClose, onUpdat
                     toast.error("🔒 Inscrivez-vous pour suivre votre progression");
                     return;
                   }
+                  
+                  // Vérifier si on passe au niveau "mastered"
+                  if (value === 'mastered' && technique.mastery_level !== 'mastered') {
+                    // Déclencher la célébration avec confettis !
+                    setCelebrationTechnique(technique.name);
+                    setShowCelebration(true);
+                  }
+                  
                   onUpdateMastery(technique.id, value);
-                  onClose();
+                  
+                  // Ne pas fermer immédiatement si célébration en cours
+                  if (value !== 'mastered') {
+                    onClose();
+                  }
                 }}
                 disabled={!isAuthenticated}
               >
