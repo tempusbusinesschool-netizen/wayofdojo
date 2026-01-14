@@ -1098,6 +1098,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                     currentStep={journeyCompletedSteps.length + 1}
                     totalPoints={statistics.total_points || 0}
                     onStepClick={handleJourneyStepComplete}
+                    onStepComplete={handleJourneyStepCompleteById}
                     onNavigate={handleJourneyNavigate}
                     onUserNameChange={handleUserNameChange}
                     isEnfantMode={true}
