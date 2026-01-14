@@ -635,9 +635,9 @@ const JourneyPath = ({
       </div>
 
       {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-      {/* GRILLE DES 8 ÉTAPES */}
+      {/* GRILLE DES 6 ÉTAPES - AVEC GROS NUMÉROS */}
       {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
         {JOURNEY_STEPS.map((step, index) => {
           const unlocked = isStepUnlocked(step);
           const completed = isStepCompleted(step.id);
@@ -662,53 +662,87 @@ const JourneyPath = ({
                 ${isCurrent ? 'ring-4 ring-white/50 ring-offset-2 ring-offset-slate-900' : ''}
               `}
             >
+              {/* GROS NUMÉRO EN HAUT À GAUCHE */}
+              <div className={`absolute top-2 left-2 w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center
+                ${unlocked ? 'bg-white/30 backdrop-blur-sm' : 'bg-slate-700'}`}
+              >
+                <span className={`text-2xl sm:text-3xl font-black ${unlocked ? 'text-white drop-shadow-lg' : 'text-slate-500'}`}>
+                  {step.id}
+                </span>
+              </div>
+
+              {/* Icône de statut en haut à droite */}
               <div className="absolute top-2 right-2">
                 {completed ? (
-                  <div className="bg-emerald-500 rounded-full p-1">
-                    <CheckCircle2 className="w-4 h-4 text-white" />
+                  <div className="bg-emerald-500 rounded-full p-1.5">
+                    <CheckCircle2 className="w-5 h-5 text-white" />
                   </div>
                 ) : !unlocked ? (
-                  <div className="bg-slate-600 rounded-full p-1">
-                    <Lock className="w-4 h-4 text-slate-400" />
+                  <div className="bg-slate-600 rounded-full p-1.5">
+                    <Lock className="w-5 h-5 text-slate-400" />
                   </div>
                 ) : isCurrent ? (
-                  <div className="bg-amber-500 rounded-full p-1 animate-pulse">
-                    <Play className="w-4 h-4 text-white" />
+                  <div className="bg-amber-500 rounded-full p-1.5 animate-pulse">
+                    <Play className="w-5 h-5 text-white" />
                   </div>
                 ) : null}
               </div>
 
-              <div className={`absolute top-2 left-2 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold
-                ${unlocked ? 'bg-white/20 text-white' : 'bg-slate-700 text-slate-500'}`}
-              >
-                {step.id}
-              </div>
-
-              <span className={`text-3xl sm:text-4xl mb-2 ${!unlocked ? 'grayscale opacity-50' : ''} group-hover:scale-110 transition-transform`}>
+              {/* Emoji principal */}
+              <span className={`text-4xl sm:text-5xl mb-2 ${!unlocked ? 'grayscale opacity-50' : ''} group-hover:scale-110 transition-transform`}>
                 {step.emoji}
               </span>
 
-              <span className={`font-bold text-center text-xs sm:text-sm ${unlocked ? 'text-white' : 'text-slate-500'}`}>
+              {/* Titre */}
+              <span className={`font-bold text-center text-sm sm:text-base ${unlocked ? 'text-white' : 'text-slate-500'}`}>
                 {step.title}
               </span>
 
+              {/* Sous-titre */}
               <span className={`text-center text-[10px] sm:text-xs mt-0.5 ${unlocked ? 'text-white/70' : 'text-slate-600'}`}>
                 {step.subtitle}
               </span>
 
+              {/* Badge XP */}
               {unlocked && !completed && (
-                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-amber-500/80 text-slate-900 px-2 py-0.5 rounded-full text-[10px] font-bold flex items-center gap-1">
-                  <Star className="w-3 h-3" />
+                <div className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-amber-500/90 text-slate-900 px-2.5 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-lg">
+                  <Star className="w-3.5 h-3.5" />
                   +{step.xpReward} XP
                 </div>
               )}
 
+              {/* Effet de brillance au hover */}
               {unlocked && (
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
               )}
             </motion.button>
           );
         })}
+      </div>
+
+      {/* Barre de progression avec les 6 étapes */}
+      <div className="mt-6 px-4">
+        <div className="flex items-center justify-between gap-1">
+          {JOURNEY_STEPS.map((step, idx) => {
+            const completed = isStepCompleted(step.id);
+            const isCurrent = currentActiveStep.id === step.id && !completed;
+            return (
+              <div 
+                key={step.id}
+                className={`flex-1 h-2 rounded-full transition-all ${
+                  completed 
+                    ? 'bg-emerald-500' 
+                    : isCurrent 
+                      ? 'bg-amber-500 animate-pulse' 
+                      : 'bg-slate-700'
+                }`}
+              />
+            );
+          })}
+        </div>
+        <p className="text-center text-slate-400 text-xs mt-2">
+          {completedSteps.length} / {JOURNEY_STEPS.length} étapes complétées
+        </p>
       </div>
 
       {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
