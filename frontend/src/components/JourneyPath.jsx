@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ChevronRight, Lock, CheckCircle2, Play, Star, 
@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { playTanakaPhrase } from '@/services/tanakaVoiceService';
+import StepTransition from './StepTransition';
 
 // Image de Maître Tanaka
 const TANAKA_IMAGE = "/images/tanaka/portrait.png";
