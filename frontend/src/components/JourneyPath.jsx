@@ -276,7 +276,7 @@ const JourneyPath = ({
   };
 
   // Callback appelé quand l'animation de transition est terminée
-  const handleTransitionComplete = useCallback(() => {
+  const handleTransitionComplete = () => {
     // Marquer l'étape comme complétée
     if (transitionStep && onStepComplete && !isStepCompleted(transitionStep.id)) {
       onStepComplete(transitionStep.id);
@@ -293,7 +293,7 @@ const JourneyPath = ({
       }
       setPendingAction(null);
     }, 300);
-  }, [transitionStep, pendingAction, onNavigate, onStepComplete]);
+  };
 
   // Réinitialiser le parcours (pour les tests)
   const handleResetJourney = () => {
