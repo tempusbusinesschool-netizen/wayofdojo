@@ -164,14 +164,14 @@ const StepTransition = ({
               )}
             </AnimatePresence>
 
-            {/* Progress dots */}
+            {/* Progress dots - 6 étapes */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
               className="flex justify-center gap-2 mt-8"
             >
-              {[...Array(8)].map((_, i) => (
+              {[...Array(6)].map((_, i) => (
                 <motion.div
                   key={i}
                   initial={{ scale: 0 }}
@@ -180,7 +180,7 @@ const StepTransition = ({
                   className={`w-3 h-3 rounded-full ${
                     i < stepNumber 
                       ? 'bg-emerald-500' 
-                      : i === stepNumber 
+                      : i === stepNumber - 1
                         ? 'bg-amber-500 animate-pulse' 
                         : 'bg-slate-600'
                   }`}
