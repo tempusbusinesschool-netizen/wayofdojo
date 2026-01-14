@@ -875,6 +875,18 @@ const JourneyPath = ({
           </Dialog>
         )}
       </AnimatePresence>
+
+      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+      {/* ANIMATION DE TRANSITION SPHÈRE - Entre chaque étape complétée */}
+      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+      <StepTransition
+        isVisible={showStepTransition}
+        stepNumber={transitionStep?.id || 1}
+        stepTitle={transitionStep?.title || ''}
+        stepEmoji={transitionStep?.emoji || '🎯'}
+        userName={displayName}
+        onComplete={handleTransitionComplete}
+      />
     </div>
   );
 };
