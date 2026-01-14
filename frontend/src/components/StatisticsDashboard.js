@@ -222,16 +222,14 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
 
   // Fonction pour naviguer vers une section depuis le parcours
   const handleJourneyNavigate = (target) => {
-    // Marquer l'étape actuelle comme complétée si c'est la première visite
+    // Mapping des 6 étapes du nouveau parcours
     const stepMap = {
-      'dashboard': 1,
-      'profil': 2,
-      'defis': 3,
-      'vertus': 4,
-      'techniques': 5,
-      'ceintures': 6,
-      'histoire': 7,
-      'trophees': 8
+      'profil': 1,      // Étape 1: Commence -> Créer mon profil
+      'techniques': 2,  // Étape 2: Apprends -> Voir les techniques
+      'defis': 3,       // Étape 3: Entraîne-toi -> Enregistrer une séance
+      'validation': 4,  // Étape 4: Valide -> Demander validation parentale
+      'ceintures': 5,   // Étape 5: Progresse -> Voir ma progression
+      'trophees': 6     // Étape 6: Maîtrise -> Voir mes trophées
     };
     
     const stepId = stepMap[target];
