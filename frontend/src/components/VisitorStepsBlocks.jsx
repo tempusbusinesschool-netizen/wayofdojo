@@ -105,15 +105,17 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
 
   return (
     <div className="mb-8" data-testid="visitor-steps-blocks">
-      {/* Titre de section */}
+      {/* ═══════════════════════════════════════════════════════════════════════════════
+          TITRE DE SECTION - 8 blocs de présentation du contenu
+      ═══════════════════════════════════════════════════════════════════════════════ */}
       <div className="text-center mb-6">
         {isEnfant ? (
           <>
             <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
-              🎮 Ton Parcours Ninja en 6 étapes ! 🎮
+              🎮 Ton Parcours Ninja en 8 étapes ! 🎮
             </h2>
             <p className="text-slate-400 text-sm sm:text-base">
-              Suis ce chemin pour devenir un vrai Maître ! 🥷
+              Découvre tout ce qui t'attend ! 🥷
             </p>
           </>
         ) : (
@@ -122,96 +124,80 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
               Votre parcours Aikido
             </h2>
             <p className="text-slate-400 text-sm">
-              Découvrez les étapes de votre progression
+              Découvrez le contenu de votre formation
             </p>
           </>
         )}
       </div>
 
-      {/* Grille des blocs */}
-      <div className={`grid gap-3 sm:gap-4 ${
-        isEnfant 
-          ? 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-6' 
-          : 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-6'
-      }`}>
-        {steps.map((step, index) => (
+      {/* ═══════════════════════════════════════════════════════════════════════════════
+          GRILLE DES 8 BLOCS - Présentation du contenu (aperçu)
+          - 4 premiers blocs colorés (débloqués visuellement)
+          - 4 derniers blocs sombres avec cadenas (verrouillés)
+      ═══════════════════════════════════════════════════════════════════════════════ */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+        {contentBlocks.map((block) => (
           <button
-            key={step.id}
-            onClick={() => onStepClick && onStepClick(step.id)}
-            data-testid={`visitor-step-${step.id}`}
+            key={block.id}
+            onClick={() => {
+              // Ouvre le dialogue d'inscription
+              const event = new CustomEvent('openAuthDialog');
+              window.dispatchEvent(event);
+            }}
+            data-testid={`visitor-block-${block.slug}`}
             className={`
               relative group
-              ${isEnfant ? 'aspect-square' : 'aspect-[4/3] sm:aspect-square'}
+              aspect-square
               rounded-2xl sm:rounded-3xl
               p-3 sm:p-4
               flex flex-col items-center justify-center
               transition-all duration-300
-              hover:scale-105 hover:-translate-y-2
-              cursor-pointer
               overflow-hidden
-              ${isEnfant 
-                ? `bg-gradient-to-br ${step.gradient} shadow-xl ${step.shadowColor} border-2 border-white/20 hover:border-white/40`
-                : `bg-gradient-to-br ${step.gradient} shadow-lg ${step.shadowColor} border-l-4 ${step.accentColor}`
+              ${block.unlocked 
+                ? `bg-gradient-to-br ${block.gradient} shadow-xl ${block.shadowColor} border-2 border-white/20 hover:border-white/40 hover:scale-105 hover:-translate-y-2 cursor-pointer`
+                : 'bg-slate-800/50 border-2 border-slate-700 cursor-pointer hover:bg-slate-800/70'
               }
             `}
           >
-            {/* Numéro d'étape */}
-            <div className={`absolute top-2 left-2 w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center
-              ${isEnfant ? 'bg-white/20' : 'bg-black/20'}`}
+            {/* Numéro d'étape - GROS NUMÉRO */}
+            <div className={`absolute top-2 left-2 w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center
+              ${block.unlocked ? 'bg-white/20' : 'bg-slate-700'}`}
             >
-              <span className="text-white text-xs sm:text-sm font-bold">{index + 1}</span>
+              <span className={`text-lg sm:text-xl font-black ${block.unlocked ? 'text-white' : 'text-slate-500'}`}>
+                {block.id}
+              </span>
             </div>
 
-            {/* Emoji décoratif (version enfant) */}
-            {isEnfant && step.decorEmoji && (
-              <div className="absolute top-2 right-2 text-lg opacity-60 group-hover:opacity-100 transition-opacity">
-                {step.decorEmoji}
+            {/* Icône de verrouillage pour les blocs non débloqués */}
+            {!block.unlocked && (
+              <div className="absolute top-2 right-2 bg-slate-600 rounded-full p-1">
+                <Lock className="w-4 h-4 text-slate-400" />
               </div>
             )}
 
-            {/* Contenu principal - différent selon le mode */}
-            {isEnfant ? (
-              <>
-                {/* Version ENFANT: Emoji principal */}
-                <span className="mb-1 sm:mb-2 group-hover:scale-110 transition-transform text-4xl sm:text-5xl">
-                  {step.emoji}
-                </span>
+            {/* Emoji principal */}
+            <span className={`mb-1 sm:mb-2 group-hover:scale-110 transition-transform text-4xl sm:text-5xl ${
+              !block.unlocked ? 'grayscale opacity-50' : ''
+            }`}>
+              {block.emoji}
+            </span>
 
-                {/* Titre */}
-                <span className="text-white font-bold text-center leading-tight text-xs sm:text-sm">
-                  {step.title}
-                </span>
+            {/* Titre */}
+            <span className={`font-bold text-center leading-tight text-xs sm:text-sm ${
+              block.unlocked ? 'text-white' : 'text-slate-500'
+            }`}>
+              {block.title}
+            </span>
 
-                {/* Description */}
-                <span className="text-center mt-0.5 sm:mt-1 text-white/70 text-[10px] sm:text-xs">
-                  {step.description}
-                </span>
-              </>
-            ) : (
-              <>
-                {/* Version ADULTE: Grand Kanji central */}
-                <span className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white/90 
-                  group-hover:text-white group-hover:scale-110 transition-all duration-300
-                  drop-shadow-lg"
-                  style={{ fontFamily: "'Noto Serif JP', serif" }}
-                >
-                  {step.kanji}
-                </span>
+            {/* Sous-titre */}
+            <span className={`text-center mt-0.5 sm:mt-1 text-[10px] sm:text-xs ${
+              block.unlocked ? 'text-white/70' : 'text-slate-600'
+            }`}>
+              {block.subtitle}
+            </span>
 
-                {/* Titre sous le Kanji */}
-                <span className="text-white font-semibold text-center leading-tight text-xs sm:text-sm mt-2">
-                  {step.title}
-                </span>
-
-                {/* Description subtile */}
-                <span className="text-center mt-0.5 text-slate-400 text-[9px] sm:text-[10px] opacity-80">
-                  {step.description}
-                </span>
-              </>
-            )}
-
-            {/* Effet de brillance au hover (version enfant) */}
-            {isEnfant && (
+            {/* Effet de brillance au hover (blocs débloqués) */}
+            {block.unlocked && (
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent 
                 -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
             )}
@@ -219,22 +205,33 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
         ))}
       </div>
 
-      {/* Flèche de progression (version enfant) */}
-      {isEnfant && (
-        <div className="hidden lg:flex items-center justify-center mt-4 px-8">
-          <div className="flex-1 h-2 bg-gradient-to-r from-emerald-500 via-pink-500 via-amber-500 via-violet-500 via-cyan-500 to-red-500 rounded-full opacity-60" />
+      {/* ═══════════════════════════════════════════════════════════════════════════════
+          BARRE DE PROGRESSION VISUELLE
+      ═══════════════════════════════════════════════════════════════════════════════ */}
+      <div className="mt-6 px-4">
+        <div className="flex items-center gap-2 mb-2">
+          <span className="text-slate-400 text-xs">Progression du parcours</span>
+          <span className="text-amber-400 text-xs font-bold">0 / 8 étapes</span>
         </div>
-      )}
+        <div className="h-3 bg-slate-700 rounded-full overflow-hidden">
+          <div 
+            className="h-full bg-gradient-to-r from-emerald-500 via-cyan-500 to-violet-500 rounded-full"
+            style={{ width: '0%' }}
+          />
+        </div>
+      </div>
 
       {/* Message d'encouragement */}
       <p className={`text-center mt-4 ${isEnfant ? 'text-slate-400 text-sm' : 'text-slate-500 text-xs'}`}>
         {isEnfant 
-          ? '👆 Clique sur une étape pour en savoir plus !'
-          : 'Inscrivez-vous gratuitement pour commencer'
+          ? '🔓 Inscris-toi pour débloquer ton parcours !'
+          : 'Inscrivez-vous pour commencer votre progression'
         }
       </p>
 
-      {/* BOUTON CALL-TO-ACTION - Commencer l'aventure */}
+      {/* ═══════════════════════════════════════════════════════════════════════════════
+          BOUTON CALL-TO-ACTION - Créer son compte
+      ═══════════════════════════════════════════════════════════════════════════════ */}
       <div className="mt-8 flex flex-col items-center gap-4">
         <button
           onClick={() => {
@@ -262,9 +259,9 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
           <span className="relative flex items-center gap-2 sm:gap-3">
             {isEnfant ? (
               <>
-                <span className="text-2xl sm:text-3xl">🚀</span>
-                <span>Commencer l'aventure !</span>
                 <span className="text-2xl sm:text-3xl">🥷</span>
+                <span>Créer mon compte Ninja</span>
+                <span className="text-2xl sm:text-3xl">🚀</span>
               </>
             ) : (
               <>
