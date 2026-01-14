@@ -201,13 +201,22 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
   }, [isAuthenticated]);
   */
   
-  // Fonction pour marquer une étape du parcours comme complétée
+  // Fonction pour marquer une étape du parcours comme complétée (par objet step)
   const handleJourneyStepComplete = (step) => {
     if (!journeyCompletedSteps.includes(step.id)) {
       const newCompleted = [...journeyCompletedSteps, step.id];
       setJourneyCompletedSteps(newCompleted);
       localStorage.setItem('aikido_journey_completed_steps', JSON.stringify(newCompleted));
       toast.success(`🎉 Étape "${step.title}" complétée ! +${step.xpReward} XP`);
+    }
+  };
+
+  // Fonction pour marquer une étape comme complétée (par ID seulement) - utilisé par l'animation de transition
+  const handleJourneyStepCompleteById = (stepId) => {
+    if (!journeyCompletedSteps.includes(stepId)) {
+      const newCompleted = [...journeyCompletedSteps, stepId];
+      setJourneyCompletedSteps(newCompleted);
+      localStorage.setItem('aikido_journey_completed_steps', JSON.stringify(newCompleted));
     }
   };
 
