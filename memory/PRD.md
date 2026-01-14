@@ -14,47 +14,38 @@ Application web gamifiée pour le club d'Aikido permettant aux pratiquants de su
 ## Architecture des écrans (Mise à jour 14 janvier 2025)
 
 ### Page d'accueil - Visiteur NON connecté
-1. **Écran de sélection du mode** : "Jeune Ninja" (enfants) ou "Ninja Confirmé" (adultes)
-2. **Après sélection** : Affichage des **8 blocs de présentation** du contenu
-   - 4 blocs colorés (Bienvenue, Mon Profil, Les Défis, Les 7 Vertus)
-   - 4 blocs verrouillés (Les Techniques, Les Ceintures, L'Histoire, Mes Trophées)
-   - Objectif : Montrer ce que l'utilisateur va découvrir
+- **8 blocs de présentation** du contenu (4 colorés + 4 verrouillés)
 
 ### Page d'accueil - Utilisateur CONNECTÉ
-- **6 blocs numérotés (1→6)** avec GROS numéros visibles
-- **Maître Tanaka animé** comme guide interactif
-- Étapes : Commence → Apprends → Entraîne-toi → Valide → Progresse → Maîtrise
-- Progression sauvegardée en localStorage
-- Bouton "Réinitialiser le parcours" pour les tests
+- **6 blocs numérotés (1→6)** avec GROS numéros + Tanaka animé
 - **Animation de transition sphère** entre chaque étape complétée ✅
+
+### Maîtrise de technique
+- **Animation de célébration avec confettis et son** quand on maîtrise une technique ✅
 
 ---
 
-## Fonctionnalités principales
+## Fonctionnalités de Gamification Implémentées
 
-### Gamification
-- Système de points XP
-- 7 Vertus avec animaux gardiens
-- Badges et trophées
-- Progression par ceintures (Blanche → Noire)
-- **Animation de transition sphère** lors de la complétion d'étapes ✅
+### 1. Animation de transition sphère (étapes du parcours)
+- Sphère turquoise avec emoji et numéro d'étape
+- Cercles concentriques animés en arrière-plan
+- Message "Bravo [Prénom] ! Étape suivante..."
+- 6 points de progression
 
-### Rôles utilisateurs
-- **Pratiquant** (utilisateur standard)
-- **Parent** (suivi des enfants)
-- **Enseignant** (gestion des cours)
-- **Admin Dojo** (gestion du club)
-- **Super Admin** (plateforme HUMAN KNOWLEDGE)
-
-### Abonnements (Stripe)
-- Plans individuels et familiaux
-- Période d'essai 30 jours
-- Intégration webhooks Stripe
+### 2. Animation de célébration (maîtrise technique) ✅ NOUVEAU
+- **Confettis multicolores** (explosion centrale + tirs latéraux + pluie d'étoiles)
+- **Son de victoire** (séquence de notes Do-Mi-Sol-Do aigu)
+- **Trophée animé** 🏆 qui rebondit
+- Titre doré "TECHNIQUE MAÎTRISÉE !"
+- 5 étoiles ⭐ décoratives
+- Cercles de lumière en arrière-plan
+- Bouton "Continuer 🚀"
 
 ---
 
 ## Stack technique
-- **Frontend** : React + TailwindCSS + Shadcn/UI + Framer Motion
+- **Frontend** : React + TailwindCSS + Shadcn/UI + Framer Motion + canvas-confetti
 - **Backend** : FastAPI (Python)
 - **Base de données** : MongoDB
 - **Intégrations** : Stripe, ElevenLabs (TTS), Resend (emails)
@@ -74,47 +65,33 @@ Application web gamifiée pour le club d'Aikido permettant aux pratiquants de su
 
 ## Changelog récent
 
-### 14 janvier 2025 (Session 2)
-- ✅ **Animation de transition sphère intégrée** entre chaque étape du parcours
-  - Composant `StepTransition.jsx` connecté à `JourneyPath.jsx`
-  - Animation avec sphère, emoji, numéro d'étape, message personnalisé
-  - Points de progression (6 étapes) affichés
-  - Cercles concentriques animés en arrière-plan
-  - Message "Bravo [Prénom] ! Étape suivante..." personnalisé
-- ✅ Logique de complétion d'étape déplacée après l'animation
-
-### 14 janvier 2025 (Session 1)
-- ✅ **Restructuration des écrans d'accueil** :
-  - NON connecté : 8 blocs de présentation du contenu
-  - Connecté : 6 blocs numérotés du parcours interactif
-- ✅ **Ajout de GROS numéros** sur les blocs (demande utilisateur)
-- ✅ **JourneyPath.jsx** : Réduit de 8 à 6 étapes pour le parcours connecté
-- ✅ **VisitorStepsBlocks.jsx** : Refactorisé pour afficher 8 blocs de présentation
-
-### Sessions précédentes
-- ✅ Bug critique de connexion résolu (TypeError emoji)
-- ✅ Module Parent debuggé (Invalid salt)
-- ✅ Compte enfant "Bill" lié au parent
-- ✅ Dialogue d'introduction Tanaka avec demande de prénom
-- ✅ Composant StepTransition.jsx créé pour animations
+### 14 janvier 2025
+- ✅ **Animation de célébration avec confettis** pour la maîtrise de techniques
+  - Composant `TechniqueCelebration.jsx` créé
+  - Intégré dans `TechniqueModal.js`
+  - Bibliothèque `canvas-confetti` installée
+  - Son de victoire synthétisé avec Web Audio API
+- ✅ **Animation de transition sphère** intégrée entre les étapes du parcours
+- ✅ **Restructuration écrans** : 8 blocs visiteurs / 6 blocs connectés
 
 ---
 
-## Fichiers clés modifiés
+## Fichiers clés
 
 | Fichier | Description |
 |---------|-------------|
-| `frontend/src/components/JourneyPath.jsx` | 6 étapes, intégration StepTransition |
-| `frontend/src/components/StepTransition.jsx` | Animation sphère entre étapes |
-| `frontend/src/components/VisitorStepsBlocks.jsx` | 8 blocs pour visiteurs |
-| `frontend/src/components/StatisticsDashboard.js` | Props onStepComplete, logique de complétion |
+| `TechniqueCelebration.jsx` | Animation confettis + son pour maîtrise |
+| `TechniqueModal.js` | Modal de technique avec célébration |
+| `JourneyPath.jsx` | 6 étapes avec animation sphère |
+| `StepTransition.jsx` | Animation sphère entre étapes |
+| `VisitorStepsBlocks.jsx` | 8 blocs pour visiteurs |
 
 ---
 
 ## Tâches à venir
 
 ### P1 - Priorité haute
-- [ ] Améliorer l'ergonomie PC du parcours guidé (cacher après complétion ou transformer en menu)
+- [ ] Améliorer l'ergonomie PC du parcours guidé
 - [ ] Configurer clés Stripe live
 - [ ] Vérifier domaine Resend pour emails
 
@@ -122,4 +99,3 @@ Application web gamifiée pour le club d'Aikido permettant aux pratiquants de su
 - [ ] Migration MongoDB → PostgreSQL
 - [ ] Créer blocs "Techniques" et "Défis collectifs"
 - [ ] 2FA pour Super Admin
-- [ ] Animations de célébration (confettis) optionnelles
