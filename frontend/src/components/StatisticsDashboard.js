@@ -227,7 +227,6 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
       toast.success(`🎉 Étape "${stepNames[stepId]}" complétée ! +${xpRewards[stepId]} XP`);
     }
   };
-  };
 
   // Fonction pour naviguer vers une section depuis le parcours
   const handleJourneyNavigate = (target) => {
