@@ -263,6 +263,16 @@ function TechniqueModal({ technique, kyuName, kyuColor, isOpen, onClose, onUpdat
           </div>
         </div>
       </DialogContent>
+
+      {/* Animation de célébration avec confettis */}
+      <TechniqueCelebration
+        isVisible={showCelebration}
+        techniqueName={celebrationTechnique}
+        onComplete={() => {
+          setShowCelebration(false);
+          onClose();
+        }}
+      />
     </Dialog>
   );
 }
