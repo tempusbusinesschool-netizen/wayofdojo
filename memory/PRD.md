@@ -26,6 +26,7 @@ Application web gamifiée pour le club d'Aikido permettant aux pratiquants de su
 - Étapes : Commence → Apprends → Entraîne-toi → Valide → Progresse → Maîtrise
 - Progression sauvegardée en localStorage
 - Bouton "Réinitialiser le parcours" pour les tests
+- **Animation de transition sphère** entre chaque étape complétée ✅
 
 ---
 
@@ -36,6 +37,7 @@ Application web gamifiée pour le club d'Aikido permettant aux pratiquants de su
 - 7 Vertus avec animaux gardiens
 - Badges et trophées
 - Progression par ceintures (Blanche → Noire)
+- **Animation de transition sphère** lors de la complétion d'étapes ✅
 
 ### Rôles utilisateurs
 - **Pratiquant** (utilisateur standard)
@@ -72,7 +74,16 @@ Application web gamifiée pour le club d'Aikido permettant aux pratiquants de su
 
 ## Changelog récent
 
-### 14 janvier 2025
+### 14 janvier 2025 (Session 2)
+- ✅ **Animation de transition sphère intégrée** entre chaque étape du parcours
+  - Composant `StepTransition.jsx` connecté à `JourneyPath.jsx`
+  - Animation avec sphère, emoji, numéro d'étape, message personnalisé
+  - Points de progression (6 étapes) affichés
+  - Cercles concentriques animés en arrière-plan
+  - Message "Bravo [Prénom] ! Étape suivante..." personnalisé
+- ✅ Logique de complétion d'étape déplacée après l'animation
+
+### 14 janvier 2025 (Session 1)
 - ✅ **Restructuration des écrans d'accueil** :
   - NON connecté : 8 blocs de présentation du contenu
   - Connecté : 6 blocs numérotés du parcours interactif
@@ -89,17 +100,26 @@ Application web gamifiée pour le club d'Aikido permettant aux pratiquants de su
 
 ---
 
+## Fichiers clés modifiés
+
+| Fichier | Description |
+|---------|-------------|
+| `frontend/src/components/JourneyPath.jsx` | 6 étapes, intégration StepTransition |
+| `frontend/src/components/StepTransition.jsx` | Animation sphère entre étapes |
+| `frontend/src/components/VisitorStepsBlocks.jsx` | 8 blocs pour visiteurs |
+| `frontend/src/components/StatisticsDashboard.js` | Props onStepComplete, logique de complétion |
+
+---
+
 ## Tâches à venir
 
 ### P1 - Priorité haute
-- [ ] Intégrer l'animation sphère (StepTransition) entre les étapes
-- [ ] Améliorer l'ergonomie PC du parcours guidé
-
-### P2 - Priorité moyenne
+- [ ] Améliorer l'ergonomie PC du parcours guidé (cacher après complétion ou transformer en menu)
 - [ ] Configurer clés Stripe live
 - [ ] Vérifier domaine Resend pour emails
 
-### P3 - Backlog
+### P2 - Backlog
 - [ ] Migration MongoDB → PostgreSQL
 - [ ] Créer blocs "Techniques" et "Défis collectifs"
 - [ ] 2FA pour Super Admin
+- [ ] Animations de célébration (confettis) optionnelles
