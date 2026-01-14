@@ -1,141 +1,106 @@
 import React from 'react';
+import { Lock } from 'lucide-react';
 
 /**
- * VisitorStepsBlocks - Blocs d'accueil pour les visiteurs non connectés
- * Affiche 6 blocs colorés présentant les étapes du jeu
- * Version ENFANT ou ADULTE selon le mode choisi
+ * VisitorStepsBlocks - Blocs d'accueil pour les visiteurs NON CONNECTÉS
+ * 
+ * NOUVELLE LOGIQUE (demandée par utilisateur):
+ * - NON CONNECTÉ : Affiche les 8 BLOCS de présentation du contenu (Bienvenue, Mon Profil, Les Défis, etc.)
+ *   → Cela montre ce que l'utilisateur va découvrir une fois inscrit
+ * 
+ * - CONNECTÉ : Utilise JourneyPath.jsx (6 blocs numérotés + Tanaka animé)
+ *   → Cela guide l'utilisateur étape par étape dans son parcours
  */
 const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
   
-  // Blocs version ENFANT - Option C : Étapes du jeu (gamification claire)
-  const stepsEnfant = [
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // 8 BLOCS DE PRÉSENTATION DU CONTENU - Pour les visiteurs NON connectés
+  // Montre ce que l'application propose (aperçu du "Votre parcours")
+  // ═══════════════════════════════════════════════════════════════════════════════
+  
+  const contentBlocks = [
     {
-      id: 'commence',
-      emoji: '🚀',
-      title: 'Commence',
-      description: 'Crée ton profil Ninja',
+      id: 1,
+      slug: 'bienvenue',
+      title: 'Bienvenue !',
+      subtitle: 'Rencontre Maître Tanaka',
+      emoji: '👋',
       gradient: 'from-emerald-500 to-teal-600',
       shadowColor: 'shadow-emerald-500/40',
-      decorEmoji: '✨'
+      unlocked: true
     },
     {
-      id: 'apprends',
-      emoji: '📚',
-      title: 'Apprends',
-      description: 'Découvre les techniques',
-      gradient: 'from-cyan-500 to-blue-600',
-      shadowColor: 'shadow-cyan-500/40',
-      decorEmoji: '🥋'
-    },
-    {
-      id: 'entraine',
-      emoji: '💪',
-      title: 'Entraîne-toi',
-      description: 'Pratique au dojo',
-      gradient: 'from-amber-400 to-orange-500',
-      shadowColor: 'shadow-amber-500/40',
-      decorEmoji: '🔥'
-    },
-    {
-      id: 'valide',
-      emoji: '✅',
-      title: 'Valide',
-      description: 'Fais valider par tes parents',
-      gradient: 'from-pink-500 to-rose-600',
-      shadowColor: 'shadow-pink-500/40',
-      decorEmoji: '👨‍👩‍👧'
-    },
-    {
-      id: 'progresse',
-      emoji: '🌟',
-      title: 'Progresse',
-      description: 'Gagne XP et monte de niveau',
+      id: 2,
+      slug: 'profil',
+      title: 'Mon Profil',
+      subtitle: 'Ta carte de ninja',
+      emoji: '🥷',
       gradient: 'from-violet-500 to-purple-600',
       shadowColor: 'shadow-violet-500/40',
-      decorEmoji: '⬆️'
+      unlocked: true
     },
     {
-      id: 'maitrise',
-      emoji: '👑',
-      title: 'Maîtrise',
-      description: 'Deviens un vrai Ninja !',
-      gradient: 'from-red-500 to-orange-600',
-      shadowColor: 'shadow-red-500/40',
-      decorEmoji: '🐉'
-    }
-  ];
-
-  // Blocs version ADULTE (sobre, technique, professionnel) avec Kanji
-  const stepsAdulte = [
-    {
-      id: 'inscription',
-      emoji: '📝',
-      kanji: '登',
-      kanjiMeaning: 'Inscription',
-      title: 'Inscription',
-      description: 'Créez votre compte',
-      gradient: 'from-slate-600 to-slate-700',
-      shadowColor: 'shadow-slate-600/40',
-      accentColor: 'border-emerald-500/50'
-    },
-    {
-      id: 'programme',
-      emoji: '🥋',
-      kanji: '技',
-      kanjiMeaning: 'Technique',
-      title: 'Programme',
-      description: 'Techniques par grade',
-      gradient: 'from-slate-600 to-slate-700',
-      shadowColor: 'shadow-slate-600/40',
-      accentColor: 'border-cyan-500/50'
-    },
-    {
-      id: 'progression',
-      emoji: '📊',
-      kanji: '進',
-      kanjiMeaning: 'Progression',
-      title: 'Progression',
-      description: 'Suivez votre parcours',
-      gradient: 'from-slate-600 to-slate-700',
-      shadowColor: 'shadow-slate-600/40',
-      accentColor: 'border-amber-500/50'
-    },
-    {
-      id: 'vertus',
-      emoji: '☯️',
-      kanji: '徳',
-      kanjiMeaning: 'Vertu',
-      title: 'Les 7 Vertus',
-      description: 'Philosophie de l\'Aikido',
-      gradient: 'from-slate-600 to-slate-700',
-      shadowColor: 'shadow-slate-600/40',
-      accentColor: 'border-violet-500/50'
-    },
-    {
-      id: 'objectifs',
+      id: 3,
+      slug: 'defis',
+      title: 'Les Défis',
+      subtitle: 'Relève les défis quotidiens',
       emoji: '🎯',
-      kanji: '目',
-      kanjiMeaning: 'Objectif',
-      title: 'Objectifs',
-      description: 'Défis quotidiens',
-      gradient: 'from-slate-600 to-slate-700',
-      shadowColor: 'shadow-slate-600/40',
-      accentColor: 'border-pink-500/50'
+      gradient: 'from-pink-500 to-rose-600',
+      shadowColor: 'shadow-pink-500/40',
+      unlocked: true
     },
     {
-      id: 'certifications',
+      id: 4,
+      slug: 'vertus',
+      title: 'Les 7 Vertus',
+      subtitle: 'Les super-pouvoirs du ninja',
+      emoji: '☯️',
+      gradient: 'from-amber-500 to-orange-600',
+      shadowColor: 'shadow-amber-500/40',
+      unlocked: true
+    },
+    {
+      id: 5,
+      slug: 'techniques',
+      title: 'Les Techniques',
+      subtitle: 'Apprends les mouvements',
+      emoji: '🥋',
+      gradient: 'from-cyan-500 to-blue-600',
+      shadowColor: 'shadow-cyan-500/40',
+      unlocked: false
+    },
+    {
+      id: 6,
+      slug: 'ceintures',
+      title: 'Les Ceintures',
+      subtitle: 'Ta progression de grade',
+      emoji: '🎖️',
+      gradient: 'from-slate-500 to-slate-700',
+      shadowColor: 'shadow-slate-500/40',
+      unlocked: false
+    },
+    {
+      id: 7,
+      slug: 'histoire',
+      title: "L'Histoire",
+      subtitle: "Les origines de l'Aïkido",
       emoji: '📜',
-      kanji: '証',
-      kanjiMeaning: 'Certificat',
-      title: 'Certifications',
-      description: 'Validez vos acquis',
-      gradient: 'from-slate-600 to-slate-700',
-      shadowColor: 'shadow-slate-600/40',
-      accentColor: 'border-orange-500/50'
+      gradient: 'from-amber-600 to-yellow-700',
+      shadowColor: 'shadow-amber-600/40',
+      unlocked: false
+    },
+    {
+      id: 8,
+      slug: 'trophees',
+      title: 'Mes Trophées',
+      subtitle: 'Badges et récompenses',
+      emoji: '🏆',
+      gradient: 'from-yellow-500 to-amber-600',
+      shadowColor: 'shadow-yellow-500/40',
+      unlocked: false
     }
   ];
 
-  const steps = mode === 'enfant' ? stepsEnfant : stepsAdulte;
   const isEnfant = mode === 'enfant';
 
   return (
