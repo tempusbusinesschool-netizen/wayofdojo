@@ -152,6 +152,11 @@ const JourneyPath = ({
   const [showStepDialog, setShowStepDialog] = useState(false);
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   
+  // État pour l'animation de transition entre étapes (sphère)
+  const [showStepTransition, setShowStepTransition] = useState(false);
+  const [transitionStep, setTransitionStep] = useState(null);
+  const [pendingAction, setPendingAction] = useState(null);
+  
   // État pour le dialogue d'introduction de Tanaka
   const [showIntroDialog, setShowIntroDialog] = useState(false);
   const [introStep, setIntroStep] = useState(1); // 1 = présentation, 2 = demande prénom
