@@ -5339,17 +5339,69 @@ async def check_and_award_badges(user_id: str, stats: dict) -> List[dict]:
     current_badges = [b.get("badge_id") for b in stats.get("badges", [])]
     
     badges_to_check = [
+        # === BADGES DE DÉBUT DE PARCOURS ===
         {"badge_id": "first_step", "badge_name": "Premier Pas", "badge_icon": "👣", "badge_description": "Premier entraînement", "condition": lambda s: s.get("attendance_count", 0) >= 1},
+        
+        # === BADGES DE RÉGULARITÉ (Streak) ===
         {"badge_id": "streak_3", "badge_name": "Persévérant", "badge_icon": "🔥", "badge_description": "3 jours d'affilée", "condition": lambda s: s.get("streak_days", 0) >= 3},
         {"badge_id": "streak_7", "badge_name": "Assidu", "badge_icon": "💪", "badge_description": "7 jours d'affilée", "condition": lambda s: s.get("streak_days", 0) >= 7},
         {"badge_id": "streak_14", "badge_name": "Marathonien", "badge_icon": "🏃", "badge_description": "14 jours d'affilée", "condition": lambda s: s.get("streak_days", 0) >= 14},
+        {"badge_id": "streak_21", "badge_name": "Esprit du Budo", "badge_icon": "🧘", "badge_description": "21 jours d'affilée", "condition": lambda s: s.get("streak_days", 0) >= 21},
+        
+        # === BADGES DE DURÉE DE PRATIQUE (Long terme - Aïkido) ===
+        {"badge_id": "practice_1month", "badge_name": "Initié", "badge_icon": "🌱", "badge_description": "1 mois de pratique", "condition": lambda s: s.get("days_since_registration", 0) >= 30},
+        {"badge_id": "practice_3months", "badge_name": "Disciple", "badge_icon": "🌿", "badge_description": "3 mois de pratique", "condition": lambda s: s.get("days_since_registration", 0) >= 90},
+        {"badge_id": "practice_6months", "badge_name": "Pratiquant Confirmé", "badge_icon": "🌳", "badge_description": "6 mois de pratique", "condition": lambda s: s.get("days_since_registration", 0) >= 180},
+        {"badge_id": "practice_1year", "badge_name": "Fidèle du Dojo", "badge_icon": "🥋", "badge_description": "1 an de pratique", "condition": lambda s: s.get("days_since_registration", 0) >= 365},
+        {"badge_id": "practice_2years", "badge_name": "Pilier du Dojo", "badge_icon": "🏯", "badge_description": "2 ans de pratique", "condition": lambda s: s.get("days_since_registration", 0) >= 730},
+        {"badge_id": "practice_5years", "badge_name": "Vétéran", "badge_icon": "⛩️", "badge_description": "5 ans de pratique", "condition": lambda s: s.get("days_since_registration", 0) >= 1825},
+        
+        # === BADGES DE PASSAGE DE GRADE (Kyu) ===
+        {"badge_id": "grade_6kyu", "badge_name": "Ceinture Blanche", "badge_icon": "⬜", "badge_description": "6e Kyu - Début du chemin", "condition": lambda s: s.get("belt_level", "") in ["6e_kyu", "5e_kyu", "4e_kyu", "3e_kyu", "2e_kyu", "1er_kyu", "shodan", "nidan", "sandan", "yondan"]},
+        {"badge_id": "grade_5kyu", "badge_name": "Ceinture Jaune", "badge_icon": "🟡", "badge_description": "5e Kyu obtenu", "condition": lambda s: s.get("belt_level", "") in ["5e_kyu", "4e_kyu", "3e_kyu", "2e_kyu", "1er_kyu", "shodan", "nidan", "sandan", "yondan"]},
+        {"badge_id": "grade_4kyu", "badge_name": "Ceinture Orange", "badge_icon": "🟠", "badge_description": "4e Kyu obtenu", "condition": lambda s: s.get("belt_level", "") in ["4e_kyu", "3e_kyu", "2e_kyu", "1er_kyu", "shodan", "nidan", "sandan", "yondan"]},
+        {"badge_id": "grade_3kyu", "badge_name": "Ceinture Verte", "badge_icon": "🟢", "badge_description": "3e Kyu obtenu", "condition": lambda s: s.get("belt_level", "") in ["3e_kyu", "2e_kyu", "1er_kyu", "shodan", "nidan", "sandan", "yondan"]},
+        {"badge_id": "grade_2kyu", "badge_name": "Ceinture Bleue", "badge_icon": "🔵", "badge_description": "2e Kyu obtenu", "condition": lambda s: s.get("belt_level", "") in ["2e_kyu", "1er_kyu", "shodan", "nidan", "sandan", "yondan"]},
+        {"badge_id": "grade_1kyu", "badge_name": "Ceinture Marron", "badge_icon": "🟤", "badge_description": "1er Kyu obtenu", "condition": lambda s: s.get("belt_level", "") in ["1er_kyu", "shodan", "nidan", "sandan", "yondan"]},
+        
+        # === BADGES DE PASSAGE DE GRADE (Dan) ===
+        {"badge_id": "grade_shodan", "badge_name": "Ceinture Noire", "badge_icon": "⬛", "badge_description": "Shodan - 1er Dan", "condition": lambda s: s.get("belt_level", "") in ["shodan", "nidan", "sandan", "yondan"]},
+        {"badge_id": "grade_nidan", "badge_name": "Maître Confirmé", "badge_icon": "🎌", "badge_description": "Nidan - 2e Dan", "condition": lambda s: s.get("belt_level", "") in ["nidan", "sandan", "yondan"]},
+        {"badge_id": "grade_sandan", "badge_name": "Enseignant", "badge_icon": "📜", "badge_description": "Sandan - 3e Dan", "condition": lambda s: s.get("belt_level", "") in ["sandan", "yondan"]},
+        {"badge_id": "grade_yondan", "badge_name": "Maître", "badge_icon": "👘", "badge_description": "Yondan - 4e Dan", "condition": lambda s: s.get("belt_level", "") == "yondan"},
+        
+        # === BADGES D'XP ===
         {"badge_id": "xp_100", "badge_name": "Débutant", "badge_icon": "⭐", "badge_description": "100 XP gagnés", "condition": lambda s: s.get("total_xp", 0) >= 100},
         {"badge_id": "xp_500", "badge_name": "Apprenti", "badge_icon": "🌟", "badge_description": "500 XP gagnés", "condition": lambda s: s.get("total_xp", 0) >= 500},
         {"badge_id": "xp_1000", "badge_name": "Confirmé", "badge_icon": "✨", "badge_description": "1000 XP gagnés", "condition": lambda s: s.get("total_xp", 0) >= 1000},
+        {"badge_id": "xp_5000", "badge_name": "Expert", "badge_icon": "💫", "badge_description": "5000 XP gagnés", "condition": lambda s: s.get("total_xp", 0) >= 5000},
+        {"badge_id": "xp_10000", "badge_name": "Maître du Ki", "badge_icon": "🌀", "badge_description": "10000 XP gagnés", "condition": lambda s: s.get("total_xp", 0) >= 10000},
+        
+        # === BADGES DE NIVEAU ===
         {"badge_id": "level_5", "badge_name": "Ninja Rapide", "badge_icon": "🥷", "badge_description": "Niveau 5 atteint", "condition": lambda s: s.get("level", 1) >= 5},
         {"badge_id": "level_10", "badge_name": "Dragon Suprême", "badge_icon": "🐉", "badge_description": "Niveau 10 atteint", "condition": lambda s: s.get("level", 1) >= 10},
+        {"badge_id": "level_20", "badge_name": "Légende Vivante", "badge_icon": "🏆", "badge_description": "Niveau 20 atteint", "condition": lambda s: s.get("level", 1) >= 20},
+        
+        # === BADGES DE TECHNIQUES VALIDÉES ===
         {"badge_id": "tech_5", "badge_name": "Technicien", "badge_icon": "🥋", "badge_description": "5 techniques validées", "condition": lambda s: s.get("techniques_validated", 0) >= 5},
-        {"badge_id": "tech_10", "badge_name": "Expert", "badge_icon": "🎯", "badge_description": "10 techniques validées", "condition": lambda s: s.get("techniques_validated", 0) >= 10},
+        {"badge_id": "tech_10", "badge_name": "Pratiquant Technique", "badge_icon": "🎯", "badge_description": "10 techniques validées", "condition": lambda s: s.get("techniques_validated", 0) >= 10},
+        {"badge_id": "tech_25", "badge_name": "Artiste Martial", "badge_icon": "🎨", "badge_description": "25 techniques validées", "condition": lambda s: s.get("techniques_validated", 0) >= 25},
+        {"badge_id": "tech_50", "badge_name": "Maître Technique", "badge_icon": "🏅", "badge_description": "50 techniques validées", "condition": lambda s: s.get("techniques_validated", 0) >= 50},
+        {"badge_id": "tech_100", "badge_name": "Encyclopédie Vivante", "badge_icon": "📚", "badge_description": "100 techniques validées", "condition": lambda s: s.get("techniques_validated", 0) >= 100},
+        
+        # === BADGES DE PRÉSENCE AU DOJO ===
+        {"badge_id": "attendance_10", "badge_name": "Habitué", "badge_icon": "🏠", "badge_description": "10 séances au dojo", "condition": lambda s: s.get("attendance_count", 0) >= 10},
+        {"badge_id": "attendance_50", "badge_name": "Régulier", "badge_icon": "📅", "badge_description": "50 séances au dojo", "condition": lambda s: s.get("attendance_count", 0) >= 50},
+        {"badge_id": "attendance_100", "badge_name": "Fidèle", "badge_icon": "🎖️", "badge_description": "100 séances au dojo", "condition": lambda s: s.get("attendance_count", 0) >= 100},
+        {"badge_id": "attendance_200", "badge_name": "Dévoué", "badge_icon": "🏆", "badge_description": "200 séances au dojo", "condition": lambda s: s.get("attendance_count", 0) >= 200},
+        {"badge_id": "attendance_500", "badge_name": "Légende du Dojo", "badge_icon": "👑", "badge_description": "500 séances au dojo", "condition": lambda s: s.get("attendance_count", 0) >= 500},
+        
+        # === BADGES SPÉCIAUX AÏKIDO ===
+        {"badge_id": "ukemi_master", "badge_name": "Maître des Chutes", "badge_icon": "🔄", "badge_description": "Ukemis parfaits validés", "condition": lambda s: s.get("ukemi_validated", False)},
+        {"badge_id": "weapons_intro", "badge_name": "Initié aux Armes", "badge_icon": "⚔️", "badge_description": "Buki waza découvert", "condition": lambda s: s.get("weapons_started", False)},
+        {"badge_id": "tanto_master", "badge_name": "Maître du Tanto", "badge_icon": "🔪", "badge_description": "Tanto-dori maîtrisé", "condition": lambda s: s.get("tanto_mastered", False)},
+        {"badge_id": "jo_master", "badge_name": "Maître du Jo", "badge_icon": "🪵", "badge_description": "Jo-waza maîtrisé", "condition": lambda s: s.get("jo_mastered", False)},
+        {"badge_id": "bokken_master", "badge_name": "Maître du Bokken", "badge_icon": "⚔️", "badge_description": "Aïki-ken maîtrisé", "condition": lambda s: s.get("bokken_mastered", False)},
     ]
     
     now = datetime.now(timezone.utc).isoformat()
