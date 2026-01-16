@@ -24,7 +24,7 @@ const ModeEmploiPage = ({ onBack }) => {
           { icon: Star, text: "206+ techniques à maîtriser", color: "text-amber-400" },
           { icon: Award, text: "10 grades (6 Kyu + 4 Dan)", color: "text-cyan-400" },
           { icon: Target, text: "84 défis à relever", color: "text-emerald-400" },
-          { icon: Shield, text: "30 jours offerts • Sans pub • RGPD", color: "text-purple-400" }
+          { icon: Shield, text: "7 jours offerts • Sans pub • RGPD", color: "text-purple-400" }
         ],
         tip: "L'Aikido n'est pas seulement un sport, c'est un Budo - une voie martiale qui développe le corps et l'esprit."
       }
@@ -55,7 +55,7 @@ const ModeEmploiPage = ({ onBack }) => {
           }
         ],
         navigation: [
-          { name: "S'inscrire", desc: "Créer un compte (30 jours offerts)" },
+          { name: "S'inscrire", desc: "Créer un compte (7 jours offerts)" },
           { name: "Connexion", desc: "Accéder à votre espace" },
           { name: "Dojo", desc: "Espace du club" },
           { name: "Enseignant", desc: "Accès professeur" }
@@ -83,7 +83,7 @@ const ModeEmploiPage = ({ onBack }) => {
           "Gagner des points et badges",
           "Sauvegarder vos favoris"
         ],
-        cta: "Pour débloquer toutes les fonctionnalités, inscrivez-vous et profitez de 30 jours offerts !"
+        cta: "Pour débloquer toutes les fonctionnalités, inscrivez-vous et profitez de 7 jours offerts !"
       }
     },
     {
@@ -134,8 +134,8 @@ const ModeEmploiPage = ({ onBack }) => {
       color: 'from-blue-500 to-indigo-400',
       content: {
         title: "Créez votre compte",
-        subtitle: "30 jours offerts pour démarrer",
-        description: "L'inscription est simple et rapide. Profitez de 30 jours gratuits pour découvrir toutes les fonctionnalités. Vos données sont protégées conformément au RGPD.",
+        subtitle: "7 jours offerts pour démarrer",
+        description: "L'inscription est simple et rapide. Profitez de 7 jours gratuits pour découvrir toutes les fonctionnalités. Vos données sont protégées conformément au RGPD.",
         steps: [
           { num: 1, text: "Cliquez sur « S'inscrire »" },
           { num: 2, text: "Remplissez vos informations" },
@@ -143,7 +143,7 @@ const ModeEmploiPage = ({ onBack }) => {
           { num: 4, text: "Validez et commencez !" }
         ],
         benefits: [
-          "30 jours d'essai offerts",
+          "7 jours d'essai offerts",
           "Accès aux 84 défis",
           "Système de points et badges",
           "Mensuel 4,50€ ou Annuel 39,90€"
