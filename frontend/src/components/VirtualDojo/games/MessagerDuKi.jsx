@@ -306,16 +306,23 @@ const MessagerDuKi = ({ userName, onComplete, onExit, tanakaSpeak }) => {
     setPosition({ x: GAME_WIDTH / 2, y: GAME_HEIGHT - 60 });
     setSpeed(0);
     setScore(0);
-    tanakaSpeak("C'est parti ! Utilise les flèches pour te déplacer. Appuie sur ESPACE pour respirer et restaurer ton équilibre.");
+    speakTanaka(TANAKA_GAME_MESSAGES.messager_start);
   };
 
   // Recommencer
   const restartGame = () => {
+    stopSpeaking(); // Arrêter la voix TTS
     setGameState('intro');
     setBalance(100);
     setPosition({ x: GAME_WIDTH / 2, y: GAME_HEIGHT - 60 });
     setSpeed(0);
     setScore(0);
+  };
+  
+  // Quitter le jeu
+  const handleExit = () => {
+    stopSpeaking(); // Arrêter la voix TTS
+    onExit();
   };
 
   // Couleur de la jauge d'équilibre
