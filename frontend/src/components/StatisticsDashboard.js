@@ -981,12 +981,12 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                               </div>
                               
                               {/* Bulle de dialogue */}
-                              <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-3 py-1 rounded-full font-bold animate-bounce shadow-lg whitespace-nowrap">
+                              <div className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full font-bold animate-bounce shadow-lg whitespace-nowrap">
                                 Parle-moi !
                               </div>
                               
                               {/* Nom */}
-                              <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2 bg-slate-900/80 backdrop-blur-sm text-amber-300 text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap">
+                              <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 bg-slate-900/80 backdrop-blur-sm text-amber-300 text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">
                                 Maître Tanaka
                               </div>
                             </div>
