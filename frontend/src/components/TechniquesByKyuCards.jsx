@@ -122,13 +122,105 @@ const TechniquesByKyuCards = ({
     }
   }, [isOpen, userName]);
 
-  // Charger les techniques maîtrisées depuis le localStorage
+  // Charger les techniques maîtrisées depuis le localStorage et le backend
   useEffect(() => {
-    const saved = localStorage.getItem('aikido_mastered_techniques');
-    if (saved) {
-      setLocalMastered(JSON.parse(saved));
+    const loadMasteryData = async () => {
+      // D'abord charger depuis localStorage
+      const saved = localStorage.getItem('aikido_mastered_techniques');
+      if (saved) {
+        setLocalMastered(JSON.parse(saved));
+      }
+      
+      // Charger les niveaux de maîtrise depuis localStorage
+      const savedMastery = localStorage.getItem('aikido_mastery_levels');
+      if (savedMastery) {
+        setMasteryLevels(JSON.parse(savedMastery));
+      }
+      
+      // Si authentifié, charger depuis le backend
+      if (isAuthenticated && userId) {
+        try {
+          const response = await axios.get(`${API}/users/me/profile`);
+          if (response.data && response.data.progression) {
+            const backendMastery = {};
+            const backendMastered = [];
+            Object.entries(response.data.progression).forEach(([techId, data]) => {
+              if (data.mastery_level) {
+                backendMastery[techId] = data.mastery_level;
+                if (data.mastery_level === 'mastered') {
+                  backendMastered.push(techId);
+                }
+              }
+            });
+            setMasteryLevels(prev => ({ ...prev, ...backendMastery }));
+            setLocalMastered(prev => [...new Set([...prev, ...backendMastered])]);
+          }
+        } catch (err) {
+          console.error('Erreur chargement progression:', err);
+        }
+      }
+    };
+    
+    loadMasteryData();
+  }, [isAuthenticated, userId]);
+  
+  // Fonction pour mettre à jour le niveau de maîtrise d'une technique
+  const updateMasteryLevel = async (techniqueId, newLevel) => {
+    setSavingMastery(techniqueId);
+    
+    try {
+      // Sauvegarder en local d'abord
+      const newMasteryLevels = { ...masteryLevels, [techniqueId]: newLevel };
+      setMasteryLevels(newMasteryLevels);
+      localStorage.setItem('aikido_mastery_levels', JSON.stringify(newMasteryLevels));
+      
+      // Mettre à jour localMastered si nécessaire
+      if (newLevel === 'mastered' && !localMastered.includes(techniqueId)) {
+        const newMastered = [...localMastered, techniqueId];
+        setLocalMastered(newMastered);
+        localStorage.setItem('aikido_mastered_techniques', JSON.stringify(newMastered));
+      } else if (newLevel !== 'mastered' && localMastered.includes(techniqueId)) {
+        const newMastered = localMastered.filter(id => id !== techniqueId);
+        setLocalMastered(newMastered);
+        localStorage.setItem('aikido_mastered_techniques', JSON.stringify(newMastered));
+      }
+      
+      // Si authentifié, synchroniser avec le backend
+      if (isAuthenticated) {
+        await axios.put(`${API}/auth/progression/${techniqueId}`, {
+          technique_id: techniqueId,
+          mastery_level: newLevel
+        });
+      }
+      
+      // Messages de Tanaka selon le niveau
+      const levelInfo = MASTERY_LEVELS.find(l => l.id === newLevel);
+      const messages = {
+        'not_started': `D'accord ${userName || 'ninja'}, tu repars de zéro pour cette technique. C'est courageux de reconnaître qu'on doit recommencer ! 🌱`,
+        'learning': `Bien ${userName || 'ninja'} ! Tu commences ton apprentissage. N'oublie pas : "Mille jours d'entraînement pour forger, dix mille jours pour polir." 📚`,
+        'practiced': `Excellent progrès ${userName || 'ninja'} ! Tu as pratiqué cette technique. Continue à la répéter jusqu'à ce qu'elle devienne naturelle ! 💪`,
+        'mastered': `Bravo ${userName || 'ninja'} ! 🎉 Cette technique est maintenant gravée dans ton corps ! Comme le dit le proverbe : "Pratique dix mille fois, et la technique devient naturelle." 🏆`
+      };
+      
+      setTanakaMessage(messages[newLevel] || `Niveau mis à jour : ${levelInfo?.label}`);
+      setIsTanakaSpeaking(true);
+      if (tanakaSpeakTimeout.current) clearTimeout(tanakaSpeakTimeout.current);
+      tanakaSpeakTimeout.current = setTimeout(() => setIsTanakaSpeaking(false), 4000);
+      
+      toast.success(`${levelInfo?.emoji} Niveau de maîtrise mis à jour !`);
+      
+      // Notifier le parent si callback fourni
+      if (onMasteryUpdate) {
+        onMasteryUpdate(techniqueId, newLevel);
+      }
+      
+    } catch (err) {
+      console.error('Erreur mise à jour niveau:', err);
+      toast.error('Erreur lors de la sauvegarde');
+    } finally {
+      setSavingMastery(null);
     }
-  }, []);
+  };
   
   // Mettre à jour le message de Tanaka quand on change de Kyu
   useEffect(() => {
