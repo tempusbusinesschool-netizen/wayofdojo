@@ -25,6 +25,16 @@ Application web gamifiée pour le club d'Aikido permettant aux pratiquants de su
    - Étape 3 "Entraîne-toi" du Parcours Guidé
    - Requiert : Étape 1 (profil) + Étape 2 (techniques) complétées
 
+3. ✅ **Modification de la période d'essai de 30 à 7 jours**
+   - Mise à jour frontend : TarificationPage, ModeEmploiPage, AgeSelector, VisitorStepsBlocks
+   - Mise à jour backend : trial_days passé de 90/10 jours à 7 jours pour tous les plans
+   - Cohérence complète sur toute la plateforme
+
+4. ✅ **Vérification de l'espace Parent**
+   - Le Dashboard Parent fonctionne correctement
+   - Login parent@gmail.com / parent123 OK
+   - Affichage des enfants liés et messages/observations OK
+
 ---
 
 ## Architecture des écrans (Mise à jour 16 janvier 2025)
