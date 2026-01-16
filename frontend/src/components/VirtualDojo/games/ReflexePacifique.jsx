@@ -130,6 +130,32 @@ const ReflexePacifique = ({ userName, onComplete, onExit, tanakaSpeak }) => {
     setScenarios(shuffled);
   }, []);
 
+  // Handler pour le timeout - défini avant useEffect
+  const handleTimeout = useCallback(() => {
+    tanakaSpeak("Le temps est écoulé ! En situation réelle, il faut parfois prendre des décisions rapidement, mais avec sagesse.");
+    setShowFeedback(true);
+    setSelectedOption(-1);
+    
+    setTimeout(() => {
+      nextScenario();
+    }, 3000);
+  }, [tanakaSpeak]);
+
+  // Handler pour passer au scénario suivant
+  const nextScenario = useCallback(() => {
+    if (currentScenarioIndex + 1 >= scenarios.length) {
+      setGameState('success');
+      const finalScore = score + correctAnswers * 10;
+      setScore(finalScore);
+      tanakaSpeak(`${userName || 'Jeune ninja'}, tu as terminé l'épreuve ! Tu as fait preuve de sagesse dans ${correctAnswers} situations sur ${scenarios.length}.`);
+    } else {
+      setCurrentScenarioIndex(prev => prev + 1);
+      setSelectedOption(null);
+      setShowFeedback(false);
+      setTimeLeft(15);
+    }
+  }, [currentScenarioIndex, scenarios.length, score, correctAnswers, userName, tanakaSpeak]);
+
   // Timer
   useEffect(() => {
     if (gameState !== 'playing' || showFeedback) return;
@@ -144,17 +170,7 @@ const ReflexePacifique = ({ userName, onComplete, onExit, tanakaSpeak }) => {
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [timeLeft, gameState, showFeedback]);
-
-  const handleTimeout = () => {
-    tanakaSpeak("Le temps est écoulé ! En situation réelle, il faut parfois prendre des décisions rapidement, mais avec sagesse.");
-    setShowFeedback(true);
-    setSelectedOption(-1);
-    
-    setTimeout(() => {
-      nextScenario();
-    }, 3000);
-  };
+  }, [timeLeft, gameState, showFeedback, handleTimeout]);
 
   const handleOptionSelect = (optionIndex) => {
     if (showFeedback) return;
