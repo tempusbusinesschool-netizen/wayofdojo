@@ -2028,6 +2028,15 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         userName={displayUserName}
         userKyu="6e_kyu"
       />
+      
+      {/* Dojo Virtuel - Étape 3 "Entraîne-toi" */}
+      <VirtualDojo
+        isOpen={showVirtualDojo}
+        onClose={() => setShowVirtualDojo(false)}
+        userName={displayUserName}
+        userLevel={userProfile?.level || 0}
+        userKi={statistics?.total_points || 0}
+      />
     </>
   );
 }
