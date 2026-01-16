@@ -955,7 +955,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                       </div>
 
                       {/* Version DESKTOP - rectangle avec gradient et personnages */}
-                      <div className="hidden sm:block relative overflow-hidden bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-500 rounded-3xl p-8 md:p-12 shadow-2xl border-2 border-orange-400/60">
+                      <div className="hidden sm:block relative overflow-hidden bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-500 rounded-2xl p-4 md:p-6 shadow-2xl border-2 border-orange-400/60">
                         
                         {/* Maître Tanaka en haut à gauche - UNIQUEMENT pour mode enfant */}
                         {visitorMode === 'enfant' && (
