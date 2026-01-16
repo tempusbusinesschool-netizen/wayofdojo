@@ -885,6 +885,19 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
 
   return (
     <>
+      {/* 🎉 CONFETTIS DE CÉLÉBRATION */}
+      {showConfetti && (
+        <Confetti
+          width={window.innerWidth}
+          height={window.innerHeight}
+          recycle={false}
+          numberOfPieces={300}
+          gravity={0.3}
+          colors={['#10B981', '#14B8A6', '#F59E0B', '#EC4899', '#8B5CF6', '#06B6D4', '#EF4444', '#FBBF24']}
+          style={{ position: 'fixed', top: 0, left: 0, zIndex: 9999 }}
+        />
+      )}
+      
       <div className="mb-4 animate-fadeIn">
         {/* ========== HERO SECTION - DIFFÉRENT SI CONNECTÉ OU NON ========== */}
         {!isAdmin && (
