@@ -381,8 +381,8 @@ const MessagerDuKi = ({ userName, onComplete, onExit, tanakaSpeak }) => {
               <span className="text-white text-sm font-bold">{Math.round(balance)}%</span>
             </div>
             
-            {/* Indicateur de respiration */}
-            <div className="flex items-center gap-2">
+            {/* Indicateur de respiration + Bouton voix */}
+            <div className="flex items-center gap-3">
               {isBreathing && (
                 <motion.div
                   animate={{ scale: [1, 1.2, 1] }}
@@ -393,10 +393,21 @@ const MessagerDuKi = ({ userName, onComplete, onExit, tanakaSpeak }) => {
                   <span className="text-sm">Respiration...</span>
                 </motion.div>
               )}
+              
+              {/* Bouton voix TTS */}
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => setVoiceEnabled(!voiceEnabled)}
+                className={voiceEnabled ? "text-cyan-400" : "text-slate-500"}
+                title={voiceEnabled ? "Désactiver la voix" : "Activer la voix"}
+              >
+                {voiceEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+              </Button>
             </div>
             
             {/* Bouton quitter */}
-            <Button variant="ghost" size="sm" onClick={onExit} className="text-slate-400">
+            <Button variant="ghost" size="sm" onClick={handleExit} className="text-slate-400">
               <X className="w-4 h-4 mr-1" /> Quitter
             </Button>
           </div>
