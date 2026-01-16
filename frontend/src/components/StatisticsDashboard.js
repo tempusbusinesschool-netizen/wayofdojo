@@ -1040,22 +1040,22 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                         </div>
                         
                         <div className="relative text-center z-10">
-                          <h1 className="text-3xl md:text-4xl lg:text-5xl font-black text-white mb-4">
+                          <h1 className="text-2xl md:text-3xl lg:text-4xl font-black text-white mb-2">
                             Aikido@Game
                           </h1>
-                          <p className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-6">
+                          <p className="text-sm md:text-base text-white/90 max-w-2xl mx-auto mb-4">
                             {visitorMode === 'enfant' 
                               ? <><strong>Deviens un vrai Ninja !</strong> Apprends l'Aikido en t'amusant 🎮</>
                               : <><strong>Développez votre maîtrise de l'Aikido</strong> avec un entraînement structuré</>
                             }
                           </p>
-                          <div className="flex flex-wrap gap-3 justify-center">
+                          <div className="flex flex-wrap gap-2 justify-center">
                             <Button
                               onClick={() => {
                                 const event = new CustomEvent('openAuthDialog');
                                 window.dispatchEvent(event);
                               }}
-                              className="bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold px-6 py-3 rounded-xl text-lg shadow-lg"
+                              className="bg-amber-400 hover:bg-amber-300 text-slate-900 font-bold px-4 py-2 rounded-xl text-sm shadow-lg"
                             >
                               {visitorMode === 'enfant' ? '🥷 Créer mon compte Ninja' : '📝 S\'inscrire gratuitement'}
                             </Button>
@@ -1065,7 +1065,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                                 const event = new CustomEvent('openLoginDialog');
                                 window.dispatchEvent(event);
                               }}
-                              className="border-2 border-white text-white hover:bg-white/20 font-bold px-6 py-3 rounded-xl text-lg"
+                              className="border-2 border-white text-white hover:bg-white/20 font-bold px-4 py-2 rounded-xl text-sm"
                             >
                               Se connecter
                             </Button>
@@ -1075,10 +1075,10 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                         {/* Bouton changer de mode - desktop */}
                         <button
                           onClick={handleResetMode}
-                          className="absolute top-4 right-4 text-white/60 hover:text-white transition-colors p-2 rounded-lg hover:bg-white/10"
+                          className="absolute top-2 right-2 text-white/60 hover:text-white transition-colors p-1.5 rounded-lg hover:bg-white/10"
                           title="Changer de mode"
                         >
-                          <Settings className="w-5 h-5" />
+                          <Settings className="w-4 h-4" />
                         </button>
                       </div>
                     </div>
