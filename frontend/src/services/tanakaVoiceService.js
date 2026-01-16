@@ -80,9 +80,9 @@ const TANAKA_PHRASES = {
     text: "Deux semaines sans relâche ! Tu montres un véritable esprit de Budoka. Ton dévouement m'impressionne, petit guerrier !",
     file: "/audio/tanaka/streak_14.mp3"
   },
-  streak_30: {
-    text: "Un mois entier ! Incroyable ! Comme disait O-Sensei : L'Aïkido n'est pas une technique, c'est une façon de vivre. Tu l'as compris !",
-    file: "/audio/tanaka/streak_30.mp3"
+  streak_21: {
+    text: "Trois semaines de pratique ! Incroyable ! Comme disait O-Sensei : L'Aïkido n'est pas une technique, c'est une façon de vivre. Tu l'as compris !",
+    file: "/audio/tanaka/streak_21.mp3"
   },
 
   // Encouragements généraux
