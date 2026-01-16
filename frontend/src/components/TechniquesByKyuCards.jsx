@@ -557,20 +557,26 @@ const TechniquesByKyuCards = ({
                 onClick={(e) => e.stopPropagation()}
                 data-testid="technique-detail-modal"
               >
-                {/* En-tête */}
+                {/* En-tête avec catégorie */}
                 <div className="text-center mb-4">
                   <span className="text-5xl mb-3 block">🥋</span>
                   <h3 className="text-xl font-bold text-white">{selectedTechnique.name}</h3>
-                  <p className="text-cyan-400 text-sm mt-1">{currentKyu?.name}</p>
+                  <div className="flex items-center justify-center gap-2 mt-2">
+                    <span className="text-cyan-400 text-sm">{currentKyu?.name}</span>
+                    <span className="text-slate-500">•</span>
+                    <span className="bg-slate-700 px-2 py-0.5 rounded text-sm text-slate-300">
+                      {getTechniqueCategory(selectedTechnique).emoji} {getTechniqueCategory(selectedTechnique).name}
+                    </span>
+                  </div>
                 </div>
 
-                {/* Description complète */}
+                {/* Description complète - FICHE PÉDAGOGIQUE */}
                 <div className="bg-slate-700/50 rounded-lg p-4 mb-4">
                   <h4 className="text-white font-semibold text-sm mb-2 flex items-center gap-2">
                     <BookOpen className="w-4 h-4 text-cyan-400" />
-                    Description
+                    Fiche Pédagogique
                   </h4>
-                  <p className="text-slate-300 text-sm leading-relaxed">
+                  <p className="text-slate-300 text-sm leading-relaxed whitespace-pre-line">
                     {selectedTechnique.description}
                   </p>
                 </div>
