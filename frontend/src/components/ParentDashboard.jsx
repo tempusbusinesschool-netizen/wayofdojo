@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { 
   Users, Mail, Eye, ChevronRight, Calendar, User, 
   Bell, CheckCircle, Clock, Award, BookOpen, X,
@@ -23,13 +23,31 @@ const ParentDashboard = ({ onLogout }) => {
   const [selectedChild, setSelectedChild] = useState(null);
   const [selectedMessage, setSelectedMessage] = useState(null);
 
-  const token = localStorage.getItem('parent_token');
+  // Use ref to prevent multiple API calls and track if data is already loaded
+  const isLoadingRef = useRef(false);
+  const hasLoadedRef = useRef(false);
 
+  // Stable token reference - read once on mount
+  const tokenRef = useRef(localStorage.getItem('parent_token'));
+
+  // Load data only once on mount
   useEffect(() => {
-    if (token) {
-      loadData();
+    const token = tokenRef.current;
+    
+    // Guard: Don't load if already loading or already loaded
+    if (!token || isLoadingRef.current || hasLoadedRef.current) {
+      if (!token) setLoading(false);
+      return;
     }
-  }, [token]);
+    
+    isLoadingRef.current = true;
+    loadDataOnce(token);
+    
+    // Cleanup function
+    return () => {
+      isLoadingRef.current = false;
+    };
+  }, []); // Empty dependency array - runs only once on mount
 
   const loadData = async () => {
     try {
