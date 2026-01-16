@@ -251,67 +251,196 @@ const ProgressionTunnel = ({
   return (
     <div className="space-y-6" data-testid="progression-tunnel">
       
-      {/* Header du Tunnel */}
-      <div className="bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600 rounded-2xl p-5 shadow-xl">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="text-5xl animate-bounce">{currentBelt?.animalSpirit || "🥋"}</div>
-            <div>
-              <h2 className="text-xl md:text-2xl font-black text-white">
-                🎯 Mon Parcours du Jour
-              </h2>
-              <p className="text-purple-200 text-sm">
-                {completedTodayIds.length}/{challenges.length} défis complétés
-              </p>
-            </div>
-          </div>
-          
-          {/* Points du jour */}
-          <div className="flex items-center gap-4">
-            <div className="bg-white/20 backdrop-blur rounded-xl px-4 py-2 text-center">
-              <div className="flex items-center gap-2">
-                <Flame className="w-5 h-5 text-orange-300" />
-                <span className="text-2xl font-black text-white">{pointsToday}</span>
+      {/* 🎯 HEADER SIMPLIFIÉ ET CLAIR */}
+      <div className="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 rounded-3xl p-6 shadow-2xl relative overflow-hidden">
+        {/* Décoration de fond */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 right-0 w-40 h-40 bg-white rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2" />
+          <div className="absolute bottom-0 left-0 w-32 h-32 bg-yellow-300 rounded-full blur-3xl transform -translate-x-1/2 translate-y-1/2" />
+        </div>
+        
+        <div className="relative z-10">
+          {/* Titre principal */}
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-4">
+              <div className="w-16 h-16 bg-white/20 backdrop-blur rounded-2xl flex items-center justify-center">
+                <span className="text-4xl">{currentBelt?.animalSpirit || "🥋"}</span>
               </div>
-              <p className="text-purple-200 text-xs">XP du jour</p>
-            </div>
-            
-            {userStats && (
-              <div className="bg-white/20 backdrop-blur rounded-xl px-4 py-2 text-center">
-                <div className="flex items-center gap-2">
-                  <Star className="w-5 h-5 text-amber-300" />
-                  <span className="text-2xl font-black text-white">{userStats.total_xp || 0}</span>
-                </div>
-                <p className="text-purple-200 text-xs">XP Total</p>
+              <div>
+                <h2 className="text-2xl font-black text-white">
+                  Mes Défis du Jour
+                </h2>
+                <p className="text-white/80 text-sm">
+                  Salut {userName} ! Voici tes missions pour aujourd&apos;hui 💪
+                </p>
               </div>
-            )}
+            </div>
             
             {allCompleted && (
-              <div className="bg-amber-500 rounded-xl px-4 py-2 text-center animate-pulse">
-                <PartyPopper className="w-6 h-6 text-white mx-auto" />
-                <p className="text-white text-xs font-bold">PARFAIT !</p>
+              <div className="bg-gradient-to-r from-amber-400 to-orange-500 rounded-2xl px-5 py-3 text-center animate-bounce shadow-lg">
+                <PartyPopper className="w-8 h-8 text-white mx-auto mb-1" />
+                <p className="text-white text-sm font-black">BRAVO !</p>
               </div>
             )}
+          </div>
+          
+          {/* Barre de progression visuelle */}
+          <div className="bg-white/10 backdrop-blur rounded-2xl p-4">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-white/90 text-sm font-medium">Ma progression du jour</span>
+              <span className="text-white font-black text-lg">
+                {completedTodayIds.length} / {challenges.length}
+              </span>
+            </div>
+            <div className="h-4 bg-black/20 rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-gradient-to-r from-emerald-400 via-cyan-400 to-blue-400 rounded-full transition-all duration-700 ease-out relative"
+                style={{ width: `${(completedTodayIds.length / Math.max(challenges.length, 1)) * 100}%` }}
+              >
+                {completedTodayIds.length > 0 && (
+                  <div className="absolute right-0 top-0 bottom-0 w-4 bg-white/50 rounded-full animate-pulse" />
+                )}
+              </div>
+            </div>
+            
+            {/* Stats en ligne */}
+            <div className="flex items-center justify-center gap-6 mt-4">
+              <div className="flex items-center gap-2">
+                <div className="w-10 h-10 rounded-xl bg-orange-500/30 flex items-center justify-center">
+                  <Flame className="w-5 h-5 text-orange-300" />
+                </div>
+                <div>
+                  <p className="text-2xl font-black text-white">{pointsToday}</p>
+                  <p className="text-white/60 text-xs">XP gagnés</p>
+                </div>
+              </div>
+              
+              {userStats && (
+                <div className="flex items-center gap-2">
+                  <div className="w-10 h-10 rounded-xl bg-amber-500/30 flex items-center justify-center">
+                    <Star className="w-5 h-5 text-amber-300" />
+                  </div>
+                  <div>
+                    <p className="text-2xl font-black text-white">{userStats.total_xp || 0}</p>
+                    <p className="text-white/60 text-xs">XP total</p>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Timeline Horizontale */}
-      <div className="relative">
-        {/* Ligne de progression */}
-        <div className="absolute top-8 left-0 right-0 h-2 bg-slate-700 rounded-full mx-12">
-          <div 
-            className="h-full bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-full transition-all duration-500"
-            style={{ width: `${(completedTodayIds.length / challenges.length) * 100}%` }}
-          />
-        </div>
+      {/* 📋 LISTE DES DÉFIS - Format carte simple */}
+      <div className="grid gap-4">
+        <h3 className="text-lg font-bold text-white flex items-center gap-2 px-1">
+          <Target className="w-5 h-5 text-purple-400" />
+          Mes {challenges.length} défis à relever
+        </h3>
+        
+        {challenges.map((challenge, idx) => {
+          const isDone = completedTodayIds.includes(challenge.id);
+          const isWaiting = pendingIds.includes(challenge.id);
+          const isCurrent = idx === currentStep;
+          
+          return (
+            <div
+              key={challenge.id}
+              onClick={() => setCurrentStep(idx)}
+              className={`
+                relative rounded-2xl p-4 cursor-pointer transition-all duration-300
+                ${isDone 
+                  ? 'bg-emerald-500/20 border-2 border-emerald-500/50' 
+                  : isWaiting
+                    ? 'bg-amber-500/20 border-2 border-amber-500/50'
+                    : isCurrent
+                      ? 'bg-purple-500/20 border-2 border-purple-500/50 ring-2 ring-purple-400/30'
+                      : 'bg-slate-800/50 border-2 border-slate-700/50 hover:border-slate-600'
+                }
+              `}
+            >
+              <div className="flex items-center gap-4">
+                {/* Icône du défi */}
+                <div className={`
+                  w-14 h-14 rounded-xl flex items-center justify-center text-2xl
+                  ${isDone 
+                    ? 'bg-emerald-500 text-white' 
+                    : isWaiting
+                      ? 'bg-amber-500'
+                      : 'bg-slate-700'
+                  }
+                `}>
+                  {isDone ? (
+                    <CheckCircle2 className="w-7 h-7 text-white" />
+                  ) : isWaiting ? (
+                    <Clock className="w-6 h-6 text-white animate-pulse" />
+                  ) : (
+                    <span>{challenge.emoji}</span>
+                  )}
+                </div>
+                
+                {/* Contenu du défi */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className={`
+                      text-xs font-bold px-2 py-0.5 rounded-full
+                      ${challenge.type === 'vertu' ? 'bg-purple-500/30 text-purple-300' : 'bg-cyan-500/30 text-cyan-300'}
+                    `}>
+                      {challenge.type === 'vertu' ? '☯️ Vertu' : '🥋 Technique'}
+                    </span>
+                    {challenge.needs_parent_validation && (
+                      <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-pink-500/30 text-pink-300">
+                        👨‍👩‍👧 Parent
+                      </span>
+                    )}
+                  </div>
+                  <h4 className={`font-bold text-base ${isDone ? 'text-emerald-300' : 'text-white'}`}>
+                    {challenge.title}
+                  </h4>
+                  <p className="text-slate-400 text-sm line-clamp-1">
+                    {challenge.description}
+                  </p>
+                </div>
+                
+                {/* Points XP */}
+                <div className="text-center">
+                  <div className={`
+                    px-3 py-2 rounded-xl font-black
+                    ${isDone 
+                      ? 'bg-emerald-500/30 text-emerald-300' 
+                      : 'bg-slate-700/50 text-amber-300'
+                    }
+                  `}>
+                    <span className="text-lg">+{challenge.points}</span>
+                    <p className="text-xs opacity-70">XP</p>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Statut du défi */}
+              {isDone && (
+                <div className="absolute top-2 right-2 bg-emerald-500 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center gap-1">
+                  <CheckCircle2 className="w-3 h-3" />
+                  Validé !
+                </div>
+              )}
+              {isWaiting && (
+                <div className="absolute top-2 right-2 bg-amber-500 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center gap-1 animate-pulse">
+                  <Clock className="w-3 h-3" />
+                  En attente
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
 
-        {/* Points de la timeline */}
-        <div className="flex justify-between items-start relative z-10 px-4">
-          {challenges.map((challenge, idx) => {
-            const isDone = completedTodayIds.includes(challenge.id);
-            const isWaiting = pendingIds.includes(challenge.id);
-            const isCurrent = idx === currentStep;
+      {/* 🎮 CARTE DU DÉFI SÉLECTIONNÉ - Pour validation */}
+      {currentChallenge && !completedTodayIds.includes(currentChallenge.id) && !pendingIds.includes(currentChallenge.id) && (
+        <div className={`
+          relative overflow-hidden rounded-3xl p-6 shadow-2xl
+          bg-gradient-to-br ${currentChallenge.color}
+        `}>
             
             return (
               <button
