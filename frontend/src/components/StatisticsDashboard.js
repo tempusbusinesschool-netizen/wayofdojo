@@ -957,9 +957,9 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                       {/* Version DESKTOP - rectangle avec gradient et personnages */}
                       <div className="hidden sm:block relative overflow-hidden bg-gradient-to-r from-violet-600 via-blue-600 to-cyan-500 rounded-2xl p-4 md:p-6 shadow-2xl border-2 border-orange-400/60">
                         
-                        {/* Maître Tanaka en haut à gauche - UNIQUEMENT pour mode enfant */}
+                        {/* Maître Tanaka en haut à gauche - UNIQUEMENT pour mode enfant - PLUS GROS */}
                         {visitorMode === 'enfant' && (
-                          <div className="absolute top-2 left-2 z-30">
+                          <div className="absolute top-4 left-4 md:left-8 z-30">
                             <div className="relative group cursor-pointer" onClick={() => {
                               const tanakaBtn = document.querySelector('[data-testid="maitre-tanaka-button"]');
                               if (tanakaBtn) tanakaBtn.click();
@@ -967,26 +967,26 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                               {/* Cercle lumineux animé derrière */}
                               <div className="absolute inset-0 bg-amber-400 rounded-full animate-ping opacity-30"></div>
                               
-                              {/* Image de Tanaka */}
-                              <div className="relative w-16 h-16 lg:w-20 lg:h-20 rounded-full overflow-hidden border-3 border-amber-400 shadow-xl shadow-amber-500/50 transform group-hover:scale-110 transition-transform duration-300">
+                              {/* Image de Tanaka - PLUS GRANDE */}
+                              <div className="relative w-24 h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 rounded-full overflow-hidden border-4 border-amber-400 shadow-2xl shadow-amber-500/50 transform group-hover:scale-110 transition-transform duration-300">
                                 <img 
                                   src="/images/tanaka/portrait.png" 
                                   alt="Maître Tanaka" 
                                   className="w-full h-full object-cover"
                                   onError={(e) => {
                                     e.target.style.display = 'none';
-                                    e.target.parentElement.innerHTML = '<div class="w-full h-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-4xl">🥋</div>';
+                                    e.target.parentElement.innerHTML = '<div class="w-full h-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-5xl">🥋</div>';
                                   }}
                                 />
                               </div>
                               
-                              {/* Bulle de dialogue */}
-                              <div className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] px-2 py-0.5 rounded-full font-bold animate-bounce shadow-lg whitespace-nowrap">
+                              {/* Bulle de dialogue - Plus grande */}
+                              <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-3 py-1 rounded-full font-bold animate-bounce shadow-lg whitespace-nowrap">
                                 Parle-moi !
                               </div>
                               
-                              {/* Nom */}
-                              <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 bg-slate-900/80 backdrop-blur-sm text-amber-300 text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap">
+                              {/* Nom - Plus visible */}
+                              <div className="absolute -bottom-5 left-1/2 transform -translate-x-1/2 bg-slate-900/90 backdrop-blur-sm text-amber-300 text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap border border-amber-500/30">
                                 Maître Tanaka
                               </div>
                             </div>
