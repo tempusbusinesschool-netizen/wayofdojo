@@ -441,53 +441,6 @@ const ProgressionTunnel = ({
           relative overflow-hidden rounded-3xl p-6 shadow-2xl
           bg-gradient-to-br ${currentChallenge.color}
         `}>
-            
-            return (
-              <button
-                key={challenge.id}
-                onClick={() => setCurrentStep(idx)}
-                className={`
-                  flex flex-col items-center gap-1 transition-all duration-300
-                  ${isCurrent ? 'scale-110' : 'opacity-70 hover:opacity-100'}
-                `}
-              >
-                <div className={`
-                  w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center
-                  border-4 transition-all duration-300 shadow-lg
-                  ${isDone 
-                    ? 'bg-gradient-to-br from-emerald-500 to-green-600 border-emerald-400' 
-                    : isWaiting
-                    ? 'bg-gradient-to-br from-amber-500 to-orange-600 border-amber-400 animate-pulse'
-                    : isCurrent
-                    ? `bg-gradient-to-br ${challenge.color} border-white`
-                    : 'bg-slate-700 border-slate-600'
-                  }
-                `}>
-                  {isDone ? (
-                    <CheckCircle2 className="w-7 h-7 text-white" />
-                  ) : isWaiting ? (
-                    <Clock className="w-7 h-7 text-white animate-spin" />
-                  ) : (
-                    <span className="text-2xl">{challenge.emoji}</span>
-                  )}
-                </div>
-                <span className={`text-xs font-medium text-center max-w-16 truncate
-                  ${isDone ? 'text-emerald-400' : isWaiting ? 'text-amber-400' : 'text-slate-400'}
-                `}>
-                  {challenge.title.length > 10 ? challenge.title.slice(0, 10) + '...' : challenge.title}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-      </div>
-
-      {/* Carte du défi actuel */}
-      {currentChallenge && (
-        <div className={`
-          relative overflow-hidden rounded-3xl p-6 shadow-2xl
-          bg-gradient-to-br ${currentChallenge.color}
-        `}>
           {/* Fond décoratif */}
           <div className="absolute top-0 right-0 text-[150px] opacity-10 font-bold leading-none">
             {currentChallenge.kanji || currentChallenge.emoji}
