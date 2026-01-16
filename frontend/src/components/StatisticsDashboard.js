@@ -1961,6 +1961,17 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         }}
         userName={userName}
       />
+      
+      {/* Profile Onboarding - Formulaire d'inscription étape 1 */}
+      <ProfileOnboarding
+        isOpen={showProfileOnboarding}
+        onClose={() => setShowProfileOnboarding(false)}
+        onComplete={handleProfileOnboardingComplete}
+        userName={displayUserName}
+        currentAvatar={userProfile.avatar}
+        currentAnimal={userProfile.guardianAnimal}
+        currentObjective={userProfile.objective}
+      />
     </>
   );
 }
