@@ -2161,6 +2161,56 @@ async def get_user_symbolic_role(user: dict = Depends(require_auth)):
 
 
 # ═══════════════════════════════════════════════════════════════════════════════════
+# USER PROFILE ENDPOINTS (Avatar, Animal Gardien, Objectif)
+# ═══════════════════════════════════════════════════════════════════════════════════
+
+class UserProfileUpdate(BaseModel):
+    avatar: Optional[str] = None
+    guardian_animal: Optional[str] = None
+    objective: Optional[str] = None
+
+@api_router.put("/auth/profile")
+async def update_user_profile(data: UserProfileUpdate, user: dict = Depends(require_auth)):
+    """Mettre à jour le profil utilisateur (avatar, animal gardien, objectif)"""
+    update_data = {}
+    
+    if data.avatar:
+        update_data["profile_avatar"] = data.avatar
+    if data.guardian_animal:
+        update_data["guardian_animal"] = data.guardian_animal
+    if data.objective:
+        update_data["personal_objective"] = data.objective
+    
+    if update_data:
+        update_data["profile_updated_at"] = datetime.now(timezone.utc).isoformat()
+        await db.users.update_one(
+            {"id": user["id"]},
+            {"$set": update_data}
+        )
+        logger.info(f"User {user['id']} updated profile: {list(update_data.keys())}")
+    
+    return {
+        "success": True,
+        "message": "Profil mis à jour avec succès !",
+        "profile": {
+            "avatar": data.avatar or user.get("profile_avatar"),
+            "guardian_animal": data.guardian_animal or user.get("guardian_animal"),
+            "objective": data.objective or user.get("personal_objective")
+        }
+    }
+
+@api_router.get("/auth/profile")
+async def get_user_profile(user: dict = Depends(require_auth)):
+    """Récupérer le profil utilisateur"""
+    return {
+        "avatar": user.get("profile_avatar"),
+        "guardian_animal": user.get("guardian_animal"),
+        "objective": user.get("personal_objective"),
+        "profile_updated_at": user.get("profile_updated_at")
+    }
+
+
+# ═══════════════════════════════════════════════════════════════════════════════════
 # PARCOURS / TIMELINE ENDPOINTS
 # ═══════════════════════════════════════════════════════════════════════════════════
 
