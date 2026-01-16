@@ -250,6 +250,12 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
       'trophees': 6     // Étape 6: Maîtrise -> Voir mes trophées
     };
     
+    // Si c'est l'étape 1 (profil) et qu'elle n'est pas complétée, ouvrir le formulaire d'onboarding
+    if (target === 'profil' && !journeyCompletedSteps.includes(1)) {
+      setShowProfileOnboarding(true);
+      return;
+    }
+    
     const stepId = stepMap[target];
     if (stepId && !journeyCompletedSteps.includes(stepId)) {
       const newCompleted = [...journeyCompletedSteps, stepId];
