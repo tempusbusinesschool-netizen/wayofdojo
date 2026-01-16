@@ -205,6 +205,10 @@ const TechniquesByKyuCards = ({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-4xl max-h-[90vh] bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-2 border-cyan-500/30 p-0 overflow-hidden" data-testid="techniques-kyu-dialog">
+        <VisuallyHidden>
+          <DialogTitle>Programme Technique - Tous les Grades</DialogTitle>
+          <DialogDescription>Découvrez les techniques d'Aïkido organisées par niveau de ceinture</DialogDescription>
+        </VisuallyHidden>
         
         {/* 🥋 MAÎTRE TANAKA - Guide animé */}
         <div className="bg-gradient-to-r from-slate-800 to-slate-700 p-3 border-b border-cyan-500/30">
