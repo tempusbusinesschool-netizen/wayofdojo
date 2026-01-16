@@ -237,10 +237,10 @@ const MessagerDuKi = ({ userName, onComplete, onExit, tanakaSpeak }) => {
       if (distance < 35) {
         setBalance(prev => Math.max(0, prev - 15));
         setObstacles(current => current.filter(o => o.id !== ob.id));
-        tanakaSpeak("Attention ! Tu as touché un obstacle. Reste calme...");
+        speakTanaka(TANAKA_GAME_MESSAGES.messager_obstacle);
       }
     });
-  }, [position, obstacles, gameState, tanakaSpeak]);
+  }, [position, obstacles, gameState, speakTanaka]);
 
   // Contrôles clavier
   useEffect(() => {
