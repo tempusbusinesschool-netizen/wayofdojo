@@ -39,7 +39,7 @@ const TANAKA_AUDIO = {
   streak_3: '/audio/tanaka/streak_3.mp3',
   streak_7: '/audio/tanaka/streak_7.mp3',
   streak_14: '/audio/tanaka/streak_14.mp3',
-  streak_30: '/audio/tanaka/streak_30.mp3',
+  streak_14: '/audio/tanaka/streak_14.mp3',
   
   // Progress
   xp_gained: '/audio/tanaka/xp_gained.mp3',
@@ -131,7 +131,7 @@ const BELT_AUDIO_MAP = {
 
 // Streak thresholds
 const getStreakAudio = (days) => {
-  if (days >= 30) return 'streak_30';
+  if (days >= 14) return 'streak_14';
   if (days >= 14) return 'streak_14';
   if (days >= 7) return 'streak_7';
   if (days >= 3) return 'streak_3';

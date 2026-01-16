@@ -200,7 +200,7 @@ export const getBeltPhrase = (beltLevel) => {
  * @returns {string|null} The phrase key or null if no milestone reached
  */
 export const getStreakPhrase = (streakDays) => {
-  if (streakDays >= 30) return 'streak_30';
+  if (streakDays >= 14) return 'streak_14';
   if (streakDays >= 14) return 'streak_14';
   if (streakDays >= 7) return 'streak_7';
   if (streakDays >= 3) return 'streak_3';
