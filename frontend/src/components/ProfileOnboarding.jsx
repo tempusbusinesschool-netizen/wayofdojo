@@ -188,11 +188,66 @@ const ProfileOnboarding = ({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-2 border-emerald-500/30 p-0 overflow-hidden">
+        
+        {/* 🥋 MAÎTRE TANAKA - Guide dynamique */}
+        <div className="bg-gradient-to-r from-slate-800 to-slate-700 p-3 sm:p-4 border-b border-emerald-500/30">
+          <div className="flex items-start gap-3 sm:gap-4">
+            {/* Avatar de Tanaka */}
+            <motion.div 
+              className="relative flex-shrink-0"
+              animate={{ 
+                y: [0, -3, 0],
+              }}
+              transition={{ 
+                duration: 2, 
+                repeat: Infinity, 
+                ease: "easeInOut" 
+              }}
+            >
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden border-3 border-emerald-400 shadow-lg shadow-emerald-500/30">
+                <img 
+                  src={TANAKA_IMAGE} 
+                  alt="Maître Tanaka"
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%2310B981" width="100" height="100"/><text x="50" y="60" text-anchor="middle" font-size="40">🥋</text></svg>';
+                  }}
+                />
+              </div>
+              {/* Badge parlant */}
+              <motion.div 
+                className="absolute -bottom-1 -right-1 bg-emerald-500 rounded-full p-1"
+                animate={{ scale: [1, 1.2, 1] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
+              >
+                <span className="text-xs">💬</span>
+              </motion.div>
+            </motion.div>
+            
+            {/* Bulle de dialogue de Tanaka */}
+            <div className="flex-1 relative">
+              <div className="absolute -left-2 top-3 w-0 h-0 border-t-8 border-t-transparent border-r-8 border-r-emerald-500/20 border-b-8 border-b-transparent"></div>
+              <motion.div 
+                key={step}
+                initial={{ opacity: 0, x: 10 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="bg-emerald-500/20 border border-emerald-500/30 rounded-xl p-3 sm:p-4"
+              >
+                <p className="text-white/90 text-sm sm:text-base font-medium">
+                  {tanakaMessages[step]}
+                </p>
+                <p className="text-emerald-400 text-xs mt-1 font-semibold">— Maître Tanaka</p>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+
         {/* Header avec progression */}
-        <div className="bg-gradient-to-r from-emerald-600 to-teal-600 p-4 sm:p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
-              <Sparkles className="w-6 h-6" />
+        <div className="bg-gradient-to-r from-emerald-600 to-teal-600 p-3 sm:p-4">
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
+              <Sparkles className="w-5 h-5" />
               Créer mon Profil Ninja
             </h2>
             <span className="text-emerald-200 text-sm">Étape {step}/3</span>
