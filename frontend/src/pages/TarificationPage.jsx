@@ -499,9 +499,9 @@ const TarificationPage = ({ onBack, onSelectPlan, user, token, onLoginRequired }
                 <ChevronRight className="w-5 h-5 transform group-open:rotate-90 transition-transform" />
               </summary>
               <p className="text-slate-400 mt-4">
-                <strong>Utilisateur unique</strong> : Profitez de 30 jours gratuits. Après cette période, 
+                <strong>Utilisateur unique</strong> : Profitez de 7 jours gratuits. Après cette période, 
                 choisissez entre l'abonnement mensuel (5,99€/mois) ou annuel (39,90€/an).<br/><br/>
-                <strong>Club</strong> : Essayez gratuitement pendant 30 jours. L'engagement de 12 mois 
+                <strong>Club</strong> : Essayez gratuitement pendant 7 jours. L'engagement de 12 mois 
                 démarre après validation.
               </p>
             </details>
