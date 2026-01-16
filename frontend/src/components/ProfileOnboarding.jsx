@@ -414,24 +414,24 @@ const ProfileOnboarding = ({
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
-                className="space-y-4"
+                className="space-y-2"
               >
-                <div className="text-center mb-6">
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-violet-500/20 mb-3">
-                    <Target className="w-8 h-8 text-violet-400" />
+                <div className="text-center mb-2">
+                  <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-violet-500/20 mb-2">
+                    <Target className="w-5 h-5 text-violet-400" />
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-2">Définis ton Objectif</h3>
-                  <p className="text-slate-400 text-sm">Quel est ton rêve en Aïkido ? Écris-le ici !</p>
+                  <h3 className="text-base font-bold text-white mb-1">Définis ton Objectif</h3>
+                  <p className="text-slate-400 text-xs">Quel est ton rêve en Aïkido ?</p>
                 </div>
 
                 {/* Suggestions rapides */}
-                <div className="flex flex-wrap gap-2 mb-4">
+                <div className="flex flex-wrap gap-1.5 mb-2">
                   {suggestedObjectives.map((suggestion, idx) => (
                     <button
                       key={idx}
                       onClick={() => setObjective(suggestion)}
                       className={`
-                        px-3 py-1.5 rounded-full text-xs transition-all
+                        px-2 py-1 rounded-full text-[10px] transition-all
                         ${objective === suggestion 
                           ? 'bg-violet-500 text-white' 
                           : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
@@ -445,40 +445,40 @@ const ProfileOnboarding = ({
 
                 {/* Champ texte pour objectif personnalisé */}
                 <div>
-                  <label className="text-white text-sm font-medium mb-2 block">
+                  <label className="text-white text-xs font-medium mb-1 block">
                     Ou écris ton propre objectif :
                   </label>
                   <Textarea
                     value={objective}
                     onChange={(e) => setObjective(e.target.value)}
-                    placeholder="Ex: Je veux devenir ceinture noire et aider les autres à apprendre..."
-                    className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-500 min-h-[100px]"
+                    placeholder="Ex: Je veux devenir ceinture noire..."
+                    className="bg-slate-700 border-slate-600 text-white placeholder:text-slate-500 min-h-[60px] text-sm"
                     maxLength={200}
                   />
-                  <p className="text-slate-500 text-xs mt-1 text-right">{objective.length}/200</p>
+                  <p className="text-slate-500 text-[10px] mt-0.5 text-right">{objective.length}/200</p>
                 </div>
 
-                {/* Récapitulatif */}
+                {/* Récapitulatif (compact) */}
                 {objective && (
                   <motion.div
-                    initial={{ opacity: 0, y: 10 }}
+                    initial={{ opacity: 0, y: 5 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="mt-4 p-4 rounded-xl bg-gradient-to-r from-emerald-500/20 to-teal-500/20 border border-emerald-500/30"
+                    className="mt-2 p-2 rounded-lg bg-gradient-to-r from-emerald-500/20 to-teal-500/20 border border-emerald-500/30"
                   >
-                    <h4 className="text-emerald-400 font-bold text-sm mb-3">📋 Récapitulatif de ton profil</h4>
-                    <div className="flex items-center gap-4">
+                    <h4 className="text-emerald-400 font-bold text-xs mb-2">📋 Récapitulatif</h4>
+                    <div className="flex items-center gap-2">
                       <div className="flex flex-col items-center">
-                        <span className="text-3xl">{avatars.find(a => a.id === selectedAvatar)?.emoji}</span>
-                        <span className="text-[10px] text-slate-400">Avatar</span>
+                        <span className="text-xl">{avatars.find(a => a.id === selectedAvatar)?.emoji}</span>
+                        <span className="text-[8px] text-slate-400">Avatar</span>
                       </div>
-                      <div className="text-2xl">+</div>
+                      <div className="text-sm">+</div>
                       <div className="flex flex-col items-center">
-                        <span className="text-3xl">{animals.find(a => a.id === selectedAnimal)?.emoji}</span>
-                        <span className="text-[10px] text-slate-400">Gardien</span>
+                        <span className="text-xl">{animals.find(a => a.id === selectedAnimal)?.emoji}</span>
+                        <span className="text-[8px] text-slate-400">Gardien</span>
                       </div>
-                      <div className="text-2xl">+</div>
-                      <div className="flex-1 bg-slate-800/50 rounded-lg p-2">
-                        <p className="text-white text-xs line-clamp-2">{objective}</p>
+                      <div className="text-sm">+</div>
+                      <div className="flex-1 bg-slate-800/50 rounded p-1.5">
+                        <p className="text-white text-[10px] line-clamp-2">{objective}</p>
                       </div>
                     </div>
                   </motion.div>
@@ -488,14 +488,15 @@ const ProfileOnboarding = ({
           </AnimatePresence>
         </div>
 
-        {/* Footer avec boutons de navigation */}
-        <div className="bg-slate-800/50 p-4 border-t border-slate-700 flex justify-between">
+        {/* Footer avec boutons de navigation (compact) */}
+        <div className="bg-slate-800/50 p-2 sm:p-3 border-t border-slate-700 flex justify-between">
           <Button
             variant="ghost"
+            size="sm"
             onClick={step === 1 ? onClose : handlePrev}
-            className="text-slate-400 hover:text-white"
+            className="text-slate-400 hover:text-white text-xs"
           >
-            <ChevronLeft className="w-4 h-4 mr-1" />
+            <ChevronLeft className="w-3 h-3 mr-1" />
             {step === 1 ? 'Annuler' : 'Retour'}
           </Button>
 
