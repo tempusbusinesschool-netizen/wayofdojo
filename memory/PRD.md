@@ -1,5 +1,8 @@
 # Aikido@Game - Product Requirements Document
 
+## Changelog
+- **2026-01-16**: Fixed infinite loop bug in Parent Dashboard (`ParentDashboard.jsx`) - Used `useRef` for stable token reference and added guards to prevent multiple API calls
+
 ## Nom de l'application
 **Aikido@Game** - Ne jamais traduire ce nom
 
