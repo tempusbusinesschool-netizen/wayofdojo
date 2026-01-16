@@ -271,6 +271,15 @@ const JourneyPath = ({
       return;
     }
     
+    // Pour l'étape 2 (techniques), ouvrir directement les fiches par Kyu
+    if (selectedStep && selectedStep.id === 2 && action.target === 'techniques') {
+      // Passer directement au parent - il ouvrira les fiches techniques
+      if (onNavigate && action.type === 'navigate') {
+        onNavigate(action.target);
+      }
+      return;
+    }
+    
     // Si une étape est sélectionnée et non complétée, lancer la transition
     if (selectedStep && !isStepCompleted(selectedStep.id)) {
       // Sauvegarder l'action pour l'exécuter après la transition
