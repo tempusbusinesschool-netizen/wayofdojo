@@ -1,7 +1,11 @@
 # Aikido@Game - Product Requirements Document
 
 ## Changelog
-- **2026-01-16**: Fixed infinite loop bug in Parent Dashboard (`ParentDashboard.jsx`) - Used `useRef` for stable token reference and added guards to prevent multiple API calls
+- **2026-01-16 (Session 2)**: 
+  - ✅ Fixed infinite loop bug in Parent Dashboard (`ParentDashboard.jsx`) - Used `useRef` for stable token reference
+  - ✅ Implemented technique mastery level selector (4 levels: Non commencé, En apprentissage, Pratiquée, Maîtrisée)
+  - ✅ Refactored "Défis du Jour" section for clarity (new gradient header, progress bar, clearer challenge list)
+  - ✅ Added TTS Maître Tanaka imports to VirtualDojo games (ReflexePacifique, SenseiInvisible)
 
 ## Nom de l'application
 **Aikido@Game** - Ne jamais traduire ce nom
