@@ -360,7 +360,7 @@ const CGVPage = ({ onBack }) => {
                 <strong>11.1.</strong> Le Prestataire ne pourra être tenu responsable de l'inexécution de ses obligations en cas de survenance d'un événement de force majeure tel que défini par l'article 1218 du Code civil, notamment : catastrophe naturelle, pandémie, guerre, grève, panne généralisée d'internet, cyberattaque majeure.
               </p>
               <p>
-                <strong>11.2.</strong> En cas de force majeure d'une durée supérieure à 30 jours, chaque partie pourra résilier le contrat sans indemnité, le Client étant remboursé au prorata des services non fournis.
+                <strong>11.2.</strong> En cas de force majeure d'une durée supérieure à 7 jours, chaque partie pourra résilier le contrat sans indemnité, le Client étant remboursé au prorata des services non fournis.
               </p>
             </div>
           </section>
@@ -380,7 +380,7 @@ const CGVPage = ({ onBack }) => {
                 <p>⏱️ Délai de réponse : 48 heures ouvrées</p>
               </div>
               <p>
-                <strong>12.2.</strong> Toute réclamation doit être formulée dans un délai de 30 jours suivant le fait générateur.
+                <strong>12.2.</strong> Toute réclamation doit être formulée dans un délai de 7 jours suivant le fait générateur.
               </p>
             </div>
           </section>
@@ -431,7 +431,7 @@ const CGVPage = ({ onBack }) => {
                 <strong>15.1.</strong> Le Prestataire se réserve le droit de modifier les présentes CGV à tout moment.
               </p>
               <p>
-                <strong>15.2.</strong> Les Clients seront informés de toute modification substantielle par email ou notification dans l'application, au moins 30 jours avant leur entrée en vigueur.
+                <strong>15.2.</strong> Les Clients seront informés de toute modification substantielle par email ou notification dans l'application, au moins 7 jours avant leur entrée en vigueur.
               </p>
               <p>
                 <strong>15.3.</strong> La poursuite de l'utilisation du service après l'entrée en vigueur des nouvelles CGV vaut acceptation de celles-ci.
