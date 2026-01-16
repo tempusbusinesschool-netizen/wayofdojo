@@ -218,7 +218,7 @@ const TarificationPage = ({ onBack, onSelectPlan, user, token, onLoginRequired }
             {/* Trial */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 mb-6">
               <Clock className="w-4 h-4 text-white" />
-              <span className="text-white font-semibold">30 jours gratuits</span>
+              <span className="text-white font-semibold">7 jours gratuits</span>
             </div>
 
             {/* Features */}
@@ -262,7 +262,7 @@ const TarificationPage = ({ onBack, onSelectPlan, user, token, onLoginRequired }
                 </>
               ) : (
                 <>
-                  Commencer 30 jours gratuits
+                  Commencer 7 jours gratuits
                   <ChevronRight className="w-5 h-5 ml-2" />
                 </>
               )}
@@ -346,7 +346,7 @@ const TarificationPage = ({ onBack, onSelectPlan, user, token, onLoginRequired }
             {/* Trial */}
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 mb-6">
               <Clock className="w-4 h-4 text-white" />
-              <span className="text-white font-semibold">30 jours gratuits</span>
+              <span className="text-white font-semibold">7 jours gratuits</span>
             </div>
 
             {/* Features */}
@@ -387,7 +387,7 @@ const TarificationPage = ({ onBack, onSelectPlan, user, token, onLoginRequired }
                 </>
               ) : (
                 <>
-                  Essayer 30 jours gratuits
+                  Essayer 7 jours gratuits
                   <ChevronRight className="w-5 h-5 ml-2" />
                 </>
               )}
