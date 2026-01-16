@@ -158,13 +158,19 @@ const ParcoursduSouffle = ({ userName, onComplete, onExit, tanakaSpeak }) => {
     setCombo(0);
     setPerfectBreaths(0);
     setBreathPhase('idle');
-    tanakaSpeak("Suis le rythme de respiration. Flèche HAUT pour inspirer, ESPACE pour retenir, Flèche BAS pour expirer.");
+    speakTanaka(TANAKA_GAME_MESSAGES.souffle_start);
   };
 
   const restartGame = () => {
+    stopSpeaking();
     setGameState('intro');
     setPosition(0);
     setScore(0);
+  };
+  
+  const handleExit = () => {
+    stopSpeaking();
+    onExit();
   };
 
   // Couleur de la phase de respiration cible
