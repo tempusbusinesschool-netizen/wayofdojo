@@ -207,13 +207,21 @@ const MessagerDuKi = ({ userName, onComplete, onExit, tanakaSpeak }) => {
       setGameState('success');
       const finalScore = Math.round(balance * level * 10);
       setScore(finalScore);
-      tanakaSpeak(`Magnifique ${userName || 'ninja'} ! Tu as traversé le dojo avec calme et maîtrise ! Ton Ki est puissant !`);
+      speakTanaka(
+        TANAKA_GAME_MESSAGES.messager_success,
+        `Magnifique ${userName || 'ninja'} ! Tu as traversé le dojo avec calme et maîtrise ! Ton Ki est puissant !`
+      );
     }
     
     // Défaite si équilibre à 0
     if (balance <= 0) {
       setGameState('fail');
-      tanakaSpeak(`Tu as perdu l'équilibre, ${userName || 'ninja'}. Rappelle-toi : la patience est la clé. Respire et réessaie !`);
+      speakTanaka(
+        TANAKA_GAME_MESSAGES.messager_fail,
+        `Tu as perdu l'équilibre, ${userName || 'ninja'}. Rappelle-toi : la patience est la clé. Respire et réessaie !`
+      );
+    }
+  }, [position.y, balance, gameState, level, userName, speakTanaka]);
     }
   }, [position.y, balance, gameState, level, userName, tanakaSpeak]);
 
