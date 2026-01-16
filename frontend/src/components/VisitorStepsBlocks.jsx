@@ -772,7 +772,7 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
               border-l-4 ${block.accentColor}
               bg-gradient-to-br from-slate-800 to-slate-900 shadow-lg 
               hover:shadow-xl hover:from-slate-700 hover:to-slate-800 cursor-pointer
-              min-h-[130px] sm:min-h-[160px]
+              min-h-[160px] sm:min-h-[190px]
             `}
           >
             {/* GROS NUMÉRO en haut à gauche */}
