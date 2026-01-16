@@ -171,6 +171,9 @@ Application web gamifiée pour le club d'Aikido permettant aux pratiquants de su
 
 ### P1 - Priorité haute
 - [x] ~~Étape 2 "Apprends" avec fiches techniques par Kyu~~ ✅ FAIT
+- [x] ~~Étape 3 "Entraîne-toi" - Dojo Virtuel avec 10 mini-jeux~~ ✅ FAIT (4 jeux complets)
+- [ ] **Compléter les 6 jeux restants** du Dojo Virtuel (GardienEspace, MiroirHarmonie, CheminEquilibre, MemorySensei, RythmeDuDojo, QueteVertus)
+- [ ] Intégrer la **voix TTS de Tanaka** (ElevenLabs) dans les jeux
 - [ ] Bouton de téléchargement du PDF Shodan
 - [ ] Améliorer l'ergonomie PC du parcours guidé
 - [ ] Configurer clés Stripe live
@@ -180,3 +183,5 @@ Application web gamifiée pour le club d'Aikido permettant aux pratiquants de su
 - [ ] Migration MongoDB → PostgreSQL
 - [ ] Créer blocs "Techniques" et "Défis collectifs"
 - [ ] 2FA pour Super Admin
+- [ ] Ajouter des sons/effets audio aux mini-jeux
+- [ ] Système de badges/trophées pour les jeux complétés
