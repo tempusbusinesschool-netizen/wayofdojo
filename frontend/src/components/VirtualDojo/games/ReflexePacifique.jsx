@@ -4,12 +4,15 @@
  * Serious game d'intelligence émotionnelle
  * Face à des situations imprévues, l'enfant doit choisir
  * la réponse la plus sage (pas de réaction automatique)
+ * 
+ * AVEC VOIX TTS DE MAÎTRE TANAKA
  */
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Brain, X, RotateCcw, Clock, CheckCircle2, XCircle } from 'lucide-react';
+import { Brain, X, RotateCcw, Clock, CheckCircle2, XCircle, Volume2, VolumeX } from 'lucide-react';
+import { useTanakaVoice, TANAKA_GAME_MESSAGES } from '@/hooks/useTanakaVoice';
 
 // Scénarios de situations
 const SCENARIOS = [
