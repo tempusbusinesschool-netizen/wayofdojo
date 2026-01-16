@@ -178,6 +178,9 @@ const TechniquesByKyuCards = ({
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogContent className="max-w-4xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-2 border-cyan-500/30 p-8">
+          <VisuallyHidden>
+            <DialogTitle>Chargement des techniques</DialogTitle>
+          </VisuallyHidden>
           <div className="flex flex-col items-center justify-center py-12">
             <div className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mb-4"></div>
             <p className="text-white text-lg">Chargement des techniques...</p>
@@ -191,6 +194,9 @@ const TechniquesByKyuCards = ({
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogContent className="max-w-md bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-2 border-red-500/30 p-6">
+          <VisuallyHidden>
+            <DialogTitle>Erreur de chargement</DialogTitle>
+          </VisuallyHidden>
           <div className="text-center">
             <p className="text-red-400 text-lg mb-4">{error}</p>
             <Button onClick={onClose} variant="outline" className="text-white border-white/30">
