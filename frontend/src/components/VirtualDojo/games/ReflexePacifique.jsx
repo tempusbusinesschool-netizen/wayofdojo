@@ -146,25 +146,38 @@ const ReflexePacifique = ({ userName, onComplete, onExit, tanakaSpeak }) => {
     }
   }, [currentScenarioIndex, scenarios.length, correctAnswers, userName, tanakaSpeak]);
 
-  // Timer
+  // Handler pour le timeout
+  const handleTimerExpired = useCallback(() => {
+    if (timeoutHandledRef.current) return;
+    timeoutHandledRef.current = true;
+    
+    tanakaSpeak("Le temps est écoulé ! En situation réelle, il faut parfois prendre des décisions rapidement, mais avec sagesse.");
+    setShowFeedback(true);
+    setSelectedOption(-1);
+    setTimeout(() => {
+      goToNextScenario();
+      timeoutHandledRef.current = false;
+    }, 3000);
+  }, [goToNextScenario, tanakaSpeak]);
+
+  // Timer - utilise setInterval au lieu de setState dans useEffect
   useEffect(() => {
     if (gameState !== 'playing' || showFeedback) return;
     
-    if (timeLeft <= 0) {
-      // Timeout inline pour éviter dépendance circulaire
-      tanakaSpeak("Le temps est écoulé ! En situation réelle, il faut parfois prendre des décisions rapidement, mais avec sagesse.");
-      setShowFeedback(true);
-      setSelectedOption(-1);
-      setTimeout(() => goToNextScenario(), 3000);
-      return;
-    }
-
-    const timer = setTimeout(() => {
-      setTimeLeft(prev => prev - 1);
+    const timer = setInterval(() => {
+      setTimeLeft(prev => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          // Appeler le handler de timeout dans le prochain tick
+          setTimeout(() => handleTimerExpired(), 0);
+          return 0;
+        }
+        return prev - 1;
+      });
     }, 1000);
 
-    return () => clearTimeout(timer);
-  }, [timeLeft, gameState, showFeedback, goToNextScenario, tanakaSpeak]);
+    return () => clearInterval(timer);
+  }, [gameState, showFeedback, handleTimerExpired]);
 
   const handleOptionSelect = (optionIndex) => {
     if (showFeedback) return;
