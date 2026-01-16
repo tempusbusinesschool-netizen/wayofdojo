@@ -568,7 +568,7 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
                 transition-all duration-300 overflow-hidden
                 bg-gradient-to-br ${block.gradient} shadow-lg ${block.shadowColor} 
                 border-2 border-white/20 hover:border-white/50 hover:scale-[1.02] cursor-pointer
-                min-h-[140px] sm:min-h-[180px]
+                min-h-[160px] sm:min-h-[200px]
               `}
             >
               {/* GROS NUMÉRO en haut à gauche */}
