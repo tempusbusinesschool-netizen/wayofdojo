@@ -56,6 +56,7 @@ const getTechniqueCategory = (technique) => {
  * - Maître Tanaka animé qui guide l'utilisateur avec messages personnalisés
  * - Progression séquentielle : techniques débloquées une par une
  * - Filtrage par catégorie (8 catégories d'Aïkido)
+ * - Sélecteur de niveau de maîtrise connecté au backend
  * - Visuels attractifs par niveau de ceinture
  */
 const TechniquesByKyuCards = ({ 
@@ -63,7 +64,10 @@ const TechniquesByKyuCards = ({
   onClose,
   userName = '',
   userKyu = '5e_kyu', // Kyu actuel de l'utilisateur
-  masteredTechniques = [] // Liste des IDs de techniques maîtrisées
+  masteredTechniques = [], // Liste des IDs de techniques maîtrisées
+  userId = null,
+  isAuthenticated = false,
+  onMasteryUpdate // Callback pour mettre à jour les stats parentes
 }) => {
   // État pour les données des Kyu depuis l'API
   const [kyuLevels, setKyuLevels] = useState([]);
@@ -75,6 +79,10 @@ const TechniquesByKyuCards = ({
   const [selectedTechnique, setSelectedTechnique] = useState(null);
   const [localMastered, setLocalMastered] = useState(masteredTechniques);
   const [selectedCategory, setSelectedCategory] = useState('all');
+  
+  // État pour les niveaux de maîtrise (technique_id -> mastery_level)
+  const [masteryLevels, setMasteryLevels] = useState({});
+  const [savingMastery, setSavingMastery] = useState(null);
   
   // État pour Tanaka
   const [tanakaMessage, setTanakaMessage] = useState('');
