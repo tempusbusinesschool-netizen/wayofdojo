@@ -4,12 +4,15 @@
  * Jeu audio-guidé
  * L'enfant ferme les yeux et suit les instructions vocales de Maître Tanaka
  * Développe l'attention, la confiance et la visualisation mentale
+ * 
+ * AVEC VOIX TTS DE MAÎTRE TANAKA
  */
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Volume2, X, RotateCcw, ArrowUp, ArrowDown, ArrowLeft, ArrowRight, Check } from 'lucide-react';
+import { Volume2, VolumeX, X, RotateCcw, ArrowUp, ArrowDown, ArrowLeft, ArrowRight, Check } from 'lucide-react';
+import { useTanakaVoice, TANAKA_GAME_MESSAGES } from '@/hooks/useTanakaVoice';
 
 // Instructions possibles
 const INSTRUCTIONS = [
