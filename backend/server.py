@@ -4373,7 +4373,7 @@ SUBSCRIPTION_PLANS = {
         "price": 4.50,
         "currency": "eur",
         "billing_period": "monthly",
-        "trial_days": 90,  # 3 mois d'essai gratuit
+        "trial_days": 7,  # 7 jours d'essai gratuit
         "commitment_months": 0,  # Sans engagement
         "description": "Parcours personnel de révision et de motivation",
         "cancellation_info": "Sans engagement, résiliable à tout moment",
@@ -4393,7 +4393,7 @@ SUBSCRIPTION_PLANS = {
         "price": 39.90,
         "currency": "eur",
         "billing_period": "yearly",
-        "trial_days": 90,  # 3 mois d'essai gratuit
+        "trial_days": 7,  # 7 jours d'essai gratuit
         "commitment_months": 12,  # 1 an
         "description": "Parcours personnel - Économisez 26%",
         "cancellation_info": "Résiliable à l'échéance annuelle",
@@ -4415,7 +4415,7 @@ SUBSCRIPTION_PLANS = {
         "price": 19.90,
         "currency": "eur",
         "billing_period": "monthly",
-        "trial_days": 10,  # 10 jours d'essai gratuit
+        "trial_days": 7,  # 7 jours d'essai gratuit
         "commitment_months": 12,  # Engagement 12 mois
         "max_members": 50,
         "description": "Licences illimitées + gestion adhérents",
@@ -4437,7 +4437,7 @@ SUBSCRIPTION_PLANS = {
         "price": 29.90,
         "currency": "eur",
         "billing_period": "monthly",
-        "trial_days": 10,  # 10 jours d'essai gratuit
+        "trial_days": 7,  # 7 jours d'essai gratuit
         "commitment_months": 12,  # Engagement 12 mois
         "min_members": 50,
         "max_members": 150,
@@ -4461,7 +4461,7 @@ SUBSCRIPTION_PLANS = {
         "price": 0.0,  # Sur devis
         "currency": "eur",
         "billing_period": "yearly",
-        "trial_days": 10,
+        "trial_days": 7,  # 7 jours d'essai gratuit
         "commitment_months": 12,
         "min_members": 150,
         "max_members": None,  # Illimité
