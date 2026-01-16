@@ -4,14 +4,21 @@
  * Jeu de respiration consciente
  * L'avatar avance uniquement si le joueur respire au bon rythme
  * Inspire par le nez, expire par la bouche
+ * 
+ * AVEC VOIX TTS DE MAÎTRE TANAKA
  */
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Wind, X, RotateCcw, ArrowUp } from 'lucide-react';
+import { Wind, X, RotateCcw, ArrowUp, Volume2, VolumeX } from 'lucide-react';
+import { useTanakaVoice, TANAKA_GAME_MESSAGES } from '@/hooks/useTanakaVoice';
 
 const ParcoursduSouffle = ({ userName, onComplete, onExit, tanakaSpeak }) => {
+  // Hook pour la voix TTS de Tanaka
+  const { speak, speaking, stopSpeaking } = useTanakaVoice();
+  const [voiceEnabled, setVoiceEnabled] = useState(true);
+  
   const [gameState, setGameState] = useState('intro'); // intro, playing, success
   const [score, setScore] = useState(0);
   const [position, setPosition] = useState(0); // 0-100 (progression)
@@ -23,6 +30,16 @@ const ParcoursduSouffle = ({ userName, onComplete, onExit, tanakaSpeak }) => {
   
   const breathTimerRef = useRef(null);
   const targetPhaseRef = useRef('inhale');
+  
+  // Fonction pour faire parler Tanaka avec TTS
+  const speakTanaka = useCallback((message, displayMessage = null) => {
+    if (tanakaSpeak) {
+      tanakaSpeak(displayMessage || message);
+    }
+    if (voiceEnabled) {
+      speak(message);
+    }
+  }, [voiceEnabled, speak, tanakaSpeak]);
 
   // Configuration des temps de respiration (en ms)
   const BREATH_CONFIG = {
