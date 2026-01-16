@@ -264,6 +264,18 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
       return;
     }
     
+    // Si c'est l'étape 2 (techniques), ouvrir les fiches par Kyu
+    if (target === 'techniques') {
+      setShowTechniquesCards(true);
+      // Marquer l'étape comme complétée si pas déjà fait
+      if (!journeyCompletedSteps.includes(2)) {
+        const newCompleted = [...journeyCompletedSteps, 2];
+        setJourneyCompletedSteps(newCompleted);
+        localStorage.setItem('aikido_journey_completed_steps', JSON.stringify(newCompleted));
+      }
+      return;
+    }
+    
     const stepId = stepMap[target];
     if (stepId && !journeyCompletedSteps.includes(stepId)) {
       const newCompleted = [...journeyCompletedSteps, stepId];
@@ -282,12 +294,6 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
       setAccordionOpen(prev => ({ ...prev, valeurs: true }));
       setTimeout(() => {
         const el = document.getElementById('section-valeurs');
-        if (el) el.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-    } else if (target === 'techniques') {
-      setAccordionOpen(prev => ({ ...prev, entrainement: true }));
-      setTimeout(() => {
-        const el = document.getElementById('section-entrainement');
         if (el) el.scrollIntoView({ behavior: 'smooth' });
       }, 100);
     } else if (target === 'ceintures') {
