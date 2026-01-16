@@ -524,7 +524,7 @@ const TarificationPage = ({ onBack, onSelectPlan, user, token, onLoginRequired }
               </summary>
               <p className="text-slate-400 mt-4">
                 <strong>Utilisateur unique (mensuel)</strong> : Résiliez à tout moment depuis votre tableau de bord.<br/><br/>
-                <strong>Club</strong> : Envoyez votre demande au moins 30 jours avant l'échéance annuelle 
+                <strong>Club</strong> : Envoyez votre demande au moins 7 jours avant l'échéance annuelle 
                 par email à contact@aikidoatgame.com.
               </p>
             </details>
