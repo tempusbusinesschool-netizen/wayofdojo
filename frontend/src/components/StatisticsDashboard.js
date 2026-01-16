@@ -295,6 +295,71 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
     }
   };
   
+  // Callback pour la complétion du formulaire d'onboarding (étape 1)
+  const handleProfileOnboardingComplete = async (profileData) => {
+    try {
+      // Sauvegarder le profil localement
+      const newProfile = {
+        avatar: profileData.avatar,
+        guardianAnimal: profileData.guardianAnimal,
+        objective: profileData.objective
+      };
+      setUserProfile(newProfile);
+      localStorage.setItem('aikido_user_profile', JSON.stringify(newProfile));
+      
+      // Sauvegarder en backend si l'utilisateur est connecté
+      if (isAuthenticated) {
+        try {
+          await axios.put(`${process.env.REACT_APP_BACKEND_URL}/api/auth/profile`, {
+            avatar: profileData.avatar,
+            guardian_animal: profileData.guardianAnimal,
+            objective: profileData.objective
+          });
+        } catch (apiError) {
+          console.error('Erreur API sauvegarde profil:', apiError);
+          // Continue même si l'API échoue - les données sont sauvegardées localement
+        }
+      }
+      
+      // Fermer le formulaire
+      setShowProfileOnboarding(false);
+      
+      // Marquer l'étape 1 comme complétée
+      if (!journeyCompletedSteps.includes(1)) {
+        const newCompleted = [...journeyCompletedSteps, 1];
+        setJourneyCompletedSteps(newCompleted);
+        localStorage.setItem('aikido_journey_completed_steps', JSON.stringify(newCompleted));
+      }
+      
+      // Afficher un message de succès
+      toast.success(`🎉 Profil créé ! Ton animal gardien ${getAnimalEmoji(profileData.guardianAnimal)} est maintenant avec toi !`);
+      
+      // Scroller vers la section profil
+      setTimeout(() => {
+        const el = document.getElementById('section-profil');
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
+      }, 300);
+      
+    } catch (error) {
+      console.error('Erreur lors de la création du profil:', error);
+      toast.error('Oups ! Une erreur est survenue. Réessaye !');
+    }
+  };
+  
+  // Helper pour obtenir l'emoji de l'animal
+  const getAnimalEmoji = (animalId) => {
+    const animals = {
+      'lion': '🦁',
+      'tiger': '🐯',
+      'turtle': '🐢',
+      'elephant': '🐘',
+      'panda': '🐼',
+      'owl': '🦉',
+      'eagle': '🦅'
+    };
+    return animals[animalId] || '🐾';
+  };
+  
   // États pour les accordéons
   const [accordionOpen, setAccordionOpen] = useState({
     progression: true,
