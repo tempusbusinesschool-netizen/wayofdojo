@@ -133,6 +133,9 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
   // État pour les fiches techniques par Kyu (étape 2)
   const [showTechniquesCards, setShowTechniquesCards] = useState(false);
   
+  // État pour le Dojo Virtuel (étape 3)
+  const [showVirtualDojo, setShowVirtualDojo] = useState(false);
+  
   // État pour les confettis de célébration
   const [showConfetti, setShowConfetti] = useState(false);
   
