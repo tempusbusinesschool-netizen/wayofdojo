@@ -254,12 +254,13 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
   const handleJourneyNavigate = (target) => {
     // Mapping des 6 étapes du nouveau parcours
     const stepMap = {
-      'profil': 1,      // Étape 1: Commence -> Créer mon profil
-      'techniques': 2,  // Étape 2: Apprends -> Voir les techniques
-      'defis': 3,       // Étape 3: Entraîne-toi -> Enregistrer une séance
-      'validation': 4,  // Étape 4: Valide -> Demander validation parentale
-      'ceintures': 5,   // Étape 5: Progresse -> Voir ma progression
-      'trophees': 6     // Étape 6: Maîtrise -> Voir mes trophées
+      'profil': 1,         // Étape 1: Commence -> Créer mon profil
+      'techniques': 2,     // Étape 2: Apprends -> Voir les techniques
+      'dojo_virtuel': 3,   // Étape 3: Entraîne-toi -> Dojo Virtuel
+      'defis': 3,          // Ancien target pour rétrocompatibilité
+      'validation': 4,     // Étape 4: Valide -> Demander validation parentale
+      'ceintures': 5,      // Étape 5: Progresse -> Voir ma progression
+      'trophees': 6        // Étape 6: Maîtrise -> Voir mes trophées
     };
     
     // Si c'est l'étape 1 (profil) et qu'elle n'est pas complétée, ouvrir le formulaire d'onboarding
@@ -274,6 +275,18 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
       // Marquer l'étape comme complétée si pas déjà fait
       if (!journeyCompletedSteps.includes(2)) {
         const newCompleted = [...journeyCompletedSteps, 2];
+        setJourneyCompletedSteps(newCompleted);
+        localStorage.setItem('aikido_journey_completed_steps', JSON.stringify(newCompleted));
+      }
+      return;
+    }
+    
+    // Si c'est l'étape 3 (dojo virtuel), ouvrir le Dojo Virtuel
+    if (target === 'dojo_virtuel' || target === 'defis') {
+      setShowVirtualDojo(true);
+      // Marquer l'étape comme complétée si pas déjà fait
+      if (!journeyCompletedSteps.includes(3)) {
+        const newCompleted = [...journeyCompletedSteps, 3];
         setJourneyCompletedSteps(newCompleted);
         localStorage.setItem('aikido_journey_completed_steps', JSON.stringify(newCompleted));
       }
