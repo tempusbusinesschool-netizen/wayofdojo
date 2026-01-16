@@ -277,7 +277,7 @@ const ParentDashboard = ({ onLogout }) => {
                     <Users className="w-12 h-12 text-slate-500 mx-auto mb-4" />
                     <p className="text-slate-400">Aucun enfant lié à votre compte</p>
                     <p className="text-sm text-slate-500 mt-2">
-                      Contactez l'administration du dojo pour lier le compte de votre enfant
+                      Contactez l&apos;administration du dojo pour lier le compte de votre enfant
                     </p>
                   </CardContent>
                 </Card>
