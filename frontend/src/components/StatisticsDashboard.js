@@ -23,6 +23,7 @@ import AppStepsNavigation from "./AppStepsNavigation";
 import AgeSelector from "./AgeSelector";
 import VisitorStepsBlocks from "./VisitorStepsBlocks";
 import JourneyPath from "./JourneyPath";
+import ProfileOnboarding from "./ProfileOnboarding";
 import { AIKIDO_BELTS, getBeltByPoints } from "@/constants/aikidoBelts";
 import { DEPLACEMENTS_DATA } from "@/constants";
 import { AIKIDO_CHARACTERS } from "@/constants/aikidoCharacters";
