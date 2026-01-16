@@ -102,7 +102,7 @@ const ParcoursduSouffle = ({ userName, onComplete, onExit, tanakaSpeak }) => {
       setScore(prev => prev + 10 + combo * 2);
       
       if (combo > 0 && combo % 5 === 0) {
-        tanakaSpeak(`Excellent ! ${combo} respirations parfaites d'affilée ! Continue ainsi !`);
+        speakTanaka(TANAKA_GAME_MESSAGES.souffle_combo, `Excellent ! ${combo} respirations parfaites d'affilée ! Continue ainsi !`);
       }
     } else if (action === 'exhale' && targetPhase === 'exhale') {
       setBreathPhase('exhale');
@@ -121,7 +121,7 @@ const ParcoursduSouffle = ({ userName, onComplete, onExit, tanakaSpeak }) => {
       setBreathPhase('wrong');
       setTimeout(() => setBreathPhase('idle'), 500);
     }
-  }, [gameState, combo, tanakaSpeak]);
+  }, [gameState, combo, speakTanaka]);
 
   // Vérifier la victoire
   useEffect(() => {
@@ -129,9 +129,9 @@ const ParcoursduSouffle = ({ userName, onComplete, onExit, tanakaSpeak }) => {
       setGameState('success');
       const finalScore = score + perfectBreaths * 50;
       setScore(finalScore);
-      tanakaSpeak(`Magnifique ${userName || 'ninja'} ! Tu as maîtrisé le parcours du souffle ! Ta respiration est celle d'un vrai aikidoka !`);
+      speakTanaka(TANAKA_GAME_MESSAGES.souffle_success, `Magnifique ${userName || 'ninja'} ! Tu as maîtrisé le parcours du souffle ! Ta respiration est celle d'un vrai aikidoka !`);
     }
-  }, [position, gameState, score, perfectBreaths, userName, tanakaSpeak]);
+  }, [position, gameState, score, perfectBreaths, userName, speakTanaka]);
 
   // Contrôles clavier
   useEffect(() => {
