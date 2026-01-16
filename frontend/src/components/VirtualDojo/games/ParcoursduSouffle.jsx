@@ -251,9 +251,20 @@ const ParcoursduSouffle = ({ userName, onComplete, onExit, tanakaSpeak }) => {
                 </motion.div>
               )}
             </div>
-            <Button variant="ghost" size="sm" onClick={onExit} className="text-slate-400">
-              <X className="w-4 h-4 mr-1" /> Quitter
-            </Button>
+            <div className="flex items-center gap-2">
+              {/* Bouton voix TTS */}
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => setVoiceEnabled(!voiceEnabled)}
+                className={voiceEnabled ? "text-cyan-400" : "text-slate-500"}
+              >
+                {voiceEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4" />}
+              </Button>
+              <Button variant="ghost" size="sm" onClick={handleExit} className="text-slate-400">
+                <X className="w-4 h-4 mr-1" /> Quitter
+              </Button>
+            </div>
           </div>
 
           {/* Indicateur de phase de respiration */}
