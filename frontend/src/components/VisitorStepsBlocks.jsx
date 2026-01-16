@@ -571,16 +571,21 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
                 min-h-[140px] sm:min-h-[180px]
               `}
             >
+              {/* GROS NUMÉRO en haut à gauche */}
+              <div className="absolute top-1 left-1 sm:top-2 sm:left-2 w-7 h-7 sm:w-10 sm:h-10 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center">
+                <span className="text-lg sm:text-2xl font-black text-white drop-shadow-lg">{block.id}</span>
+              </div>
+
               {/* Badge "Aperçu" */}
               <div className="absolute top-1.5 right-1.5 sm:top-2 sm:right-2 bg-white/25 backdrop-blur-sm text-white text-[8px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 rounded-full flex items-center gap-1">
                 <Eye className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                 <span className="hidden sm:inline">Aperçu</span>
               </div>
 
-              {/* En-tête avec emoji et titre */}
-              <div className="flex items-center gap-2 sm:gap-3 mb-2">
-                <span className="text-2xl sm:text-3xl">{block.emoji}</span>
-                <h3 className="font-bold text-white text-xs sm:text-sm leading-tight">{block.title}</h3>
+              {/* En-tête avec emoji et titre - PLUS GROS */}
+              <div className="flex items-center gap-2 sm:gap-3 mb-2 mt-6 sm:mt-8">
+                <span className="text-3xl sm:text-4xl">{block.emoji}</span>
+                <h3 className="font-black text-white text-sm sm:text-lg leading-tight drop-shadow-md">{block.title}</h3>
               </div>
 
               {/* Mini aperçu du contenu réel */}
