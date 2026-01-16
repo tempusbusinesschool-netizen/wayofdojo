@@ -38,8 +38,18 @@ Application web gamifiée pour le club d'Aikido permettant aux pratiquants de su
 5. ✅ **Mise à jour CGV et badges de récompense**
    - CGV : Délais modifiés de 30 à 7 jours (réclamation, notification, force majeure, résiliation club)
    - Badge "Marathonien" : Modifié de 30 à 14 jours d'affilée (adapté à la temporalité Aïkido)
-   - Streak badges : 3 jours → 7 jours → 14 jours (progression réaliste pour pratique hebdomadaire)
+   - Streak badges : 3 jours → 7 jours → 14 jours → 21 jours (progression réaliste)
    - TTS Tanaka : Références streak_30 remplacées par streak_14/streak_21
+
+6. ✅ **Système de badges long terme adapté à l'Aïkido**
+   - **Badges de durée** : 1 mois → 3 mois → 6 mois → 1 an → 2 ans → 5 ans
+   - **Badges de grades Kyu** : 6e→5e→4e→3e→2e→1er Kyu (ceintures colorées)
+   - **Badges de grades Dan** : Shodan → Nidan → Sandan → Yondan
+   - **Badges techniques** : 5 → 10 → 25 → 50 → 100 techniques validées
+   - **Badges présence dojo** : 10 → 50 → 100 → 200 → 500 séances
+   - **Badges spéciaux Aïkido** : Ukemi, Tanto, Jo, Bokken maîtrisés
+   - **Système de raretés** : Common, Rare, Epic, Legendary, Mythic
+   - **Filtrage par catégorie** : Grades, Ancienneté, Techniques, Régularité, Spéciaux
 
 ---
 
