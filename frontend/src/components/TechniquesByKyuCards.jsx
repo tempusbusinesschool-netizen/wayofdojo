@@ -498,10 +498,17 @@ const TechniquesByKyuCards = ({
                         
                         {/* Infos de la technique */}
                         <div className="flex-1 min-w-0">
-                          <h4 className={`font-bold text-base ${isMastered ? 'text-emerald-300' : 'text-white'}`}>
-                            {technique.name}
-                          </h4>
-                          <p className="text-slate-400 text-sm line-clamp-2 mt-1">
+                          <div className="flex items-center gap-2 mb-1">
+                            <h4 className={`font-bold text-base ${isMastered ? 'text-emerald-300' : 'text-white'}`}>
+                              {technique.name}
+                            </h4>
+                            {/* Badge catégorie */}
+                            <span className="text-xs bg-slate-700/70 text-slate-300 px-1.5 py-0.5 rounded flex items-center gap-1">
+                              <span>{techCategory.emoji}</span>
+                              <span className="hidden sm:inline">{techCategory.name}</span>
+                            </span>
+                          </div>
+                          <p className="text-slate-400 text-sm line-clamp-2">
                             {technique.description}
                           </p>
                           
