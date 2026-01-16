@@ -796,10 +796,10 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
 
   return (
     <>
-      <div className="mb-8 animate-fadeIn">
+      <div className="mb-4 animate-fadeIn">
         {/* ========== HERO SECTION - DIFFÉRENT SI CONNECTÉ OU NON ========== */}
         {!isAdmin && (
-          <div className="mb-8 md:mb-12 w-full">
+          <div className="mb-4 md:mb-6 w-full">
             
             {/* ===== HERO POUR UTILISATEUR NON CONNECTÉ ===== */}
             {!isAuthenticated && (
