@@ -547,10 +547,14 @@ const TechniquesByKyuCards = ({
                 {currentKyu.techniques?.filter(technique => 
                   selectedCategory === 'all' || (technique.description || '').includes(selectedCategory)
                 ).map((technique, techIndex) => {
-                  const isMastered = localMastered.includes(technique.id);
+                  const currentMastery = masteryLevels[technique.id] || 'not_started';
+                  const isMastered = currentMastery === 'mastered';
+                  const isLearning = currentMastery === 'learning';
+                  const isPracticed = currentMastery === 'practiced';
                   const isUnlocked = isTechniqueUnlocked(techIndex, selectedKyuIndex);
-                  const isNextToLearn = isUnlocked && !isMastered;
+                  const isNextToLearn = isUnlocked && currentMastery === 'not_started';
                   const techCategory = getTechniqueCategory(technique);
+                  const masteryInfo = MASTERY_LEVELS.find(l => l.id === currentMastery);
                   
                   return (
                     <motion.button
@@ -565,15 +569,27 @@ const TechniquesByKyuCards = ({
                         relative w-full p-4 rounded-xl text-left transition-all
                         ${isMastered 
                           ? 'bg-emerald-500/20 border-2 border-emerald-500/50 hover:border-emerald-400' 
-                          : isNextToLearn
-                            ? 'bg-cyan-500/10 border-2 border-cyan-500/50 hover:border-cyan-400 hover:bg-cyan-500/20'
-                            : isUnlocked
-                              ? 'bg-slate-700/50 border-2 border-slate-600 hover:border-slate-500'
-                              : 'bg-slate-800/30 border-2 border-slate-700/50 cursor-not-allowed opacity-60'
+                          : isPracticed
+                            ? 'bg-cyan-500/15 border-2 border-cyan-500/40 hover:border-cyan-400'
+                            : isLearning
+                              ? 'bg-amber-500/15 border-2 border-amber-500/40 hover:border-amber-400'
+                              : isNextToLearn
+                                ? 'bg-cyan-500/10 border-2 border-cyan-500/50 hover:border-cyan-400 hover:bg-cyan-500/20'
+                                : isUnlocked
+                                  ? 'bg-slate-700/50 border-2 border-slate-600 hover:border-slate-500'
+                                  : 'bg-slate-800/30 border-2 border-slate-700/50 cursor-not-allowed opacity-60'
                         }
                       `}
                     >
-                      {/* Badge de progression */}
+                      {/* Badge de niveau de maîtrise */}
+                      {isUnlocked && currentMastery !== 'not_started' && (
+                        <div className={`absolute -top-2 -right-2 ${masteryInfo?.bg} ${masteryInfo?.color} text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1`}>
+                          <span>{masteryInfo?.emoji}</span>
+                          <span>{masteryInfo?.label}</span>
+                        </div>
+                      )}
+                      
+                      {/* Badge à apprendre */}
                       {isNextToLearn && (
                         <div className="absolute -top-2 -right-2 bg-cyan-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full animate-pulse">
                           À apprendre !
@@ -590,14 +606,18 @@ const TechniquesByKyuCards = ({
                       )}
 
                       <div className="flex items-start gap-3">
-                        {/* Numéro / Statut */}
+                        {/* Numéro / Statut avec indicateur de maîtrise */}
                         <div className={`
                           w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 font-bold text-lg
                           ${isMastered 
                             ? 'bg-emerald-500 text-white' 
-                            : isNextToLearn
+                            : isPracticed
                               ? 'bg-cyan-500 text-white'
-                              : 'bg-slate-600 text-slate-300'
+                              : isLearning
+                                ? 'bg-amber-500 text-white'
+                                : isNextToLearn
+                                  ? 'bg-cyan-500 text-white'
+                                  : 'bg-slate-600 text-slate-300'
                           }
                         `}>
                           {isMastered ? (
