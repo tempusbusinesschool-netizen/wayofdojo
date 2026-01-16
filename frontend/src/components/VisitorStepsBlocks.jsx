@@ -893,7 +893,7 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
         </button>
         
         <div className="flex items-center gap-2 sm:gap-4 text-[10px] sm:text-xs text-slate-500">
-          <span className="flex items-center gap-1">✓ 30 jours offerts</span>
+          <span className="flex items-center gap-1">✓ 7 jours offerts</span>
           <span className="flex items-center gap-1">✓ Sans publicité</span>
           <span className="flex items-center gap-1">🔒 RGPD</span>
         </div>
