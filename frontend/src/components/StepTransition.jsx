@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Confetti from 'react-confetti';
 
 /**
  * StepTransition - Animation de sphère entre les étapes du parcours
- * Similaire à LoginTransition mais adapté pour les étapes
+ * Avec explosion de confettis ! 🎉
  */
 const StepTransition = ({ 
   isVisible, 
@@ -14,14 +15,36 @@ const StepTransition = ({
   onComplete 
 }) => {
   const [stage, setStage] = useState(0);
+  const [windowSize, setWindowSize] = useState({ width: window.innerWidth, height: window.innerHeight });
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [confettiPieces, setConfettiPieces] = useState(200);
+
+  // Gérer le redimensionnement de la fenêtre
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({ width: window.innerWidth, height: window.innerHeight });
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     if (isVisible) {
+      // Lancer les confettis immédiatement
+      setShowConfetti(true);
+      setConfettiPieces(250);
+
       // Stage 0: Initial appearance
       const timer1 = setTimeout(() => setStage(1), 400);  // Message étape
       const timer2 = setTimeout(() => setStage(2), 1200); // Félicitations
+      
+      // Réduire progressivement les confettis
+      const timerConfetti = setTimeout(() => setConfettiPieces(50), 1000);
+      const timerConfettiEnd = setTimeout(() => setConfettiPieces(0), 1800);
+      
       const timer3 = setTimeout(() => {
         setStage(3);
+        setShowConfetti(false);
         if (onComplete) onComplete();
       }, 2000);
 
@@ -29,9 +52,12 @@ const StepTransition = ({
         clearTimeout(timer1);
         clearTimeout(timer2);
         clearTimeout(timer3);
+        clearTimeout(timerConfetti);
+        clearTimeout(timerConfettiEnd);
       };
     } else {
       setStage(0);
+      setShowConfetti(false);
     }
   }, [isVisible, onComplete]);
 
