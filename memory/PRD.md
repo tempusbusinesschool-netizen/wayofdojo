@@ -51,6 +51,31 @@ Application web gamifiée pour le club d'Aikido permettant aux pratiquants de su
    - **Système de raretés** : Common, Rare, Epic, Legendary, Mythic
    - **Filtrage par catégorie** : Grades, Ancienneté, Techniques, Régularité, Spéciaux
 
+7. ✅ **10 Mini-jeux du Dojo Virtuel développés**
+   - 🌊 **Messager du Ki** : Gestion du stress et équilibre (clavier)
+   - 🌬️ **Parcours du Souffle** : Respiration et calme intérieur
+   - 👁️ **Sensei Invisible** : Réflexes et anticipation
+   - ☯️ **Réflexe Pacifique** : Contrôle et non-violence
+   - 🎯 **Gardien de l'Espace** : Ma-ai (distance parfaite)
+   - 🪞 **Miroir d'Harmonie** : Imitation et synchronisation
+   - ⚖️ **Chemin de l'Équilibre** : Posture et Hara
+   - 🎴 **Memory du Sensei** : Vocabulaire japonais techniques
+   - 🥁 **Rythme du Dojo** : Timing et tempo (jeu de rythme)
+   - 🛡️ **Quête des 7 Vertus** : Éthique et valeurs du Budo
+
+8. ✅ **Interface Enseignant améliorée**
+   - Tableau de bord avec statistiques (élèves, actifs, validations)
+   - Liste des élèves avec recherche et filtres par niveau
+   - Détails par élève (XP, parties jouées, badges)
+   - Validation des techniques en attente
+   - Envoi de messages d'encouragement (rapides ou personnalisés)
+   - Paramètres de configuration des jeux
+
+9. ✅ **Intégration TTS Maître Tanaka dans les jeux**
+   - Hook `useTanakaVoice` intégré dans tous les mini-jeux
+   - Messages d'encouragement au début, pendant et fin de partie
+   - Feedback vocal adapté aux performances
+
 ---
 
 ## Architecture des écrans (Mise à jour 16 janvier 2025)
