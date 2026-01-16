@@ -95,6 +95,7 @@ const MaitrisePage = ({ onBack, isAuthenticated, onOpenAuth }) => {
       case 'rare': return 'from-blue-500 to-cyan-500';
       case 'epic': return 'from-purple-500 to-pink-500';
       case 'legendary': return 'from-amber-500 to-orange-500';
+      case 'mythic': return 'from-red-500 to-rose-600';
       default: return 'from-slate-500 to-slate-600';
     }
   };
