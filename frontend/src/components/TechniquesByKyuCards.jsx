@@ -400,12 +400,46 @@ const TechniquesByKyuCards = ({
                 </div>
               </div>
 
+              {/* Filtre par catégorie de techniques */}
+              <div className="flex items-center gap-2 flex-wrap">
+                <div className="flex items-center gap-1 text-slate-400 text-sm">
+                  <Filter className="w-4 h-4" />
+                  <span>Filtrer :</span>
+                </div>
+                {TECHNIQUE_CATEGORIES.slice(0, 5).map(cat => {
+                  const count = currentKyu.techniques?.filter(t => 
+                    cat.id === 'all' || (t.description || '').includes(cat.id)
+                  ).length || 0;
+                  
+                  if (cat.id !== 'all' && count === 0) return null;
+                  
+                  return (
+                    <button
+                      key={cat.id}
+                      onClick={() => setSelectedCategory(cat.id)}
+                      className={`px-2 py-1 rounded-lg text-xs transition-all flex items-center gap-1 ${
+                        selectedCategory === cat.id
+                          ? 'bg-cyan-500 text-white'
+                          : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+                      }`}
+                    >
+                      <span>{cat.emoji}</span>
+                      <span>{cat.name}</span>
+                      <span className="bg-black/20 px-1 rounded">{count}</span>
+                    </button>
+                  );
+                })}
+              </div>
+
               {/* Liste des techniques avec progression séquentielle */}
               <div className="space-y-3">
-                {currentKyu.techniques?.map((technique, techIndex) => {
+                {currentKyu.techniques?.filter(technique => 
+                  selectedCategory === 'all' || (technique.description || '').includes(selectedCategory)
+                ).map((technique, techIndex) => {
                   const isMastered = localMastered.includes(technique.id);
                   const isUnlocked = isTechniqueUnlocked(techIndex, selectedKyuIndex);
                   const isNextToLearn = isUnlocked && !isMastered;
+                  const techCategory = getTechniqueCategory(technique);
                   
                   return (
                     <motion.button
