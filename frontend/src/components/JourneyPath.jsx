@@ -261,6 +261,16 @@ const JourneyPath = ({
     // Fermer le dialogue d'abord
     setShowStepDialog(false);
     
+    // Pour l'étape 1 (profil), on laisse le parent gérer le flux d'onboarding
+    // Le formulaire d'onboarding déclenchera la transition après validation
+    if (selectedStep && selectedStep.id === 1 && !isStepCompleted(1) && action.target === 'profil') {
+      // Passer directement au parent sans transition - il ouvrira le formulaire d'onboarding
+      if (onNavigate && action.type === 'navigate') {
+        onNavigate(action.target);
+      }
+      return;
+    }
+    
     // Si une étape est sélectionnée et non complétée, lancer la transition
     if (selectedStep && !isStepCompleted(selectedStep.id)) {
       // Sauvegarder l'action pour l'exécuter après la transition
