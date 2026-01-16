@@ -328,6 +328,10 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
       // Fermer le formulaire
       setShowProfileOnboarding(false);
       
+      // 🎉 Déclencher les confettis de célébration !
+      setShowConfetti(true);
+      setTimeout(() => setShowConfetti(false), 4000);
+      
       // Marquer l'étape 1 comme complétée
       if (!journeyCompletedSteps.includes(1)) {
         const newCompleted = [...journeyCompletedSteps, 1];
