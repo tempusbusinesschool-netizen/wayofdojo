@@ -49,10 +49,8 @@ const ParentDashboard = ({ onLogout }) => {
     };
   }, []); // Empty dependency array - runs only once on mount
 
-  const loadData = async () => {
+  const loadDataOnce = async (token) => {
     try {
-      setLoading(true);
-      
       // Load parent profile and children
       const profileRes = await fetch(`${API}/parents/me`, {
         headers: { 'Authorization': `Bearer ${token}` }
@@ -61,6 +59,11 @@ const ParentDashboard = ({ onLogout }) => {
         const profileData = await profileRes.json();
         setParent(profileData.parent);
         setChildren(profileData.children);
+      } else if (profileRes.status === 401 || profileRes.status === 403) {
+        // Token invalid - logout
+        toast.error('Session expirée, veuillez vous reconnecter');
+        onLogout?.();
+        return;
       }
 
       // Load messages
@@ -81,10 +84,14 @@ const ParentDashboard = ({ onLogout }) => {
         const obsData = await obsRes.json();
         setObservations(obsData.observations);
       }
+      
+      // Mark as successfully loaded
+      hasLoadedRef.current = true;
     } catch (error) {
       console.error('Error loading data:', error);
       toast.error('Erreur lors du chargement des données');
     } finally {
+      isLoadingRef.current = false;
       setLoading(false);
     }
   };
