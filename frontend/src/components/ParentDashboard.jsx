@@ -97,6 +97,9 @@ const ParentDashboard = ({ onLogout }) => {
   };
 
   const markAsRead = async (messageId) => {
+    const token = tokenRef.current;
+    if (!token) return;
+    
     try {
       const res = await fetch(`${API}/parents/messages/${messageId}/read`, {
         method: 'PATCH',
