@@ -187,16 +187,16 @@ const ProfileOnboarding = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-2 border-emerald-500/30 p-0 overflow-hidden">
+      <DialogContent className="max-w-md bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-2 border-emerald-500/30 p-0 overflow-hidden max-h-[85vh] overflow-y-auto">
         
-        {/* 🥋 MAÎTRE TANAKA - Guide dynamique */}
-        <div className="bg-gradient-to-r from-slate-800 to-slate-700 p-3 sm:p-4 border-b border-emerald-500/30">
-          <div className="flex items-start gap-3 sm:gap-4">
-            {/* Avatar de Tanaka */}
+        {/* 🥋 MAÎTRE TANAKA - Guide dynamique (compact) */}
+        <div className="bg-gradient-to-r from-slate-800 to-slate-700 p-2 sm:p-3 border-b border-emerald-500/30">
+          <div className="flex items-start gap-2 sm:gap-3">
+            {/* Avatar de Tanaka (plus petit) */}
             <motion.div 
               className="relative flex-shrink-0"
               animate={{ 
-                y: [0, -3, 0],
+                y: [0, -2, 0],
               }}
               transition={{ 
                 duration: 2, 
@@ -204,7 +204,7 @@ const ProfileOnboarding = ({
                 ease: "easeInOut" 
               }}
             >
-              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden border-3 border-emerald-400 shadow-lg shadow-emerald-500/30">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden border-2 border-emerald-400 shadow-lg shadow-emerald-500/30">
                 <img 
                   src={TANAKA_IMAGE} 
                   alt="Maître Tanaka"
@@ -217,7 +217,7 @@ const ProfileOnboarding = ({
               </div>
               {/* Badge parlant */}
               <motion.div 
-                className="absolute -bottom-1 -right-1 bg-emerald-500 rounded-full p-1"
+                className="absolute -bottom-1 -right-1 bg-emerald-500 rounded-full p-0.5"
                 animate={{ scale: [1, 1.2, 1] }}
                 transition={{ duration: 1.5, repeat: Infinity }}
               >
