@@ -67,18 +67,18 @@ const JOURNEY_STEPS = [
     id: 3,
     slug: 'entraine',
     title: 'Entraîne-toi',
-    subtitle: 'Pratique au dojo',
+    subtitle: 'Dojo Virtuel',
     emoji: '💪',
     icon: Target,
     gradient: 'from-amber-400 to-orange-500',
     shadowColor: 'shadow-amber-500/40',
     unlockCondition: 'step_2_completed',
     xpReward: 20,
-    description: 'Va au dojo et pratique avec tes camarades ! Chaque séance te rapproche de la maîtrise.',
-    tanakaMessage: "Ho ho ho ! La pratique au dojo est le cœur de ton entraînement ! C'est là que tu progresseras vraiment. La persévérance est la clé ! 💪",
+    description: 'Entre dans le Dojo Virtuel ! 10 mini-jeux t\'attendent pour développer tes compétences de ninja. Tu peux aussi valider tes exercices faits au vrai dojo !',
+    tanakaMessage: "Ho ho ho ! Bienvenue dans le Dojo Virtuel ! Ici, tu vas t'entraîner avec des jeux qui développeront ton calme, ta respiration et ton écoute. Et si tu pratiques au vrai dojo, ton sensei pourra valider tes exercices ! 💪",
     tanakaAudioKey: 'encourage_practice',
-    actions: [{ label: 'Enregistrer une séance', type: 'navigate', target: 'defis' }],
-    tips: ['🥋 Pratique régulière', '👥 Avec tes camarades', '🔥 Séries de jours consécutifs']
+    actions: [{ label: 'Entrer dans le Dojo Virtuel', type: 'navigate', target: 'dojo_virtuel' }],
+    tips: ['🎮 10 mini-jeux éducatifs', '🏯 Exercices au dojo réel', '✨ Gagne des points de Ki', '🧘 Développe ton calme']
   },
   {
     id: 4,
