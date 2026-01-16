@@ -740,101 +740,138 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
   }
 
   // ═══════════════════════════════════════════════════════════════════════════════
-  // RENDU VERSION ADULTE - Blocs sobres avec contenu détaillé
+  // RENDU VERSION ADULTE - Blocs sobres avec VRAI CONTENU visible
   // ═══════════════════════════════════════════════════════════════════════════════
   return (
     <div className="mb-4" data-testid="visitor-steps-blocks-adulte">
       {/* En-tête sobre */}
-      <div className="text-center mb-6">
-        <h2 className="text-xl sm:text-2xl font-semibold text-white mb-1">
+      <div className="text-center mb-4 sm:mb-6">
+        <h2 className="text-lg sm:text-xl font-semibold text-white mb-1">
           Contenu de la plateforme
         </h2>
-        <p className="text-slate-400 text-sm">
-          Découvrez tout ce qui vous attend sur Aikido@Game
+        <p className="text-slate-400 text-xs sm:text-sm">
+          Cliquez pour découvrir un aperçu • <span className="text-cyan-400">Inscription gratuite</span>
         </p>
       </div>
 
-      {/* Grille des 8 blocs - PRÉSENTATION DU CONTENU */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+      {/* Grille des 8 blocs - PRÉSENTATION DU VRAI CONTENU */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
         {blocksAdulte.map((block) => (
           <button
             key={block.id}
-            onClick={handleBlockClick}
+            onClick={() => handleBlockClick(block)}
             data-testid={`visitor-block-${block.slug}`}
             className={`
-              relative group rounded-xl p-4 text-left
+              relative group rounded-lg sm:rounded-xl p-3 sm:p-4 text-left
               transition-all duration-300
               border-l-4 ${block.accentColor}
               bg-gradient-to-br from-slate-800 to-slate-900 shadow-lg 
               hover:shadow-xl hover:from-slate-700 hover:to-slate-800 cursor-pointer
+              min-h-[130px] sm:min-h-[160px]
             `}
           >
-            {/* Badge verrouillé */}
-            <div className="absolute top-2 right-2 text-slate-500 flex items-center gap-1 text-[10px]">
-              <Lock className="w-3 h-3" />
-              <span>Inscription requise</span>
+            {/* Badge aperçu */}
+            <div className="absolute top-1.5 right-1.5 sm:top-2 sm:right-2 text-slate-500 flex items-center gap-1 text-[9px] sm:text-[10px]">
+              <Eye className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+              <span className="hidden sm:inline">Aperçu</span>
             </div>
 
             {/* Kanji et titre */}
-            <div className="flex items-center gap-3 mb-2">
+            <div className="flex items-center gap-2 sm:gap-3 mb-2">
               <span 
-                className="text-3xl sm:text-4xl font-bold text-white/80"
+                className="text-2xl sm:text-3xl font-bold text-white/80"
                 style={{ fontFamily: "'Noto Serif JP', serif" }}
               >
                 {block.kanji}
               </span>
               <div>
-                <h3 className="font-semibold text-white text-sm">{block.title}</h3>
-                <span className="text-slate-500 text-[10px] italic">{block.kanjiMeaning}</span>
+                <h3 className="font-semibold text-white text-xs sm:text-sm">{block.title}</h3>
+                <span className="text-slate-500 text-[9px] sm:text-[10px] italic">{block.kanjiMeaning}</span>
               </div>
             </div>
 
-            {/* Description du contenu */}
-            <p className="text-slate-300 text-xs mb-3 line-clamp-2">
-              {block.content}
-            </p>
+            {/* Mini aperçu du contenu réel */}
+            <div className="text-[10px] sm:text-xs text-slate-400 space-y-1">
+              {block.slug === 'programme' && (
+                <div className="flex flex-wrap gap-1">
+                  <span className="bg-slate-700 px-1.5 py-0.5 rounded">Tachi Waza</span>
+                  <span className="bg-slate-700 px-1.5 py-0.5 rounded">Suwari</span>
+                  <span className="text-slate-500">+2</span>
+                </div>
+              )}
+              {block.slug === 'grades' && (
+                <div className="flex items-center gap-0.5">
+                  {['bg-white', 'bg-yellow-400', 'bg-orange-500', 'bg-green-500', 'bg-blue-500', 'bg-amber-700', 'bg-slate-900'].map((c, i) => (
+                    <div key={i} className={`w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full ${c} border border-slate-600`}></div>
+                  ))}
+                </div>
+              )}
+              {block.slug === 'vertus' && (
+                <div className="flex gap-1 flex-wrap">
+                  {realVirtues.slice(0, 4).map((v, i) => (
+                    <span key={i} className="text-base">{v.kanji}</span>
+                  ))}
+                  <span className="text-slate-500">+3</span>
+                </div>
+              )}
+              {block.slug === 'objectifs' && (
+                <div className="space-y-1">
+                  <div className="h-1 bg-slate-700 rounded-full overflow-hidden">
+                    <div className="h-full bg-emerald-500 rounded-full" style={{ width: '75%' }}></div>
+                  </div>
+                  <span className="text-slate-500">Suivi de progression</span>
+                </div>
+              )}
+              {block.slug === 'profil' && (
+                <div className="flex gap-2">
+                  <span className="bg-slate-700 px-1.5 py-0.5 rounded">Grade</span>
+                  <span className="bg-slate-700 px-1.5 py-0.5 rounded">Stats</span>
+                </div>
+              )}
+              {block.slug === 'histoire' && (
+                <span>O'Sensei • Hakama • Reigi</span>
+              )}
+              {block.slug === 'certifications' && (
+                <div className="flex gap-1">
+                  <span className="bg-slate-700 px-1.5 py-0.5 rounded">📄 PDF</span>
+                  <span className="bg-slate-700 px-1.5 py-0.5 rounded">🏆 Badges</span>
+                </div>
+              )}
+              {block.slug === 'communaute' && (
+                <span>Multi-dojo • Événements</span>
+              )}
+            </div>
 
-            {/* Tags/détails */}
-            <div className="flex flex-wrap gap-1">
-              {block.details.map((detail, idx) => (
-                <span key={idx} className="bg-slate-700 text-slate-300 text-[10px] px-2 py-0.5 rounded">
-                  {detail}
-                </span>
-              ))}
+            {/* Indicateur hover */}
+            <div className="absolute bottom-2 right-2 text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity">
+              <ChevronRight className="w-4 h-4" />
             </div>
           </button>
         ))}
       </div>
 
       {/* Statistiques sobres */}
-      <div className="mt-6 grid grid-cols-3 gap-4 px-4">
-        <div className="text-center p-3 bg-slate-800/50 rounded-lg border border-slate-700">
-          <div className="text-2xl font-bold text-cyan-400">206+</div>
-          <div className="text-xs text-slate-400">Techniques</div>
+      <div className="mt-4 sm:mt-6 grid grid-cols-3 gap-2 sm:gap-4 px-2 sm:px-4">
+        <div className="text-center p-2 sm:p-3 bg-slate-800/50 rounded-lg border border-slate-700">
+          <div className="text-xl sm:text-2xl font-bold text-cyan-400">206+</div>
+          <div className="text-[10px] sm:text-xs text-slate-400">Techniques</div>
         </div>
-        <div className="text-center p-3 bg-slate-800/50 rounded-lg border border-slate-700">
-          <div className="text-2xl font-bold text-amber-400">10</div>
-          <div className="text-xs text-slate-400">Grades (6 Kyu + 4 Dan)</div>
+        <div className="text-center p-2 sm:p-3 bg-slate-800/50 rounded-lg border border-slate-700">
+          <div className="text-xl sm:text-2xl font-bold text-amber-400">10</div>
+          <div className="text-[10px] sm:text-xs text-slate-400">Grades</div>
         </div>
-        <div className="text-center p-3 bg-slate-800/50 rounded-lg border border-slate-700">
-          <div className="text-2xl font-bold text-violet-400">84</div>
-          <div className="text-xs text-slate-400">Défis</div>
+        <div className="text-center p-2 sm:p-3 bg-slate-800/50 rounded-lg border border-slate-700">
+          <div className="text-xl sm:text-2xl font-bold text-violet-400">7</div>
+          <div className="text-[10px] sm:text-xs text-slate-400">Vertus</div>
         </div>
-      </div>
-
-      {/* Citation philosophique */}
-      <div className="mt-6 text-center px-4">
-        <p className="text-slate-400 text-sm italic border-l-2 border-amber-500/50 pl-4 py-2 bg-slate-800/30 rounded-r-lg">
-          "L'Aïkido n'est pas seulement un sport, c'est un <span className="text-amber-400 font-semibold">Budo</span> — la Voie du guerrier."
-        </p>
       </div>
 
       {/* CTA sobre */}
-      <div className="mt-6 flex flex-col items-center gap-3">
+      <div className="mt-4 sm:mt-6 flex flex-col items-center gap-2 sm:gap-3">
         <button
-          onClick={handleBlockClick}
+          onClick={handleSignupClick}
           data-testid="cta-start-adventure-adulte"
-          className="group relative overflow-hidden px-8 py-3 rounded-xl font-semibold
+          className="group relative overflow-hidden px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg sm:rounded-xl font-semibold
             bg-gradient-to-r from-slate-700 to-slate-800 text-white border border-slate-600
             shadow-lg hover:shadow-xl hover:border-cyan-500/50
             transform hover:scale-[1.02] transition-all duration-300"
@@ -845,12 +882,71 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
           </span>
         </button>
         
-        <div className="flex items-center gap-4 text-xs text-slate-500">
+        <div className="flex items-center gap-2 sm:gap-4 text-[10px] sm:text-xs text-slate-500">
           <span className="flex items-center gap-1">✓ 30 jours offerts</span>
           <span className="flex items-center gap-1">✓ Sans publicité</span>
-          <span className="flex items-center gap-1">🔒 Conforme RGPD</span>
+          <span className="flex items-center gap-1">🔒 RGPD</span>
         </div>
       </div>
+
+      {/* MODAL D'APERÇU - Version adulte */}
+      {previewBlock && (
+        <div 
+          className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          onClick={closePreview}
+        >
+          <div 
+            className="relative w-full max-w-md rounded-xl overflow-hidden shadow-2xl bg-slate-900 border border-slate-700"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className={`p-4 border-b border-slate-700 border-l-4 ${previewBlock.accentColor}`}>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <span 
+                    className="text-4xl font-bold text-white/80"
+                    style={{ fontFamily: "'Noto Serif JP', serif" }}
+                  >
+                    {previewBlock.kanji}
+                  </span>
+                  <div>
+                    <h3 className="text-lg font-semibold text-white">{previewBlock.title}</h3>
+                    <p className="text-slate-400 text-sm italic">{previewBlock.kanjiMeaning}</p>
+                  </div>
+                </div>
+                <button 
+                  onClick={closePreview}
+                  className="bg-slate-800 hover:bg-slate-700 rounded-full p-2 transition-colors"
+                >
+                  <X className="w-5 h-5 text-slate-400" />
+                </button>
+              </div>
+            </div>
+
+            {/* Contenu réel */}
+            <div className="p-4">
+              {previewBlock.previewContent}
+            </div>
+
+            {/* Footer avec CTA */}
+            <div className="p-4 bg-slate-800/50 border-t border-slate-700">
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2 text-slate-400 text-sm">
+                  <Lock className="w-4 h-4" />
+                  <span>Inscription requise</span>
+                </div>
+                <button
+                  onClick={handleSignupClick}
+                  className="bg-cyan-600 hover:bg-cyan-500 text-white font-semibold px-4 py-2 rounded-lg transition-colors flex items-center gap-2"
+                >
+                  <span>S'inscrire</span>
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
