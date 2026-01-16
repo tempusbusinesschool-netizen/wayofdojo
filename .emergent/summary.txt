@@ -10,72 +10,66 @@ The user wants to build a web application for their Aikido club, Aikido@Game. Th
 6.  **Subscription System**: Implement a detailed, multi-plan subscription system using Stripe.
 7.  **Branding**: The application name is Aikido@Game and must never be translated. The user's company is HUMAN KNOWLEDGE.
 8.  **Digital Rulebook**: Integrate a deontology charter and digital internal rules into the application.
+9.  **Long-Term Progression**: The gamification must respect the long-term nature of Aikido practice, which spans several years.
 
 **User's preferred language**: French. INSTRUCT next agent to respond in French only.
 
 **what currently exists?**
-The application is a full-stack React/FastAPI app. The visitor view provides content previews. The member view now features a fully functional 6-step gamified Parcours Guidé (Guided Journey). Step 1 (Commence) has a complete 3-step onboarding form with an animated Maître Tanaka, and Step 2 (Apprends) displays Aikido techniques organized by Kyu levels with detailed descriptions, sequential progression, and an animated Maître Tanaka. Step 3 (Entraîne-toi) now includes a Dojo Virtuel modal with a grid of 10 mini-games (as skeleton components) and a dedicated teacher interface. Text-to-Speech (TTS) integration for Maître Tanaka's voice has been initiated within the Dojo Virtuel games.
+The application is a full-stack React/FastAPI app with a 6-step gamified Parcours Guidé (Guided Journey).
+- **Step 1 (Commence) & Step 2 (Apprends)** are functional, allowing users to create a profile and view Aikido techniques.
+- **Step 3 (Entraîne-toi)** now contains a Dojo Virtuel with 10 fully implemented mini-game components (e.g., , ) and an improved teacher interface skeleton.
+- **Weapon Technique Data**: The pedagogical sheets for Tanto, Jo, and Bokken have been enriched with detailed descriptions and key points.
+- **Badge System**: A comprehensive long-term badge system has been implemented, rewarding practice duration (e.g., 1 year), rank progression, and technique mastery.
+- **Trial Period**: The free trial period has been changed from 30 jours to 7 jours throughout the entire application (frontend UI and backend logic). Legal terms (CGV) and gamification streaks have also been adjusted to reflect a more realistic practice timeline.
 
 **Last working item**:
-The agent is currently working on enriching the pedagogical sheets for weapon techniques (Tanto, Jo, Bokken) within the Apprends section with detailed descriptions and key execution points, as requested by the user. Concurrently, the user asked how to access the games section (Dojo Virtuel).
+The agent was investigating how to define and use the different levels of maîtrise (mastery) for Aikido techniques, as requested by the user.
 
-*   **Last item agent was working**: Searching for detailed data for Tanto, Jo, Bokken techniques to enrich the pedagogical sheets and preparing to demonstrate access to the Dojo Virtuel games.
+*   **Last item agent was working**: The agent had just located the  enum within , which contains the predefined mastery levels (, , , etc.), after confirming that technique documents in the database have a  field.
 *   **Status**: IN PROGRESS
-*   **Agent Testing Done**: N (for this specific sub-task)
-*   **Which testing method agent to use?**: Frontend testing agent or manual screenshot testing after integrating weapon technique details and confirming game access.
+*   **Agent Testing Done**: N
+*   **Which testing method agent to use?**: Frontend testing agent. The agent should test the full user flow of viewing a technique, changing its mastery level, and seeing that change reflected in their profile and progress.
 *   **User Testing Done**: N
 
 **All Pending/In progress Issue list**:
-*   **Issue 1: Enrich Pedagogical Sheets for Weapon Techniques (P0)**
-    *   **Description**: The user explicitly requested to enrich the pedagogical sheets for weapon techniques (Tanto, Jo, Bokken) with detailed descriptions and key execution points in the Programme technique par Kyu (TechniquesByKyuCards.jsx). The agent has just started searching for the relevant data.
-    *   **Attempted fixes**: The agent is in the process of searching for the data.
+*   **Issue 1: Implement UI/UX for Technique Mastery Levels (P0)**
+    *   **Description**: The user wants to define and use different levels of mastery for techniques. The backend data structure ( enum) exists. The task is to build the frontend UI and backend logic to allow a user to update a technique's mastery level and have it persist and be displayed.
+    *   **Attempted fixes**: The agent has identified the relevant data structures in the backend.
     *   **Next debug checklist**:
-        1.  Continue searching backend data for detailed descriptions and key points related to Tanto, Jo, and Bokken techniques.
-        2.  Once found, integrate this data into the  component and potentially  constants if not already dynamically fetched.
-        3.  Ensure these details are displayed correctly on the technique cards.
-    *   **Why fix this issue and what will be achieved with the fix?**: This directly addresses a user request to provide comprehensive information for weapon techniques, enhancing the educational value of the application.
+        1.  In , add UI elements (e.g., a dropdown or buttons) to allow a user to change the  of a technique.
+        2.  Create a new backend API endpoint (e.g., ) to handle the update.
+        3.  Wire the frontend UI to call this new endpoint.
+        4.  Ensure the user's progress (e.g., on the ) updates accordingly when a technique is marked as mastered.
+    *   **Why fix this issue and what will be achieved with the fix?**: This is a core gamification feature, allowing users to track their learning progress for each specific technique, directly addressing the user's latest request.
     *   **Status**: IN PROGRESS
+    *   **Is recurring issue?**: N
+    *   **Should Test frontend/backend/both after fix?**: Both
+    *   **Blocked on other issue**: None.
+*   **Issue 2: Investigate Parent Section Loop Bug (P1)**
+    *   **Description**: The user reported that the Espace Parent (Parent Dashboard) was stuck in an infinite loop. The agent was unable to reproduce this issue; the dashboard worked correctly during testing.
+    *   **Attempted fixes**: The agent investigated the code (, , backend endpoints) and performed a successful login test with a screenshot, which showed the dashboard functioning as expected.
+    *   **Next debug checklist**:
+        1.  Ask the user for specific steps to reproduce the bug (e.g., browser used, exact sequence of clicks).
+        2.  Once reproduced, analyze the network requests and component state in the browser's developer tools to identify the source of the loop.
+    *   **Why fix this issue and what will be achieved with the fix?**: It will resolve a critical bug reported by the user, ensuring the parent role is functional.
+    *   **Status**: BLOCKED (waiting for user feedback to reproduce)
     *   **Is recurring issue?**: N
     *   **Should Test frontend/backend/both after fix?**: Frontend
     *   **Blocked on other issue**: None.
-*   **Issue 2: Demonstrate Access to Dojo Virtuel Games (P0)**
-    *   **Description**: The user asked comment rejoindre cette partie jeu ? (how to join this game part?). The agent needs to guide the user on how to access the Dojo Virtuel from the main journey.
-    *   **Attempted fixes**: The Dojo Virtuel has been integrated and tested for display. The access flow needs to be clearly communicated.
-    *   **Next debug checklist**:
-        1.  Prepare a clear sequence of steps to guide the user through login, completing Step 1 (profile creation) and Step 2 (techniques), then navigating to Step 3 (Entraîne-toi) to access the Dojo Virtuel.
-        2.  Consider if any temporary unlocking mechanism is needed for demonstration purposes, or if a full walkthrough is preferred.
-    *   **Why fix this issue and what will be achieved with the fix?**: This directly answers the user's question, enabling them to explore the newly implemented Dojo Virtuel functionality.
-    *   **Status**: IN PROGRESS
-    *   **Is recurring issue?**: N
-    *   **Should Test frontend/backend/both after fix?**: Frontend
-    *   **Blocked on other issue**: Requires Step 1 and Step 2 to be completed first, or a temporary bypass.
 
 **In progress Task List**:
-*   **Task 1: Implement Maître Tanaka TTS in Mini-Games (P0)**
-    *   **Description**: Integrate Text-to-Speech functionality for Maître Tanaka's voice into all mini-games within the Dojo Virtuel, as per user request. The  hook has been created and integrated into Le Messager du Ki and Parcours du Souffle.
-    *   **Where to resume**: Integrate  into the remaining mini-game components (e.g., , , etc.) as they are developed.
-    *   **What will be achieved with this?**: A more immersive and guided experience in the mini-games through voice narration by Maître Tanaka.
+*   **Task 1: Integrate Maître Tanaka TTS in all Mini-Games (P1)**
+    *   **Description**: The user requested that Maître Tanaka's voice be integrated into all mini-games. The  hook has been created, and all 10 mini-game components are now implemented. The task is to integrate the hook into each game.
+    *   **Where to resume**: Add calls to the  hook within each of the 10 game components in  to provide instructions, feedback, or encouragement.
+    *   **What will be achieved with this?**: A more immersive and guided experience in the mini-games, fulfilling a key user requirement.
     *   **Status**: IN PROGRESS
     *   **Should Test frontend/backend/both after fix?**: Frontend
     *   **Blocked on something**: None.
-*   **Task 2: Develop 10 Mini-Games for Dojo Virtuel (P1)**
-    *   **Description**: Flesh out the logic and UI for the 10 mini-games (e.g., Le Messager du Ki, Parcours du Souffle, etc.) that are currently implemented as skeleton components within the .
-    *   **Where to resume**: Start implementing the core game logic and UI for each mini-game component.
-    *   **What will be achieved with this?**: A functional and engaging set of gamified exercises for users in the Entraîne-toi section.
-    *   **Status**: IN PROGRESS
-    *   **Should Test frontend/backend/both after fix?**: Frontend
-    *   **Blocked on something**: None.
-*   **Task 3: Implement Teacher Interface for Dojo Virtuel (P1)**
-    *   **Description**: Develop the functionality for the  component, allowing teachers to manage aspects of the virtual dojo or validate student progress.
-    *   **Where to resume**: Define the specific features required for the teacher interface and begin implementing them.
-    *   **What will be achieved with this?**: Provide a dedicated tool for teachers to interact with the gamified learning environment.
-    *   **Status**: IN PROGRESS
-    *   **Should Test frontend/backend/both after fix?**: Frontend
-    *   **Blocked on something**: Requires further clarification on features.
 
 **Upcoming and Future Tasks**
 
 **Upcoming Tasks**:
+*   **P1**: Fully test the 10 implemented mini-games in the Dojo Virtuel and the . The components are built but have not been user-tested.
 *   **P1**: Add a download button for the Shodan program PDF ().
 *   **P2**: Improve the PC ergonomics of the Parcours Guidé (the 6-step journey view), as the user previously questioned its clarity on desktop.
 *   **P3**: Add a section for configuring production API keys for Stripe and Resend.
@@ -86,14 +80,17 @@ The agent is currently working on enriching the pedagogical sheets for weapon te
 *   Implement 2FA (Two-Factor Authentication) for the Super Admin role.
 
 **Completed work in this session**
-*   **Completed Step 2 Apprends Feature**: Implemented the  component to display Aikido techniques by Kyu level, including detailed descriptions, key points, practice tips, an animated Maître Tanaka with dynamic messages, and sequential mastery progression.
-*   **Fixed Accessibility Issue**: Added  and  for improved accessibility in .
-*   **Integrated Dojo Virtuel (Step 3)**: Created the  component and integrated it into the Entraîne-toi step of the user journey, featuring a grid of 10 skeleton mini-games and a  skeleton.
-*   **Initiated TTS Integration for Games**: Created  hook and integrated Maître Tanaka's TTS into the Le Messager du Ki and Parcours du Souffle mini-game components.
-*   **Identified 8 Technique Categories**: Researched and presented the 8 main categories of Aikido techniques present in the database.
+*   **Weapon Technique Enrichment**: Enriched the pedagogical data for Tanto, Jo, and Bokken techniques in the database with detailed descriptions and key execution points using a custom Python script.
+*   **Dojo Virtuel Access Demo**: Successfully demonstrated the complete user flow to access the Dojo Virtuel (Step 3) after completing Steps 1 and 2.
+*   **Trial Period Update**: Changed the free trial from 30 jours to 7 jours across the entire application (frontend UI, backend logic, and legal mentions).
+*   **Long-Term Gamification**:
+    *   Implemented a comprehensive long-term badge system based on practice duration, rank progression, and technique mastery.
+    *   Created a categorized badge display page () with filters.
+*   **Dojo Virtuel Game Development**: Fully implemented the 10 mini-games (previously skeletons) with functional logic and UI.
+*   **Teacher Interface Improvement**: Upgraded the  with a more functional structure.
 
 **Earlier issues found/mentioned but not fixed**
-*   None.
+*   **Issue 1: Parent Section Loop**: Reported by the user but could not be reproduced by the agent. Awaiting user feedback for reproduction steps.
 
 **Known issue recurrence from previous fork**
 *   None.
@@ -102,73 +99,52 @@ The agent is currently working on enriching the pedagogical sheets for weapon te
 
 
 **Key Technical Concepts**
-*   **Conditional Logic Refactoring**: Shifting UI flow control from child components () to a parent container () to handle complex sequences like modal-then-animation.
-*   **Multi-Step Modal Forms**: Building a sequential user input form within a single React component ().
-*   **Dynamic Content Previews**: Using real application data to populate visitor-facing components without enabling full functionality, driving user registration.
-*   **Backend Endpoint Creation**: Adding new / routes in FastAPI with Pydantic models to handle profile data persistence.
-*   **Diagnosing Test Tool Limitations**: Identifying that the screenshot tool creates a new browser session per call, which prevents testing of stateful user flows, and developing a workaround by scripting the entire flow in one call.
-*   **Dynamic Technique Display**: Fetching and rendering detailed Aikido technique data from a backend API, including descriptions, key points, and practice tips.
-*   **Sequential Gamification Logic**: Implementing UI elements (e.g., locks, progress bars) that enforce a specific order of completion for tasks or learning materials.
-*   **Text-to-Speech Integration**: Utilizing a backend  endpoint and a custom React hook () to provide dynamic voice narration within the frontend.
+*   **Database Seeding/Updating**: Using a standalone Python script to perform complex, one-off data updates in the MongoDB database, bypassing limitations of shell commands.
+*   **Stateful UI Debugging**: Investigating and testing state-dependent UI flows (like login and multi-step journeys) by scripting the entire user sequence in a single testing tool call.
+*   **Gamification Design**: Implementing both short-term (streaks) and long-term (practice duration, rank) reward systems (badges) to match the user's domain requirements.
+*   **Component-Based Game Development**: Building multiple, self-contained mini-games as individual React components.
 
 **key DB schema**
-*   **users**: No schema change, but the documents in this collection are now updated by the new profile endpoint with fields such as , , and .
-*   **kyu_levels**: Backend API () serves detailed technique information, including , , and .
-
-**changes in tech stack**
-*   **Frontend**: Added  dependency. (from previous fork)
+*   **techniques** (within  collection): Documents now contain a  field, which corresponds to the  enum (, , ) in the backend. The weapon techniques also have enriched , , and  fields.
+*   **users**: Documents now contain a  array, which will store the IDs of earned long-term badges.
+*   **plans**: Documents in the backend now have  set to .
 
 **All files of reference**
-*    (Modified, **Completed Step 2**)
-*    (Modified, **Completed Step 2**)
-*    (New, from previous fork)
-*    (Heavily Modified)
-*    (Modified, reverted temporary change)
-*    (Heavily Modified, from previous fork)
-*    (Modified, from previous fork)
-*    (New)
-*    (New/Modified)
-*    (New/Modified)
-*    (New)
-*    (New)
-*    (New)
-*    (New)
-*    (New)
-*    (New)
-*    (Viewed)
+*    (For  enum and badge logic)
+*    (For mastery level UI implementation)
+*    (All 10 game components)
+*    (For TTS integration)
+*    (For badge display)
+*    (One-off script, for reference)
 
 **Areas that need refactoring**:
-*   , , and  continue to grow and would benefit from being broken down into smaller, more specialized modules.
+*   The  and  files are becoming very large. The logic for subscriptions, user profiles, badges, and techniques in  could be split into separate route files.  could delegate state management for different sections (e.g., parent mode, journey mode) to dedicated context providers.
 
 **key api endpoints**
-*   : Updates the logged-in user's profile.
-*   : Retrieves the extended profile data for the logged-in user.
-*   : Fetches detailed Aikido technique information by Kyu level.
-*   : Provides Text-to-Speech functionality for Maître Tanaka's voice.
+*   : Fetches all technique data.
+*   : Fetches the current user's profile, including progress.
+*   : Fetches the parent's profile and their children's data.
+*   (To be created) : Endpoint to update the mastery level of a specific technique.
 
 **Critical Info for New Agent**
-*   The immediate and highest priority is to **address the user's latest requests**: enriching weapon techniques and demonstrating access to the Dojo Virtuel games.
-*   **Testing Stateful Flows**: When testing features that require a user to be logged in and navigate, script the entire sequence (login, navigation, clicks) in a **single tool call** ( or ). Making separate tool calls will reset the browser session and cause tests to fail.
-*   The user is highly engaged and provides frequent, specific feedback. Be prepared to iterate on UI/UX details.
-*   The  for journey steps in  was temporarily modified for testing and then reverted. Ensure to follow the correct user journey for testing.
-*   The  hook is available for further TTS integration into other mini-games.
+*   The user frequently shifts priorities. The current focus is implementing the **technique mastery levels**. After that, the next priorities are the user's P1 list: integrating TTS into all games, and testing the games/teacher interface.
+*   The Parent loop bug could not be reproduced. Do not work on it unless the user provides specific steps.
+*   The 10 mini-games are functionally implemented but are completely untested from a user's perspective. They need a full testing pass to ensure they work as intended within the Dojo Virtuel modal.
 
 **documents and test reports created in this job**
-*    (updated)
-*    (for Step 2 completion)
+*    (updated multiple times)
 
 **Last 10 User Messages and any pending HUMAN messages**
-1.  **User (Chat Message 116)**: Provided detailed ideas for gamification within a virtual dojo, including specific game concepts, digital adaptations, numerical gamification elements, and architectural suggestions.
-2.  **Agent (Chat Message 118)**: Sent a follow-up question to the user for clarification (asking about the number of games, target age, interface type, and Tanaka's role).
-3.  **User (Chat Message 119)**: Responded with clarifications: 10 games for children aged 5-14, dedicated teacher interface, intermediate Canvas 2D interface with illustrated characters, and Maître Tanaka as the virtual coach using existing Tanaka voice source.
-4.  **Agent (Chat Message 120)**: Acknowledged, proposed to explore the Tanaka service, and planned for 10 mini-games and teacher interface.
-5.  **User (Chat Message 191)**: Confirmed approval for TTS integration.
-6.  **Agent (Chat Message 192)**: Acknowledged and started exploring the existing voice service.
-7.  **User (Chat Message 259)**: Requested to test the TTS voice after creating a ninja profile (Step 1). Also, reiterated the need to detail pedagogical sheets for each technique, integrate them into Programme technique par Kyu, and asked to see the 8 defined categories.
-8.  **Agent (Chat Message 260)**: Acknowledged, prioritizing TTS test with profile creation, then searching for detailed technique sheets.
-9.  **User (Chat Message 303)**: Asked to enrich pedagogical sheets for weapon techniques (Tanto, Jo, Bokken) with detailed descriptions and key execution points, and then asked to be shown how to access the games.
-10. **Agent (Chat Message 304)**: Acknowledged, prioritizing enriching weapon techniques first, then demonstrating game access.
-**Pending Human Messages**: User's latest requests in Chat Message 303 are actively being addressed.
+1.  **User (Chat 222):** Agreed to add long-term progression badges. (COMPLETED)
+2.  **Agent (Chat 223-260):** Implemented the long-term badge system.
+3.  **Agent (Chat 261):** Finished and proposed adding weekly objectives.
+4.  **User (Chat 262):** Redirected the agent to the P1 priorities: develop the 10 mini-games, the teacher interface, and integrate TTS. (IN PROGRESS)
+5.  **Agent (Chat 263-290):** Implemented the 10 mini-games and improved the teacher interface.
+6.  **Agent (Chat 291):** Finished and asked if the user wanted to test the games.
+7.  **User (Chat 292):** Asked to find the techniques sheets to define levels of mastery, stating the data already exists. (IN PROGRESS)
+8.  **Agent (Chat 293-298):** Investigated the database and found the  field.
+9.  **User (N/A)**
+10. **Agent (Chat 299-300):** Found the corresponding  enum in the backend code, setting the stage for the next implementation step.
 
 **Project Health Check:**
 *   **Broken**: NO
@@ -184,7 +160,7 @@ The agent is currently working on enriching the pedagogical sheets for weapon te
 *   **reportlab**: Used on the backend for PDF generation.
 
 **Testing status**
-*   **Testing agent used after significant changes**: YES (for Step 2 completion, )
+*   **Testing agent used after significant changes**: NO (Not in this session)
 *   **Troubleshoot agent used after agent stuck in loop**: NO
 *   **Test files created**: None
 *   **Known regressions**: None
@@ -192,15 +168,9 @@ The agent is currently working on enriching the pedagogical sheets for weapon te
 **Credentials to test flow:**
 | Rôle | Email | Mot de passe | Notes |
 | :--- | :--- | :--- | :--- |
-| **Enfant (Jeune Ninja)**|  |  | User for testing the new onboarding flow. |
+| **Enfant (Jeune Ninja)**|  |  | **Use this user.** Has active trial and progress. |
 | **Parent** |  |  | Lié à  |
-| **Super Admin** |  |  | |
-| **Adhérent (Adulte)** |  |  | |
-| **Enseignant** |  |  | |
-| **Admin Dojo** |  |  | |
 
 **What agent forgot to execute**
-*   The minor accessibility issue identified by the testing agent (missing  in ) was fixed. No other forgotten tasks or issues.
-
-**Critical Info for New Agent**
-The previous agent successfully completed Step 2 (Apprends) and integrated the framework for Step 3 (Entraîne-toi - Dojo Virtuel) including basic game skeletons and initial TTS integration. The current priority is to address the user's latest requests regarding enriching weapon technique details and demonstrating how to access the new Dojo Virtuel games. The next agent should focus on locating and integrating the detailed weapon technique data and providing clear instructions or a demonstration for navigating to the games section.</analysis>
+*   The agent fully implemented the 10 mini-games but did not perform any testing (not even a screenshot) to see if they render and function correctly inside the Dojo Virtuel. This is a critical next step.
+*   The agent implemented a new categorized badge page () but did not test it, as it's part of a locked journey step. A plan to test this page is needed.</analysis>
