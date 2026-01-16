@@ -3,8 +3,19 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { Button } from '@/components/ui/button';
-import { ChevronRight, ChevronLeft, Check, Lock, Star, BookOpen, Trophy, X, Lightbulb, Volume2, VolumeX, Filter, Layers } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Check, Lock, Star, BookOpen, Trophy, X, Lightbulb, Volume2, VolumeX, Filter, Layers, Circle, Loader2, PlayCircle, GraduationCap } from 'lucide-react';
 import axios from 'axios';
+import { toast } from 'sonner';
+
+// Niveaux de maîtrise avec leurs couleurs et icônes
+const MASTERY_LEVELS = [
+  { id: 'not_started', label: 'Non commencé', icon: Circle, color: 'text-slate-400', bg: 'bg-slate-700', emoji: '⚪' },
+  { id: 'learning', label: 'En apprentissage', icon: PlayCircle, color: 'text-amber-400', bg: 'bg-amber-500/20', emoji: '🟡' },
+  { id: 'practiced', label: 'Pratiquée', icon: Star, color: 'text-cyan-400', bg: 'bg-cyan-500/20', emoji: '🔵' },
+  { id: 'mastered', label: 'Maîtrisée', icon: GraduationCap, color: 'text-emerald-400', bg: 'bg-emerald-500/20', emoji: '🟢' },
+];
+
+const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
 // Image de Maître Tanaka
 const TANAKA_IMAGE = "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=200&h=200&fit=crop&crop=face";
