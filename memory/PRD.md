@@ -11,6 +11,22 @@ Application web gamifiée pour le club d'Aikido permettant aux pratiquants de su
 
 ---
 
+## Dernière mise à jour : 16 janvier 2025
+
+### Travaux effectués cette session :
+1. ✅ **Enrichissement des fiches pédagogiques des techniques d'armes** (Tanto, Jo, Bokken)
+   - Tanto Dori : Description complète avec 7 points clés et 6 conseils de pratique
+   - Jo Waza : Jo Dori et Jo Nage avec katas de référence
+   - Tachi Dori (Bokken) : Désarmement contre sabre avec timing critique
+   - Kumitachi & Kumijo : Exercices codifiés avec 7 formes de Saito Sensei
+   - Fondements Aïkiken : Principes universels et tenue du bokken (prise Tamago)
+
+2. ✅ **Documentation de l'accès au Dojo Virtuel**
+   - Étape 3 "Entraîne-toi" du Parcours Guidé
+   - Requiert : Étape 1 (profil) + Étape 2 (techniques) complétées
+
+---
+
 ## Architecture des écrans (Mise à jour 16 janvier 2025)
 
 ### Page d'accueil - Visiteur NON connecté
