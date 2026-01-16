@@ -222,8 +222,6 @@ const MessagerDuKi = ({ userName, onComplete, onExit, tanakaSpeak }) => {
       );
     }
   }, [position.y, balance, gameState, level, userName, speakTanaka]);
-    }
-  }, [position.y, balance, gameState, level, userName, tanakaSpeak]);
 
   // Collision avec obstacles
   useEffect(() => {
