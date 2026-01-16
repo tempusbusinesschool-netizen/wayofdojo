@@ -29,6 +29,10 @@ const ParentDashboard = ({ onLogout }) => {
 
   // Stable token reference - read once on mount
   const tokenRef = useRef(localStorage.getItem('parent_token'));
+  
+  // Stable reference to onLogout to avoid dependency issues
+  const onLogoutRef = useRef(onLogout);
+  onLogoutRef.current = onLogout;
 
   // Load data only once on mount
   useEffect(() => {
@@ -41,60 +45,61 @@ const ParentDashboard = ({ onLogout }) => {
     }
     
     isLoadingRef.current = true;
-    loadDataOnce(token);
+    
+    const loadData = async () => {
+      try {
+        // Load parent profile and children
+        const profileRes = await fetch(`${API}/parents/me`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (profileRes.ok) {
+          const profileData = await profileRes.json();
+          setParent(profileData.parent);
+          setChildren(profileData.children);
+        } else if (profileRes.status === 401 || profileRes.status === 403) {
+          // Token invalid - logout
+          toast.error('Session expirée, veuillez vous reconnecter');
+          onLogoutRef.current?.();
+          return;
+        }
+
+        // Load messages
+        const messagesRes = await fetch(`${API}/parents/messages`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (messagesRes.ok) {
+          const messagesData = await messagesRes.json();
+          setMessages(messagesData.messages);
+          setUnreadCount(messagesData.unread_count);
+        }
+
+        // Load observations
+        const obsRes = await fetch(`${API}/parents/observations`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (obsRes.ok) {
+          const obsData = await obsRes.json();
+          setObservations(obsData.observations);
+        }
+        
+        // Mark as successfully loaded
+        hasLoadedRef.current = true;
+      } catch (error) {
+        console.error('Error loading data:', error);
+        toast.error('Erreur lors du chargement des données');
+      } finally {
+        isLoadingRef.current = false;
+        setLoading(false);
+      }
+    };
+    
+    loadData();
     
     // Cleanup function
     return () => {
       isLoadingRef.current = false;
     };
   }, []); // Empty dependency array - runs only once on mount
-
-  const loadDataOnce = async (token) => {
-    try {
-      // Load parent profile and children
-      const profileRes = await fetch(`${API}/parents/me`, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      if (profileRes.ok) {
-        const profileData = await profileRes.json();
-        setParent(profileData.parent);
-        setChildren(profileData.children);
-      } else if (profileRes.status === 401 || profileRes.status === 403) {
-        // Token invalid - logout
-        toast.error('Session expirée, veuillez vous reconnecter');
-        onLogout?.();
-        return;
-      }
-
-      // Load messages
-      const messagesRes = await fetch(`${API}/parents/messages`, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      if (messagesRes.ok) {
-        const messagesData = await messagesRes.json();
-        setMessages(messagesData.messages);
-        setUnreadCount(messagesData.unread_count);
-      }
-
-      // Load observations
-      const obsRes = await fetch(`${API}/parents/observations`, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      if (obsRes.ok) {
-        const obsData = await obsRes.json();
-        setObservations(obsData.observations);
-      }
-      
-      // Mark as successfully loaded
-      hasLoadedRef.current = true;
-    } catch (error) {
-      console.error('Error loading data:', error);
-      toast.error('Erreur lors du chargement des données');
-    } finally {
-      isLoadingRef.current = false;
-      setLoading(false);
-    }
-  };
 
   const markAsRead = async (messageId) => {
     const token = tokenRef.current;
