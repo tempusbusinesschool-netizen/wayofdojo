@@ -25,14 +25,12 @@ import MessagerDuKi from './games/MessagerDuKi';
 import ParcoursduSouffle from './games/ParcoursduSouffle';
 import SenseiInvisible from './games/SenseiInvisible';
 import ReflexePacifique from './games/ReflexePacifique';
-import { 
-  GardienEspace,
-  MiroirHarmonie,
-  CheminEquilibre,
-  MemorySensei,
-  RythmeDuDojo,
-  QueteVertus
-} from './games/PlaceholderGames';
+import GardienEspace from './games/GardienEspace';
+import MiroirHarmonie from './games/MiroirHarmonie';
+import CheminEquilibre from './games/CheminEquilibre';
+import MemorySensei from './games/MemorySensei';
+import RythmeDuDojo from './games/RythmeDuDojo';
+import QueteVertus from './games/QueteVertus';
 
 // Image de Maître Tanaka
 const TANAKA_IMAGE = "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=200&h=200&fit=crop&crop=face";
