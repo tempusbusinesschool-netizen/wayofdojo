@@ -8,17 +8,69 @@ import { Button } from '@/components/ui/button';
  */
 const MaitrisePage = ({ onBack, isAuthenticated, onOpenAuth }) => {
   
-  // Badges débloqués
+  // Badges débloqués - Système complet Aïkido
   const badges = [
-    { id: 1, name: 'Premier Pas', desc: 'Premier entraînement', icon: '👣', unlocked: true, rarity: 'common' },
-    { id: 2, name: 'Assidu', desc: '5 jours d\'affilée', icon: '🔥', unlocked: true, rarity: 'common' },
-    { id: 3, name: 'Technicien', desc: '5 techniques validées', icon: '🥋', unlocked: true, rarity: 'rare' },
-    { id: 4, name: 'Chuteur Pro', desc: 'Maîtrise des ukemis', icon: '🔄', unlocked: false, rarity: 'rare' },
-    { id: 5, name: 'Super Ninja', desc: 'Niveau 5 atteint', icon: '⭐', unlocked: false, rarity: 'epic' },
-    { id: 6, name: 'Dragon Légendaire', desc: 'Niveau 10 atteint', icon: '🐉', unlocked: false, rarity: 'legendary' },
-    { id: 7, name: 'Ceinture Jaune', desc: '5e KYU obtenu', icon: '🟡', unlocked: true, rarity: 'epic' },
-    { id: 8, name: 'Marathonien', desc: '14 jours d\'affilée', icon: '🏃', unlocked: false, rarity: 'legendary' },
+    // Badges de début
+    { id: 1, name: 'Premier Pas', desc: 'Premier entraînement', icon: '👣', unlocked: true, rarity: 'common', category: 'debut' },
+    
+    // Badges de régularité
+    { id: 2, name: 'Persévérant', desc: '3 jours d\'affilée', icon: '🔥', unlocked: true, rarity: 'common', category: 'streak' },
+    { id: 3, name: 'Assidu', desc: '7 jours d\'affilée', icon: '💪', unlocked: true, rarity: 'rare', category: 'streak' },
+    { id: 4, name: 'Marathonien', desc: '14 jours d\'affilée', icon: '🏃', unlocked: false, rarity: 'epic', category: 'streak' },
+    { id: 5, name: 'Esprit du Budo', desc: '21 jours d\'affilée', icon: '🧘', unlocked: false, rarity: 'legendary', category: 'streak' },
+    
+    // Badges de durée de pratique (Long terme)
+    { id: 6, name: 'Initié', desc: '1 mois de pratique', icon: '🌱', unlocked: true, rarity: 'common', category: 'duration' },
+    { id: 7, name: 'Disciple', desc: '3 mois de pratique', icon: '🌿', unlocked: false, rarity: 'rare', category: 'duration' },
+    { id: 8, name: 'Pratiquant Confirmé', desc: '6 mois de pratique', icon: '🌳', unlocked: false, rarity: 'epic', category: 'duration' },
+    { id: 9, name: 'Fidèle du Dojo', desc: '1 an de pratique', icon: '🥋', unlocked: false, rarity: 'legendary', category: 'duration' },
+    { id: 10, name: 'Pilier du Dojo', desc: '2 ans de pratique', icon: '🏯', unlocked: false, rarity: 'legendary', category: 'duration' },
+    { id: 11, name: 'Vétéran', desc: '5 ans de pratique', icon: '⛩️', unlocked: false, rarity: 'mythic', category: 'duration' },
+    
+    // Badges de passage de grade (Kyu)
+    { id: 12, name: 'Ceinture Blanche', desc: '6e Kyu - Début du chemin', icon: '⬜', unlocked: true, rarity: 'common', category: 'grade' },
+    { id: 13, name: 'Ceinture Jaune', desc: '5e Kyu obtenu', icon: '🟡', unlocked: true, rarity: 'rare', category: 'grade' },
+    { id: 14, name: 'Ceinture Orange', desc: '4e Kyu obtenu', icon: '🟠', unlocked: false, rarity: 'rare', category: 'grade' },
+    { id: 15, name: 'Ceinture Verte', desc: '3e Kyu obtenu', icon: '🟢', unlocked: false, rarity: 'epic', category: 'grade' },
+    { id: 16, name: 'Ceinture Bleue', desc: '2e Kyu obtenu', icon: '🔵', unlocked: false, rarity: 'epic', category: 'grade' },
+    { id: 17, name: 'Ceinture Marron', desc: '1er Kyu obtenu', icon: '🟤', unlocked: false, rarity: 'legendary', category: 'grade' },
+    
+    // Badges de passage de grade (Dan)
+    { id: 18, name: 'Ceinture Noire', desc: 'Shodan - 1er Dan', icon: '⬛', unlocked: false, rarity: 'legendary', category: 'grade' },
+    { id: 19, name: 'Maître Confirmé', desc: 'Nidan - 2e Dan', icon: '🎌', unlocked: false, rarity: 'mythic', category: 'grade' },
+    { id: 20, name: 'Enseignant', desc: 'Sandan - 3e Dan', icon: '📜', unlocked: false, rarity: 'mythic', category: 'grade' },
+    { id: 21, name: 'Maître', desc: 'Yondan - 4e Dan', icon: '👘', unlocked: false, rarity: 'mythic', category: 'grade' },
+    
+    // Badges de techniques
+    { id: 22, name: 'Technicien', desc: '5 techniques validées', icon: '🥋', unlocked: true, rarity: 'common', category: 'technique' },
+    { id: 23, name: 'Pratiquant Technique', desc: '10 techniques validées', icon: '🎯', unlocked: false, rarity: 'rare', category: 'technique' },
+    { id: 24, name: 'Artiste Martial', desc: '25 techniques validées', icon: '🎨', unlocked: false, rarity: 'epic', category: 'technique' },
+    { id: 25, name: 'Maître Technique', desc: '50 techniques validées', icon: '🏅', unlocked: false, rarity: 'legendary', category: 'technique' },
+    { id: 26, name: 'Encyclopédie Vivante', desc: '100 techniques validées', icon: '📚', unlocked: false, rarity: 'mythic', category: 'technique' },
+    
+    // Badges spéciaux Aïkido (Armes)
+    { id: 27, name: 'Maître des Chutes', desc: 'Ukemis parfaits validés', icon: '🔄', unlocked: false, rarity: 'epic', category: 'special' },
+    { id: 28, name: 'Initié aux Armes', desc: 'Buki waza découvert', icon: '⚔️', unlocked: false, rarity: 'rare', category: 'special' },
+    { id: 29, name: 'Maître du Tanto', desc: 'Tanto-dori maîtrisé', icon: '🔪', unlocked: false, rarity: 'legendary', category: 'special' },
+    { id: 30, name: 'Maître du Jo', desc: 'Jo-waza maîtrisé', icon: '🪵', unlocked: false, rarity: 'legendary', category: 'special' },
+    { id: 31, name: 'Maître du Bokken', desc: 'Aïki-ken maîtrisé', icon: '⚔️', unlocked: false, rarity: 'legendary', category: 'special' },
   ];
+  
+  // Filtrer les badges par catégorie pour l'affichage
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  
+  const badgeCategories = [
+    { id: 'all', name: 'Tous', icon: '🏆' },
+    { id: 'grade', name: 'Grades', icon: '🥋' },
+    { id: 'duration', name: 'Ancienneté', icon: '📅' },
+    { id: 'technique', name: 'Techniques', icon: '🎯' },
+    { id: 'streak', name: 'Régularité', icon: '🔥' },
+    { id: 'special', name: 'Spéciaux', icon: '⭐' },
+  ];
+  
+  const filteredBadges = selectedCategory === 'all' 
+    ? badges 
+    : badges.filter(b => b.category === selectedCategory);
 
   // Titres spéciaux
   const titles = [
