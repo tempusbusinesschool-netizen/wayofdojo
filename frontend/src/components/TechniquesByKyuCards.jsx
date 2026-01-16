@@ -265,15 +265,23 @@ const TechniquesByKyuCards = ({
   // Calculer la progression pour un Kyu
   const getKyuProgress = (kyuIndex) => {
     const kyu = kyuLevels[kyuIndex];
-    if (!kyu || !kyu.techniques) return { mastered: 0, total: 0, percent: 0 };
+    if (!kyu || !kyu.techniques) return { mastered: 0, total: 0, percent: 0, learning: 0, practiced: 0 };
     
     const total = kyu.techniques.length;
-    const mastered = kyu.techniques.filter(t => localMastered.includes(t.id)).length;
+    const mastered = kyu.techniques.filter(t => masteryLevels[t.id] === 'mastered').length;
+    const practiced = kyu.techniques.filter(t => masteryLevels[t.id] === 'practiced').length;
+    const learning = kyu.techniques.filter(t => masteryLevels[t.id] === 'learning').length;
+    
+    // Le pourcentage prend en compte les différents niveaux (mastered = 100%, practiced = 75%, learning = 25%)
+    const weightedProgress = mastered * 100 + practiced * 75 + learning * 25;
+    const maxProgress = total * 100;
     
     return {
       mastered,
+      practiced,
+      learning,
       total,
-      percent: total > 0 ? Math.round((mastered / total) * 100) : 0
+      percent: maxProgress > 0 ? Math.round(weightedProgress / maxProgress * 100) : 0
     };
   };
 
@@ -285,16 +293,17 @@ const TechniquesByKyuCards = ({
     return previousProgress.percent >= 80;
   };
 
-  // Vérifier si une technique est débloquée (progression séquentielle)
+  // Vérifier si une technique est débloquée (progression séquentielle - au moins "practiced")
   const isTechniqueUnlocked = (techniqueIndex, kyuIndex) => {
     if (techniqueIndex === 0) return true; // Première technique toujours débloquée
     
     const kyu = kyuLevels[kyuIndex];
     if (!kyu || !kyu.techniques) return false;
     
-    // La technique précédente doit être maîtrisée
+    // La technique précédente doit être au moins "practiced" ou "mastered"
     const prevTechnique = kyu.techniques[techniqueIndex - 1];
-    return prevTechnique && localMastered.includes(prevTechnique.id);
+    const prevMastery = masteryLevels[prevTechnique?.id];
+    return prevMastery === 'mastered' || prevMastery === 'practiced';
   };
 
   // Obtenir la couleur du Kyu
