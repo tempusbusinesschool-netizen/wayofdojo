@@ -104,26 +104,26 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
   const isEnfant = mode === 'enfant';
 
   return (
-    <div className="mb-8" data-testid="visitor-steps-blocks">
+    <div className="mb-4" data-testid="visitor-steps-blocks">
       {/* ═══════════════════════════════════════════════════════════════════════════════
           TITRE DE SECTION - 8 blocs de présentation du contenu
       ═══════════════════════════════════════════════════════════════════════════════ */}
-      <div className="text-center mb-6">
+      <div className="text-center mb-4">
         {isEnfant ? (
           <>
-            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+            <h2 className="text-xl sm:text-2xl font-bold text-white mb-1">
               🎮 Ton Parcours Ninja en 8 étapes ! 🎮
             </h2>
-            <p className="text-slate-400 text-sm sm:text-base">
+            <p className="text-slate-400 text-xs sm:text-sm">
               Découvre tout ce qui t'attend ! 🥷
             </p>
           </>
         ) : (
           <>
-            <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
+            <h2 className="text-lg sm:text-xl font-bold text-white mb-1">
               Votre parcours Aikido
             </h2>
-            <p className="text-slate-400 text-sm">
+            <p className="text-slate-400 text-xs">
               Découvrez le contenu de votre formation
             </p>
           </>
