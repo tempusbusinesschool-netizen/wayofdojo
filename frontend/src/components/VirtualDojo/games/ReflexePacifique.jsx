@@ -181,7 +181,7 @@ const ReflexePacifique = ({ userName, onComplete, onExit, tanakaSpeak }) => {
     }
     
     setTimeout(() => {
-      nextScenario();
+      goToNextScenario();
     }, 4000);
   };
 
