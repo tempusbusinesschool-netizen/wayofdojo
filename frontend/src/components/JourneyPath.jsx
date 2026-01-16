@@ -55,7 +55,7 @@ const JOURNEY_STEPS = [
     icon: Swords,
     gradient: 'from-cyan-500 to-blue-600',
     shadowColor: 'shadow-cyan-500/40',
-    unlockCondition: 'always', // Temporarily unlocked for testing - TODO: change back to 'step_1_completed'
+    unlockCondition: 'step_1_completed',
     xpReward: 15,
     description: 'Découvre les techniques d\'Aïkido par grade : Tai Sabaki, Ukemi, Ikkyo, Shiho Nage et bien plus !',
     tanakaMessage: "Maintenant, passons aux techniques ! Chaque ceinture a ses propres mouvements à maîtriser. Commence par les bases : les déplacements et les chutes. Ensuite, tu apprendras les vraies techniques !",
