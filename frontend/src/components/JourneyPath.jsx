@@ -72,7 +72,7 @@ const JOURNEY_STEPS = [
     icon: Target,
     gradient: 'from-amber-400 to-orange-500',
     shadowColor: 'shadow-amber-500/40',
-    unlockCondition: 'step_2_completed',
+    unlockCondition: 'always', // TEMP: débloqué pour test
     xpReward: 20,
     description: 'Entre dans le Dojo Virtuel ! 10 mini-jeux t\'attendent pour développer tes compétences de ninja. Tu peux aussi valider tes exercices faits au vrai dojo !',
     tanakaMessage: "Ho ho ho ! Bienvenue dans le Dojo Virtuel ! Ici, tu vas t'entraîner avec des jeux qui développeront ton calme, ta respiration et ton écoute. Et si tu pratiques au vrai dojo, ton sensei pourra valider tes exercices ! 💪",
