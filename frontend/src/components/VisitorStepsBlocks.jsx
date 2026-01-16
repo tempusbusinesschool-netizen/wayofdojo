@@ -8,30 +8,25 @@ import { Lock } from 'lucide-react';
  * - MODE ENFANT (Jeune Ninja) : Coloré, ludique, emojis, gamifié
  * - MODE ADULTE (Ninja Confirmé) : Sobre, professionnel, Kanji japonais
  * 
- * Les blocs redirigent vers le dialogue d'inscription pour inciter à créer un compte
+ * Les blocs naviguent vers les différentes sections pour PRÉSENTER les thèmes de la plateforme
  */
 const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
   
   const isEnfant = mode === 'enfant';
 
-  // Fonction pour gérer le clic sur un bloc
+  // Fonction pour gérer le clic sur un bloc - NAVIGATION vers la section correspondante
   const handleBlockClick = (target) => {
-    // Ouvrir le dialogue d'inscription
-    const event = new CustomEvent('openAuthDialog');
-    window.dispatchEvent(event);
-    
-    // Si une fonction de navigation est fournie, l'appeler aussi
     if (onStepClick) {
       onStepClick(target);
     }
   };
 
   // ═══════════════════════════════════════════════════════════════════════════════
-  // BLOCS VERSION ENFANT - Colorés et ludiques avec liens
+  // BLOCS VERSION ENFANT - Colorés et ludiques avec navigation
   // ═══════════════════════════════════════════════════════════════════════════════
   const blocksEnfant = [
     {
-      id: 1, slug: 'bienvenue', target: 'profil', title: 'Bienvenue !', subtitle: 'Rencontre Maître Tanaka',
+      id: 1, slug: 'bienvenue', target: 'profil', title: 'Bienvenue !', subtitle: 'Ton profil Ninja',
       emoji: '👋', gradient: 'from-emerald-500 to-teal-600', shadowColor: 'shadow-emerald-500/40', unlocked: true
     },
     {
@@ -39,66 +34,66 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
       emoji: '🥷', gradient: 'from-violet-500 to-purple-600', shadowColor: 'shadow-violet-500/40', unlocked: true
     },
     {
-      id: 3, slug: 'defis', target: 'defis', title: 'Les Défis', subtitle: 'Relève les défis quotidiens',
+      id: 3, slug: 'defis', target: 'defis', title: 'Les Défis', subtitle: 'Défis quotidiens',
       emoji: '🎯', gradient: 'from-pink-500 to-rose-600', shadowColor: 'shadow-pink-500/40', unlocked: true
     },
     {
-      id: 4, slug: 'vertus', target: 'vertus', title: 'Les 7 Vertus', subtitle: 'Les super-pouvoirs du ninja',
+      id: 4, slug: 'vertus', target: 'vertus', title: 'Les 7 Vertus', subtitle: 'Super-pouvoirs',
       emoji: '☯️', gradient: 'from-amber-500 to-orange-600', shadowColor: 'shadow-amber-500/40', unlocked: true
     },
     {
-      id: 5, slug: 'techniques', target: 'techniques', title: 'Les Techniques', subtitle: 'Apprends les mouvements',
-      emoji: '🥋', gradient: 'from-cyan-500 to-blue-600', shadowColor: 'shadow-cyan-500/40', unlocked: false
+      id: 5, slug: 'techniques', target: 'techniques', title: 'Les Techniques', subtitle: '206+ mouvements',
+      emoji: '🥋', gradient: 'from-cyan-500 to-blue-600', shadowColor: 'shadow-cyan-500/40', unlocked: true
     },
     {
-      id: 6, slug: 'ceintures', target: 'ceintures', title: 'Les Ceintures', subtitle: 'Ta progression de grade',
-      emoji: '🎖️', gradient: 'from-slate-500 to-slate-700', shadowColor: 'shadow-slate-500/40', unlocked: false
+      id: 6, slug: 'ceintures', target: 'ceintures', title: 'Les Ceintures', subtitle: 'Progression',
+      emoji: '🎖️', gradient: 'from-slate-500 to-slate-700', shadowColor: 'shadow-slate-500/40', unlocked: true
     },
     {
-      id: 7, slug: 'histoire', target: 'histoire', title: "L'Histoire", subtitle: "Les origines de l'Aïkido",
-      emoji: '📜', gradient: 'from-amber-600 to-yellow-700', shadowColor: 'shadow-amber-600/40', unlocked: false
+      id: 7, slug: 'histoire', target: 'histoire', title: "L'Histoire", subtitle: "Origines",
+      emoji: '📜', gradient: 'from-amber-600 to-yellow-700', shadowColor: 'shadow-amber-600/40', unlocked: true
     },
     {
-      id: 8, slug: 'trophees', target: 'trophees', title: 'Mes Trophées', subtitle: 'Badges et récompenses',
-      emoji: '🏆', gradient: 'from-yellow-500 to-amber-600', shadowColor: 'shadow-yellow-500/40', unlocked: false
+      id: 8, slug: 'trophees', target: 'trophees', title: 'Mes Trophées', subtitle: 'Récompenses',
+      emoji: '🏆', gradient: 'from-yellow-500 to-amber-600', shadowColor: 'shadow-yellow-500/40', unlocked: true
     }
   ];
 
   // ═══════════════════════════════════════════════════════════════════════════════
-  // BLOCS VERSION ADULTE - Sobres avec Kanji japonais et liens
+  // BLOCS VERSION ADULTE - Sobres avec Kanji japonais et navigation
   // ═══════════════════════════════════════════════════════════════════════════════
   const blocksAdulte = [
     {
-      id: 1, slug: 'inscription', target: 'profil', title: 'Inscription', subtitle: 'Créez votre compte',
-      kanji: '登', kanjiMeaning: 'Monter', accentColor: 'border-l-emerald-500', unlocked: true
+      id: 1, slug: 'inscription', target: 'profil', title: 'Profil', subtitle: 'Votre espace personnel',
+      kanji: '人', kanjiMeaning: 'Personne', accentColor: 'border-l-emerald-500', unlocked: true
     },
     {
-      id: 2, slug: 'programme', target: 'techniques', title: 'Programme', subtitle: '206+ techniques par grade',
+      id: 2, slug: 'programme', target: 'techniques', title: 'Programme', subtitle: '206+ techniques',
       kanji: '技', kanjiMeaning: 'Technique', accentColor: 'border-l-cyan-500', unlocked: true
     },
     {
-      id: 3, slug: 'progression', target: 'ceintures', title: 'Progression', subtitle: 'Suivez votre parcours',
-      kanji: '進', kanjiMeaning: 'Avancer', accentColor: 'border-l-amber-500', unlocked: true
+      id: 3, slug: 'defis', target: 'defis', title: 'Objectifs', subtitle: 'Défis quotidiens',
+      kanji: '目', kanjiMeaning: 'Objectif', accentColor: 'border-l-pink-500', unlocked: true
     },
     {
       id: 4, slug: 'vertus', target: 'vertus', title: 'Les 7 Vertus', subtitle: 'Philosophie du Budo',
       kanji: '徳', kanjiMeaning: 'Vertu', accentColor: 'border-l-violet-500', unlocked: true
     },
     {
-      id: 5, slug: 'grades', target: 'ceintures', title: 'Grades', subtitle: 'Du 6e Kyu au 4e Dan',
-      kanji: '段', kanjiMeaning: 'Grade', accentColor: 'border-l-blue-500', unlocked: false
+      id: 5, slug: 'grades', target: 'ceintures', title: 'Grades', subtitle: '6 Kyu + 4 Dan',
+      kanji: '段', kanjiMeaning: 'Grade', accentColor: 'border-l-amber-500', unlocked: true
     },
     {
-      id: 6, slug: 'objectifs', target: 'defis', title: 'Objectifs', subtitle: 'Défis personnalisés',
-      kanji: '目', kanjiMeaning: 'Objectif', accentColor: 'border-l-pink-500', unlocked: false
+      id: 6, slug: 'progression', target: 'ceintures', title: 'Progression', subtitle: 'Votre parcours',
+      kanji: '進', kanjiMeaning: 'Avancer', accentColor: 'border-l-blue-500', unlocked: true
     },
     {
       id: 7, slug: 'histoire', target: 'histoire', title: 'Histoire', subtitle: "O'Sensei & traditions",
-      kanji: '歴', kanjiMeaning: 'Histoire', accentColor: 'border-l-orange-500', unlocked: false
+      kanji: '歴', kanjiMeaning: 'Histoire', accentColor: 'border-l-orange-500', unlocked: true
     },
     {
-      id: 8, slug: 'certifications', target: 'trophees', title: 'Certifications', subtitle: 'Validez vos acquis',
-      kanji: '証', kanjiMeaning: 'Certificat', accentColor: 'border-l-red-500', unlocked: false
+      id: 8, slug: 'certifications', target: 'trophees', title: 'Certifications', subtitle: 'Badges & trophées',
+      kanji: '証', kanjiMeaning: 'Certificat', accentColor: 'border-l-red-500', unlocked: true
     }
   ];
 
@@ -111,14 +106,14 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
         {/* Titre */}
         <div className="text-center mb-4">
           <h2 className="text-xl sm:text-2xl font-bold text-white mb-1">
-            🎮 Ton Parcours Ninja en 8 étapes ! 🎮
+            🎮 Découvre ton Parcours Ninja ! 🎮
           </h2>
           <p className="text-slate-400 text-xs sm:text-sm">
-            Découvre tout ce qui t'attend ! 🥷
+            Clique sur un bloc pour explorer ! 🥷
           </p>
         </div>
 
-        {/* Grille des 8 blocs colorés avec liens */}
+        {/* Grille des 8 blocs colorés - TOUS CLIQUABLES pour navigation */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
           {blocksEnfant.map((block) => (
             <button
@@ -128,77 +123,51 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
               className={`
                 relative group aspect-square rounded-2xl sm:rounded-3xl p-3 sm:p-4
                 flex flex-col items-center justify-center transition-all duration-300 overflow-hidden
-                ${block.unlocked 
-                  ? `bg-gradient-to-br ${block.gradient} shadow-xl ${block.shadowColor} border-2 border-white/20 hover:border-white/40 hover:scale-105 hover:-translate-y-2 cursor-pointer`
-                  : 'bg-slate-800/50 border-2 border-slate-700 cursor-pointer hover:bg-slate-800/70'
-                }
+                bg-gradient-to-br ${block.gradient} shadow-xl ${block.shadowColor} 
+                border-2 border-white/20 hover:border-white/40 hover:scale-105 hover:-translate-y-2 cursor-pointer
               `}
             >
               {/* Numéro */}
-              <div className={`absolute top-2 left-2 w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center
-                ${block.unlocked ? 'bg-white/20' : 'bg-slate-700'}`}>
-                <span className={`text-lg sm:text-xl font-black ${block.unlocked ? 'text-white' : 'text-slate-500'}`}>
+              <div className="absolute top-2 left-2 w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center bg-white/20">
+                <span className="text-lg sm:text-xl font-black text-white">
                   {block.id}
                 </span>
               </div>
 
-              {/* Cadenas */}
-              {!block.unlocked && (
-                <div className="absolute top-2 right-2 bg-slate-600 rounded-full p-1">
-                  <Lock className="w-4 h-4 text-slate-400" />
-                </div>
-              )}
-
               {/* Emoji */}
-              <span className={`mb-1 sm:mb-2 group-hover:scale-110 transition-transform text-4xl sm:text-5xl ${
-                !block.unlocked ? 'grayscale opacity-50' : ''
-              }`}>
+              <span className="mb-1 sm:mb-2 group-hover:scale-110 transition-transform text-4xl sm:text-5xl">
                 {block.emoji}
               </span>
 
               {/* Titre */}
-              <span className={`font-bold text-center leading-tight text-xs sm:text-sm ${
-                block.unlocked ? 'text-white' : 'text-slate-500'
-              }`}>
+              <span className="font-bold text-center leading-tight text-xs sm:text-sm text-white">
                 {block.title}
               </span>
 
               {/* Sous-titre */}
-              <span className={`text-center mt-0.5 sm:mt-1 text-[10px] sm:text-xs ${
-                block.unlocked ? 'text-white/70' : 'text-slate-600'
-              }`}>
+              <span className="text-center mt-0.5 sm:mt-1 text-[10px] sm:text-xs text-white/70">
                 {block.subtitle}
               </span>
 
               {/* Effet brillance */}
-              {block.unlocked && (
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent 
-                  -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
-              )}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent 
+                -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
             </button>
           ))}
         </div>
 
-        {/* Barre de progression */}
-        <div className="mt-4 px-4">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-slate-400 text-xs">Progression du parcours</span>
-            <span className="text-amber-400 text-xs font-bold">0 / 8 étapes</span>
-          </div>
-          <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
-            <div className="h-full bg-gradient-to-r from-emerald-500 via-cyan-500 to-violet-500 rounded-full" style={{ width: '0%' }} />
-          </div>
-        </div>
-
-        {/* Message */}
-        <p className="text-center mt-3 text-slate-400 text-sm">
-          🔓 Inscris-toi pour débloquer ton parcours !
+        {/* Message d'incitation */}
+        <p className="text-center mt-4 text-slate-400 text-sm">
+          👆 Clique sur un bloc pour découvrir ce qui t'attend !
         </p>
 
-        {/* CTA */}
+        {/* CTA inscription */}
         <div className="mt-6 flex flex-col items-center gap-3">
           <button
-            onClick={() => handleBlockClick('profil')}
+            onClick={() => {
+              const event = new CustomEvent('openAuthDialog');
+              window.dispatchEvent(event);
+            }}
             data-testid="cta-start-adventure"
             className="group relative overflow-hidden px-8 sm:px-12 py-4 rounded-2xl font-bold text-lg
               bg-gradient-to-r from-amber-400 via-orange-400 to-red-400 text-slate-900 
@@ -230,11 +199,11 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
           Votre parcours Aikido
         </h2>
         <p className="text-slate-400 text-sm">
-          Programme complet du 6e Kyu au 4e Dan
+          Explorez les différentes sections de la plateforme
         </p>
       </div>
 
-      {/* Grille des 8 blocs sobres avec Kanji et liens */}
+      {/* Grille des 8 blocs sobres avec Kanji - TOUS CLIQUABLES pour navigation */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
         {blocksAdulte.map((block) => (
           <button
@@ -249,52 +218,35 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
               flex flex-col items-center justify-center
               transition-all duration-300
               border-l-4 ${block.accentColor}
-              ${block.unlocked 
-                ? 'bg-gradient-to-br from-slate-800 to-slate-900 shadow-lg hover:shadow-xl hover:from-slate-700 hover:to-slate-800 cursor-pointer'
-                : 'bg-slate-900/50 opacity-60 cursor-pointer hover:opacity-80'
-              }
+              bg-gradient-to-br from-slate-800 to-slate-900 shadow-lg 
+              hover:shadow-xl hover:from-slate-700 hover:to-slate-800 cursor-pointer
             `}
           >
             {/* Numéro discret */}
-            <div className={`absolute top-2 left-3 text-xs font-medium ${block.unlocked ? 'text-slate-500' : 'text-slate-600'}`}>
+            <div className="absolute top-2 left-3 text-xs font-medium text-slate-500">
               {block.id.toString().padStart(2, '0')}
             </div>
 
-            {/* Cadenas */}
-            {!block.unlocked && (
-              <div className="absolute top-2 right-2">
-                <Lock className="w-4 h-4 text-slate-600" />
-              </div>
-            )}
-
             {/* Kanji central */}
             <span 
-              className={`text-4xl sm:text-5xl lg:text-6xl font-bold mb-2 transition-transform group-hover:scale-110 ${
-                block.unlocked ? 'text-white/90' : 'text-slate-600'
-              }`}
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-2 transition-transform group-hover:scale-110 text-white/90"
               style={{ fontFamily: "'Noto Serif JP', serif" }}
             >
               {block.kanji}
             </span>
 
             {/* Titre */}
-            <span className={`font-semibold text-center text-sm ${
-              block.unlocked ? 'text-white' : 'text-slate-500'
-            }`}>
+            <span className="font-semibold text-center text-sm text-white">
               {block.title}
             </span>
 
             {/* Sous-titre */}
-            <span className={`text-center text-[10px] sm:text-xs mt-1 ${
-              block.unlocked ? 'text-slate-400' : 'text-slate-600'
-            }`}>
+            <span className="text-center text-[10px] sm:text-xs mt-1 text-slate-400">
               {block.subtitle}
             </span>
 
             {/* Signification du Kanji */}
-            <span className={`absolute bottom-2 text-[9px] italic ${
-              block.unlocked ? 'text-slate-500' : 'text-slate-700'
-            }`}>
+            <span className="absolute bottom-2 text-[9px] italic text-slate-500">
               {block.kanjiMeaning}
             </span>
           </button>
@@ -327,7 +279,10 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
       {/* CTA sobre */}
       <div className="mt-6 flex flex-col items-center gap-3">
         <button
-          onClick={() => handleBlockClick('profil')}
+          onClick={() => {
+            const event = new CustomEvent('openAuthDialog');
+            window.dispatchEvent(event);
+          }}
           data-testid="cta-start-adventure-adulte"
           className="group relative overflow-hidden px-8 py-3 rounded-xl font-semibold
             bg-gradient-to-r from-slate-700 to-slate-800 text-white border border-slate-600
