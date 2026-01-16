@@ -451,8 +451,8 @@ const SenseiInvisible = ({ userName, onComplete, onExit, tanakaSpeak }) => {
             <span className="text-6xl block mb-4">🙉</span>
             <h2 className="text-2xl font-bold text-red-400 mb-2">Concentration perdue !</h2>
             <p className="text-slate-300 mb-6">
-              L'écoute demande de la patience.<br/>
-              <em className="text-amber-400">"Écouter, c'est observer avec les oreilles"</em>
+              L&apos;écoute demande de la patience.<br/>
+              <em className="text-amber-400">&quot;Écouter, c&apos;est observer avec les oreilles&quot;</em>
             </p>
             
             <div className="flex justify-center gap-4">
