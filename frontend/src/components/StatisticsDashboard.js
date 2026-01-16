@@ -129,6 +129,9 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
   // État pour le formulaire d'onboarding (étape 1)
   const [showProfileOnboarding, setShowProfileOnboarding] = useState(false);
   
+  // État pour les fiches techniques par Kyu (étape 2)
+  const [showTechniquesCards, setShowTechniquesCards] = useState(false);
+  
   // État pour les confettis de célébration
   const [showConfetti, setShowConfetti] = useState(false);
   
