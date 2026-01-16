@@ -745,33 +745,67 @@ const TechniquesByKyuCards = ({
                   </div>
                 </div>
 
-                {/* Boutons d'action */}
+                {/* ⭐ SÉLECTEUR DE NIVEAU DE MAÎTRISE */}
+                <div className="bg-gradient-to-r from-slate-700/50 to-slate-800/50 rounded-xl p-4 mb-5 border border-slate-600/50">
+                  <h4 className="text-white font-bold text-sm mb-3 flex items-center gap-2">
+                    <GraduationCap className="w-4 h-4 text-purple-400" />
+                    Mon niveau de maîtrise
+                  </h4>
+                  
+                  <div className="grid grid-cols-2 gap-2">
+                    {MASTERY_LEVELS.map((level) => {
+                      const isCurrentLevel = masteryLevels[selectedTechnique.id] === level.id || 
+                        (!masteryLevels[selectedTechnique.id] && level.id === 'not_started');
+                      const LevelIcon = level.icon;
+                      const isSaving = savingMastery === selectedTechnique.id;
+                      
+                      return (
+                        <button
+                          key={level.id}
+                          onClick={() => !isSaving && updateMasteryLevel(selectedTechnique.id, level.id)}
+                          disabled={isSaving}
+                          data-testid={`mastery-level-${level.id}`}
+                          className={`
+                            relative p-3 rounded-lg border-2 transition-all duration-200
+                            flex items-center gap-2
+                            ${isCurrentLevel 
+                              ? `${level.bg} border-current ${level.color} ring-2 ring-offset-2 ring-offset-slate-800 ring-current` 
+                              : 'bg-slate-700/30 border-slate-600/50 text-slate-400 hover:bg-slate-700/50 hover:border-slate-500'
+                            }
+                            ${isSaving ? 'opacity-50 cursor-wait' : 'cursor-pointer'}
+                          `}
+                        >
+                          {isSaving && isCurrentLevel ? (
+                            <Loader2 className="w-5 h-5 animate-spin" />
+                          ) : (
+                            <LevelIcon className={`w-5 h-5 ${isCurrentLevel ? level.color : ''}`} />
+                          )}
+                          <div className="text-left flex-1">
+                            <span className="text-sm font-medium block">{level.label}</span>
+                            <span className="text-xl">{level.emoji}</span>
+                          </div>
+                          {isCurrentLevel && (
+                            <Check className="w-4 h-4 absolute top-1 right-1" />
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                  
+                  <p className="text-slate-400 text-xs mt-3 text-center">
+                    Clique pour mettre à jour ton niveau de progression
+                  </p>
+                </div>
+
+                {/* Bouton fermer uniquement */}
                 <div className="flex gap-3">
                   <Button
                     variant="ghost"
                     onClick={() => setSelectedTechnique(null)}
-                    className="flex-1 text-slate-400 hover:text-white"
+                    className="flex-1 text-slate-400 hover:text-white border border-slate-600"
                   >
                     Fermer
                   </Button>
-                  
-                  {!localMastered.includes(selectedTechnique.id) && (
-                    <Button
-                      onClick={() => handleMasterTechnique(selectedTechnique.id)}
-                      className="flex-1 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-bold"
-                      data-testid="master-technique-btn"
-                    >
-                      <Check className="w-4 h-4 mr-2" />
-                      Marquer comme maîtrisé !
-                    </Button>
-                  )}
-                  
-                  {localMastered.includes(selectedTechnique.id) && (
-                    <div className="flex-1 flex items-center justify-center gap-2 text-emerald-400 font-bold">
-                      <Trophy className="w-5 h-5" />
-                      Technique maîtrisée !
-                    </div>
-                  )}
                 </div>
               </motion.div>
             </motion.div>
