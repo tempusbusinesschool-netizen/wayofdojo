@@ -71,6 +71,35 @@ const StepTransition = ({
           transition={{ duration: 0.3 }}
           className="fixed inset-0 z-[100] flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"
         >
+          {/* 🎉 CONFETTIS ! */}
+          {showConfetti && (
+            <Confetti
+              width={windowSize.width}
+              height={windowSize.height}
+              numberOfPieces={confettiPieces}
+              recycle={false}
+              gravity={0.3}
+              initialVelocityX={15}
+              initialVelocityY={30}
+              colors={[
+                '#10B981', // emerald
+                '#14B8A6', // teal
+                '#F59E0B', // amber
+                '#EC4899', // pink
+                '#8B5CF6', // violet
+                '#06B6D4', // cyan
+                '#EF4444', // red
+                '#FBBF24', // yellow
+              ]}
+              confettiSource={{
+                x: windowSize.width / 2,
+                y: windowSize.height / 3,
+                w: 10,
+                h: 10
+              }}
+            />
+          )}
+
           {/* Background animated circles */}
           <div className="absolute inset-0 overflow-hidden">
             <motion.div
