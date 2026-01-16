@@ -35,6 +35,12 @@ Application web gamifiée pour le club d'Aikido permettant aux pratiquants de su
    - Login parent@gmail.com / parent123 OK
    - Affichage des enfants liés et messages/observations OK
 
+5. ✅ **Mise à jour CGV et badges de récompense**
+   - CGV : Délais modifiés de 30 à 7 jours (réclamation, notification, force majeure, résiliation club)
+   - Badge "Marathonien" : Modifié de 30 à 14 jours d'affilée (adapté à la temporalité Aïkido)
+   - Streak badges : 3 jours → 7 jours → 14 jours (progression réaliste pour pratique hebdomadaire)
+   - TTS Tanaka : Références streak_30 remplacées par streak_14/streak_21
+
 ---
 
 ## Architecture des écrans (Mise à jour 16 janvier 2025)
