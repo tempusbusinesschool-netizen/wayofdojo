@@ -7,88 +7,100 @@ import { Lock } from 'lucide-react';
  * DEUX TEMPLATES DISTINCTS:
  * - MODE ENFANT (Jeune Ninja) : Coloré, ludique, emojis, gamifié
  * - MODE ADULTE (Ninja Confirmé) : Sobre, professionnel, Kanji japonais
+ * 
+ * Les blocs redirigent vers le dialogue d'inscription pour inciter à créer un compte
  */
 const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
   
   const isEnfant = mode === 'enfant';
 
+  // Fonction pour gérer le clic sur un bloc
+  const handleBlockClick = (target) => {
+    // Ouvrir le dialogue d'inscription
+    const event = new CustomEvent('openAuthDialog');
+    window.dispatchEvent(event);
+    
+    // Si une fonction de navigation est fournie, l'appeler aussi
+    if (onStepClick) {
+      onStepClick(target);
+    }
+  };
+
   // ═══════════════════════════════════════════════════════════════════════════════
-  // BLOCS VERSION ENFANT - Colorés et ludiques
+  // BLOCS VERSION ENFANT - Colorés et ludiques avec liens
   // ═══════════════════════════════════════════════════════════════════════════════
   const blocksEnfant = [
     {
-      id: 1, slug: 'bienvenue', title: 'Bienvenue !', subtitle: 'Rencontre Maître Tanaka',
+      id: 1, slug: 'bienvenue', target: 'profil', title: 'Bienvenue !', subtitle: 'Rencontre Maître Tanaka',
       emoji: '👋', gradient: 'from-emerald-500 to-teal-600', shadowColor: 'shadow-emerald-500/40', unlocked: true
     },
     {
-      id: 2, slug: 'profil', title: 'Mon Profil', subtitle: 'Ta carte de ninja',
+      id: 2, slug: 'profil', target: 'profil', title: 'Mon Profil', subtitle: 'Ta carte de ninja',
       emoji: '🥷', gradient: 'from-violet-500 to-purple-600', shadowColor: 'shadow-violet-500/40', unlocked: true
     },
     {
-      id: 3, slug: 'defis', title: 'Les Défis', subtitle: 'Relève les défis quotidiens',
+      id: 3, slug: 'defis', target: 'defis', title: 'Les Défis', subtitle: 'Relève les défis quotidiens',
       emoji: '🎯', gradient: 'from-pink-500 to-rose-600', shadowColor: 'shadow-pink-500/40', unlocked: true
     },
     {
-      id: 4, slug: 'vertus', title: 'Les 7 Vertus', subtitle: 'Les super-pouvoirs du ninja',
+      id: 4, slug: 'vertus', target: 'vertus', title: 'Les 7 Vertus', subtitle: 'Les super-pouvoirs du ninja',
       emoji: '☯️', gradient: 'from-amber-500 to-orange-600', shadowColor: 'shadow-amber-500/40', unlocked: true
     },
     {
-      id: 5, slug: 'techniques', title: 'Les Techniques', subtitle: 'Apprends les mouvements',
+      id: 5, slug: 'techniques', target: 'techniques', title: 'Les Techniques', subtitle: 'Apprends les mouvements',
       emoji: '🥋', gradient: 'from-cyan-500 to-blue-600', shadowColor: 'shadow-cyan-500/40', unlocked: false
     },
     {
-      id: 6, slug: 'ceintures', title: 'Les Ceintures', subtitle: 'Ta progression de grade',
+      id: 6, slug: 'ceintures', target: 'ceintures', title: 'Les Ceintures', subtitle: 'Ta progression de grade',
       emoji: '🎖️', gradient: 'from-slate-500 to-slate-700', shadowColor: 'shadow-slate-500/40', unlocked: false
     },
     {
-      id: 7, slug: 'histoire', title: "L'Histoire", subtitle: "Les origines de l'Aïkido",
+      id: 7, slug: 'histoire', target: 'histoire', title: "L'Histoire", subtitle: "Les origines de l'Aïkido",
       emoji: '📜', gradient: 'from-amber-600 to-yellow-700', shadowColor: 'shadow-amber-600/40', unlocked: false
     },
     {
-      id: 8, slug: 'trophees', title: 'Mes Trophées', subtitle: 'Badges et récompenses',
+      id: 8, slug: 'trophees', target: 'trophees', title: 'Mes Trophées', subtitle: 'Badges et récompenses',
       emoji: '🏆', gradient: 'from-yellow-500 to-amber-600', shadowColor: 'shadow-yellow-500/40', unlocked: false
     }
   ];
 
   // ═══════════════════════════════════════════════════════════════════════════════
-  // BLOCS VERSION ADULTE - Sobres avec Kanji japonais
+  // BLOCS VERSION ADULTE - Sobres avec Kanji japonais et liens
   // ═══════════════════════════════════════════════════════════════════════════════
   const blocksAdulte = [
     {
-      id: 1, slug: 'inscription', title: 'Inscription', subtitle: 'Créez votre compte',
+      id: 1, slug: 'inscription', target: 'profil', title: 'Inscription', subtitle: 'Créez votre compte',
       kanji: '登', kanjiMeaning: 'Monter', accentColor: 'border-l-emerald-500', unlocked: true
     },
     {
-      id: 2, slug: 'programme', title: 'Programme', subtitle: '206+ techniques par grade',
+      id: 2, slug: 'programme', target: 'techniques', title: 'Programme', subtitle: '206+ techniques par grade',
       kanji: '技', kanjiMeaning: 'Technique', accentColor: 'border-l-cyan-500', unlocked: true
     },
     {
-      id: 3, slug: 'progression', title: 'Progression', subtitle: 'Suivez votre parcours',
+      id: 3, slug: 'progression', target: 'ceintures', title: 'Progression', subtitle: 'Suivez votre parcours',
       kanji: '進', kanjiMeaning: 'Avancer', accentColor: 'border-l-amber-500', unlocked: true
     },
     {
-      id: 4, slug: 'vertus', title: 'Les 7 Vertus', subtitle: 'Philosophie du Budo',
+      id: 4, slug: 'vertus', target: 'vertus', title: 'Les 7 Vertus', subtitle: 'Philosophie du Budo',
       kanji: '徳', kanjiMeaning: 'Vertu', accentColor: 'border-l-violet-500', unlocked: true
     },
     {
-      id: 5, slug: 'grades', title: 'Grades', subtitle: 'Du 6e Kyu au 4e Dan',
+      id: 5, slug: 'grades', target: 'ceintures', title: 'Grades', subtitle: 'Du 6e Kyu au 4e Dan',
       kanji: '段', kanjiMeaning: 'Grade', accentColor: 'border-l-blue-500', unlocked: false
     },
     {
-      id: 6, slug: 'objectifs', title: 'Objectifs', subtitle: 'Défis personnalisés',
+      id: 6, slug: 'objectifs', target: 'defis', title: 'Objectifs', subtitle: 'Défis personnalisés',
       kanji: '目', kanjiMeaning: 'Objectif', accentColor: 'border-l-pink-500', unlocked: false
     },
     {
-      id: 7, slug: 'histoire', title: 'Histoire', subtitle: "O'Sensei & traditions",
+      id: 7, slug: 'histoire', target: 'histoire', title: 'Histoire', subtitle: "O'Sensei & traditions",
       kanji: '歴', kanjiMeaning: 'Histoire', accentColor: 'border-l-orange-500', unlocked: false
     },
     {
-      id: 8, slug: 'certifications', title: 'Certifications', subtitle: 'Validez vos acquis',
+      id: 8, slug: 'certifications', target: 'trophees', title: 'Certifications', subtitle: 'Validez vos acquis',
       kanji: '証', kanjiMeaning: 'Certificat', accentColor: 'border-l-red-500', unlocked: false
     }
   ];
-
-  const blocks = isEnfant ? blocksEnfant : blocksAdulte;
 
   // ═══════════════════════════════════════════════════════════════════════════════
   // RENDU VERSION ENFANT - Coloré et ludique
@@ -106,15 +118,12 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
           </p>
         </div>
 
-        {/* Grille des 8 blocs colorés */}
+        {/* Grille des 8 blocs colorés avec liens */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
           {blocksEnfant.map((block) => (
             <button
               key={block.id}
-              onClick={() => {
-                const event = new CustomEvent('openAuthDialog');
-                window.dispatchEvent(event);
-              }}
+              onClick={() => handleBlockClick(block.target)}
               data-testid={`visitor-block-${block.slug}`}
               className={`
                 relative group aspect-square rounded-2xl sm:rounded-3xl p-3 sm:p-4
@@ -189,10 +198,7 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
         {/* CTA */}
         <div className="mt-6 flex flex-col items-center gap-3">
           <button
-            onClick={() => {
-              const event = new CustomEvent('openAuthDialog');
-              window.dispatchEvent(event);
-            }}
+            onClick={() => handleBlockClick('profil')}
             data-testid="cta-start-adventure"
             className="group relative overflow-hidden px-8 sm:px-12 py-4 rounded-2xl font-bold text-lg
               bg-gradient-to-r from-amber-400 via-orange-400 to-red-400 text-slate-900 
@@ -228,15 +234,12 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
         </p>
       </div>
 
-      {/* Grille des 8 blocs sobres avec Kanji */}
+      {/* Grille des 8 blocs sobres avec Kanji et liens */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
         {blocksAdulte.map((block) => (
           <button
             key={block.id}
-            onClick={() => {
-              const event = new CustomEvent('openAuthDialog');
-              window.dispatchEvent(event);
-            }}
+            onClick={() => handleBlockClick(block.target)}
             data-testid={`visitor-block-${block.slug}`}
             className={`
               relative group
@@ -324,10 +327,7 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
       {/* CTA sobre */}
       <div className="mt-6 flex flex-col items-center gap-3">
         <button
-          onClick={() => {
-            const event = new CustomEvent('openAuthDialog');
-            window.dispatchEvent(event);
-          }}
+          onClick={() => handleBlockClick('profil')}
           data-testid="cta-start-adventure-adulte"
           className="group relative overflow-hidden px-8 py-3 rounded-xl font-semibold
             bg-gradient-to-r from-slate-700 to-slate-800 text-white border border-slate-600
