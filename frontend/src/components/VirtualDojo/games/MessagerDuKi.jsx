@@ -5,12 +5,15 @@
  * L'enfant contrôle un avatar qui traverse le dojo
  * S'il va trop vite, il perd l'équilibre
  * Il doit respirer et garder sa posture
+ * 
+ * AVEC VOIX TTS DE MAÎTRE TANAKA
  */
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight, Heart, Wind, X, RotateCcw } from 'lucide-react';
+import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight, Heart, Wind, X, RotateCcw, Volume2, VolumeX } from 'lucide-react';
+import { useTanakaVoice, TANAKA_GAME_MESSAGES } from '@/hooks/useTanakaVoice';
 
 // Personnage ninja simplifié en SVG
 const NinjaAvatar = ({ x, y, balance, isBreathing }) => (
