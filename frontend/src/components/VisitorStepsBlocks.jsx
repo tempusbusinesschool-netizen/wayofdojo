@@ -541,7 +541,7 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
   ];
 
   // ═══════════════════════════════════════════════════════════════════════════════
-  // RENDU VERSION ENFANT - Blocs colorés avec contenu détaillé
+  // RENDU VERSION ENFANT - Blocs colorés avec VRAI CONTENU visible
   // ═══════════════════════════════════════════════════════════════════════════════
   if (isEnfant) {
     return (
@@ -549,53 +549,109 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
         {/* Titre */}
         <div className="text-center mb-4">
           <h2 className="text-xl sm:text-2xl font-bold text-white mb-1">
-            🎮 Tout ce qui t'attend dans Aikido@Game ! 🎮
+            🎮 Découvre ce qui t'attend ! 🎮
           </h2>
           <p className="text-slate-400 text-xs sm:text-sm">
-            Inscris-toi pour débloquer tout ce contenu ! 🔓
+            Clique sur un bloc pour voir un aperçu 👀 • <span className="text-amber-400">Inscris-toi pour tout débloquer !</span>
           </p>
         </div>
 
-        {/* Grille des 8 blocs - PRÉSENTATION DU CONTENU */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        {/* Grille des 8 blocs - PRÉSENTATION DU VRAI CONTENU */}
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
           {blocksEnfant.map((block) => (
             <button
               key={block.id}
-              onClick={handleBlockClick}
+              onClick={() => handleBlockClick(block)}
               data-testid={`visitor-block-${block.slug}`}
               className={`
-                relative group rounded-2xl p-4 text-left
+                relative group rounded-xl sm:rounded-2xl p-3 sm:p-4 text-left
                 transition-all duration-300 overflow-hidden
-                bg-gradient-to-br ${block.gradient} shadow-xl ${block.shadowColor} 
-                border-2 border-white/20 hover:border-white/40 hover:scale-[1.02] cursor-pointer
+                bg-gradient-to-br ${block.gradient} shadow-lg ${block.shadowColor} 
+                border-2 border-white/20 hover:border-white/50 hover:scale-[1.02] cursor-pointer
+                min-h-[140px] sm:min-h-[180px]
               `}
             >
-              {/* Badge "Inscris-toi" */}
-              <div className="absolute top-2 right-2 bg-white/20 backdrop-blur-sm text-white text-[9px] px-2 py-0.5 rounded-full flex items-center gap-1">
-                <Lock className="w-3 h-3" />
-                <span>Inscris-toi</span>
+              {/* Badge "Aperçu" */}
+              <div className="absolute top-1.5 right-1.5 sm:top-2 sm:right-2 bg-white/25 backdrop-blur-sm text-white text-[8px] sm:text-[10px] px-1.5 sm:px-2 py-0.5 rounded-full flex items-center gap-1">
+                <Eye className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                <span className="hidden sm:inline">Aperçu</span>
               </div>
 
               {/* En-tête avec emoji et titre */}
-              <div className="flex items-center gap-3 mb-2">
-                <span className="text-3xl sm:text-4xl">{block.emoji}</span>
-                <div>
-                  <h3 className="font-bold text-white text-sm sm:text-base leading-tight">{block.title}</h3>
-                </div>
+              <div className="flex items-center gap-2 sm:gap-3 mb-2">
+                <span className="text-2xl sm:text-3xl">{block.emoji}</span>
+                <h3 className="font-bold text-white text-xs sm:text-sm leading-tight">{block.title}</h3>
               </div>
 
-              {/* Description du contenu */}
-              <p className="text-white/80 text-xs sm:text-sm mb-3 line-clamp-2">
-                {block.content}
-              </p>
+              {/* Mini aperçu du contenu réel */}
+              <div className="text-[10px] sm:text-xs text-white/80 space-y-1">
+                {block.slug === 'techniques' && (
+                  <div className="flex flex-wrap gap-1">
+                    {realTechniques.slice(0, 3).map((t, i) => (
+                      <span key={i} className="bg-white/20 px-1.5 py-0.5 rounded text-[9px]">{t.emoji} {t.name}</span>
+                    ))}
+                    <span className="text-white/60">+203</span>
+                  </div>
+                )}
+                {block.slug === 'defis' && (
+                  <div className="space-y-0.5">
+                    {realChallenges.slice(0, 2).map((c, i) => (
+                      <div key={i} className="flex items-center gap-1">
+                        <span>{c.emoji}</span>
+                        <span className="truncate">{c.name}</span>
+                        <span className="text-amber-300 text-[9px]">+{c.xp}XP</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                {block.slug === 'vertus' && (
+                  <div className="flex gap-1 flex-wrap">
+                    {realVirtues.slice(0, 4).map((v, i) => (
+                      <span key={i} className="flex items-center gap-0.5 bg-white/20 px-1 py-0.5 rounded">
+                        {v.emoji}{v.animal}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                {block.slug === 'ceintures' && (
+                  <div className="flex items-center gap-1">
+                    {realBelts.map((b, i) => (
+                      <span key={i} className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full ${b.color} border border-white/30`}></span>
+                    ))}
+                  </div>
+                )}
+                {block.slug === 'trophees' && (
+                  <div className="flex gap-1">
+                    {realTrophies.slice(0, 4).map((t, i) => (
+                      <span key={i} className="text-lg">{t.emoji}</span>
+                    ))}
+                    <span className="text-white/60">+46</span>
+                  </div>
+                )}
+                {block.slug === 'profil' && (
+                  <div className="flex items-center gap-2">
+                    <span className="bg-white/20 px-1.5 py-0.5 rounded">🦁 Animal</span>
+                    <span className="bg-white/20 px-1.5 py-0.5 rounded">⭐ XP</span>
+                  </div>
+                )}
+                {block.slug === 'histoire' && (
+                  <div className="flex items-center gap-1">
+                    <span>👴🏻 O'Sensei</span>
+                    <span>🎎 Hakama</span>
+                  </div>
+                )}
+                {block.slug === 'parents' && (
+                  <div className="flex items-center gap-1">
+                    <span className="bg-white/20 px-1.5 py-0.5 rounded">✅ Valider</span>
+                    <span className="bg-white/20 px-1.5 py-0.5 rounded">📊 Stats</span>
+                  </div>
+                )}
+              </div>
 
-              {/* Tags/détails */}
-              <div className="flex flex-wrap gap-1">
-                {block.details.map((detail, idx) => (
-                  <span key={idx} className="bg-white/20 text-white text-[10px] px-2 py-0.5 rounded-full">
-                    {detail}
-                  </span>
-                ))}
+              {/* Bouton "Voir plus" */}
+              <div className="absolute bottom-2 right-2 bg-white/30 text-white text-[9px] sm:text-[10px] px-2 py-1 rounded-full flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                <span>Voir</span>
+                <ChevronRight className="w-3 h-3" />
               </div>
 
               {/* Effet brillance au hover */}
@@ -605,31 +661,80 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
           ))}
         </div>
 
-        {/* Message d'incitation */}
-        <p className="text-center mt-4 text-amber-400 text-sm font-medium">
-          ⭐ Tout ce contenu t'attend ! Crée ton compte pour commencer l'aventure !
-        </p>
-
         {/* CTA inscription */}
-        <div className="mt-6 flex flex-col items-center gap-3">
+        <div className="mt-4 sm:mt-6 flex flex-col items-center gap-2 sm:gap-3">
           <button
-            onClick={handleBlockClick}
+            onClick={handleSignupClick}
             data-testid="cta-start-adventure"
-            className="group relative overflow-hidden px-8 sm:px-12 py-4 rounded-2xl font-bold text-lg
+            className="group relative overflow-hidden px-6 sm:px-10 py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold text-base sm:text-lg
               bg-gradient-to-r from-amber-400 via-orange-400 to-red-400 text-slate-900 
               shadow-xl shadow-amber-500/40 hover:shadow-amber-500/60
               transform hover:scale-105 hover:-translate-y-1 transition-all duration-300"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent 
               -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-            <span className="relative flex items-center gap-3">
-              <span className="text-2xl">🥷</span>
+            <span className="relative flex items-center gap-2 sm:gap-3">
+              <span className="text-xl sm:text-2xl">🥷</span>
               <span>Créer mon compte Ninja</span>
-              <span className="text-2xl">🚀</span>
+              <span className="text-xl sm:text-2xl">🚀</span>
             </span>
           </button>
-          <p className="text-slate-500 text-xs">✨ C'est gratuit et ça prend 30 secondes !</p>
+          <p className="text-slate-500 text-[10px] sm:text-xs">✨ C'est gratuit et ça prend 30 secondes !</p>
         </div>
+
+        {/* MODAL D'APERÇU - Montre le VRAI contenu du bloc */}
+        {previewBlock && (
+          <div 
+            className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={closePreview}
+          >
+            <div 
+              className={`relative w-full max-w-md rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br ${previewBlock.gradient}`}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Header */}
+              <div className="p-4 border-b border-white/20">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <span className="text-4xl">{previewBlock.emoji}</span>
+                    <div>
+                      <h3 className="text-xl font-bold text-white">{previewBlock.title}</h3>
+                      <p className="text-white/70 text-sm">Aperçu du contenu</p>
+                    </div>
+                  </div>
+                  <button 
+                    onClick={closePreview}
+                    className="bg-white/20 hover:bg-white/30 rounded-full p-2 transition-colors"
+                  >
+                    <X className="w-5 h-5 text-white" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Contenu réel */}
+              <div className="p-4">
+                {previewBlock.previewContent}
+              </div>
+
+              {/* Footer avec CTA */}
+              <div className="p-4 bg-black/20 border-t border-white/10">
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-2 text-white/80 text-sm">
+                    <Lock className="w-4 h-4" />
+                    <span>Inscris-toi pour débloquer !</span>
+                  </div>
+                  <button
+                    onClick={handleSignupClick}
+                    className="bg-white text-slate-900 font-bold px-4 py-2 rounded-xl hover:bg-white/90 transition-colors flex items-center gap-2"
+                  >
+                    <Sparkles className="w-4 h-4" />
+                    <span>S'inscrire</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     );
   }
