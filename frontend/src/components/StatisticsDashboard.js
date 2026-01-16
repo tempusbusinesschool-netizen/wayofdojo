@@ -814,7 +814,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                   <>
                     {/* Hero Banner - Version responsive */}
                     {/* Sur mobile: landing page commerciale claire, sur desktop: rectangle avec gradient */}
-                    <div className="relative overflow-hidden mb-4 sm:mb-6">
+                    <div className="relative overflow-hidden mb-2 sm:mb-4">
                       {/* Version MOBILE - Landing page avec les 2 gros blocs */}
                       <div className="block sm:hidden px-2">
                         
