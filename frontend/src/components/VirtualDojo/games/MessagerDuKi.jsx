@@ -97,6 +97,10 @@ const ExitGate = ({ x, y }) => (
 );
 
 const MessagerDuKi = ({ userName, onComplete, onExit, tanakaSpeak }) => {
+  // Hook pour la voix TTS de Tanaka
+  const { speak, speaking, stopSpeaking } = useTanakaVoice();
+  const [voiceEnabled, setVoiceEnabled] = useState(true);
+  
   // États du jeu
   const [gameState, setGameState] = useState('intro'); // intro, playing, success, fail
   const [score, setScore] = useState(0);
@@ -120,6 +124,18 @@ const MessagerDuKi = ({ userName, onComplete, onExit, tanakaSpeak }) => {
   const BALANCE_DRAIN_FAST = 2;
   const BALANCE_DRAIN_SLOW = 0.3;
   const BALANCE_RESTORE = 1.5;
+  
+  // Fonction pour faire parler Tanaka avec TTS
+  const speakTanaka = useCallback((message, displayMessage = null) => {
+    // Afficher le message dans l'UI
+    if (tanakaSpeak) {
+      tanakaSpeak(displayMessage || message);
+    }
+    // Jouer le TTS si activé
+    if (voiceEnabled) {
+      speak(message);
+    }
+  }, [voiceEnabled, speak, tanakaSpeak]);
 
   // Initialiser les obstacles
   useEffect(() => {
