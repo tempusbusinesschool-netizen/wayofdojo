@@ -115,11 +115,6 @@ const SCENARIOS = [
 ];
 
 const ReflexePacifique = ({ userName, onComplete, onExit, tanakaSpeak }) => {
-  // Initialiser les scénarios une fois avec useMemo
-  const initialScenarios = useMemo(() => {
-    return [...SCENARIOS].sort(() => Math.random() - 0.5).slice(0, 5);
-  }, []);
-  
   const [gameState, setGameState] = useState('intro');
   const [score, setScore] = useState(0);
   const [currentScenarioIndex, setCurrentScenarioIndex] = useState(0);
@@ -127,9 +122,12 @@ const ReflexePacifique = ({ userName, onComplete, onExit, tanakaSpeak }) => {
   const [showFeedback, setShowFeedback] = useState(false);
   const [correctAnswers, setCorrectAnswers] = useState(0);
   const [timeLeft, setTimeLeft] = useState(15);
-  const [scenarios, setScenarios] = useState(initialScenarios);
+  // Initialisation paresseuse des scénarios
+  const [scenarios, setScenarios] = useState(() => 
+    [...SCENARIOS].sort(() => Math.random() - 0.5).slice(0, 5)
+  );
   
-  // Ref pour éviter les appels setState dans useEffect
+  // Ref pour éviter les appels multiples du timeout handler
   const timeoutHandledRef = useRef(false);
 
   // Handler pour passer au scénario suivant - défini en premier
