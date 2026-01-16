@@ -57,7 +57,7 @@ const TanakaEventDemo = ({ isVisible = false }) => {
       label: 'Série 14 jours',
       icon: Flame,
       color: 'bg-red-500',
-      action: () => tanaka.onStreakMilestone(30)
+      action: () => tanaka.onStreakMilestone(14)
     },
     {
       label: 'Level Up',
