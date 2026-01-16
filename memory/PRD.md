@@ -99,6 +99,25 @@ Application web gamifiée pour le club d'Aikido permettant aux pratiquants de su
 
 ## Changelog récent
 
+### 16 janvier 2025 (Session 3) - DOJO VIRTUEL 🏯
+- ✅ **Étape 3 "Entraîne-toi" - Dojo Virtuel avec 10 mini-jeux**
+  - Architecture complète avec 2 espaces : Jeux Numériques + Exercices Dojo Réel
+  - **10 mini-jeux éducatifs** pour enfants 5-14 ans :
+    1. 🌊 Le Messager du Ki - Gestion du stress (SVG Canvas)
+    2. 💨 Parcours du Souffle - Respiration consciente
+    3. 👂 Le Sensei Invisible - Écoute audio-guidée
+    4. 🧠 Réflexe Pacifique - Intelligence émotionnelle (8 scénarios)
+    5. 🎯 Gardien de l'Espace - Maîtrise du Ma-ai (à venir)
+    6. 🪞 Miroir d'Harmonie - Synchronisation (à venir)
+    7. ⚖️ Chemin de l'Équilibre - Posture & centre (à venir)
+    8. 🎴 Memory du Sensei - Mémoire visuelle (à venir)
+    9. 🥁 Rythme du Dojo - Tempo & fluidité (à venir)
+    10. 🛡️ Quête des 7 Vertus - Valeurs du Budo (à venir)
+  - **Maître Tanaka** comme coach virtuel intégré
+  - Système de **Points de Ki** et progression par niveaux
+  - **Interface Enseignant** pour valider les exercices au dojo réel
+  - 8 exercices dojo réel validables par l'enseignant
+
 ### 16 janvier 2025 (Session 2)
 - ✅ **Étape 2 "Apprends" - TechniquesByKyuCards** 
   - Fiches techniques complètes par niveau de ceinture (5e KYU → GODAN)
@@ -134,8 +153,11 @@ Application web gamifiée pour le club d'Aikido permettant aux pratiquants de su
 
 | Fichier | Description |
 |---------|-------------|
-| `TechniquesByKyuCards.jsx` | **NOUVEAU** - Fiches techniques par Kyu avec Tanaka animé et progression séquentielle |
-| `ProfileOnboarding.jsx` | **NOUVEAU** - Formulaire d'onboarding 3 étapes avec Tanaka |
+| `VirtualDojo/index.jsx` | **NOUVEAU** - Dojo Virtuel principal avec 10 mini-jeux |
+| `VirtualDojo/games/*.jsx` | **NOUVEAU** - 4 jeux implémentés + 6 placeholders |
+| `VirtualDojo/TeacherValidationInterface.jsx` | **NOUVEAU** - Interface validation enseignant |
+| `TechniquesByKyuCards.jsx` | Fiches techniques par Kyu avec Tanaka animé |
+| `ProfileOnboarding.jsx` | Formulaire d'onboarding 3 étapes avec Tanaka |
 | `VisitorStepsBlocks.jsx` | 8 blocs avec aperçu du vrai contenu (enfant/adulte) |
 | `TechniqueCelebration.jsx` | Animation confettis + son pour maîtrise |
 | `TechniqueModal.js` | Modal de technique avec célébration |
