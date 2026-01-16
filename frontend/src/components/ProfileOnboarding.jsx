@@ -283,54 +283,54 @@ const ProfileOnboarding = ({
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
-                className="space-y-4"
+                className="space-y-3"
               >
-                <div className="text-center mb-6">
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-500/20 mb-3">
-                    <Camera className="w-8 h-8 text-emerald-400" />
+                <div className="text-center mb-3">
+                  <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-emerald-500/20 mb-2">
+                    <Camera className="w-5 h-5 text-emerald-400" />
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-2">Choisis ton Avatar</h3>
-                  <p className="text-slate-400 text-sm">Sélectionne l'image qui te représente le mieux !</p>
+                  <h3 className="text-base font-bold text-white mb-1">Choisis ton Avatar</h3>
+                  <p className="text-slate-400 text-xs">Sélectionne l'image qui te représente !</p>
                 </div>
 
-                <div className="grid grid-cols-4 gap-3">
+                <div className="grid grid-cols-4 gap-2">
                   {avatars.map((avatar) => (
                     <button
                       key={avatar.id}
                       onClick={() => setSelectedAvatar(avatar.id)}
                       className={`
-                        relative p-4 rounded-xl transition-all duration-200
-                        flex flex-col items-center justify-center gap-2
+                        relative p-2 rounded-lg transition-all duration-200
+                        flex flex-col items-center justify-center gap-1
                         ${selectedAvatar === avatar.id 
                           ? 'bg-emerald-500/30 border-2 border-emerald-400 scale-105 shadow-lg shadow-emerald-500/20' 
                           : 'bg-slate-700/50 border-2 border-transparent hover:border-slate-500 hover:bg-slate-700'
                         }
                       `}
                     >
-                      <span className="text-4xl">{avatar.emoji}</span>
-                      <span className="text-[10px] text-slate-300">{avatar.label}</span>
+                      <span className="text-2xl">{avatar.emoji}</span>
+                      <span className="text-[9px] text-slate-300">{avatar.label}</span>
                       {selectedAvatar === avatar.id && (
                         <motion.div
                           initial={{ scale: 0 }}
                           animate={{ scale: 1 }}
-                          className="absolute -top-1 -right-1 w-5 h-5 bg-emerald-500 rounded-full flex items-center justify-center"
+                          className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full flex items-center justify-center"
                         >
-                          <Check className="w-3 h-3 text-white" />
+                          <Check className="w-2.5 h-2.5 text-white" />
                         </motion.div>
                       )}
                     </button>
                   ))}
                 </div>
 
-                {/* Aperçu */}
-                <div className="mt-6 flex justify-center">
-                  <div className="bg-slate-800 rounded-2xl p-4 flex items-center gap-4">
-                    <div className="w-16 h-16 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-4xl border-4 border-white/20">
+                {/* Aperçu (compact) */}
+                <div className="mt-3 flex justify-center">
+                  <div className="bg-slate-800 rounded-xl p-2 flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-2xl border-2 border-white/20">
                       {avatars.find(a => a.id === selectedAvatar)?.emoji}
                     </div>
                     <div>
-                      <p className="text-white font-bold">{userName || 'Ninja'}</p>
-                      <p className="text-emerald-400 text-sm">Apprenti Ninja</p>
+                      <p className="text-white font-bold text-sm">{userName || 'Ninja'}</p>
+                      <p className="text-emerald-400 text-xs">Apprenti Ninja</p>
                     </div>
                   </div>
                 </div>
