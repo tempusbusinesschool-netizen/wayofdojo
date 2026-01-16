@@ -128,6 +128,9 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
   // État pour le formulaire d'onboarding (étape 1)
   const [showProfileOnboarding, setShowProfileOnboarding] = useState(false);
   
+  // État pour les confettis de célébration
+  const [showConfetti, setShowConfetti] = useState(false);
+  
   // Données du profil utilisateur (avatar, animal gardien, objectif)
   const [userProfile, setUserProfile] = useState(() => {
     const saved = localStorage.getItem('aikido_user_profile');
