@@ -2003,6 +2003,14 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         currentAnimal={userProfile.guardianAnimal}
         currentObjective={userProfile.objective}
       />
+      
+      {/* Techniques par Kyu - Fiches de l'étape 2 "Apprends" */}
+      <TechniquesByKyuCards
+        isOpen={showTechniquesCards}
+        onClose={() => setShowTechniquesCards(false)}
+        userName={displayUserName}
+        userKyu="6e_kyu"
+      />
     </>
   );
 }
