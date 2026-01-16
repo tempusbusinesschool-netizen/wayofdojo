@@ -17,7 +17,7 @@ const MaitrisePage = ({ onBack, isAuthenticated, onOpenAuth }) => {
     { id: 5, name: 'Super Ninja', desc: 'Niveau 5 atteint', icon: '⭐', unlocked: false, rarity: 'epic' },
     { id: 6, name: 'Dragon Légendaire', desc: 'Niveau 10 atteint', icon: '🐉', unlocked: false, rarity: 'legendary' },
     { id: 7, name: 'Ceinture Jaune', desc: '5e KYU obtenu', icon: '🟡', unlocked: true, rarity: 'epic' },
-    { id: 8, name: 'Marathonien', desc: '30 jours d\'affilée', icon: '🏃', unlocked: false, rarity: 'legendary' },
+    { id: 8, name: 'Marathonien', desc: '14 jours d\'affilée', icon: '🏃', unlocked: false, rarity: 'legendary' },
   ];
 
   // Titres spéciaux

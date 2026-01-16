@@ -5342,7 +5342,7 @@ async def check_and_award_badges(user_id: str, stats: dict) -> List[dict]:
         {"badge_id": "first_step", "badge_name": "Premier Pas", "badge_icon": "👣", "badge_description": "Premier entraînement", "condition": lambda s: s.get("attendance_count", 0) >= 1},
         {"badge_id": "streak_3", "badge_name": "Persévérant", "badge_icon": "🔥", "badge_description": "3 jours d'affilée", "condition": lambda s: s.get("streak_days", 0) >= 3},
         {"badge_id": "streak_7", "badge_name": "Assidu", "badge_icon": "💪", "badge_description": "7 jours d'affilée", "condition": lambda s: s.get("streak_days", 0) >= 7},
-        {"badge_id": "streak_30", "badge_name": "Marathonien", "badge_icon": "🏃", "badge_description": "30 jours d'affilée", "condition": lambda s: s.get("streak_days", 0) >= 30},
+        {"badge_id": "streak_14", "badge_name": "Marathonien", "badge_icon": "🏃", "badge_description": "14 jours d'affilée", "condition": lambda s: s.get("streak_days", 0) >= 14},
         {"badge_id": "xp_100", "badge_name": "Débutant", "badge_icon": "⭐", "badge_description": "100 XP gagnés", "condition": lambda s: s.get("total_xp", 0) >= 100},
         {"badge_id": "xp_500", "badge_name": "Apprenti", "badge_icon": "🌟", "badge_description": "500 XP gagnés", "condition": lambda s: s.get("total_xp", 0) >= 500},
         {"badge_id": "xp_1000", "badge_name": "Confirmé", "badge_icon": "✨", "badge_description": "1000 XP gagnés", "condition": lambda s: s.get("total_xp", 0) >= 1000},
