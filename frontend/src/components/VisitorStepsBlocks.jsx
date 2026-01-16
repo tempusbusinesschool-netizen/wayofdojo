@@ -775,22 +775,27 @@ const VisitorStepsBlocks = ({ mode = 'enfant', onStepClick }) => {
               min-h-[130px] sm:min-h-[160px]
             `}
           >
+            {/* GROS NUMÉRO en haut à gauche */}
+            <div className="absolute top-1 left-1 sm:top-2 sm:left-2 w-7 h-7 sm:w-9 sm:h-9 rounded-full bg-slate-700/80 border border-slate-600 flex items-center justify-center">
+              <span className="text-base sm:text-xl font-bold text-cyan-400">{block.id}</span>
+            </div>
+
             {/* Badge aperçu */}
             <div className="absolute top-1.5 right-1.5 sm:top-2 sm:right-2 text-slate-500 flex items-center gap-1 text-[9px] sm:text-[10px]">
               <Eye className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
               <span className="hidden sm:inline">Aperçu</span>
             </div>
 
-            {/* Kanji et titre */}
-            <div className="flex items-center gap-2 sm:gap-3 mb-2">
+            {/* Kanji et titre - PLUS GROS */}
+            <div className="flex items-center gap-2 sm:gap-3 mb-2 mt-6 sm:mt-8">
               <span 
-                className="text-2xl sm:text-3xl font-bold text-white/80"
+                className="text-3xl sm:text-4xl font-bold text-white/80"
                 style={{ fontFamily: "'Noto Serif JP', serif" }}
               >
                 {block.kanji}
               </span>
               <div>
-                <h3 className="font-semibold text-white text-xs sm:text-sm">{block.title}</h3>
+                <h3 className="font-bold text-white text-sm sm:text-base">{block.title}</h3>
                 <span className="text-slate-500 text-[9px] sm:text-[10px] italic">{block.kanjiMeaning}</span>
               </div>
             </div>
