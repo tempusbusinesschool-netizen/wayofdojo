@@ -1007,11 +1007,11 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                         </div>
                         
                         {/* Homme à droite - fondu progressif vers le centre */}
-                        <div className={`absolute right-0 bottom-0 hidden md:block z-20 pointer-events-none overflow-hidden rounded-br-3xl ${visitorMode === 'enfant' ? 'opacity-0' : ''}`}>
+                        <div className={`absolute right-0 bottom-0 hidden md:block z-20 pointer-events-none overflow-hidden rounded-br-2xl ${visitorMode === 'enfant' ? 'opacity-0' : ''}`}>
                           <img 
                             src={AIKIDO_CHARACTERS.HOMME_SEUL} 
                             alt="Sensei Homme" 
-                            className="h-48 lg:h-56 xl:h-64 object-cover object-top"
+                            className="h-32 lg:h-40 xl:h-48 object-cover object-top"
                             style={{
                               maskImage: 'linear-gradient(to left, black 0%, black 45%, transparent 100%)',
                               WebkitMaskImage: 'linear-gradient(to left, black 0%, black 45%, transparent 100%)'
