@@ -79,7 +79,7 @@ Application web gamifiée pour le club d'Aikido permettant aux pratiquants de su
 ---
 
 ## Stack technique
-- **Frontend** : React + TailwindCSS + Shadcn/UI + Framer Motion + canvas-confetti
+- **Frontend** : React + TailwindCSS + Shadcn/UI + Framer Motion + canvas-confetti + react-confetti
 - **Backend** : FastAPI (Python)
 - **Base de données** : MongoDB
 - **Intégrations** : Stripe, ElevenLabs (TTS), Resend (emails)
@@ -99,12 +99,29 @@ Application web gamifiée pour le club d'Aikido permettant aux pratiquants de su
 
 ## Changelog récent
 
-### 16 janvier 2025
+### 16 janvier 2025 (Session 2)
+- ✅ **Étape 2 "Apprends" - TechniquesByKyuCards** 
+  - Fiches techniques complètes par niveau de ceinture (5e KYU → GODAN)
+  - Données chargées depuis l'API `/api/kyu-levels` (description, key_points, practice_tips)
+  - **Maître Tanaka animé** avec messages personnalisés selon la progression
+  - **Progression séquentielle** : techniques débloquées une par une
+  - 10 onglets de Kyu avec barres de progression
+  - Détail technique avec : description, points clés, conseils de pratique
+  - Bouton "Marquer comme maîtrisé !" avec sauvegarde dans localStorage
+  - Accessibilité : DialogTitle/DialogDescription pour lecteurs d'écran
+
+### 16 janvier 2025 (Session 1)
 - ✅ **Blocs visiteurs avec aperçu du VRAI contenu** 
   - Mode enfant : vraies techniques, défis avec XP, vertus avec animaux
   - Mode adulte : programme FFAAA, kanji, données professionnelles
   - Modal d'aperçu au clic sur chaque bloc
   - Design responsive (4 cols desktop, 2 cols mobile)
+
+- ✅ **Étape 1 "Commence" - Formulaire d'onboarding ProfileOnboarding.jsx**
+  - Formulaire en 3 étapes : Avatar → Animal gardien → Objectif
+  - Maître Tanaka animé avec dialogue contextuel
+  - Confettis à la validation du profil
+  - Endpoint backend `/api/auth/profile` (GET/PUT)
 
 ### 14 janvier 2025
 - ✅ Animation de célébration avec confettis pour la maîtrise de techniques
@@ -117,18 +134,21 @@ Application web gamifiée pour le club d'Aikido permettant aux pratiquants de su
 
 | Fichier | Description |
 |---------|-------------|
-| `VisitorStepsBlocks.jsx` | **MODIFIÉ** - 8 blocs avec aperçu du vrai contenu (enfant/adulte) |
+| `TechniquesByKyuCards.jsx` | **NOUVEAU** - Fiches techniques par Kyu avec Tanaka animé et progression séquentielle |
+| `ProfileOnboarding.jsx` | **NOUVEAU** - Formulaire d'onboarding 3 étapes avec Tanaka |
+| `VisitorStepsBlocks.jsx` | 8 blocs avec aperçu du vrai contenu (enfant/adulte) |
 | `TechniqueCelebration.jsx` | Animation confettis + son pour maîtrise |
 | `TechniqueModal.js` | Modal de technique avec célébration |
 | `JourneyPath.jsx` | 6 étapes avec animation sphère |
 | `StepTransition.jsx` | Animation sphère entre étapes |
+| `StatisticsDashboard.js` | Dashboard principal qui orchestre les modals |
 
 ---
 
 ## Tâches à venir
 
 ### P1 - Priorité haute
-- [ ] Ajouter confetti sur les transitions d'étapes (StepTransition.jsx)
+- [x] ~~Étape 2 "Apprends" avec fiches techniques par Kyu~~ ✅ FAIT
 - [ ] Bouton de téléchargement du PDF Shodan
 - [ ] Améliorer l'ergonomie PC du parcours guidé
 - [ ] Configurer clés Stripe live
