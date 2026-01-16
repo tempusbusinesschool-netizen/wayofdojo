@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ArrowLeft, Trophy, Crown, Star, Lock, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
