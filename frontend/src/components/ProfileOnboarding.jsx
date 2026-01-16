@@ -6,8 +6,12 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { ChevronRight, ChevronLeft, Check, Sparkles, User, Camera, Target } from 'lucide-react';
 
+// Image de Maître Tanaka
+const TANAKA_IMAGE = "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=200&h=200&fit=crop&crop=face";
+
 /**
  * ProfileOnboarding - Formulaire d'onboarding pour l'étape 1 "Commence"
+ * Avec Maître Tanaka comme guide dynamique !
  * 
  * 3 étapes :
  * 1. Choisir son avatar/photo
@@ -28,6 +32,13 @@ const ProfileOnboarding = ({
   const [selectedAnimal, setSelectedAnimal] = useState(currentAnimal || null);
   const [objective, setObjective] = useState(currentObjective || '');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Messages de Maître Tanaka pour chaque étape
+  const tanakaMessages = {
+    1: `Bienvenue ${userName || 'jeune ninja'} ! 🥋 Choisis d'abord ton avatar, celui qui te représente le mieux sur le tatami !`,
+    2: `Excellent choix ! Maintenant, choisis ton Animal Gardien. Chaque animal représente une vertu du Budo qui te guidera dans ton apprentissage.`,
+    3: `Parfait ! 🎯 Dernière étape : fixe-toi un objectif. Qu'est-ce qui te motive à pratiquer l'Aïkido ?`
+  };
 
   // Avatars disponibles
   const avatars = [
