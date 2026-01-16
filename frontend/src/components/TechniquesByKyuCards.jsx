@@ -1,13 +1,41 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { Button } from '@/components/ui/button';
-import { ChevronRight, ChevronLeft, Check, Lock, Star, BookOpen, Trophy, X, Lightbulb, Volume2, VolumeX } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Check, Lock, Star, BookOpen, Trophy, X, Lightbulb, Volume2, VolumeX, Filter, Layers } from 'lucide-react';
 import axios from 'axios';
 
 // Image de Maître Tanaka
 const TANAKA_IMAGE = "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=200&h=200&fit=crop&crop=face";
+
+/**
+ * LES 8 CATÉGORIES DE TECHNIQUES D'AÏKIDO
+ */
+const TECHNIQUE_CATEGORIES = [
+  { id: 'all', name: 'Toutes', emoji: '📋', color: 'slate' },
+  { id: 'SUWARIWAZA', name: 'Suwariwaza', emoji: '🧎', color: 'amber', description: 'Techniques à genoux' },
+  { id: 'TACHIWAZA', name: 'Tachiwaza', emoji: '🧍', color: 'cyan', description: 'Techniques debout' },
+  { id: 'USHIRO WAZA', name: 'Ushiro Waza', emoji: '🔙', color: 'purple', description: 'Techniques arrière' },
+  { id: 'HANMI HANDACHI WAZA', name: 'Hanmi Handachi', emoji: '⬇️', color: 'emerald', description: 'Tori à genoux, Uke debout' },
+  { id: 'TANTO', name: 'Tanto Dori', emoji: '🔪', color: 'red', description: 'Défense contre couteau' },
+  { id: 'JO', name: 'Jo Waza', emoji: '🪵', color: 'yellow', description: 'Techniques de bâton' },
+  { id: 'BOKKEN', name: 'Tachi Dori', emoji: '⚔️', color: 'rose', description: 'Défense contre sabre' },
+  { id: 'FUTARI', name: 'Futari Dori', emoji: '👥', color: 'indigo', description: 'Contre plusieurs adversaires' },
+];
+
+/**
+ * Extraire la catégorie d'une technique depuis sa description
+ */
+const getTechniqueCategory = (technique) => {
+  const desc = technique.description || '';
+  for (const cat of TECHNIQUE_CATEGORIES) {
+    if (cat.id !== 'all' && desc.includes(cat.id)) {
+      return cat;
+    }
+  }
+  return TECHNIQUE_CATEGORIES[0]; // 'all' par défaut
+};
 
 /**
  * TechniquesByKyuCards - Fiches des techniques par niveau de ceinture
@@ -16,6 +44,7 @@ const TANAKA_IMAGE = "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?
  * - Charge les techniques depuis l'API avec description détaillée et key_points
  * - Maître Tanaka animé qui guide l'utilisateur avec messages personnalisés
  * - Progression séquentielle : techniques débloquées une par une
+ * - Filtrage par catégorie (8 catégories d'Aïkido)
  * - Visuels attractifs par niveau de ceinture
  */
 const TechniquesByKyuCards = ({ 
@@ -34,6 +63,7 @@ const TechniquesByKyuCards = ({
   const [selectedKyuIndex, setSelectedKyuIndex] = useState(0);
   const [selectedTechnique, setSelectedTechnique] = useState(null);
   const [localMastered, setLocalMastered] = useState(masteredTechniques);
+  const [selectedCategory, setSelectedCategory] = useState('all');
   
   // État pour Tanaka
   const [tanakaMessage, setTanakaMessage] = useState('');
