@@ -363,7 +363,7 @@ const TechniquesByKyuCards = ({
       <DialogContent className="max-w-4xl max-h-[90vh] bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-2 border-cyan-500/30 p-0 overflow-hidden" data-testid="techniques-kyu-dialog">
         <VisuallyHidden>
           <DialogTitle>Programme Technique - Tous les Grades</DialogTitle>
-          <DialogDescription>Découvrez les techniques d'Aïkido organisées par niveau de ceinture</DialogDescription>
+          <DialogDescription>Découvrez les techniques d&apos;Aïkido organisées par niveau de ceinture</DialogDescription>
         </VisuallyHidden>
         
         {/* 🥋 MAÎTRE TANAKA - Guide animé */}
@@ -726,7 +726,7 @@ const TechniquesByKyuCards = ({
                   <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4 mb-4">
                     <h4 className="text-amber-400 font-semibold text-sm mb-3 flex items-center gap-2">
                       <Star className="w-4 h-4" />
-                      Points clés d'exécution
+                      Points clés d&apos;exécution
                     </h4>
                     <ul className="space-y-2">
                       {selectedTechnique.key_points.map((point, idx) => (
