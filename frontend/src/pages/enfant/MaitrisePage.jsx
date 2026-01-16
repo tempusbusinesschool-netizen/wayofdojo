@@ -161,32 +161,70 @@ const MaitrisePage = ({ onBack, isAuthenticated, onOpenAuth }) => {
 
             {/* Collection de badges */}
             <div className="bg-slate-800/50 rounded-3xl p-6 border border-slate-700">
-              <div className="flex items-center gap-3 mb-6">
+              <div className="flex items-center gap-3 mb-4">
                 <Trophy className="w-6 h-6 text-amber-400" />
                 <h2 className="text-xl font-bold text-white">Ma collection de badges</h2>
               </div>
               
-              <div className="grid grid-cols-4 sm:grid-cols-4 gap-4">
-                {badges.map((badge) => (
+              {/* Filtres par catégorie */}
+              <div className="flex flex-wrap gap-2 mb-6">
+                {badgeCategories.map((cat) => (
+                  <button
+                    key={cat.id}
+                    onClick={() => setSelectedCategory(cat.id)}
+                    className={`
+                      px-3 py-1.5 rounded-full text-xs font-medium transition-all
+                      ${selectedCategory === cat.id 
+                        ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white' 
+                        : 'bg-slate-700/50 text-slate-400 hover:bg-slate-700'}
+                    `}
+                  >
+                    {cat.icon} {cat.name}
+                  </button>
+                ))}
+              </div>
+              
+              <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-3">
+                {filteredBadges.map((badge) => (
                   <div
                     key={badge.id}
                     className={`
-                      relative aspect-square rounded-2xl p-3 flex flex-col items-center justify-center
-                      transition-all hover:scale-105
+                      relative aspect-square rounded-2xl p-2 flex flex-col items-center justify-center
+                      transition-all hover:scale-105 cursor-pointer group
                       ${badge.unlocked 
                         ? `bg-gradient-to-br ${getRarityColor(badge.rarity)} shadow-lg` 
                         : 'bg-slate-700/50 opacity-50'}
                     `}
+                    title={`${badge.name}\n${badge.desc}`}
                   >
                     {!badge.unlocked && (
                       <div className="absolute inset-0 flex items-center justify-center bg-slate-900/50 rounded-2xl">
-                        <Lock className="w-6 h-6 text-slate-500" />
+                        <Lock className="w-5 h-5 text-slate-500" />
                       </div>
                     )}
-                    <span className="text-3xl mb-1">{badge.icon}</span>
-                    <span className="text-white text-xs font-medium text-center leading-tight">
+                    <span className="text-2xl mb-1">{badge.icon}</span>
+                    <span className="text-white text-[10px] font-medium text-center leading-tight line-clamp-2">
                       {badge.name}
                     </span>
+                    
+                    {/* Tooltip au hover */}
+                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-slate-900 rounded-lg text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-10 shadow-lg border border-slate-700">
+                      <p className="font-bold">{badge.name}</p>
+                      <p className="text-slate-400">{badge.desc}</p>
+                      <p className={`text-xs mt-1 ${
+                        badge.rarity === 'mythic' ? 'text-red-400' :
+                        badge.rarity === 'legendary' ? 'text-amber-400' :
+                        badge.rarity === 'epic' ? 'text-purple-400' :
+                        badge.rarity === 'rare' ? 'text-blue-400' :
+                        'text-slate-500'
+                      }`}>
+                        {badge.rarity === 'mythic' ? '✨ Mythique' :
+                         badge.rarity === 'legendary' ? '🏆 Légendaire' :
+                         badge.rarity === 'epic' ? '💎 Épique' :
+                         badge.rarity === 'rare' ? '💠 Rare' :
+                         '○ Commun'}
+                      </p>
+                    </div>
                   </div>
                 ))}
               </div>
