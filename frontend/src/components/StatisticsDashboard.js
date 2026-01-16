@@ -124,6 +124,15 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
   });
   const [showJourneyPath, setShowJourneyPath] = useState(true);
   
+  // État pour le formulaire d'onboarding (étape 1)
+  const [showProfileOnboarding, setShowProfileOnboarding] = useState(false);
+  
+  // Données du profil utilisateur (avatar, animal gardien, objectif)
+  const [userProfile, setUserProfile] = useState(() => {
+    const saved = localStorage.getItem('aikido_user_profile');
+    return saved ? JSON.parse(saved) : { avatar: null, guardianAnimal: null, objective: '' };
+  });
+  
   // État pour le prénom personnalisé (modifiable par Tanaka)
   const [customUserName, setCustomUserName] = useState(() => {
     return localStorage.getItem('aikido_user_firstname') || '';
