@@ -344,64 +344,62 @@ const ProfileOnboarding = ({
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
-                className="space-y-4"
+                className="space-y-2"
               >
-                <div className="text-center mb-4">
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-amber-500/20 mb-3">
-                    <span className="text-4xl">🐾</span>
+                <div className="text-center mb-2">
+                  <div className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-amber-500/20 mb-2">
+                    <span className="text-2xl">🐾</span>
                   </div>
-                  <h3 className="text-xl font-bold text-white mb-2">Choisis ton Animal Gardien</h3>
-                  <p className="text-slate-400 text-sm">Chaque animal représente une vertu qui te guidera !</p>
+                  <h3 className="text-base font-bold text-white mb-1">Choisis ton Animal Gardien</h3>
+                  <p className="text-slate-400 text-xs">Chaque animal représente une vertu !</p>
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 max-h-[280px] overflow-y-auto pr-2">
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 max-h-[180px] overflow-y-auto pr-1">
                   {animals.map((animal) => (
                     <button
                       key={animal.id}
                       onClick={() => setSelectedAnimal(animal.id)}
                       className={`
-                        relative p-3 rounded-xl transition-all duration-200 text-left
+                        relative p-2 rounded-lg transition-all duration-200 text-left
                         ${selectedAnimal === animal.id 
                           ? `${animal.bgColor} border-2 ${animal.borderColor} scale-[1.02] shadow-lg` 
                           : 'bg-slate-700/50 border-2 border-transparent hover:border-slate-500'
                         }
                       `}
                     >
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-3xl">{animal.emoji}</span>
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <span className="text-xl">{animal.emoji}</span>
                         <div>
-                          <p className="text-white font-bold text-sm">{animal.name}</p>
-                          <p className="text-xs text-slate-400">{animal.virtue}</p>
+                          <p className="text-white font-bold text-xs">{animal.name}</p>
+                          <p className="text-[9px] text-slate-400">{animal.virtue}</p>
                         </div>
                       </div>
-                      <p className="text-[10px] text-slate-400 line-clamp-2">{animal.description}</p>
                       
                       {selectedAnimal === animal.id && (
                         <motion.div
                           initial={{ scale: 0 }}
                           animate={{ scale: 1 }}
-                          className="absolute -top-1 -right-1 w-5 h-5 bg-emerald-500 rounded-full flex items-center justify-center"
+                          className="absolute -top-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full flex items-center justify-center"
                         >
-                          <Check className="w-3 h-3 text-white" />
+                          <Check className="w-2.5 h-2.5 text-white" />
                         </motion.div>
                       )}
                     </button>
                   ))}
                 </div>
 
-                {/* Aperçu de l'animal sélectionné */}
+                {/* Aperçu de l'animal sélectionné (compact) */}
                 {selectedAnimal && (
                   <motion.div
-                    initial={{ opacity: 0, y: 10 }}
+                    initial={{ opacity: 0, y: 5 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className={`mt-4 p-4 rounded-xl ${animals.find(a => a.id === selectedAnimal)?.bgColor} border ${animals.find(a => a.id === selectedAnimal)?.borderColor}`}
+                    className={`mt-2 p-2 rounded-lg ${animals.find(a => a.id === selectedAnimal)?.bgColor} border ${animals.find(a => a.id === selectedAnimal)?.borderColor}`}
                   >
-                    <div className="flex items-center gap-3">
-                      <span className="text-5xl">{animals.find(a => a.id === selectedAnimal)?.emoji}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-3xl">{animals.find(a => a.id === selectedAnimal)?.emoji}</span>
                       <div>
-                        <p className="text-white font-bold">{animals.find(a => a.id === selectedAnimal)?.name}</p>
-                        <p className="text-white/80 text-sm">Vertu : {animals.find(a => a.id === selectedAnimal)?.virtue}</p>
-                        <p className="text-white/60 text-xs mt-1">{animals.find(a => a.id === selectedAnimal)?.description}</p>
+                        <p className="text-white font-bold text-sm">{animals.find(a => a.id === selectedAnimal)?.name}</p>
+                        <p className="text-white/80 text-xs">Vertu : {animals.find(a => a.id === selectedAnimal)?.virtue}</p>
                       </div>
                     </div>
                   </motion.div>
