@@ -14,42 +14,55 @@ The user wants to build a web application for their Aikido club, Aikido@Game. Th
 **User's preferred language**: French
 
 **what currently exists?**
-The application is a stable full-stack React/FastAPI app.
+The application is a full-stack React/FastAPI app with a clear distinction between the logged-out visitor experience and the logged-in member journey.
 
-A major restructuring of the user experience has been completed, creating a clear distinction between logged-out visitors and logged-in members:
-*   **Logged-out visitors** are presented with an 8-block landing page designed to showcase the app's content and encourage registration. This page has two distinct visual themes: a playful Jeune Ninja version and a professional Ninja Confirmé version. The blocks are descriptive but intentionally non-functional to drive sign-ups.
-*   **Logged-in members** see a 6-step gamified Parcours Guidé (Guided Journey) to onboard and interact with the platform.
+-   **Visitor View**: A landing page with 8 blocks showcasing *real* application content in a non-functional preview modal to encourage sign-ups. It supports Jeune Ninja (child) and Ninja Confirmé (adult) themes. The UI includes large numbers and titles on each block as per the user's latest request.
 
-Key features implemented include a sphere transition animation between journey steps, a confetti celebration for mastering any of the 206 Aikido techniques, and the generation of a downloadable PDF for the 1st Dan (Shodan) program.
+-   **Member View**: A 6-step gamified Parcours Guidé (Guided Journey).
+    -   **Step 1 (Commence)** now features a comprehensive, 3-step onboarding form where users choose their avatar, select a guardian animal, and define a personal goal. This form is guided by an animated Maître Tanaka who provides contextual instructions.
+    -   Confetti animations have been implemented for both completing the new profile and for the transitions between journey steps.
+
+A backend endpoint () has been added to save the new user profile data.
 
 **Last working item**:
-The agent just finished implementing the user's final request for the visitor landing page: making the blocks descriptive showcases of content that do not navigate, but instead encourage the user to sign up to access the features.
+The agent was implementing the feature for Step 2 (Apprends) of the member journey. The user wants this page to display Aikido techniques organized by belt/Kyu level as interactive cards.
 
-*   **Last item agent was working**: Modifying the visitor onboarding blocks () to be descriptive but non-functional for navigation, aiming to entice users to register. This applies to both Jeune Ninja and Ninja Confirmé modes.
-*   **Status**: USER VERIFICATION PENDING
-*   **Agent Testing Done**: Y
-*   **Which testing method agent to use?**: Screenshot tool. The agent needs to show the user the final state of both the Jeune Ninja and Ninja Confirmé pages to confirm the blocks are visually descriptive but do not navigate on click.
+*   **Last item agent was working**: Building the Apprends (Step 2) feature. The agent created the data structure (), the main component (), and integrated it into the journey flow. The work was interrupted by new user requirements for this same feature.
+*   **Status**: IN PROGRESS
+*   **Agent Testing Done**: N
+*   **Which testing method agent to use?**: Frontend testing agent. The test script must handle a full user flow (login, navigate to the dashboard, click through the journey steps) in a single session to avoid the session loss issues previously encountered with individual screenshot calls.
 *   **User Testing Done**: N
 
 **All Pending/In progress Issue list**:
-There are no known bugs or technical issues. The primary pending item is user feedback on the last implemented change.
+*   **Issue 1: Complete Step 2 Apprends Feature (P0)**
+    *   **Description**: The current implementation of the Apprends page is a skeleton. It needs to be fleshed out with two critical new requirements from the user.
+    *   **Attempted fixes**: The base component and data structure were created, but no attempt has been made to add the new requirements yet.
+    *   **Next debug checklist**:
+        1.  **Find Technique Details**: The user stated that detailed explanations for each technique exist in Tous les grades. The agent must locate this data within the project files. Use  or search for technique names (e.g., 'Ikkyo', 'Nikyo') to find the source. If not found, ask the user for the exact file path.
+        2.  **Integrate Technique Details**: Modify  and the data structure in  to include and display these detailed explanations on each technique card.
+        3.  **Add Animated Tanaka**: Integrate the animated Maître Tanaka component into . It must appear when the view loads and speak the specific phrase: Bill, voici les techniques du 6e Kyu. Commence par les bases et progresse à ton rythme ! — Maître Tanaka. This will likely involve using the .
+        4.  **Implement Sequential Progression**: Implement the logic so that techniques must be mastered one after the other within a Kyu level, as requested by the user.
+    *   **Why fix this issue and what will be achieved with the fix?**: This will complete a core feature of the gamified user journey, making the Apprends step functional and engaging.
+    *   **Status**: IN PROGRESS
+    *   **Is recurring issue?**: N
+    *   **Should Test frontend/backend/both after fix?**: Frontend
+    *   **Blocked on other issue**: None.
 
 **In progress Task List**:
-*   **Task 1: Verify Visitor Onboarding Blocks (P0)**
-    *   **Description**: The user needs to confirm that the new visitor experience—where the 8 blocks are descriptive but don't navigate, instead prompting registration—is correct for both Jeune Ninja and Ninja Confirmé modes.
-    *   **Where to resume**: Await user feedback on the latest implementation shown in the final messages. If approved, move to the next task. If changes are requested, implement them in .
-    *   **What will be achieved with this?**: Finalizing the logged-out user experience as per the user's explicit vision.
-    *   **Status**: USER VERIFICATION PENDING
-    *   **Should Test frontend/backend/both after fix?**: Frontend.
-    *   **Blocked on something**: User feedback.
+*   **Task 1: Complete Step 2 Apprends Feature (P0)**
+    *   **Description**: Same as Issue 1 above. This is the highest priority task.
+    *   **Where to resume**: Start by searching for the detailed technique data. Then, modify the  component to add the animated Tanaka and the detailed text.
+    *   **What will be achieved with this?**: A fully functional and interactive page for learning Aikido techniques, organized by belt level.
+    *   **Status**: IN PROGRESS
+    *   **Should Test frontend/backend/both after fix?**: Frontend
+    *   **Blocked on something**: Potentially blocked if the technique detail data cannot be found.
 
 **Upcoming and Future Tasks**
 
 **Upcoming Tasks**:
-*   **P1: Add Confetti to Journey Step Transitions**: The user requested a confetti effect on the step transition animation. The agent installed the  library but was interrupted before implementing it in .
-*   **P2: Add Download Button for Shodan PDF**: The agent generated  and asked the user if they wanted a button to download it, but the conversation shifted. A button should be added to a relevant page (e.g., the user's dashboard or a Documents section).
-*   **P3: Improve PC Ergonomics for Parcours Guidé**: A task from the previous handoff that is still relevant. The user questioned the clarity of the 8-block journey on PC. This needs discussion and potential implementation (e.g., transforming it into a standard menu after completion).
-*   **P4: Configure Production Keys**: The user needs to provide live API keys for Stripe (, , ) and verify their domain with Resend.
+*   **P1**: Add a download button for the Shodan program PDF ().
+*   **P2**: Improve the PC ergonomics of the Parcours Guidé (the 6-step journey view), as the user previously questioned its clarity on desktop.
+*   **P3**: Add a section for configuring production API keys for Stripe and Resend.
 
 **Future Tasks**:
 *   Migrate the database from MongoDB to PostgreSQL.
@@ -57,12 +70,13 @@ There are no known bugs or technical issues. The primary pending item is user fe
 *   Implement 2FA (Two-Factor Authentication) for the Super Admin role.
 
 **Completed work in this session**
-- **Restructured Onboarding/Dashboard Views**: Implemented a clear separation between the 8-block descriptive view for logged-out users and the 6-step interactive journey for logged-in members.
-- **Differentiated Visitor Experience**: Created two distinct visual themes for the visitor page: a playful Jeune Ninja version () and a professional Ninja Confirmé version.
-- **Technique Mastered Celebration**: Added a confetti and sound celebration () that triggers when a user masters any of the 206 Aikido techniques via the .
-- **Integrated Sphere Animation**: Successfully added and tested the sphere transition animation () between each step of the logged-in user's .
-- **Generated 1st Dan (Shodan) Program PDF**: Created a Python script () to generate a professional PDF of the 1st Dan program, now available at .
-- **UI/Layout Adjustments**: Made the visitor page's hero banner more compact and adjusted the size and position of the Maître Tanaka character as requested.
+- **Redesigned Visitor Onboarding**: Replaced static descriptions with interactive modals showing real application content previews on the visitor landing page ().
+- **Enhanced Visitor Block UI**: Added large sequential numbers and increased title font sizes to the visitor blocks.
+- **Implemented Step 1 Onboarding Form**: Created a 3-step profile creation form () for avatar selection, guardian animal choice, and personal goal setting.
+- **Integrated Maître Tanaka into Onboarding**: Added the animated Tanaka character with dynamic, step-specific dialogue to guide the user through the onboarding form.
+- **Implemented Confetti Animations**: Added  effects for both completing the journey step transitions () and for successfully submitting the new profile form ().
+- **Created Backend Profile Endpoint**: Added  and  endpoints to  in  to persist the new user profile data.
+- **Resized Onboarding UI**: Made the onboarding modal more compact based on user feedback.
 
 **Earlier issues found/mentioned but not fixed**
 *   None.
@@ -74,57 +88,53 @@ There are no known bugs or technical issues. The primary pending item is user fe
 
 
 **Key Technical Concepts**
-*   **Conditional Rendering**: Extensively used to switch between logged-in/logged-out views () and child/adult themes ().
-*   **Frontend Library Integration**: Added and used  for celebration animations and  (on the backend) for PDF generation.
-*   **Event Dispatching**: Used  to trigger the authentication modal from nested components.
-*   **UI/UX Differentiation**: Created two completely separate visual and interactive experiences for different visitor personas (Jeune Ninja vs. Ninja Confirmé).
-*   **Backend Scripting**: Created a standalone Python script to perform a specific task (PDF generation) using data from the main application logic.
+*   **Conditional Logic Refactoring**: Shifting UI flow control from child components () to a parent container () to handle complex sequences like modal-then-animation.
+*   **Multi-Step Modal Forms**: Building a sequential user input form within a single React component ().
+*   **Dynamic Content Previews**: Using real application data to populate visitor-facing components without enabling full functionality, driving user registration.
+*   **Backend Endpoint Creation**: Adding new / routes in FastAPI with Pydantic models to handle profile data persistence.
+*   **Diagnosing Test Tool Limitations**: Identifying that the screenshot tool creates a new browser session per call, which prevents testing of stateful user flows, and developing a workaround by scripting the entire flow in one call.
 
 **key DB schema**
-*   No schema changes were made.
+*   **users**: No schema change, but the documents in this collection are now updated by the new profile endpoint with fields such as , , and .
 
 **changes in tech stack**
-*   **Frontend**: Added .
-*   **Backend**: Added  (via pip install).
+*   **Frontend**: Added  dependency.
 
 **All files of reference**
-*   **/app/frontend/src/components/VisitorStepsBlocks.jsx**: (Heavily Modified) The core component for the visitor landing page, now containing logic for both Jeune Ninja and Ninja Confirmé themes with descriptive, non-navigable blocks.
-*   **/app/frontend/src/components/StatisticsDashboard.js**: (Modified) Orchestrates which view (visitor or member) is displayed. Contains layout adjustments for the hero section.
-*   **/app/frontend/src/components/JourneyPath.jsx**: (Modified) The 6-step journey for logged-in users, now with the sphere transition integrated.
-*   **/app/frontend/src/components/TechniqueModal.js**: (Modified) Triggers the celebration animation upon mastering a technique.
-*   **/app/frontend/src/components/TechniqueCelebration.jsx**: (New) The confetti and sound celebration component.
-*   **/app/backend/generate_shodan_pdf.py**: (New) Script that creates the 1st Dan program PDF.
-*   **/app/frontend/public/documents/programme_shodan_1er_dan.pdf**: (New) The generated PDF file.
+*    (New, **In Progress**): Component for the Apprends step.
+*    (New, **In Progress**): Data file for techniques.
+*    (New): The 3-step profile onboarding form.
+*    (Heavily Modified): Main dashboard component, orchestrates the new onboarding and technique card modals.
+*    (Modified): Logic updated to delegate control for Step 1 and 2 to the parent dashboard component.
+*    (Heavily Modified): Implements the visitor-facing content previews.
+*    (Modified): Contains the new  endpoints.
 
 **Areas that need refactoring**:
-*   ****, ****, and **** remain very large files and would benefit from being broken down into smaller, more manageable modules/components.
+*   , , and  continue to grow and would benefit from being broken down into smaller, more specialized modules.
 
 **key api endpoints**
-*   No new or modified API endpoints.
+*   : (New) Updates the logged-in user's profile with their avatar, guardian animal, and personal objective.
+*   : (New) Retrieves the extended profile data for the logged-in user.
 
 **Critical Info for New Agent**
-*   The user's core request has been to differentiate the experience for **logged-out visitors** versus **logged-in members**. This is now implemented and awaiting final user validation.
-*   **Logged-out View**: Shows 8 descriptive blocks to showcase app content and drive registration. It has two themes: Jeune Ninja and Ninja Confirmé.
-*   **Logged-in View**: A 6-step interactive Parcours Guidé.
-*   The sphere animation for the journey and the confetti celebration for mastering techniques are both fully implemented and tested.
-*   The immediate next step is to confirm with the user that the latest changes to the visitor page (descriptive, non-functional blocks) are correct.
+*   The immediate and highest priority is to **complete the Apprends (Step 2) feature**. This involves finding the detailed technique descriptions and integrating the animated, talking Maître Tanaka as per the user's latest requests.
+*   **Testing Stateful Flows**: When testing features that require a user to be logged in and navigate, script the entire sequence (login, navigation, clicks) in a **single tool call** ( or ). Making separate tool calls will reset the browser session and cause tests to fail.
+*   The user is highly engaged and provides frequent, specific feedback. Be prepared to iterate on UI/UX details.
 
 **documents and test reports created in this job**
 *    (updated)
-*    (created)
-*    (created)
 
 **Last 10 User Messages and any pending HUMAN messages**
-1.  **User**: Corrected the Ninja Confirmé template as it was identical to the Jeune Ninja version.
-2.  **User**: Pointed out that adult block links were broken and requested that the Tanaka character be made larger and moved to the left.
-3.  **User**: Stated that all block links were lost for both adult and child pages and needed to be restored.
-4.  **User**: Expressed that the agent's implementation was wrong and that the blocks should present the platform's themes, not just open a login dialog.
-5.  **User**: Clarified the final vision: the blocks should explicitly show the content of each section but not be functional for navigation, in order to motivate non-logged-in users to register.
-6.  **User**: Requested a confetti celebration for when a user achieves the Maîtrisé (Mastered) level for any of the 206 techniques.
-7.  **User**: Requested an exhaustive list of all techniques required for the 1st Dan level.
-8.  **User**: Asked the agent to create a PDF from the 1st Dan technique list.
-9.  **User**: Requested a layout change to move the main visitor hero section higher on the page.
-10. **User**: Confirmed the logic for the confetti celebration: it should only trigger for the Maîtrisé level.
+1.  **User**: Add details of the technique practice from Tous les grades to the technique cards.
+2.  **Agent**: Acknowledges and starts searching for the data.
+3.  **User**: When the technique card page opens, an animated Tanaka must appear and speak a specific line.
+4.  **Agent**: Acknowledges and begins to investigate the Tanaka voice service. (Last agent action).
+5.  **User**: Request to implement the Apprends step with techniques by belt level, mastered one after another.
+6.  **Agent**: Acknowledges and shows the implemented, resized onboarding form.
+7.  **User**: Asks to reduce the size of the Créer mon Profil Ninja (onboarding) window.
+8.  **Agent**: Provides testing credentials and URL.
+9.  **User**: Asks for the code and credentials to test.
+10. **Agent**: Asks the user to choose the next task after confirming the onboarding form is complete.
 
 **Project Health Check:**
 *   **Broken**: NO
@@ -137,7 +147,7 @@ There are no known bugs or technical issues. The primary pending item is user fe
 *   **framer-motion**: Used for UI animations.
 *   **Emergent LLM Key**: Utilized by the backend voice agent.
 *   **react-confetti**: (New) Used for frontend celebration animations.
-*   **reportlab**: (New) Used on the backend for PDF generation.
+*   **reportlab**: Used on the backend for PDF generation.
 
 **Testing status**
 *   **Testing agent used after significant changes**: NO
@@ -148,12 +158,12 @@ There are no known bugs or technical issues. The primary pending item is user fe
 **Credentials to test flow:**
 | Rôle | Email | Mot de passe | Notes |
 | :--- | :--- | :--- | :--- |
-| **Enfant (Jeune Ninja)**| bill@gmail.com | 123 | Formerly enfant@gmail.com. Name is Bill |
-| **Parent** | parent@gmail.com | **parent123** | Lié à  |
-| **Super Admin** | admin@gmail.com | 123 | |
-| **Adhérent (Adulte)** | adulte@gmail.com | 123 | |
-| **Enseignant** | enseignant@gmail.com | 123 | |
-| **Admin Dojo** | dojo@gmail.com | 123 | |
+| **Enfant (Jeune Ninja)**|  |  | User for testing the new onboarding flow. |
+| **Parent** |  |  | Lié à  |
+| **Super Admin** |  |  | |
+| **Adhérent (Adulte)** |  |  | |
+| **Enseignant** |  |  | |
+| **Admin Dojo** |  |  | |
 
 **What agent forgot to execute**
-*   The agent started to add a confetti animation to the  component (as requested by the user) by installing the  library. However, the agent was interrupted by another user request and never finished implementing the confetti logic within that specific component. This task remains incomplete.</analysis>
+*   Nothing was forgotten. The previous pending task (confetti on step transitions) was completed. The current work is a new feature request that is actively in progress.</analysis>
