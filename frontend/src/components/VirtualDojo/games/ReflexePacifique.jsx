@@ -8,7 +8,7 @@
  * AVEC VOIX TTS DE MAÎTRE TANAKA
  */
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Brain, X, RotateCcw, Clock, CheckCircle2, XCircle, Volume2, VolumeX } from 'lucide-react';
