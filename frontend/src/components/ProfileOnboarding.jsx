@@ -225,40 +225,40 @@ const ProfileOnboarding = ({
               </motion.div>
             </motion.div>
             
-            {/* Bulle de dialogue de Tanaka */}
+            {/* Bulle de dialogue de Tanaka (plus compacte) */}
             <div className="flex-1 relative">
-              <div className="absolute -left-2 top-3 w-0 h-0 border-t-8 border-t-transparent border-r-8 border-r-emerald-500/20 border-b-8 border-b-transparent"></div>
+              <div className="absolute -left-2 top-2 w-0 h-0 border-t-6 border-t-transparent border-r-6 border-r-emerald-500/20 border-b-6 border-b-transparent"></div>
               <motion.div 
                 key={step}
                 initial={{ opacity: 0, x: 10 }}
                 animate={{ opacity: 1, x: 0 }}
-                className="bg-emerald-500/20 border border-emerald-500/30 rounded-xl p-3 sm:p-4"
+                className="bg-emerald-500/20 border border-emerald-500/30 rounded-lg p-2 sm:p-3"
               >
-                <p className="text-white/90 text-sm sm:text-base font-medium">
+                <p className="text-white/90 text-xs sm:text-sm font-medium">
                   {tanakaMessages[step]}
                 </p>
-                <p className="text-emerald-400 text-xs mt-1 font-semibold">— Maître Tanaka</p>
+                <p className="text-emerald-400 text-[10px] mt-1 font-semibold">— Maître Tanaka</p>
               </motion.div>
             </div>
           </div>
         </div>
 
-        {/* Header avec progression */}
-        <div className="bg-gradient-to-r from-emerald-600 to-teal-600 p-3 sm:p-4">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg sm:text-xl font-bold text-white flex items-center gap-2">
-              <Sparkles className="w-5 h-5" />
+        {/* Header avec progression (compact) */}
+        <div className="bg-gradient-to-r from-emerald-600 to-teal-600 p-2 sm:p-3">
+          <div className="flex items-center justify-between mb-2">
+            <h2 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+              <Sparkles className="w-4 h-4" />
               Créer mon Profil Ninja
             </h2>
-            <span className="text-emerald-200 text-sm">Étape {step}/3</span>
+            <span className="text-emerald-200 text-xs">Étape {step}/3</span>
           </div>
           
           {/* Barre de progression */}
-          <div className="flex gap-2">
+          <div className="flex gap-1.5">
             {[1, 2, 3].map((s) => (
               <div 
                 key={s}
-                className={`flex-1 h-2 rounded-full transition-all duration-300 ${
+                className={`flex-1 h-1.5 rounded-full transition-all duration-300 ${
                   s <= step ? 'bg-white' : 'bg-white/30'
                 }`}
               />
@@ -266,15 +266,15 @@ const ProfileOnboarding = ({
           </div>
           
           {/* Labels des étapes */}
-          <div className="flex justify-between mt-2 text-xs text-emerald-200">
+          <div className="flex justify-between mt-1.5 text-[10px] text-emerald-200">
             <span className={step >= 1 ? 'text-white font-semibold' : ''}>Avatar</span>
-            <span className={step >= 2 ? 'text-white font-semibold' : ''}>Animal Gardien</span>
+            <span className={step >= 2 ? 'text-white font-semibold' : ''}>Animal</span>
             <span className={step >= 3 ? 'text-white font-semibold' : ''}>Objectif</span>
           </div>
         </div>
 
-        {/* Contenu des étapes */}
-        <div className="p-4 sm:p-6 min-h-[400px]">
+        {/* Contenu des étapes (plus compact) */}
+        <div className="p-3 sm:p-4 min-h-[280px] max-h-[350px] overflow-y-auto">
           <AnimatePresence mode="wait">
             {/* ÉTAPE 1 : Choix de l'avatar */}
             {step === 1 && (
