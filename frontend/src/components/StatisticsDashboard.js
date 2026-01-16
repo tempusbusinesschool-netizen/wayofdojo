@@ -959,7 +959,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                         
                         {/* Maître Tanaka en haut à gauche - UNIQUEMENT pour mode enfant */}
                         {visitorMode === 'enfant' && (
-                          <div className="absolute top-4 left-4 z-30">
+                          <div className="absolute top-2 left-2 z-30">
                             <div className="relative group cursor-pointer" onClick={() => {
                               const tanakaBtn = document.querySelector('[data-testid="maitre-tanaka-button"]');
                               if (tanakaBtn) tanakaBtn.click();
@@ -968,7 +968,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                               <div className="absolute inset-0 bg-amber-400 rounded-full animate-ping opacity-30"></div>
                               
                               {/* Image de Tanaka */}
-                              <div className="relative w-24 h-24 lg:w-32 lg:h-32 rounded-full overflow-hidden border-4 border-amber-400 shadow-2xl shadow-amber-500/50 transform group-hover:scale-110 transition-transform duration-300">
+                              <div className="relative w-16 h-16 lg:w-20 lg:h-20 rounded-full overflow-hidden border-3 border-amber-400 shadow-xl shadow-amber-500/50 transform group-hover:scale-110 transition-transform duration-300">
                                 <img 
                                   src="/images/tanaka/portrait.png" 
                                   alt="Maître Tanaka" 
