@@ -217,16 +217,22 @@ const SenseiInvisible = ({ userName, onComplete, onExit, tanakaSpeak }) => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [gameState, checkAction]);
 
+  // Nettoyage au démontage
+  useEffect(() => {
+    return () => stopSpeaking();
+  }, [stopSpeaking]);
+
   const startGame = () => {
     setScore(0);
     setMistakes(0);
     setRoundsCompleted(0);
     setDifficulty('easy');
-    tanakaSpeak(`${userName || 'Jeune ninja'}, ferme les yeux et écoute ma voix. Je vais te donner des instructions. Suis-les avec attention.`);
+    tanakaVoice(`${userName || 'Jeune ninja'}, ferme les yeux et écoute ma voix. Je vais te donner des instructions. Suis-les avec attention.`);
     setTimeout(startRound, 3000);
   };
 
   const restartGame = () => {
+    stopSpeaking();
     setGameState('intro');
     setScore(0);
     setMistakes(0);
