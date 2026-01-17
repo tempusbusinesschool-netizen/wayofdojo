@@ -5,6 +5,10 @@ import Confetti from 'react-confetti';
 /**
  * StepTransition - Animation de sphère entre les étapes du parcours
  * Avec explosion de confettis ! 🎉
+ * 
+ * Props:
+ * - actionType: 'step_complete' | 'profile_created' | 'technique_learned' | 'game_won' | 'challenge_done' | 'badge_earned'
+ * - customMessage: Message personnalisé optionnel
  */
 const StepTransition = ({ 
   isVisible, 
@@ -12,12 +16,53 @@ const StepTransition = ({
   stepTitle, 
   stepEmoji,
   userName,
+  actionType = 'step_complete',
+  customMessage = null,
+  xpEarned = 0,
   onComplete 
 }) => {
   const [stage, setStage] = useState(0);
   const [windowSize, setWindowSize] = useState({ width: window.innerWidth, height: window.innerHeight });
   const [showConfetti, setShowConfetti] = useState(false);
   const [confettiPieces, setConfettiPieces] = useState(200);
+
+  // Messages adaptés selon le type d'action
+  const getActionMessages = () => {
+    const messages = {
+      step_complete: {
+        status: "Complétée ! ✨",
+        congrats: `🎉 Bravo ${userName} ! Étape suivante...`
+      },
+      profile_created: {
+        status: "Profil créé ! 🥋",
+        congrats: `🎊 Bienvenue ${userName} ! Ton aventure commence...`
+      },
+      technique_learned: {
+        status: "Technique découverte ! 📚",
+        congrats: `💪 Continue ${userName} ! La maîtrise s'approche...`
+      },
+      game_won: {
+        status: "Victoire ! 🏆",
+        congrats: `🌟 Excellent ${userName} ! Tu progresses vite !`
+      },
+      challenge_done: {
+        status: "Défi relevé ! ⚡",
+        congrats: `🔥 Super ${userName} ! Un pas de plus vers la maîtrise !`
+      },
+      badge_earned: {
+        status: "Badge obtenu ! 🏅",
+        congrats: `✨ Félicitations ${userName} ! Tu mérites cette récompense !`
+      },
+      dojo_entered: {
+        status: "Dojo ouvert ! 🏯",
+        congrats: `🥷 ${userName}, le Dojo Virtuel t'attend !`
+      }
+    };
+    
+    return messages[actionType] || messages.step_complete;
+  };
+
+  const actionMessages = getActionMessages();
 
   // Gérer le redimensionnement de la fenêtre
   useEffect(() => {
