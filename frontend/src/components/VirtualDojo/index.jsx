@@ -701,6 +701,38 @@ const VirtualDojo = ({
           )}
         </div>
       </DialogContent>
+
+      {/* Modal de confirmation - Recommencer le parcours */}
+      <AnimatePresence>
+        {showResetConfirm && (
+          <Dialog open={showResetConfirm} onOpenChange={setShowResetConfirm}>
+            <DialogContent className="sm:max-w-md bg-slate-900 border-amber-500/30">
+              <div className="text-center py-4">
+                <span className="text-5xl block mb-4">🔄</span>
+                <h3 className="text-xl font-bold text-white mb-3">Recommencer le parcours ?</h3>
+                <p className="text-slate-300 text-sm leading-relaxed mb-6">
+                  Tu vas recommencer le jeu depuis le début. Ta progression actuelle sera remise à zéro. Tu pourras rejouer tranquillement.
+                </p>
+                <div className="flex justify-center gap-3">
+                  <Button 
+                    onClick={() => setShowResetConfirm(false)}
+                    variant="outline" 
+                    className="text-white border-slate-600"
+                  >
+                    Non, je continue
+                  </Button>
+                  <Button 
+                    onClick={handleResetProgress}
+                    className="bg-gradient-to-r from-amber-500 to-orange-600"
+                  >
+                    Oui, je recommence
+                  </Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+        )}
+      </AnimatePresence>
     </Dialog>
   );
 };
