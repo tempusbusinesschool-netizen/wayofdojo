@@ -298,9 +298,49 @@ const DojoLogbookDialog = ({
                 <h2 className="text-xl font-bold text-amber-100 flex items-center gap-2">
                   🥋 Mon Club
                 </h2>
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                  {/* Bouton rejouer audio */}
+                  <button
+                    onClick={() => playTanakaAudio('step_4_carnet')}
+                    disabled={isAudioPlaying}
+                    className={`p-2 rounded-full transition-all ${
+                      isAudioPlaying 
+                        ? 'bg-amber-500/50 cursor-not-allowed' 
+                        : 'bg-amber-500/20 hover:bg-amber-500/40'
+                    }`}
+                    title="Écouter Maître Tanaka"
+                    data-testid="tanaka-play-audio"
+                  >
+                    <Volume2 className={`w-4 h-4 ${isAudioPlaying ? 'text-amber-300 animate-pulse' : 'text-amber-400'}`} />
+                  </button>
+                  
+                  {/* Bouton mute */}
+                  <button
+                    onClick={() => {
+                      setAudioMuted(!audioMuted);
+                      if (!audioMuted && currentAudioRef.current) {
+                        currentAudioRef.current.pause();
+                        setIsAudioPlaying(false);
+                        setIsTanakaSpeaking(false);
+                      }
+                    }}
+                    className={`p-2 rounded-full transition-all ${
+                      audioMuted 
+                        ? 'bg-red-500/30 hover:bg-red-500/50' 
+                        : 'bg-slate-700/50 hover:bg-slate-700'
+                    }`}
+                    title={audioMuted ? "Activer le son" : "Couper le son"}
+                    data-testid="tanaka-mute-toggle"
+                  >
+                    {audioMuted ? (
+                      <VolumeX className="w-4 h-4 text-red-400" />
+                    ) : (
+                      <Volume2 className="w-4 h-4 text-slate-400" />
+                    )}
+                  </button>
+                  
                   {/* Points de Ki */}
-                  <div className="flex items-center gap-2 bg-cyan-500/20 px-3 py-1 rounded-full">
+                  <div className="flex items-center gap-2 bg-cyan-500/20 px-3 py-1 rounded-full ml-2">
                     <span className="text-cyan-400 text-lg">✨</span>
                     <span className="text-cyan-300 font-bold">{totalKi} Ki</span>
                   </div>
