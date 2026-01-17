@@ -255,7 +255,6 @@ Application web gamifiée pour le club d'Aikido permettant aux pratiquants de su
 - [ ] Vérifier domaine Resend pour emails
 
 ### P2 - Backlog
-- [ ] Migration MongoDB → PostgreSQL
 - [ ] Créer blocs "Techniques" et "Défis collectifs"
 - [ ] 2FA pour Super Admin
 - [ ] Ajouter des sons/effets audio aux mini-jeux
