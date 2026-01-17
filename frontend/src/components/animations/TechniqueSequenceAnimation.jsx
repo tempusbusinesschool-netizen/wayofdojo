@@ -62,26 +62,23 @@ const TechniqueSequenceAnimation = ({
   const [imagesLoaded, setImagesLoaded] = useState({});
 
   const technique = TECHNIQUES_DATA[techniqueId];
-  
-  if (!technique) {
-    return <div className="text-red-400">Technique non trouvée</div>;
-  }
-
-  const phases = technique.phases;
+  const phases = technique?.phases || [];
 
   // Animation automatique
   useEffect(() => {
-    if (!isPlaying) return;
+    if (!isPlaying || !technique) return;
 
     const timer = setTimeout(() => {
       setCurrentPhase((prev) => (prev + 1) % phases.length);
-    }, phases[currentPhase].duration);
+    }, phases[currentPhase]?.duration || 3000);
 
     return () => clearTimeout(timer);
-  }, [currentPhase, isPlaying, phases]);
+  }, [currentPhase, isPlaying, phases, technique]);
 
   // Préchargement des images
   useEffect(() => {
+    if (!technique) return;
+    
     phases.forEach((phase) => {
       const img = new Image();
       img.onload = () => {
@@ -89,7 +86,11 @@ const TechniqueSequenceAnimation = ({
       };
       img.src = phase.image;
     });
-  }, [phases]);
+  }, [phases, technique]);
+
+  if (!technique) {
+    return <div className="text-red-400">Technique non trouvée</div>;
+  }
 
   const goToPhase = (index) => {
     setCurrentPhase(index);
