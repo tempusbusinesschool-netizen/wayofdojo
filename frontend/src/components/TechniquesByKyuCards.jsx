@@ -90,6 +90,9 @@ const TechniquesByKyuCards = ({
   const [isTanakaSpeaking, setIsTanakaSpeaking] = useState(false);
   const [tanakaAnimating, setTanakaAnimating] = useState(true);
   
+  // État pour la démo d'animation
+  const [showAnimationDemo, setShowAnimationDemo] = useState(false);
+  
   // Ref pour l'animation de Tanaka
   const tanakaSpeakTimeout = useRef(null);
 
