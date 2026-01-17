@@ -723,6 +723,40 @@ function AppContent() {
                 </Button>
               )}
 
+              {/* Bouton Espace Parent - Visible en permanence */}
+              {!enseignantMode && !isAdminMode && !parentMode && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowParentLogin(true)}
+                  className="text-purple-400 hover:text-purple-300 hover:bg-purple-900/20 h-8 px-2 sm:px-3"
+                  data-testid="parent-access-btn"
+                >
+                  <Heart className="w-4 h-4 sm:mr-1" />
+                  <span className="hidden lg:inline">Espace Parent</span>
+                </Button>
+              )}
+              
+              {/* Indicateur Parent connecté */}
+              {parentMode && parentInfo && (
+                <div className="flex items-center gap-1 sm:gap-2">
+                  <Badge className="bg-purple-600 text-white flex text-xs">
+                    <Heart className="w-3 h-3 mr-1" />
+                    <span className="hidden sm:inline">{parentInfo.first_name}</span>
+                    <span className="sm:hidden">Parent</span>
+                  </Badge>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleParentLogout}
+                    className="text-purple-400 hover:text-purple-300 hover:bg-purple-900/20 h-8 px-2"
+                    title="Déconnexion Espace Parent"
+                  >
+                    <LogOut className="w-4 h-4" />
+                  </Button>
+                </div>
+              )}
+
               {isAdmin && (
                 <Button
                   variant="ghost"
