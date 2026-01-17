@@ -300,6 +300,18 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
       return;
     }
     
+    // Si c'est l'étape 4 (carnet de dojo), ouvrir le Carnet de Dojo
+    if (target === 'carnet_dojo') {
+      setShowDojoLogbook(true);
+      // Marquer l'étape comme complétée si pas déjà fait
+      if (!journeyCompletedSteps.includes(4)) {
+        const newCompleted = [...journeyCompletedSteps, 4];
+        setJourneyCompletedSteps(newCompleted);
+        localStorage.setItem('aikido_journey_completed_steps', JSON.stringify(newCompleted));
+      }
+      return;
+    }
+    
     const stepId = stepMap[target];
     if (stepId && !journeyCompletedSteps.includes(stepId)) {
       const newCompleted = [...journeyCompletedSteps, stepId];
