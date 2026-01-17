@@ -8,6 +8,8 @@ import axios from 'axios';
 import { toast } from 'sonner';
 import { TechniqueSequenceDemo } from './animations/TechniqueSequenceAnimation';
 import HakamaHistory from './HakamaHistory';
+import BeltProgressCard from './BeltProgressCard';
+import DeplacementsSection from './DeplacementsSection';
 import { 
   PHILOSOPHIE_PHASES, 
   PHILOSOPHIE_TECHNIQUES, 
