@@ -156,7 +156,7 @@ PHRASES = {
     
     # Étape 3 - Dojo Virtuel
     "step_3_dojo": {
-        "text": "Bienvenue dans le Dojo Virtuel ! Ici, tu vas t'entraîner avec des jeux qui développeront ton calme, ta respiration et ton écoute. Et si tu pratiques au vrai dojo, ton sensei pourra valider tes exercices !",
+        "text": "Bienvenue dans le Dojo Virtuel ! Ici, tu vas t'entraîner avec des jeux qui développeront ton calme, ta respiration et ton écoute. Quand tu termines un jeu, tes parents diront si tout s'est bien passé. Et si tu pratiques au vrai dojo, c'est toi qui notes les exercices que tu as faits !",
         "filename": "step_3_dojo.mp3"
     },
     
