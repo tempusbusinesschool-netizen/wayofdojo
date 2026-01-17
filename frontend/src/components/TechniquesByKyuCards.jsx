@@ -76,7 +76,11 @@ const TechniquesByKyuCards = ({
   masteredTechniques = [], // Liste des IDs de techniques maîtrisées
   userId = null,
   isAuthenticated = false,
-  onMasteryUpdate // Callback pour mettre à jour les stats parentes
+  onMasteryUpdate, // Callback pour mettre à jour les stats parentes
+  // Props pour BeltProgressCard
+  currentBelt = null,
+  totalPoints = 0,
+  onBeltClick = null
 }) => {
   // État pour les données des Kyu depuis l'API
   const [kyuLevels, setKyuLevels] = useState([]);
