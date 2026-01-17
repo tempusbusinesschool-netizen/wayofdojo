@@ -438,12 +438,12 @@ const TechniquesByKyuCards = ({
 
         {/* Titre principal */}
         <div className="bg-gradient-to-r from-cyan-600 to-blue-600 p-3">
-          <div className="flex items-center justify-between">
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+            <h2 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
               <BookOpen className="w-5 h-5" />
-              Programme Technique - Tous les Grades
+              Programme Technique
             </h2>
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-2">
               {/* Bouton Philosophie et Histoire */}
               <Button
                 onClick={() => setShowPhilosophieHistoire(true)}
@@ -453,7 +453,7 @@ const TechniquesByKyuCards = ({
                 data-testid="philosophie-histoire-btn"
               >
                 <History className="w-3 h-3 mr-1" />
-                Philosophie et histoire
+                <span className="hidden xs:inline">Philosophie et </span>histoire
               </Button>
               {/* Bouton démo animations */}
               <Button
@@ -464,9 +464,9 @@ const TechniquesByKyuCards = ({
                 data-testid="animation-demo-btn"
               >
                 <Play className="w-3 h-3 mr-1" />
-                Voir les mouvements
+                <span className="hidden xs:inline">Voir les </span>mouvements
               </Button>
-              <div className="text-cyan-200 text-sm font-medium">
+              <div className="text-cyan-200 text-xs sm:text-sm font-medium">
                 {localMastered.length} en confiance
               </div>
             </div>
