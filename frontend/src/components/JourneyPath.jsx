@@ -306,6 +306,15 @@ const JourneyPath = ({
       }, 800);
       return () => clearTimeout(timer);
     }
+    
+    // Arrêter l'audio quand l'intro dialog se ferme
+    if (!showIntroDialog && currentAudioRef.current) {
+      currentAudioRef.current.pause();
+      currentAudioRef.current.currentTime = 0;
+      currentAudioRef.current = null;
+      setIsPlayingAudio(false);
+      setTanakaAnimationState('idle');
+    }
   }, [showIntroDialog, introStep]);
 
   // Valider le prénom
