@@ -509,10 +509,10 @@ const MessagerDuKi = ({ userName, onComplete, onExit, tanakaSpeak }) => {
               animate={{ rotate: [0, 10, -10, 0] }}
               transition={{ repeat: 3, duration: 0.5 }}
             >
-              🎉
+              👏
             </motion.span>
-            <h2 className="text-2xl font-bold text-emerald-400 mb-2">Bravo !</h2>
-            <p className="text-slate-300 mb-4">Tu as traversé le dojo avec maîtrise !</p>
+            <h2 className="text-2xl font-bold text-emerald-400 mb-2">Bravo ! Tu as terminé cette étape 👏</h2>
+            <p className="text-slate-300 mb-4">Tu peux continuer ou rejouer pour t'entraîner encore.</p>
             
             <div className="bg-slate-800/50 rounded-xl p-4 mb-6 inline-block">
               <p className="text-amber-400 text-3xl font-bold">{score} points</p>
@@ -521,20 +521,21 @@ const MessagerDuKi = ({ userName, onComplete, onExit, tanakaSpeak }) => {
             
             <div className="flex justify-center gap-4">
               <Button onClick={restartGame} variant="outline" className="text-white border-white/30">
-                <RotateCcw className="w-4 h-4 mr-2" /> Rejouer
+                <RotateCcw className="w-4 h-4 mr-2" /> Rejouer cette étape
               </Button>
               <Button 
                 onClick={() => onComplete(score, Math.round(score / 10))}
                 className="bg-gradient-to-r from-emerald-500 to-teal-600"
               >
-                Terminer
+                Continuer
               </Button>
             </div>
+            <p className="text-slate-500 text-xs mt-3">Tu peux recommencer pour t'entraîner encore.</p>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Écran d'échec */}
+      {/* Écran de fin - Tu peux recommencer */}
       <AnimatePresence>
         {gameState === 'fail' && (
           <motion.div
@@ -542,16 +543,16 @@ const MessagerDuKi = ({ userName, onComplete, onExit, tanakaSpeak }) => {
             animate={{ opacity: 1, scale: 1 }}
             className="text-center py-8"
           >
-            <span className="text-6xl block mb-4">😵</span>
-            <h2 className="text-2xl font-bold text-red-400 mb-2">Équilibre perdu !</h2>
+            <span className="text-6xl block mb-4">💪</span>
+            <h2 className="text-2xl font-bold text-amber-400 mb-2">Continue comme ça !</h2>
             <p className="text-slate-300 mb-6">
-              Tu es allé trop vite. Rappelle-toi :<br/>
-              <em className="text-amber-400">"Qui va lentement va sûrement"</em>
+              Tu peux recommencer pour t'entraîner encore.<br/>
+              <em className="text-cyan-400">"Chaque essai te fait progresser"</em>
             </p>
             
             <div className="flex justify-center gap-4">
               <Button onClick={restartGame} className="bg-gradient-to-r from-cyan-500 to-blue-600">
-                <RotateCcw className="w-4 h-4 mr-2" /> Réessayer
+                <RotateCcw className="w-4 h-4 mr-2" /> Rejouer cette étape
               </Button>
               <Button onClick={onExit} variant="outline" className="text-white border-white/30">
                 Quitter
