@@ -102,6 +102,39 @@ const TechniquesByKyuCards = ({
   const [tanakaMessage, setTanakaMessage] = useState('');
   const [isTanakaSpeaking, setIsTanakaSpeaking] = useState(false);
   const [tanakaAnimating, setTanakaAnimating] = useState(true);
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  const [audioMuted, setAudioMuted] = useState(false);
+  const currentAudioRef = useRef(null);
+  const hasPlayedWelcomeRef = useRef(false);
+
+  // Fonction pour jouer l'audio de Tanaka
+  const playTanakaAudio = async (phraseKey) => {
+    if (audioMuted) return;
+    
+    // Arrêter l'audio précédent
+    if (currentAudioRef.current) {
+      currentAudioRef.current.pause();
+      currentAudioRef.current = null;
+    }
+    
+    try {
+      setIsAudioPlaying(true);
+      setIsTanakaSpeaking(true);
+      const result = await playTanakaPhrase(phraseKey);
+      if (result.audio) {
+        currentAudioRef.current = result.audio;
+        result.audio.onended = () => {
+          setIsAudioPlaying(false);
+          setIsTanakaSpeaking(false);
+          currentAudioRef.current = null;
+        };
+      }
+    } catch (error) {
+      console.error('Erreur lecture audio Tanaka:', error);
+      setIsAudioPlaying(false);
+      setIsTanakaSpeaking(false);
+    }
+  };
   
   // État pour la démo d'animation
   const [showAnimationDemo, setShowAnimationDemo] = useState(false);
