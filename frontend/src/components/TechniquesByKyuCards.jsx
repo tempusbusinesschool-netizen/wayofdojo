@@ -165,6 +165,14 @@ const TechniquesByKyuCards = ({
           setTanakaMessage(`${displayName}, voici les techniques du ${firstKyu.name}. Commence par les bases et progresse à ton rythme ! — Maître Tanaka 🥋`);
         }
         
+        // Jouer l'audio de bienvenue (une seule fois par ouverture)
+        if (!hasPlayedWelcomeRef.current) {
+          hasPlayedWelcomeRef.current = true;
+          setTimeout(() => {
+            playTanakaAudio('step_2_techniques');
+          }, 500);
+        }
+        
         setLoading(false);
       } catch (err) {
         console.error('Erreur chargement kyu-levels:', err);
@@ -175,8 +183,16 @@ const TechniquesByKyuCards = ({
     
     if (isOpen) {
       fetchKyuLevels();
+    } else {
+      // Reset quand le dialog se ferme
+      hasPlayedWelcomeRef.current = false;
+      if (currentAudioRef.current) {
+        currentAudioRef.current.pause();
+        currentAudioRef.current = null;
+      }
+      setIsAudioPlaying(false);
     }
-  }, [isOpen, userName]);
+  }, [isOpen, userName, audioMuted]);
 
   // Charger les techniques maîtrisées depuis le localStorage et le backend
   useEffect(() => {
