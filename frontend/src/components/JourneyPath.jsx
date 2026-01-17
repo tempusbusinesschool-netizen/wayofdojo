@@ -208,28 +208,72 @@ const JourneyPath = ({
   // Vérifie si une étape est complétée
   const isStepCompleted = (stepId) => completedSteps.includes(stepId);
 
-  // Jouer l'audio de Tanaka
+  // Jouer l'audio de Tanaka (avec protection contre les lectures multiples)
   const playTanakaAudio = async (audioKey) => {
+    // Si déjà en cours de lecture, ignorer
     if (isPlayingAudio) return;
+    
+    // Arrêter l'audio précédent si en cours
+    if (currentAudioRef.current) {
+      currentAudioRef.current.pause();
+      currentAudioRef.current.currentTime = 0;
+      currentAudioRef.current = null;
+    }
+    
     try {
       setIsPlayingAudio(true);
       setTanakaAnimationState('talking');
+      
       const result = await playTanakaPhrase(audioKey);
+      
       if (result?.audio) {
+        currentAudioRef.current = result.audio;
+        
+        // Configurer le callback de fin AVANT de continuer
         result.audio.onended = () => {
+          currentAudioRef.current = null;
+          setIsPlayingAudio(false);
+          setTanakaAnimationState('idle');
+        };
+        
+        result.audio.onerror = () => {
+          currentAudioRef.current = null;
           setIsPlayingAudio(false);
           setTanakaAnimationState('idle');
         };
       } else {
+        // Pas d'audio retourné
         setIsPlayingAudio(false);
         setTanakaAnimationState('idle');
       }
     } catch (error) {
       console.error('Error playing Tanaka audio:', error);
+      currentAudioRef.current = null;
       setIsPlayingAudio(false);
       setTanakaAnimationState('idle');
     }
   };
+  
+  // Arrêter l'audio de Tanaka
+  const stopTanakaAudio = () => {
+    if (currentAudioRef.current) {
+      currentAudioRef.current.pause();
+      currentAudioRef.current.currentTime = 0;
+      currentAudioRef.current = null;
+    }
+    setIsPlayingAudio(false);
+    setTanakaAnimationState('idle');
+  };
+  
+  // Nettoyage au démontage
+  useEffect(() => {
+    return () => {
+      if (currentAudioRef.current) {
+        currentAudioRef.current.pause();
+        currentAudioRef.current = null;
+      }
+    };
+  }, []);
 
   // Valider le prénom
   const handleNameSubmit = () => {
