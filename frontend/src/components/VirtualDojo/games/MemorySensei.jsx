@@ -76,7 +76,7 @@ const MemorySensei = ({ userName, onComplete, onExit, tanakaSpeak }) => {
     setMatchedPairs([]);
     setFlippedCards([]);
     initializeCards();
-    tanakaVoice("Un bon aikidoka connaît le nom de toutes les techniques ! Trouve les paires : image et nom japonais !");
+    tanakaVoice("Trouve les paires : image et nom japonais.");
   };
 
   // Timer
@@ -129,7 +129,7 @@ const MemorySensei = ({ userName, onComplete, onExit, tanakaSpeak }) => {
 
         // Message de Tanaka
         if (combo > 0 && combo % 2 === 0) {
-          tanakaVoice(`${card1.name} ! Excellent ! Tu connais bien tes techniques !`);
+          tanakaVoice("Bien joué !");
         }
 
         // Vérifier si toutes les paires sont trouvées
@@ -154,9 +154,9 @@ const MemorySensei = ({ userName, onComplete, onExit, tanakaSpeak }) => {
     const kiEarned = Math.floor(finalScore / 25);
 
     if (success) {
-      tanakaVoice("Bravo ! Tu as retrouvé toutes les techniques ! Ta mémoire est excellente !");
+      tanakaVoice("Bravo, tu as terminé cette étape !");
     } else {
-      tanakaVoice("Le temps est écoulé. Continue de pratiquer pour mieux mémoriser les techniques !");
+      tanakaVoice("Tu peux recommencer, c'est comme ça qu'on progresse.");
     }
 
     setTimeout(() => onComplete(finalScore, kiEarned), 3000);
