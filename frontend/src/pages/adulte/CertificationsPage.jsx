@@ -32,7 +32,7 @@ const CertificationsPage = ({ onBack, isAuthenticated, onOpenAuth }) => {
   const validationProcess = [
     { step: 1, title: 'Auto-évaluation', desc: 'Marquez les techniques comme "en apprentissage" ou "maîtrisées"' },
     { step: 2, title: 'Pratique régulière', desc: 'Enregistrez vos sessions d\'entraînement' },
-    { step: 3, title: 'Validation enseignant', desc: 'Votre sensei peut valider officiellement vos acquis' },
+    { step: 3, title: 'Progression', desc: 'Suivez votre avancement dans le programme' },
     { step: 4, title: 'Certification', desc: 'Recevez votre attestation de niveau' },
   ];
 
@@ -120,7 +120,7 @@ const CertificationsPage = ({ onBack, isAuthenticated, onOpenAuth }) => {
               <h3 className="font-semibold text-white mb-2">Authenticité garantie</h3>
               <p className="text-slate-400 text-sm">
                 Chaque certification est liée à votre compte personnel et peut être vérifiée. 
-                Les validations par les enseignants sont horodatées et signées numériquement.
+                Les certifications sont horodatées et signées numériquement.
               </p>
             </div>
           </div>
