@@ -1518,71 +1518,10 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
               </p>
             </section>
 
-            {/* ACCORDÉON 2 : Entrainement + Grades détaillés */}
-            <SimpleAccordion
-          title="Entrainement - Techniques d'Aikido"
-          emoji="🥋"
-          subtitle="Parcours & Déplacements"
-          headerGradient="from-cyan-600 via-blue-600 to-indigo-600"
-          defaultOpen={true}
-          testId="accordion-entrainement"
-        >
-          <div id="bloc2-entrainement" className="bg-gradient-to-br from-cyan-900/40 via-blue-900/40 to-indigo-900/40 rounded-b-2xl border-2 border-t-0 border-cyan-500/40 p-4 md:p-6 shadow-xl">
-            
-            {/* EN HAUT : Titre Entrainement */}
-            <div className="flex items-center gap-3 mb-6">
-              <div className="text-4xl">🥋</div>
-              <div>
-                <h2 className="text-xl md:text-2xl font-bold text-cyan-400">
-                  Entrainement - Techniques d&apos;Aikido
-                </h2>
-                <p className="text-slate-400 text-sm">Les ceintures, ton parcours et les déplacements</p>
-              </div>
-            </div>
-
-            {/* Section Mon Parcours Aïkido - Version ludique pour enfants */}
-            {currentBelt && (
-              <div id="section-techniques-maitrisees">
-                <BeltProgressCard 
-                  currentBelt={currentBelt}
-                  totalPoints={statistics.total_points || 0}
-                  onBeltClick={() => setShowBeltDialog(true)}
-                />
-              </div>
-            )}
-
-            {/* Grade Cards Grid (détails des techniques par niveau) - Section Dojo */}
-            <div id="section-techniques-dojo">
-              <GradeCardsGrid 
-                techniquesByLevel={statistics.techniques_by_level}
-                onGradeClick={onGradeClick}
-              />
-            </div>
-
-          {/* Section Déplacements - Techniques en cours */}
-          <div id="section-techniques-encours">
-            <DeplacementsSection />
-          </div>
-
-          {/* Fun footer message */}
-          <div className="mt-6 text-center">
-            <p className="text-cyan-300 text-sm">
-              🌟 Continue à t&apos;entraîner pour débloquer tous les grades ! 🌟
-            </p>
-            <div className="flex justify-center gap-2 mt-2 text-2xl">
-              <span className="animate-bounce" style={{ animationDelay: '0ms' }}>🥋</span>
-              <span className="animate-bounce" style={{ animationDelay: '100ms' }}>💪</span>
-              <span className="animate-bounce" style={{ animationDelay: '200ms' }}>⭐</span>
-              <span className="animate-bounce" style={{ animationDelay: '300ms' }}>🎯</span>
-              <span className="animate-bounce" style={{ animationDelay: '400ms' }}>🔥</span>
-            </div>
-          </div>
-          </div>
-        </SimpleAccordion>
-
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* ACCORDÉON 3 : LES VALEURS DE L'AIKIDO - Version ludique enfant */}
+        {/* ACCORDÉON 2 : LES VALEURS DE L'AIKIDO - Version ludique enfant */}
         {/* Visible pour tous (visiteurs et utilisateurs connectés) */}
+        {/* Note: L'ancien accordéon "Entrainement" a été déplacé dans "Apprends" (étape 2) */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {currentBelt && (
           <SimpleAccordion
