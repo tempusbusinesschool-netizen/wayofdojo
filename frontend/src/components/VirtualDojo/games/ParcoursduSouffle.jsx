@@ -389,10 +389,10 @@ const ParcoursduSouffle = ({ userName, onComplete, onExit, tanakaSpeak }) => {
               }}
               transition={{ duration: 1 }}
             >
-              🎊
+              👏
             </motion.span>
-            <h2 className="text-2xl font-bold text-emerald-400 mb-2">Souffle Maîtrisé !</h2>
-            <p className="text-slate-300 mb-4">Ta respiration est harmonieuse et puissante !</p>
+            <h2 className="text-2xl font-bold text-emerald-400 mb-2">Bravo ! Tu as terminé cette étape 👏</h2>
+            <p className="text-slate-300 mb-4">Tu peux continuer ou rejouer pour t'entraîner encore.</p>
             
             <div className="bg-slate-800/50 rounded-xl p-4 mb-6 inline-block">
               <p className="text-amber-400 text-3xl font-bold">{score} points</p>
@@ -404,15 +404,16 @@ const ParcoursduSouffle = ({ userName, onComplete, onExit, tanakaSpeak }) => {
             
             <div className="flex justify-center gap-4">
               <Button onClick={restartGame} variant="outline" className="text-white border-white/30">
-                <RotateCcw className="w-4 h-4 mr-2" /> Rejouer
+                <RotateCcw className="w-4 h-4 mr-2" /> Rejouer cette étape
               </Button>
               <Button 
                 onClick={() => onComplete(score, Math.round(score / 10))}
                 className="bg-gradient-to-r from-emerald-500 to-teal-600"
               >
-                Terminer
+                Continuer
               </Button>
             </div>
+            <p className="text-slate-500 text-xs mt-3">Tu peux recommencer pour t'entraîner encore.</p>
           </motion.div>
         )}
       </AnimatePresence>
