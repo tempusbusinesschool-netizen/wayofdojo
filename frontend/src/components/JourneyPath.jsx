@@ -153,6 +153,9 @@ const JourneyPath = ({
   const [showStepDialog, setShowStepDialog] = useState(false);
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   
+  // Ref pour stocker l'audio en cours et éviter les lectures multiples
+  const currentAudioRef = useRef(null);
+  
   // État pour l'animation de transition entre étapes (sphère)
   const [showStepTransition, setShowStepTransition] = useState(false);
   const [transitionStep, setTransitionStep] = useState(null);
