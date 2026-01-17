@@ -794,7 +794,7 @@ const VirtualDojo = ({
                     );
                   })}
                 </div>
-              ) : (
+              ) : activeDojoTab === 'dojo' ? (
                 // Section Dojo Réel - Défis du Jour + Exercices
                 <div className="space-y-6">
                   {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
