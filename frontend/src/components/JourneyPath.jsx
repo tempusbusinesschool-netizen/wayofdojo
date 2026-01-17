@@ -275,6 +275,17 @@ const JourneyPath = ({
     };
   }, []);
 
+  // Arrêter l'audio quand le dialog se ferme
+  useEffect(() => {
+    if (!showStepDialog && currentAudioRef.current) {
+      currentAudioRef.current.pause();
+      currentAudioRef.current.currentTime = 0;
+      currentAudioRef.current = null;
+      setIsPlayingAudio(false);
+      setTanakaAnimationState('idle');
+    }
+  }, [showStepDialog]);
+
   // Jouer l'audio de Tanaka automatiquement quand un dialog d'étape s'ouvre
   useEffect(() => {
     if (showStepDialog && selectedStep && selectedStep.tanakaAudioKey) {
