@@ -1,6 +1,22 @@
 # Aikido@Game - Product Requirements Document
 
 ## Changelog
+- **2026-01-17 (Session 6)**:
+  - ✅ **REFACTORING PARCOURS UTILISATEUR - 6 ÉTAPES**
+    - Extraction de "Entraînement Dojo" (Carnet) vers une étape dédiée
+    - Nouveau composant `DojoLogbookDialog.jsx`
+    - Parcours maintenant à 6 étapes :
+      1. Mon Profil 🎭
+      2. Mes Techniques 📚
+      3. Dojo Virtuel 🎮 (Jeux numériques + Validations uniquement)
+      4. **Entraînement au Dojo 🥋** (NOUVEAU - Mon Carnet de pratique)
+      5. Ma Progression 🌟
+      6. Mes Trophées 🏆
+  - ✅ **VirtualDojo simplifié** - Seulement 2 onglets :
+    - "Jeux numériques" (10 mini-jeux)
+    - "Validations" (statut des validations parentales)
+  - ✅ **Étape 4 renommée** : "Mon Carnet" → "Entraînement au Dojo"
+
 - **2026-01-17 (Session 5)**:
   - ✅ **DÉPLACEMENT "DÉFIS DU JOUR"** → Étape 3 "Mon Entraînement"
   - ✅ **ESPACE PARENT** → Fenêtre flottante via bouton header
