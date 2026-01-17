@@ -1020,9 +1020,20 @@ function AppContent() {
               />
             )}
             {activePage === 'philosophie' && (
-              <PhilosophiePage 
-                isChildMode={!isAdultMode}
-              />
+              <div className="relative">
+                <button
+                  onClick={() => setActivePage(null)}
+                  className="fixed top-4 left-4 z-50 bg-slate-800/80 hover:bg-slate-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 border border-slate-600 backdrop-blur-sm"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>
+                  </svg>
+                  Retour au parcours
+                </button>
+                <PhilosophiePage 
+                  isChildMode={!isAdultMode}
+                />
+              </div>
             )}
             
             {/* Grade Sections - Visible uniquement pour les utilisateurs connectés */}
