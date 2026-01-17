@@ -9,7 +9,7 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { X, Volume2, VolumeX, Music, Zap } from 'lucide-react';
+import { X, Volume2, VolumeX, Music, Zap, RotateCcw } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 
 // Configuration du jeu
