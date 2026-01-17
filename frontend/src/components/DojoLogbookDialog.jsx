@@ -8,14 +8,15 @@
  * Il a été extrait pour créer une étape distincte dans le parcours utilisateur.
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { Button } from '@/components/ui/button';
 import { 
-  Trophy, Star, Sparkles, Volume2, X
+  Trophy, Star, Sparkles, Volume2, VolumeX, X
 } from 'lucide-react';
+import { playTanakaPhrase, getPhraseText } from '@/services/tanakaVoiceService';
 
 // Image de Maître Tanaka
 const TANAKA_IMAGE = "/images/tanaka/portrait.png";
