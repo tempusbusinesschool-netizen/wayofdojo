@@ -855,8 +855,9 @@ const JourneyPath = ({
       <AnimatePresence>
         {showStepDialog && selectedStep && (
           <Dialog open={showStepDialog} onOpenChange={setShowStepDialog}>
-            <DialogContent className="sm:max-w-lg p-0 bg-slate-900 border-slate-700 overflow-hidden">
-              <div className={`bg-gradient-to-r ${selectedStep.gradient} p-6 relative`}>
+            <DialogContent className="sm:max-w-lg p-0 bg-slate-900 border-slate-700 overflow-hidden max-h-[90vh] flex flex-col">
+              {/* Header fixe */}
+              <div className={`bg-gradient-to-r ${selectedStep.gradient} p-6 relative flex-shrink-0`}>
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center">
                     <span className="text-4xl">{selectedStep.emoji}</span>
@@ -883,7 +884,8 @@ const JourneyPath = ({
                 </div>
               </div>
 
-              <div className="p-6 space-y-4">
+              {/* Contenu scrollable */}
+              <div className="p-6 space-y-4 overflow-y-auto flex-1 min-h-0">
                 {/* Message de Tanaka */}
                 <div className="bg-gradient-to-r from-amber-600/20 to-orange-600/20 rounded-xl p-4 border border-amber-500/30">
                   <div className="flex items-start gap-3">
@@ -902,7 +904,7 @@ const JourneyPath = ({
                         </button>
                       </div>
                       <p className="text-amber-100 text-sm leading-relaxed italic">
-                        "{displayName}, {selectedStep.tanakaMessage}"
+                        &quot;{displayName}, {selectedStep.tanakaMessage}&quot;
                       </p>
                     </div>
                   </div>
@@ -924,19 +926,20 @@ const JourneyPath = ({
                     ))}
                   </ul>
                 </div>
+              </div>
 
-                <div className="space-y-2">
-                  {selectedStep.actions.map((action, idx) => (
-                    <Button
-                      key={idx}
-                      onClick={() => handleAction(action)}
-                      className={`w-full bg-gradient-to-r ${selectedStep.gradient} hover:opacity-90 text-white font-bold py-3`}
-                    >
-                      <Play className="w-4 h-4 mr-2" />
-                      {action.label}
-                    </Button>
-                  ))}
-                </div>
+              {/* Bouton d'action fixe en bas */}
+              <div className="p-4 border-t border-slate-700 bg-slate-900 flex-shrink-0">
+                {selectedStep.actions.map((action, idx) => (
+                  <Button
+                    key={idx}
+                    onClick={() => handleAction(action)}
+                    className={`w-full bg-gradient-to-r ${selectedStep.gradient} hover:opacity-90 text-white font-bold py-3`}
+                  >
+                    <Play className="w-4 h-4 mr-2" />
+                    {action.label}
+                  </Button>
+                ))}
               </div>
             </DialogContent>
           </Dialog>
