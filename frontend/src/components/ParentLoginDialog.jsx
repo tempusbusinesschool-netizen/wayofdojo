@@ -118,7 +118,7 @@ const ParentLoginDialog = ({ isOpen, onClose, onSuccess }) => {
             </div>
             <div>
               <DialogTitle className="text-xl font-bold text-white">
-                {mode === 'login' ? 'Connexion Parent' : 'Inscription Parent'}
+                {mode === 'login' ? 'Espace Parent' : 'Inscription Parent'}
               </DialogTitle>
               <p className="text-sm text-slate-400">
                 {mode === 'login' 
