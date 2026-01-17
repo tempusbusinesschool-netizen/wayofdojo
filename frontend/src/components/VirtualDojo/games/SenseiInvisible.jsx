@@ -432,35 +432,33 @@ const SenseiInvisible = ({ userName, onComplete, onExit, tanakaSpeak }) => {
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ repeat: 3, duration: 0.5 }}
             >
-              🎧
+              👏
             </motion.span>
-            <h2 className="text-2xl font-bold text-emerald-400 mb-2">Écoute Parfaite !</h2>
-            <p className="text-slate-300 mb-4">Tu as suivi toutes les instructions de Maître Tanaka !</p>
+            <h2 className="text-2xl font-bold text-emerald-400 mb-2">Bravo ! Tu as terminé cette étape 👏</h2>
+            <p className="text-slate-300 mb-4">Tu peux continuer ou rejouer pour t'entraîner encore.</p>
             
             <div className="bg-slate-800/50 rounded-xl p-4 mb-6 inline-block">
               <p className="text-amber-400 text-3xl font-bold">{score} points</p>
               <p className="text-cyan-400">+{Math.round(score / 10)} Ki</p>
-              <p className="text-purple-400 text-sm mt-1">
-                Erreurs : {mistakes}/3
-              </p>
             </div>
             
             <div className="flex justify-center gap-4">
               <Button onClick={restartGame} variant="outline" className="text-white border-white/30">
-                <RotateCcw className="w-4 h-4 mr-2" /> Rejouer
+                <RotateCcw className="w-4 h-4 mr-2" /> Rejouer cette étape
               </Button>
               <Button 
                 onClick={() => onComplete(score, Math.round(score / 10))}
                 className="bg-gradient-to-r from-emerald-500 to-teal-600"
               >
-                Terminer
+                Continuer
               </Button>
             </div>
+            <p className="text-slate-500 text-xs mt-3">Tu peux recommencer pour t'entraîner encore.</p>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* Écran d'échec */}
+      {/* Écran de fin - Tu peux recommencer */}
       <AnimatePresence>
         {gameState === 'fail' && (
           <motion.div
@@ -468,16 +466,16 @@ const SenseiInvisible = ({ userName, onComplete, onExit, tanakaSpeak }) => {
             animate={{ opacity: 1, scale: 1 }}
             className="text-center py-8"
           >
-            <span className="text-6xl block mb-4">🙉</span>
-            <h2 className="text-2xl font-bold text-red-400 mb-2">Concentration perdue !</h2>
+            <span className="text-6xl block mb-4">💪</span>
+            <h2 className="text-2xl font-bold text-amber-400 mb-2">Continue comme ça !</h2>
             <p className="text-slate-300 mb-6">
-              L&apos;écoute demande de la patience.<br/>
-              <em className="text-amber-400">&quot;Écouter, c&apos;est observer avec les oreilles&quot;</em>
+              Tu peux recommencer pour t&apos;entraîner encore.<br/>
+              <em className="text-cyan-400">&quot;Chaque essai te fait progresser&quot;</em>
             </p>
             
             <div className="flex justify-center gap-4">
               <Button onClick={restartGame} className="bg-gradient-to-r from-purple-500 to-violet-600">
-                <RotateCcw className="w-4 h-4 mr-2" /> Réessayer
+                <RotateCcw className="w-4 h-4 mr-2" /> Rejouer cette étape
               </Button>
               <Button onClick={onExit} variant="outline" className="text-white border-white/30">
                 Quitter
