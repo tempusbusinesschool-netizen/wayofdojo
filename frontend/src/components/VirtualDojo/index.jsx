@@ -2,10 +2,16 @@
  * 🏯 DOJO VIRTUEL - Centre d'entraînement gamifié
  * 
  * Architecture:
- * - 10 mini-jeux numériques pour enfants 5-14 ans
- * - Exercices validés par enseignant au dojo réel
+ * - 10 mini-jeux numériques pour enfants 6-14 ans
+ * - Jeux numériques : validés par les PARENTS uniquement
+ * - Exercices au dojo réel : AUTO-VALIDATION par l'utilisateur
  * - Coach virtuel: Maître Tanaka
  * - Système de points de Ki, badges, progression
+ * 
+ * RÈGLES DE VALIDATION STRICTES:
+ * ✅ Jeux numériques → Parents valident
+ * ✅ Exercices au dojo → L'enfant s'auto-valide (honnêteté)
+ * ❌ Le sensei n'intervient PAS dans la validation numérique
  */
 
 import React, { useState, useEffect, useCallback } from 'react';
