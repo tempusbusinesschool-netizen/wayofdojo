@@ -98,9 +98,17 @@ export const TECHNIQUES_BY_KYU = {
         name: "Saisies",
         icon: "✋",
         techniques: [
-          { id: "katate_dori", name: "Katate Dori", description: "Saisie d'un poignet", difficulty: 1 },
-          { id: "ai_hanmi", name: "Ai Hanmi Katate Dori", description: "Saisie en garde identique", difficulty: 1 },
-          { id: "gyaku_hanmi", name: "Gyaku Hanmi Katate Dori", description: "Saisie en garde inverse", difficulty: 1 },
+          { id: "katate_dori", name: "Katate Dori", description: "Saisie d'un poignet", difficulty: 1, type: "statique" },
+          { id: "ai_hanmi", name: "Ai Hanmi Katate Dori", description: "Saisie en garde identique", difficulty: 1, type: "statique" },
+          { id: "gyaku_hanmi", name: "Gyaku Hanmi Katate Dori", description: "Saisie en garde inverse", difficulty: 1, type: "statique" },
+        ]
+      },
+      {
+        name: "Attaques avancées",
+        icon: "👊",
+        techniques: [
+          { id: "ushiro_ryote_dori", name: "Ushiro Ryote Dori", description: "Saisie arrière des deux poignets", difficulty: 2, type: "statique" },
+          { id: "mae_geri", name: "Mae Geri", description: "Coup de pied avant", difficulty: 3, type: "dynamique" },
         ]
       }
     ]
