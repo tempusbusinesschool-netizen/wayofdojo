@@ -7,7 +7,7 @@
 const TANAKA_PHRASES = {
   // Bienvenue et salutations
   welcome: {
-    text: "Bienvenue dans mon dojo virtuel, jeune ninja ! Je suis Maître Tanaka, ton guide sur la Voie de l'Aïkido. Ho ho ho...",
+    text: "Bienvenue dans mon dojo virtuel, jeune ninja ! Je suis Maître Tanaka, ton guide sur la Voie de l'Aïkido.",
     file: "/audio/tanaka/welcome.mp3"
   },
   hello_morning: {
@@ -29,7 +29,7 @@ const TANAKA_PHRASES = {
     file: "/audio/tanaka/challenge_complete.mp3"
   },
   challenge_first: {
-    text: "Ho ho ho ! Ton premier défi est accompli ! C'est le premier pas sur un long chemin. Je suis fier de toi, jeune ninja !",
+    text: "Ton premier défi est accompli ! C'est le premier pas sur un long chemin. Je suis fier de toi, jeune ninja !",
     file: "/audio/tanaka/challenge_first.mp3"
   },
   challenge_hard: {
@@ -47,7 +47,7 @@ const TANAKA_PHRASES = {
     file: "/audio/tanaka/belt_yellow.mp3"
   },
   belt_orange: {
-    text: "Ho ho ho ! Ta ceinture orange montre ta progression ! Comme la flamme, tu gagnes en intensité. Magnifique !",
+    text: "Ta ceinture orange montre ta progression ! Comme la flamme, tu gagnes en intensité. Magnifique !",
     file: "/audio/tanaka/belt_orange.mp3"
   },
   belt_green: {
@@ -63,7 +63,7 @@ const TANAKA_PHRASES = {
     file: "/audio/tanaka/belt_brown.mp3"
   },
   belt_black: {
-    text: "La ceinture noire ! Ho ho ho ! Ce n'est pas la fin, mais un nouveau commencement. Maintenant, le vrai apprentissage commence !",
+    text: "La ceinture noire ! Ce n'est pas la fin, mais un nouveau commencement. Maintenant, le vrai apprentissage commence !",
     file: "/audio/tanaka/belt_black.mp3"
   },
 
@@ -73,7 +73,7 @@ const TANAKA_PHRASES = {
     file: "/audio/tanaka/streak_3.mp3"
   },
   streak_7: {
-    text: "Une semaine complète de pratique ! Ho ho ho ! Comme l'eau qui sculpte la pierre, ta persévérance porte ses fruits !",
+    text: "Une semaine complète de pratique ! Comme l'eau qui sculpte la pierre, ta persévérance porte ses fruits !",
     file: "/audio/tanaka/streak_7.mp3"
   },
   streak_14: {
@@ -105,7 +105,7 @@ const TANAKA_PHRASES = {
     file: "/audio/tanaka/xp_gained.mp3"
   },
   level_up: {
-    text: "Ho ho ho ! Tu montes de niveau ! Ton esprit grandit, ton corps s'améliore. Continue sur cette voie !",
+    text: "Tu montes de niveau ! Ton esprit grandit, ton corps s'améliore. Continue sur cette voie !",
     file: "/audio/tanaka/level_up.mp3"
   },
 
