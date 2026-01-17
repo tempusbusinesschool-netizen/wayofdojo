@@ -24,7 +24,7 @@ OUTPUT_DIR = Path(__file__).parent.parent / "frontend" / "public" / "audio" / "t
 PHRASES = {
     # Bienvenue et salutations
     "welcome": {
-        "text": "Bienvenue dans mon dojo virtuel, jeune ninja ! Je suis Maître Tanaka, ton guide sur la Voie de l'Aïkido. Ho ho ho...",
+        "text": "Bienvenue dans mon dojo virtuel, jeune ninja ! Je suis Maître Tanaka, ton guide sur la Voie de l'Aïkido.",
         "filename": "welcome.mp3"
     },
     "hello_morning": {
@@ -46,7 +46,7 @@ PHRASES = {
         "filename": "challenge_complete.mp3"
     },
     "challenge_first": {
-        "text": "Ho ho ho ! Ton premier défi est accompli ! C'est le premier pas sur un long chemin. Je suis fier de toi, jeune ninja !",
+        "text": "Ton premier défi est accompli ! C'est le premier pas sur un long chemin. Je suis fier de toi, jeune ninja !",
         "filename": "challenge_first.mp3"
     },
     "challenge_hard": {
@@ -64,7 +64,7 @@ PHRASES = {
         "filename": "belt_yellow.mp3"
     },
     "belt_orange": {
-        "text": "Ho ho ho ! Ta ceinture orange montre ta progression ! Comme la flamme, tu gagnes en intensité. Magnifique !",
+        "text": "Ta ceinture orange montre ta progression ! Comme la flamme, tu gagnes en intensité. Magnifique !",
         "filename": "belt_orange.mp3"
     },
     "belt_green": {
@@ -80,7 +80,7 @@ PHRASES = {
         "filename": "belt_brown.mp3"
     },
     "belt_black": {
-        "text": "La ceinture noire ! Ho ho ho ! Ce n'est pas la fin, mais un nouveau commencement. Maintenant, le vrai apprentissage commence !",
+        "text": "La ceinture noire ! Ce n'est pas la fin, mais un nouveau commencement. Maintenant, le vrai apprentissage commence !",
         "filename": "belt_black.mp3"
     },
     
@@ -90,7 +90,7 @@ PHRASES = {
         "filename": "streak_3.mp3"
     },
     "streak_7": {
-        "text": "Une semaine complète de pratique ! Ho ho ho ! Comme l'eau qui sculpte la pierre, ta persévérance porte ses fruits !",
+        "text": "Une semaine complète de pratique ! Comme l'eau qui sculpte la pierre, ta persévérance porte ses fruits !",
         "filename": "streak_7.mp3"
     },
     "streak_14": {
@@ -122,7 +122,7 @@ PHRASES = {
         "filename": "xp_gained.mp3"
     },
     "level_up": {
-        "text": "Ho ho ho ! Tu montes de niveau ! Ton esprit grandit, ton corps s'améliore. Continue sur cette voie !",
+        "text": "Tu montes de niveau ! Ton esprit grandit, ton corps s'améliore. Continue sur cette voie !",
         "filename": "level_up.mp3"
     },
     
