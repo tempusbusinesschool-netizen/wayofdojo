@@ -208,7 +208,7 @@ const MaitreTanaka = ({ childContext = null, isVisible = true }) => {
 
   return (
     <>
-      {/* Floating Button */}
+      {/* Floating Button - Maître Tanaka dans cercle orange */}
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
@@ -216,25 +216,31 @@ const MaitreTanaka = ({ childContext = null, isVisible = true }) => {
           data-testid="maitre-tanaka-button"
         >
           <div className="relative">
-            {/* Pulse animation */}
-            <div className="absolute inset-0 bg-amber-500 rounded-full animate-ping opacity-25"></div>
+            {/* Pulse animation - cercle orange extérieur */}
+            <div className="absolute inset-0 bg-gradient-to-br from-orange-400 to-amber-500 rounded-full animate-ping opacity-30"></div>
             
-            {/* Main button with 3D image */}
-            <div className="relative w-16 h-16 rounded-full shadow-lg overflow-hidden border-2 border-amber-400 transform transition-transform group-hover:scale-110">
-              <img 
-                src={TANAKA_IMAGE} 
-                alt="Maître Tanaka" 
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  e.target.style.display = 'none';
-                  e.target.parentElement.classList.add('bg-gradient-to-br', 'from-amber-500', 'to-orange-600', 'flex', 'items-center', 'justify-center');
-                  e.target.parentElement.innerHTML = '<span class="text-3xl">🥋</span>';
-                }}
-              />
+            {/* Cercle orange principal avec Tanaka à l'intérieur */}
+            <div className="relative w-20 h-20 rounded-full shadow-2xl overflow-hidden bg-gradient-to-br from-orange-500 via-amber-500 to-orange-600 border-4 border-orange-300 transform transition-all duration-300 group-hover:scale-110 group-hover:shadow-orange-500/50">
+              {/* Image de Tanaka centrée dans le cercle orange */}
+              <div className="absolute inset-2 rounded-full overflow-hidden bg-slate-900/20">
+                <img 
+                  src={TANAKA_IMAGE} 
+                  alt="Maître Tanaka" 
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.parentElement.classList.add('flex', 'items-center', 'justify-center');
+                    e.target.parentElement.innerHTML = '<span class="text-3xl">🧘</span>';
+                  }}
+                />
+              </div>
+              
+              {/* Effet de brillance sur le cercle orange */}
+              <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent rounded-full pointer-events-none"></div>
             </div>
             
-            {/* Label */}
-            <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full font-bold animate-bounce">
+            {/* Label "Parle-moi !" */}
+            <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full font-bold animate-bounce shadow-lg">
               Parle-moi !
             </div>
           </div>
