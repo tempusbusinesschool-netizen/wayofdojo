@@ -131,6 +131,9 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
   // État pour le Dojo Virtuel (étape 3)
   const [showVirtualDojo, setShowVirtualDojo] = useState(false);
   
+  // État pour le Carnet de Dojo (étape 4)
+  const [showDojoLogbook, setShowDojoLogbook] = useState(false);
+  
   // État pour les confettis de célébration
   const [showConfetti, setShowConfetti] = useState(false);
   
