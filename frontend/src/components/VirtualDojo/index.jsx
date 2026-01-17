@@ -14,7 +14,7 @@
  * ❌ Le sensei n'intervient PAS dans la validation numérique
  */
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
@@ -23,10 +23,11 @@ import {
   Gamepad2, Wind, Target, Ear, Brain, 
   Users, Heart, Eye, Footprints, Shield,
   Trophy, Star, Lock, Play, ChevronRight,
-  X, Volume2, Info, Sparkles, RotateCcw
+  X, Volume2, VolumeX, Info, Sparkles, RotateCcw
 } from 'lucide-react';
 import ProgressionTunnel from '../ProgressionTunnel';
 import { getBeltByPoints } from '@/constants/aikidoBelts';
+import { playTanakaPhrase } from '@/services/tanakaVoiceService';
 
 // Import des mini-jeux
 import MessagerDuKi from './games/MessagerDuKi';
