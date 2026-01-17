@@ -311,8 +311,9 @@ const TechniqueSequenceDemo = ({ isOpen, onClose }) => {
             <p className="text-amber-200 text-xs flex items-start gap-2">
               <Info className="w-4 h-4 mt-0.5 flex-shrink-0" />
               <span>
-                <strong>Rappel :</strong> Ces illustrations sont un aide-mémoire. 
-                C'est au dojo avec ton enseignant que tu apprends vraiment les techniques.
+                <strong>Support de reconnaissance uniquement.</strong> Cette animation stylisée 
+                t'aide à te souvenir de ce que tu as vu au dojo. Ce n'est pas un modèle à imiter. 
+                Seul ton enseignant peut te montrer la technique correctement.
               </span>
             </p>
           </div>
