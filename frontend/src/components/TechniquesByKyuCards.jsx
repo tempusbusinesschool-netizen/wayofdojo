@@ -862,6 +862,12 @@ const TechniquesByKyuCards = ({
           )}
         </AnimatePresence>
       </DialogContent>
+
+      {/* Modal de démo des animations */}
+      <TechniqueAnimationDemo 
+        isOpen={showAnimationDemo} 
+        onClose={() => setShowAnimationDemo(false)} 
+      />
     </Dialog>
   );
 };
