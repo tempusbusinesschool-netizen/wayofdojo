@@ -748,6 +748,26 @@ const JourneyPath = ({
         </div>
       </div>
 
+      {/* Bouton Sagesse de Maître Tanaka (Philosophie) */}
+      <div className="flex justify-center mb-4">
+        <motion.button
+          onClick={() => onNavigate && onNavigate('philosophie')}
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="flex items-center gap-3 bg-gradient-to-r from-blue-600/20 to-purple-600/20 hover:from-blue-600/30 hover:to-purple-600/30 border border-blue-500/30 hover:border-blue-400/50 text-white px-6 py-3 rounded-xl transition-all shadow-lg hover:shadow-blue-500/20"
+          data-testid="philosophie-btn"
+        >
+          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+            <span className="text-xl">🧘</span>
+          </div>
+          <div className="text-left">
+            <span className="font-bold text-blue-200">La Sagesse de Maître Tanaka</span>
+            <p className="text-xs text-blue-300/70">Découvre la philosophie de l'Aïkido</p>
+          </div>
+          <ChevronRight className="w-5 h-5 text-blue-400" />
+        </motion.button>
+      </div>
+
       {/* Bouton Réinitialiser le parcours (pour les tests) */}
       <div className="flex justify-end mb-4">
         <button
