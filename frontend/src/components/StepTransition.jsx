@@ -242,8 +242,17 @@ const StepTransition = ({
                     {stepTitle}
                   </h2>
                   <p className="text-emerald-400 text-xl">
-                    Complétée ! ✨
+                    {customMessage || actionMessages.status}
                   </p>
+                  {xpEarned > 0 && (
+                    <motion.p 
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      className="text-amber-400 text-lg font-bold mt-2"
+                    >
+                      +{xpEarned} XP
+                    </motion.p>
+                  )}
                 </motion.div>
               )}
             </AnimatePresence>
@@ -258,7 +267,7 @@ const StepTransition = ({
                   className="mt-6"
                 >
                   <p className="text-amber-400 text-lg font-semibold">
-                    🎉 Bravo {userName} ! Étape suivante...
+                    {actionMessages.congrats}
                   </p>
                 </motion.div>
               )}
