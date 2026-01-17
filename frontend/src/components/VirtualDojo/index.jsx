@@ -259,6 +259,41 @@ const VirtualDojo = ({
   // Onglet actif : 'jeux', 'dojo' ou 'validations'
   const [activeDojoTab, setActiveDojoTab] = useState('jeux');
   
+  // États pour l'audio de Tanaka
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  const [audioMuted, setAudioMuted] = useState(false);
+  const currentAudioRef = useRef(null);
+  const hasPlayedWelcomeRef = useRef(false);
+
+  // Fonction pour jouer l'audio de Tanaka
+  const playTanakaAudio = async (phraseKey) => {
+    if (audioMuted) return;
+    
+    // Arrêter l'audio précédent
+    if (currentAudioRef.current) {
+      currentAudioRef.current.pause();
+      currentAudioRef.current = null;
+    }
+    
+    try {
+      setIsAudioPlaying(true);
+      setIsTanakaSpeaking(true);
+      const result = await playTanakaPhrase(phraseKey);
+      if (result.audio) {
+        currentAudioRef.current = result.audio;
+        result.audio.onended = () => {
+          setIsAudioPlaying(false);
+          setIsTanakaSpeaking(false);
+          currentAudioRef.current = null;
+        };
+      }
+    } catch (error) {
+      console.error('Erreur lecture audio Tanaka:', error);
+      setIsAudioPlaying(false);
+      setIsTanakaSpeaking(false);
+    }
+  };
+  
   // État pour les exercices au dojo réel validés par l'enfant
   const [completedDojoExercises, setCompletedDojoExercises] = useState(() => {
     const saved = localStorage.getItem('aikido_dojo_exercises_today');
