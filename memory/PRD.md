@@ -8,6 +8,14 @@
     - Props ajoutées au composant VirtualDojo (statistics, virtueData, userId, etc.)
     - Nettoyage des imports inutilisés (ProgressionTunnel, HakamaHistory)
     - Aucun doublon visuel ou fonctionnel
+  - ✅ **ESPACE PARENT - FENÊTRE FLOTTANTE**
+    - Supprimé la section "👨‍👩‍👧 Espace Parent" de `StatisticsDashboard.js`
+    - Transformé `ParentDashboard` en Dialog flottant dans `App.js`
+    - Point d'entrée unique : bouton "Espace Parent" dans le header
+    - Le dashboard principal reste visible en arrière-plan
+    - Fenêtre contextuelle à l'enfant actif (lecture/saisie : consultation, validations, messages, observations)
+    - Ne modifie jamais la navigation principale
+    - Aucun doublon visuel ou fonctionnel
 
 - **2026-01-17 (Session 4)**:
   - ✅ **BASE DE DONNÉES TECHNIQUES COMPLÈTE - Structure en 3 Phases**
