@@ -48,6 +48,16 @@ export const TECHNIQUES_BY_KYU = {
           { id: "kamae", name: "Kamae", description: "Garde de base", difficulty: 1 },
           { id: "shikko", name: "Shikko", description: "Marche à genoux", difficulty: 2 },
         ]
+      },
+      {
+        name: "Attaques (Frappes)",
+        icon: "👊",
+        techniques: [
+          { id: "shomen_uchi", name: "Shomen Uchi", description: "Frappe verticale descendante sur la tête", difficulty: 1, type: "dynamique" },
+          { id: "yokomen_uchi", name: "Yokomen Uchi", description: "Frappe latérale à la tempe", difficulty: 2, type: "dynamique" },
+          { id: "chudan_tsuki", name: "Chudan Tsuki", description: "Coup de poing direct au ventre", difficulty: 1, type: "dynamique" },
+          { id: "jodan_tsuki", name: "Jodan Tsuki", description: "Coup de poing direct au visage", difficulty: 2, type: "dynamique" },
+        ]
       }
     ]
   },
