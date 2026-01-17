@@ -206,7 +206,7 @@ const DojoLogbookDialog = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-3xl max-h-[90vh] bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-2 border-amber-500/30 p-0 overflow-hidden" data-testid="dojo-logbook-dialog">
         <VisuallyHidden>
-          <DialogTitle>Entraînement au Dojo - Mon Carnet</DialogTitle>
+          <DialogTitle>Mon Club - Mon Carnet</DialogTitle>
           <DialogDescription>Note les exercices que tu as faits au vrai dojo</DialogDescription>
         </VisuallyHidden>
 
@@ -245,7 +245,7 @@ const DojoLogbookDialog = ({
             <div className="flex-1">
               <div className="flex items-center justify-between mb-2">
                 <h2 className="text-xl font-bold text-amber-100 flex items-center gap-2">
-                  🥋 Entraînement au Dojo
+                  🥋 Mon Club
                 </h2>
                 <div className="flex items-center gap-4">
                   {/* Points de Ki */}
