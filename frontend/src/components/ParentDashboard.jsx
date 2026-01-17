@@ -188,7 +188,7 @@ const ParentDashboard = ({ onLogout }) => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center">
+      <div className="flex items-center justify-center py-20">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-purple-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-slate-400">Chargement...</p>
@@ -198,7 +198,7 @@ const ParentDashboard = ({ onLogout }) => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
+    <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
       {/* Header */}
       <header className="bg-slate-800/50 backdrop-blur-sm border-b border-purple-500/20 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 py-4">
