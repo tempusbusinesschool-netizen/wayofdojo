@@ -143,9 +143,9 @@ const TANAKA_PHRASES = {
     file: "/audio/tanaka/step_3_dojo.mp3"
   },
   
-  // Étape 4 - Mon Club (Carnet de pratique au dojo)
+  // Étape 4 - Ma Pratique (Carnet de pratique au dojo)
   step_4_carnet: {
-    text: "Bienvenue dans Mon Club ! Après ton cours au dojo, reviens ici pour noter ce que tu as pratiqué. C'est ton carnet personnel. Ta parole compte, sois honnête avec toi-même ! Chaque exercice noté te rapporte des points de Ki.",
+    text: "Bienvenue dans Ma Pratique ! Après ton cours au dojo, reviens ici pour noter ce que tu as pratiqué. C'est ton carnet personnel. Ta parole compte, sois honnête avec toi-même ! Chaque exercice noté te rapporte des points de Ki.",
     file: "/audio/tanaka/step_4_carnet.mp3"
   },
   
