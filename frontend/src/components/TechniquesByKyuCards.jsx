@@ -444,6 +444,17 @@ const TechniquesByKyuCards = ({
               Programme Technique - Tous les Grades
             </h2>
             <div className="flex items-center gap-3">
+              {/* Bouton Philosophie et Histoire */}
+              <Button
+                onClick={() => setShowPhilosophieHistoire(true)}
+                variant="outline"
+                size="sm"
+                className="border-purple-400/50 text-purple-200 hover:bg-purple-500/20 text-xs"
+                data-testid="philosophie-histoire-btn"
+              >
+                <History className="w-3 h-3 mr-1" />
+                Philosophie et histoire
+              </Button>
               {/* Bouton démo animations */}
               <Button
                 onClick={() => setShowAnimationDemo(true)}
