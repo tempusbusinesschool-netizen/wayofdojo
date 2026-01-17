@@ -59,7 +59,7 @@ const JOURNEY_STEPS = [
     xpReward: 15,
     description: 'Découvre les techniques d\'Aïkido par grade : Tai Sabaki, Ukemi, Ikkyo, Shiho Nage et bien plus !',
     tanakaMessage: "Maintenant, passons aux techniques ! Chaque ceinture a ses propres mouvements à maîtriser. Commence par les bases : les déplacements et les chutes. Ensuite, tu apprendras les vraies techniques !",
-    tanakaAudioKey: 'encourage_practice',
+    tanakaAudioKey: 'step_2_techniques',
     actions: [{ label: 'Voir les techniques', type: 'navigate', target: 'techniques' }],
     tips: ['🦶 Tai Sabaki - Déplacements', '🔄 Ukemi - Chutes', '💪 Ikkyo, Nikyo, Sankyo...', '🌀 Shiho Nage, Irimi Nage...']
   },
@@ -75,8 +75,8 @@ const JOURNEY_STEPS = [
     unlockCondition: 'step_2_completed',
     xpReward: 20,
     description: 'Entre dans le Dojo Virtuel ! 10 mini-jeux t\'attendent pour développer tes compétences de ninja. Tu peux aussi valider tes exercices faits au vrai dojo !',
-    tanakaMessage: "Bienvenue dans le Dojo Virtuel ! Ici, tu vas t'entraîner avec des jeux qui développeront ton calme, ta respiration et ton écoute. Et si tu pratiques au vrai dojo, ton sensei pourra valider tes exercices ! 💪",
-    tanakaAudioKey: 'encourage_practice',
+    tanakaMessage: "Bienvenue dans le Dojo Virtuel ! Ici, tu vas t'entraîner avec des jeux qui développeront ton calme, ta respiration et ton écoute. Et si tu pratiques au vrai dojo, ton sensei pourra valider tes exercices !",
+    tanakaAudioKey: 'step_3_dojo',
     actions: [{ label: 'Entrer dans le Dojo Virtuel', type: 'navigate', target: 'dojo_virtuel' }],
     tips: ['🎮 10 mini-jeux éducatifs', '🏯 Exercices au dojo réel', '✨ Gagne des points de Ki', '🧘 Développe ton calme']
   },
@@ -92,8 +92,8 @@ const JOURNEY_STEPS = [
     unlockCondition: 'step_3_completed',
     xpReward: 25,
     description: 'Demande à tes parents de valider tes défis accomplis ! Ils peuvent suivre ta progression.',
-    tanakaMessage: "Tes parents sont fiers de toi ! 🙏 Demande-leur de valider tes efforts. Ils peuvent voir tout ce que tu as accompli !",
-    tanakaAudioKey: 'encourage_patience',
+    tanakaMessage: "Tes parents sont fiers de toi ! Demande-leur de valider tes efforts. Ils peuvent voir tout ce que tu as accompli !",
+    tanakaAudioKey: 'step_4_validation',
     actions: [{ label: 'Demander validation', type: 'navigate', target: 'validation' }],
     tips: ['👨‍👩‍👧 Validation parentale', '📱 Notification aux parents', '✨ Points bonus']
   },
