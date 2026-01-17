@@ -1019,6 +1019,11 @@ function AppContent() {
                 onOpenAuth={() => setShowAuthDialog(true)}
               />
             )}
+            {activePage === 'philosophie' && (
+              <PhilosophiePage 
+                isChildMode={!isAdultMode}
+              />
+            )}
             
             {/* Grade Sections - Visible uniquement pour les utilisateurs connectés */}
             {isAuthenticated && (
