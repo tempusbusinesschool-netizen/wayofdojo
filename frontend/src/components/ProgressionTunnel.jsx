@@ -697,7 +697,7 @@ const getDefaultChallenges = () => [
     emoji: "✋",
     kanji: "心",
     title: "Main Levée",
-    description: "Pose une question au sensei pendant le cours",
+    description: "Pose une question pendant le cours au dojo",
     points: 15,
     xp_reward: 15,
     needs_parent_validation: false,
