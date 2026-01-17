@@ -390,9 +390,9 @@ const JourneyPath = ({
       <AnimatePresence>
         {showIntroDialog && (
           <Dialog open={showIntroDialog} onOpenChange={setShowIntroDialog}>
-            <DialogContent className="sm:max-w-lg p-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-amber-500/50 overflow-hidden">
-              {/* Tanaka animé */}
-              <div className="relative bg-gradient-to-r from-amber-600/30 via-orange-600/30 to-amber-600/30 p-6 text-center">
+            <DialogContent className="sm:max-w-lg p-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-amber-500/50 overflow-hidden max-h-[90vh] flex flex-col">
+              {/* Tanaka animé - Header fixe */}
+              <div className="relative bg-gradient-to-r from-amber-600/30 via-orange-600/30 to-amber-600/30 p-6 text-center flex-shrink-0">
                 <motion.div
                   animate={{
                     scale: tanakaAnimationState === 'waving' ? [1, 1.05, 1] : 1,
@@ -401,7 +401,7 @@ const JourneyPath = ({
                   transition={{ duration: 0.5, repeat: tanakaAnimationState === 'waving' ? 3 : 0 }}
                   className="relative inline-block"
                 >
-                  <div className="w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-amber-400 shadow-2xl shadow-amber-500/40">
+                  <div className="w-24 h-24 sm:w-32 sm:h-32 mx-auto rounded-full overflow-hidden border-4 border-amber-400 shadow-2xl shadow-amber-500/40">
                     <img 
                       src={TANAKA_IMAGE} 
                       alt="Maître Tanaka" 
@@ -419,12 +419,12 @@ const JourneyPath = ({
                     </motion.div>
                   )}
                 </motion.div>
-                <h2 className="text-2xl font-bold text-amber-400 mt-4">Maître Tanaka</h2>
-                <p className="text-amber-200/70 text-sm">Ton guide sur la Voie de l'Aïkido</p>
+                <h2 className="text-xl sm:text-2xl font-bold text-amber-400 mt-4">Maître Tanaka</h2>
+                <p className="text-amber-200/70 text-sm">Ton guide sur la Voie de l&apos;Aïkido</p>
               </div>
 
-              {/* Contenu */}
-              <div className="p-6">
+              {/* Contenu scrollable */}
+              <div className="p-4 sm:p-6 overflow-y-auto flex-1 min-h-0">
                 {introStep === 1 ? (
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -434,13 +434,13 @@ const JourneyPath = ({
                     <div className="bg-slate-800/50 rounded-xl p-4 border border-amber-500/30">
                       {/* Message de bienvenue */}
                       <p className="text-emerald-400 font-bold text-lg mb-3">
-                        "Bienvenue jeune Ninja ! 🥋"
+                        &quot;Bienvenue jeune Ninja ! 🥋&quot;
                       </p>
-                      <p className="text-white/80 mt-2">
-                        Je suis <span className="text-amber-400 font-bold">Maître Tanaka</span>, et je serai ton guide sur la Voie de l'Aïkido.
+                      <p className="text-white/80 mt-2 text-sm sm:text-base">
+                        Je suis <span className="text-amber-400 font-bold">Maître Tanaka</span>, et je serai ton guide sur la Voie de l&apos;Aïkido.
                       </p>
-                      <p className="text-white/80 mt-2">
-                        Ensemble, nous allons découvrir les secrets des grands maîtres, les 7 vertus magiques, et tu deviendras un vrai ninja !"
+                      <p className="text-white/80 mt-2 text-sm sm:text-base">
+                        Ensemble, nous allons découvrir les secrets des grands maîtres, les 7 vertus magiques, et tu deviendras un vrai ninja !&quot;
                       </p>
                     </div>
                     
@@ -476,14 +476,14 @@ const JourneyPath = ({
                     className="space-y-4"
                   >
                     <div className="bg-slate-800/50 rounded-xl p-4 border border-amber-500/30">
-                      <p className="text-white text-lg leading-relaxed">
-                        "Très bien ! Mais dis-moi...
+                      <p className="text-white text-base sm:text-lg leading-relaxed">
+                        &quot;Très bien ! Mais dis-moi...
                       </p>
-                      <p className="text-amber-400 font-bold text-xl mt-3 text-center">
-                        Quel est ton prénom ? 🤔"
+                      <p className="text-amber-400 font-bold text-lg sm:text-xl mt-3 text-center">
+                        Quel est ton prénom ? 🤔&quot;
                       </p>
                       <p className="text-slate-400 text-sm mt-2 text-center">
-                        (Je l'utiliserai pour te parler)
+                        (Je l&apos;utiliserai pour te parler)
                       </p>
                     </div>
                     
@@ -503,7 +503,7 @@ const JourneyPath = ({
                         className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-white font-bold py-4 disabled:opacity-50"
                       >
                         <Play className="w-5 h-5 mr-2" />
-                        C'est parti, Maître Tanaka !
+                        C&apos;est parti, Maître Tanaka !
                       </Button>
                     </div>
                   </motion.div>
