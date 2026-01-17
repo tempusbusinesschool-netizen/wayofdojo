@@ -1517,36 +1517,12 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
             </section>
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* ACCORDÉON 2 : LES VALEURS DE L'AIKIDO - Version ludique enfant */}
-        {/* Visible pour tous (visiteurs et utilisateurs connectés) */}
-        {/* Note: L'ancien accordéon "Entrainement" a été déplacé dans "Apprends" (étape 2) */}
+        {/* NOTE: "Les Super-Pouvoirs Ninja" a été déplacé dans l'étape 5 "Progresse" */}
+        {/* Accessible via l'onglet "Mes Qualités" dans ProgressionDialog */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {currentBelt && (
-          <SimpleAccordion
-            title="Les Super-Pouvoirs Ninja !"
-            emoji="☯️"
-            subtitle="7 Vertus & Trophées"
-            headerGradient="from-violet-600 via-purple-600 to-fuchsia-600"
-            defaultOpen={true}
-            testId="accordion-valeurs"
-          >
-          <div id="bloc3-valeurs" className="bg-gradient-to-br from-violet-900/40 via-purple-900/40 to-indigo-900/40 rounded-b-2xl border-2 border-t-0 border-violet-500/40 p-4 md:p-6 shadow-xl">
-            <VirtuesSection
-              virtueData={virtueData}
-              totalPoints={points.total}
-              trophies={trophies}
-              statistics={statistics}
-              currentBelt={currentBelt}
-              onOpenVirtueActions={() => setShowVirtueActionsPanel(true)}
-              onOpenVirtuesDialog={() => setShowVirtuesDialog(true)}
-              onOpenTrophiesDialog={() => setShowTrophiesDialog(true)}
-            />
-          </div>
-        </SimpleAccordion>
-        )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* ACCORDÉON 4 : HISTOIRE DE L'AIKIDO - MASQUÉ (déplacé dans Philosophie et Histoire) */}
+        {/* ACCORDÉON HISTOIRE DE L'AIKIDO - MASQUÉ (déplacé dans Philosophie et Histoire) */}
         {/* Accessible via le bouton "Philosophie et histoire" dans l'étape 2 Apprends */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
         {/* Masqué selon les consignes - contenu disponible dans "Philosophie et histoire" */}
