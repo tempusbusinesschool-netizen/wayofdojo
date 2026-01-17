@@ -723,8 +723,9 @@ function AppContent() {
                 </Button>
               )}
 
-              {/* Bouton Espace Parent - Visible en permanence */}
-              {!enseignantMode && !isAdminMode && !parentMode && (
+              {/* Bouton Espace Parent - Visible uniquement si un Enfant est connecté */}
+              {/* L'Espace Parent est toujours rattaché à un enfant - pas d'accès hors contexte enfant */}
+              {isAuthenticated && !enseignantMode && !isAdminMode && !parentMode && (
                 <Button
                   variant="ghost"
                   size="sm"
@@ -737,8 +738,8 @@ function AppContent() {
                 </Button>
               )}
               
-              {/* Indicateur Parent connecté */}
-              {parentMode && parentInfo && (
+              {/* Indicateur Parent connecté - Visible uniquement si un Enfant est connecté */}
+              {isAuthenticated && parentMode && parentInfo && (
                 <div className="flex items-center gap-1 sm:gap-2">
                   <Badge className="bg-purple-600 text-white flex text-xs">
                     <Heart className="w-3 h-3 mr-1" />
