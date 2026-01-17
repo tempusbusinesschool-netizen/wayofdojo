@@ -1298,39 +1298,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 </section>
 
                 {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-                {/* SECTION 3 : DÉFIS DU JOUR - Tunnel de progression (gagne des points !) */}
-                {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-                <section id="section-points" className="mb-6 sm:mb-8" data-testid="section-defis">
-                  {/* Titre de section */}
-                  <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                    <div className="h-0.5 sm:h-1 flex-1 bg-gradient-to-r from-transparent via-pink-500 to-pink-500 rounded-full" />
-                    <h2 className="text-base sm:text-xl font-bold text-white flex items-center gap-1 sm:gap-2 whitespace-nowrap">
-                      <span className="text-xl sm:text-2xl">🎯</span>
-                      <span className="hidden xs:inline">Mes </span>Défis du Jour
-                    </h2>
-                    <div className="h-0.5 sm:h-1 flex-1 bg-gradient-to-l from-transparent via-pink-500 to-pink-500 rounded-full" />
-                  </div>
-
-                  <ProgressionTunnel
-                    currentBelt={getBeltByPoints(statistics.total_points || 0)}
-                    statistics={statistics}
-                    virtueData={virtueData}
-                    userName={userName}
-                    userId={userId}
-                    isAuthenticated={isAuthenticated}
-                    onRefreshStats={onRefreshData}
-                    onCompleteChallenge={(challenge) => {
-                      console.log("Challenge completed:", challenge);
-                      onRefreshData?.();
-                    }}
-                    onRequestParentValidation={(challenge) => {
-                      console.log("Parent validation requested:", challenge);
-                    }}
-                  />
-                </section>
-
-                {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-                {/* SECTION 4 : ESPACE PARENT - Validation des défis des enfants */}
+                {/* SECTION 3 : ESPACE PARENT - Validation des défis des enfants */}
                 {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
                 <section className="mb-6 sm:mb-8" data-testid="section-parent">
                   {/* Titre de section */}
