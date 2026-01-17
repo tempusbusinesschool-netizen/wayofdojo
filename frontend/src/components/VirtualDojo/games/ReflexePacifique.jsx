@@ -115,6 +115,10 @@ const SCENARIOS = [
 ];
 
 const ReflexePacifique = ({ userName, onComplete, onExit, tanakaSpeak }) => {
+  // Hook pour la voix TTS réelle de Tanaka
+  const { speak, speaking, stopSpeaking } = useTanakaVoice();
+  const [soundEnabled, setSoundEnabled] = useState(true);
+  
   const [gameState, setGameState] = useState('intro');
   const [score, setScore] = useState(0);
   const [currentScenarioIndex, setCurrentScenarioIndex] = useState(0);
@@ -130,19 +134,29 @@ const ReflexePacifique = ({ userName, onComplete, onExit, tanakaSpeak }) => {
   // Ref pour éviter les appels multiples du timeout handler
   const timeoutHandledRef = useRef(false);
 
+  // Fonction pour parler avec TTS + mise à jour UI
+  const tanakaVoice = useCallback((message) => {
+    if (soundEnabled) {
+      speak(message);
+    }
+    if (tanakaSpeak) {
+      tanakaSpeak(message);
+    }
+  }, [soundEnabled, speak, tanakaSpeak]);
+
   // Handler pour passer au scénario suivant - défini en premier
   const goToNextScenario = useCallback(() => {
     if (currentScenarioIndex + 1 >= scenarios.length) {
       setGameState('success');
       setScore(prev => prev + correctAnswers * 10);
-      tanakaSpeak(`${userName || 'Jeune ninja'}, tu as terminé l'épreuve ! Tu as fait preuve de sagesse dans ${correctAnswers} situations sur ${scenarios.length}.`);
+      tanakaVoice(`${userName || 'Jeune ninja'}, tu as terminé l'épreuve ! Tu as fait preuve de sagesse dans ${correctAnswers} situations sur ${scenarios.length}.`);
     } else {
       setCurrentScenarioIndex(prev => prev + 1);
       setSelectedOption(null);
       setShowFeedback(false);
       setTimeLeft(15);
     }
-  }, [currentScenarioIndex, scenarios.length, correctAnswers, userName, tanakaSpeak]);
+  }, [currentScenarioIndex, scenarios.length, correctAnswers, userName, tanakaVoice]);
 
   // Handler pour le timeout
   const handleTimerExpired = useCallback(() => {
