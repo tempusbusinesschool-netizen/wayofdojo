@@ -142,6 +142,40 @@ PHRASES = {
     "badge_earned": {
         "text": "Un nouveau badge ! Chaque badge raconte une partie de ton histoire. Collectionne-les avec fierté !",
         "filename": "badge_earned.mp3"
+    },
+    
+    # ═══════════════════════════════════════════════════════════════════
+    # ÉTAPES DU PARCOURS GUIDÉ - Chaque étape a son texte UNIQUE
+    # ═══════════════════════════════════════════════════════════════════
+    
+    # Étape 2 - Apprends les techniques
+    "step_2_techniques": {
+        "text": "Maintenant, passons aux techniques ! Chaque ceinture a ses propres mouvements à maîtriser. Commence par les bases : les déplacements et les chutes. Ensuite, tu apprendras les vraies techniques !",
+        "filename": "step_2_techniques.mp3"
+    },
+    
+    # Étape 3 - Dojo Virtuel
+    "step_3_dojo": {
+        "text": "Bienvenue dans le Dojo Virtuel ! Ici, tu vas t'entraîner avec des jeux qui développeront ton calme, ta respiration et ton écoute. Et si tu pratiques au vrai dojo, ton sensei pourra valider tes exercices !",
+        "filename": "step_3_dojo.mp3"
+    },
+    
+    # Étape 4 - Validation parentale
+    "step_4_validation": {
+        "text": "Tes parents sont fiers de toi ! Demande-leur de valider tes efforts. Ils peuvent voir tout ce que tu as accompli !",
+        "filename": "step_4_validation.mp3"
+    },
+    
+    # Étape 5 - Progression
+    "step_5_progress": {
+        "text": "Tu progresses vite ! Chaque point XP te rapproche de la prochaine ceinture. Continue comme ça et tu deviendras un vrai maître !",
+        "filename": "step_5_progress.mp3"
+    },
+    
+    # Étape 6 - Maîtrise
+    "step_6_mastery": {
+        "text": "Félicitations, jeune ninja ! Tu as parcouru tout le chemin de l'initiation ! Maintenant, ta véritable aventure commence. Vise le titre de Légende du Dojo ! Je crois en toi !",
+        "filename": "step_6_mastery.mp3"
     }
 }
 
