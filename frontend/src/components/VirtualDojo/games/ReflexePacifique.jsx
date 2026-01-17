@@ -149,7 +149,7 @@ const ReflexePacifique = ({ userName, onComplete, onExit, tanakaSpeak }) => {
     if (currentScenarioIndex + 1 >= scenarios.length) {
       setGameState('success');
       setScore(prev => prev + correctAnswers * 10);
-      tanakaVoice(`${userName || 'Jeune ninja'}, tu as terminé l'épreuve ! Tu as fait preuve de sagesse dans ${correctAnswers} situations sur ${scenarios.length}.`);
+      tanakaVoice("Bravo, tu as terminé cette étape !");
     } else {
       setCurrentScenarioIndex(prev => prev + 1);
       setSelectedOption(null);
@@ -163,7 +163,7 @@ const ReflexePacifique = ({ userName, onComplete, onExit, tanakaSpeak }) => {
     if (timeoutHandledRef.current) return;
     timeoutHandledRef.current = true;
     
-    tanakaVoice("Le temps est écoulé ! En situation réelle, il faut parfois prendre des décisions rapidement, mais avec sagesse.");
+    tanakaVoice("Tu peux recommencer, c'est comme ça qu'on progresse.");
     setShowFeedback(true);
     setSelectedOption(-1);
     setTimeout(() => {
@@ -220,7 +220,7 @@ const ReflexePacifique = ({ userName, onComplete, onExit, tanakaSpeak }) => {
     setSelectedOption(null);
     setShowFeedback(false);
     setTimeLeft(15);
-    tanakaVoice(`${userName || 'Jeune ninja'}, tu vas être confronté à des situations de la vie. Réfléchis bien avant de répondre. La précipitation est l'ennemie de la sagesse.`);
+    tanakaVoice("Lis bien les situations, puis choisis.");
   };
 
   const restartGame = () => {
