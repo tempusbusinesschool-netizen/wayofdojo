@@ -295,13 +295,24 @@ const MemorySensei = ({ userName, onComplete, onExit, tanakaSpeak }) => {
             animate={{ opacity: 1, scale: 1 }}
             className="absolute inset-0 flex flex-col items-center justify-center bg-black/80 z-20 rounded-2xl"
           >
-            <span className="text-6xl mb-4">{matchedPairs.length >= TECHNIQUE_CARDS.length ? '🏆' : '⏰'}</span>
-            <h2 className="text-3xl font-bold text-white mb-2">
-              {matchedPairs.length >= TECHNIQUE_CARDS.length ? 'Victoire !' : 'Temps écoulé !'}
-            </h2>
+            <span className="text-6xl mb-4">👏</span>
+            <h2 className="text-3xl font-bold text-white mb-2">Bravo ! Tu as terminé cette étape 👏</h2>
+            <p className="text-slate-300 mb-4">Tu peux continuer ou rejouer pour t'entraîner encore.</p>
             <p className="text-slate-400 mb-2">{matchedPairs.length}/{TECHNIQUE_CARDS.length} paires trouvées</p>
             <p className="text-4xl font-bold text-red-400 mb-2">{score} points</p>
-            <p className="text-cyan-400">+{Math.floor(score / 25)} Ki gagné !</p>
+            <p className="text-cyan-400 mb-4">+{Math.floor(score / 25)} Ki</p>
+            <div className="flex gap-3">
+              <Button onClick={restartGame} variant="outline" className="text-white border-white/30">
+                <RotateCcw className="w-4 h-4 mr-2" /> Rejouer cette étape
+              </Button>
+              <Button 
+                onClick={() => onComplete(score, Math.floor(score / 25))}
+                className="bg-gradient-to-r from-emerald-500 to-teal-600"
+              >
+                Continuer
+              </Button>
+            </div>
+            <p className="text-slate-500 text-xs mt-3">Tu peux recommencer pour t'entraîner encore.</p>
           </motion.div>
         )}
 
