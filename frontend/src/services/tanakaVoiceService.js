@@ -143,7 +143,13 @@ const TANAKA_PHRASES = {
     file: "/audio/tanaka/step_3_dojo.mp3"
   },
   
-  // Étape 4 - Validation parentale
+  // Étape 4 - Mon Club (Carnet de pratique au dojo)
+  step_4_carnet: {
+    text: "Bienvenue dans Mon Club ! Après ton cours au dojo, reviens ici pour noter ce que tu as pratiqué. C'est ton carnet personnel. Ta parole compte, sois honnête avec toi-même ! Chaque exercice noté te rapporte des points de Ki.",
+    file: "/audio/tanaka/step_4_carnet.mp3"
+  },
+  
+  // Étape 4 - Validation parentale (legacy)
   step_4_validation: {
     text: "Tes parents sont fiers de toi ! Demande-leur de valider tes efforts. Ils peuvent voir tout ce que tu as accompli !",
     file: "/audio/tanaka/step_4_validation.mp3"
