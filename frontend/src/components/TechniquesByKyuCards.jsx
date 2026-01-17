@@ -475,6 +475,50 @@ const TechniquesByKyuCards = ({
             
             {/* Bulle de dialogue de Tanaka */}
             <div className="flex-1">
+              <div className="flex items-center justify-between mb-1">
+                <span className="text-cyan-400 text-xs font-medium">Maître Tanaka</span>
+                <div className="flex items-center gap-1">
+                  {/* Bouton rejouer audio */}
+                  <button
+                    onClick={() => playTanakaAudio('step_2_techniques')}
+                    disabled={isAudioPlaying}
+                    className={`p-1.5 rounded-full transition-all ${
+                      isAudioPlaying 
+                        ? 'bg-cyan-500/50 cursor-not-allowed' 
+                        : 'bg-cyan-500/20 hover:bg-cyan-500/40'
+                    }`}
+                    title="Écouter Maître Tanaka"
+                    data-testid="tanaka-play-audio"
+                  >
+                    <Volume2 className={`w-3 h-3 ${isAudioPlaying ? 'text-cyan-300 animate-pulse' : 'text-cyan-400'}`} />
+                  </button>
+                  
+                  {/* Bouton mute */}
+                  <button
+                    onClick={() => {
+                      setAudioMuted(!audioMuted);
+                      if (!audioMuted && currentAudioRef.current) {
+                        currentAudioRef.current.pause();
+                        setIsAudioPlaying(false);
+                        setIsTanakaSpeaking(false);
+                      }
+                    }}
+                    className={`p-1.5 rounded-full transition-all ${
+                      audioMuted 
+                        ? 'bg-red-500/30 hover:bg-red-500/50' 
+                        : 'bg-slate-700/50 hover:bg-slate-700'
+                    }`}
+                    title={audioMuted ? "Activer le son" : "Couper le son"}
+                    data-testid="tanaka-mute-toggle"
+                  >
+                    {audioMuted ? (
+                      <VolumeX className="w-3 h-3 text-red-400" />
+                    ) : (
+                      <Volume2 className="w-3 h-3 text-slate-400" />
+                    )}
+                  </button>
+                </div>
+              </div>
               <motion.div 
                 key={tanakaMessage}
                 initial={{ opacity: 0, y: -5 }}
