@@ -50,7 +50,7 @@ const GardienEspace = ({ userName, onComplete, onExit, tanakaSpeak }) => {
     setPerfectStreak(0);
     setPlayerPos({ x: GAME_WIDTH / 2, y: GAME_HEIGHT / 2 });
     initPartners();
-    tanakaVoice("C'est parti ! Maintiens la distance parfaite avec tes partenaires. Ni trop près, ni trop loin !");
+    tanakaVoice("Maintiens la bonne distance avec tes partenaires.");
   };
 
   // Initialiser les partenaires

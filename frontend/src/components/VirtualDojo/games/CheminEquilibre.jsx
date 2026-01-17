@@ -53,7 +53,7 @@ const CheminEquilibre = ({ userName, onComplete, onExit, tanakaSpeak }) => {
     setFallenTimes(0);
     setBalanceStreak(0);
     setIsBalanced(true);
-    tanakaVoice("Trouve ton centre, le Hara. Utilise les flèches gauche et droite pour maintenir l'équilibre sur le chemin !");
+    tanakaVoice("Utilise les flèches gauche et droite pour garder l'équilibre.");
   };
 
   // Gestion des touches
