@@ -109,8 +109,8 @@ const JOURNEY_STEPS = [
     unlockCondition: 'step_4_completed',
     xpReward: 25,
     description: 'Gagne des points XP, fais évoluer tes vertus et tes animaux gardiens ! Monte de ceinture !',
-    tanakaMessage: "Tu progresses vite ! 🌟 Chaque point XP te rapproche de la prochaine ceinture. Continue comme ça et tu deviendras un vrai maître !",
-    tanakaAudioKey: 'level_up',
+    tanakaMessage: "Tu progresses vite ! Chaque point XP te rapproche de la prochaine ceinture. Continue comme ça et tu deviendras un vrai maître !",
+    tanakaAudioKey: 'step_5_progress',
     actions: [{ label: 'Voir ma progression', type: 'navigate', target: 'ceintures' }],
     tips: ['⭐ Points XP', '📈 Monte de niveau', '🥋 Prochaine ceinture', '🐾 Animaux évoluent']
   },
@@ -126,8 +126,8 @@ const JOURNEY_STEPS = [
     unlockCondition: 'step_5_completed',
     xpReward: 30,
     description: 'Tu as complété le parcours d\'initiation ! Collectionne les badges, vise le titre de Légende du Dojo !',
-    tanakaMessage: "Félicitations, jeune ninja ! 🎉 Tu as parcouru tout le chemin de l'initiation ! Maintenant, ta véritable aventure commence. Vise le titre de 'Légende du Dojo' ! Je crois en toi ! 🥋✨",
-    tanakaAudioKey: 'level_up',
+    tanakaMessage: "Félicitations, jeune ninja ! Tu as parcouru tout le chemin de l'initiation ! Maintenant, ta véritable aventure commence. Vise le titre de Légende du Dojo ! Je crois en toi !",
+    tanakaAudioKey: 'step_6_mastery',
     actions: [{ label: 'Voir mes trophées', type: 'navigate', target: 'trophees' }],
     tips: ['🏆 Badges à collectionner', '👑 Titres spéciaux', '🐉 Dragon légendaire', '🏯 Grand Maître !']
   }
