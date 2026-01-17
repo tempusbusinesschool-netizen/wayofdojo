@@ -235,16 +235,6 @@ const UserDashboardBlocks = ({
 
         </div>
       </div>
-
-      {/* Message motivation */}
-      <div className="text-center bg-gradient-to-r from-emerald-600/10 via-cyan-600/10 to-violet-600/10 rounded-xl p-4 border border-emerald-500/20">
-        <p className="text-emerald-300 font-medium">
-          🔥 Continue comme ça {userName} !
-        </p>
-        <p className="text-slate-400 text-sm mt-1">
-          Chaque entraînement te rapproche de ton prochain grade ! 🥋✨
-        </p>
-      </div>
     </div>
   );
 };
