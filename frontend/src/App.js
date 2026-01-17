@@ -849,8 +849,9 @@ function AppContent() {
         />
       )}
       
-      {/* Main Content - Masqué quand en mode enseignant, mode d'emploi, tarification ou parent */}
-      {!enseignantMode && !showModeEmploi && !showTarification && !parentMode && (
+      {/* Main Content - Masqué quand en mode enseignant, mode d'emploi ou tarification */}
+      {/* Note: parentMode n'empêche plus l'affichage car Espace Parent est maintenant une fenêtre flottante */}
+      {!enseignantMode && !showModeEmploi && !showTarification && (
       <main className="max-w-7xl mx-auto px-4 py-6">
         {/* Tabs for Techniques and Members */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
