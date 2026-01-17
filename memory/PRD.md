@@ -18,9 +18,12 @@
     - Bouton **"Je l'ai fait au dojo !"** pour auto-validation par l'enfant
     - Progression du jour avec barre visuelle et Ki gagnés
     - 8 exercices : Salut, Échauffement, Ukemi, Déplacements, Technique partenaire, Écoute, Aide camarade, Rangement
-    - Messages d'encouragement personnalisés
-    - Aucune mention de validation par enseignant dans l'application
-    - Sauvegarde quotidienne dans localStorage
+  - ✅ **RÉORGANISATION "PROGRAMME TECHNIQUE" (TechniquesByKyuCards)**
+    - Nouveaux onglets : "Ma Progression" / "Fiches Techniques"
+    - `BeltProgressCard` intégré dans l'onglet "Ma Progression"
+    - `DeplacementsSection` intégré dans l'onglet "Ma Progression"
+    - Supprimé l'accordéon "Entrainement - Techniques d'Aikido" du dashboard
+    - Dashboard simplifié (-1.09 kB de JS)
 
 - **2026-01-17 (Session 4)**:
   - ✅ **BASE DE DONNÉES TECHNIQUES COMPLÈTE - Structure en 3 Phases**
