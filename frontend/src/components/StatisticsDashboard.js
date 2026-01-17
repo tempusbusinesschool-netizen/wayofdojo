@@ -1494,39 +1494,11 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* SECTION 4 : CONTENU PÉDAGOGIQUE - Accordéons */}
-        {/* VISIBLE UNIQUEMENT POUR LES UTILISATEURS CONNECTÉS */}
+        {/* NOTE: Les contenus pédagogiques ont été déplacés dans les étapes du parcours */}
+        {/* - "Entrainement" → Étape 2 "Apprends" */}
+        {/* - "Super-Pouvoirs Ninja" → Étape 5 "Progresse" */}
+        {/* - "Défis du Jour" → Étape 3 "Entraîne-toi" */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        
-        {isAuthenticated && (
-          <>
-            {/* Titre de section pour utilisateurs connectés */}
-            <section className="mb-4 sm:mb-6 mt-2 sm:mt-4" data-testid="section-pedagogique">
-              <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-6">
-                <div className="h-0.5 sm:h-1 flex-1 bg-gradient-to-r from-transparent via-cyan-500 to-cyan-500 rounded-full" />
-                <h2 className="text-base sm:text-xl font-bold text-white flex items-center gap-1 sm:gap-2 whitespace-nowrap">
-                  <span className="text-xl sm:text-2xl">📚</span>
-                  Apprendre l'Aikido
-                </h2>
-                <div className="h-0.5 sm:h-1 flex-1 bg-gradient-to-l from-transparent via-cyan-500 to-cyan-500 rounded-full" />
-              </div>
-              <p className="text-center text-slate-400 text-xs sm:text-sm mb-3 sm:mb-4">
-                Explore les techniques, les vertus et l'histoire 🥋
-              </p>
-            </section>
-
-        {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* NOTE: "Les Super-Pouvoirs Ninja" a été déplacé dans l'étape 5 "Progresse" */}
-        {/* Accessible via l'onglet "Mes Qualités" dans ProgressionDialog */}
-        {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-
-        {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* ACCORDÉON HISTOIRE DE L'AIKIDO - MASQUÉ (déplacé dans Philosophie et Histoire) */}
-        {/* Accessible via le bouton "Philosophie et histoire" dans l'étape 2 Apprends */}
-        {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* Masqué selon les consignes - contenu disponible dans "Philosophie et histoire" */}
-          </>
-        )}
 
         {/* Trophies Dialog */}
         <Dialog open={showTrophiesDialog} onOpenChange={setShowTrophiesDialog}>
