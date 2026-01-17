@@ -716,6 +716,80 @@ const TechniquesByKyuCards = ({
           )}
         </div>
 
+        {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+        {/* SECTION : LA SAGESSE DE MAÎTRE TANAKA — Sous-partie du bloc 2 "Apprends" */}
+        {/* Zone enfants uniquement - Contenu philosophique et pédagogique */}
+        {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+        <div className="p-4 bg-gradient-to-br from-blue-900/30 via-purple-900/20 to-slate-800/50 border-t border-blue-500/30">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            {/* En-tête de la section */}
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
+                  <span className="text-2xl">🧘</span>
+                </div>
+                <div>
+                  <h3 className="font-bold text-blue-200 text-lg">La Sagesse de Maître Tanaka</h3>
+                  <p className="text-xs text-blue-300/70">Découvre la philosophie de l'Aïkido</p>
+                </div>
+              </div>
+              <Button
+                onClick={() => setShowPhilosophieHistoire(true)}
+                variant="outline"
+                size="sm"
+                className="border-blue-500/50 text-blue-300 hover:bg-blue-500/20"
+                data-testid="voir-philosophie-complete-btn"
+              >
+                <BookOpen className="w-4 h-4 mr-1" />
+                Voir tout
+              </Button>
+            </div>
+
+            {/* Contenu philosophique condensé */}
+            <div className="bg-slate-800/50 rounded-xl p-4 border border-blue-500/20">
+              {/* Citation principale */}
+              <blockquote className="text-center mb-4">
+                <p className="text-blue-200 italic text-sm leading-relaxed">
+                  « Jeune ninja, l'aïkido c'est comme apprendre à être de l'eau.<br/>
+                  L'eau ne combat jamais — elle guide, elle accompagne, elle protège. »
+                </p>
+                <footer className="text-amber-400 text-xs mt-2 font-medium">— Maître Tanaka</footer>
+              </blockquote>
+
+              {/* Les 3 phases en résumé */}
+              <div className="grid grid-cols-3 gap-2 mt-4">
+                <div className="bg-blue-900/40 rounded-lg p-2 text-center border border-blue-500/20">
+                  <span className="text-lg">1️⃣</span>
+                  <p className="text-blue-300 text-xs font-medium mt-1">L'Entrée</p>
+                  <p className="text-blue-200/60 text-[10px]">Accueillir</p>
+                </div>
+                <div className="bg-amber-900/40 rounded-lg p-2 text-center border border-amber-500/20">
+                  <span className="text-lg">2️⃣</span>
+                  <p className="text-amber-300 text-xs font-medium mt-1">La Technique</p>
+                  <p className="text-amber-200/60 text-[10px]">Transformer</p>
+                </div>
+                <div className="bg-green-900/40 rounded-lg p-2 text-center border border-green-500/20">
+                  <span className="text-lg">3️⃣</span>
+                  <p className="text-green-300 text-xs font-medium mt-1">Le Final</p>
+                  <p className="text-green-200/60 text-[10px]">Protéger</p>
+                </div>
+              </div>
+
+              {/* Métaphore de l'eau */}
+              <div className="mt-4 flex items-center gap-2 bg-blue-500/10 rounded-lg p-3 border border-blue-500/20">
+                <span className="text-xl">🌊</span>
+                <p className="text-blue-200 text-xs leading-relaxed">
+                  <strong>La métaphore de l'eau :</strong> Quand quelqu'un pousse fort, tu apprends à guider comme l'eau qui contourne les rochers.
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
         {/* Modal détail d'une technique */}
         <AnimatePresence>
           {selectedTechnique && (
