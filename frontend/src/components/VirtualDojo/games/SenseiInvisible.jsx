@@ -129,13 +129,13 @@ const SenseiInvisible = ({ userName, onComplete, onExit, tanakaSpeak }) => {
           if (roundsCompleted + 1 >= 3) {
             // Victoire après 3 manches
             setGameState('success');
-            tanakaVoice(`Extraordinaire ${userName || 'ninja'} ! Tu as suivi toutes mes instructions parfaitement ! Ton écoute est remarquable !`);
+            tanakaVoice("Bravo, tu as terminé cette étape !");
           } else {
             // Manche suivante avec difficulté croissante
             if (roundsCompleted + 1 === 1) setDifficulty('medium');
             if (roundsCompleted + 1 === 2) setDifficulty('hard');
             
-            tanakaVoice(`Excellent ! Manche ${roundsCompleted + 2} ! La séquence sera plus longue...`);
+            tanakaVoice("Passons à la suite.");
             setTimeout(startRound, 2000);
           }
         }
@@ -148,9 +148,9 @@ const SenseiInvisible = ({ userName, onComplete, onExit, tanakaSpeak }) => {
       
       if (mistakes + 1 >= 3) {
         setGameState('fail');
-        tanakaVoice(`Tu as fait trop d'erreurs, ${userName || 'ninja'}. L'écoute demande de la concentration. Réessaie !`);
+        tanakaVoice("Tu peux recommencer, c'est comme ça qu'on progresse.");
       } else {
-        tanakaVoice(`Ce n'était pas la bonne action. Concentre-toi et écoute bien.`);
+        tanakaVoice("Continue comme ça !");
         setTimeout(() => {
           setIsCorrect(null);
           setPlayerAction(null);
