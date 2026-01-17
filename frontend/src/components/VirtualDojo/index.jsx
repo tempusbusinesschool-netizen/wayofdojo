@@ -246,6 +246,7 @@ const VirtualDojo = ({
   const [gameScores, setGameScores] = useState({});
   const [totalKi, setTotalKi] = useState(userKi);
   const [showDojoReal, setShowDojoReal] = useState(false);
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
 
   // Charger la progression depuis localStorage
   useEffect(() => {
@@ -257,6 +258,18 @@ const VirtualDojo = ({
       setTotalKi(data.totalKi || 0);
     }
   }, []);
+
+  // Recommencer le parcours (remise à zéro)
+  const handleResetProgress = () => {
+    setCompletedGames([]);
+    setGameScores({});
+    setTotalKi(0);
+    localStorage.removeItem('aikido_dojo_progress');
+    setShowResetConfirm(false);
+    setTanakaMessage('Tu recommences le parcours. Tu pourras rejouer tranquillement !');
+    setIsTanakaSpeaking(true);
+    setTimeout(() => setIsTanakaSpeaking(false), 3000);
+  };
 
   // Sauvegarder la progression
   const saveProgress = useCallback((newCompleted, newScores, newKi) => {
