@@ -2,10 +2,15 @@
  * 👨‍🏫 INTERFACE ENSEIGNANT - Dojo Virtuel
  * 
  * Permet aux enseignants de:
- * - Voir la progression des élèves
- * - Valider les techniques
+ * - Voir la progression des élèves (suivi pédagogique)
+ * - Valider les TECHNIQUES OFFICIELLES d'Aïkido (grades)
  * - Envoyer des encouragements
  * - Configurer les jeux
+ * 
+ * ⚠️ IMPORTANT - RÈGLES DE VALIDATION:
+ * - Jeux numériques: Validés par les PARENTS uniquement
+ * - Exercices au dojo: AUTO-VALIDÉS par l'enfant
+ * - Cet espace sert au SUIVI et aux ENCOURAGEMENTS, pas à valider les jeux
  */
 
 import React, { useState, useEffect, useCallback } from 'react';
