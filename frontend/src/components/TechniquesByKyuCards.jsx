@@ -3,10 +3,16 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { Button } from '@/components/ui/button';
-import { ChevronRight, ChevronLeft, Check, Lock, Star, BookOpen, Trophy, X, Lightbulb, Volume2, VolumeX, Filter, Layers, Circle, Loader2, PlayCircle, GraduationCap, Play } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Check, Lock, Star, BookOpen, Trophy, X, Lightbulb, Volume2, VolumeX, Filter, Layers, Circle, Loader2, PlayCircle, GraduationCap, Play, History, Scroll, ArrowLeft } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'sonner';
 import { TechniqueSequenceDemo } from './animations/TechniqueSequenceAnimation';
+import HakamaHistory from './HakamaHistory';
+import { 
+  PHILOSOPHIE_PHASES, 
+  PHILOSOPHIE_TECHNIQUES, 
+  TANAKA_SYNTHESE 
+} from '@/constants/aikidoPhilosophie';
 
 // Niveaux de ressenti sur la pratique (appréciation symbolique, non évaluative)
 const MASTERY_LEVELS = [
