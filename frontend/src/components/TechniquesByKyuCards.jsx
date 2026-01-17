@@ -230,13 +230,13 @@ const TechniquesByKyuCards = ({
       const progress = getKyuProgress(selectedKyuIndex);
       
       if (progress.percent === 0) {
-        setTanakaMessage(`${displayName}, voici les techniques du ${currentKyu.name}. Commence par les bases et progresse à ton rythme ! — Maître Tanaka 🥋`);
+        setTanakaMessage(`${displayName}, voici les techniques du ${currentKyu.name}. Découvre-les au dojo avec ton enseignant ! — Maître Tanaka 🥋`);
       } else if (progress.percent < 50) {
-        setTanakaMessage(`Tu as déjà maîtrisé ${progress.mastered} technique${progress.mastered > 1 ? 's' : ''} ! Continue comme ça, tu progresses bien ! 💪 — Maître Tanaka`);
+        setTanakaMessage(`Tu te sens en confiance sur ${progress.mastered} technique${progress.mastered > 1 ? 's' : ''}. Continue à t'entraîner au dojo ! 💪 — Maître Tanaka`);
       } else if (progress.percent < 100) {
-        setTanakaMessage(`Excellent ${displayName} ! Plus que ${progress.total - progress.mastered} technique${progress.total - progress.mastered > 1 ? 's' : ''} et tu maîtrises ce niveau ! 🌟 — Maître Tanaka`);
+        setTanakaMessage(`Super ${displayName} ! Tu progresses bien dans ce niveau. N'oublie pas : c'est au dojo que tu apprends vraiment ! 🌟 — Maître Tanaka`);
       } else {
-        setTanakaMessage(`Bravo ! Tu as maîtrisé toutes les techniques du ${currentKyu.name} ! Prêt pour le niveau suivant ? 🏆 — Maître Tanaka`);
+        setTanakaMessage(`${displayName}, tu te sens en confiance sur toutes les techniques de ce niveau ! Continue à les pratiquer au dojo. 🥋 — Maître Tanaka`);
       }
       
       // Animation de parole
