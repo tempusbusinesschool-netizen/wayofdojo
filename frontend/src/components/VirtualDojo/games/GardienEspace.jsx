@@ -188,11 +188,11 @@ const GardienEspace = ({ userName, onComplete, onExit, tanakaSpeak }) => {
     const kiEarned = Math.floor(score / 10);
     
     if (finalScore >= 300) {
-      tanakaVoice("Extraordinaire ! Tu maîtrises parfaitement le Ma-ai ! La distance juste n'a plus de secret pour toi !");
+      tanakaVoice("Bien joué !");
     } else if (finalScore >= 150) {
-      tanakaVoice("Bien joué ! Tu commences à sentir la bonne distance. Continue de pratiquer !");
+      tanakaVoice("Tu fais des efforts, ça se voit.");
     } else {
-      tanakaVoice("N'abandonne pas ! Le Ma-ai demande de la pratique. Réessaie, tu vas progresser !");
+      tanakaVoice("Tu peux recommencer, c'est comme ça qu'on progresse.");
     }
 
     setTimeout(() => onComplete(finalScore, kiEarned), 3000);
