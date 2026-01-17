@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { ChevronRight, ChevronLeft, Check, Lock, Star, BookOpen, Trophy, X, Lightbulb, Volume2, VolumeX, Filter, Layers, Circle, Loader2, PlayCircle, GraduationCap, Play } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'sonner';
-import TechniqueAnimationDemo from './animations/TechniqueAnimationDemo';
+import { TechniqueSequenceDemo } from './animations/TechniqueSequenceAnimation';
 
 // Niveaux de ressenti sur la pratique (appréciation symbolique, non évaluative)
 const MASTERY_LEVELS = [
