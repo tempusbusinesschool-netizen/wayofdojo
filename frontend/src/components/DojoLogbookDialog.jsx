@@ -127,16 +127,50 @@ const DojoLogbookDialog = ({
   // Message de Tanaka
   const [tanakaMessage, setTanakaMessage] = useState('');
   const [isTanakaSpeaking, setIsTanakaSpeaking] = useState(false);
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  const [audioMuted, setAudioMuted] = useState(false);
+  const currentAudioRef = useRef(null);
+  const hasPlayedWelcomeRef = useRef(false);
 
-  // Message d'accueil de Tanaka
+  // Fonction pour jouer l'audio de Tanaka
+  const playTanakaAudio = async (phraseKey) => {
+    if (audioMuted) return;
+    
+    // Arrêter l'audio précédent
+    if (currentAudioRef.current) {
+      currentAudioRef.current.pause();
+      currentAudioRef.current = null;
+    }
+    
+    try {
+      setIsAudioPlaying(true);
+      setIsTanakaSpeaking(true);
+      const result = await playTanakaPhrase(phraseKey);
+      if (result.audio) {
+        currentAudioRef.current = result.audio;
+        result.audio.onended = () => {
+          setIsAudioPlaying(false);
+          setIsTanakaSpeaking(false);
+          currentAudioRef.current = null;
+        };
+      }
+    } catch (error) {
+      console.error('Erreur lecture audio Tanaka:', error);
+      setIsAudioPlaying(false);
+      setIsTanakaSpeaking(false);
+    }
+  };
+
+  // Message d'accueil de Tanaka + Audio automatique
   useEffect(() => {
     if (isOpen) {
       const displayName = userName || 'jeune ninja';
       const completedCount = completedDojoExercises.length;
       
+      // Définir le message texte
       if (completedCount === 0) {
         setTanakaMessage(
-          `Bienvenue dans ton Carnet de Dojo, ${displayName} ! 🥋\n\n` +
+          `Bienvenue dans Mon Club, ${displayName} ! 🥋\n\n` +
           `Après ton cours au vrai dojo, reviens ici pour noter ce que tu as fait.\n\n` +
           `C'est ton carnet personnel, ta parole compte. Sois honnête avec toi-même !`
         );
@@ -151,10 +185,26 @@ const DojoLogbookDialog = ({
           `Journée complète ! Tu as noté tous tes exercices. Je suis fier de toi !`
         );
       }
-      setIsTanakaSpeaking(true);
-      setTimeout(() => setIsTanakaSpeaking(false), 3000);
+      
+      // Jouer l'audio de bienvenue (une seule fois par ouverture)
+      if (!hasPlayedWelcomeRef.current) {
+        hasPlayedWelcomeRef.current = true;
+        // Petit délai pour laisser le dialog s'ouvrir
+        setTimeout(() => {
+          playTanakaAudio('step_4_carnet');
+        }, 500);
+      }
+    } else {
+      // Reset quand le dialog se ferme
+      hasPlayedWelcomeRef.current = false;
+      if (currentAudioRef.current) {
+        currentAudioRef.current.pause();
+        currentAudioRef.current = null;
+      }
+      setIsAudioPlaying(false);
+      setIsTanakaSpeaking(false);
     }
-  }, [isOpen, userName, completedDojoExercises.length]);
+  }, [isOpen, userName, completedDojoExercises.length, audioMuted]);
 
   // Valider un exercice
   const handleValidateDojoExercise = (exerciseId) => {
