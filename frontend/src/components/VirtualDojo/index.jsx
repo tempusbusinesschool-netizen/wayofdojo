@@ -696,31 +696,44 @@ const VirtualDojo = ({
           ) : (
             // Liste des jeux
             <>
-              {/* Onglets Numérique / Dojo Réel */}
+              {/* Onglets : Jeux / Dojo / Validations */}
               <div className="flex gap-2 mb-4">
                 <button
-                  onClick={() => setShowDojoReal(false)}
-                  className={`flex-1 py-2 px-4 rounded-xl font-bold transition-all ${
-                    !showDojoReal 
+                  onClick={() => setActiveDojoTab('jeux')}
+                  className={`flex-1 py-2 px-3 rounded-xl font-bold transition-all text-sm ${
+                    activeDojoTab === 'jeux' 
                       ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-white' 
                       : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
                   }`}
+                  data-testid="tab-jeux"
                 >
-                  🖥️ Jeux Numériques
+                  🎮 Jeux
                 </button>
                 <button
-                  onClick={() => setShowDojoReal(true)}
-                  className={`flex-1 py-2 px-4 rounded-xl font-bold transition-all ${
-                    showDojoReal 
+                  onClick={() => setActiveDojoTab('dojo')}
+                  className={`flex-1 py-2 px-3 rounded-xl font-bold transition-all text-sm ${
+                    activeDojoTab === 'dojo' 
                       ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white' 
                       : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
                   }`}
+                  data-testid="tab-dojo"
                 >
-                  🥋 Exercices au Dojo
+                  🥋 Carnet
+                </button>
+                <button
+                  onClick={() => setActiveDojoTab('validations')}
+                  className={`flex-1 py-2 px-3 rounded-xl font-bold transition-all text-sm ${
+                    activeDojoTab === 'validations' 
+                      ? 'bg-gradient-to-r from-pink-500 to-rose-600 text-white' 
+                      : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+                  }`}
+                  data-testid="tab-validations"
+                >
+                  ✅ Validations
                 </button>
               </div>
 
-              {!showDojoReal ? (
+              {activeDojoTab === 'jeux' ? (
                 // Grille des jeux numériques
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
                   {DOJO_GAMES.map((game, index) => {
