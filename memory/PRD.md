@@ -1,6 +1,14 @@
 # Aikido@Game - Product Requirements Document
 
 ## Changelog
+- **2026-01-17 (Session 5)**:
+  - ✅ **DÉPLACEMENT "DÉFIS DU JOUR"**
+    - Supprimé de `StatisticsDashboard.js` (dashboard principal)
+    - Intégré dans `VirtualDojo/index.jsx` sous l'onglet "Exercices au Dojo Réel"
+    - Props ajoutées au composant VirtualDojo (statistics, virtueData, userId, etc.)
+    - Nettoyage des imports inutilisés (ProgressionTunnel, HakamaHistory)
+    - Aucun doublon visuel ou fonctionnel
+
 - **2026-01-17 (Session 4)**:
   - ✅ **BASE DE DONNÉES TECHNIQUES COMPLÈTE - Structure en 3 Phases**
     - Phase 1 (Entrée) : 16 Attaques/Saisies + 3 Déplacements
