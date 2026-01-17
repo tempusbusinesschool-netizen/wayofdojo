@@ -83,7 +83,7 @@ const JOURNEY_STEPS = [
   {
     id: 4,
     slug: 'carnet_dojo',
-    title: 'Mon Club',
+    title: 'Ma Pratique',
     subtitle: 'Mon Carnet de pratique',
     emoji: '🥋',
     icon: BookOpen,

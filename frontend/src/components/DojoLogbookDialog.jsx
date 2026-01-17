@@ -170,7 +170,7 @@ const DojoLogbookDialog = ({
       // Définir le message texte
       if (completedCount === 0) {
         setTanakaMessage(
-          `Bienvenue dans Mon Club, ${displayName} ! 🥋\n\n` +
+          `Bienvenue dans Ma Pratique, ${displayName} ! 🥋\n\n` +
           `Après ton cours au vrai dojo, reviens ici pour noter ce que tu as fait.\n\n` +
           `C'est ton carnet personnel, ta parole compte. Sois honnête avec toi-même !`
         );
@@ -257,7 +257,7 @@ const DojoLogbookDialog = ({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-3xl max-h-[90vh] bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-2 border-amber-500/30 p-0 overflow-hidden" data-testid="dojo-logbook-dialog">
         <VisuallyHidden>
-          <DialogTitle>Mon Club - Mon Carnet</DialogTitle>
+          <DialogTitle>Ma Pratique - Mon Carnet</DialogTitle>
           <DialogDescription>Note les exercices que tu as faits au vrai dojo</DialogDescription>
         </VisuallyHidden>
 
@@ -296,7 +296,7 @@ const DojoLogbookDialog = ({
             <div className="flex-1">
               <div className="flex items-center justify-between mb-2">
                 <h2 className="text-xl font-bold text-amber-100 flex items-center gap-2">
-                  🥋 Mon Club
+                  🥋 Ma Pratique
                 </h2>
                 <div className="flex items-center gap-2">
                   {/* Bouton rejouer audio */}
