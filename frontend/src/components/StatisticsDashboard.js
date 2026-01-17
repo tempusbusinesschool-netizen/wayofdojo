@@ -16,7 +16,6 @@ import GradeCardsGrid from "./GradeCardsGrid";
 import DeplacementsSection from "./DeplacementsSection";
 import VirtuesSection from "./VirtuesSection";
 import UserDashboardBlocks from "./UserDashboardBlocks";
-import ParentDashboard from "./ParentDashboard";
 import GuidedTour, { TourTriggerButton } from "./GuidedTour";
 import AppStepsNavigation from "./AppStepsNavigation";
 import AgeSelector from "./AgeSelector";
