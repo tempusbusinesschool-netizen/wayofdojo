@@ -432,6 +432,16 @@ const VirtualDojo = ({
                   🏯 Dojo Virtuel
                 </h2>
                 <div className="flex items-center gap-4">
+                  {/* Bouton Recommencer le parcours */}
+                  {completedGames.length > 0 && (
+                    <button
+                      onClick={() => setShowResetConfirm(true)}
+                      className="flex items-center gap-1 text-slate-400 hover:text-amber-400 text-xs transition-colors"
+                    >
+                      <RotateCcw className="w-3 h-3" />
+                      <span>Recommencer le parcours</span>
+                    </button>
+                  )}
                   {/* Points de Ki */}
                   <div className="flex items-center gap-2 bg-cyan-500/20 px-3 py-1 rounded-full">
                     <span className="text-cyan-400 text-lg">✨</span>
