@@ -1664,20 +1664,10 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         )}
 
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        {/* ACCORDÉON 4 : HISTOIRE DE L'AIKIDO - Les Sept Plis du Hakama */}
+        {/* ACCORDÉON 4 : HISTOIRE DE L'AIKIDO - MASQUÉ (déplacé dans Philosophie et Histoire) */}
+        {/* Accessible via le bouton "Philosophie et histoire" dans l'étape 2 Apprends */}
         {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-        <SimpleAccordion
-          title="Histoire de l'Aikido"
-          emoji="📜"
-          subtitle="Hakama & O Sensei"
-          headerGradient="from-amber-600 via-orange-600 to-yellow-600"
-          defaultOpen={true}
-          testId="accordion-histoire"
-        >
-          <div id="bloc4-histoire" className="bg-gradient-to-br from-amber-900/30 via-slate-900/40 to-amber-900/30 rounded-b-2xl border-2 border-t-0 border-amber-500/40 p-4 md:p-6 shadow-xl">
-            <HakamaHistory />
-          </div>
-        </SimpleAccordion>
+        {/* Masqué selon les consignes - contenu disponible dans "Philosophie et histoire" */}
           </>
         )}
 
