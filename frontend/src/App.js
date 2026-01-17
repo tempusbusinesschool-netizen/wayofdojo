@@ -829,12 +829,16 @@ function AppContent() {
         />
       )}
       
-      {/* Parent Dashboard - Affichage complet quand connecté en mode parent */}
-      {parentMode && parentInfo && (
-        <ParentDashboard
-          onLogout={handleParentLogout}
-        />
-      )}
+      {/* Parent Dashboard - Fenêtre flottante contextuelle à l'enfant actif */}
+      <Dialog open={parentMode && parentInfo} onOpenChange={(open) => { if (!open) handleParentLogout(); }}>
+        <DialogContent className="max-w-5xl max-h-[90vh] p-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-2 border-purple-500/30 overflow-hidden">
+          <div className="overflow-y-auto max-h-[90vh]">
+            <ParentDashboard
+              onLogout={handleParentLogout}
+            />
+          </div>
+        </DialogContent>
+      </Dialog>
       
       {/* Enseignant Dashboard - Affichage complet quand connecté en mode enseignant */}
       {enseignantMode && enseignantInfo && enseignantToken && (
