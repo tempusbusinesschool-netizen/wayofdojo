@@ -345,7 +345,7 @@ const CGVPage = ({ onBack }) => {
                 <strong>10.3.</strong> Le traitement des données des mineurs de moins de 15 ans nécessite le consentement du titulaire de l'autorité parentale, conformément à l'article 8 du RGPD et à l'article 45 de la loi Informatique et Libertés.
               </p>
               <p>
-                <strong>10.4.</strong> Les parents peuvent suivre la progression de leur enfant via l'espace Parent dédié, après validation par l'enseignant du dojo.
+                <strong>10.4.</strong> Les parents peuvent suivre la progression de leur enfant via l'espace Parent dédié et valider les activités numériques accomplies par leur enfant.
               </p>
             </div>
           </section>
