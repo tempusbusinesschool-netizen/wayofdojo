@@ -253,8 +253,8 @@ const TechniquesByKyuCards = ({
       setLocalMastered(newMastered);
       localStorage.setItem('aikido_mastered_techniques', JSON.stringify(newMastered));
       
-      // Message de félicitation de Tanaka
-      setTanakaMessage(`Bravo ${userName || 'ninja'} ! 🎉 Cette technique est maintenant gravée dans ton corps ! Comme le dit le proverbe : "Pratique dix mille fois, et la technique devient naturelle." — Maître Tanaka`);
+      // Message de Tanaka - vocabulaire non évaluatif
+      setTanakaMessage(`${userName || 'Ninja'}, tu te sens en confiance sur cette technique. Continue à la pratiquer au dojo ! 🥋 — Maître Tanaka`);
       setIsTanakaSpeaking(true);
       if (tanakaSpeakTimeout.current) clearTimeout(tanakaSpeakTimeout.current);
       tanakaSpeakTimeout.current = setTimeout(() => setIsTanakaSpeaking(false), 4000);
