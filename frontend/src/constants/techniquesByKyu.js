@@ -143,9 +143,17 @@ export const TECHNIQUES_BY_KYU = {
         name: "Saisies multiples",
         icon: "✋",
         techniques: [
-          { id: "ryote_dori", name: "Ryote Dori", description: "Saisie des deux poignets", difficulty: 2 },
-          { id: "kata_dori", name: "Kata Dori", description: "Saisie de l'épaule", difficulty: 2 },
-          { id: "mune_dori", name: "Mune Dori", description: "Saisie du revers", difficulty: 2 },
+          { id: "ryote_dori", name: "Ryote Dori", description: "Saisie des deux poignets", difficulty: 2, type: "statique" },
+          { id: "kata_dori", name: "Kata Dori", description: "Saisie de l'épaule", difficulty: 2, type: "statique" },
+          { id: "mune_dori", name: "Mune Dori", description: "Saisie du revers", difficulty: 2, type: "statique" },
+        ]
+      },
+      {
+        name: "Attaques combinées",
+        icon: "⚡",
+        techniques: [
+          { id: "kata_dori_men_uchi", name: "Kata Dori Men Uchi", description: "Saisie épaule + frappe à la tête", difficulty: 3, type: "dynamique" },
+          { id: "mune_dori_tsuki", name: "Mune Dori Tsuki", description: "Saisie revers + coup de poing", difficulty: 3, type: "dynamique" },
         ]
       }
     ]
