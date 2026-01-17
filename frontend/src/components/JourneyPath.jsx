@@ -275,6 +275,17 @@ const JourneyPath = ({
     };
   }, []);
 
+  // Jouer l'audio de Tanaka automatiquement quand un dialog d'étape s'ouvre
+  useEffect(() => {
+    if (showStepDialog && selectedStep && selectedStep.tanakaAudioKey) {
+      // Petit délai pour laisser le dialog s'animer
+      const timer = setTimeout(() => {
+        playTanakaAudio(selectedStep.tanakaAudioKey);
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [showStepDialog, selectedStep]);
+
   // Valider le prénom
   const handleNameSubmit = () => {
     if (tempUserName.trim()) {
