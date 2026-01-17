@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Dialog, DialogContent, DialogTitle, DialogDescription, DialogHeader } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
-import { Trophy, Star, Award, Heart, Sparkles, GraduationCap } from 'lucide-react';
+import { Trophy, Star, Award, Heart, Sparkles, GraduationCap, Volume2, VolumeX } from 'lucide-react';
 import VirtuesSection from './VirtuesSection';
 import { AIKIDO_BELTS } from '@/constants/aikidoBelts';
+import { playTanakaPhrase } from '@/services/tanakaVoiceService';
 
 /**
  * ProgressionDialog - Étape 5 "Progresse"
@@ -28,6 +29,56 @@ const ProgressionDialog = ({
 }) => {
   // Onglet actif : 'ceinture' ou 'qualites'
   const [activeTab, setActiveTab] = useState('ceinture');
+  
+  // États pour l'audio de Tanaka
+  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  const [audioMuted, setAudioMuted] = useState(false);
+  const currentAudioRef = useRef(null);
+  const hasPlayedWelcomeRef = useRef(false);
+
+  // Fonction pour jouer l'audio de Tanaka
+  const playTanakaAudio = async (phraseKey) => {
+    if (audioMuted) return;
+    
+    if (currentAudioRef.current) {
+      currentAudioRef.current.pause();
+      currentAudioRef.current = null;
+    }
+    
+    try {
+      setIsAudioPlaying(true);
+      const result = await playTanakaPhrase(phraseKey);
+      if (result.audio) {
+        currentAudioRef.current = result.audio;
+        result.audio.onended = () => {
+          setIsAudioPlaying(false);
+          currentAudioRef.current = null;
+        };
+      }
+    } catch (error) {
+      console.error('Erreur lecture audio Tanaka:', error);
+      setIsAudioPlaying(false);
+    }
+  };
+
+  // Jouer l'audio de bienvenue à l'ouverture
+  useEffect(() => {
+    if (isOpen && !hasPlayedWelcomeRef.current) {
+      hasPlayedWelcomeRef.current = true;
+      setTimeout(() => {
+        playTanakaAudio('step_5_progress');
+      }, 500);
+    }
+    
+    if (!isOpen) {
+      hasPlayedWelcomeRef.current = false;
+      if (currentAudioRef.current) {
+        currentAudioRef.current.pause();
+        currentAudioRef.current = null;
+      }
+      setIsAudioPlaying(false);
+    }
+  }, [isOpen, audioMuted]);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -36,10 +87,52 @@ const ProgressionDialog = ({
         {/* Header */}
         <div className="bg-gradient-to-r from-violet-600 to-purple-600 p-4">
           <DialogHeader>
-            <DialogTitle className="text-xl font-bold flex items-center gap-2 text-white">
-              <Star className="w-6 h-6 text-amber-300" />
-              Progresse - Étape 5
-            </DialogTitle>
+            <div className="flex items-center justify-between">
+              <DialogTitle className="text-xl font-bold flex items-center gap-2 text-white">
+                <Star className="w-6 h-6 text-amber-300" />
+                Progresse - Étape 5
+              </DialogTitle>
+              <div className="flex items-center gap-2">
+                {/* Bouton rejouer audio */}
+                <button
+                  onClick={() => playTanakaAudio('step_5_progress')}
+                  disabled={isAudioPlaying}
+                  className={`p-2 rounded-full transition-all ${
+                    isAudioPlaying 
+                      ? 'bg-violet-500/50 cursor-not-allowed' 
+                      : 'bg-violet-500/20 hover:bg-violet-500/40'
+                  }`}
+                  title="Écouter Maître Tanaka"
+                  data-testid="tanaka-play-audio"
+                >
+                  <Volume2 className={`w-4 h-4 ${isAudioPlaying ? 'text-violet-200 animate-pulse' : 'text-violet-200'}`} />
+                </button>
+                
+                {/* Bouton mute */}
+                <button
+                  onClick={() => {
+                    setAudioMuted(!audioMuted);
+                    if (!audioMuted && currentAudioRef.current) {
+                      currentAudioRef.current.pause();
+                      setIsAudioPlaying(false);
+                    }
+                  }}
+                  className={`p-2 rounded-full transition-all ${
+                    audioMuted 
+                      ? 'bg-red-500/30 hover:bg-red-500/50' 
+                      : 'bg-violet-700/50 hover:bg-violet-700'
+                  }`}
+                  title={audioMuted ? "Activer le son" : "Couper le son"}
+                  data-testid="tanaka-mute-toggle"
+                >
+                  {audioMuted ? (
+                    <VolumeX className="w-4 h-4 text-red-400" />
+                  ) : (
+                    <Volume2 className="w-4 h-4 text-violet-300" />
+                  )}
+                </button>
+              </div>
+            </div>
             <DialogDescription className="text-violet-200">
               Suis ta progression et développe tes qualités de ninja !
             </DialogDescription>
