@@ -497,6 +497,7 @@ const VirtualDojo = ({
         currentAudioRef.current = null;
       }
       setIsAudioPlaying(false);
+      setIsTanakaSpeaking(false);
     }
   }, [isOpen, selectedGame, userName, completedGames, audioMuted]);
 
