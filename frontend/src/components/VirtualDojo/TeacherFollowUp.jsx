@@ -1,16 +1,17 @@
 /**
- * 👨‍🏫 INTERFACE ENSEIGNANT - Dojo Virtuel
+ * 👨‍🏫 ESPACE ENSEIGNANT - Suivi pédagogique
  * 
  * Permet aux enseignants de:
  * - Voir la progression des élèves (suivi pédagogique)
- * - Valider les TECHNIQUES OFFICIELLES d'Aïkido (grades)
+ * - Valider les TECHNIQUES OFFICIELLES d'Aïkido (grades au dojo)
  * - Envoyer des encouragements
  * - Configurer les jeux
  * 
  * ⚠️ IMPORTANT - RÈGLES DE VALIDATION:
  * - Jeux numériques: Validés par les PARENTS uniquement
  * - Exercices au dojo: AUTO-VALIDÉS par l'enfant
- * - Cet espace sert au SUIVI et aux ENCOURAGEMENTS, pas à valider les jeux
+ * - Cet espace sert au SUIVI et aux ENCOURAGEMENTS
+ * - Les techniques officielles sont validées AU DOJO par l'enseignant
  */
 
 import React, { useState, useEffect, useCallback } from 'react';
@@ -24,7 +25,7 @@ import {
 
 const API_URL = process.env.REACT_APP_BACKEND_URL || '';
 
-const TeacherValidationInterface = ({ onClose, teacherToken }) => {
+const TeacherFollowUp = ({ onClose, teacherToken }) => {
   const [activeTab, setActiveTab] = useState('students');
   const [students, setStudents] = useState([]);
   const [selectedStudent, setSelectedStudent] = useState(null);
@@ -528,4 +529,4 @@ const TeacherValidationInterface = ({ onClose, teacherToken }) => {
   );
 };
 
-export default TeacherValidationInterface;
+export default TeacherFollowUp;
