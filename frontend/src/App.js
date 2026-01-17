@@ -1031,7 +1031,7 @@ function AppContent() {
                   Retour au parcours
                 </button>
                 <PhilosophiePage 
-                  isChildMode={!isAdultMode}
+                  isChildMode={ninjaMode === 'jeune' || ninjaMode === null}
                 />
               </div>
             )}
