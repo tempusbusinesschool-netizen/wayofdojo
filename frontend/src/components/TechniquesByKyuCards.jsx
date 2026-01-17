@@ -445,7 +445,7 @@ const TechniquesByKyuCards = ({
           </div>
         </div>
 
-        {/* Titre principal */}
+        {/* Titre principal avec onglets */}
         <div className="bg-gradient-to-r from-cyan-600 to-blue-600 p-3">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
             <h2 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
@@ -482,6 +482,64 @@ const TechniquesByKyuCards = ({
           </div>
         </div>
 
+        {/* Onglets de navigation : Ma Progression / Techniques */}
+        <div className="flex border-b border-slate-700 bg-slate-800/30">
+          <button
+            onClick={() => setActiveView('progression')}
+            className={`flex-1 py-3 px-4 text-sm font-medium transition-all flex items-center justify-center gap-2 ${
+              activeView === 'progression'
+                ? 'text-amber-400 border-b-2 border-amber-400 bg-amber-500/10'
+                : 'text-slate-400 hover:text-white hover:bg-slate-700/30'
+            }`}
+            data-testid="tab-progression"
+          >
+            <Trophy className="w-4 h-4" />
+            Ma Progression
+          </button>
+          <button
+            onClick={() => setActiveView('techniques')}
+            className={`flex-1 py-3 px-4 text-sm font-medium transition-all flex items-center justify-center gap-2 ${
+              activeView === 'techniques'
+                ? 'text-cyan-400 border-b-2 border-cyan-400 bg-cyan-500/10'
+                : 'text-slate-400 hover:text-white hover:bg-slate-700/30'
+            }`}
+            data-testid="tab-techniques"
+          >
+            <BookOpen className="w-4 h-4" />
+            Fiches Techniques
+          </button>
+        </div>
+
+        {/* Contenu selon l'onglet actif */}
+        {activeView === 'progression' ? (
+          /* ═══════════════════════════════════════════════════════════════════════════════════ */
+          /* VUE PROGRESSION : BeltProgressCard + DeplacementsSection */
+          /* ═══════════════════════════════════════════════════════════════════════════════════ */
+          <div className="p-4 overflow-y-auto max-h-[500px] space-y-4">
+            {/* Carte de progression de ceinture */}
+            {currentBelt && (
+              <BeltProgressCard 
+                currentBelt={currentBelt}
+                totalPoints={totalPoints}
+                onBeltClick={onBeltClick}
+              />
+            )}
+            
+            {/* Section Déplacements */}
+            <DeplacementsSection />
+            
+            {/* Message d'encouragement */}
+            <div className="text-center py-4">
+              <p className="text-cyan-300 text-sm">
+                🌟 Continue à t'entraîner au dojo pour progresser ! 🌟
+              </p>
+            </div>
+          </div>
+        ) : (
+          /* ═══════════════════════════════════════════════════════════════════════════════════ */
+          /* VUE TECHNIQUES : Navigation Kyu + Fiches détaillées */
+          /* ═══════════════════════════════════════════════════════════════════════════════════ */
+          <>
         {/* Navigation des Kyu (onglets) */}
         <div className="p-3 bg-slate-800/50 border-b border-slate-700">
           <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-slate-600">
