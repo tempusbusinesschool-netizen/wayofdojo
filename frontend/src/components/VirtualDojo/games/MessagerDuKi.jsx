@@ -218,7 +218,7 @@ const MessagerDuKi = ({ userName, onComplete, onExit, tanakaSpeak }) => {
       setGameState('fail');
       speakTanaka(
         TANAKA_GAME_MESSAGES.messager_fail,
-        `Tu as perdu l'équilibre, ${userName || 'ninja'}. Rappelle-toi : la patience est la clé. Respire et réessaie !`
+        `Continue comme ça, ${userName || 'ninja'}. Rappelle-toi : la patience est la clé. Respire et recommence !`
       );
     }
   }, [position.y, balance, gameState, level, userName, speakTanaka]);
