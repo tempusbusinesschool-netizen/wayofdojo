@@ -778,7 +778,7 @@ const TechniquesByKyuCards = ({
                 <div className="bg-gradient-to-r from-slate-700/50 to-slate-800/50 rounded-xl p-4 mb-5 border border-slate-600/50">
                   <h4 className="text-white font-bold text-sm mb-3 flex items-center gap-2">
                     <GraduationCap className="w-4 h-4 text-purple-400" />
-                    Mon niveau de maîtrise
+                    Mon ressenti sur ma pratique
                   </h4>
                   
                   <div className="grid grid-cols-2 gap-2">
@@ -821,9 +821,13 @@ const TechniquesByKyuCards = ({
                     })}
                   </div>
                   
-                  <p className="text-slate-400 text-xs mt-3 text-center">
-                    Clique pour mettre à jour ton niveau de progression
-                  </p>
+                  {/* Rappel explicite - appréciation symbolique */}
+                  <div className="mt-4 p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg">
+                    <p className="text-amber-200 text-xs leading-relaxed text-center">
+                      <strong>💡 Ce niveau reflète ton ressenti sur ta pratique.</strong><br/>
+                      Il n'a pas de valeur officielle. Seul ton enseignant au dojo valide ta progression réelle.
+                    </p>
+                  </div>
                 </div>
 
                 {/* Bouton fermer uniquement */}
