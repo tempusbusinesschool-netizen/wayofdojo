@@ -1022,6 +1022,8 @@ const TechniquesByKyuCards = ({
             </motion.div>
           )}
         </AnimatePresence>
+          </>
+        )}
       </DialogContent>
 
       {/* Modal de démo des animations séquentielles */}
