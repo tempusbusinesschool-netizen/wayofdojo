@@ -15,6 +15,7 @@ import {
   PHILOSOPHIE_TECHNIQUES, 
   TANAKA_SYNTHESE 
 } from '@/constants/aikidoPhilosophie';
+import { playTanakaPhrase } from '@/services/tanakaVoiceService';
 
 // Niveaux de ressenti sur la pratique (appréciation symbolique, non évaluative)
 const MASTERY_LEVELS = [
