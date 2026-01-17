@@ -5,7 +5,8 @@
   - ✅ Fixed infinite loop bug in Parent Dashboard (`ParentDashboard.jsx`) - Used `useRef` for stable token reference
   - ✅ Implemented technique mastery level selector (4 levels: Non commencé, En apprentissage, Pratiquée, Maîtrisée)
   - ✅ Refactored "Défis du Jour" section for clarity (new gradient header, progress bar, clearer challenge list)
-  - ✅ Added TTS Maître Tanaka imports to VirtualDojo games (ReflexePacifique, SenseiInvisible)
+  - ✅ **Full TTS integration in all 10 VirtualDojo mini-games** - Each game now uses `useTanakaVoice` hook with `tanakaVoice()` callback for: game start, feedback, timeout, completion
+  - ✅ Tested all 10 mini-games: MessagerDuKi, ParcoursduSouffle, SenseiInvisible, ReflexePacifique, GardienEspace, MiroirHarmonie, CheminEquilibre, MemorySensei, RythmeDuDojo, QueteVertus
 
 ## Nom de l'application
 **Aikido@Game** - Ne jamais traduire ce nom
