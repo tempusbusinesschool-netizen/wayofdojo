@@ -7,12 +7,12 @@ import { ChevronRight, ChevronLeft, Check, Lock, Star, BookOpen, Trophy, X, Ligh
 import axios from 'axios';
 import { toast } from 'sonner';
 
-// Niveaux de maîtrise avec leurs couleurs et icônes
+// Niveaux de ressenti sur la pratique (appréciation symbolique, non évaluative)
 const MASTERY_LEVELS = [
-  { id: 'not_started', label: 'Non commencé', icon: Circle, color: 'text-slate-400', bg: 'bg-slate-700', emoji: '⚪' },
-  { id: 'learning', label: 'En apprentissage', icon: PlayCircle, color: 'text-amber-400', bg: 'bg-amber-500/20', emoji: '🟡' },
-  { id: 'practiced', label: 'Pratiquée', icon: Star, color: 'text-cyan-400', bg: 'bg-cyan-500/20', emoji: '🔵' },
-  { id: 'mastered', label: 'Maîtrisée', icon: GraduationCap, color: 'text-emerald-400', bg: 'bg-emerald-500/20', emoji: '🟢' },
+  { id: 'not_started', label: 'Pas encore vue', icon: Circle, color: 'text-slate-400', bg: 'bg-slate-700', emoji: '⚪' },
+  { id: 'learning', label: 'En découverte', icon: PlayCircle, color: 'text-amber-400', bg: 'bg-amber-500/20', emoji: '🟡' },
+  { id: 'practiced', label: 'Travaillée au dojo', icon: Star, color: 'text-cyan-400', bg: 'bg-cyan-500/20', emoji: '🔵' },
+  { id: 'mastered', label: 'En confiance', icon: GraduationCap, color: 'text-emerald-400', bg: 'bg-emerald-500/20', emoji: '🟢' },
 ];
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
