@@ -653,56 +653,93 @@ const VirtualDojo = ({
                   })}
                 </div>
               ) : (
-                // Section Dojo Réel - Auto-validation par l'utilisateur
-                <div className="bg-slate-800/50 rounded-xl p-6 border border-amber-500/30">
-                  <div className="text-center mb-6">
-                    <span className="text-6xl block mb-3">🥋</span>
-                    <h3 className="text-xl font-bold text-white">Exercices au Dojo Réel</h3>
-                    <p className="text-slate-400 mt-2 leading-relaxed">
-                      Ces exercices sont pratiqués au vrai dojo, avec ton corps et tes partenaires.
-                    </p>
-                    <p className="text-amber-400 mt-2 font-medium">
-                      Quand tu as fait un exercice au dojo, c'est toi qui le notes ici !
-                    </p>
-                  </div>
-                  
-                  {/* Explication pédagogique */}
-                  <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 mb-4">
-                    <p className="text-amber-200 text-sm leading-relaxed">
-                      🌟 <strong>Comment ça marche ?</strong><br/>
-                      Après un cours au dojo, reviens ici et coche les exercices que tu as pratiqués. 
-                      C'est ta parole qui compte : sois honnête avec toi-même !
-                    </p>
-                  </div>
-                  
-                  {/* Liste des exercices */}
-                  <div className="space-y-3">
-                    {[
-                      { name: 'Tai Sabaki en groupe', xp: 30, emoji: '🦶', desc: 'Déplacements avec les autres' },
-                      { name: 'Ukemi avec partenaire', xp: 35, emoji: '🔄', desc: 'Chutes et roulades' },
-                      { name: 'Randori guidé', xp: 40, emoji: '⚔️', desc: 'Pratique libre encadrée' },
-                      { name: 'Méditation collective', xp: 25, emoji: '🧘', desc: 'Calme et concentration' },
-                      { name: 'Kata en duo', xp: 45, emoji: '🤝', desc: 'Techniques avec un partenaire' },
-                    ].map((exercice, idx) => (
-                      <div key={idx} className="flex items-center justify-between bg-slate-700/50 rounded-lg p-3 hover:bg-slate-700/70 transition-colors cursor-pointer">
-                        <div className="flex items-center gap-3">
-                          <span className="text-2xl">{exercice.emoji}</span>
-                          <div>
-                            <span className="text-white font-medium block">{exercice.name}</span>
-                            <span className="text-slate-500 text-xs">{exercice.desc}</span>
+                // Section Dojo Réel - Défis du Jour + Exercices
+                <div className="space-y-6">
+                  {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+                  {/* DÉFIS DU JOUR - Tunnel de progression (gagne des points !) */}
+                  {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+                  <section data-testid="section-defis-dojo">
+                    {/* Titre de section */}
+                    <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                      <div className="h-0.5 sm:h-1 flex-1 bg-gradient-to-r from-transparent via-pink-500 to-pink-500 rounded-full" />
+                      <h2 className="text-base sm:text-xl font-bold text-white flex items-center gap-1 sm:gap-2 whitespace-nowrap">
+                        <span className="text-xl sm:text-2xl">🎯</span>
+                        <span className="hidden xs:inline">Mes </span>Défis du Jour
+                      </h2>
+                      <div className="h-0.5 sm:h-1 flex-1 bg-gradient-to-l from-transparent via-pink-500 to-pink-500 rounded-full" />
+                    </div>
+
+                    <ProgressionTunnel
+                      currentBelt={getBeltByPoints(statistics.total_points || 0)}
+                      statistics={statistics}
+                      virtueData={virtueData}
+                      userName={userName}
+                      userId={userId}
+                      isAuthenticated={isAuthenticated}
+                      onRefreshStats={onRefreshData}
+                      onCompleteChallenge={(challenge) => {
+                        console.log("Challenge completed:", challenge);
+                        onRefreshData?.();
+                      }}
+                      onRequestParentValidation={(challenge) => {
+                        console.log("Parent validation requested:", challenge);
+                      }}
+                    />
+                  </section>
+
+                  {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+                  {/* EXERCICES AU DOJO RÉEL - Auto-validation par l'utilisateur */}
+                  {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+                  <div className="bg-slate-800/50 rounded-xl p-6 border border-amber-500/30">
+                    <div className="text-center mb-6">
+                      <span className="text-6xl block mb-3">🥋</span>
+                      <h3 className="text-xl font-bold text-white">Exercices au Dojo Réel</h3>
+                      <p className="text-slate-400 mt-2 leading-relaxed">
+                        Ces exercices sont pratiqués au vrai dojo, avec ton corps et tes partenaires.
+                      </p>
+                      <p className="text-amber-400 mt-2 font-medium">
+                        Quand tu as fait un exercice au dojo, c'est toi qui le notes ici !
+                      </p>
+                    </div>
+                    
+                    {/* Explication pédagogique */}
+                    <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 mb-4">
+                      <p className="text-amber-200 text-sm leading-relaxed">
+                        🌟 <strong>Comment ça marche ?</strong><br/>
+                        Après un cours au dojo, reviens ici et coche les exercices que tu as pratiqués. 
+                        C'est ta parole qui compte : sois honnête avec toi-même !
+                      </p>
+                    </div>
+                    
+                    {/* Liste des exercices */}
+                    <div className="space-y-3">
+                      {[
+                        { name: 'Tai Sabaki en groupe', xp: 30, emoji: '🦶', desc: 'Déplacements avec les autres' },
+                        { name: 'Ukemi avec partenaire', xp: 35, emoji: '🔄', desc: 'Chutes et roulades' },
+                        { name: 'Randori guidé', xp: 40, emoji: '⚔️', desc: 'Pratique libre encadrée' },
+                        { name: 'Méditation collective', xp: 25, emoji: '🧘', desc: 'Calme et concentration' },
+                        { name: 'Kata en duo', xp: 45, emoji: '🤝', desc: 'Techniques avec un partenaire' },
+                      ].map((exercice, idx) => (
+                        <div key={idx} className="flex items-center justify-between bg-slate-700/50 rounded-lg p-3 hover:bg-slate-700/70 transition-colors cursor-pointer">
+                          <div className="flex items-center gap-3">
+                            <span className="text-2xl">{exercice.emoji}</span>
+                            <div>
+                              <span className="text-white font-medium block">{exercice.name}</span>
+                              <span className="text-slate-500 text-xs">{exercice.desc}</span>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-amber-400 text-sm">+{exercice.xp} Ki</span>
+                            <div className="w-5 h-5 rounded border-2 border-slate-500 hover:border-emerald-400 transition-colors" />
                           </div>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-amber-400 text-sm">+{exercice.xp} Ki</span>
-                          <div className="w-5 h-5 rounded border-2 border-slate-500 hover:border-emerald-400 transition-colors" />
-                        </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
+                    
+                    <p className="text-center text-emerald-400/80 text-sm mt-4 font-medium">
+                      ✅ C'est toi qui valides tes exercices au dojo !
+                    </p>
                   </div>
-                  
-                  <p className="text-center text-emerald-400/80 text-sm mt-4 font-medium">
-                    ✅ C'est toi qui valides tes exercices au dojo !
-                  </p>
                 </div>
               )}
             </>
