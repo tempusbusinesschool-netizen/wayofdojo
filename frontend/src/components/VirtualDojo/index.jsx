@@ -479,8 +479,26 @@ const VirtualDojo = ({
       }
       setIsTanakaSpeaking(true);
       setTimeout(() => setIsTanakaSpeaking(false), 4000);
+      
+      // Jouer l'audio de bienvenue (une seule fois par ouverture)
+      if (!hasPlayedWelcomeRef.current) {
+        hasPlayedWelcomeRef.current = true;
+        setTimeout(() => {
+          playTanakaAudio('step_3_dojo');
+        }, 500);
+      }
     }
-  }, [isOpen, selectedGame, userName, completedGames]);
+    
+    // Reset quand le dialog se ferme
+    if (!isOpen) {
+      hasPlayedWelcomeRef.current = false;
+      if (currentAudioRef.current) {
+        currentAudioRef.current.pause();
+        currentAudioRef.current = null;
+      }
+      setIsAudioPlaying(false);
+    }
+  }, [isOpen, selectedGame, userName, completedGames, audioMuted]);
 
   // Vérifier si un jeu est débloqué
   const isGameUnlocked = (game) => {
