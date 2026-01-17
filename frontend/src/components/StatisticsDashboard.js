@@ -1749,11 +1749,6 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
                 🌱 Continue à pratiquer pour débloquer tes premiers trophées !
               </p>
             )}
-
-            {/* Section Histoire de l'Aikido - Hakama & O Sensei */}
-            <div className="mt-6 pt-6 border-t border-slate-700">
-              <HakamaHistory />
-            </div>
           </DialogContent>
         </Dialog>
 
