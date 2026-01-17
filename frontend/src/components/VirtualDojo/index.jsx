@@ -695,7 +695,7 @@ const VirtualDojo = ({
           ) : (
             // Liste des jeux
             <>
-              {/* Onglets : Entraînement physique / Entraînement Dojo / Validations */}
+              {/* Onglets : Jeux numériques / Validations */}
               <div className="flex gap-2 mb-4">
                 <button
                   onClick={() => setActiveDojoTab('jeux')}
@@ -706,18 +706,7 @@ const VirtualDojo = ({
                   }`}
                   data-testid="tab-jeux"
                 >
-                  🎮 <span className="hidden xs:inline">Entraînement </span>physique
-                </button>
-                <button
-                  onClick={() => setActiveDojoTab('dojo')}
-                  className={`flex-1 py-2 px-3 rounded-xl font-bold transition-all text-xs sm:text-sm ${
-                    activeDojoTab === 'dojo' 
-                      ? 'bg-gradient-to-r from-amber-500 to-orange-600 text-white' 
-                      : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
-                  }`}
-                  data-testid="tab-dojo"
-                >
-                  🥋 <span className="hidden xs:inline">Entraînement </span>Dojo
+                  🎮 Jeux numériques
                 </button>
                 <button
                   onClick={() => setActiveDojoTab('validations')}
