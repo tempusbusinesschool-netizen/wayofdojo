@@ -148,7 +148,7 @@ const CheminEquilibre = ({ userName, onComplete, onExit, tanakaSpeak }) => {
     if (fallenTimes >= 2) {
       endGame(false);
     } else {
-      tanakaVoice("Continue comme ça ! Recentre-toi et avance doucement.");
+      tanakaVoice("Continue comme ça !");
     }
   };
 
@@ -160,9 +160,9 @@ const CheminEquilibre = ({ userName, onComplete, onExit, tanakaSpeak }) => {
     const kiEarned = Math.floor(finalScore / 20);
 
     if (success) {
-      tanakaVoice("Magnifique ! Tu as traversé le chemin en gardant ton équilibre ! Ton Hara est solide !");
+      tanakaVoice("Bravo, tu as terminé cette étape !");
     } else {
-      tanakaVoice("Tu peux recommencer pour t'entraîner encore. L'équilibre se travaille avec patience.");
+      tanakaVoice("Tu peux recommencer, c'est comme ça qu'on progresse.");
     }
 
     setTimeout(() => onComplete(finalScore, kiEarned), 3000);
