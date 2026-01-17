@@ -74,11 +74,11 @@ const JOURNEY_STEPS = [
     shadowColor: 'shadow-amber-500/40',
     unlockCondition: 'step_2_completed',
     xpReward: 20,
-    description: 'Entre dans le Dojo Virtuel ! 10 mini-jeux t\'attendent pour développer tes compétences de ninja. Tu peux aussi valider tes exercices faits au vrai dojo !',
-    tanakaMessage: "Bienvenue dans le Dojo Virtuel ! Ici, tu vas t'entraîner avec des jeux qui développeront ton calme, ta respiration et ton écoute. Et si tu pratiques au vrai dojo, ton sensei pourra valider tes exercices !",
+    description: 'Le Dojo Virtuel propose deux activités : des mini-jeux numériques (validés par tes parents) et des exercices pratiqués au vrai dojo (que tu valides toi-même) !',
+    tanakaMessage: "Bienvenue dans le Dojo Virtuel ! Tu y trouveras des jeux numériques pour développer ton calme et ta concentration. Tu pourras aussi noter les exercices que tu as pratiqués au vrai dojo !",
     tanakaAudioKey: 'step_3_dojo',
     actions: [{ label: 'Entrer dans le Dojo Virtuel', type: 'navigate', target: 'dojo_virtuel' }],
-    tips: ['🎮 10 mini-jeux éducatifs', '🏯 Exercices au dojo réel', '✨ Gagne des points de Ki', '🧘 Développe ton calme']
+    tips: ['🎮 Mini-jeux (validés par parents)', '🏯 Exercices au dojo (auto-validation)', '✨ Gagne des points de Ki', '🧘 Développe ton calme']
   },
   {
     id: 4,
