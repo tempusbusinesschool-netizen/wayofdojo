@@ -1683,74 +1683,18 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
           </DialogContent>
         </Dialog>
 
-        {/* Belt Selection Dialog */}
-        <Dialog open={showBeltDialog} onOpenChange={setShowBeltDialog}>
-          <DialogContent className="max-w-lg bg-slate-900 border-slate-700 text-white max-h-[90vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle className="text-xl font-bold flex items-center gap-2 text-amber-400">
-                🥋 Choisis ta Ceinture
-              </DialogTitle>
-              <DialogDescription className="text-slate-400">
-                Clique sur ta ceinture actuelle pour enregistrer ton grade
-              </DialogDescription>
-            </DialogHeader>
-            
-            <div className="space-y-3 py-4">
-              {Object.entries(AIKIDO_BELTS).map(([key, belt]) => {
-                const isCurrentBelt = userBelt === key;
-                const isPassed = belt.order < (AIKIDO_BELTS[userBelt]?.order || 0);
-                const beltPoints = (belt.order + 1) * 10; // 10 pts per grade level
-                
-                return (
-                  <div 
-                    key={key}
-                    onClick={() => handleBeltChange(key)}
-                    className={`p-3 rounded-xl border-2 transition-all cursor-pointer hover:scale-[1.02] hover:shadow-lg ${
-                      isCurrentBelt 
-                        ? 'border-amber-500 bg-amber-900/30 ring-2 ring-amber-500/50' 
-                        : isPassed 
-                          ? 'border-emerald-500/50 bg-emerald-900/20 hover:border-emerald-400' 
-                          : 'border-slate-700 bg-slate-800/50 hover:border-slate-500 hover:bg-slate-800'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <span className="text-3xl">{belt.emoji}</span>
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2">
-                          <p className="font-bold text-white">{belt.name}</p>
-                          {isCurrentBelt && <span className="text-xs bg-amber-500 text-white px-2 py-0.5 rounded-full animate-pulse">✓ Actuelle</span>}
-                          {isPassed && !isCurrentBelt && <span className="text-xs text-emerald-400">✓ Passée</span>}
-                        </div>
-                        <p className="text-slate-400 text-xs">{belt.grade}</p>
-                        {belt.symbolicRole && (
-                          <p className="text-purple-300 text-xs mt-1">
-                            🎭 Rôle disponible : {belt.symbolicRole.name}
-                          </p>
-                        )}
-                      </div>
-                      {/* Points badge */}
-                      <div className="flex flex-col items-end gap-1">
-                        <div className="bg-amber-500/20 text-amber-400 px-2 py-1 rounded-lg text-xs font-bold">
-                          +{beltPoints} pts
-                        </div>
-                        {!isCurrentBelt && (
-                          <span className="text-slate-500 text-[10px]">Sélectionner →</span>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-            
-            <div className="bg-slate-800 rounded-lg p-4 border border-slate-700">
-              <p className="text-sm text-slate-300 text-center">
-                🎌 <strong>Rappel :</strong> Indique ta ceinture actuelle obtenue au dojo.
-                <br />Ta progression sera sauvegardée automatiquement.
-              </p>
-            </div>
-          </DialogContent>
-        </Dialog>
+        {/* Progression Dialog - Étape 5 "Progresse" */}
+        <ProgressionDialog
+          isOpen={showBeltDialog}
+          onClose={() => setShowBeltDialog(false)}
+          currentBelt={userBelt}
+          onBeltChange={handleBeltChange}
+          statistics={statistics}
+          virtueData={virtueData}
+          userId={userId}
+          isAuthenticated={isAuthenticated}
+          onRefreshData={onRefreshData}
+        />
 
         {/* Admin block - Adhérents (adults + children) centered full width */}
         {membersStats && isAdmin && (
