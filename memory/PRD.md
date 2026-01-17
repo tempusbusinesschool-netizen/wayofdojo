@@ -18,12 +18,16 @@
     - Bouton **"Je l'ai fait au dojo !"** pour auto-validation par l'enfant
     - Progression du jour avec barre visuelle et Ki gagnés
     - 8 exercices : Salut, Échauffement, Ukemi, Déplacements, Technique partenaire, Écoute, Aide camarade, Rangement
-  - ✅ **RÉORGANISATION "PROGRAMME TECHNIQUE" (TechniquesByKyuCards)**
+  - ✅ **RÉORGANISATION "PROGRAMME TECHNIQUE" (Étape 2 - Apprends)**
     - Nouveaux onglets : "Ma Progression" / "Fiches Techniques"
-    - `BeltProgressCard` intégré dans l'onglet "Ma Progression"
-    - `DeplacementsSection` intégré dans l'onglet "Ma Progression"
+    - `BeltProgressCard` + `DeplacementsSection` intégrés dans "Ma Progression"
     - Supprimé l'accordéon "Entrainement - Techniques d'Aikido" du dashboard
-    - Dashboard simplifié (-1.09 kB de JS)
+  - ✅ **RÉORGANISATION "SUPER-POUVOIRS NINJA" (Étape 5 - Progresse)**
+    - Créé nouveau composant `ProgressionDialog.jsx`
+    - Nouveaux onglets : "Ma Ceinture" / "Mes Qualités"
+    - `VirtuesSection` (7 vertus du Budō) intégré dans onglet "Mes Qualités"
+    - Supprimé l'accordéon "Les Super-Pouvoirs Ninja" du dashboard
+    - Dashboard significativement simplifié
 
 - **2026-01-17 (Session 4)**:
   - ✅ **BASE DE DONNÉES TECHNIQUES COMPLÈTE - Structure en 3 Phases**
