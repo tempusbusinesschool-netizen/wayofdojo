@@ -5,17 +5,22 @@
   - ✅ **DÉPLACEMENT "DÉFIS DU JOUR"**
     - Supprimé de `StatisticsDashboard.js` (dashboard principal)
     - Intégré dans `VirtualDojo/index.jsx` sous l'onglet "Exercices au Dojo Réel"
-    - Props ajoutées au composant VirtualDojo (statistics, virtueData, userId, etc.)
-    - Nettoyage des imports inutilisés (ProgressionTunnel, HakamaHistory)
-    - Aucun doublon visuel ou fonctionnel
   - ✅ **ESPACE PARENT - FENÊTRE FLOTTANTE**
     - Supprimé la section "👨‍👩‍👧 Espace Parent" de `StatisticsDashboard.js`
     - Transformé `ParentDashboard` en Dialog flottant dans `App.js`
     - Point d'entrée unique : bouton "Espace Parent" dans le header
-    - Le dashboard principal reste visible en arrière-plan
-    - Fenêtre contextuelle à l'enfant actif (lecture/saisie : consultation, validations, messages, observations)
-    - Ne modifie jamais la navigation principale
-    - Aucun doublon visuel ou fonctionnel
+  - ✅ **RENOMMAGE "Connexion Parent" → "Espace Parent"** dans ParentLoginDialog.jsx
+  - ✅ **BOUTONS HEADER TECHNIQUES CORRIGÉS** - Layout responsive avec flex-wrap
+  - ✅ **MESSAGE TANAKA CORRIGÉ** - Supprimé "ton sensei pourra valider tes exercices"
+    - Nouveau message audio régénéré via ElevenLabs
+  - ✅ **"MON CARNET DE DOJO" - REFONTE COMPLÈTE**
+    - Interface ludique avec cartes visuelles pour chaque exercice
+    - Bouton **"Je l'ai fait au dojo !"** pour auto-validation par l'enfant
+    - Progression du jour avec barre visuelle et Ki gagnés
+    - 8 exercices : Salut, Échauffement, Ukemi, Déplacements, Technique partenaire, Écoute, Aide camarade, Rangement
+    - Messages d'encouragement personnalisés
+    - Aucune mention de validation par enseignant dans l'application
+    - Sauvegarde quotidienne dans localStorage
 
 - **2026-01-17 (Session 4)**:
   - ✅ **BASE DE DONNÉES TECHNIQUES COMPLÈTE - Structure en 3 Phases**
