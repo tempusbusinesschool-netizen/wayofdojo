@@ -163,14 +163,14 @@ const ReflexePacifique = ({ userName, onComplete, onExit, tanakaSpeak }) => {
     if (timeoutHandledRef.current) return;
     timeoutHandledRef.current = true;
     
-    tanakaSpeak("Le temps est écoulé ! En situation réelle, il faut parfois prendre des décisions rapidement, mais avec sagesse.");
+    tanakaVoice("Le temps est écoulé ! En situation réelle, il faut parfois prendre des décisions rapidement, mais avec sagesse.");
     setShowFeedback(true);
     setSelectedOption(-1);
     setTimeout(() => {
       goToNextScenario();
       timeoutHandledRef.current = false;
     }, 3000);
-  }, [goToNextScenario, tanakaSpeak]);
+  }, [goToNextScenario, tanakaVoice]);
 
   // Timer - utilise setInterval au lieu de setState dans useEffect
   useEffect(() => {
@@ -202,9 +202,9 @@ const ReflexePacifique = ({ userName, onComplete, onExit, tanakaSpeak }) => {
       const points = 20 + Math.floor(timeLeft * 2);
       setScore(prev => prev + points);
       setCorrectAnswers(prev => prev + 1);
-      tanakaSpeak(option.feedback);
+      tanakaVoice(option.feedback);
     } else {
-      tanakaSpeak(option.feedback);
+      tanakaVoice(option.feedback);
     }
     
     setTimeout(() => {
