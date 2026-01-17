@@ -5,7 +5,13 @@
  * dans le programme technique traditionnel de l'Aïkido.
  * 
  * Structure: Phase 1 (Entrée) → Phase 2 (Technique) → Phase 3 (Final)
+ * 
+ * Chaque combinaison est liée à la dimension philosophique via le fichier
+ * aikidoPhilosophie.js — permettant à Maître Tanaka d'accompagner chaque
+ * mouvement avec une parole de sagesse adaptée (enfants / adultes).
  */
+
+import { getPhilosophieCombinaison, getTanakaParole } from './aikidoPhilosophie';
 
 export const COMBINAISONS_VALIDES = [
   // ==========================================================================
