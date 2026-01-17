@@ -155,54 +155,48 @@ export const useTanakaVoice = () => {
 
 /**
  * Messages prédéfinis pour les jeux du Dojo Virtuel
+ * Conformes au Lexique TANAKA validé
  */
 export const TANAKA_GAME_MESSAGES = {
-  // Messages généraux
-  welcome_dojo: "Bienvenue dans le Dojo Virtuel, jeune ninja ! Ici, tu vas t'entraîner avec des jeux qui développeront tes compétences.",
+  // ACCUEIL (ACC)
+  welcome_dojo: "Bienvenue dans le Dojo Virtuel ! Ici, tu apprends en jouant.",
   
-  // Messages pour le Messager du Ki
-  messager_intro: "Jeune ninja, le Ki est l'énergie qui nous anime. Utilise les flèches pour te déplacer. Appuie sur espace pour respirer et restaurer ton équilibre. Si tu vas trop vite, tu perdras l'équilibre !",
-  messager_start: "C'est parti ! Traverse le dojo sans perdre ton équilibre.",
-  messager_breathing: "Bien ! La respiration est la clé. Continue à respirer calmement.",
-  messager_obstacle: "Attention ! Tu as touché un obstacle. Reste calme et continue.",
-  messager_success: "Magnifique ! Tu as traversé le dojo avec calme et maîtrise ! Ton Ki est puissant !",
-  messager_fail: "Tu as perdu l'équilibre, petit ninja. Rappelle-toi : la patience est la clé. Respire et réessaie !",
+  // GUIDANCE (GUI)
+  messager_intro: "Utilise les flèches pour te déplacer. Appuie sur espace pour respirer.",
+  messager_start: "C'est à toi.",
+  souffle_intro: "Suis le rythme de respiration avec les flèches.",
+  souffle_start: "C'est à toi.",
+  sensei_intro: "Écoute bien les instructions et suis-les.",
+  sensei_start: "C'est à toi.",
+  reflexe_intro: "Lis bien les situations, puis choisis.",
+  reflexe_start: "C'est à toi.",
   
-  // Messages pour le Parcours du Souffle
-  souffle_intro: "La respiration est la clé de tout, petit guerrier. Ton avatar n'avancera que si tu respires correctement. Inspire par le nez, expire par la bouche.",
-  souffle_start: "Suis le rythme de respiration. Flèche haut pour inspirer, espace pour retenir, flèche bas pour expirer.",
-  souffle_inhale: "Inspire profondément...",
-  souffle_hold: "Retiens ton souffle...",
-  souffle_exhale: "Expire doucement...",
-  souffle_combo: "Excellent ! Tu as trouvé le rythme parfait !",
-  souffle_success: "Magnifique ! Tu as maîtrisé le parcours du souffle ! Ta respiration est celle d'un vrai aikidoka !",
+  // ENCOURAGEMENT (ENC)
+  messager_breathing: "Continue comme ça !",
+  messager_obstacle: "Tu peux recommencer, c'est comme ça qu'on progresse.",
+  souffle_inhale: "Inspire...",
+  souffle_hold: "Retiens...",
+  souffle_exhale: "Expire...",
+  souffle_combo: "Bien joué !",
+  sensei_correct: "Bien joué !",
+  sensei_wrong: "Continue comme ça !",
+  reflexe_correct: "Bien joué !",
+  reflexe_wrong: "Tu peux recommencer, c'est comme ça qu'on progresse.",
+  reflexe_timeout: "Tu peux recommencer, c'est comme ça qu'on progresse.",
+  encourage_1: "Continue comme ça !",
+  encourage_2: "Tu fais des efforts, ça se voit.",
+  encourage_3: "Tu peux recommencer, c'est comme ça qu'on progresse.",
   
-  // Messages pour le Sensei Invisible
-  sensei_intro: "Ferme les yeux, jeune ninja. Je vais te guider uniquement avec ma voix. Fais confiance à tes autres sens.",
-  sensei_start: "Écoute bien mes instructions. Salue, tourne, avance... Tu dois suivre exactement ce que je dis.",
-  sensei_correct: "Bien joué ! Tu as bien écouté.",
-  sensei_wrong: "Ce n'était pas la bonne action. Concentre-toi et écoute bien.",
-  sensei_success: "Extraordinaire ! Tu as suivi toutes mes instructions parfaitement ! Ton écoute est remarquable !",
-  sensei_fail: "Tu as fait trop d'erreurs, petit ninja. L'écoute demande de la concentration. Réessaie !",
-  
-  // Messages pour le Réflexe Pacifique
-  reflexe_intro: "L'Aïkido nous apprend à ne pas réagir avec colère ou peur. Tu vas voir des situations difficiles. Prends le temps de réfléchir avant de répondre.",
-  reflexe_start: "Face à chaque situation, choisis la réponse la plus sage. Tu as quinze secondes !",
-  reflexe_correct: "Excellent choix ! C'est la voie de la sagesse.",
-  reflexe_wrong: "Ce n'était pas la meilleure réponse, mais tu apprendras.",
-  reflexe_timeout: "Le temps est écoulé ! En situation réelle, il faut parfois décider vite, mais avec sagesse.",
-  reflexe_success: "Tu as fait preuve d'une grande sagesse ! L'Aïkido t'enseigne bien.",
-  
-  // Messages d'encouragement généraux
-  encourage_1: "Continue ainsi, petit guerrier !",
-  encourage_2: "Tu progresses bien !",
-  encourage_3: "N'abandonne pas, tu y es presque !",
-  encourage_4: "Comme le bambou, plie mais ne romps pas !",
-  
-  // Messages de félicitations
-  congrats_ki: "Tu gagnes des points de Ki ! Ton énergie intérieure grandit !",
-  congrats_badge: "Un nouveau badge ! Chaque badge raconte une partie de ton histoire.",
-  congrats_game: "Bravo ! Tu as terminé ce jeu avec brio !"
+  // FÉLICITATION (FEL)
+  messager_success: "Bravo, tu as terminé cette étape !",
+  messager_fail: "Tu peux recommencer, c'est comme ça qu'on progresse.",
+  souffle_success: "Bravo, tu as terminé cette étape !",
+  sensei_success: "Bravo, tu as terminé cette étape !",
+  sensei_fail: "Tu peux recommencer, c'est comme ça qu'on progresse.",
+  reflexe_success: "Bravo, tu as terminé cette étape !",
+  congrats_ki: "Bien joué !",
+  congrats_badge: "Bien joué !",
+  congrats_game: "Bien joué !"
 };
 
 export default useTanakaVoice;
