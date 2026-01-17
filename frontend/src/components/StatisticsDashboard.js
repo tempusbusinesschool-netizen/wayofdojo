@@ -252,6 +252,15 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
 
   // Fonction pour naviguer vers une section depuis le parcours
   const handleJourneyNavigate = (target) => {
+    // Si c'est une page externe (philosophie, etc.), utiliser onNavigate du parent
+    const externalPages = ['philosophie', 'commence', 'apprends', 'entraine', 'valide', 'progresse', 'maitrise'];
+    if (externalPages.includes(target)) {
+      if (onNavigate) {
+        onNavigate(target);
+      }
+      return;
+    }
+    
     // Mapping des 6 étapes du nouveau parcours
     const stepMap = {
       'profil': 1,         // Étape 1: Commence -> Créer mon profil
