@@ -286,6 +286,17 @@ const JourneyPath = ({
     }
   }, [showStepDialog, selectedStep]);
 
+  // Jouer l'audio de bienvenue automatiquement quand l'intro de Tanaka s'affiche
+  useEffect(() => {
+    if (showIntroDialog && introStep === 1) {
+      // Petit délai pour laisser le dialog s'animer
+      const timer = setTimeout(() => {
+        playTanakaAudio('welcome');
+      }, 800);
+      return () => clearTimeout(timer);
+    }
+  }, [showIntroDialog, introStep]);
+
   // Valider le prénom
   const handleNameSubmit = () => {
     if (tempUserName.trim()) {
