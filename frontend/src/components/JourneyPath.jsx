@@ -59,7 +59,7 @@ const JOURNEY_STEPS = [
     xpReward: 15,
     description: 'Découvre les techniques d\'Aïkido par grade : Tai Sabaki, Ukemi, Ikkyo, Shiho Nage et bien plus !',
     tanakaMessage: "Maintenant, passons aux techniques ! Chaque ceinture a ses propres mouvements à maîtriser. Commence par les bases : les déplacements et les chutes. Ensuite, tu apprendras les vraies techniques !",
-    tanakaAudioKey: 'technique_mastered',
+    tanakaAudioKey: 'encourage_practice',
     actions: [{ label: 'Voir les techniques', type: 'navigate', target: 'techniques' }],
     tips: ['🦶 Tai Sabaki - Déplacements', '🔄 Ukemi - Chutes', '💪 Ikkyo, Nikyo, Sankyo...', '🌀 Shiho Nage, Irimi Nage...']
   },
