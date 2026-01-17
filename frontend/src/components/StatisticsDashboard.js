@@ -1822,7 +1822,7 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         onBeltClick={() => setShowBeltDialog(true)}
       />
       
-      {/* Dojo Virtuel - Étape 3 "Entraîne-toi" */}
+      {/* Dojo Virtuel - Étape 3 "Dojo Virtuel" (Jeux & Validations) */}
       <VirtualDojo
         isOpen={showVirtualDojo}
         onClose={() => setShowVirtualDojo(false)}
@@ -1833,6 +1833,14 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         virtueData={virtueData}
         userId={userId}
         isAuthenticated={isAuthenticated}
+        onRefreshData={onRefreshData}
+      />
+      
+      {/* Carnet de Dojo - Étape 4 "Entraînement au Dojo" */}
+      <DojoLogbookDialog
+        isOpen={showDojoLogbook}
+        onClose={() => setShowDojoLogbook(false)}
+        userName={displayUserName}
         onRefreshData={onRefreshData}
       />
     </>
