@@ -311,8 +311,8 @@ const JourneyPath = ({
       }
       setShowIntroDialog(false);
       setTanakaAnimationState('idle');
-      // Jouer un audio de bienvenue personnalisé
-      playTanakaAudio('welcome');
+      // Ne pas rejouer l'audio welcome ici - évite la répétition
+      // L'enfant a déjà entendu le message d'accueil
     }
   };
 
