@@ -1,6 +1,25 @@
 # Aikido@Game - Product Requirements Document
 
 ## Changelog
+- **2026-01-17 (Session 3)**:
+  - ✅ **AMÉLIORATION PÉDAGOGIQUE MAJEURE - Dojo Virtuel / Jeux numériques**
+    - Nouveau message d'accueil pédagogique complet, rassurant, adapté aux enfants 6-14 ans
+    - Ton chaleureux et encourageant avec phrases courtes
+    - Explication claire de la validation parentale pour les jeux numériques
+  - ✅ **Règles de validation strictes implémentées** :
+    - Jeux numériques → Validation exclusive par les **PARENTS**
+    - Exercices au dojo → **AUTO-VALIDATION** par l'enfant uniquement
+    - Le sensei n'intervient PAS dans la validation numérique
+  - ✅ **Section "Exercices au Dojo" refactorisée** :
+    - Message clair : "C'est toi qui notes ici !"
+    - Explication pédagogique : "Sois honnête avec toi-même"
+    - Cases à cocher pour l'auto-validation
+  - ✅ **Étape 3 "Entraîne-toi" mise à jour** avec tips clairs :
+    - 🎮 Jeux numériques → Tes parents valident
+    - 🥋 Exercices au dojo → Tu notes toi-même
+  - ✅ **CGV Article 10.4 corrigé** : validation par l'enseignant → validation parentale
+  - ✅ **Tests automatisés passés à 100%** (iteration_7.json)
+
 - **2026-01-16 (Session 2)**: 
   - ✅ Fixed infinite loop bug in Parent Dashboard (`ParentDashboard.jsx`) - Used `useRef` for stable token reference
   - ✅ Implemented technique mastery level selector (4 levels: Non commencé, En apprentissage, Pratiquée, Maîtrisée)
