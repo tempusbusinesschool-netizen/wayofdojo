@@ -952,6 +952,15 @@ const JourneyPath = ({
         stepTitle={transitionStep?.title || ''}
         stepEmoji={transitionStep?.emoji || '🎯'}
         userName={displayName}
+        actionType={
+          transitionStep?.id === 1 ? 'profile_created' :
+          transitionStep?.id === 2 ? 'technique_learned' :
+          transitionStep?.id === 3 ? 'dojo_entered' :
+          transitionStep?.id === 4 ? 'challenge_done' :
+          transitionStep?.id === 5 ? 'badge_earned' :
+          'step_complete'
+        }
+        xpEarned={transitionStep?.xpReward || 0}
         onComplete={handleTransitionComplete}
       />
     </div>
