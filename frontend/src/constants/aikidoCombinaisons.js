@@ -386,6 +386,32 @@ export const getCombinaisonsStatistics = () => {
   return stats;
 };
 
+/**
+ * Récupère une combinaison enrichie avec sa philosophie
+ * @param {string} combinaisonId - ID de la combinaison
+ * @param {string} audience - "enfant" ou "adulte"
+ * @returns {Object} - Combinaison avec philosophie
+ */
+export const getCombinaisonAvecPhilosophie = (combinaisonId, audience = "enfant") => {
+  const combinaison = COMBINAISONS_VALIDES.find(c => c.id === combinaisonId);
+  if (!combinaison) return null;
+  
+  return {
+    ...combinaison,
+    philosophie: getPhilosophieCombinaison(combinaison, audience),
+    tanaka: getTanakaParole(combinaison.phase2.technique, audience)
+  };
+};
+
+/**
+ * Récupère toutes les combinaisons enrichies avec leur philosophie
+ * @param {string} audience - "enfant" ou "adulte"
+ * @returns {Array} - Combinaisons avec philosophie
+ */
+export const getAllCombinaisonsAvecPhilosophie = (audience = "enfant") => {
+  return COMBINAISONS_VALIDES.map(c => getCombinaisonAvecPhilosophie(c.id, audience));
+};
+
 export default {
   COMBINAISONS_VALIDES,
   getAllCombinaisons,
@@ -395,4 +421,6 @@ export default {
   getCombinaisonsByFinal,
   getCombinaisonDisplayName,
   getCombinaisonsStatistics,
+  getCombinaisonAvecPhilosophie,
+  getAllCombinaisonsAvecPhilosophie,
 };
