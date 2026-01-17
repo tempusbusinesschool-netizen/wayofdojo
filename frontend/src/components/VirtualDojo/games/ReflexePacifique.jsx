@@ -220,14 +220,20 @@ const ReflexePacifique = ({ userName, onComplete, onExit, tanakaSpeak }) => {
     setSelectedOption(null);
     setShowFeedback(false);
     setTimeLeft(15);
-    tanakaSpeak(`${userName || 'Jeune ninja'}, tu vas être confronté à des situations de la vie. Réfléchis bien avant de répondre. La précipitation est l'ennemie de la sagesse.`);
+    tanakaVoice(`${userName || 'Jeune ninja'}, tu vas être confronté à des situations de la vie. Réfléchis bien avant de répondre. La précipitation est l'ennemie de la sagesse.`);
   };
 
   const restartGame = () => {
+    stopSpeaking();
     const shuffled = [...SCENARIOS].sort(() => Math.random() - 0.5).slice(0, 5);
     setScenarios(shuffled);
     setGameState('intro');
   };
+
+  // Nettoyage au démontage
+  useEffect(() => {
+    return () => stopSpeaking();
+  }, [stopSpeaking]);
 
   const currentScenario = scenarios[currentScenarioIndex];
 
