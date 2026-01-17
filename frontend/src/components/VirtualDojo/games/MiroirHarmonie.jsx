@@ -68,7 +68,7 @@ const MiroirHarmonie = ({ userName, onComplete, onExit, tanakaSpeak }) => {
     setSequence(newSeq);
     setPlayerSequence([]);
     setCurrentShowIndex(0);
-    tanakaVoice("Observe bien mes mouvements, puis reproduis-les dans le même ordre. Comme un miroir parfait !");
+    tanakaVoice("Observe les mouvements, puis reproduis-les.");
   };
 
   // Montrer la séquence de Tanaka
@@ -80,7 +80,7 @@ const MiroirHarmonie = ({ userName, onComplete, onExit, tanakaSpeak }) => {
       setTimeout(() => {
         setTanakaPose('neutral');
         setGameState('playing');
-        tanakaVoice("À toi maintenant ! Reproduis les mouvements !");
+        tanakaVoice("C'est à toi.");
       }, 500);
       return;
     }
@@ -148,11 +148,11 @@ const MiroirHarmonie = ({ userName, onComplete, onExit, tanakaSpeak }) => {
     setGameState('feedback');
 
     if (accuracy >= 80) {
-      tanakaVoice("Excellent ! Tu as bien observé et reproduit mes mouvements !");
+      tanakaVoice("Bien joué !");
     } else if (accuracy >= 50) {
-      tanakaVoice("Pas mal ! Mais concentre-toi davantage sur l'ordre des mouvements.");
+      tanakaVoice("Tu fais des efforts, ça se voit.");
     } else {
-      tanakaVoice("Continue de pratiquer. L'observation est une compétence qui se développe !");
+      tanakaVoice("Continue comme ça !");
     }
 
     setTimeout(() => {
@@ -178,9 +178,9 @@ const MiroirHarmonie = ({ userName, onComplete, onExit, tanakaSpeak }) => {
     const kiEarned = Math.floor(score / 15);
 
     if (finalScore >= 200) {
-      tanakaVoice("Tu es un vrai miroir de l'harmonie ! Ta coordination est remarquable !");
+      tanakaVoice("Bravo, tu as terminé cette étape !");
     } else {
-      tanakaVoice("Tu progresses ! L'imitation parfaite demande de la patience et de l'observation.");
+      tanakaVoice("Tu fais des efforts, ça se voit.");
     }
 
     setTimeout(() => onComplete(finalScore, kiEarned), 3000);
