@@ -25,6 +25,8 @@ import {
   Trophy, Star, Lock, Play, ChevronRight,
   X, Volume2, Info, Sparkles, RotateCcw
 } from 'lucide-react';
+import ProgressionTunnel from '../ProgressionTunnel';
+import { getBeltByPoints } from '@/constants/aikidoBelts';
 
 // Import des mini-jeux
 import MessagerDuKi from './games/MessagerDuKi';
@@ -235,7 +237,13 @@ const VirtualDojo = ({
   onClose, 
   userName = '',
   userLevel = 0,
-  userKi = 0
+  userKi = 0,
+  // Props pour les Défis du Jour
+  statistics = {},
+  virtueData = [],
+  userId = null,
+  isAuthenticated = false,
+  onRefreshData = null
 }) => {
   // États
   const [selectedGame, setSelectedGame] = useState(null);
