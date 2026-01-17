@@ -191,6 +191,7 @@ const TechniquesByKyuCards = ({
         currentAudioRef.current = null;
       }
       setIsAudioPlaying(false);
+      setIsTanakaSpeaking(false);
     }
   }, [isOpen, userName, audioMuted]);
 
