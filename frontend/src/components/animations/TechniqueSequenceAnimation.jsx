@@ -15,6 +15,7 @@ import { Button } from '@/components/ui/button';
 import { Play, Pause, RotateCcw, ChevronLeft, ChevronRight, Info } from 'lucide-react';
 
 // Données des techniques avec leurs phases illustrées
+// Illustrations stylisées et génériques - aucune reproduction d'enseignant réel
 const TECHNIQUES_DATA = {
   ikkyo: {
     id: 'ikkyo',
@@ -22,26 +23,27 @@ const TECHNIQUES_DATA = {
     kanji: '一教',
     description: 'Première technique de contrôle',
     category: 'Katame Waza',
+    disclaimer: 'Support de reconnaissance post-dojo uniquement',
     phases: [
       {
         id: 1,
         name: 'Entrée',
-        description: 'Tori fait face à Uke qui initie une attaque',
-        image: 'https://static.prod-images.emergentagent.com/jobs/51455b90-90be-4e38-bbca-dc798741648e/images/67e95d5ef1131a62271c664426a120ff576d7ae9d5597c60503be703c62d23b4.png',
+        description: 'Tori se positionne face à Uke qui initie le contact',
+        image: 'https://static.prod-images.emergentagent.com/jobs/51455b90-90be-4e38-bbca-dc798741648e/images/e09d21ff31d1eaf3c248f072bfbb36009269b51d5b029bed63946ab515fd11c2.png',
         duration: 3000
       },
       {
         id: 2,
         name: 'Placement',
-        description: 'Contrôle du coude et du poignet, redirection de l\'attaque',
-        image: 'https://static.prod-images.emergentagent.com/jobs/51455b90-90be-4e38-bbca-dc798741648e/images/9272a2c5596834006483bd12abb8b9b9f4f00db73464326e6aac073d999a0a44.png',
+        description: 'Redirection au niveau du coude et du poignet',
+        image: 'https://static.prod-images.emergentagent.com/jobs/51455b90-90be-4e38-bbca-dc798741648e/images/7f50ad7bbedb77928758b255da22de49e67d7bc605617ab31dda39618654ddc5.png',
         duration: 3000
       },
       {
         id: 3,
         name: 'Final',
-        description: 'Immobilisation au sol, contrôle du bras',
-        image: 'https://static.prod-images.emergentagent.com/jobs/51455b90-90be-4e38-bbca-dc798741648e/images/db1cc880645e66c9061d3a1c418213f0874945ef0c4e9ab89020b3458d12921f.png',
+        description: 'Immobilisation au sol, contrôle sécurisé',
+        image: 'https://static.prod-images.emergentagent.com/jobs/51455b90-90be-4e38-bbca-dc798741648e/images/7ea7516b5f884f879be4abfa910f9d7d8f8a8ce465cf29dd270755cbc2d867c3.png',
         duration: 3000
       }
     ]
