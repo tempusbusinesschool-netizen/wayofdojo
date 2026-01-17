@@ -33,11 +33,11 @@ const ProfileOnboarding = ({
   const [objective, setObjective] = useState(currentObjective || '');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Messages de Maître Tanaka pour chaque étape
+  // Messages de Maître Tanaka pour chaque étape (conformes au Lexique TANAKA)
   const tanakaMessages = {
-    1: `Bienvenue ${userName || 'jeune ninja'} ! 🥋 Choisis d'abord ton avatar, celui qui te représente le mieux sur le tatami !`,
-    2: `Excellent choix ! Maintenant, choisis ton Animal Gardien. Chaque animal représente une vertu du Budo qui te guidera dans ton apprentissage.`,
-    3: `Parfait ! 🎯 Dernière étape : fixe-toi un objectif. Qu'est-ce qui te motive à pratiquer l'Aïkido ?`
+    1: `Bienvenue ${userName || ''} ! Choisis ton avatar, celui qui te représente le mieux.`,
+    2: `Maintenant, choisis ton Animal Gardien. Chaque animal représente une vertu du Budo.`,
+    3: `Dernière étape : fixe-toi un objectif. Qu'est-ce qui te motive à pratiquer l'Aïkido ?`
   };
 
   // Avatars disponibles
