@@ -23,7 +23,7 @@ import {
   Gamepad2, Wind, Target, Ear, Brain, 
   Users, Heart, Eye, Footprints, Shield,
   Trophy, Star, Lock, Play, ChevronRight,
-  X, Volume2, Info, Sparkles
+  X, Volume2, Info, Sparkles, RotateCcw
 } from 'lucide-react';
 
 // Import des mini-jeux
