@@ -157,7 +157,7 @@ const MaitreTanaka = ({ childContext = null, isVisible = true }) => {
         ...prev,
         { 
           role: 'master', 
-          text: "Ho ho ho... Pardonne-moi, jeune ninja, mes vieilles oreilles fatiguent. Peux-tu répéter ?", 
+          text: "Pardonne-moi, jeune ninja, mes vieilles oreilles fatiguent. Peux-tu répéter ?", 
           audio: null 
         }
       ]);
