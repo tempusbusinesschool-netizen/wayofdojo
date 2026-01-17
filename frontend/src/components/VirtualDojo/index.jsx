@@ -256,6 +256,9 @@ const VirtualDojo = ({
   const [showDojoReal, setShowDojoReal] = useState(false);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   
+  // Onglet actif : 'jeux', 'dojo' ou 'validations'
+  const [activeDojoTab, setActiveDojoTab] = useState('jeux');
+  
   // État pour les exercices au dojo réel validés par l'enfant
   const [completedDojoExercises, setCompletedDojoExercises] = useState(() => {
     const saved = localStorage.getItem('aikido_dojo_exercises_today');
