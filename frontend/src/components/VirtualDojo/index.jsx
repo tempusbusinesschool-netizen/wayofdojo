@@ -253,7 +253,6 @@ const VirtualDojo = ({
   const [completedGames, setCompletedGames] = useState([]);
   const [gameScores, setGameScores] = useState({});
   const [totalKi, setTotalKi] = useState(userKi);
-  const [showDojoReal, setShowDojoReal] = useState(false);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   
   // Onglet actif : 'jeux', 'dojo' ou 'validations'
