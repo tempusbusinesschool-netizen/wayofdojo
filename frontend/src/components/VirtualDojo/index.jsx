@@ -967,6 +967,85 @@ const VirtualDojo = ({
                     </p>
                   </div>
                 </div>
+              ) : (
+                /* ═══════════════════════════════════════════════════════════════════════════════════ */
+                /* ONGLET VALIDATIONS - Statut des demandes de validation parentale */
+                /* ═══════════════════════════════════════════════════════════════════════════════════ */
+                <div className="space-y-4">
+                  {/* Header */}
+                  <div className="text-center mb-6">
+                    <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br from-pink-400 to-rose-500 shadow-lg shadow-pink-500/30 mb-3">
+                      <span className="text-3xl">✅</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-white mb-2">
+                      Mes Validations
+                    </h3>
+                    <p className="text-pink-200 text-sm max-w-md mx-auto">
+                      Quand tu termines un jeu, tes parents valident ici !<br/>
+                      <span className="text-slate-400">Ils reçoivent une notification.</span>
+                    </p>
+                  </div>
+
+                  {/* Liste des jeux complétés en attente de validation */}
+                  <div className="bg-slate-800/50 rounded-xl p-4 border border-pink-500/30">
+                    <h4 className="text-pink-300 font-bold text-sm mb-3 flex items-center gap-2">
+                      <span className="text-lg">⏳</span>
+                      En attente de validation
+                    </h4>
+                    
+                    {completedGames.length === 0 ? (
+                      <div className="text-center py-6 text-slate-400">
+                        <span className="text-4xl block mb-2">🎮</span>
+                        <p className="text-sm">Joue à un jeu pour demander une validation !</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-2">
+                        {completedGames.map((gameId) => {
+                          const game = DOJO_GAMES.find(g => g.id === gameId);
+                          if (!game) return null;
+                          return (
+                            <div key={gameId} className="flex items-center justify-between bg-slate-700/50 rounded-lg p-3">
+                              <div className="flex items-center gap-3">
+                                <span className="text-2xl">{game.emoji}</span>
+                                <div>
+                                  <p className="text-white font-medium text-sm">{game.name}</p>
+                                  <p className="text-slate-400 text-xs">Complété</p>
+                                </div>
+                              </div>
+                              <span className="bg-amber-500/20 text-amber-300 px-2 py-1 rounded-full text-xs font-medium">
+                                ⏳ En attente
+                              </span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Jeux déjà validés par les parents */}
+                  <div className="bg-slate-800/50 rounded-xl p-4 border border-emerald-500/30">
+                    <h4 className="text-emerald-300 font-bold text-sm mb-3 flex items-center gap-2">
+                      <span className="text-lg">✅</span>
+                      Validés par mes parents
+                    </h4>
+                    
+                    <div className="text-center py-6 text-slate-400">
+                      <span className="text-4xl block mb-2">🌟</span>
+                      <p className="text-sm">Les validations de tes parents apparaîtront ici !</p>
+                    </div>
+                  </div>
+
+                  {/* Message d'information */}
+                  <div className="bg-pink-500/10 border border-pink-500/30 rounded-xl p-4 text-center">
+                    <p className="text-pink-200 text-sm">
+                      👨‍👩‍👧 <strong>Comment ça marche ?</strong><br/>
+                      <span className="text-slate-400">
+                        Quand tu termines un jeu, tes parents reçoivent une notification.<br/>
+                        Ils peuvent valider depuis leur espace ou le bouton "Espace Parent".
+                      </span>
+                    </p>
+                  </div>
+                </div>
               )}
             </>
           )}
