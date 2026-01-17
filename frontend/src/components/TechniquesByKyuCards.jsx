@@ -108,6 +108,9 @@ const TechniquesByKyuCards = ({
   // État pour la section Philosophie et Histoire
   const [showPhilosophieHistoire, setShowPhilosophieHistoire] = useState(false);
   
+  // État pour la vue active : 'techniques' ou 'progression'
+  const [activeView, setActiveView] = useState('techniques');
+  
   // Ref pour l'animation de Tanaka
   const tanakaSpeakTimeout = useRef(null);
 
