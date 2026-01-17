@@ -1907,6 +1907,11 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         onClose={() => setShowTechniquesCards(false)}
         userName={displayUserName}
         userKyu="6e_kyu"
+        userId={userId}
+        isAuthenticated={isAuthenticated}
+        currentBelt={currentBelt}
+        totalPoints={statistics?.total_points || 0}
+        onBeltClick={() => setShowBeltDialog(true)}
       />
       
       {/* Dojo Virtuel - Étape 3 "Entraîne-toi" */}
