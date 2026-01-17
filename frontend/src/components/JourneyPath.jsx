@@ -83,9 +83,9 @@ const JOURNEY_STEPS = [
   {
     id: 4,
     slug: 'carnet_dojo',
-    title: 'Mon Carnet',
-    subtitle: 'Entraînement au Dojo',
-    emoji: '📓',
+    title: 'Entraînement au Dojo',
+    subtitle: 'Mon Carnet de pratique',
+    emoji: '🥋',
     icon: BookOpen,
     gradient: 'from-amber-400 to-orange-500',
     shadowColor: 'shadow-amber-500/40',
