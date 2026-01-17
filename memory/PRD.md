@@ -117,9 +117,11 @@ Application web gamifiée pour le club d'Aikido permettant aux pratiquants de su
 ### Composants clés modifiés
 - `/app/frontend/src/components/TechniquesByKyuCards.jsx` - Bouton "Philosophie et histoire"
 - `/app/frontend/src/components/animations/TechniqueAnimationPhilosophie.jsx` - Animation avec philosophie
-- `/app/frontend/src/components/StatisticsDashboard.js` - Accordéon Histoire masqué
+- `/app/frontend/src/components/StatisticsDashboard.js` - Gestion navigation parcours 6 étapes
 - `/app/frontend/src/components/MaitreTanaka.jsx` - Design cercle orange
-- `/app/frontend/src/components/JourneyPath.jsx` - Bouton "Sagesse de Maître Tanaka"
+- `/app/frontend/src/components/JourneyPath.jsx` - Parcours 6 étapes avec "Entraînement au Dojo"
+- `/app/frontend/src/components/DojoLogbookDialog.jsx` - **NOUVEAU** Carnet de pratique au dojo
+- `/app/frontend/src/components/VirtualDojo/index.jsx` - Dojo Virtuel (Jeux + Validations)
 - `/app/frontend/src/components/ParentDashboard.jsx` - Écran rattachement amélioré
 - `/app/frontend/src/App.js` - Bouton Espace Parent conditionnel
 
