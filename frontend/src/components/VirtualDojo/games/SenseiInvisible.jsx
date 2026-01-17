@@ -47,6 +47,10 @@ const SEQUENCES = {
 };
 
 const SenseiInvisible = ({ userName, onComplete, onExit, tanakaSpeak }) => {
+  // Hook pour la voix TTS réelle de Tanaka
+  const { speak, speaking, stopSpeaking } = useTanakaVoice();
+  const [soundEnabled, setSoundEnabled] = useState(true);
+  
   const [gameState, setGameState] = useState('intro'); // intro, listening, acting, feedback, success, fail
   const [score, setScore] = useState(0);
   const [currentSequence, setCurrentSequence] = useState([]);
@@ -60,6 +64,16 @@ const SenseiInvisible = ({ userName, onComplete, onExit, tanakaSpeak }) => {
   const [eyesClosed, setEyesClosed] = useState(false);
   
   const timeoutRef = useRef(null);
+
+  // Fonction pour parler avec TTS + mise à jour UI
+  const tanakaVoice = useCallback((message) => {
+    if (soundEnabled) {
+      speak(message);
+    }
+    if (tanakaSpeak) {
+      tanakaSpeak(message);
+    }
+  }, [soundEnabled, speak, tanakaSpeak]);
 
   // Sélectionner une séquence aléatoire
   const getRandomSequence = useCallback((diff) => {
@@ -78,9 +92,9 @@ const SenseiInvisible = ({ userName, onComplete, onExit, tanakaSpeak }) => {
     // Annoncer la première instruction
     const instruction = INSTRUCTIONS.find(i => i.id === sequence[0]);
     if (instruction) {
-      tanakaSpeak(`${userName || 'Jeune ninja'}, écoute bien... ${instruction.text}`);
+      tanakaVoice(`${userName || 'Jeune ninja'}, écoute bien... ${instruction.text}`);
     }
-  }, [difficulty, getRandomSequence, userName, tanakaSpeak]);
+  }, [difficulty, getRandomSequence, userName, tanakaVoice]);
 
   // Vérifier l'action du joueur
   const checkAction = useCallback((action) => {
@@ -106,7 +120,7 @@ const SenseiInvisible = ({ userName, onComplete, onExit, tanakaSpeak }) => {
           
           const nextInstruction = INSTRUCTIONS.find(i => i.id === currentSequence[nextIndex]);
           if (nextInstruction) {
-            tanakaSpeak(nextInstruction.text);
+            tanakaVoice(nextInstruction.text);
           }
         } else {
           // Séquence terminée !
@@ -115,7 +129,7 @@ const SenseiInvisible = ({ userName, onComplete, onExit, tanakaSpeak }) => {
           if (roundsCompleted + 1 >= 3) {
             // Victoire après 3 manches
             setGameState('success');
-            tanakaSpeak(`Extraordinaire ${userName || 'ninja'} ! Tu as suivi toutes mes instructions parfaitement ! Ton écoute est remarquable !`);
+            tanakaVoice(`Extraordinaire ${userName || 'ninja'} ! Tu as suivi toutes mes instructions parfaitement ! Ton écoute est remarquable !`);
           } else {
             // Manche suivante avec difficulté croissante
             if (roundsCompleted + 1 === 1) setDifficulty('medium');
