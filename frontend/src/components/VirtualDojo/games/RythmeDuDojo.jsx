@@ -96,7 +96,7 @@ const RythmeDuDojo = ({ userName, onComplete, onExit, tanakaSpeak }) => {
     setHitEffects([]);
     gameStartTime.current = Date.now();
     notesRef.current = BEAT_PATTERNS.map(p => ({ ...p, time: p.beat * BEAT_INTERVAL, hit: false }));
-    tanakaVoice("L'Aïkido a son propre rythme. Tape au bon moment pour suivre le tempo du dojo !");
+    tanakaVoice("Tape au bon moment pour suivre le rythme.");
   };
 
   // Boucle de jeu
@@ -211,11 +211,11 @@ const RythmeDuDojo = ({ userName, onComplete, onExit, tanakaSpeak }) => {
     const kiEarned = Math.floor(finalScore / 50);
 
     if (accuracy >= 90) {
-      tanakaVoice("Extraordinaire ! Tu as le rythme d'un vrai maître ! Ton timing est parfait !");
+      tanakaVoice("Bravo, tu as terminé cette étape !");
     } else if (accuracy >= 70) {
-      tanakaVoice("Bien joué ! Tu ressens le rythme du dojo. Continue de pratiquer !");
+      tanakaVoice("Bien joué !");
     } else {
-      tanakaVoice("Le rythme demande de la pratique. Ne te décourage pas, réessaie !");
+      tanakaVoice("Tu peux recommencer, c'est comme ça qu'on progresse.");
     }
 
     setTimeout(() => onComplete(finalScore, kiEarned), 3000);
