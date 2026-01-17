@@ -11,7 +11,6 @@ import VirtueActionsPanel from "./VirtueActionsPanel";
 import TimelinePanel from "./TimelinePanel";
 import JournalPanel from "./JournalPanel";
 import SimpleAccordion from "./SimpleAccordion";
-import VirtuesSection from "./VirtuesSection";
 import UserDashboardBlocks from "./UserDashboardBlocks";
 import GuidedTour, { TourTriggerButton } from "./GuidedTour";
 import AppStepsNavigation from "./AppStepsNavigation";
