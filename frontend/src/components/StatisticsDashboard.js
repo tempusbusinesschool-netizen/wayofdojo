@@ -15,9 +15,7 @@ import BeltProgressCard from "./BeltProgressCard";
 import GradeCardsGrid from "./GradeCardsGrid";
 import DeplacementsSection from "./DeplacementsSection";
 import VirtuesSection from "./VirtuesSection";
-import HakamaHistory from "./HakamaHistory";
 import UserDashboardBlocks from "./UserDashboardBlocks";
-import ProgressionTunnel from "./ProgressionTunnel";
 import ParentDashboard from "./ParentDashboard";
 import GuidedTour, { TourTriggerButton } from "./GuidedTour";
 import AppStepsNavigation from "./AppStepsNavigation";
@@ -2003,6 +2001,11 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
         userName={displayUserName}
         userLevel={userProfile?.level || 0}
         userKi={statistics?.total_points || 0}
+        statistics={statistics}
+        virtueData={virtueData}
+        userId={userId}
+        isAuthenticated={isAuthenticated}
+        onRefreshData={onRefreshData}
       />
     </>
   );
