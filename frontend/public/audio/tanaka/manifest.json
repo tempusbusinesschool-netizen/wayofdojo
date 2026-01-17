@@ -110,8 +110,12 @@
       "file": "/audio/tanaka/step_2_techniques.mp3"
     },
     "step_3_dojo": {
-      "text": "Bienvenue dans le Dojo Virtuel ! Ici, tu vas t'entraîner avec des jeux qui développeront ton calme, ta respiration et ton écoute. Et si tu pratiques au vrai dojo, ton sensei pourra valider tes exercices !",
+      "text": "Bienvenue dans le Dojo Virtuel ! Ici, tu vas t'entraîner avec des jeux qui développeront ton calme, ta respiration et ton écoute. Quand tu termines un jeu, tes parents diront si tout s'est bien passé. Et si tu pratiques au vrai dojo, c'est toi qui notes les exercices que tu as faits !",
       "file": "/audio/tanaka/step_3_dojo.mp3"
+    },
+    "step_4_carnet": {
+      "text": "Bienvenue dans Mon Club ! Après ton cours au dojo, reviens ici pour noter ce que tu as pratiqué. C'est ton carnet personnel. Ta parole compte, sois honnête avec toi-même ! Chaque exercice noté te rapporte des points de Ki.",
+      "file": "/audio/tanaka/step_4_carnet.mp3"
     },
     "step_4_validation": {
       "text": "Tes parents sont fiers de toi ! Demande-leur de valider tes efforts. Ils peuvent voir tout ce que tu as accompli !",
