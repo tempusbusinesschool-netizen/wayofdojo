@@ -157,19 +157,37 @@ export const playTanakaPhrase = (phraseKey) => {
 
     const audio = new Audio(phrase.file);
     
+    // Track if already resolved to prevent double resolution
+    let resolved = false;
+    
     audio.onended = () => {
-      resolve({ audio, text: phrase.text });
+      if (!resolved) {
+        resolved = true;
+        resolve({ audio, text: phrase.text, ended: true });
+      }
     };
     
     audio.onerror = (error) => {
-      console.error(`Error playing phrase ${phraseKey}:`, error);
-      reject(error);
+      if (!resolved) {
+        resolved = true;
+        console.error(`Error playing phrase ${phraseKey}:`, error);
+        reject(error);
+      }
     };
 
-    audio.play().catch(reject);
-    
-    // Return immediately with text for UI updates
-    resolve({ audio, text: phrase.text, playing: true });
+    audio.play()
+      .then(() => {
+        // Audio started playing - return reference for caller to track
+        if (!resolved) {
+          resolve({ audio, text: phrase.text, playing: true });
+        }
+      })
+      .catch((err) => {
+        if (!resolved) {
+          resolved = true;
+          reject(err);
+        }
+      });
   });
 };
 
