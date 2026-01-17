@@ -255,6 +255,132 @@ const VirtualDojo = ({
   const [totalKi, setTotalKi] = useState(userKi);
   const [showDojoReal, setShowDojoReal] = useState(false);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
+  
+  // État pour les exercices au dojo réel validés par l'enfant
+  const [completedDojoExercises, setCompletedDojoExercises] = useState(() => {
+    const saved = localStorage.getItem('aikido_dojo_exercises_today');
+    if (saved) {
+      const data = JSON.parse(saved);
+      // Reset si c'est un nouveau jour
+      const today = new Date().toDateString();
+      if (data.date === today) {
+        return data.exercises || [];
+      }
+    }
+    return [];
+  });
+
+  // Liste des exercices au dojo réel
+  const DOJO_EXERCISES = [
+    { 
+      id: 'salut', 
+      name: 'Salut au dojo', 
+      emoji: '🙏', 
+      ki: 10,
+      description: 'Tu as salué en entrant et en sortant du tatami',
+      encouragement: 'Le respect commence par le salut !'
+    },
+    { 
+      id: 'echauffement', 
+      name: 'Échauffement', 
+      emoji: '🔥', 
+      ki: 15,
+      description: 'Tu as bien préparé ton corps avant de pratiquer',
+      encouragement: 'Un corps bien échauffé est prêt à apprendre !'
+    },
+    { 
+      id: 'ukemi', 
+      name: 'Chutes (Ukemi)', 
+      emoji: '🔄', 
+      ki: 20,
+      description: 'Tu as pratiqué les roulades avant ou arrière',
+      encouragement: 'Savoir chuter, c\'est savoir se protéger !'
+    },
+    { 
+      id: 'tai_sabaki', 
+      name: 'Déplacements', 
+      emoji: '🦶', 
+      ki: 20,
+      description: 'Tu as travaillé tes déplacements (Tai Sabaki)',
+      encouragement: 'Bien se déplacer, c\'est la base de tout !'
+    },
+    { 
+      id: 'technique', 
+      name: 'Technique avec partenaire', 
+      emoji: '🤝', 
+      ki: 25,
+      description: 'Tu as pratiqué une technique avec un partenaire',
+      encouragement: 'Ensemble, on progresse mieux !'
+    },
+    { 
+      id: 'attention', 
+      name: 'Bien écouté le cours', 
+      emoji: '👂', 
+      ki: 15,
+      description: 'Tu as été attentif aux explications',
+      encouragement: 'L\'écoute est la clé de l\'apprentissage !'
+    },
+    { 
+      id: 'aide', 
+      name: 'Aidé un camarade', 
+      emoji: '💝', 
+      ki: 20,
+      description: 'Tu as aidé quelqu\'un pendant le cours',
+      encouragement: 'La bienveillance te rend plus fort !'
+    },
+    { 
+      id: 'rangement', 
+      name: 'Rangement du dojo', 
+      emoji: '🧹', 
+      ki: 10,
+      description: 'Tu as participé au rangement après le cours',
+      encouragement: 'Prendre soin du dojo, c\'est respecter la pratique !'
+    }
+  ];
+
+  // Valider un exercice au dojo
+  const handleValidateDojoExercise = (exerciseId) => {
+    const exercise = DOJO_EXERCISES.find(e => e.id === exerciseId);
+    if (!exercise || completedDojoExercises.includes(exerciseId)) return;
+    
+    const newCompleted = [...completedDojoExercises, exerciseId];
+    setCompletedDojoExercises(newCompleted);
+    
+    // Sauvegarder avec la date du jour
+    const today = new Date().toDateString();
+    localStorage.setItem('aikido_dojo_exercises_today', JSON.stringify({
+      date: today,
+      exercises: newCompleted
+    }));
+    
+    // Ajouter les points Ki
+    const newKi = totalKi + exercise.ki;
+    setTotalKi(newKi);
+    
+    // Sauvegarder la progression totale
+    const progressData = {
+      completedGames,
+      gameScores,
+      totalKi: newKi
+    };
+    localStorage.setItem('aikido_dojo_progress', JSON.stringify(progressData));
+    
+    // Message de Tanaka
+    setTanakaMessage(`${exercise.encouragement} +${exercise.ki} points de Ki ! 🌟`);
+    setIsTanakaSpeaking(true);
+    setTimeout(() => setIsTanakaSpeaking(false), 3000);
+  };
+
+  // Calculer la progression du jour
+  const todayProgress = {
+    completed: completedDojoExercises.length,
+    total: DOJO_EXERCISES.length,
+    percent: Math.round((completedDojoExercises.length / DOJO_EXERCISES.length) * 100),
+    kiEarned: completedDojoExercises.reduce((sum, id) => {
+      const ex = DOJO_EXERCISES.find(e => e.id === id);
+      return sum + (ex?.ki || 0);
+    }, 0)
+  };
 
   // Charger la progression depuis localStorage
   useEffect(() => {
