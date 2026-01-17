@@ -135,7 +135,7 @@ const SenseiInvisible = ({ userName, onComplete, onExit, tanakaSpeak }) => {
             if (roundsCompleted + 1 === 1) setDifficulty('medium');
             if (roundsCompleted + 1 === 2) setDifficulty('hard');
             
-            tanakaSpeak(`Excellent ! Manche ${roundsCompleted + 2} ! La séquence sera plus longue...`);
+            tanakaVoice(`Excellent ! Manche ${roundsCompleted + 2} ! La séquence sera plus longue...`);
             setTimeout(startRound, 2000);
           }
         }
@@ -148,21 +148,21 @@ const SenseiInvisible = ({ userName, onComplete, onExit, tanakaSpeak }) => {
       
       if (mistakes + 1 >= 3) {
         setGameState('fail');
-        tanakaSpeak(`Tu as fait trop d'erreurs, ${userName || 'ninja'}. L'écoute demande de la concentration. Réessaie !`);
+        tanakaVoice(`Tu as fait trop d'erreurs, ${userName || 'ninja'}. L'écoute demande de la concentration. Réessaie !`);
       } else {
-        tanakaSpeak(`Ce n'était pas la bonne action. Concentre-toi et écoute bien.`);
+        tanakaVoice(`Ce n'était pas la bonne action. Concentre-toi et écoute bien.`);
         setTimeout(() => {
           setIsCorrect(null);
           setPlayerAction(null);
           // Répéter l'instruction
           const instruction = INSTRUCTIONS.find(i => i.id === currentSequence[currentInstructionIndex]);
           if (instruction) {
-            tanakaSpeak(`Je répète : ${instruction.text}`);
+            tanakaVoice(`Je répète : ${instruction.text}`);
           }
         }, 1500);
       }
     }
-  }, [gameState, currentSequence, currentInstructionIndex, difficulty, mistakes, roundsCompleted, userName, tanakaSpeak, startRound]);
+  }, [gameState, currentSequence, currentInstructionIndex, difficulty, mistakes, roundsCompleted, userName, tanakaVoice, startRound]);
 
   // Contrôles clavier
   useEffect(() => {
