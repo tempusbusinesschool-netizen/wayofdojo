@@ -888,6 +888,123 @@ const TechniquesByKyuCards = ({
         isOpen={showAnimationDemo} 
         onClose={() => setShowAnimationDemo(false)} 
       />
+
+      {/* Modal Philosophie et Histoire */}
+      <Dialog open={showPhilosophieHistoire} onOpenChange={setShowPhilosophieHistoire}>
+        <DialogContent className="max-w-4xl max-h-[90vh] bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-2 border-purple-500/30 p-0 overflow-hidden" data-testid="philosophie-histoire-dialog">
+          <VisuallyHidden>
+            <DialogTitle>Philosophie et Histoire de l'Aïkido</DialogTitle>
+            <DialogDescription>Découvrez l'histoire et la philosophie de l'Aïkido</DialogDescription>
+          </VisuallyHidden>
+          
+          {/* Header avec Maître Tanaka */}
+          <div className="bg-gradient-to-r from-purple-600 to-blue-600 p-4 border-b border-purple-500/30">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Button
+                  onClick={() => setShowPhilosophieHistoire(false)}
+                  variant="ghost"
+                  size="sm"
+                  className="text-white hover:bg-white/20"
+                >
+                  <ArrowLeft className="w-4 h-4 mr-1" />
+                  Retour aux techniques
+                </Button>
+              </div>
+              <h2 className="text-lg font-bold text-white flex items-center gap-2">
+                <Scroll className="w-5 h-5" />
+                Philosophie et Histoire
+              </h2>
+              <button 
+                onClick={() => setShowPhilosophieHistoire(false)}
+                className="text-white/80 hover:text-white p-1 rounded-lg hover:bg-white/20 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+
+          {/* Contenu scrollable */}
+          <div className="overflow-y-auto max-h-[calc(90vh-80px)] p-6 space-y-8">
+            
+            {/* Section Introduction Maître Tanaka */}
+            <div className="bg-gradient-to-br from-blue-900/40 to-purple-900/40 border border-blue-500/30 rounded-2xl p-6">
+              <div className="flex items-start gap-4">
+                <div className="w-16 h-16 bg-gradient-to-br from-amber-500/20 to-orange-600/20 rounded-full flex items-center justify-center border-2 border-amber-500/30 flex-shrink-0">
+                  <span className="text-3xl">🧘</span>
+                </div>
+                <div>
+                  <p className="text-amber-400 font-semibold mb-2">Maître Tanaka</p>
+                  <p className="text-white text-lg leading-relaxed">
+                    « {TANAKA_SYNTHESE.enfant.ouverture} »
+                  </p>
+                </div>
+              </div>
+              
+              {/* Citation centrale */}
+              <div className="mt-6 text-center">
+                <blockquote className="text-xl italic text-blue-200 border-l-4 border-blue-500 pl-4 inline-block text-left">
+                  "Quand quelqu'un pousse fort, tu apprends à guider comme l'eau."
+                </blockquote>
+              </div>
+            </div>
+
+            {/* Section Les 3 Phases */}
+            <div>
+              <h3 className="text-xl font-bold text-amber-400 mb-4 flex items-center gap-2">
+                <span className="text-2xl">🎬</span>
+                Les 3 Phases du Mouvement
+              </h3>
+              <p className="text-slate-300 mb-4">
+                Chaque technique se décompose en trois moments. Comme un voyage !
+              </p>
+              <div className="grid gap-4 md:grid-cols-3">
+                <div className="bg-gradient-to-br from-blue-900/40 to-cyan-900/40 border border-blue-500/30 rounded-xl p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-xl">1️⃣</span>
+                    <h4 className="font-bold text-blue-400">L'Entrée</h4>
+                  </div>
+                  <p className="text-blue-200 text-sm italic mb-2">🌊 {PHILOSOPHIE_PHASES.phase1.enfant.metaphore}</p>
+                  <p className="text-slate-300 text-xs">{PHILOSOPHIE_PHASES.phase1.principe}</p>
+                </div>
+                <div className="bg-gradient-to-br from-amber-900/40 to-orange-900/40 border border-amber-500/30 rounded-xl p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-xl">2️⃣</span>
+                    <h4 className="font-bold text-amber-400">La Technique</h4>
+                  </div>
+                  <p className="text-amber-200 text-sm italic mb-2">🌊 {PHILOSOPHIE_PHASES.phase2.enfant.metaphore}</p>
+                  <p className="text-slate-300 text-xs">{PHILOSOPHIE_PHASES.phase2.principe}</p>
+                </div>
+                <div className="bg-gradient-to-br from-green-900/40 to-emerald-900/40 border border-green-500/30 rounded-xl p-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-xl">3️⃣</span>
+                    <h4 className="font-bold text-green-400">Le Final</h4>
+                  </div>
+                  <p className="text-green-200 text-sm italic mb-2">🌊 {PHILOSOPHIE_PHASES.phase3.enfant.metaphore}</p>
+                  <p className="text-slate-300 text-xs">{PHILOSOPHIE_PHASES.phase3.principe}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Séparateur */}
+            <div className="border-t border-slate-700"></div>
+
+            {/* Section Histoire de l'Aikido - Hakama & O Sensei */}
+            <HakamaHistory />
+
+            {/* Citation de fermeture */}
+            <div className="bg-slate-800/50 rounded-2xl p-6 text-center border border-slate-700">
+              <div className="flex justify-center mb-3">
+                <span className="text-4xl">🧘</span>
+              </div>
+              <p className="text-amber-400 font-medium mb-2">Maître Tanaka</p>
+              <p className="text-white italic text-lg">
+                « {TANAKA_SYNTHESE.enfant.fermeture} »
+              </p>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </Dialog>
   );
 };
