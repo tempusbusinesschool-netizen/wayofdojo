@@ -277,13 +277,27 @@ const ParentDashboard = ({ onLogout }) => {
               </h2>
               
               {children.length === 0 ? (
-                <Card className="bg-slate-800/50 border-slate-700">
-                  <CardContent className="py-8 text-center">
-                    <Users className="w-12 h-12 text-slate-500 mx-auto mb-4" />
-                    <p className="text-slate-400">Aucun enfant lié à votre compte</p>
-                    <p className="text-sm text-slate-500 mt-2">
-                      Contactez l&apos;administration du dojo pour lier le compte de votre enfant
+                <Card className="bg-slate-800/50 border-purple-500/30 border-2">
+                  <CardContent className="py-12 text-center">
+                    <div className="w-20 h-20 rounded-full bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center mx-auto mb-6">
+                      <Users className="w-10 h-10 text-purple-400" />
+                    </div>
+                    <h3 className="text-xl font-bold text-white mb-3">Rattachement requis</h3>
+                    <p className="text-slate-300 mb-2">
+                      Votre Espace Parent n'est pas encore rattaché à un compte enfant.
                     </p>
+                    <p className="text-sm text-slate-400 mb-6 max-w-md mx-auto">
+                      L'Espace Parent est toujours rattaché à au moins un enfant.<br/>
+                      Il n'existe pas d'Espace Parent autonome ou indépendant.
+                    </p>
+                    <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 max-w-md mx-auto">
+                      <p className="text-amber-300 text-sm flex items-start gap-2">
+                        <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                        <span>
+                          Contactez l'administration du dojo pour lier le compte de votre enfant à votre Espace Parent.
+                        </span>
+                      </p>
+                    </div>
                   </CardContent>
                 </Card>
               ) : (
