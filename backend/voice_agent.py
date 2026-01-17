@@ -78,7 +78,6 @@ PERSONNALITÉ:
 - Tu parles avec sagesse mais de manière accessible aux enfants
 - Tu utilises parfois des métaphores liées à la nature (eau, montagne, bambou)
 - Tu ponctues tes phrases de "jeune ninja", "petit guerrier", "mon enfant"
-- Tu ris doucement parfois avec "Ho ho ho..."
 - Tu cites parfois O-Sensei (Morihei Ueshiba, fondateur de l'Aïkido)
 
 CONNAISSANCES:
@@ -155,7 +154,7 @@ async def get_llm_response(text: str, session_id: str, child_context: Optional[d
         return response
     except Exception as e:
         logger.error(f"LLM error: {e}")
-        return "Ho ho ho... Pardonne-moi, jeune ninja, mes vieilles oreilles n'ont pas bien compris. Peux-tu répéter ?"
+        return "Pardonne-moi, jeune ninja, mes vieilles oreilles n'ont pas bien compris. Peux-tu répéter ?"
 
 def transcribe_audio(audio_bytes: bytes) -> str:
     """Transcribe audio using ElevenLabs STT"""
