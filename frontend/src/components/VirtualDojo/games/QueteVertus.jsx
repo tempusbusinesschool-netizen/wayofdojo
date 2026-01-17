@@ -184,7 +184,7 @@ const QueteVertus = ({ userName, onComplete, onExit, tanakaSpeak }) => {
     setScore(0);
     setSelectedChoice(null);
     setShowExplanation(false);
-    tanakaVoice("Le Budo repose sur 7 vertus sacrées. À chaque dilemme, fais le choix qui honore ces valeurs !");
+    tanakaVoice("À chaque situation, fais un choix.");
   };
 
   // Sélectionner un choix
@@ -198,10 +198,10 @@ const QueteVertus = ({ userName, onComplete, onExit, tanakaSpeak }) => {
       const virtue = VIRTUES.find(v => v.id === currentDilemma.virtue);
       setCollectedVirtues(prev => [...prev, virtue]);
       setScore(s => s + 100);
-      tanakaVoice(`Excellent choix ! Tu as compris la vertu de ${virtue.name} !`);
+      tanakaVoice("Bien joué !");
     } else {
       setScore(s => s + 25); // Points de participation
-      tanakaVoice("Ce n'était pas le meilleur choix, mais tu apprendras de cette expérience.");
+      tanakaVoice("Tu peux recommencer, c'est comme ça qu'on progresse.");
     }
 
     setShowExplanation(true);
@@ -225,11 +225,11 @@ const QueteVertus = ({ userName, onComplete, onExit, tanakaSpeak }) => {
     const kiEarned = Math.floor(score / 20);
 
     if (collectedVirtues.length >= 6) {
-      tanakaVoice("Magnifique ! Tu as presque toutes les vertus du Budo ! Tu es sur le chemin du vrai guerrier !");
+      tanakaVoice("Bravo, tu as terminé cette étape !");
     } else if (collectedVirtues.length >= 4) {
-      tanakaVoice("Bien joué ! Tu comprends plusieurs vertus. Continue de réfléchir à tes choix au quotidien.");
+      tanakaVoice("Tu fais des efforts, ça se voit.");
     } else {
-      tanakaVoice("Les vertus du Budo demandent de la réflexion. Réessaie pour mieux les comprendre !");
+      tanakaVoice("Tu peux recommencer, c'est comme ça qu'on progresse.");
     }
 
     setTimeout(() => onComplete(score, kiEarned), 3000);
