@@ -434,8 +434,21 @@ const TechniquesByKyuCards = ({
               <BookOpen className="w-5 h-5" />
               Programme Technique - Tous les Grades
             </h2>
-            <div className="text-cyan-200 text-sm font-medium">
-              {localMastered.length} techniques maîtrisées
+            <div className="flex items-center gap-3">
+              {/* Bouton démo animations */}
+              <Button
+                onClick={() => setShowAnimationDemo(true)}
+                variant="outline"
+                size="sm"
+                className="border-cyan-400/50 text-cyan-200 hover:bg-cyan-500/20 text-xs"
+                data-testid="animation-demo-btn"
+              >
+                <Play className="w-3 h-3 mr-1" />
+                Voir les mouvements
+              </Button>
+              <div className="text-cyan-200 text-sm font-medium">
+                {localMastered.length} en confiance
+              </div>
             </div>
           </div>
         </div>
