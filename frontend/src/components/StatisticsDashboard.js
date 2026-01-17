@@ -21,6 +21,7 @@ import JourneyPath from "./JourneyPath";
 import ProfileOnboarding from "./ProfileOnboarding";
 import TechniquesByKyuCards from "./TechniquesByKyuCards";
 import VirtualDojo from "./VirtualDojo";
+import ProgressionDialog from "./ProgressionDialog";
 import { AIKIDO_BELTS, getBeltByPoints } from "@/constants/aikidoBelts";
 import { DEPLACEMENTS_DATA } from "@/constants";
 import { AIKIDO_CHARACTERS } from "@/constants/aikidoCharacters";
