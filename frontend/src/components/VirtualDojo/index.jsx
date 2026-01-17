@@ -621,15 +621,55 @@ const VirtualDojo = ({
                 <h2 className="text-xl font-bold text-amber-100 flex items-center gap-2">
                   🏯 Dojo Virtuel
                 </h2>
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 sm:gap-4">
+                  {/* Bouton rejouer audio */}
+                  <button
+                    onClick={() => playTanakaAudio('step_3_dojo')}
+                    disabled={isAudioPlaying}
+                    className={`p-2 rounded-full transition-all ${
+                      isAudioPlaying 
+                        ? 'bg-amber-500/50 cursor-not-allowed' 
+                        : 'bg-amber-500/20 hover:bg-amber-500/40'
+                    }`}
+                    title="Écouter Maître Tanaka"
+                    data-testid="tanaka-play-audio"
+                  >
+                    <Volume2 className={`w-4 h-4 ${isAudioPlaying ? 'text-amber-300 animate-pulse' : 'text-amber-400'}`} />
+                  </button>
+                  
+                  {/* Bouton mute */}
+                  <button
+                    onClick={() => {
+                      setAudioMuted(!audioMuted);
+                      if (!audioMuted && currentAudioRef.current) {
+                        currentAudioRef.current.pause();
+                        setIsAudioPlaying(false);
+                        setIsTanakaSpeaking(false);
+                      }
+                    }}
+                    className={`p-2 rounded-full transition-all ${
+                      audioMuted 
+                        ? 'bg-red-500/30 hover:bg-red-500/50' 
+                        : 'bg-slate-700/50 hover:bg-slate-700'
+                    }`}
+                    title={audioMuted ? "Activer le son" : "Couper le son"}
+                    data-testid="tanaka-mute-toggle"
+                  >
+                    {audioMuted ? (
+                      <VolumeX className="w-4 h-4 text-red-400" />
+                    ) : (
+                      <Volume2 className="w-4 h-4 text-slate-400" />
+                    )}
+                  </button>
+                  
                   {/* Bouton Recommencer le parcours */}
                   {completedGames.length > 0 && (
                     <button
                       onClick={() => setShowResetConfirm(true)}
-                      className="flex items-center gap-1 text-slate-400 hover:text-amber-400 text-xs transition-colors"
+                      className="hidden sm:flex items-center gap-1 text-slate-400 hover:text-amber-400 text-xs transition-colors"
                     >
                       <RotateCcw className="w-3 h-3" />
-                      <span>Recommencer le parcours</span>
+                      <span>Recommencer</span>
                     </button>
                   )}
                   {/* Points de Ki */}
@@ -638,7 +678,7 @@ const VirtualDojo = ({
                     <span className="text-cyan-300 font-bold">{totalKi} Ki</span>
                   </div>
                   {/* Jeux complétés */}
-                  <div className="flex items-center gap-2 bg-emerald-500/20 px-3 py-1 rounded-full">
+                  <div className="hidden sm:flex items-center gap-2 bg-emerald-500/20 px-3 py-1 rounded-full">
                     <Trophy className="w-4 h-4 text-emerald-400" />
                     <span className="text-emerald-300 font-bold">{completedGames.length}/{DOJO_GAMES.length}</span>
                   </div>
