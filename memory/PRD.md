@@ -2,32 +2,29 @@
 
 ## Changelog
 - **2026-01-17 (Session 5)**:
-  - ✅ **DÉPLACEMENT "DÉFIS DU JOUR"**
-    - Supprimé de `StatisticsDashboard.js` (dashboard principal)
-    - Intégré dans `VirtualDojo/index.jsx` sous l'onglet "Exercices au Dojo Réel"
-  - ✅ **ESPACE PARENT - FENÊTRE FLOTTANTE**
-    - Supprimé la section "👨‍👩‍👧 Espace Parent" de `StatisticsDashboard.js`
-    - Transformé `ParentDashboard` en Dialog flottant dans `App.js`
-    - Point d'entrée unique : bouton "Espace Parent" dans le header
-  - ✅ **RENOMMAGE "Connexion Parent" → "Espace Parent"** dans ParentLoginDialog.jsx
-  - ✅ **BOUTONS HEADER TECHNIQUES CORRIGÉS** - Layout responsive avec flex-wrap
-  - ✅ **MESSAGE TANAKA CORRIGÉ** - Supprimé "ton sensei pourra valider tes exercices"
-    - Nouveau message audio régénéré via ElevenLabs
-  - ✅ **"MON CARNET DE DOJO" - REFONTE COMPLÈTE**
-    - Interface ludique avec cartes visuelles pour chaque exercice
-    - Bouton **"Je l'ai fait au dojo !"** pour auto-validation par l'enfant
-    - Progression du jour avec barre visuelle et Ki gagnés
-    - 8 exercices : Salut, Échauffement, Ukemi, Déplacements, Technique partenaire, Écoute, Aide camarade, Rangement
-  - ✅ **RÉORGANISATION "PROGRAMME TECHNIQUE" (Étape 2 - Apprends)**
-    - Nouveaux onglets : "Ma Progression" / "Fiches Techniques"
-    - `BeltProgressCard` + `DeplacementsSection` intégrés dans "Ma Progression"
-    - Supprimé l'accordéon "Entrainement - Techniques d'Aikido" du dashboard
-  - ✅ **RÉORGANISATION "SUPER-POUVOIRS NINJA" (Étape 5 - Progresse)**
-    - Créé nouveau composant `ProgressionDialog.jsx`
-    - Nouveaux onglets : "Ma Ceinture" / "Mes Qualités"
-    - `VirtuesSection` (7 vertus du Budō) intégré dans onglet "Mes Qualités"
-    - Supprimé l'accordéon "Les Super-Pouvoirs Ninja" du dashboard
-    - Dashboard significativement simplifié
+  - ✅ **DÉPLACEMENT "DÉFIS DU JOUR"** → Étape 3 "Mon Entraînement"
+  - ✅ **ESPACE PARENT** → Fenêtre flottante via bouton header
+  - ✅ **RENOMMAGE "Connexion Parent" → "Espace Parent"**
+  - ✅ **MESSAGE TANAKA CORRIGÉ** - Supprimé "ton sensei pourra valider"
+  - ✅ **"MON CARNET DE DOJO"** - Refonte complète avec 8 exercices
+  - ✅ **RÉORGANISATION "PROGRAMME TECHNIQUE"** → Étape 2 "Mes Techniques"
+    - Onglets : "Ma Progression" + "Fiches Techniques"
+  - ✅ **RÉORGANISATION "SUPER-POUVOIRS NINJA"** → Étape 4 "Ma Progression"
+    - Onglets : "Ma Ceinture" + "Mes Qualités"
+  - ✅ **SUPPRESSION SECTIONS DASHBOARD** :
+    - "Continue comme ça Bill !"
+    - "Apprendre l'Aikido"
+    - Accordéon "Entrainement"
+    - Accordéon "Super-Pouvoirs Ninja"
+  - ✅ **FUSION ÉTAPE 4 "VALIDE" → ÉTAPE 3 "MON ENTRAÎNEMENT"**
+    - Parcours réduit de 6 à 5 étapes
+    - Nouveaux noms d'étapes :
+      1. Mon Profil 🎭
+      2. Mes Techniques 📚
+      3. Mon Entraînement 💪 (inclut Jeux + Carnet + Validations)
+      4. Ma Progression 🌟
+      5. Mes Trophées 🏆
+    - Nouvel onglet "✅ Validations" dans VirtualDojo
 
 - **2026-01-17 (Session 4)**:
   - ✅ **BASE DE DONNÉES TECHNIQUES COMPLÈTE - Structure en 3 Phases**
