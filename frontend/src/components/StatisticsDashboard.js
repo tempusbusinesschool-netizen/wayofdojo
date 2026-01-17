@@ -261,13 +261,13 @@ function StatisticsDashboard({ statistics, membersStats, onGradeClick, onFilterC
     
     // Mapping des 6 étapes du nouveau parcours
     const stepMap = {
-      'profil': 1,         // Étape 1: Commence -> Créer mon profil
-      'techniques': 2,     // Étape 2: Apprends -> Voir les techniques
-      'dojo_virtuel': 3,   // Étape 3: Entraîne-toi -> Dojo Virtuel
+      'profil': 1,         // Étape 1: Mon Profil
+      'techniques': 2,     // Étape 2: Mes Techniques
+      'dojo_virtuel': 3,   // Étape 3: Dojo Virtuel (Jeux & Validations)
       'defis': 3,          // Ancien target pour rétrocompatibilité
-      'validation': 4,     // Étape 4: Valide -> Demander validation parentale
-      'ceintures': 5,      // Étape 5: Progresse -> Voir ma progression
-      'trophees': 6        // Étape 6: Maîtrise -> Voir mes trophées
+      'carnet_dojo': 4,    // Étape 4: Entraînement au Dojo (Carnet)
+      'ceintures': 5,      // Étape 5: Ma Progression
+      'trophees': 6        // Étape 6: Mes Trophées
     };
     
     // Si c'est l'étape 1 (profil) et qu'elle n'est pas complétée, ouvrir le formulaire d'onboarding
