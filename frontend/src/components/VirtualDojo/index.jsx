@@ -258,21 +258,36 @@ const VirtualDojo = ({
     localStorage.setItem('aikido_dojo_progress', JSON.stringify(data));
   }, []);
 
-  // Message d'accueil de Tanaka
+  // Message d'accueil de Tanaka - Pédagogique et rassurant pour les enfants 6-14 ans
   useEffect(() => {
     if (isOpen && !selectedGame) {
       const displayName = userName || 'jeune ninja';
       const completedCount = completedGames.length;
       
       if (completedCount === 0) {
-        setTanakaMessage(`Bienvenue dans le Dojo Virtuel, ${displayName} ! 🏯 Ici, tu vas t'entraîner avec des jeux qui développeront tes compétences de ninja. Choisis un jeu pour commencer !`);
+        // Premier message : explication complète, rassurante et pédagogique
+        setTanakaMessage(
+          `Bienvenue dans le Dojo Virtuel, ${displayName} ! 🎮\n\n` +
+          `Ici, tu vas apprendre en jouant ! Chaque jeu est un petit défi pour t'aider à mieux comprendre les mouvements, la concentration et l'esprit du dojo.\n\n` +
+          `Prends ton temps : tu peux recommencer autant de fois que tu veux. Il n'y a pas d'échec, seulement des progrès !\n\n` +
+          `Quand tu as terminé un jeu, ce sont tes parents qui diront si tout s'est bien passé.\n\n` +
+          `L'important, ce n'est pas d'être parfait, mais d'essayer et de progresser. Prêt ? Alors choisis un jeu et commençons ensemble !`
+        );
       } else if (completedCount < 5) {
-        setTanakaMessage(`Bon retour, ${displayName} ! Tu as déjà complété ${completedCount} jeu${completedCount > 1 ? 'x' : ''}. Continue ainsi, tu progresses bien ! 💪`);
+        setTanakaMessage(
+          `Te revoilà, ${displayName} ! 🌟\n\n` +
+          `Tu as déjà terminé ${completedCount} jeu${completedCount > 1 ? 'x' : ''}. C'est super !\n\n` +
+          `Continue comme ça, chaque partie te fait progresser. N'oublie pas : tes parents valident tes jeux terminés. Montre-leur ce que tu sais faire !`
+        );
       } else {
-        setTanakaMessage(`${displayName}, tu es un vrai guerrier ! ${completedCount} jeux maîtrisés ! Explore les jeux avancés ou perfectionne tes scores. 🌟`);
+        setTanakaMessage(
+          `${displayName}, quel progrès ! 🏆\n\n` +
+          `${completedCount} jeux terminés, tu deviens un vrai petit maître !\n\n` +
+          `Continue à t'entraîner pour améliorer tes scores. Tes parents sont fiers de toi !`
+        );
       }
       setIsTanakaSpeaking(true);
-      setTimeout(() => setIsTanakaSpeaking(false), 3000);
+      setTimeout(() => setIsTanakaSpeaking(false), 4000);
     }
   }, [isOpen, selectedGame, userName, completedGames]);
 
