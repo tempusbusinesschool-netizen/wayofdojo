@@ -477,12 +477,12 @@ const JourneyPath = ({
                       className="w-full border-amber-500/50 text-amber-400 hover:bg-amber-500/20 py-3"
                     >
                       <Volume2 className={`w-5 h-5 mr-2 ${isPlayingAudio ? 'animate-pulse' : ''}`} />
-                      {isPlayingAudio ? '🔊 Tanaka parle...' : '🔊 Écouter Maître Tanaka'}
+                      {isPlayingAudio ? '🔊 Tanaka parle...' : '🔊 Réécouter Maître Tanaka'}
                     </Button>
                     
                     <Button
                       onClick={() => {
-                        playTanakaAudio('welcome');
+                        // Passer à l'étape suivante sans rejouer l'audio
                         setIntroStep(2);
                       }}
                       className="w-full bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-white font-bold py-4"
