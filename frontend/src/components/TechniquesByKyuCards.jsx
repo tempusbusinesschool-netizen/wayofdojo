@@ -193,13 +193,13 @@ const TechniquesByKyuCards = ({
         });
       }
       
-      // Messages de Tanaka selon le niveau
+      // Messages de Tanaka selon le niveau (vocabulaire non évaluatif)
       const levelInfo = MASTERY_LEVELS.find(l => l.id === newLevel);
       const messages = {
-        'not_started': `D'accord ${userName || 'ninja'}, tu repars de zéro pour cette technique. C'est courageux de reconnaître qu'on doit recommencer ! 🌱`,
-        'learning': `Bien ${userName || 'ninja'} ! Tu commences ton apprentissage. N'oublie pas : "Mille jours d'entraînement pour forger, dix mille jours pour polir." 📚`,
-        'practiced': `Excellent progrès ${userName || 'ninja'} ! Tu as pratiqué cette technique. Continue à la répéter jusqu'à ce qu'elle devienne naturelle ! 💪`,
-        'mastered': `Bravo ${userName || 'ninja'} ! 🎉 Cette technique est maintenant gravée dans ton corps ! Comme le dit le proverbe : "Pratique dix mille fois, et la technique devient naturelle." 🏆`
+        'not_started': `D'accord ${userName || 'ninja'}, tu n'as pas encore vu cette technique au dojo. Ça viendra ! 🌱`,
+        'learning': `Bien ${userName || 'ninja'} ! Tu découvres cette technique. Observe bien ton enseignant au dojo ! 👀`,
+        'practiced': `Super ${userName || 'ninja'} ! Tu as travaillé cette technique au dojo. Continue à la pratiquer ! 💪`,
+        'mastered': `Bravo ${userName || 'ninja'} ! 🎉 Tu te sens en confiance sur cette technique. Continue de t'entraîner au dojo pour progresser encore !`
       };
       
       setTanakaMessage(messages[newLevel] || `Niveau mis à jour : ${levelInfo?.label}`);
