@@ -413,8 +413,9 @@ const QueteVertus = ({ userName, onComplete, onExit, tanakaSpeak }) => {
             animate={{ opacity: 1, scale: 1 }}
             className="flex flex-col items-center justify-center h-full py-8"
           >
-            <span className="text-6xl mb-4">🏆</span>
-            <h2 className="text-3xl font-bold text-white mb-2">Quête terminée !</h2>
+            <span className="text-6xl mb-4">🎉</span>
+            <h2 className="text-3xl font-bold text-white mb-2">Tu as fini le parcours 🎉</h2>
+            <p className="text-amber-400 text-lg mb-4">Demande à tes parents de vérifier le jeu avec toi.</p>
             
             {/* Vertus collectées */}
             <div className="flex gap-2 mb-4">
@@ -433,7 +434,25 @@ const QueteVertus = ({ userName, onComplete, onExit, tanakaSpeak }) => {
             
             <p className="text-slate-400 mb-4">{collectedVirtues.length}/7 vertus collectées</p>
             <p className="text-4xl font-bold text-slate-300 mb-2">{score} points</p>
-            <p className="text-cyan-400">+{Math.floor(score / 20)} Ki gagné !</p>
+            <p className="text-cyan-400 mb-6">+{Math.floor(score / 20)} Ki gagné !</p>
+            
+            <div className="flex justify-center gap-4">
+              <Button onClick={() => {
+                setGameState('intro');
+                setCurrentQuestionIndex(0);
+                setCollectedVirtues([]);
+                setScore(0);
+              }} variant="outline" className="text-white border-white/30">
+                <RotateCcw className="w-4 h-4 mr-2" /> Rejouer cette étape
+              </Button>
+              <Button 
+                onClick={() => onComplete(score, Math.floor(score / 20))}
+                className="bg-gradient-to-r from-emerald-500 to-teal-600"
+              >
+                Continuer
+              </Button>
+            </div>
+            <p className="text-slate-500 text-xs mt-3">Tu peux recommencer pour t'entraîner encore.</p>
           </motion.div>
         )}
       </div>
