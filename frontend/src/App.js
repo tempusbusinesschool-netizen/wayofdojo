@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Swords, Users, BarChart3, LogOut, Baby, User, LogIn, Lock, ScrollText, Eye, Award, Building2, Sparkles, BookOpen, LayoutDashboard, Settings, AlertTriangle, CreditCard, Shield, KeyRound } from "lucide-react";
+import { Swords, Users, BarChart3, LogOut, Baby, User, LogIn, Lock, ScrollText, Eye, Award, Building2, Sparkles, BookOpen, LayoutDashboard, Settings, AlertTriangle, CreditCard, Shield, KeyRound, Heart } from "lucide-react";
 
 // Import belt utilities for normalization
 import { normalizeBeltKey } from "@/constants/aikidoBelts";
