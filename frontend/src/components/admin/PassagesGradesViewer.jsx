@@ -635,142 +635,182 @@ const GradeDetailPage = ({ gradeId, onBack }) => {
   const beltInfo = BELT_INFO[grade.couleur_ceinture] || BELT_INFO['#FFFFFF'];
   const isDan = ['shodan', 'nidan', 'sandan', 'yondan'].includes(grade.id);
   
+  // État pour les sections repliables
+  const [showObjectifs, setShowObjectifs] = useState(false);
+  const [showCriteres, setShowCriteres] = useState(false);
+  
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
-      className="space-y-6"
+      className="space-y-4"
       data-testid="grade-detail-page"
     >
-      {/* Header avec navigation */}
-      <div className="flex items-center gap-4 mb-6">
-        <Button onClick={onBack} variant="outline" size="sm" className="border-slate-600">
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Retour à la liste
-        </Button>
-      </div>
-      
-      {/* En-tête du grade */}
-      <div className="bg-gradient-to-br from-slate-800 via-slate-800/80 to-slate-900 rounded-2xl p-6 md:p-8 border border-slate-700">
-        <div className="flex flex-col md:flex-row items-center gap-6">
-          <BeltBadge color={grade.couleur_ceinture} size="xl" showStar={isDan} />
+      {/* Header compact avec navigation et infos essentielles */}
+      <div className="bg-gradient-to-r from-slate-800 to-slate-900 rounded-xl p-4 border border-slate-700">
+        <div className="flex items-center gap-4">
+          {/* Bouton retour */}
+          <Button onClick={onBack} variant="ghost" size="sm" className="border-slate-600 hover:bg-slate-700">
+            <ArrowLeft className="w-4 h-4" />
+          </Button>
           
-          <div className="flex-1 text-center md:text-left">
-            <div className="flex items-center justify-center md:justify-start gap-3 mb-2">
-              <h1 className="text-3xl md:text-4xl font-bold text-white">{grade.nom}</h1>
-              <span className="text-2xl text-slate-400">{grade.nom_japonais}</span>
+          {/* Badge ceinture */}
+          <BeltBadge color={grade.couleur_ceinture} size="md" showStar={isDan} />
+          
+          {/* Titre et description */}
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 flex-wrap">
+              <h1 className="text-xl md:text-2xl font-bold text-white">{grade.nom}</h1>
+              <span className="text-lg text-slate-400">{grade.nom_japonais}</span>
+              <Badge className="bg-slate-700 text-slate-300 text-xs">
+                Ceinture {beltInfo.name}
+              </Badge>
             </div>
-            
-            <p className="text-slate-300 text-lg mb-4 max-w-2xl">{grade.description}</p>
-            
-            {/* Stats en badges */}
-            <div className="flex flex-wrap justify-center md:justify-start gap-3">
-              <div className="flex items-center gap-2 bg-slate-700/50 px-4 py-2 rounded-full">
-                <div className="w-4 h-4 rounded-full" style={{ backgroundColor: grade.couleur_ceinture, border: grade.couleur_ceinture === '#FFFFFF' ? '2px solid #e5e7eb' : 'none' }}></div>
-                <span className="text-white font-medium">Ceinture {beltInfo.name}</span>
-              </div>
-              <div className="flex items-center gap-2 bg-slate-700/50 px-4 py-2 rounded-full">
-                <Clock className="w-4 h-4 text-cyan-400" />
-                <span className="text-white">{grade.delai_minimum}</span>
-              </div>
-              <div className="flex items-center gap-2 bg-slate-700/50 px-4 py-2 rounded-full">
-                <Timer className="w-4 h-4 text-violet-400" />
-                <span className="text-white">{grade.heures_minimum}h minimum</span>
-              </div>
-              <div className="flex items-center gap-2 bg-amber-500/20 px-4 py-2 rounded-full">
-                <Swords className="w-4 h-4 text-amber-400" />
-                <span className="text-amber-400 font-medium">{grade.nb_techniques} techniques</span>
-              </div>
-              {grade.nb_mouvements > 0 && (
-                <div className="flex items-center gap-2 bg-cyan-500/20 px-4 py-2 rounded-full">
-                  <Users className="w-4 h-4 text-cyan-400" />
-                  <span className="text-cyan-400 font-medium">{grade.nb_mouvements} mouvements</span>
-                </div>
-              )}
-            </div>
+            <p className="text-slate-400 text-sm mt-1 line-clamp-1">{grade.description}</p>
+          </div>
+          
+          {/* Stats rapides */}
+          <div className="hidden md:flex items-center gap-2">
+            <Badge className="bg-amber-500/20 text-amber-400 border-0">
+              <Swords className="w-3 h-3 mr-1" />
+              {grade.nb_techniques} techniques
+            </Badge>
+            {grade.nb_mouvements > 0 && (
+              <Badge className="bg-cyan-500/20 text-cyan-400 border-0">
+                <Users className="w-3 h-3 mr-1" />
+                {grade.nb_mouvements} mvts
+              </Badge>
+            )}
+            <Badge className="bg-violet-500/20 text-violet-400 border-0">
+              <Timer className="w-3 h-3 mr-1" />
+              {grade.heures_minimum}h
+            </Badge>
           </div>
         </div>
         
-        {/* Prérequis */}
+        {/* Prérequis compact */}
         {grade.prerequis && (
-          <div className="mt-6 p-4 bg-amber-500/10 border border-amber-500/30 rounded-xl">
-            <span className="text-amber-400 font-semibold">Prérequis : </span>
+          <div className="mt-3 px-3 py-2 bg-amber-500/10 border border-amber-500/30 rounded-lg text-sm">
+            <span className="text-amber-400 font-medium">Prérequis : </span>
             <span className="text-amber-200">{grade.prerequis}</span>
           </div>
         )}
       </div>
       
-      {/* Objectifs */}
-      {grade.objectifs && grade.objectifs.length > 0 && (
-        <Card className="bg-slate-800/50 border-slate-700">
-          <CardHeader>
-            <CardTitle className="text-lg text-emerald-400 flex items-center gap-2">
-              <Target className="w-5 h-5" />
-              Objectifs du grade
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {grade.objectifs.map((obj, idx) => (
-                <div key={idx} className="flex items-start gap-3 p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
-                  <span className="text-white">{obj}</span>
-                </div>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
-      )}
-      
-      {/* Mouvements */}
-      <MouvementsSection mouvements={grade.mouvements} />
-      
-      {/* Techniques - Tableau structuré */}
-      <Card className="bg-slate-800/50 border-slate-700">
-        <CardHeader>
-          <CardTitle className="text-lg text-amber-400 flex items-center gap-2">
-            <Table className="w-5 h-5" />
-            Apprendre les différentes techniques en Aikido
+      {/* ══════════════════════════════════════════════════════════════════════ */}
+      {/* TECHNIQUES EN PREMIER - Section principale visible immédiatement */}
+      {/* ══════════════════════════════════════════════════════════════════════ */}
+      <Card className="bg-slate-800/50 border-slate-700 border-2 border-amber-500/30">
+        <CardHeader className="pb-2 bg-gradient-to-r from-amber-900/20 to-orange-900/20">
+          <CardTitle className="text-xl text-amber-400 flex items-center gap-2">
+            <Swords className="w-6 h-6" />
+            Programme Technique - {grade.nb_techniques} Prises
           </CardTitle>
+          <p className="text-slate-400 text-sm">
+            Les techniques à maîtriser pour ce grade
+          </p>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-4">
           <TechniquesTable techniques={grade.techniques} />
         </CardContent>
       </Card>
       
-      {/* Critères d'évaluation */}
-      {grade.criteres_evaluation && grade.criteres_evaluation.length > 0 && (
+      {/* ══════════════════════════════════════════════════════════════════════ */}
+      {/* SECTIONS SECONDAIRES - Repliées par défaut */}
+      {/* ══════════════════════════════════════════════════════════════════════ */}
+      
+      {/* Mouvements - Section repliable */}
+      <MouvementsSection mouvements={grade.mouvements} />
+      
+      {/* Objectifs - Section repliable */}
+      {grade.objectifs && grade.objectifs.length > 0 && (
         <Card className="bg-slate-800/50 border-slate-700">
-          <CardHeader>
-            <CardTitle className="text-lg text-rose-400 flex items-center gap-2">
-              <GraduationCap className="w-5 h-5" />
-              Critères d'évaluation
-            </CardTitle>
+          <CardHeader className="pb-2">
+            <button
+              onClick={() => setShowObjectifs(!showObjectifs)}
+              className="w-full flex items-center justify-between"
+            >
+              <CardTitle className="text-base text-emerald-400 flex items-center gap-2">
+                <Target className="w-5 h-5" />
+                Objectifs du grade ({grade.objectifs.length})
+              </CardTitle>
+              <ChevronDown className={`w-5 h-5 text-slate-400 transition-transform duration-300 ${showObjectifs ? 'rotate-180' : ''}`} />
+            </button>
           </CardHeader>
-          <CardContent>
-            <div className="space-y-2">
-              {grade.criteres_evaluation.map((critere, idx) => (
-                <div key={idx} className="flex items-start gap-3 p-3 bg-rose-500/10 border border-rose-500/20 rounded-lg">
-                  <Shield className="w-5 h-5 text-rose-400 flex-shrink-0 mt-0.5" />
-                  <span className="text-white">{critere}</span>
-                </div>
-              ))}
-            </div>
-          </CardContent>
+          <AnimatePresence>
+            {showObjectifs && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                    {grade.objectifs.map((obj, idx) => (
+                      <div key={idx} className="flex items-start gap-2 p-2 bg-emerald-500/10 border border-emerald-500/20 rounded-lg text-sm">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
+                        <span className="text-white">{obj}</span>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </Card>
       )}
       
-      {/* Durée examen */}
+      {/* Critères d'évaluation - Section repliable */}
+      {grade.criteres_evaluation && grade.criteres_evaluation.length > 0 && (
+        <Card className="bg-slate-800/50 border-slate-700">
+          <CardHeader className="pb-2">
+            <button
+              onClick={() => setShowCriteres(!showCriteres)}
+              className="w-full flex items-center justify-between"
+            >
+              <CardTitle className="text-base text-rose-400 flex items-center gap-2">
+                <GraduationCap className="w-5 h-5" />
+                Critères d'évaluation ({grade.criteres_evaluation.length})
+              </CardTitle>
+              <ChevronDown className={`w-5 h-5 text-slate-400 transition-transform duration-300 ${showCriteres ? 'rotate-180' : ''}`} />
+            </button>
+          </CardHeader>
+          <AnimatePresence>
+            {showCriteres && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <CardContent>
+                  <div className="space-y-2">
+                    {grade.criteres_evaluation.map((critere, idx) => (
+                      <div key={idx} className="flex items-start gap-2 p-2 bg-rose-500/10 border border-rose-500/20 rounded-lg text-sm">
+                        <Shield className="w-4 h-4 text-rose-400 flex-shrink-0 mt-0.5" />
+                        <span className="text-white">{critere}</span>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </Card>
+      )}
+      
+      {/* Durée examen - Compact */}
       {grade.duree_examen && (
-        <div className="bg-gradient-to-r from-violet-500/20 to-purple-500/20 rounded-xl p-6 border border-violet-500/30">
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-xl bg-violet-500/30 flex items-center justify-center">
-              <Timer className="w-7 h-7 text-violet-400" />
+        <div className="bg-gradient-to-r from-violet-500/20 to-purple-500/20 rounded-lg p-4 border border-violet-500/30">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-violet-500/30 flex items-center justify-center">
+              <Timer className="w-5 h-5 text-violet-400" />
             </div>
             <div>
-              <h4 className="text-lg font-bold text-white">Durée de l'examen</h4>
-              <p className="text-violet-300 text-lg">{grade.duree_examen}</p>
+              <h4 className="text-sm font-bold text-white">Durée de l'examen</h4>
+              <p className="text-violet-300">{grade.duree_examen}</p>
             </div>
           </div>
         </div>
