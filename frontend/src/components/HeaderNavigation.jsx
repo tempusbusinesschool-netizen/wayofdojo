@@ -111,10 +111,10 @@ const HeaderNavigation = ({
               onClick={() => { onLoginEnseignant(); setOpenMenu(null); }}
               className="w-full flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 text-left text-slate-200 hover:bg-amber-900/30 transition-colors border-t border-slate-700"
             >
-              <GraduationCap className="w-4 h-4 text-amber-400 flex-shrink-0" />
+              <Building2 className="w-4 h-4 text-amber-400 flex-shrink-0" />
               <div className="min-w-0">
-                <div className="font-medium text-sm sm:text-base truncate">Enseignant</div>
-                <div className="text-[10px] sm:text-xs text-slate-400 truncate">Espace professeur</div>
+                <div className="font-medium text-sm sm:text-base truncate">Dojo & Clubs</div>
+                <div className="text-[10px] sm:text-xs text-slate-400 truncate">Espace club affilié</div>
               </div>
             </button>
           </div>
