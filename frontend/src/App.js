@@ -177,6 +177,20 @@ function AppContent() {
       setParentInfo(JSON.parse(parentInfoStored));
       setParentMode(true);
     }
+    
+    // Handle URL hash navigation (e.g., #combinaisons)
+    const handleHashNavigation = () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash) {
+        const validPages = ['combinaisons', 'philosophie', 'tarification', 'mode-emploi', 'inscription'];
+        if (validPages.includes(hash)) {
+          setActivePage(hash);
+        }
+      }
+    };
+    handleHashNavigation();
+    window.addEventListener('hashchange', handleHashNavigation);
+    return () => window.removeEventListener('hashchange', handleHashNavigation);
   }, []);
   
   // Handle enseignant login success
