@@ -1001,6 +1001,8 @@ function AppContent() {
               <AdminFilesContent />
             ) : adminSection === 'passages_grades' ? (
               <PassagesGradesViewer />
+            ) : adminSection === 'animations_techniques' ? (
+              <AnimationsDemoViewer />
             ) : adminSection === 'jo' ? (
               <TechniquesSectionViewer
                 techniques={TECHNIQUES_JO}
