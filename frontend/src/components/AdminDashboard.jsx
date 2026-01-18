@@ -150,9 +150,84 @@ const AdminDashboard = ({
 }) => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [expandedMenus, setExpandedMenus] = useState(['sports', 'aikido']); // Menus dépliés par défaut
 
-  const currentSection = ADMIN_SECTIONS.find(s => s.id === activeSection) || ADMIN_SECTIONS[0];
+  // Fonction pour trouver une section (y compris dans les enfants)
+  const findSection = (sections, id) => {
+    for (const section of sections) {
+      if (section.id === id) return section;
+      if (section.children) {
+        const found = findSection(section.children, id);
+        if (found) return found;
+      }
+    }
+    return null;
+  };
+
+  const currentSection = findSection(ADMIN_SECTIONS, activeSection) || ADMIN_SECTIONS[0];
   const colors = colorClasses[currentSection.color];
+
+  // Toggle menu parent
+  const toggleMenu = (menuId) => {
+    setExpandedMenus(prev => 
+      prev.includes(menuId) 
+        ? prev.filter(id => id !== menuId)
+        : [...prev, menuId]
+    );
+  };
+
+  // Rendu récursif des items de menu
+  const renderMenuItem = (section, depth = 0) => {
+    const Icon = section.icon;
+    const sectionColors = colorClasses[section.color];
+    const isActive = activeSection === section.id;
+    const isExpanded = expandedMenus.includes(section.id);
+    const hasChildren = section.children && section.children.length > 0;
+    const paddingLeft = depth * 12;
+
+    return (
+      <div key={section.id}>
+        <button
+          onClick={() => {
+            if (hasChildren) {
+              toggleMenu(section.id);
+            } else {
+              onSectionChange(section.id);
+            }
+          }}
+          className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+            isActive && !hasChildren
+              ? `${sectionColors.active} text-white shadow-lg` 
+              : 'hover:bg-slate-700/50 text-slate-400 hover:text-white'
+          }`}
+          style={{ paddingLeft: `${16 + paddingLeft}px` }}
+        >
+          <Icon className={`w-5 h-5 flex-shrink-0 ${isActive && !hasChildren ? 'text-white' : sectionColors.text}`} />
+          {sidebarOpen && (
+            <div className="flex-1 text-left">
+              <div className="font-medium text-sm">{section.label}</div>
+              {isActive && !hasChildren && (
+                <div className="text-xs opacity-80">{section.description}</div>
+              )}
+            </div>
+          )}
+          {sidebarOpen && hasChildren && (
+            <ChevronDown className={`w-4 h-4 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+          )}
+          {sidebarOpen && isActive && !hasChildren && (
+            <ChevronRight className="w-4 h-4" />
+          )}
+        </button>
+        
+        {/* Sous-menus */}
+        {hasChildren && isExpanded && sidebarOpen && (
+          <div className="ml-2 border-l border-slate-700 pl-2 mt-1 space-y-1">
+            {section.children.map(child => renderMenuItem(child, depth + 1))}
+          </div>
+        )}
+      </div>
+    );
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
