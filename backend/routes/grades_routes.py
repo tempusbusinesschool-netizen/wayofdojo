@@ -64,7 +64,7 @@ class GradeComplet(BaseModel):
     nb_techniques: int
     nb_mouvements: int
     techniques_par_categorie: dict
-    techniques_par_attaque: dict
+    techniques_par_attaque: List[dict]  # Liste de groupes par attaque
 
 
 class UserProgressUpdate(BaseModel):
