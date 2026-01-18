@@ -83,6 +83,15 @@ const ADMIN_SECTIONS = [
             hasVideo: true
           },
           {
+            id: 'passages_grades',
+            label: 'Passages de Grades',
+            icon: FileCode,
+            color: 'emerald',
+            description: 'Programme officiel 6e Kyu → 4e Dan',
+            filePath: 'Sports/Aikido/Techniques d\'aikido/Passages_de_Grades/Passages_de_Grades.js',
+            hasVideo: true
+          },
+          {
             id: 'armes',
             label: 'Armes',
             icon: Swords,
