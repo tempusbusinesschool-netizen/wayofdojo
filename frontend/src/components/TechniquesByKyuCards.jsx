@@ -1,11 +1,11 @@
 /**
- * 🥋 MES TECHNIQUES - Version 2.0 Ergonomie Refaite
+ * 🥋 MES TECHNIQUES - Version 3.0 - Ceintures Visibles
  * 
  * Interface enfant "Mes techniques" / "voir les techniques"
- * Design épuré, techniques bien visibles, navigation fluide
+ * Design avec ceintures colorées bien visibles, navigation claire
  */
 
-import React, { useState, useEffect, useRef, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
@@ -13,82 +13,157 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { 
   BookOpen, X, ChevronRight, ChevronLeft, Lock, Trophy, Star,
-  CheckCircle2, Circle, Target, AlertCircle, Swords, Users,
-  GraduationCap, Award, Sparkles, Eye, Play
+  CheckCircle2, Target, AlertCircle, Swords, Sparkles, Eye
 } from 'lucide-react';
 
 const API_URL = process.env.REACT_APP_BACKEND_URL;
 
-// Configuration des couleurs par Kyu
-const KYU_CONFIG = {
-  '6e_kyu': { 
-    name: '6e Kyu', 
-    color: '#FFFFFF', 
-    gradient: 'from-slate-200 to-slate-400',
-    bgLight: 'bg-slate-100',
-    textColor: 'text-slate-800',
-    emoji: '⚪',
-    label: 'Blanche'
-  },
-  '5e_kyu': { 
-    name: '5e Kyu', 
-    color: '#FCD34D', 
-    gradient: 'from-yellow-400 to-amber-500',
-    bgLight: 'bg-yellow-100',
-    textColor: 'text-yellow-800',
-    emoji: '🟡',
-    label: 'Jaune'
-  },
-  '4e_kyu': { 
-    name: '4e Kyu', 
-    color: '#FB923C', 
-    gradient: 'from-orange-400 to-orange-600',
-    bgLight: 'bg-orange-100',
-    textColor: 'text-orange-800',
-    emoji: '🟠',
-    label: 'Orange'
-  },
-  '3e_kyu': { 
-    name: '3e Kyu', 
-    color: '#22C55E', 
-    gradient: 'from-green-400 to-emerald-600',
-    bgLight: 'bg-green-100',
-    textColor: 'text-green-800',
-    emoji: '🟢',
-    label: 'Verte'
-  },
-  '2e_kyu': { 
-    name: '2e Kyu', 
-    color: '#3B82F6', 
-    gradient: 'from-blue-400 to-blue-600',
-    bgLight: 'bg-blue-100',
-    textColor: 'text-blue-800',
-    emoji: '🔵',
-    label: 'Bleue'
-  },
-  '1er_kyu': { 
-    name: '1er Kyu', 
-    color: '#92400E', 
-    gradient: 'from-amber-700 to-amber-900',
-    bgLight: 'bg-amber-100',
-    textColor: 'text-amber-900',
-    emoji: '🟤',
-    label: 'Marron'
-  }
+// Configuration des ceintures par couleur hex
+const getBeltConfig = (color, name) => {
+  const colorMap = {
+    '#FFFFFF': { label: 'Blanche', emoji: '⚪', gradient: 'from-gray-100 to-gray-300', textClass: 'text-gray-800' },
+    '#fbbf24': { label: 'Jaune', emoji: '🟡', gradient: 'from-yellow-400 to-amber-500', textClass: 'text-yellow-900' },
+    '#f97316': { label: 'Orange', emoji: '🟠', gradient: 'from-orange-400 to-orange-600', textClass: 'text-orange-900' },
+    '#22c55e': { label: 'Verte', emoji: '🟢', gradient: 'from-green-400 to-emerald-600', textClass: 'text-green-900' },
+    '#3b82f6': { label: 'Bleue', emoji: '🔵', gradient: 'from-blue-400 to-blue-600', textClass: 'text-blue-900' },
+    '#92400e': { label: 'Marron', emoji: '🟤', gradient: 'from-amber-700 to-amber-900', textClass: 'text-amber-100' },
+    '#000000': { label: 'Noire', emoji: '⚫', gradient: 'from-gray-800 to-black', textClass: 'text-white' }
+  };
+  
+  // Trouver la couleur la plus proche
+  const lowerColor = color?.toLowerCase();
+  const match = Object.entries(colorMap).find(([hex]) => hex.toLowerCase() === lowerColor);
+  
+  if (match) return match[1];
+  
+  // Fallback basé sur le nom
+  if (name?.includes('5')) return colorMap['#fbbf24'];
+  if (name?.includes('4')) return colorMap['#f97316'];
+  if (name?.includes('3')) return colorMap['#22c55e'];
+  if (name?.includes('2')) return colorMap['#3b82f6'];
+  if (name?.includes('1')) return colorMap['#92400e'];
+  
+  return colorMap['#FFFFFF'];
 };
 
 // Niveaux de maîtrise
 const MASTERY_LEVELS = [
-  { id: 'not_started', label: 'À découvrir', emoji: '⭕', color: 'text-slate-400', bg: 'bg-slate-700' },
-  { id: 'learning', label: 'J\'apprends', emoji: '📖', color: 'text-amber-400', bg: 'bg-amber-500/20' },
-  { id: 'practiced', label: 'Je pratique', emoji: '🥋', color: 'text-cyan-400', bg: 'bg-cyan-500/20' },
-  { id: 'mastered', label: 'Je maîtrise', emoji: '⭐', color: 'text-emerald-400', bg: 'bg-emerald-500/20' }
+  { id: 'not_started', label: 'À découvrir', emoji: '⭕', color: 'text-slate-400', bg: 'bg-slate-700/50', border: 'border-slate-600' },
+  { id: 'learning', label: "J'apprends", emoji: '📖', color: 'text-amber-400', bg: 'bg-amber-500/20', border: 'border-amber-500/50' },
+  { id: 'practiced', label: 'Je pratique', emoji: '🥋', color: 'text-cyan-400', bg: 'bg-cyan-500/20', border: 'border-cyan-500/50' },
+  { id: 'mastered', label: 'Je maîtrise !', emoji: '⭐', color: 'text-emerald-400', bg: 'bg-emerald-500/20', border: 'border-emerald-500/50' }
 ];
 
 /**
- * Carte de technique individuelle
+ * Composant Ceinture visuelle
  */
-const TechniqueCard = ({ technique, index, mastery, isUnlocked, onClick }) => {
+const BeltVisual = ({ color, size = 'md', showKnot = true }) => {
+  const sizes = {
+    sm: { width: 60, height: 12, knot: 8 },
+    md: { width: 100, height: 18, knot: 12 },
+    lg: { width: 140, height: 24, knot: 16 }
+  };
+  const s = sizes[size];
+  
+  return (
+    <div className="relative flex items-center justify-center" style={{ width: s.width, height: s.height * 2 }}>
+      {/* Ceinture principale */}
+      <div 
+        className="absolute rounded-full shadow-lg"
+        style={{ 
+          width: s.width, 
+          height: s.height, 
+          backgroundColor: color || '#FFFFFF',
+          border: color === '#FFFFFF' ? '2px solid #e5e7eb' : 'none',
+          boxShadow: `0 4px 12px ${color}40`
+        }}
+      />
+      {/* Noeud */}
+      {showKnot && (
+        <div 
+          className="absolute rounded-full z-10 shadow-md"
+          style={{ 
+            width: s.knot, 
+            height: s.knot * 1.5, 
+            backgroundColor: color || '#FFFFFF',
+            border: color === '#FFFFFF' ? '2px solid #d1d5db' : 'none',
+            left: '50%',
+            transform: 'translateX(-50%)'
+          }}
+        />
+      )}
+    </div>
+  );
+};
+
+/**
+ * Carte de grade dans le sélecteur
+ */
+const GradeCard = ({ grade, index, isSelected, stats, onClick }) => {
+  const config = getBeltConfig(grade.color, grade.name);
+  const isComplete = stats.percent === 100;
+  
+  return (
+    <motion.button
+      onClick={onClick}
+      whileHover={{ scale: 1.03, y: -4 }}
+      whileTap={{ scale: 0.98 }}
+      className={`
+        relative p-4 rounded-2xl transition-all min-w-[160px] border-2
+        ${isSelected 
+          ? `bg-gradient-to-br ${config.gradient} border-white/50 shadow-2xl` 
+          : 'bg-slate-800/80 border-slate-700 hover:border-slate-500'
+        }
+      `}
+    >
+      {/* Badge complété */}
+      {isComplete && (
+        <motion.div 
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          className="absolute -top-2 -right-2 bg-amber-500 rounded-full p-1.5 shadow-lg"
+        >
+          <Trophy className="w-4 h-4 text-white" />
+        </motion.div>
+      )}
+      
+      <div className="flex flex-col items-center gap-2">
+        {/* Ceinture visuelle */}
+        <BeltVisual color={grade.color} size="md" />
+        
+        {/* Nom du grade */}
+        <div className="text-center mt-1">
+          <p className={`font-bold text-lg ${isSelected ? config.textClass : 'text-white'}`}>
+            {grade.name}
+          </p>
+          <p className={`text-xs ${isSelected ? config.textClass + '/80' : 'text-slate-400'}`}>
+            Ceinture {config.label}
+          </p>
+        </div>
+        
+        {/* Progression */}
+        <div className="w-full mt-2">
+          <div className="h-2 bg-black/30 rounded-full overflow-hidden">
+            <motion.div 
+              className={`h-full rounded-full ${isSelected ? 'bg-white/90' : 'bg-cyan-500'}`}
+              initial={{ width: 0 }}
+              animate={{ width: `${stats.percent}%` }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+            />
+          </div>
+          <p className={`text-xs mt-1 text-center ${isSelected ? config.textClass + '/80' : 'text-slate-500'}`}>
+            {stats.mastered}/{stats.total} maîtrisées
+          </p>
+        </div>
+      </div>
+    </motion.button>
+  );
+};
+
+/**
+ * Carte de technique
+ */
+const TechniqueCard = ({ technique, index, mastery, onClick }) => {
   const masteryInfo = MASTERY_LEVELS.find(l => l.id === mastery) || MASTERY_LEVELS[0];
   const isMastered = mastery === 'mastered';
   const isLearning = mastery === 'learning';
@@ -96,145 +171,107 @@ const TechniqueCard = ({ technique, index, mastery, isUnlocked, onClick }) => {
   
   return (
     <motion.button
-      onClick={() => isUnlocked && onClick(technique)}
-      disabled={!isUnlocked}
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: index * 0.03 }}
-      whileHover={isUnlocked ? { scale: 1.02, y: -2 } : {}}
-      whileTap={isUnlocked ? { scale: 0.98 } : {}}
+      onClick={() => onClick(technique)}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: index * 0.02 }}
+      whileHover={{ scale: 1.01, x: 4 }}
       className={`
-        relative w-full p-4 rounded-2xl text-left transition-all border-2
-        ${isMastered 
-          ? 'bg-gradient-to-br from-emerald-500/20 to-green-600/20 border-emerald-500/50 shadow-emerald-500/20' 
-          : isPracticed
-            ? 'bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border-cyan-500/50 shadow-cyan-500/20'
-            : isLearning
-              ? 'bg-gradient-to-br from-amber-500/20 to-orange-600/20 border-amber-500/50 shadow-amber-500/20'
-              : isUnlocked
-                ? 'bg-slate-800/50 border-slate-600/50 hover:border-cyan-500/50 hover:bg-slate-700/50'
-                : 'bg-slate-900/30 border-slate-800/50 cursor-not-allowed opacity-50'
-        }
-        shadow-lg
+        relative w-full p-4 rounded-xl text-left transition-all border-2 flex items-center gap-4
+        ${masteryInfo.bg} ${masteryInfo.border}
+        hover:shadow-lg
       `}
-      data-testid={`technique-card-${index}`}
     >
-      {/* Cadenas si verrouillé */}
-      {!isUnlocked && (
-        <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-2xl z-10 backdrop-blur-sm">
-          <Lock className="w-8 h-8 text-slate-500" />
-        </div>
-      )}
+      {/* Numéro/Statut */}
+      <div className={`
+        w-12 h-12 rounded-xl flex items-center justify-center font-bold text-lg flex-shrink-0
+        ${isMastered 
+          ? 'bg-emerald-500 text-white' 
+          : isPracticed
+            ? 'bg-cyan-500 text-white'
+            : isLearning
+              ? 'bg-amber-500 text-white'
+              : 'bg-slate-700 text-slate-300'
+        }
+      `}>
+        {isMastered ? <Star className="w-6 h-6" /> : index + 1}
+      </div>
       
-      {/* Badge de maîtrise */}
-      {isUnlocked && mastery !== 'not_started' && (
-        <div className={`absolute -top-2 -right-2 ${masteryInfo.bg} px-2 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-lg`}>
-          <span>{masteryInfo.emoji}</span>
-          <span className={masteryInfo.color}>{masteryInfo.label}</span>
+      {/* Infos */}
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2 flex-wrap">
+          <h4 className="font-bold text-white text-sm">{technique.name}</h4>
+          <span className={`text-xs ${masteryInfo.color}`}>{masteryInfo.emoji} {masteryInfo.label}</span>
         </div>
-      )}
-      
-      <div className="flex items-start gap-4">
-        {/* Numéro */}
-        <div className={`
-          w-12 h-12 rounded-xl flex items-center justify-center font-bold text-lg flex-shrink-0
-          ${isMastered 
-            ? 'bg-emerald-500 text-white' 
-            : isPracticed
-              ? 'bg-cyan-500 text-white'
-              : isLearning
-                ? 'bg-amber-500 text-white'
-                : 'bg-slate-700 text-slate-300'
-          }
-        `}>
-          {isMastered ? <Star className="w-6 h-6" /> : index + 1}
-        </div>
-        
-        {/* Infos */}
-        <div className="flex-1 min-w-0">
-          <h4 className="font-bold text-white text-base truncate">
-            {technique.name}
-          </h4>
-          {technique.japanese_name && (
-            <p className="text-slate-400 text-sm">{technique.japanese_name}</p>
-          )}
-          {technique.description && (
-            <p className="text-slate-500 text-xs mt-1 line-clamp-2">{technique.description}</p>
-          )}
-        </div>
-        
-        {/* Flèche */}
-        {isUnlocked && (
-          <ChevronRight className="w-5 h-5 text-slate-400 flex-shrink-0" />
+        {technique.description && (
+          <p className="text-slate-400 text-xs mt-1 line-clamp-1">{technique.description}</p>
         )}
+      </div>
+      
+      {/* Action */}
+      <div className="flex items-center gap-2 flex-shrink-0">
+        <Eye className="w-4 h-4 text-slate-400" />
+        <ChevronRight className="w-5 h-5 text-slate-400" />
       </div>
     </motion.button>
   );
 };
 
 /**
- * Détail d'une technique (panneau latéral)
+ * Panneau de détail technique
  */
-const TechniqueDetail = ({ technique, mastery, onMasteryChange, onClose, userName }) => {
+const TechniqueDetailPanel = ({ technique, mastery, onMasteryChange, onClose, userName }) => {
   const masteryInfo = MASTERY_LEVELS.find(l => l.id === mastery) || MASTERY_LEVELS[0];
   
   return (
     <motion.div
-      initial={{ opacity: 0, x: 50 }}
+      initial={{ opacity: 0, x: 100 }}
       animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: 50 }}
-      className="h-full flex flex-col bg-slate-800/95 backdrop-blur-sm"
+      exit={{ opacity: 0, x: 100 }}
+      className="absolute inset-0 bg-slate-900/98 backdrop-blur-sm z-20 flex flex-col"
     >
       {/* Header */}
-      <div className="p-4 bg-gradient-to-r from-cyan-600 to-blue-600 flex items-center justify-between">
+      <div className="p-4 bg-gradient-to-r from-cyan-600 to-blue-600 flex items-center gap-3">
         <button
           onClick={onClose}
           className="p-2 rounded-lg bg-white/20 hover:bg-white/30 transition-colors"
         >
           <ChevronLeft className="w-5 h-5 text-white" />
         </button>
-        <h3 className="font-bold text-white text-lg">Détail Technique</h3>
-        <div className="w-9" />
+        <div className="flex-1">
+          <h3 className="font-bold text-white">{technique.name}</h3>
+          <p className="text-cyan-100 text-xs">{technique.japanese_name || ''}</p>
+        </div>
       </div>
       
-      {/* Contenu scrollable */}
+      {/* Contenu */}
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
-        {/* Nom de la technique */}
-        <div className="text-center p-6 bg-slate-900/50 rounded-2xl border border-slate-700">
-          <h2 className="text-2xl font-bold text-white mb-2">{technique.name}</h2>
-          {technique.japanese_name && (
-            <p className="text-cyan-400 text-lg">{technique.japanese_name}</p>
-          )}
-        </div>
-        
-        {/* Niveau de maîtrise actuel */}
-        <div className={`p-4 rounded-xl ${masteryInfo.bg} border border-slate-600`}>
+        {/* Niveau actuel */}
+        <div className={`p-4 rounded-xl ${masteryInfo.bg} border ${masteryInfo.border}`}>
           <div className="flex items-center gap-3">
-            <span className="text-3xl">{masteryInfo.emoji}</span>
+            <span className="text-4xl">{masteryInfo.emoji}</span>
             <div>
-              <p className="text-xs text-slate-400">Mon niveau actuel</p>
-              <p className={`font-bold text-lg ${masteryInfo.color}`}>{masteryInfo.label}</p>
+              <p className="text-xs text-slate-400">Mon niveau</p>
+              <p className={`font-bold text-xl ${masteryInfo.color}`}>{masteryInfo.label}</p>
             </div>
           </div>
         </div>
         
         {/* Description */}
         {technique.description && (
-          <div className="p-4 bg-slate-900/50 rounded-xl border border-slate-700">
-            <h4 className="text-sm font-semibold text-slate-400 mb-2 flex items-center gap-2">
-              <BookOpen className="w-4 h-4" />
-              Description
+          <div className="p-4 bg-slate-800/50 rounded-xl border border-slate-700">
+            <h4 className="text-sm font-semibold text-slate-300 mb-2 flex items-center gap-2">
+              <BookOpen className="w-4 h-4" /> Description
             </h4>
-            <p className="text-white text-sm leading-relaxed">{technique.description}</p>
+            <p className="text-white text-sm">{technique.description}</p>
           </div>
         )}
         
         {/* Points clés */}
-        {technique.key_points && technique.key_points.length > 0 && (
+        {technique.key_points?.length > 0 && (
           <div className="p-4 bg-emerald-500/10 rounded-xl border border-emerald-500/30">
             <h4 className="text-sm font-semibold text-emerald-400 mb-3 flex items-center gap-2">
-              <Target className="w-4 h-4" />
-              Points clés ({technique.key_points.length})
+              <Target className="w-4 h-4" /> Points clés
             </h4>
             <ul className="space-y-2">
               {technique.key_points.map((point, idx) => (
@@ -247,11 +284,10 @@ const TechniqueDetail = ({ technique, mastery, onMasteryChange, onClose, userNam
           </div>
         )}
         
-        {/* Changer le niveau de maîtrise */}
-        <div className="p-4 bg-slate-900/50 rounded-xl border border-slate-700">
-          <h4 className="text-sm font-semibold text-slate-400 mb-3 flex items-center gap-2">
-            <Sparkles className="w-4 h-4" />
-            Comment te sens-tu sur cette technique ?
+        {/* Sélecteur de maîtrise */}
+        <div className="p-4 bg-slate-800/50 rounded-xl border border-slate-700">
+          <h4 className="text-sm font-semibold text-slate-300 mb-3 flex items-center gap-2">
+            <Sparkles className="w-4 h-4" /> Comment tu te sens ?
           </h4>
           <div className="grid grid-cols-2 gap-2">
             {MASTERY_LEVELS.map((level) => (
@@ -259,26 +295,26 @@ const TechniqueDetail = ({ technique, mastery, onMasteryChange, onClose, userNam
                 key={level.id}
                 onClick={() => onMasteryChange(technique.id, level.id)}
                 className={`
-                  p-3 rounded-xl text-center transition-all border-2
+                  p-3 rounded-xl transition-all border-2
                   ${mastery === level.id 
-                    ? `${level.bg} border-current ${level.color}` 
-                    : 'bg-slate-800 border-slate-700 hover:border-slate-500 text-slate-300'
+                    ? `${level.bg} ${level.border} ring-2 ring-offset-2 ring-offset-slate-900 ring-current` 
+                    : 'bg-slate-800 border-slate-700 hover:border-slate-500'
                   }
                 `}
               >
-                <span className="text-2xl block mb-1">{level.emoji}</span>
-                <span className="text-xs font-medium">{level.label}</span>
+                <span className="text-2xl block">{level.emoji}</span>
+                <span className={`text-xs font-medium ${mastery === level.id ? level.color : 'text-slate-400'}`}>
+                  {level.label}
+                </span>
               </button>
             ))}
           </div>
         </div>
         
-        {/* Message d'encouragement */}
-        <div className="p-4 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-xl border border-cyan-500/30">
-          <p className="text-center text-cyan-300 text-sm">
-            🥋 Continue à t'entraîner au dojo, {userName || 'ninja'} ! 
-            <br />
-            <span className="text-xs text-slate-400">La pratique régulière est la clé du progrès.</span>
+        {/* Message */}
+        <div className="p-4 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-xl border border-purple-500/30 text-center">
+          <p className="text-purple-200 text-sm">
+            🥋 Continue à t'entraîner {userName || 'ninja'} !
           </p>
         </div>
       </div>
@@ -287,76 +323,13 @@ const TechniqueDetail = ({ technique, mastery, onMasteryChange, onClose, userNam
 };
 
 /**
- * Navigation par grade (tabs horizontaux)
- */
-const GradeNavigation = ({ grades, selectedIndex, onSelect, getMasteryStats }) => {
-  return (
-    <div className="flex gap-2 overflow-x-auto pb-2 px-1 scrollbar-thin scrollbar-thumb-slate-600">
-      {grades.map((grade, index) => {
-        const config = KYU_CONFIG[grade.kyu_id] || KYU_CONFIG['6e_kyu'];
-        const stats = getMasteryStats(index);
-        const isSelected = selectedIndex === index;
-        const isComplete = stats.percent === 100;
-        
-        return (
-          <motion.button
-            key={grade.id}
-            onClick={() => onSelect(index)}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className={`
-              relative flex-shrink-0 p-3 rounded-2xl transition-all min-w-[110px]
-              ${isSelected 
-                ? `bg-gradient-to-br ${config.gradient} shadow-xl shadow-${config.color}/20` 
-                : 'bg-slate-800 hover:bg-slate-700 border border-slate-700'
-              }
-            `}
-            data-testid={`grade-tab-${index}`}
-          >
-            {/* Badge complété */}
-            {isComplete && (
-              <div className="absolute -top-1 -right-1 bg-amber-500 rounded-full p-1 shadow-lg">
-                <Trophy className="w-3 h-3 text-white" />
-              </div>
-            )}
-            
-            <div className="text-center">
-              <span className="text-3xl block">{config.emoji}</span>
-              <p className={`text-sm font-bold mt-1 ${isSelected ? 'text-white' : 'text-slate-300'}`}>
-                {config.name}
-              </p>
-              <p className={`text-xs ${isSelected ? 'text-white/80' : 'text-slate-500'}`}>
-                {config.label}
-              </p>
-              
-              {/* Barre de progression */}
-              <div className="mt-2 h-1.5 bg-black/30 rounded-full overflow-hidden">
-                <motion.div 
-                  className={`h-full rounded-full ${isSelected ? 'bg-white' : 'bg-cyan-500'}`}
-                  initial={{ width: 0 }}
-                  animate={{ width: `${stats.percent}%` }}
-                  transition={{ duration: 0.5 }}
-                />
-              </div>
-              <p className={`text-[10px] mt-1 ${isSelected ? 'text-white/70' : 'text-slate-500'}`}>
-                {stats.mastered}/{stats.total} maîtrisées
-              </p>
-            </div>
-          </motion.button>
-        );
-      })}
-    </div>
-  );
-};
-
-/**
- * Composant principal - Mes Techniques
+ * Composant principal
  */
 const TechniquesByKyuCards = ({ 
   isOpen, 
   onClose,
   userName = '',
-  userKyu = '6e_kyu',
+  userKyu = '5e_kyu',
   masteredTechniques = [],
   userId = null,
   isAuthenticated = false,
@@ -365,16 +338,14 @@ const TechniquesByKyuCards = ({
   totalPoints = 0,
   onBeltClick = null
 }) => {
-  // États
   const [kyuLevels, setKyuLevels] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [selectedKyuIndex, setSelectedKyuIndex] = useState(0);
   const [selectedTechnique, setSelectedTechnique] = useState(null);
   const [masteryLevels, setMasteryLevels] = useState({});
-  const [savingMastery, setSavingMastery] = useState(null);
 
-  // Charger les données depuis l'API
+  // Charger les données
   useEffect(() => {
     const fetchKyuLevels = async () => {
       try {
@@ -382,13 +353,12 @@ const TechniquesByKyuCards = ({
         const response = await fetch(`${API_URL}/api/kyu-levels`);
         if (!response.ok) throw new Error('Erreur de chargement');
         const data = await response.json();
-        setKyuLevels(data);
+        // Trier par order décroissant (5e kyu en premier)
+        const sorted = data.sort((a, b) => b.order - a.order);
+        setKyuLevels(sorted);
         
-        // Charger les niveaux de maîtrise sauvegardés
         const savedMastery = localStorage.getItem(`aikido-mastery-${userId || 'guest'}`);
-        if (savedMastery) {
-          setMasteryLevels(JSON.parse(savedMastery));
-        }
+        if (savedMastery) setMasteryLevels(JSON.parse(savedMastery));
       } catch (err) {
         setError(err.message);
       } finally {
@@ -396,60 +366,21 @@ const TechniquesByKyuCards = ({
       }
     };
 
-    if (isOpen) {
-      fetchKyuLevels();
-    }
+    if (isOpen) fetchKyuLevels();
   }, [isOpen, userId]);
 
-  // Calculer les stats de maîtrise pour un grade
+  // Stats par grade
   const getMasteryStats = (kyuIndex) => {
     const kyu = kyuLevels[kyuIndex];
     if (!kyu?.techniques) return { total: 0, mastered: 0, percent: 0 };
-    
     const total = kyu.techniques.length;
     const mastered = kyu.techniques.filter(t => masteryLevels[t.id] === 'mastered').length;
-    const percent = total > 0 ? Math.round((mastered / total) * 100) : 0;
-    
-    return { total, mastered, percent };
+    return { total, mastered, percent: total > 0 ? Math.round((mastered / total) * 100) : 0 };
   };
-
-  // Gérer le changement de maîtrise
-  const handleMasteryChange = async (techniqueId, newLevel) => {
-    const newMasteryLevels = { ...masteryLevels, [techniqueId]: newLevel };
-    setMasteryLevels(newMasteryLevels);
-    
-    // Sauvegarder localement
-    localStorage.setItem(`aikido-mastery-${userId || 'guest'}`, JSON.stringify(newMasteryLevels));
-    
-    // Sauvegarder sur le serveur si authentifié
-    if (isAuthenticated && userId) {
-      try {
-        setSavingMastery(techniqueId);
-        await fetch(`${API_URL}/api/auth/progression/${techniqueId}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ mastery_level: newLevel })
-        });
-      } catch (err) {
-        console.error('Erreur sauvegarde:', err);
-      } finally {
-        setSavingMastery(null);
-      }
-    }
-    
-    // Callback parent
-    if (onMasteryUpdate) {
-      onMasteryUpdate(techniqueId, newLevel);
-    }
-  };
-
-  // Kyu actuel
-  const currentKyu = kyuLevels[selectedKyuIndex];
 
   // Stats globales
   const globalStats = useMemo(() => {
-    let total = 0;
-    let mastered = 0;
+    let total = 0, mastered = 0;
     kyuLevels.forEach(kyu => {
       if (kyu.techniques) {
         total += kyu.techniques.length;
@@ -459,14 +390,23 @@ const TechniquesByKyuCards = ({
     return { total, mastered, percent: total > 0 ? Math.round((mastered / total) * 100) : 0 };
   }, [kyuLevels, masteryLevels]);
 
-  // Loading state
+  // Changer maîtrise
+  const handleMasteryChange = (techniqueId, newLevel) => {
+    const newMasteryLevels = { ...masteryLevels, [techniqueId]: newLevel };
+    setMasteryLevels(newMasteryLevels);
+    localStorage.setItem(`aikido-mastery-${userId || 'guest'}`, JSON.stringify(newMasteryLevels));
+    if (onMasteryUpdate) onMasteryUpdate(techniqueId, newLevel);
+  };
+
+  const currentKyu = kyuLevels[selectedKyuIndex];
+  const currentConfig = currentKyu ? getBeltConfig(currentKyu.color, currentKyu.name) : null;
+
+  // Loading
   if (loading) {
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogContent className="max-w-md bg-slate-900 border-cyan-500/30 p-8">
-          <VisuallyHidden>
-            <DialogTitle>Chargement</DialogTitle>
-          </VisuallyHidden>
+          <VisuallyHidden><DialogTitle>Chargement</DialogTitle></VisuallyHidden>
           <div className="flex flex-col items-center justify-center">
             <div className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mb-4" />
             <p className="text-white text-lg">Chargement des techniques...</p>
@@ -476,14 +416,12 @@ const TechniquesByKyuCards = ({
     );
   }
 
-  // Error state
+  // Error
   if (error) {
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogContent className="max-w-md bg-slate-900 border-red-500/30 p-6">
-          <VisuallyHidden>
-            <DialogTitle>Erreur</DialogTitle>
-          </VisuallyHidden>
+          <VisuallyHidden><DialogTitle>Erreur</DialogTitle></VisuallyHidden>
           <div className="text-center">
             <AlertCircle className="w-12 h-12 text-red-400 mx-auto mb-4" />
             <p className="text-red-400 mb-4">{error}</p>
@@ -497,7 +435,7 @@ const TechniquesByKyuCards = ({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent 
-        className="max-w-5xl h-[90vh] bg-slate-900 border-2 border-cyan-500/30 p-0 overflow-hidden flex flex-col"
+        className="max-w-6xl h-[92vh] bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950 border-2 border-cyan-500/30 p-0 overflow-hidden"
         data-testid="techniques-dialog"
       >
         <VisuallyHidden>
@@ -506,121 +444,137 @@ const TechniquesByKyuCards = ({
         </VisuallyHidden>
         
         {/* ═══════════════════════════════════════════════════════════════════════════════ */}
-        {/* HEADER */}
+        {/* HEADER AVEC STATS GLOBALES */}
         {/* ═══════════════════════════════════════════════════════════════════════════════ */}
-        <div className="bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 p-4">
+        <div className="bg-gradient-to-r from-slate-800 via-slate-800 to-slate-900 p-4 border-b border-slate-700">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center">
-                <Swords className="w-7 h-7 text-white" />
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/30">
+                <Swords className="w-8 h-8 text-white" />
               </div>
               <div>
-                <h1 className="text-xl font-bold text-white">Mes Techniques</h1>
-                <p className="text-cyan-100 text-sm">
-                  {globalStats.mastered}/{globalStats.total} techniques maîtrisées ({globalStats.percent}%)
+                <h1 className="text-2xl font-bold text-white">Mes Techniques</h1>
+                <p className="text-slate-400 text-sm">
+                  {globalStats.mastered} / {globalStats.total} techniques maîtrisées
                 </p>
+              </div>
+            </div>
+            
+            {/* Progression globale */}
+            <div className="hidden sm:flex items-center gap-4">
+              <div className="text-right">
+                <p className="text-3xl font-bold text-cyan-400">{globalStats.percent}%</p>
+                <p className="text-xs text-slate-500">progression totale</p>
+              </div>
+              <div className="w-24 h-24">
+                <svg viewBox="0 0 100 100" className="transform -rotate-90">
+                  <circle cx="50" cy="50" r="40" fill="none" stroke="#334155" strokeWidth="8" />
+                  <motion.circle 
+                    cx="50" cy="50" r="40" fill="none" 
+                    stroke="url(#progressGradient)" 
+                    strokeWidth="8"
+                    strokeLinecap="round"
+                    initial={{ strokeDasharray: "0 251.2" }}
+                    animate={{ strokeDasharray: `${globalStats.percent * 2.512} 251.2` }}
+                    transition={{ duration: 1 }}
+                  />
+                  <defs>
+                    <linearGradient id="progressGradient">
+                      <stop offset="0%" stopColor="#06b6d4" />
+                      <stop offset="100%" stopColor="#3b82f6" />
+                    </linearGradient>
+                  </defs>
+                </svg>
               </div>
             </div>
             
             <button
               onClick={onClose}
-              className="p-2 rounded-lg bg-white/20 hover:bg-white/30 transition-colors"
-              data-testid="close-techniques"
+              className="p-2 rounded-xl bg-slate-700/50 hover:bg-slate-600 transition-colors"
             >
-              <X className="w-6 h-6 text-white" />
+              <X className="w-6 h-6 text-slate-300" />
             </button>
-          </div>
-          
-          {/* Barre de progression globale */}
-          <div className="mt-3 h-2 bg-white/20 rounded-full overflow-hidden">
-            <motion.div 
-              className="h-full bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full"
-              initial={{ width: 0 }}
-              animate={{ width: `${globalStats.percent}%` }}
-              transition={{ duration: 0.8 }}
-            />
           </div>
         </div>
         
         {/* ═══════════════════════════════════════════════════════════════════════════════ */}
-        {/* CONTENU PRINCIPAL */}
+        {/* SÉLECTEUR DE GRADES AVEC CEINTURES */}
         {/* ═══════════════════════════════════════════════════════════════════════════════ */}
-        <div className="flex-1 flex overflow-hidden">
-          {/* Liste des techniques (gauche) */}
-          <div className={`flex-1 flex flex-col overflow-hidden transition-all ${selectedTechnique ? 'w-1/2' : 'w-full'}`}>
-            {/* Navigation par grade */}
-            <div className="p-4 bg-slate-800/50 border-b border-slate-700">
-              <GradeNavigation 
-                grades={kyuLevels}
-                selectedIndex={selectedKyuIndex}
-                onSelect={setSelectedKyuIndex}
-                getMasteryStats={getMasteryStats}
+        <div className="p-4 bg-slate-800/30 border-b border-slate-700">
+          <h2 className="text-sm font-medium text-slate-400 mb-3">Choisis ton grade :</h2>
+          <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-thin scrollbar-thumb-slate-600">
+            {kyuLevels.map((grade, index) => (
+              <GradeCard
+                key={grade.id}
+                grade={grade}
+                index={index}
+                isSelected={selectedKyuIndex === index}
+                stats={getMasteryStats(index)}
+                onClick={() => setSelectedKyuIndex(index)}
               />
-            </div>
-            
-            {/* En-tête du grade sélectionné */}
-            {currentKyu && (
-              <div className="p-4 bg-slate-800/30 border-b border-slate-700">
+            ))}
+          </div>
+        </div>
+        
+        {/* ═══════════════════════════════════════════════════════════════════════════════ */}
+        {/* CONTENU : LISTE DES TECHNIQUES */}
+        {/* ═══════════════════════════════════════════════════════════════════════════════ */}
+        <div className="flex-1 overflow-hidden relative">
+          {currentKyu && (
+            <div className="h-full flex flex-col">
+              {/* En-tête du grade */}
+              <div className={`p-4 bg-gradient-to-r ${currentConfig?.gradient || 'from-slate-600 to-slate-700'}`}>
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <span className="text-4xl">{KYU_CONFIG[currentKyu.kyu_id]?.emoji || '⚪'}</span>
+                  <div className="flex items-center gap-4">
+                    <BeltVisual color={currentKyu.color} size="lg" />
                     <div>
-                      <h2 className="text-xl font-bold text-white">{currentKyu.name}</h2>
-                      <p className="text-slate-400 text-sm">
-                        Ceinture {KYU_CONFIG[currentKyu.kyu_id]?.label || 'Blanche'} • {currentKyu.techniques?.length || 0} techniques
+                      <h2 className={`text-2xl font-bold ${currentConfig?.textClass || 'text-white'}`}>
+                        {currentKyu.name}
+                      </h2>
+                      <p className={`text-sm ${currentConfig?.textClass || 'text-white'} opacity-80`}>
+                        {currentKyu.techniques?.length || 0} techniques • Ceinture {currentConfig?.label}
                       </p>
                     </div>
                   </div>
-                  
-                  <div className="text-right">
-                    <p className="text-2xl font-bold text-cyan-400">
-                      {getMasteryStats(selectedKyuIndex).percent}%
-                    </p>
-                    <p className="text-xs text-slate-500">complété</p>
+                  <div className={`text-right ${currentConfig?.textClass || 'text-white'}`}>
+                    <p className="text-3xl font-bold">{getMasteryStats(selectedKyuIndex).percent}%</p>
+                    <p className="text-xs opacity-80">complété</p>
                   </div>
                 </div>
               </div>
-            )}
-            
-            {/* Liste des techniques */}
-            <div className="flex-1 overflow-y-auto p-4 space-y-3" data-testid="techniques-list">
-              {currentKyu?.techniques?.map((technique, index) => (
-                <TechniqueCard
-                  key={technique.id}
-                  technique={technique}
-                  index={index}
-                  mastery={masteryLevels[technique.id] || 'not_started'}
-                  isUnlocked={true}
-                  onClick={setSelectedTechnique}
-                />
-              ))}
               
-              {(!currentKyu?.techniques || currentKyu.techniques.length === 0) && (
-                <div className="text-center py-12">
-                  <Swords className="w-16 h-16 text-slate-600 mx-auto mb-4" />
-                  <p className="text-slate-400">Aucune technique pour ce grade</p>
-                </div>
-              )}
+              {/* Liste des techniques */}
+              <div className="flex-1 overflow-y-auto p-4 space-y-2" data-testid="techniques-list">
+                {currentKyu.techniques?.map((technique, index) => (
+                  <TechniqueCard
+                    key={technique.id}
+                    technique={technique}
+                    index={index}
+                    mastery={masteryLevels[technique.id] || 'not_started'}
+                    onClick={setSelectedTechnique}
+                  />
+                ))}
+                
+                {(!currentKyu.techniques || currentKyu.techniques.length === 0) && (
+                  <div className="text-center py-12">
+                    <Swords className="w-16 h-16 text-slate-600 mx-auto mb-4" />
+                    <p className="text-slate-400">Aucune technique pour ce grade</p>
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
+          )}
           
-          {/* Panneau de détail (droite) */}
+          {/* Panneau de détail */}
           <AnimatePresence>
             {selectedTechnique && (
-              <motion.div
-                initial={{ width: 0, opacity: 0 }}
-                animate={{ width: '50%', opacity: 1 }}
-                exit={{ width: 0, opacity: 0 }}
-                className="border-l border-slate-700 overflow-hidden"
-              >
-                <TechniqueDetail
-                  technique={selectedTechnique}
-                  mastery={masteryLevels[selectedTechnique.id] || 'not_started'}
-                  onMasteryChange={handleMasteryChange}
-                  onClose={() => setSelectedTechnique(null)}
-                  userName={userName}
-                />
-              </motion.div>
+              <TechniqueDetailPanel
+                technique={selectedTechnique}
+                mastery={masteryLevels[selectedTechnique.id] || 'not_started'}
+                onMasteryChange={handleMasteryChange}
+                onClose={() => setSelectedTechnique(null)}
+                userName={userName}
+              />
             )}
           </AnimatePresence>
         </div>
@@ -628,19 +582,14 @@ const TechniquesByKyuCards = ({
         {/* ═══════════════════════════════════════════════════════════════════════════════ */}
         {/* FOOTER */}
         {/* ═══════════════════════════════════════════════════════════════════════════════ */}
-        <div className="p-3 bg-slate-800/50 border-t border-slate-700">
-          <div className="flex items-center justify-between text-sm">
-            <p className="text-slate-400">
-              🥋 Pratique régulièrement au dojo pour progresser !
-            </p>
-            <div className="flex items-center gap-2">
-              {MASTERY_LEVELS.slice(1).map(level => (
-                <div key={level.id} className="flex items-center gap-1 text-xs">
-                  <span>{level.emoji}</span>
-                  <span className={level.color}>{level.label}</span>
-                </div>
-              ))}
-            </div>
+        <div className="p-3 bg-slate-800/50 border-t border-slate-700 flex items-center justify-between text-xs">
+          <p className="text-slate-400">🥋 Entraîne-toi régulièrement au dojo pour progresser !</p>
+          <div className="flex items-center gap-3">
+            {MASTERY_LEVELS.map(level => (
+              <span key={level.id} className={`flex items-center gap-1 ${level.color}`}>
+                {level.emoji} {level.label}
+              </span>
+            ))}
           </div>
         </div>
       </DialogContent>
