@@ -936,8 +936,8 @@ function AppContent() {
                           <Swords className="w-5 h-5 text-amber-400" />
                         </div>
                         <div>
-                          <p className="text-2xl font-bold text-white">284</p>
-                          <p className="text-xs text-slate-400">Techniques</p>
+                          <p className="text-2xl font-bold text-white">96</p>
+                          <p className="text-xs text-slate-400">Techniques Kyu</p>
                         </div>
                       </div>
                     </CardContent>
