@@ -251,7 +251,8 @@ async def get_user_progress(user_id: str):
     """
     Récupère la progression d'un utilisateur sur tous les grades.
     """
-    from server import db
+    if db is None:
+        raise HTTPException(status_code=500, detail="Database not configured")
     
     progress = await db.user_grade_progress.find({"user_id": user_id}).to_list(None)
     
