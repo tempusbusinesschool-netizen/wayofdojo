@@ -6,7 +6,7 @@ Routes pour accéder au programme FFAAA et gérer la progression utilisateur
 from fastapi import APIRouter, HTTPException, Depends
 from typing import List, Optional
 from pydantic import BaseModel
-from datetime import datetime
+from datetime import datetime, timezone
 import os
 
 from models.passages_grades import (
@@ -16,7 +16,15 @@ from models.passages_grades import (
     count_techniques_by_category
 )
 
-router = APIRouter(prefix="/api/grades", tags=["Passages de Grades"])
+router = APIRouter(prefix="/grades", tags=["Passages de Grades"])
+
+# Reference to database - will be set by server.py
+db = None
+
+def set_database(database):
+    """Set the database reference from server.py"""
+    global db
+    db = database
 
 
 # ============================================================================
