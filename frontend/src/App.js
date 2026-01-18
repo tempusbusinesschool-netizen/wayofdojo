@@ -79,6 +79,20 @@ import TarificationPage from "@/pages/TarificationPage";
 import PhilosophiePage from "@/pages/PhilosophiePage";
 import CombinaisonsPage from "@/pages/CombinaisonsPage";
 import AdminDashboard, { ADMIN_SECTIONS, AdminTechniquesContent, AdminFilesContent } from "@/components/AdminDashboard";
+import TechniquesSectionViewer from "@/components/admin/TechniquesSectionViewer";
+import {
+  TECHNIQUES_JO,
+  TECHNIQUES_BOKKEN,
+  TECHNIQUES_TANTO,
+  TAI_SABAKI,
+  UKEMI,
+  KAMAE,
+  ATEMI,
+  KOKYU_WAZA,
+  KANSETSU_WAZA,
+  SUWARIWAZA,
+  HANMI_HANDACHI
+} from "@/constants/aikidoTechniquesData";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
