@@ -82,7 +82,6 @@ import CombinaisonsPage from "@/pages/CombinaisonsPage";
 import AdminDashboard, { ADMIN_SECTIONS, AdminTechniquesContent, AdminFilesContent } from "@/components/AdminDashboard";
 import TechniquesSectionViewer from "@/components/admin/TechniquesSectionViewer";
 import PassagesGradesViewer from "@/components/admin/PassagesGradesViewer";
-import AnimationsDemoViewer from "@/components/admin/AnimationsDemoViewer";
 import {
   TECHNIQUES_JO,
   TECHNIQUES_BOKKEN,
