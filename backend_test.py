@@ -10,7 +10,7 @@ import sys
 from datetime import datetime
 
 # Backend URL from frontend .env
-BACKEND_URL = "https://ninja-path-4.preview.emergentagent.com/api"
+BACKEND_URL = "https://aikido-game-2.preview.emergentagent.com/api"
 
 # Test credentials
 ADMIN_PASSWORD = "aikido2024"
