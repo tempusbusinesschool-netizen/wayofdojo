@@ -797,7 +797,7 @@ const VirtualDojo = ({
                   }`}
                   data-testid="tab-jeux"
                 >
-                  🎮 Jeux numériques
+                  🏋️ Entrainement physique
                 </button>
                 <button
                   onClick={() => setActiveDojoTab('validations')}
