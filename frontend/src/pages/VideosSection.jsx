@@ -27,6 +27,45 @@ const VIDEO_CATEGORIES = [
 const DEMO_VIDEOS = [
   {
     id: '1',
+    title: 'Démonstration Aïkido et Kaeshi Waza - François Pichereau',
+    description: 'Démonstration de François Pichereau (5e Dan) lors du Kagami Biraki du 25 février 2023 à Paris, Institut du Judo. Membre du Collège Technique Régional FFAAA Île-de-France.',
+    category: 'demonstrations',
+    duration: '4:27',
+    views: 1800,
+    thumbnail: 'https://img.youtube.com/vi/X9Jbb-GT9sg/maxresdefault.jpg',
+    videoUrl: 'https://www.youtube.com/watch?v=X9Jbb-GT9sg',
+    instructor: 'François Pichereau (5e Dan)',
+    date: '2023-02-25',
+    tags: ['Kagami Biraki', 'Kaeshi Waza', '5e Dan', 'FFAAA']
+  },
+  {
+    id: '2',
+    title: 'Kagami Biraki 2023 - François Pichereau 5ème dan',
+    description: 'Démonstration complète au Kagami Biraki 2023 à l\'Institut du Judo de Paris',
+    category: 'demonstrations',
+    duration: '6:15',
+    views: 1800,
+    thumbnail: 'https://img.youtube.com/vi/bgGCur4dySQ/maxresdefault.jpg',
+    videoUrl: 'https://www.youtube.com/watch?v=bgGCur4dySQ',
+    instructor: 'François Pichereau (5e Dan)',
+    date: '2023-02-25',
+    tags: ['Kagami Biraki', '2023', 'Institut du Judo']
+  },
+  {
+    id: '3',
+    title: 'Tachi Waza - Shomen Uchi Ikkyo',
+    description: 'Technique Ikkyo sur attaque Shomen Uchi en position debout',
+    category: 'techniques',
+    duration: '0:44',
+    views: 950,
+    thumbnail: 'https://img.youtube.com/vi/X9Jbb-GT9sg/hqdefault.jpg',
+    videoUrl: 'https://www.youtube.com/playlist?list=PLefaFeudP13MLfsVXGQQ79qRJ0gRyvfRE',
+    instructor: 'François Pichereau',
+    date: '2023-01-15',
+    tags: ['Ikkyo', 'Shomen Uchi', 'Tachi Waza']
+  },
+  {
+    id: '4',
     title: 'Ikkyo - Première technique',
     description: 'Démonstration complète de la technique Ikkyo avec variations',
     category: 'techniques',
@@ -39,7 +78,7 @@ const DEMO_VIDEOS = [
     tags: ['Ikkyo', '5e Kyu', 'Immobilisation']
   },
   {
-    id: '2',
+    id: '5',
     title: 'Shiho Nage - Projection 4 directions',
     description: 'Technique de projection dans les 4 directions',
     category: 'techniques',
@@ -52,7 +91,7 @@ const DEMO_VIDEOS = [
     tags: ['Shiho Nage', '5e Kyu', 'Projection']
   },
   {
-    id: '3',
+    id: '6',
     title: 'Stage National 2024',
     description: 'Enregistrement du stage national avec les plus grands maîtres',
     category: 'stages',
@@ -65,7 +104,7 @@ const DEMO_VIDEOS = [
     tags: ['Stage', 'National', '2024']
   },
   {
-    id: '4',
+    id: '7',
     title: 'Cours débutant - Les bases',
     description: 'Introduction aux fondamentaux de l\'Aïkido pour débutants',
     category: 'cours',
@@ -78,17 +117,17 @@ const DEMO_VIDEOS = [
     tags: ['Débutant', 'Bases', '6e Kyu']
   },
   {
-    id: '5',
-    title: 'Démonstration O-Sensei',
-    description: 'Archive historique - Démonstration du fondateur de l\'Aïkido',
+    id: '8',
+    title: 'World Combat Games - Préparation',
+    description: 'Préparation vidéo de François Pichereau pour les World Combat Games à Riyadh',
     category: 'demonstrations',
-    duration: '12:30',
-    views: 15000,
-    thumbnail: 'https://images.unsplash.com/photo-1509822929063-6b6cfc9b42f2?w=400',
-    videoUrl: '',
-    instructor: 'Morihei Ueshiba',
-    date: '1969-01-01',
-    tags: ['Archive', 'O-Sensei', 'Historique']
+    duration: '8:30',
+    views: 2500,
+    thumbnail: 'https://img.youtube.com/vi/LGgYTxKrCbk/maxresdefault.jpg',
+    videoUrl: 'https://www.youtube.com/watch?v=LGgYTxKrCbk',
+    instructor: 'François Pichereau',
+    date: '2023-10-15',
+    tags: ['World Combat Games', 'Riyadh', 'Compétition']
   }
 ];
 
