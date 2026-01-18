@@ -83,12 +83,22 @@ class UserProgressUpdate(BaseModel):
 # ============================================================================
 
 @router.get("/programme", response_model=List[GradeResume])
-async def get_programme_complet():
+async def get_programme_complet(type: Optional[str] = Query(None, description="Filtrer par type: 'kyu', 'dan', ou tous si non spécifié")):
     """
-    Récupère la liste de tous les grades avec résumé.
+    Récupère la liste des grades avec résumé.
+    - type=kyu : uniquement les grades Kyu (6e → 1er)
+    - type=dan : uniquement les grades Dan (Shodan → Yondan)
+    - sans filtre : tous les grades
     """
-    grades = get_all_grades()
+    if type == "kyu":
+        grades = get_kyu_grades()
+    elif type == "dan":
+        grades = get_dan_grades()
+    else:
+        grades = get_all_grades()
+    
     result = []
+    dan_grades = ["shodan", "nidan", "sandan", "yondan"]
     
     for g in grades:
         techniques = g.get("techniques", [])
@@ -103,7 +113,8 @@ async def get_programme_complet():
             heures_minimum=g["heures_minimum"],
             nb_techniques=len(techniques),
             nb_mouvements=len(mouvements),
-            categories=count_techniques_by_category(g["id"])
+            categories=count_techniques_by_category(g["id"]),
+            type_grade="dan" if g["id"] in dan_grades else "kyu"
         ))
     
     return result
