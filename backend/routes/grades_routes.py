@@ -308,7 +308,7 @@ async def update_user_progress(user_id: str, update: UserProgressUpdate):
             if update.mouvement_id in progress["mouvements_valides"]:
                 progress["mouvements_valides"].remove(update.mouvement_id)
     
-    progress["updated_at"] = datetime.utcnow()
+    progress["updated_at"] = datetime.now(timezone.utc)
     
     # Sauvegarder
     await db.user_grade_progress.update_one(
