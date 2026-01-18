@@ -5999,6 +5999,11 @@ app.include_router(api_router)
 from voice_agent import voice_router
 app.include_router(voice_router)
 
+# Import and include grades routes
+from routes.grades_routes import router as grades_router, set_database as set_grades_db
+set_grades_db(db)
+app.include_router(grades_router, prefix="/api")
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
