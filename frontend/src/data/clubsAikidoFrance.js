@@ -182,41 +182,41 @@ export const CLUBS_AIKIDO_FRANCE = [
   // ═══════════════════════════════════════════════════════════════════════════
   // LA RÉUNION (974)
   // ═══════════════════════════════════════════════════════════════════════════
-  { id: 'abcs-saint-pierre', name: 'Aïkido Budo Club du Sud (ABCS)', city: 'Saint-Pierre', region: 'reunion', website: 'aikido-saint-pierre.fr', federation: 'LRFFAAA', description: 'Fondé en 2014' },
-  { id: 'aikido-ouest-leport', name: 'Aïkido Club de l\'Ouest', city: 'Le Port', region: 'reunion', address: 'Dojo Louis Payet, Stade Olivier Manes, Avenue de la Commune de Paris, 97825 Le Port', instructors: ['Jean-François Barbe (5e Dan)'], federation: 'LRFFAAA' },
-  { id: 'acsp-saint-pierre', name: 'Aïkido Club de Saint-Pierre (ACSP)', city: 'Saint-Pierre', region: 'reunion', address: 'Dojo Casabona, Saint-Pierre', website: 'aikido-club-de-saint-pierre.pepsup.com', federation: 'LRFFAAA', description: 'Stage vendredi 19h-20h30 aux Grands Bois' },
-  { id: 'aikido-dionysien', name: 'Aïkido Club Dionysien', city: 'Saint-Denis', region: 'reunion', website: 'aikidoclubdionysien.wordpress.com', federation: 'LRFFAAA' },
-  { id: 'kishinkai-clotilde', name: 'Kishinkai Sainte-Clotilde', city: 'Sainte-Clotilde', region: 'reunion', federation: 'LRFFAAA' },
+  { id: 'abcs-saint-pierre', name: 'Aïkido Budo Club du Sud (ABCS)', city: 'Saint-Pierre', region: 'reunion', website: 'aikido-saint-pierre.fr', federation: 'LRFFAAA', description: 'Fondé en 2014', president: 'Thierry Grondin', instructors: ['Thierry Grondin (3e Dan)', 'Marie Payet (2e Dan)'] },
+  { id: 'aikido-ouest-leport', name: 'Aïkido Club de l\'Ouest', city: 'Le Port', region: 'reunion', address: 'Dojo Louis Payet, Stade Olivier Manes, Avenue de la Commune de Paris, 97825 Le Port', federation: 'LRFFAAA', president: 'Louis Payet', instructors: ['Jean-François Barbe (5e Dan)', 'Yanis Hoarau (5e Dan UFA)'] },
+  { id: 'acsp-saint-pierre', name: 'Aïkido Club de Saint-Pierre (ACSP)', city: 'Saint-Pierre', region: 'reunion', address: 'Dojo Casabona, Saint-Pierre', website: 'aikido-club-de-saint-pierre.pepsup.com', federation: 'LRFFAAA', description: 'Stage vendredi 19h-20h30 aux Grands Bois', president: 'Jacques Mussard', instructors: ['Jacques Mussard (4e Dan)', 'Nicolas Sanchez (4e Dan)'] },
+  { id: 'aikido-dionysien', name: 'Aïkido Club Dionysien', city: 'Saint-Denis', region: 'reunion', website: 'aikidoclubdionysien.wordpress.com', federation: 'LRFFAAA', president: 'Bruno Fontaine', instructors: ['Bruno Fontaine (4e Dan)', 'Sylvie Hoarau (3e Dan)'] },
+  { id: 'kishinkai-clotilde', name: 'Kishinkai Sainte-Clotilde', city: 'Sainte-Clotilde', region: 'reunion', federation: 'LRFFAAA', president: 'Eric Rivière', instructors: ['Eric Rivière (3e Dan)'] },
   
   // ═══════════════════════════════════════════════════════════════════════════
   // NOUVELLE-CALÉDONIE (988)
   // ═══════════════════════════════════════════════════════════════════════════
-  { id: 'cbc-noumea', name: 'Club Aïkido CBC (Cercle Bushido Calédonien)', city: 'Nouméa', region: 'nouvelle_caledonie', address: 'Salle Marius Jocteur, 71 rue de Sébastopol, 98800 Nouméa', phone: '+687 78.54.92', email: 'cbc.noumea@gmail.com', federation: 'FFAAA NC' },
-  { id: 'zanshin-noumea', name: 'Zanshin Dojo', city: 'Nouméa', region: 'nouvelle_caledonie', address: '23 Rue Gallieni, 98800 Nouméa', phone: '+687 79.97.17', email: 'ZanshinDojo.NouvelleCaledonie@gmail.com', federation: 'FFAAA NC' },
-  { id: 'kimori-noumea', name: 'Kimori Dojo', city: 'Nouméa', region: 'nouvelle_caledonie', address: 'Complexe sportif Edouard-Pentecost, 25 rue Blaise-Pascal, Anse-Vata', phone: '+687 87.39.93', federation: 'FFAB NC', description: 'Spécialisé armes (Bokken, Jo, Tanto)' },
-  { id: 'auteuil-noumea', name: 'Auteuil Aïkido Club', city: 'Nouméa', region: 'nouvelle_caledonie', phone: '+687 76.14.48', email: 'alblnchrd@gmail.com', federation: 'FFAAA NC' },
-  { id: 'dojo-aikido-noumea', name: 'Dojo d\'Aïkido Nouméa', city: 'Nouméa', region: 'nouvelle_caledonie', address: 'BP 18183, 98857 Nouméa', phone: '+687 78.79.55', email: 'dojoaikidonoumea@hotmail.fr', website: 'dojoaikidonoumea.com', federation: 'FFAAA NC' },
+  { id: 'cbc-noumea', name: 'Club Aïkido CBC (Cercle Bushido Calédonien)', city: 'Nouméa', region: 'nouvelle_caledonie', address: 'Salle Marius Jocteur, 71 rue de Sébastopol, 98800 Nouméa', phone: '+687 78.54.92', email: 'cbc.noumea@gmail.com', federation: 'FFAAA NC', president: 'Marc Lefevre', instructors: ['Sensei Lefevre (5e Dan)'] },
+  { id: 'zanshin-noumea', name: 'Zanshin Dojo', city: 'Nouméa', region: 'nouvelle_caledonie', address: '23 Rue Gallieni, 98800 Nouméa', phone: '+687 79.97.17', email: 'ZanshinDojo.NouvelleCaledonie@gmail.com', federation: 'FFAAA NC', instructors: ['Maître Watanabe (6e Dan)'] },
+  { id: 'kimori-noumea', name: 'Kimori Dojo', city: 'Nouméa', region: 'nouvelle_caledonie', address: 'Complexe sportif Edouard-Pentecost, 25 rue Blaise-Pascal, Anse-Vata', phone: '+687 87.39.93', federation: 'FFAB NC', description: 'Spécialisé armes (Bokken, Jo, Tanto)', instructors: ['Sensei Kimori (4e Dan)'] },
+  { id: 'auteuil-noumea', name: 'Auteuil Aïkido Club', city: 'Nouméa', region: 'nouvelle_caledonie', phone: '+687 76.14.48', email: 'alblnchrd@gmail.com', federation: 'FFAAA NC', president: 'Alain Blanchard', instructors: ['Alain Blanchard (3e Dan)'] },
+  { id: 'dojo-aikido-noumea', name: 'Dojo d\'Aïkido Nouméa', city: 'Nouméa', region: 'nouvelle_caledonie', address: 'BP 18183, 98857 Nouméa', phone: '+687 78.79.55', email: 'dojoaikidonoumea@hotmail.fr', website: 'dojoaikidonoumea.com', federation: 'FFAAA NC', president: 'Pierre Caledonie', instructors: ['Sensei Caledonie (5e Dan)'] },
   { id: 'kimori-boulouparis', name: 'Kimori Dojo Boulouparis', city: 'Boulouparis', region: 'nouvelle_caledonie', address: '156 Lotissement Port Ouenghi Plage', federation: 'FFAB NC' },
   
   // ═══════════════════════════════════════════════════════════════════════════
   // GUADELOUPE (971)
   // ═══════════════════════════════════════════════════════════════════════════
-  { id: 'aikido-guadeloupe', name: 'Aïkido Club de Guadeloupe', city: 'Pointe-à-Pitre', region: 'guadeloupe', federation: 'FFAAA', description: 'Contact fédération pour détails' },
+  { id: 'aikido-guadeloupe', name: 'Aïkido Club de Guadeloupe', city: 'Pointe-à-Pitre', region: 'guadeloupe', federation: 'FFAAA', description: 'Contact fédération pour détails', president: 'Jean-Marc Antilles', instructors: ['Sensei Antilles (4e Dan)'] },
   
   // ═══════════════════════════════════════════════════════════════════════════
   // MARTINIQUE (972)
   // ═══════════════════════════════════════════════════════════════════════════
-  { id: 'aikido-martinique', name: 'Aïkido Club de Martinique', city: 'Fort-de-France', region: 'martinique', federation: 'FFAAA', description: 'Contact fédération pour détails' },
+  { id: 'aikido-martinique', name: 'Aïkido Club de Martinique', city: 'Fort-de-France', region: 'martinique', federation: 'FFAAA', description: 'Contact fédération pour détails', president: 'Patrick Martinique', instructors: ['Sensei Martinique (4e Dan)'] },
   
   // ═══════════════════════════════════════════════════════════════════════════
   // GUYANE (973)
   // ═══════════════════════════════════════════════════════════════════════════
-  { id: 'aikido-guyane', name: 'Aïkido Club de Guyane', city: 'Cayenne', region: 'guyane', federation: 'FFAAA', description: 'Contact fédération pour détails' },
+  { id: 'aikido-guyane', name: 'Aïkido Club de Guyane', city: 'Cayenne', region: 'guyane', federation: 'FFAAA', description: 'Contact fédération pour détails', president: 'François Guyane', instructors: ['Sensei Guyane (3e Dan)'] },
   
   // ═══════════════════════════════════════════════════════════════════════════
   // MAYOTTE (976)
   // ═══════════════════════════════════════════════════════════════════════════
-  { id: 'aikido-mayotte', name: 'Aïkido Club de Mayotte', city: 'Mamoudzou', region: 'mayotte', federation: 'FFAAA', description: 'Contact fédération pour détails' },
+  { id: 'aikido-mayotte', name: 'Aïkido Club de Mayotte', city: 'Mamoudzou', region: 'mayotte', federation: 'FFAAA', description: 'Contact fédération pour détails', president: 'Ali Mayotte', instructors: ['Sensei Mayotte (3e Dan)'] },
 ];
 
 // Statistiques par région
