@@ -480,6 +480,230 @@ PROGRAMME_FFAAA = {
             "Prêt pour le passage Shodan"
         ],
         "duree_examen": "35-40 minutes"
+    },
+    
+    # ========================================================================
+    # GRADES DAN - CEINTURES NOIRES
+    # ========================================================================
+    
+    "shodan": {
+        "id": "shodan",
+        "grade": "shodan",
+        "nom": "Shodan",
+        "nom_japonais": "初段",
+        "couleur_ceinture": "#000000",
+        "delai_minimum": "1 an après 1er Kyu",
+        "heures_minimum": 300,
+        "jours_minimum": 100,
+        "prerequis": "1er Kyu validé, licence FFAAA en cours",
+        "description": "Premier dan - Le vrai commencement. Maîtrise des fondamentaux et début de la compréhension profonde.",
+        "objectifs": [
+            "Maîtrise complète du programme Kyu",
+            "Démontrer une pratique fluide et efficace",
+            "Comprendre les principes fondamentaux (Ki, Ma-ai, Kuzushi)",
+            "Être capable de recevoir (Ukemi) de manière sécurisée à tout moment"
+        ],
+        "mouvements": [
+            {"id": "dan_ukemi_all", "nom": "Tous les Ukemi", "nom_japonais": "受身", "categorie": "ukemi", "obligatoire": True,
+             "description": "Maîtrise complète de toutes les chutes", "points_cles": ["Fluidité", "Sécurité", "Adaptabilité"], "erreurs_communes": ["Rigidité", "Anticipation"]},
+            {"id": "dan_tai_sabaki_all", "nom": "Tous les Tai Sabaki", "nom_japonais": "体捌き", "categorie": "tai_sabaki", "obligatoire": True,
+             "description": "Déplacements fluides et connectés", "points_cles": ["Centre stable", "Timing parfait"], "erreurs_communes": ["Déconnexion du centre"]}
+        ],
+        "techniques": [
+            # Programme complet - révision de toutes les techniques Kyu
+            # TACHI WAZA - Démonstration sur toutes les attaques
+            {"id": "sd_su_all", "nom": "Toutes techniques", "nom_japonais": "全技", "attaque": "Shomen Uchi", "attaque_japonais": "正面打ち", "categorie": "tachi_waza", "obligatoire": True,
+             "description": "Ikkyo à Gokyo + projections sur Shomen", "points_cles": ["Fluidité", "Efficacité", "Zanshin"], "erreurs_communes": ["Techniques mécaniques"]},
+            {"id": "sd_yu_all", "nom": "Toutes techniques", "nom_japonais": "全技", "attaque": "Yokomen Uchi", "attaque_japonais": "横面打ち", "categorie": "tachi_waza", "obligatoire": True,
+             "description": "Programme complet sur Yokomen", "points_cles": ["Timing d'interception", "Continuité"], "erreurs_communes": ["Bloquer au lieu de guider"]},
+            {"id": "sd_tsuki_all", "nom": "Toutes techniques", "nom_japonais": "全技", "attaque": "Chudan Tsuki", "attaque_japonais": "中段突き", "categorie": "tachi_waza", "obligatoire": True,
+             "description": "Techniques sur coup de poing", "points_cles": ["Irimi décisif", "Ne pas fuir"], "erreurs_communes": ["Reculer"]},
+            {"id": "sd_katate_all", "nom": "Toutes techniques", "nom_japonais": "全技", "attaque": "Katate Dori", "attaque_japonais": "片手取り", "categorie": "tachi_waza", "obligatoire": True,
+             "description": "Saisies une main (Ai et Gyaku Hanmi)", "points_cles": ["Utiliser la connexion"], "erreurs_communes": ["Forcer"]},
+            {"id": "sd_ryote_all", "nom": "Toutes techniques", "nom_japonais": "全技", "attaque": "Ryote Dori", "attaque_japonais": "両手取り", "categorie": "tachi_waza", "obligatoire": True,
+             "description": "Saisies deux mains", "points_cles": ["Centrage", "Extension"], "erreurs_communes": ["Tirer vers soi"]},
+            # USHIRO WAZA
+            {"id": "sd_ushiro_all", "nom": "Toutes techniques Ushiro", "nom_japonais": "後ろ技", "attaque": "Ushiro Waza", "attaque_japonais": "後ろ技", "categorie": "ushiro_waza", "obligatoire": True,
+             "description": "Ryote Dori, Ryokata Dori, Kubishime", "points_cles": ["Anticipation", "Ne pas attendre"], "erreurs_communes": ["Attendre d'être saisi"]},
+            # SUWARI WAZA
+            {"id": "sd_sw_all", "nom": "Programme Suwari Waza complet", "nom_japonais": "座り技", "attaque": "Shomen/Katate", "attaque_japonais": "正面/片手", "categorie": "suwari_waza", "obligatoire": True,
+             "description": "Ikkyo à Yonkyo + projections à genoux", "points_cles": ["Mobilité Shikko", "Stabilité"], "erreurs_communes": ["Se relever"]},
+            # HANMI HANDACHI
+            {"id": "sd_hh_all", "nom": "Programme Hanmi Handachi complet", "nom_japonais": "半身半立", "attaque": "Toutes saisies", "attaque_japonais": "全取り", "categorie": "hanmi_handachi", "obligatoire": True,
+             "description": "Techniques Tori à genoux, Uke debout", "points_cles": ["Utiliser le désavantage"], "erreurs_communes": ["Tenter de se relever"]},
+            # BUKIWAZA
+            {"id": "sd_tanto_all", "nom": "Tanto Dori complet", "nom_japonais": "短刀取り", "attaque": "Tanto", "attaque_japonais": "短刀", "categorie": "tanto_dori", "obligatoire": True,
+             "description": "Défenses contre couteau (Shomen, Yokomen, Tsuki)", "points_cles": ["Sécurité absolue", "Désarmement"], "erreurs_communes": ["Croiser la lame"]},
+            {"id": "sd_tachi_all", "nom": "Tachi Dori", "nom_japonais": "太刀取り", "attaque": "Tachi", "attaque_japonais": "太刀", "categorie": "tachi_dori", "obligatoire": True,
+             "description": "Défenses contre sabre", "points_cles": ["Timing crucial", "Ma-ai"], "erreurs_communes": ["Entrée tardive"]},
+            {"id": "sd_jo_all", "nom": "Jo Dori", "nom_japonais": "杖取り", "attaque": "Jo", "attaque_japonais": "杖", "categorie": "jo_dori", "obligatoire": True,
+             "description": "Défenses contre bâton", "points_cles": ["Distance", "Timing"], "erreurs_communes": ["Saisir trop tôt"]},
+            # JIYU WAZA
+            {"id": "sd_jiyu", "nom": "Jiyu Waza", "nom_japonais": "自由技", "attaque": "Attaques libres", "attaque_japonais": "自由", "categorie": "jiyu_waza", "obligatoire": True,
+             "description": "Travail libre sur attaques variées", "points_cles": ["Adaptation", "Fluidité", "Zanshin"], "erreurs_communes": ["Répétition mécanique"]},
+            # RANDORI
+            {"id": "sd_randori", "nom": "Randori", "nom_japonais": "乱取り", "attaque": "2-3 attaquants", "attaque_japonais": "二三人", "categorie": "randori", "obligatoire": True,
+             "description": "Attaques multiples (2-3 Uke)", "points_cles": ["Vision périphérique", "Positionnement", "Gestion du stress"], "erreurs_communes": ["Fixer un seul attaquant"]}
+        ],
+        "criteres_evaluation": [
+            "Maîtrise technique de l'ensemble du programme",
+            "Fluidité et efficacité des mouvements",
+            "Qualité de l'Ukemi (recevoir)",
+            "Zanshin (vigilance maintenue)",
+            "Attitude et étiquette irréprochables",
+            "Randori contrôlé et efficace"
+        ],
+        "duree_examen": "45-60 minutes"
+    },
+    
+    "nidan": {
+        "id": "nidan",
+        "grade": "nidan",
+        "nom": "Nidan",
+        "nom_japonais": "弐段",
+        "couleur_ceinture": "#000000",
+        "delai_minimum": "2 ans après Shodan",
+        "heures_minimum": 500,
+        "jours_minimum": 150,
+        "prerequis": "Shodan validé depuis 2 ans minimum",
+        "description": "Deuxième dan - Approfondissement. Recherche de la précision et début de l'enseignement.",
+        "objectifs": [
+            "Approfondir la compréhension des principes",
+            "Développer des variations personnelles",
+            "Être capable d'assister à l'enseignement",
+            "Maîtriser le travail aux armes (Aiki-Ken, Aiki-Jo)"
+        ],
+        "mouvements": [
+            {"id": "nd_weapons_suburi", "nom": "Suburi Ken et Jo", "nom_japonais": "素振り", "categorie": "bukiwaza", "obligatoire": True,
+             "description": "Mouvements de base au sabre et bâton", "points_cles": ["Précision", "Puissance du centre"], "erreurs_communes": ["Utiliser les bras"]},
+            {"id": "nd_awase", "nom": "Awase", "nom_japonais": "合わせ", "categorie": "bukiwaza", "obligatoire": True,
+             "description": "Travail d'harmonisation avec partenaire", "points_cles": ["Connexion", "Timing"], "erreurs_communes": ["Forcer le contact"]}
+        ],
+        "techniques": [
+            # Approfondissement avec variations
+            {"id": "nd_henka_ikkyo", "nom": "Ikkyo - Variations", "nom_japonais": "一教変化", "attaque": "Toutes attaques", "attaque_japonais": "全攻撃", "categorie": "tachi_waza", "obligatoire": True,
+             "description": "Variations et enchaînements depuis Ikkyo", "points_cles": ["Adaptation", "Continuité"], "erreurs_communes": ["Techniques figées"]},
+            {"id": "nd_henka_nikyo", "nom": "Nikyo - Variations", "nom_japonais": "二教変化", "attaque": "Toutes attaques", "attaque_japonais": "全攻撃", "categorie": "tachi_waza", "obligatoire": True,
+             "description": "Variations et enchaînements depuis Nikyo", "points_cles": ["Précision du placement"], "erreurs_communes": ["Forcer la clé"]},
+            {"id": "nd_henka_sankyo", "nom": "Sankyo - Variations", "nom_japonais": "三教変化", "attaque": "Toutes attaques", "attaque_japonais": "全攻撃", "categorie": "tachi_waza", "obligatoire": True,
+             "description": "Variations et enchaînements depuis Sankyo", "points_cles": ["Spirale continue"], "erreurs_communes": ["Torsion plate"]},
+            {"id": "nd_kaeshi_waza", "nom": "Kaeshi Waza", "nom_japonais": "返し技", "attaque": "Techniques retournées", "attaque_japonais": "返し", "categorie": "tachi_waza", "obligatoire": True,
+             "description": "Contre-techniques (retourner la technique de Tori)", "points_cles": ["Timing précis", "Sensibilité"], "erreurs_communes": ["Anticiper", "Résister"]},
+            # BUKIWAZA approfondi
+            {"id": "nd_ken_suburi", "nom": "Ken Suburi (7)", "nom_japonais": "剣素振り", "attaque": "Solo", "attaque_japonais": "一人", "categorie": "bukiwaza", "obligatoire": True,
+             "description": "7 coupes fondamentales au sabre", "points_cles": ["Coupe depuis le centre", "Tenouchi"], "erreurs_communes": ["Couper avec les bras"]},
+            {"id": "nd_jo_suburi", "nom": "Jo Suburi (20)", "nom_japonais": "杖素振り", "attaque": "Solo", "attaque_japonais": "一人", "categorie": "bukiwaza", "obligatoire": True,
+             "description": "20 mouvements fondamentaux au bâton", "points_cles": ["Fluidité", "Extension"], "erreurs_communes": ["Gestes saccadés"]},
+            {"id": "nd_kumitachi", "nom": "Kumitachi", "nom_japonais": "組太刀", "attaque": "Ken vs Ken", "attaque_japonais": "剣対剣", "categorie": "bukiwaza", "obligatoire": True,
+             "description": "Travail à deux au sabre", "points_cles": ["Ma-ai", "Musubi"], "erreurs_communes": ["Compétition"]},
+            {"id": "nd_kumijo", "nom": "Kumijo", "nom_japonais": "組杖", "attaque": "Jo vs Jo", "attaque_japonais": "杖対杖", "categorie": "bukiwaza", "obligatoire": True,
+             "description": "Travail à deux au bâton", "points_cles": ["Distance", "Rythme"], "erreurs_communes": ["Frapper au lieu de guider"]},
+            # JIYU WAZA avancé
+            {"id": "nd_jiyu_advanced", "nom": "Jiyu Waza avancé", "nom_japonais": "自由技", "attaque": "Toutes attaques", "attaque_japonais": "全攻撃", "categorie": "jiyu_waza", "obligatoire": True,
+             "description": "Travail libre avec variations et enchaînements", "points_cles": ["Créativité", "Efficacité"], "erreurs_communes": ["Répétition"]},
+            # RANDORI
+            {"id": "nd_randori", "nom": "Randori", "nom_japonais": "乱取り", "attaque": "3-4 attaquants", "attaque_japonais": "三四人", "categorie": "randori", "obligatoire": True,
+             "description": "Attaques multiples (3-4 Uke)", "points_cles": ["Calme", "Contrôle de l'espace"], "erreurs_communes": ["Panique", "Brutalité"]}
+        ],
+        "criteres_evaluation": [
+            "Variations personnelles cohérentes",
+            "Kaeshi Waza démontré",
+            "Travail aux armes maîtrisé",
+            "Capacité à transmettre les bases",
+            "Randori fluide avec 3-4 attaquants"
+        ],
+        "duree_examen": "60-75 minutes"
+    },
+    
+    "sandan": {
+        "id": "sandan",
+        "grade": "sandan",
+        "nom": "Sandan",
+        "nom_japonais": "参段",
+        "couleur_ceinture": "#000000",
+        "delai_minimum": "3 ans après Nidan",
+        "heures_minimum": 700,
+        "jours_minimum": 200,
+        "prerequis": "Nidan validé depuis 3 ans minimum",
+        "description": "Troisième dan - Maturité technique. Expression personnelle et capacité d'enseignement confirmée.",
+        "objectifs": [
+            "Développer un style personnel cohérent",
+            "Être capable d'enseigner de manière autonome",
+            "Maîtriser les principes au-delà de la forme",
+            "Démontrer une compréhension martiale approfondie"
+        ],
+        "mouvements": [
+            {"id": "3d_ki_no_nagare", "nom": "Ki no Nagare", "nom_japonais": "気の流れ", "categorie": "principe", "obligatoire": True,
+             "description": "Flux continu - techniques sans arrêt", "points_cles": ["Continuité absolue", "Pas de pause"], "erreurs_communes": ["Marquer des arrêts"]}
+        ],
+        "techniques": [
+            # Expression personnelle
+            {"id": "3d_personal_style", "nom": "Programme personnel", "nom_japonais": "個人表現", "attaque": "Au choix", "attaque_japonais": "選択", "categorie": "tachi_waza", "obligatoire": True,
+             "description": "Démonstration du style personnel sur attaques choisies", "points_cles": ["Cohérence", "Efficacité", "Expression"], "erreurs_communes": ["Copier sans comprendre"]},
+            {"id": "3d_ki_nagare", "nom": "Ki no Nagare Waza", "nom_japonais": "気の流れ技", "attaque": "Toutes attaques", "attaque_japonais": "全攻撃", "categorie": "tachi_waza", "obligatoire": True,
+             "description": "Techniques en flux continu (sans saisie statique)", "points_cles": ["Fluidité totale", "Connexion maintenue"], "erreurs_communes": ["Attendre la saisie"]},
+            {"id": "3d_oyo_waza", "nom": "Oyo Waza", "nom_japonais": "応用技", "attaque": "Applications", "attaque_japonais": "応用", "categorie": "tachi_waza", "obligatoire": True,
+             "description": "Applications martiales des techniques", "points_cles": ["Efficacité réelle", "Atemi intégrés"], "erreurs_communes": ["Techniques sportives"]},
+            # BUKIWAZA avancé
+            {"id": "3d_ken_tai_jo", "nom": "Ken Tai Jo", "nom_japonais": "剣対杖", "attaque": "Sabre vs Bâton", "attaque_japonais": "剣対杖", "categorie": "bukiwaza", "obligatoire": True,
+             "description": "Travail sabre contre bâton", "points_cles": ["Adaptation", "Distance variable"], "erreurs_communes": ["Distance fixe"]},
+            {"id": "3d_jo_nage", "nom": "Jo Nage Waza", "nom_japonais": "杖投げ技", "attaque": "Projections au Jo", "attaque_japonais": "杖投げ", "categorie": "bukiwaza", "obligatoire": True,
+             "description": "Projections utilisant le bâton", "points_cles": ["Jo comme extension"], "erreurs_communes": ["Frapper au lieu de projeter"]},
+            {"id": "3d_tanto_advanced", "nom": "Tanto Dori avancé", "nom_japonais": "短刀取り上級", "attaque": "Tanto", "attaque_japonais": "短刀", "categorie": "tanto_dori", "obligatoire": True,
+             "description": "Défenses avancées contre couteau", "points_cles": ["Attaques réalistes", "Stress contrôlé"], "erreurs_communes": ["Attaques complaisantes"]},
+            # RANDORI avancé
+            {"id": "3d_randori", "nom": "Randori avancé", "nom_japonais": "乱取り上級", "attaque": "4+ attaquants", "attaque_japonais": "四人以上", "categorie": "randori", "obligatoire": True,
+             "description": "Randori avec 4 attaquants ou plus", "points_cles": ["Sérénité", "Efficacité"], "erreurs_communes": ["Brutalité", "Fuite"]}
+        ],
+        "criteres_evaluation": [
+            "Style personnel identifiable et cohérent",
+            "Ki no Nagare maîtrisé",
+            "Applications martiales démontrées",
+            "Capacité d'enseignement autonome",
+            "Maturité et sérénité dans la pratique"
+        ],
+        "duree_examen": "75-90 minutes"
+    },
+    
+    "yondan": {
+        "id": "yondan",
+        "grade": "yondan",
+        "nom": "Yondan",
+        "nom_japonais": "四段",
+        "couleur_ceinture": "#000000",
+        "delai_minimum": "4 ans après Sandan",
+        "heures_minimum": 1000,
+        "jours_minimum": 300,
+        "prerequis": "Sandan validé depuis 4 ans minimum",
+        "description": "Quatrième dan - Expert. Maîtrise technique complète et contribution à la transmission de l'art.",
+        "objectifs": [
+            "Incarner les principes de l'Aïkido",
+            "Contribuer au développement de l'art",
+            "Former des enseignants",
+            "Démontrer une pratique exemplaire"
+        ],
+        "mouvements": [
+            {"id": "4d_takemusu", "nom": "Takemusu Aiki", "nom_japonais": "武産合気", "categorie": "principe", "obligatoire": True,
+             "description": "Création spontanée - techniques naissant naturellement", "points_cles": ["Spontanéité", "Adaptation infinie"], "erreurs_communes": ["Préméditation"]}
+        ],
+        "techniques": [
+            {"id": "4d_free_demo", "nom": "Démonstration libre", "nom_japonais": "自由演武", "attaque": "Libre", "attaque_japonais": "自由", "categorie": "jiyu_waza", "obligatoire": True,
+             "description": "Démonstration complète reflétant la maîtrise personnelle", "points_cles": ["Expression totale", "Cohérence"], "erreurs_communes": ["Performance vs Authenticité"]},
+            {"id": "4d_all_weapons", "nom": "Programme complet armes", "nom_japonais": "武器全般", "attaque": "Ken, Jo, Tanto", "attaque_japonais": "剣杖短刀", "categorie": "bukiwaza", "obligatoire": True,
+             "description": "Maîtrise complète du travail aux armes", "points_cles": ["Intégration corps-arme"], "erreurs_communes": ["Arme séparée du corps"]},
+            {"id": "4d_teaching_demo", "nom": "Démonstration pédagogique", "nom_japonais": "教育演武", "attaque": "Enseignement", "attaque_japonais": "教育", "categorie": "tachi_waza", "obligatoire": True,
+             "description": "Capacité à expliquer et transmettre", "points_cles": ["Clarté", "Adaptation au niveau"], "erreurs_communes": ["Technique sans pédagogie"]},
+            {"id": "4d_randori_expert", "nom": "Randori expert", "nom_japonais": "乱取り達人", "attaque": "5+ attaquants", "attaque_japonais": "五人以上", "categorie": "randori", "obligatoire": True,
+             "description": "Randori avec 5 attaquants ou plus", "points_cles": ["Calme absolu", "Efficacité naturelle"], "erreurs_communes": ["Effort visible"]}
+        ],
+        "criteres_evaluation": [
+            "Incarnation des principes fondamentaux",
+            "Expression naturelle et spontanée (Takemusu)",
+            "Capacité à former des enseignants",
+            "Contribution à la communauté Aïkido",
+            "Exemplarité sur et hors tatami"
+        ],
+        "duree_examen": "90+ minutes"
     }
 }
 
