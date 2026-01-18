@@ -280,36 +280,7 @@ const AdminDashboard = ({
         {/* Sidebar - Desktop */}
         <aside className={`hidden lg:block ${sidebarOpen ? 'w-64' : 'w-20'} bg-slate-800/50 border-r border-slate-700 min-h-[calc(100vh-64px)] transition-all duration-300`}>
           <nav className="p-4 space-y-2">
-            {ADMIN_SECTIONS.map((section) => {
-              const Icon = section.icon;
-              const sectionColors = colorClasses[section.color];
-              const isActive = activeSection === section.id;
-              
-              return (
-                <button
-                  key={section.id}
-                  onClick={() => onSectionChange(section.id)}
-                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                    isActive 
-                      ? `${sectionColors.active} text-white shadow-lg` 
-                      : 'hover:bg-slate-700/50 text-slate-400 hover:text-white'
-                  }`}
-                >
-                  <Icon className={`w-5 h-5 flex-shrink-0 ${isActive ? 'text-white' : sectionColors.text}`} />
-                  {sidebarOpen && (
-                    <div className="flex-1 text-left">
-                      <div className="font-medium text-sm">{section.label}</div>
-                      {isActive && (
-                        <div className="text-xs opacity-80">{section.description}</div>
-                      )}
-                    </div>
-                  )}
-                  {sidebarOpen && isActive && (
-                    <ChevronRight className="w-4 h-4" />
-                  )}
-                </button>
-              );
-            })}
+            {ADMIN_SECTIONS.map((section) => renderMenuItem(section))}
           </nav>
 
           {/* Toggle sidebar */}
