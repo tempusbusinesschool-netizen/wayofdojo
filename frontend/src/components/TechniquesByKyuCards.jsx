@@ -182,6 +182,17 @@ const TechniquesByKyuCards = ({
           
           {/* Contenu */}
           <div className="p-4 space-y-4 overflow-y-auto max-h-[70vh]">
+            {/* Image de la technique */}
+            {selectedTechnique.image_url && (
+              <div className="relative rounded-xl overflow-hidden border border-slate-600 bg-slate-800">
+                <img 
+                  src={selectedTechnique.image_url} 
+                  alt={selectedTechnique.name}
+                  className="w-full h-48 object-contain bg-slate-900"
+                />
+              </div>
+            )}
+            
             {/* Niveau actuel */}
             <div className={`p-4 rounded-xl ${masteryInfo.bg} border border-slate-600`}>
               <div className="flex items-center gap-3">
