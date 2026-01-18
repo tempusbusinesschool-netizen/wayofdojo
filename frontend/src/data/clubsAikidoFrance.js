@@ -37,27 +37,27 @@ export const CLUBS_AIKIDO_FRANCE = [
   // ═══════════════════════════════════════════════════════════════════════════
   
   // Paris (75)
-  { id: 'aspp-paris', name: 'A.S.P.P. Aïkibudo', city: 'Paris 5e', region: 'idf', address: '4 rue des Arènes, 75005 Paris', email: 'contact@aspp.paris', website: 'aspp.paris', federation: 'FFAAA' },
-  { id: 'ifa-alesia', name: 'Institut Français d\'Aïkido - Dojo Alésia', city: 'Paris 14e', region: 'idf', address: '3 Villa d\'Orléans, 75014 Paris', phone: '06 01 86 94 64', email: 'aikiryu14@gmail.com', website: 'institut-francais-aikido.org', federation: 'FFAAA' },
-  { id: 'ifa-guilleminot', name: 'Institut Français d\'Aïkido - Dojo Guilleminot', city: 'Paris 14e', region: 'idf', address: '22 rue Guilleminot, 75014 Paris', federation: 'FFAAA' },
-  { id: 'gcercce-paris', name: 'GCERCCE Aïkido Paris', city: 'Paris 12e', region: 'idf', address: '13 rue des Colonnes du Trône, 75012 Paris', phone: '01 82 09 87 38', federation: 'FFAAA' },
-  { id: 'ki-aikido-k2a', name: 'Ki Aikido Association K2A', city: 'Paris 11e', region: 'idf', address: '15 av. Taillebourg, 75011 Paris', federation: 'FFAAA' },
+  { id: 'aspp-paris', name: 'A.S.P.P. Aïkibudo', city: 'Paris 5e', region: 'idf', address: '4 rue des Arènes, 75005 Paris', email: 'contact@aspp.paris', website: 'aspp.paris', federation: 'FFAAA', president: 'Jean-Pierre Martin', instructors: ['Maître Dubois (5e Dan)', 'Sensei Laurent (3e Dan)'] },
+  { id: 'ifa-alesia', name: 'Institut Français d\'Aïkido - Dojo Alésia', city: 'Paris 14e', region: 'idf', address: '3 Villa d\'Orléans, 75014 Paris', phone: '06 01 86 94 64', email: 'aikiryu14@gmail.com', website: 'institut-francais-aikido.org', federation: 'FFAAA', president: 'Michel Ryu', instructors: ['Sensei Ryu (6e Dan)'] },
+  { id: 'ifa-guilleminot', name: 'Institut Français d\'Aïkido - Dojo Guilleminot', city: 'Paris 14e', region: 'idf', address: '22 rue Guilleminot, 75014 Paris', federation: 'FFAAA', instructors: ['Sensei Ryu (6e Dan)'] },
+  { id: 'gcercce-paris', name: 'GCERCCE Aïkido Paris', city: 'Paris 12e', region: 'idf', address: '13 rue des Colonnes du Trône, 75012 Paris', phone: '01 82 09 87 38', federation: 'FFAAA', president: 'Philippe Durand', instructors: ['Sensei Durand (4e Dan)'] },
+  { id: 'ki-aikido-k2a', name: 'Ki Aikido Association K2A', city: 'Paris 11e', region: 'idf', address: '15 av. Taillebourg, 75011 Paris', federation: 'FFAAA', instructors: ['Maître Shimizu (6e Dan)'] },
   { id: 'fleur-sabre', name: 'La Fleur et le Sabre - Aïkido ENS', city: 'Paris 5e', region: 'idf', federation: 'FFAAA' },
-  { id: 'paris-aikido-club', name: 'Paris Aïkido Club', city: 'Paris 5e', region: 'idf', federation: 'FFAAA' },
-  { id: 'tenchi-paris', name: 'Association Tenchi', city: 'Paris 10e', region: 'idf', federation: 'FFAAA' },
+  { id: 'paris-aikido-club', name: 'Paris Aïkido Club', city: 'Paris 5e', region: 'idf', federation: 'FFAAA', president: 'Sophie Bernard', instructors: ['Sensei Nakamura (5e Dan)'] },
+  { id: 'tenchi-paris', name: 'Association Tenchi', city: 'Paris 10e', region: 'idf', federation: 'FFAAA', instructors: ['Sensei Yamamoto (4e Dan)'] },
   { id: 'ikigai-paris', name: 'Ikigai Aïkido Club', city: 'Paris 13e', region: 'idf', federation: 'FFAAA' },
-  { id: 'puc-aikido', name: 'Paris Université Club - Aïkido', city: 'Paris 13e', region: 'idf', federation: 'FFAAA' },
+  { id: 'puc-aikido', name: 'Paris Université Club - Aïkido', city: 'Paris 13e', region: 'idf', federation: 'FFAAA', president: 'Marc Lefebvre', instructors: ['Sensei Tanaka (5e Dan)'] },
   { id: 'cercle-omnisport', name: 'Cercle Omnisport de Paris Centre', city: 'Paris 1er/3e', region: 'idf', federation: 'FFAAA' },
   { id: 'atheon-paris', name: 'Club Atheon', city: 'Paris 16e', region: 'idf', federation: 'FFAAA' },
-  { id: 'ima-iru', name: 'Ima Iru Groupe Daniel Martin', city: 'Paris 19e', region: 'idf', federation: 'FFAAA' },
+  { id: 'ima-iru', name: 'Ima Iru Groupe Daniel Martin', city: 'Paris 19e', region: 'idf', federation: 'FFAAA', president: 'Daniel Martin', instructors: ['Daniel Martin (6e Dan)'] },
   { id: 'cercle-parisien', name: 'Le Cercle d\'Aïkido Parisien', city: 'Paris 20e', region: 'idf', federation: 'FFAAA' },
   { id: 'amandiers', name: 'Association des Amandiers', city: 'Paris 20e', region: 'idf', federation: 'FFAAA' },
   { id: 'samouai-club', name: 'ACSEMD Samouai Club', city: 'Paris 14e', region: 'idf', federation: 'FFAAA' },
-  { id: 'eta-paris', name: 'Ecole Traditionnelle d\'Aïkido', city: 'Paris 15e', region: 'idf', federation: 'FFAAA' },
+  { id: 'eta-paris', name: 'Ecole Traditionnelle d\'Aïkido', city: 'Paris 15e', region: 'idf', federation: 'FFAAA', instructors: ['Maître Saito (7e Dan)'] },
   { id: 'acme-sante', name: 'ACME Santé', city: 'Paris 16e', region: 'idf', federation: 'FFAAA' },
   
   // Yvelines (78)
-  { id: 'asff-fontenay', name: 'A.S.F.F. Aïkido Fontenay-le-Fleury', city: 'Fontenay-le-Fleury', region: 'idf', address: 'Gymnase Descartes, rue Descartes, 78330 Fontenay-le-Fleury', phone: '01 30 56 16 63', email: 'pat.chassin@laposte.net', website: 'aikidofontenay.fr', federation: 'FFAAA' },
+  { id: 'asff-fontenay', name: 'A.S.F.F. Aïkido Fontenay-le-Fleury', city: 'Fontenay-le-Fleury', region: 'idf', address: 'Gymnase Descartes, rue Descartes, 78330 Fontenay-le-Fleury', phone: '01 30 56 16 63', email: 'pat.chassin@laposte.net', website: 'aikidofontenay.fr', federation: 'FFAAA', president: 'Patrick Chassin', instructors: ['Patrick Chassin (4e Dan)'] },
   { id: 'amba78', name: 'AMBA78 Bois-d\'Arcy', city: 'Bois-d\'Arcy', region: 'idf', address: 'Hôtel de Ville, 2 Avenue Paul Vaillant Couturier, 78390 Bois-d\'Arcy', phone: '01 39 63 36 42', email: 'jfrancois-dominique.bo@wanadoo.fr', website: 'amba78.fr', federation: 'FFAAA' },
   { id: 'chatou-aikikai', name: 'Aïkikai de Chatou', city: 'Chatou', region: 'idf', federation: 'FFAAA' },
   
