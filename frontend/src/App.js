@@ -1078,7 +1078,7 @@ function AppContent() {
             )}
             
             {activePage === 'combinaisons' && (
-              <CombinaisonsPage />
+              <CombinaisonsPage onBack={() => setActivePage(null)} />
             )}
             
             {/* Grade Sections - Visible uniquement pour les utilisateurs connectés */}
