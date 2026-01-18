@@ -961,6 +961,8 @@ function AppContent() {
               <div className="p-6">
                 <DojoManagement />
               </div>
+            ) : adminSection === 'stages' ? (
+              <StagesCalendar embedded={true} />
             ) : adminSection === 'subscriptions' ? (
               <div className="p-6">
                 <div className="text-center py-12">
