@@ -439,7 +439,7 @@ async def delete_dojo(dojo_id: str, auth: SuperAdminAuth):
     # Move all users to default dojo
     await db.users.update_many(
         {"dojo_id": dojo_id},
-        {"$set": {"dojo_id": "aikido-la-riviere", "dojo_name": "Aikido La Rivière"}}
+        {"$set": {"dojo_id": "club-test", "dojo_name": "Club test"}}
     )
     
     await db.dojos.delete_one({"id": dojo_id})
