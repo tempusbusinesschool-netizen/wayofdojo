@@ -39,7 +39,7 @@ const getBeltConfig = (color, name) => {
     || { label: 'Blanche', emoji: '⚪', bg: 'bg-gray-200' };
 };
 
-const IllustrationsGallery = () => {
+const IllustrationsGallery = ({ embedded = false }) => {
   const [kyuLevels, setKyuLevels] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedGrade, setSelectedGrade] = useState('all');
