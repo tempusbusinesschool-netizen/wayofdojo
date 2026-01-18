@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { ChevronRight, ChevronLeft, Check, Lock, Star, BookOpen, Trophy, X, Lightbulb, Volume2, VolumeX, Filter, Layers, Circle, Loader2, PlayCircle, GraduationCap, Play, History, Scroll, ArrowLeft } from 'lucide-react';
 import axios from 'axios';
 import { toast } from 'sonner';
-import { TechniqueSequenceDemo } from './animations/TechniqueSequenceAnimation';
 import HakamaHistory from './HakamaHistory';
 import BeltProgressCard from './BeltProgressCard';
 import DeplacementsSection from './DeplacementsSection';
