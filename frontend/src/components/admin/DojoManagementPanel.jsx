@@ -992,12 +992,35 @@ function DojoManagementPanel() {
                           )}
                         </div>
                       )}
+                      
+                      {/* Président */}
+                      {club.president && (
+                        <div className="mt-2">
+                          <p className="text-amber-400 text-xs flex items-center gap-1">
+                            <UserCog className="w-3 h-3" />
+                            <span className="font-medium">Président:</span> {club.president}
+                          </p>
+                        </div>
+                      )}
+                      
+                      {/* Enseignants */}
+                      {club.instructors && club.instructors.length > 0 && (
+                        <div className="mt-2">
+                          <p className="text-purple-400 text-xs flex items-start gap-1">
+                            <GraduationCap className="w-3 h-3 mt-0.5 flex-shrink-0" />
+                            <span>
+                              <span className="font-medium">Enseignants:</span>{' '}
+                              {club.instructors.join(', ')}
+                            </span>
+                          </p>
+                        </div>
+                      )}
                     </div>
                     <div className="text-right flex-shrink-0">
                       <span className="text-lg">{region?.emoji}</span>
                       {isAlreadyImported && (
                         <Badge className="mt-1 bg-emerald-600 text-xs">Importé</Badge>
-                      )}}
+                      )}
                     </div>
                   </div>
                   <div className="flex items-center gap-2 mt-2">
