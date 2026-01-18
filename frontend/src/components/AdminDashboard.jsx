@@ -271,6 +271,13 @@ const colorClasses = {
     gradient: 'from-rose-600 to-pink-600',
     active: 'bg-gradient-to-r from-rose-600 to-pink-600'
   },
+  pink: {
+    bg: 'bg-pink-500/20',
+    border: 'border-pink-500/50',
+    text: 'text-pink-400',
+    gradient: 'from-pink-600 to-purple-600',
+    active: 'bg-gradient-to-r from-pink-600 to-purple-600'
+  },
   red: {
     bg: 'bg-red-500/20',
     border: 'border-red-500/50',
