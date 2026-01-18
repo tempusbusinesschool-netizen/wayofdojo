@@ -201,7 +201,7 @@ function AppContent() {
     const handleHashNavigation = () => {
       const hash = window.location.hash.replace('#', '');
       if (hash) {
-        const validPages = ['combinaisons', 'philosophie', 'tarification', 'mode-emploi', 'inscription'];
+        const validPages = ['combinaisons', 'philosophie', 'tarification', 'mode-emploi', 'inscription', 'illustrations'];
         if (validPages.includes(hash)) {
           setActivePage(hash);
         }
