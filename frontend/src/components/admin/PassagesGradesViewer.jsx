@@ -591,6 +591,9 @@ const GradeDetailPage = ({ gradeId, onBack }) => {
   const [grade, setGrade] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  // État pour les sections repliables - DOIT être au début du composant
+  const [showObjectifs, setShowObjectifs] = useState(false);
+  const [showCriteres, setShowCriteres] = useState(false);
   
   useEffect(() => {
     const fetchGrade = async () => {
@@ -634,10 +637,6 @@ const GradeDetailPage = ({ gradeId, onBack }) => {
   
   const beltInfo = BELT_INFO[grade.couleur_ceinture] || BELT_INFO['#FFFFFF'];
   const isDan = ['shodan', 'nidan', 'sandan', 'yondan'].includes(grade.id);
-  
-  // État pour les sections repliables
-  const [showObjectifs, setShowObjectifs] = useState(false);
-  const [showCriteres, setShowCriteres] = useState(false);
   
   return (
     <motion.div
