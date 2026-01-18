@@ -79,6 +79,7 @@ import ModeEmploiPage from "@/pages/ModeEmploiPage";
 import TarificationPage from "@/pages/TarificationPage";
 import PhilosophiePage from "@/pages/PhilosophiePage";
 import CombinaisonsPage from "@/pages/CombinaisonsPage";
+import IllustrationsGallery from "@/pages/IllustrationsGallery";
 import AdminDashboard, { ADMIN_SECTIONS, AdminTechniquesContent, AdminFilesContent } from "@/components/AdminDashboard";
 import TechniquesSectionViewer from "@/components/admin/TechniquesSectionViewer";
 import PassagesGradesViewer from "@/components/admin/PassagesGradesViewer";
