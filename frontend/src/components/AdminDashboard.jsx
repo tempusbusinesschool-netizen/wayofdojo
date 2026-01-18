@@ -54,7 +54,14 @@ const ADMIN_SECTIONS = [
     label: 'Techniques d\'Aïkido',
     icon: Swords,
     color: 'amber',
-    description: '96 combinaisons du programme'
+    description: '141 combinaisons du programme'
+  },
+  {
+    id: 'files',
+    label: 'Fichiers de référence',
+    icon: FolderOpen,
+    color: 'sky',
+    description: 'Documents et ressources techniques'
   },
   {
     id: 'legal',
