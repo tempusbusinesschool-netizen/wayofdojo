@@ -299,43 +299,37 @@ const DojoLogbookDialog = ({
                   🥋 Ma Pratique
                 </h2>
                 <div className="flex items-center gap-2">
-                  {/* Bouton rejouer audio */}
-                  <button
-                    onClick={() => playTanakaAudio('step_4_carnet')}
-                    disabled={isAudioPlaying}
-                    className={`p-2 rounded-full transition-all ${
-                      isAudioPlaying 
-                        ? 'bg-amber-500/50 cursor-not-allowed' 
-                        : 'bg-amber-500/20 hover:bg-amber-500/40'
-                    }`}
-                    title="Écouter Maître Tanaka"
-                    data-testid="tanaka-play-audio"
-                  >
-                    <Volume2 className={`w-4 h-4 ${isAudioPlaying ? 'text-amber-300 animate-pulse' : 'text-amber-400'}`} />
-                  </button>
-                  
-                  {/* Bouton mute */}
+                  {/* Bouton unique son - joue ou coupe le son */}
                   <button
                     onClick={() => {
-                      setAudioMuted(!audioMuted);
-                      if (!audioMuted && currentAudioRef.current) {
-                        currentAudioRef.current.pause();
+                      if (audioMuted) {
+                        setAudioMuted(false);
+                        playTanakaAudio('step_4_carnet');
+                      } else if (isAudioPlaying) {
+                        if (currentAudioRef.current) {
+                          currentAudioRef.current.pause();
+                        }
                         setIsAudioPlaying(false);
                         setIsTanakaSpeaking(false);
+                        setAudioMuted(true);
+                      } else {
+                        playTanakaAudio('step_4_carnet');
                       }
                     }}
                     className={`p-2 rounded-full transition-all ${
                       audioMuted 
                         ? 'bg-red-500/30 hover:bg-red-500/50' 
-                        : 'bg-slate-700/50 hover:bg-slate-700'
+                        : isAudioPlaying
+                          ? 'bg-amber-500/50'
+                          : 'bg-amber-500/20 hover:bg-amber-500/40'
                     }`}
-                    title={audioMuted ? "Activer le son" : "Couper le son"}
-                    data-testid="tanaka-mute-toggle"
+                    title={audioMuted ? "Activer le son" : isAudioPlaying ? "Couper le son" : "Écouter Maître Tanaka"}
+                    data-testid="tanaka-audio-toggle"
                   >
                     {audioMuted ? (
                       <VolumeX className="w-4 h-4 text-red-400" />
                     ) : (
-                      <Volume2 className="w-4 h-4 text-slate-400" />
+                      <Volume2 className={`w-4 h-4 ${isAudioPlaying ? 'text-amber-300 animate-pulse' : 'text-amber-400'}`} />
                     )}
                   </button>
                   
