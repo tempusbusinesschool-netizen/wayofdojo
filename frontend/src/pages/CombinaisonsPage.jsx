@@ -13,7 +13,6 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { COMBINAISONS_VALIDES } from '@/constants/aikidoCombinaisons';
-import { useNavigate } from 'react-router-dom';
 
 // Mapping des noms lisibles
 const ATTAQUE_NAMES = {
@@ -81,8 +80,7 @@ const KYU_COLORS = {
   '1er_kyu': { bg: 'bg-purple-100', text: 'text-purple-800', border: 'border-purple-500', label: '1er Kyu' }
 };
 
-const CombinaisonsPage = () => {
-  const navigate = useNavigate();
+const CombinaisonsPage = ({ onBack }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedKyu, setSelectedKyu] = useState('all');
   const [selectedType, setSelectedType] = useState('all');
@@ -172,7 +170,7 @@ const CombinaisonsPage = () => {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => navigate('/')}
+                onClick={onBack}
                 className="text-slate-400 hover:text-white"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
