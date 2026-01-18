@@ -786,7 +786,7 @@ const VirtualDojo = ({
           ) : (
             // Liste des jeux
             <>
-              {/* Onglets : Jeux numériques / Validations */}
+              {/* Onglets : Entrainement physique / Validations */}
               <div className="flex gap-2 mb-4">
                 <button
                   onClick={() => setActiveDojoTab('jeux')}
