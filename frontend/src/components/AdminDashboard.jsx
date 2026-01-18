@@ -67,11 +67,20 @@ const ADMIN_SECTIONS = [
         children: [
           {
             id: 'techniques',
-            label: 'Toutes les techniques',
+            label: 'Techniques Kyu',
             icon: FileCode,
             color: 'amber',
-            description: '284 combinaisons du programme',
+            description: '96 techniques (6e Kyu → 1er Kyu)',
             filePath: 'Sports/Aikido/Techniques d\'aikido/Techniques d\'aikido.js'
+          },
+          {
+            id: 'grades_dan',
+            label: 'Grades Dan',
+            icon: FileCode,
+            color: 'violet',
+            description: '45 techniques (1er → 4e Dan)',
+            filePath: 'Sports/Aikido/Techniques d\'aikido/Grades_Dan/Techniques_Dan.js',
+            hasVideo: true
           },
           {
             id: 'armes',
