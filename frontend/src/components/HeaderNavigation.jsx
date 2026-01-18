@@ -118,16 +118,6 @@ const HeaderNavigation = ({
                 <div className="text-[10px] sm:text-xs text-slate-400 truncate">Espace professeur</div>
               </div>
             </button>
-            <button
-              onClick={() => { onLoginParent(); setOpenMenu(null); }}
-              className="w-full flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 text-left text-slate-200 hover:bg-purple-900/30 transition-colors border-t border-slate-700"
-            >
-              <Heart className="w-4 h-4 text-purple-400 flex-shrink-0" />
-              <div className="min-w-0">
-                <div className="font-medium text-sm sm:text-base truncate">Parent</div>
-                <div className="text-[10px] sm:text-xs text-slate-400 truncate">Suivi enfants</div>
-              </div>
-            </button>
           </div>
         )}
       </div>
