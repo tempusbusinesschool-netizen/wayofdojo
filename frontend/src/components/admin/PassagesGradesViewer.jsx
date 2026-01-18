@@ -18,7 +18,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 
 // Import des données
-import { PASSAGES_DE_GRADES, getGradesKyu, getGradesDan, getNombreTechniquesGrade } from '../../../../Sports/Aikido/Techniques d\'aikido/Passages_de_Grades/Passages_de_Grades';
+import { PASSAGES_DE_GRADES, getGradesKyu, getGradesDan, getNombreTechniquesGrade } from '@/constants/passagesGrades';
 
 /**
  * Carte pour un grade individuel dans la liste
