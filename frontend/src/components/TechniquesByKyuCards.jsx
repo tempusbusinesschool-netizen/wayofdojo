@@ -1120,12 +1120,6 @@ const TechniquesByKyuCards = ({
         )}
       </DialogContent>
 
-      {/* Modal de démo des animations séquentielles */}
-      <TechniqueSequenceDemo 
-        isOpen={showAnimationDemo} 
-        onClose={() => setShowAnimationDemo(false)} 
-      />
-
       {/* Modal Philosophie et Histoire */}
       <Dialog open={showPhilosophieHistoire} onOpenChange={setShowPhilosophieHistoire}>
         <DialogContent className="max-w-4xl max-h-[90vh] bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-2 border-purple-500/30 p-0 overflow-hidden" data-testid="philosophie-histoire-dialog">
