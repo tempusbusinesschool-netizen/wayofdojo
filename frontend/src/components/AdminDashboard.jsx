@@ -13,7 +13,8 @@ import {
   Shield, Users, Building2, CreditCard, ScrollText, 
   LayoutDashboard, Settings, BookOpen, Swords,
   ChevronRight, LogOut, Menu, X, FileText,
-  BarChart3, UserCog, Bell, Database, HelpCircle
+  BarChart3, UserCog, Bell, Database, HelpCircle,
+  FolderOpen, Download, ExternalLink, FileCode
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import CombinaisonsPage from '@/pages/CombinaisonsPage';
