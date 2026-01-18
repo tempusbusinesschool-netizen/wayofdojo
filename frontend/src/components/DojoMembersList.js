@@ -40,58 +40,66 @@ const AIKIDO_GRADES = {
   "3e_dan": { label: "3ème Dan", color: "#1a1a1a", emoji: "⬛⬛⬛", textColor: "text-slate-200" },
 };
 
-function DojoMembersList({ dojoId, dojoName }) {
+function DojoMembersList({ dojoId, dojoName, isAdmin = false }) {
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingMember, setEditingMember] = useState(null);
 
-  const fetchMembers = async () => {
-    try {
-      const response = await axios.get(`${API}/dojo-members`, {
-        params: { dojo_id: dojoId }
-      });
-      setMembers(response.data.members || []);
-    } catch (error) {
-      console.error("Error fetching members:", error);
-      // Use mock data if API not ready
-      setMembers([
-        { id: '1', display_name: 'Jean Dupont', status: 'active', created_at: new Date().toISOString(), email: 'jean@example.com', belt_level: '4e_kyu', progression_percentage: 45 },
-        { id: '2', display_name: 'Marie Martin', status: 'active', created_at: new Date().toISOString(), belt_level: '5e_kyu', progression_percentage: 30 },
-        { id: '3', display_name: 'NinjaAikido42', status: 'active', created_at: new Date().toISOString(), use_pseudonym: true, belt_level: '3e_kyu', progression_percentage: 65 },
-        { id: '4', display_name: 'Pierre Leroy', status: 'inactive', created_at: new Date().toISOString(), internal_note: 'Absent depuis 2 mois', belt_level: '6e_kyu', progression_percentage: 10 },
-        { id: '5', display_name: 'Sophie Bernard', status: 'active', created_at: new Date().toISOString(), belt_level: '1er_kyu', progression_percentage: 85 },
-      ]);
-    }
-    setLoading(false);
-  };
-
   useEffect(() => {
     const loadMembers = async () => {
+      setLoading(true);
       try {
-        const response = await axios.get(`${API}/dojo-members`, {
-          params: { dojo_id: dojoId }
-        });
-        setMembers(response.data.members || []);
+        let response;
+        if (isAdmin) {
+          // Admin mode: fetch all users from the platform
+          response = await axios.get(`${API}/users`);
+          const users = response.data.users || response.data || [];
+          // Transform users to member format
+          const transformedMembers = users.map(user => ({
+            id: user.id,
+            display_name: `${user.first_name || ''} ${user.last_name || ''}`.trim() || user.email,
+            email: user.email,
+            status: user.is_active !== false ? 'active' : 'inactive',
+            belt_level: user.belt_level || '6e_kyu',
+            created_at: user.created_at,
+            role: user.role || 'adherent',
+            subscription_status: user.subscription_status,
+            subscription_plan: user.subscription_plan,
+            dojo_name: user.dojo_name,
+            progression_percentage: calculateProgressionPercentage(user.progression)
+          }));
+          setMembers(transformedMembers);
+        } else if (dojoId) {
+          // Dojo mode: fetch members for specific dojo
+          response = await axios.get(`${API}/dojo-members`, {
+            params: { dojo_id: dojoId }
+          });
+          setMembers(response.data.members || []);
+        }
       } catch (error) {
         console.error("Error fetching members:", error);
-        // Use mock data if API not ready
-        setMembers([
-          { id: '1', display_name: 'Jean Dupont', status: 'active', created_at: new Date().toISOString(), email: 'jean@example.com', belt_level: '4e_kyu', progression_percentage: 45 },
-          { id: '2', display_name: 'Marie Martin', status: 'active', created_at: new Date().toISOString(), belt_level: '5e_kyu', progression_percentage: 30 },
-          { id: '3', display_name: 'NinjaAikido42', status: 'active', created_at: new Date().toISOString(), use_pseudonym: true, belt_level: '3e_kyu', progression_percentage: 65 },
-          { id: '4', display_name: 'Pierre Leroy', status: 'inactive', created_at: new Date().toISOString(), internal_note: 'Absent depuis 2 mois', belt_level: '6e_kyu', progression_percentage: 10 },
-          { id: '5', display_name: 'Sophie Bernard', status: 'active', created_at: new Date().toISOString(), belt_level: '1er_kyu', progression_percentage: 85 },
-        ]);
+        setMembers([]);
       }
       setLoading(false);
     };
     
-    if (dojoId) {
+    // Load members if admin mode OR if dojoId is provided
+    if (isAdmin || dojoId) {
       loadMembers();
+    } else {
+      setLoading(false);
     }
-  }, [dojoId]);
+  }, [dojoId, isAdmin]);
+
+  // Calculate progression percentage from user progression object
+  const calculateProgressionPercentage = (progression) => {
+    if (!progression || typeof progression !== 'object') return 0;
+    const masteredCount = Object.values(progression).filter(p => p?.mastery_level === 'mastered').length;
+    // Assuming ~100 techniques total for rough percentage
+    return Math.min(100, Math.round((masteredCount / 100) * 100));
+  };
 
   const handleToggleStatus = async (memberId, currentStatus) => {
     const newStatus = currentStatus === 'active' ? 'inactive' : 'active';
