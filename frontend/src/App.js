@@ -83,6 +83,7 @@ import IllustrationsGallery from "@/pages/IllustrationsGallery";
 import AdminDashboard, { ADMIN_SECTIONS, AdminTechniquesContent, AdminFilesContent, AdminGalleryContent, AdminVideosContent } from "@/components/AdminDashboard";
 import TechniquesSectionViewer from "@/components/admin/TechniquesSectionViewer";
 import PassagesGradesViewer from "@/components/admin/PassagesGradesViewer";
+import UserCredentialsManager from "@/components/admin/UserCredentialsManager";
 import {
   TECHNIQUES_JO,
   TECHNIQUES_BOKKEN,
