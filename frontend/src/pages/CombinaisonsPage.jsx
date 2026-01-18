@@ -161,34 +161,36 @@ const CombinaisonsPage = ({ onBack, embedded = false }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-      {/* Header */}
-      <header className="bg-slate-800/80 border-b border-slate-700 sticky top-0 z-50 backdrop-blur-sm">
-        <div className="max-w-7xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={onBack}
-                className="text-slate-400 hover:text-white"
-              >
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Retour
-              </Button>
-              <div>
-                <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-                  <BookOpen className="w-6 h-6 text-amber-400" />
-                  Programme Technique
-                </h1>
-                <p className="text-slate-400 text-sm">
-                  {totalFiltered} combinaison{totalFiltered > 1 ? 's' : ''} sur 96
-                </p>
+    <div className={embedded ? "" : "min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"}>
+      {/* Header - Masqué en mode embedded */}
+      {!embedded && (
+        <header className="bg-slate-800/80 border-b border-slate-700 sticky top-0 z-50 backdrop-blur-sm">
+          <div className="max-w-7xl mx-auto px-4 py-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={onBack}
+                  className="text-slate-400 hover:text-white"
+                >
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Retour
+                </Button>
+                <div>
+                  <h1 className="text-2xl font-bold text-white flex items-center gap-2">
+                    <BookOpen className="w-6 h-6 text-amber-400" />
+                    Programme Technique
+                  </h1>
+                  <p className="text-slate-400 text-sm">
+                    {totalFiltered} combinaison{totalFiltered > 1 ? 's' : ''} sur 96
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </header>
+        </header>
+      )}
 
       {/* Filtres */}
       <div className="max-w-7xl mx-auto px-4 py-6">
