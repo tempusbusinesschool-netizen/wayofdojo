@@ -24,20 +24,30 @@ const getBeltConfig = (color, name) => {
     '#22c55e': { label: 'Verte', emoji: '🟢', bg: 'bg-green-500', textDark: false },
     '#3b82f6': { label: 'Bleue', emoji: '🔵', bg: 'bg-blue-500', textDark: false },
     '#92400e': { label: 'Marron', emoji: '🟤', bg: 'bg-amber-800', textDark: false },
+    '#1c1917': { label: 'Noire', emoji: '⚫', bg: 'bg-black', textDark: false },
     '#000000': { label: 'Noire', emoji: '⚫', bg: 'bg-black', textDark: false }
   };
+  
+  // Toutes les DAN sont des ceintures NOIRES
+  if (name?.toUpperCase().includes('DAN') || 
+      name?.toUpperCase().includes('SHODAN') || 
+      name?.toUpperCase().includes('NIDAN') || 
+      name?.toUpperCase().includes('SANDAN') || 
+      name?.toUpperCase().includes('YONDAN')) {
+    return { label: 'Noire', emoji: '⚫', bg: 'bg-black', textDark: false };
+  }
   
   const lowerColor = color?.toLowerCase();
   const match = Object.entries(colorMap).find(([hex]) => hex.toLowerCase() === lowerColor);
   if (match) return match[1];
   
-  // Fallback
-  if (name?.includes('5')) return colorMap['#fbbf24'];
-  if (name?.includes('4')) return colorMap['#f97316'];
-  if (name?.includes('3')) return colorMap['#22c55e'];
-  if (name?.includes('2')) return colorMap['#3b82f6'];
-  if (name?.includes('1') && !name?.includes('Dan')) return colorMap['#92400e'];
-  if (name?.includes('Dan') || name?.includes('SHODAN') || name?.includes('NIDAN')) return colorMap['#000000'];
+  // Fallback par nom de Kyu
+  if (name?.includes('6')) return colorMap['#FFFFFF']; // 6e Kyu = Blanche
+  if (name?.includes('5')) return colorMap['#fbbf24']; // 5e Kyu = Jaune
+  if (name?.includes('4')) return colorMap['#f97316']; // 4e Kyu = Orange
+  if (name?.includes('3')) return colorMap['#22c55e']; // 3e Kyu = Verte
+  if (name?.includes('2')) return colorMap['#3b82f6']; // 2e Kyu = Bleue
+  if (name?.includes('1') && name?.toUpperCase().includes('KYU')) return colorMap['#92400e']; // 1er Kyu = Marron
   
   return colorMap['#FFFFFF'];
 };
