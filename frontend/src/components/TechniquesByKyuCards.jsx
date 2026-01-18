@@ -558,17 +558,6 @@ const TechniquesByKyuCards = ({
                 <History className="w-3 h-3 mr-1" />
                 <span className="hidden xs:inline">Philosophie et </span>histoire
               </Button>
-              {/* Bouton démo animations */}
-              <Button
-                onClick={() => setShowAnimationDemo(true)}
-                variant="outline"
-                size="sm"
-                className="border-cyan-400/50 text-cyan-200 hover:bg-cyan-500/20 text-xs"
-                data-testid="animation-demo-btn"
-              >
-                <Play className="w-3 h-3 mr-1" />
-                <span className="hidden xs:inline">Voir les </span>mouvements
-              </Button>
               <div className="text-cyan-200 text-xs sm:text-sm font-medium">
                 {localMastered.length} en confiance
               </div>
