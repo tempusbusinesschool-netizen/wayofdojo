@@ -129,6 +129,7 @@ function AppContent() {
     return stored && stored !== 'false' ? stored : null;
   });
   const [showAdminLogin, setShowAdminLogin] = useState(false);
+  const [adminSection, setAdminSection] = useState('dashboard'); // Section active dans l'admin
   
   // Computed admin flags
   const isAdminMode = adminType !== null;
