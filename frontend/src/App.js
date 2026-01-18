@@ -77,6 +77,7 @@ import { CGUPage, CGVPage, ChartePage, MentionsLegalesPage, RGPDPage } from "@/c
 import ModeEmploiPage from "@/pages/ModeEmploiPage";
 import TarificationPage from "@/pages/TarificationPage";
 import PhilosophiePage from "@/pages/PhilosophiePage";
+import CombinaisonsPage from "@/pages/CombinaisonsPage";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
