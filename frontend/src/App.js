@@ -44,6 +44,7 @@ import LoginTransition from "@/components/LoginTransition";
 import ParentLoginDialog from "@/components/ParentLoginDialog";
 import ParentDashboard from "@/components/ParentDashboard";
 import MaitreTanaka from "@/components/MaitreTanaka";
+import TanakaAnimatedLogo from "@/components/TanakaAnimatedLogo";
 
 // Import pages enfant
 import {
