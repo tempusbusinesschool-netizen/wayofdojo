@@ -14,10 +14,11 @@ import {
   LayoutDashboard, Settings, BookOpen, Swords,
   ChevronRight, ChevronDown, LogOut, Menu, X, FileText,
   BarChart3, UserCog, Bell, Database, HelpCircle,
-  FolderOpen, Download, ExternalLink, FileCode, Dumbbell
+  FolderOpen, Download, ExternalLink, FileCode, Dumbbell, Image
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import CombinaisonsPage from '@/pages/CombinaisonsPage';
+import IllustrationsGallery from '@/pages/IllustrationsGallery';
 
 // Configuration des sections admin (structure hiérarchique)
 const ADMIN_SECTIONS = [
