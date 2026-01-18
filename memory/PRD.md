@@ -48,6 +48,12 @@ Application web pour le club "Aikido@Game" servant de référence numérique pou
   - Interface avec onglets colorés et recherche
   - Composant: `/app/frontend/src/components/admin/UserCredentialsManager.jsx`
 
+- [x] **Calendrier Stages FFAAA 2026** : Nouvelle section "Stages & Séminaires"
+  - 17 stages référencés (France + La Réunion)
+  - Filtres par mois, région, type
+  - Sources : FFAAA officiel, LRFFAAA, Ligue IDF
+  - Composant: `/app/frontend/src/pages/StagesCalendar.jsx`
+
 ### Previous Sessions
 - [x] UI/UX Overhaul pour techniques (enfants et admin)
 - [x] 6e KYU (ceinture blanche) avec 8 techniques
