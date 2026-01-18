@@ -393,8 +393,8 @@ const REFERENCE_FILES = [
     details: [
       '6e Kyu → 1er Kyu : 96 techniques',
       '1er Dan → 4e Dan : 45 techniques',
-      'Attaques, déplacements, finales',
-      'Fonctions utilitaires incluses'
+      'Armes (Jo, Bokken, Tanto) : 100+ techniques',
+      'Ukemi, Tai Sabaki, Kamae : 40+ techniques'
     ]
   }
 ];
