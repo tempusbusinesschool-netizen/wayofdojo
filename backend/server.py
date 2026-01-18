@@ -48,7 +48,7 @@ resend.api_key = os.environ.get('RESEND_API_KEY', '')
 SENDER_EMAIL = os.environ.get('SENDER_EMAIL', 'onboarding@resend.dev')
 
 # JWT Configuration
-JWT_SECRET = os.environ.get('JWT_SECRET', 'aikido-la-riviere-secret-key-2025')
+JWT_SECRET = os.environ.get('JWT_SECRET', 'club-test-secret-key-2025')
 JWT_ALGORITHM = "HS256"
 JWT_EXPIRATION_HOURS = 72
 
@@ -172,7 +172,7 @@ async def send_confirmation_email(member: dict, is_adult: bool = False):
         <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #1e293b; padding: 20px;">
             <tr>
                 <td style="text-align: center;">
-                    <h1 style="color: #f59e0b; margin: 0;">Aikido La Rivière</h1>
+                    <h1 style="color: #f59e0b; margin: 0;">Club test</h1>
                     <p style="color: #94a3b8; margin: 5px 0 0 0;">Club affilié FFAAA</p>
                 </td>
             </tr>
@@ -185,7 +185,7 @@ async def send_confirmation_email(member: dict, is_adult: bool = False):
                     
                     <p>Bonjour <strong>{member_name}</strong>,</p>
                     
-                    <p>Nous avons bien reçu votre demande d'inscription au club <strong>Aikido La Rivière</strong>.</p>
+                    <p>Nous avons bien reçu votre demande d'inscription au club <strong>Club test</strong>.</p>
                     
                     <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #fff; border: 1px solid #e2e8f0; border-radius: 8px; margin: 20px 0;">
                         <tr>
@@ -231,7 +231,7 @@ async def send_confirmation_email(member: dict, is_adult: bool = False):
                     <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 20px 0;">
                     
                     <p style="color: #64748b; font-size: 14px;">
-                        <strong>Aikido La Rivière</strong><br>
+                        <strong>Club test</strong><br>
                         68, rue du Docteur Schweitzer<br>
                         97421 SAINT-LOUIS - RÉUNION
                     </p>
@@ -242,7 +242,7 @@ async def send_confirmation_email(member: dict, is_adult: bool = False):
         <table width="100%" cellpadding="15" cellspacing="0" style="background-color: #1e293b;">
             <tr>
                 <td style="text-align: center; color: #94a3b8; font-size: 12px;">
-                    © 2024 Aikido La Rivière - Club affilié FFAAA
+                    © 2024 Club test - Club affilié FFAAA
                 </td>
             </tr>
         </table>
@@ -253,7 +253,7 @@ async def send_confirmation_email(member: dict, is_adult: bool = False):
     params = {
         "from": SENDER_EMAIL,
         "to": [email],
-        "subject": f"Confirmation d'inscription - Aikido La Rivière ({member_id})",
+        "subject": f"Confirmation d'inscription - Club test ({member_id})",
         "html": html_content
     }
     
@@ -1318,7 +1318,7 @@ async def send_progression_pdf(request: SendProgressionPDFRequest):
             <table width="100%" cellpadding="0" cellspacing="0" style="background-color: #1e293b; padding: 20px;">
                 <tr>
                     <td style="text-align: center;">
-                        <h1 style="color: #f59e0b; margin: 0;">Aikido La Rivière</h1>
+                        <h1 style="color: #f59e0b; margin: 0;">Club test</h1>
                         <p style="color: #94a3b8; margin: 5px 0 0 0;">Club affilié FFAAA</p>
                     </td>
                 </tr>
@@ -1345,7 +1345,7 @@ async def send_progression_pdf(request: SendProgressionPDFRequest):
                         <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 20px 0;">
                         
                         <p style="color: #64748b; font-size: 14px;">
-                            <strong>Aikido La Rivière</strong><br>
+                            <strong>Club test</strong><br>
                             68, rue du Docteur Schweitzer<br>
                             97421 SAINT-LOUIS - RÉUNION
                         </p>
@@ -1636,7 +1636,7 @@ async def register(data: UserRegister):
         raise HTTPException(status_code=400, detail="Un compte avec cet email existe déjà")
     
     # Ensure default dojo exists
-    default_dojo = await db.dojos.find_one({"id": "aikido-la-riviere"})
+    default_dojo = await db.dojos.find_one({"id": "club-test"})
     if not default_dojo:
         await db.dojos.insert_one(DEFAULT_DOJO)
     
@@ -1652,8 +1652,8 @@ async def register(data: UserRegister):
         "belt_level": "6e_kyu",  # Default: white belt (6e kyu)
         "belt_awarded_at": datetime.now(timezone.utc).isoformat(),
         "belt_awarded_by": "system",  # Initial belt is system-assigned
-        "dojo_id": "aikido-la-riviere",  # Default dojo
-        "dojo_name": "Aikido La Rivière",
+        "dojo_id": "club-test",  # Default dojo
+        "dojo_name": "Club test",
         "subscription_status": "none",  # No subscription by default
         "subscription_plan": None
     }
@@ -2722,8 +2722,8 @@ async def get_visitors(dojo_id: Optional[str] = None):
         
         # Add default dojo info if missing
         if "dojo_id" not in user:
-            user["dojo_id"] = "aikido-la-riviere"
-            user["dojo_name"] = "Aikido La Rivière"
+            user["dojo_id"] = "club-test"
+            user["dojo_name"] = "Club test"
         
         # Calculate progression stats
         progression = user.get("progression", {})
