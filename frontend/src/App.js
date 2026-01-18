@@ -1042,6 +1042,8 @@ function AppContent() {
               </div>
             ) : adminSection === 'files' ? (
               <AdminFilesContent />
+            ) : adminSection === 'passages_grades' ? (
+              <PassagesGradesViewer />
             ) : adminSection === 'jo' ? (
               <TechniquesSectionViewer
                 techniques={TECHNIQUES_JO}
