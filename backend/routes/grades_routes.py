@@ -270,7 +270,8 @@ async def update_user_progress(user_id: str, update: UserProgressUpdate):
     """
     Met à jour la progression d'un utilisateur (valider/invalider une technique).
     """
-    from server import db
+    if db is None:
+        raise HTTPException(status_code=500, detail="Database not configured")
     
     # Récupérer ou créer la progression
     progress = await db.user_grade_progress.find_one({
@@ -284,7 +285,7 @@ async def update_user_progress(user_id: str, update: UserProgressUpdate):
             "grade_id": update.grade_id,
             "techniques_validees": [],
             "mouvements_valides": [],
-            "date_debut": datetime.utcnow(),
+            "date_debut": datetime.now(timezone.utc),
             "heures_pratique": 0,
             "en_cours": True,
             "valide": False
