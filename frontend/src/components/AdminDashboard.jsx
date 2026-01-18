@@ -581,6 +581,17 @@ export const AdminGalleryContent = () => {
 };
 
 /**
+ * Contenu de la section Vidéos
+ */
+export const AdminVideosContent = ({ category = 'all' }) => {
+  return (
+    <div className="p-0">
+      <VideosSection category={category} embedded={true} />
+    </div>
+  );
+};
+
+/**
  * Configuration des fichiers de référence
  */
 const REFERENCE_FILES = [
