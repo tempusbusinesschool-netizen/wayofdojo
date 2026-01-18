@@ -229,6 +229,88 @@ function DojoManagementPanel() {
       birth_date: ""
     });
   };
+  
+  // Sélection/désélection d'un club pour import
+  const toggleClubSelection = (clubId) => {
+    setSelectedClubs(prev => 
+      prev.includes(clubId) 
+        ? prev.filter(id => id !== clubId)
+        : [...prev, clubId]
+    );
+  };
+  
+  // Sélectionner tous les clubs filtrés
+  const selectAllFiltered = () => {
+    const filteredIds = filteredClubs.map(c => c.id);
+    setSelectedClubs(prev => {
+      const allSelected = filteredIds.every(id => prev.includes(id));
+      if (allSelected) {
+        return prev.filter(id => !filteredIds.includes(id));
+      } else {
+        return [...new Set([...prev, ...filteredIds])];
+      }
+    });
+  };
+  
+  // Importer les clubs sélectionnés
+  const handleImportClubs = async () => {
+    if (selectedClubs.length === 0) {
+      toast.error("Sélectionnez au moins un club à importer");
+      return;
+    }
+    if (!superAdminPassword) {
+      toast.error("Mot de passe Super Admin requis");
+      return;
+    }
+    
+    setImportingClubs(true);
+    let imported = 0;
+    let errors = 0;
+    
+    for (const clubId of selectedClubs) {
+      const club = CLUBS_AIKIDO_FRANCE.find(c => c.id === clubId);
+      if (!club) continue;
+      
+      // Vérifier si le club existe déjà
+      const exists = dojos.some(d => d.id === club.id || d.name === club.name);
+      if (exists) {
+        errors++;
+        continue;
+      }
+      
+      try {
+        await axios.post(`${API}/dojos`, {
+          dojo: {
+            id: club.id,
+            name: club.name,
+            city: club.city,
+            address: club.address || '',
+            description: `${club.federation} - ${REGIONS_FRANCE[club.region]?.name || club.region}${club.description ? ' - ' + club.description : ''}`,
+            admin_password: 'aikido2024', // Mot de passe par défaut
+            email: club.email || '',
+            phone: club.phone || '',
+            website: club.website || ''
+          },
+          auth: { super_admin_password: superAdminPassword }
+        });
+        imported++;
+      } catch (error) {
+        console.error(`Erreur import ${club.name}:`, error);
+        errors++;
+      }
+    }
+    
+    setImportingClubs(false);
+    setSelectedClubs([]);
+    
+    if (imported > 0) {
+      toast.success(`${imported} club(s) importé(s) avec succès !`);
+      fetchDojos();
+    }
+    if (errors > 0) {
+      toast.warning(`${errors} club(s) ignoré(s) (déjà existants ou erreur)`);
+    }
+  };
 
   const toggleDojoExpand = (dojoId) => {
     if (expandedDojo === dojoId) {
