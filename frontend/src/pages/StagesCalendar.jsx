@@ -433,7 +433,7 @@ const MONTHS_FR = [
 ];
 
 /**
- * Carte de stage
+ * Carte de stage avec affiche et senseis
  */
 const StageCard = ({ stage, onClick }) => {
   const typeConfig = STAGE_TYPES[stage.type] || STAGE_TYPES.regional;
@@ -447,6 +447,9 @@ const StageCard = ({ stage, onClick }) => {
     return date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' });
   };
   
+  // Récupérer les infos des senseis
+  const stageSenseis = (stage.senseis || []).map(id => SENSEIS[id]).filter(Boolean);
+  
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -459,27 +462,63 @@ const StageCard = ({ stage, onClick }) => {
           : 'bg-slate-800/50 border-slate-700 hover:border-slate-500'
       }`}
     >
-      {/* Badge highlight */}
-      {stage.highlight && (
-        <div className="absolute top-2 right-2">
+      {/* Affiche du stage (si disponible) */}
+      {stage.poster && (
+        <div className="relative h-32 overflow-hidden">
+          <img 
+            src={stage.poster} 
+            alt={stage.title}
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent" />
+          {/* Badge type sur l'affiche */}
+          <div className="absolute top-2 left-2">
+            <Badge className={`${typeConfig.color} text-white text-xs shadow-lg`}>
+              {typeConfig.icon} {typeConfig.label}
+            </Badge>
+          </div>
+          {/* Badge highlight */}
+          {stage.highlight && (
+            <div className="absolute top-2 right-2">
+              <Star className="w-5 h-5 text-amber-400 fill-amber-400 drop-shadow-lg" />
+            </div>
+          )}
+        </div>
+      )}
+      
+      {/* Si pas d'affiche, afficher le badge en haut */}
+      {!stage.poster && stage.highlight && (
+        <div className="absolute top-2 right-2 z-10">
           <Star className="w-5 h-5 text-amber-400 fill-amber-400" />
         </div>
       )}
       
       <div className="p-4">
-        {/* Header avec type et date */}
-        <div className="flex items-start justify-between gap-2 mb-3">
-          <Badge className={`${typeConfig.color} text-white text-xs`}>
-            {typeConfig.icon} {typeConfig.label}
-          </Badge>
-          <div className="text-right">
-            <p className="text-white font-semibold text-sm">
-              {formatDate(startDate)}
-              {isMultiDay && ` - ${formatDate(endDate)}`}
-            </p>
-            <p className="text-slate-500 text-xs">2026</p>
+        {/* Header avec type et date (si pas d'affiche) */}
+        {!stage.poster && (
+          <div className="flex items-start justify-between gap-2 mb-3">
+            <Badge className={`${typeConfig.color} text-white text-xs`}>
+              {typeConfig.icon} {typeConfig.label}
+            </Badge>
+            <div className="text-right">
+              <p className="text-white font-semibold text-sm">
+                {formatDate(startDate)}
+                {isMultiDay && ` - ${formatDate(endDate)}`}
+              </p>
+              <p className="text-slate-500 text-xs">2026</p>
+            </div>
           </div>
-        </div>
+        )}
+        
+        {/* Date si affiche présente */}
+        {stage.poster && (
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-orange-400 font-semibold text-sm">
+              {formatDate(startDate)}
+              {isMultiDay && ` - ${formatDate(endDate)}`} 2026
+            </p>
+          </div>
+        )}
         
         {/* Titre */}
         <h3 className="text-white font-bold text-lg mb-2">{stage.title}</h3>
@@ -492,8 +531,30 @@ const StageCard = ({ stage, onClick }) => {
           <span>{regionConfig.emoji} {regionConfig.label}</span>
         </div>
         
-        {/* Instructeurs */}
-        {stage.instructors && stage.instructors.length > 0 && (
+        {/* Senseis avec photos */}
+        {stageSenseis.length > 0 && (
+          <div className="mt-3 p-3 bg-slate-700/50 rounded-lg">
+            <p className="text-xs text-slate-500 uppercase tracking-wider mb-2">Animé par</p>
+            <div className="space-y-2">
+              {stageSenseis.map((sensei, idx) => (
+                <div key={idx} className="flex items-center gap-2">
+                  <img 
+                    src={sensei.photo} 
+                    alt={sensei.name}
+                    className="w-8 h-8 rounded-full object-cover border-2 border-slate-600"
+                  />
+                  <div>
+                    <p className="text-white text-sm font-medium">{sensei.name}</p>
+                    <p className="text-xs text-slate-400">{sensei.grade} • {sensei.title}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+        
+        {/* Instructeurs texte (si pas de senseis) */}
+        {stageSenseis.length === 0 && stage.instructors && stage.instructors.length > 0 && (
           <div className="flex items-center gap-2 text-slate-400 text-sm mb-2">
             <User className="w-4 h-4 flex-shrink-0" />
             <span>{stage.instructors.join(', ')}</span>
