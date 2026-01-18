@@ -63,8 +63,7 @@ const AppStepsNavigation = ({ onStepClick, activeStep = null }) => {
       'profil': 'user-dashboard-blocks',
       'defis': 'progression-tunnel',
       'techniques': 'accordion-entrainement',
-      'vertus': 'bloc3-valeurs',
-      'histoire': 'accordion-histoire'
+      'vertus': 'bloc3-valeurs'
     };
     
     const targetId = scrollTargets[stepId];
