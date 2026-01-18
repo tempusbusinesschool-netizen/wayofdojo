@@ -297,6 +297,129 @@ export const COMBINAISONS_VALIDES = [
   
   // Aiki Otoshi
   { id: "rd_aiki_otoshi", phase1: { attaque: "ryote_dori", deplacement: "irimi" }, phase2: { technique: "aiki_otoshi", direction: null }, phase3: { final: "yoko_ukemi", type: "chute" }, kyu: "3e_kyu" },
+
+  // ==========================================================================
+  // ██████╗  █████╗ ███╗   ██╗    ██╗      ███████╗██╗   ██╗███████╗██╗     ███████╗
+  // ██╔══██╗██╔══██╗████╗  ██║    ██║      ██╔════╝██║   ██║██╔════╝██║     ██╔════╝
+  // ██║  ██║███████║██╔██╗ ██║    ██║      █████╗  ██║   ██║█████╗  ██║     ███████╗
+  // ██║  ██║██╔══██║██║╚██╗██║    ██║      ██╔══╝  ╚██╗ ██╔╝██╔══╝  ██║     ╚════██║
+  // ██████╔╝██║  ██║██║ ╚████║    ███████╗ ███████╗ ╚████╔╝ ███████╗███████╗███████║
+  // ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═══╝    ╚══════╝ ╚══════╝  ╚═══╝  ╚══════╝╚══════╝╚══════╝
+  // ==========================================================================
+
+  // ==========================================================================
+  // SHODAN (1er Dan) - Début de la maîtrise
+  // Corps qui commence à répondre aux commandements
+  // ==========================================================================
+  
+  // Suwariwaza (à genoux) - Maîtrise complète
+  { id: "shodan_sw_ikkyo_omote", phase1: { attaque: "suwariwaza_shomen_uchi", deplacement: "irimi" }, phase2: { technique: "ikkyo", direction: "omote" }, phase3: { final: "ikkyo_osae", type: "immobilisation" }, kyu: "shodan" },
+  { id: "shodan_sw_ikkyo_ura", phase1: { attaque: "suwariwaza_shomen_uchi", deplacement: "tenkan" }, phase2: { technique: "ikkyo", direction: "ura" }, phase3: { final: "ikkyo_osae", type: "immobilisation" }, kyu: "shodan" },
+  { id: "shodan_sw_nikyo", phase1: { attaque: "suwariwaza_katate_dori", deplacement: "irimi" }, phase2: { technique: "nikyo", direction: "omote" }, phase3: { final: "nikyo_osae", type: "immobilisation" }, kyu: "shodan" },
+  { id: "shodan_sw_sankyo", phase1: { attaque: "suwariwaza_katate_dori", deplacement: "tenkan" }, phase2: { technique: "sankyo", direction: "ura" }, phase3: { final: "sankyo_osae", type: "immobilisation" }, kyu: "shodan" },
+  { id: "shodan_sw_yonkyo", phase1: { attaque: "suwariwaza_shomen_uchi", deplacement: "irimi" }, phase2: { technique: "yonkyo", direction: "omote" }, phase3: { final: "yonkyo_osae", type: "immobilisation" }, kyu: "shodan" },
+  { id: "shodan_sw_kokyu_ho", phase1: { attaque: "suwariwaza_ryote_dori", deplacement: "kokyu" }, phase2: { technique: "kokyu_ho", direction: null }, phase3: { final: "ushiro_ukemi", type: "chute" }, kyu: "shodan" },
+  
+  // Randori 2 adversaires
+  { id: "shodan_randori_2", phase1: { attaque: "randori_futari", deplacement: "tai_sabaki" }, phase2: { technique: "jiyu_waza", direction: null }, phase3: { final: "zanshin", type: "libre" }, kyu: "shodan" },
+  
+  // Tanto Dori - Défense couteau
+  { id: "shodan_tanto_ikkyo", phase1: { attaque: "tanto_tsuki", deplacement: "irimi" }, phase2: { technique: "ikkyo", direction: "omote" }, phase3: { final: "ikkyo_osae", type: "immobilisation" }, kyu: "shodan" },
+  { id: "shodan_tanto_kote", phase1: { attaque: "tanto_yokomen", deplacement: "tenkan" }, phase2: { technique: "kote_gaeshi", direction: null }, phase3: { final: "kote_gaeshi_osae", type: "immobilisation" }, kyu: "shodan" },
+  
+  // Jo Dori - Défense bâton
+  { id: "shodan_jo_dori_irimi", phase1: { attaque: "jo_tsuki", deplacement: "irimi" }, phase2: { technique: "irimi_nage", direction: "omote" }, phase3: { final: "ushiro_ukemi", type: "chute" }, kyu: "shodan" },
+  { id: "shodan_jo_nage", phase1: { attaque: "jo_shomen", deplacement: "tenkan" }, phase2: { technique: "kokyu_nage", direction: null }, phase3: { final: "mae_ukemi", type: "chute" }, kyu: "shodan" },
+
+  // ==========================================================================
+  // NIDAN (2e Dan) - Rapidité et puissance
+  // Plus grande détermination mentale
+  // ==========================================================================
+  
+  // Tachiwaza avancé - Fluidité accrue
+  { id: "nidan_tw_ikkyo_kaeshi", phase1: { attaque: "shomen_uchi", deplacement: "kaeshi" }, phase2: { technique: "ikkyo", direction: "ura" }, phase3: { final: "ikkyo_osae", type: "immobilisation" }, kyu: "nidan" },
+  { id: "nidan_tw_nikyo_henka", phase1: { attaque: "yokomen_uchi", deplacement: "irimi" }, phase2: { technique: "nikyo", direction: "henka" }, phase3: { final: "nikyo_osae", type: "immobilisation" }, kyu: "nidan" },
+  { id: "nidan_tw_sankyo_nagare", phase1: { attaque: "katate_dori", deplacement: "nagare" }, phase2: { technique: "sankyo", direction: null }, phase3: { final: "sankyo_osae", type: "immobilisation" }, kyu: "nidan" },
+  
+  // Ushiro Waza complet
+  { id: "nidan_ushiro_ryote_ikkyo", phase1: { attaque: "ushiro_ryote_dori", deplacement: "tenkan" }, phase2: { technique: "ikkyo", direction: "ura" }, phase3: { final: "ikkyo_osae", type: "immobilisation" }, kyu: "nidan" },
+  { id: "nidan_ushiro_ryokata_shiho", phase1: { attaque: "ushiro_ryokata_dori", deplacement: "irimi" }, phase2: { technique: "shiho_nage", direction: "omote" }, phase3: { final: "mae_ukemi", type: "chute" }, kyu: "nidan" },
+  { id: "nidan_ushiro_kubi_kokyu", phase1: { attaque: "ushiro_kubi_shime", deplacement: "kokyu" }, phase2: { technique: "kokyu_nage", direction: null }, phase3: { final: "ushiro_ukemi", type: "chute" }, kyu: "nidan" },
+  
+  // Randori 2 adversaires avec engagement
+  { id: "nidan_randori_2_ki", phase1: { attaque: "randori_futari", deplacement: "irimi_tenkan" }, phase2: { technique: "jiyu_waza", direction: null }, phase3: { final: "zanshin", type: "libre" }, kyu: "nidan" },
+  
+  // Tanto Dori avancé
+  { id: "nidan_tanto_shiho", phase1: { attaque: "tanto_shomen", deplacement: "irimi" }, phase2: { technique: "shiho_nage", direction: "omote" }, phase3: { final: "shiho_nage_osae", type: "immobilisation" }, kyu: "nidan" },
+  { id: "nidan_tanto_kaiten", phase1: { attaque: "tanto_tsuki", deplacement: "tenkan" }, phase2: { technique: "kaiten_nage", direction: null }, phase3: { final: "mae_ukemi", type: "chute" }, kyu: "nidan" },
+  
+  // Jo Dori avancé
+  { id: "nidan_jo_shiho", phase1: { attaque: "jo_yokomen", deplacement: "irimi" }, phase2: { technique: "shiho_nage", direction: "omote" }, phase3: { final: "mae_ukemi", type: "chute" }, kyu: "nidan" },
+
+  // ==========================================================================
+  // SANDAN (3e Dan) - Compréhension du Kokyu Ryoku
+  // Entrée dans la dimension spirituelle
+  // ==========================================================================
+  
+  // Grande maîtrise d'Irimi
+  { id: "sandan_irimi_pure", phase1: { attaque: "shomen_uchi", deplacement: "irimi_direct" }, phase2: { technique: "irimi_nage", direction: "soku" }, phase3: { final: "ushiro_ukemi", type: "chute" }, kyu: "sandan" },
+  { id: "sandan_irimi_kokyu", phase1: { attaque: "yokomen_uchi", deplacement: "irimi" }, phase2: { technique: "kokyu_nage", direction: null }, phase3: { final: "ushiro_ukemi", type: "chute" }, kyu: "sandan" },
+  
+  // Ma-ai - Juste distance
+  { id: "sandan_maai_kote", phase1: { attaque: "chudan_tsuki", deplacement: "maai" }, phase2: { technique: "kote_gaeshi", direction: null }, phase3: { final: "tobi_ukemi", type: "chute" }, kyu: "sandan" },
+  
+  // Rythme du mouvement
+  { id: "sandan_rhythm_jiyu", phase1: { attaque: "jiyu_waza", deplacement: "nagare" }, phase2: { technique: "kaeshi_waza", direction: null }, phase3: { final: "ukemi", type: "chute" }, kyu: "sandan" },
+  
+  // Randori 3 adversaires
+  { id: "sandan_randori_3", phase1: { attaque: "randori_sannin", deplacement: "tai_sabaki" }, phase2: { technique: "jiyu_waza", direction: null }, phase3: { final: "zanshin", type: "libre" }, kyu: "sandan" },
+  
+  // Tachi Dori (Défense sabre)
+  { id: "sandan_tachi_dori_irimi", phase1: { attaque: "tachi_shomen", deplacement: "irimi" }, phase2: { technique: "irimi_nage", direction: "omote" }, phase3: { final: "ushiro_ukemi", type: "chute" }, kyu: "sandan" },
+  { id: "sandan_tachi_dori_kote", phase1: { attaque: "tachi_yokomen", deplacement: "tenkan" }, phase2: { technique: "kote_gaeshi", direction: null }, phase3: { final: "tobi_ukemi", type: "chute" }, kyu: "sandan" },
+  
+  // Kumitachi (Sabre à deux)
+  { id: "sandan_kumitachi_1", phase1: { attaque: "kumitachi_ichi", deplacement: "awase" }, phase2: { technique: "ken_no_ri", direction: null }, phase3: { final: "zanshin", type: "arme" }, kyu: "sandan" },
+  { id: "sandan_kumitachi_2", phase1: { attaque: "kumitachi_ni", deplacement: "awase" }, phase2: { technique: "ken_no_ri", direction: null }, phase3: { final: "zanshin", type: "arme" }, kyu: "sandan" },
+  
+  // Kumijo (Bâton à deux)
+  { id: "sandan_kumijo_1", phase1: { attaque: "kumijo_ichi", deplacement: "awase" }, phase2: { technique: "jo_no_ri", direction: null }, phase3: { final: "zanshin", type: "arme" }, kyu: "sandan" },
+  { id: "sandan_kumijo_2", phase1: { attaque: "kumijo_ni", deplacement: "awase" }, phase2: { technique: "jo_no_ri", direction: null }, phase3: { final: "zanshin", type: "arme" }, kyu: "sandan" },
+
+  // ==========================================================================
+  // YONDAN (4e Dan) - Principes qui régissent les techniques
+  // Niveau techniquement avancé
+  // ==========================================================================
+  
+  // Liberté totale Suwariwaza
+  { id: "yondan_sw_jiyu_ikkyo", phase1: { attaque: "suwariwaza_jiyu", deplacement: "awase" }, phase2: { technique: "ikkyo", direction: "henka" }, phase3: { final: "ikkyo_osae", type: "immobilisation" }, kyu: "yondan" },
+  { id: "yondan_sw_jiyu_nikyo", phase1: { attaque: "suwariwaza_jiyu", deplacement: "awase" }, phase2: { technique: "nikyo", direction: "henka" }, phase3: { final: "nikyo_osae", type: "immobilisation" }, kyu: "yondan" },
+  
+  // Futari Dori (Saisie par deux)
+  { id: "yondan_futari_dori_1", phase1: { attaque: "futari_dori", deplacement: "tai_sabaki" }, phase2: { technique: "kokyu_nage", direction: null }, phase3: { final: "ushiro_ukemi", type: "chute" }, kyu: "yondan" },
+  { id: "yondan_futari_dori_2", phase1: { attaque: "futari_dori", deplacement: "irimi" }, phase2: { technique: "shiho_nage", direction: "omote" }, phase3: { final: "mae_ukemi", type: "chute" }, kyu: "yondan" },
+  
+  // Randori 3 adversaires - Maîtrise
+  { id: "yondan_randori_3_mastery", phase1: { attaque: "randori_sannin", deplacement: "nagare" }, phase2: { technique: "jiyu_waza", direction: null }, phase3: { final: "zanshin", type: "libre" }, kyu: "yondan" },
+  
+  // Tanto Dori complet
+  { id: "yondan_tanto_irimi", phase1: { attaque: "tanto_jiyu", deplacement: "irimi" }, phase2: { technique: "irimi_nage", direction: "soku" }, phase3: { final: "ushiro_ukemi", type: "chute" }, kyu: "yondan" },
+  { id: "yondan_tanto_kokyu", phase1: { attaque: "tanto_jiyu", deplacement: "kokyu" }, phase2: { technique: "kokyu_nage", direction: null }, phase3: { final: "mae_ukemi", type: "chute" }, kyu: "yondan" },
+  
+  // Jo complet
+  { id: "yondan_jo_kokyu", phase1: { attaque: "jo_jiyu", deplacement: "kokyu" }, phase2: { technique: "kokyu_nage", direction: null }, phase3: { final: "mae_ukemi", type: "chute" }, kyu: "yondan" },
+  { id: "yondan_jo_koshi", phase1: { attaque: "jo_tsuki", deplacement: "irimi" }, phase2: { technique: "koshi_nage", direction: null }, phase3: { final: "tobi_ukemi", type: "chute" }, kyu: "yondan" },
+  
+  // Tachi Dori complet
+  { id: "yondan_tachi_shiho", phase1: { attaque: "tachi_jiyu", deplacement: "irimi" }, phase2: { technique: "shiho_nage", direction: "omote" }, phase3: { final: "shiho_nage_osae", type: "immobilisation" }, kyu: "yondan" },
+  { id: "yondan_tachi_kokyu", phase1: { attaque: "tachi_jiyu", deplacement: "kokyu" }, phase2: { technique: "kokyu_nage", direction: null }, phase3: { final: "ushiro_ukemi", type: "chute" }, kyu: "yondan" },
+  
+  // Kumitachi avancé
+  { id: "yondan_kumitachi_3", phase1: { attaque: "kumitachi_san", deplacement: "awase" }, phase2: { technique: "ken_no_ri", direction: null }, phase3: { final: "zanshin", type: "arme" }, kyu: "yondan" },
+  { id: "yondan_kumitachi_4", phase1: { attaque: "kumitachi_yon", deplacement: "awase" }, phase2: { technique: "ken_no_ri", direction: null }, phase3: { final: "zanshin", type: "arme" }, kyu: "yondan" },
+  
+  // Kumijo avancé
+  { id: "yondan_kumijo_3", phase1: { attaque: "kumijo_san", deplacement: "awase" }, phase2: { technique: "jo_no_ri", direction: null }, phase3: { final: "zanshin", type: "arme" }, kyu: "yondan" },
 ];
 
 // =============================================================================
