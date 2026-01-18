@@ -62,6 +62,13 @@ const ADMIN_SECTIONS = [
     description: 'Configuration des clubs affiliés'
   },
   {
+    id: 'stages',
+    label: 'Stages & Séminaires',
+    icon: CalendarDays,
+    color: 'rose',
+    description: 'Calendrier des stages FFAAA 2026'
+  },
+  {
     id: 'subscriptions',
     label: 'Abonnements',
     icon: CreditCard,
