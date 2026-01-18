@@ -794,6 +794,213 @@ function DojoManagementPanel() {
           ))}
         </div>
       )}
+        </TabsContent>
+        
+        {/* Onglet Annuaire FFAAA */}
+        <TabsContent value="annuaire">
+          {/* Stats rapides par région */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2 mb-6">
+            {Object.entries(REGIONS_FRANCE).slice(0, 14).map(([key, region]) => {
+              const count = regionStats[key]?.count || 0;
+              if (count === 0) return null;
+              return (
+                <button
+                  key={key}
+                  onClick={() => setAnnuaireRegion(annuaireRegion === key ? 'all' : key)}
+                  className={`p-2 rounded-lg text-center transition-all ${
+                    annuaireRegion === key 
+                      ? 'bg-blue-500 text-white' 
+                      : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                  }`}
+                >
+                  <span className="text-lg">{region.emoji}</span>
+                  <p className="text-xs font-medium truncate">{region.name.split(' ')[0]}</p>
+                  <p className="text-xs opacity-70">{count}</p>
+                </button>
+              );
+            })}
+          </div>
+          
+          {/* DOM-TOM */}
+          <div className="mb-6 p-4 bg-cyan-900/20 border border-cyan-500/30 rounded-xl">
+            <h3 className="text-cyan-300 font-semibold mb-3 flex items-center gap-2">
+              <Globe className="w-4 h-4" />
+              Outre-Mer
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {Object.entries(REGIONS_FRANCE).slice(14).map(([key, region]) => {
+                const count = regionStats[key]?.count || 0;
+                return (
+                  <button
+                    key={key}
+                    onClick={() => setAnnuaireRegion(annuaireRegion === key ? 'all' : key)}
+                    className={`px-3 py-2 rounded-lg flex items-center gap-2 transition-all ${
+                      annuaireRegion === key 
+                        ? 'bg-cyan-500 text-white' 
+                        : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                    }`}
+                  >
+                    <span>{region.emoji}</span>
+                    <span className="text-sm">{region.name}</span>
+                    <Badge variant="outline" className="text-xs">{count}</Badge>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+          
+          {/* Recherche et filtres */}
+          <div className="flex flex-col sm:flex-row gap-4 mb-6">
+            <div className="relative flex-1">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+              <Input
+                value={annuaireSearch}
+                onChange={(e) => setAnnuaireSearch(e.target.value)}
+                placeholder="Rechercher un club par nom ou ville..."
+                className="pl-10 bg-slate-800 border-slate-700 text-white"
+              />
+            </div>
+            <select
+              value={annuaireRegion}
+              onChange={(e) => setAnnuaireRegion(e.target.value)}
+              className="px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white"
+            >
+              <option value="all">Toutes les régions ({CLUBS_AIKIDO_FRANCE.length})</option>
+              {Object.entries(REGIONS_FRANCE).map(([key, region]) => {
+                const count = regionStats[key]?.count || 0;
+                return (
+                  <option key={key} value={key}>
+                    {region.emoji} {region.name} ({count})
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+          
+          {/* Actions d'import */}
+          {selectedClubs.length > 0 && (
+            <div className="mb-4 p-4 bg-emerald-900/30 border border-emerald-500/30 rounded-xl flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                <span className="text-emerald-300 font-medium">{selectedClubs.length} club(s) sélectionné(s)</span>
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  onClick={() => setSelectedClubs([])}
+                  variant="outline"
+                  size="sm"
+                  className="border-slate-600 text-slate-300"
+                >
+                  Annuler
+                </Button>
+                <Button
+                  onClick={handleImportClubs}
+                  disabled={importingClubs}
+                  className="bg-emerald-500 hover:bg-emerald-400"
+                  size="sm"
+                >
+                  {importingClubs ? (
+                    <>
+                      <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+                      Import...
+                    </>
+                  ) : (
+                    <>
+                      <Download className="w-4 h-4 mr-2" />
+                      Importer
+                    </>
+                  )}
+                </Button>
+              </div>
+            </div>
+          )}
+          
+          {/* Bouton tout sélectionner */}
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-slate-400 text-sm">
+              {filteredClubs.length} club(s) trouvé(s)
+            </p>
+            <Button
+              onClick={selectAllFiltered}
+              variant="outline"
+              size="sm"
+              className="border-slate-600 text-slate-300"
+            >
+              {filteredClubs.every(c => selectedClubs.includes(c.id)) ? 'Désélectionner tout' : 'Sélectionner tout'}
+            </Button>
+          </div>
+          
+          {/* Liste des clubs */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 max-h-[500px] overflow-y-auto">
+            {filteredClubs.map(club => {
+              const region = REGIONS_FRANCE[club.region];
+              const isSelected = selectedClubs.includes(club.id);
+              const isAlreadyImported = dojos.some(d => d.id === club.id || d.name === club.name);
+              
+              return (
+                <div
+                  key={club.id}
+                  onClick={() => !isAlreadyImported && toggleClubSelection(club.id)}
+                  className={`p-4 rounded-xl border cursor-pointer transition-all ${
+                    isAlreadyImported
+                      ? 'bg-slate-800/30 border-slate-700 opacity-50 cursor-not-allowed'
+                      : isSelected
+                        ? 'bg-blue-900/30 border-blue-500/50 ring-2 ring-blue-500/30'
+                        : 'bg-slate-800/50 border-slate-700 hover:border-blue-500/30'
+                  }`}
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        {isSelected && <CheckCircle2 className="w-4 h-4 text-blue-400 flex-shrink-0" />}
+                        <h4 className="text-white font-medium truncate">{club.name}</h4>
+                      </div>
+                      <p className="text-slate-400 text-sm flex items-center gap-1 mt-1">
+                        <MapPin className="w-3 h-3" />
+                        {club.city}
+                      </p>
+                      {club.address && (
+                        <p className="text-slate-500 text-xs mt-1 truncate">{club.address}</p>
+                      )}
+                    </div>
+                    <div className="text-right flex-shrink-0">
+                      <span className="text-lg">{region?.emoji}</span>
+                      {isAlreadyImported && (
+                        <Badge className="mt-1 bg-emerald-600 text-xs">Importé</Badge>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 mt-2">
+                    <Badge variant="outline" className="text-xs border-slate-600 text-slate-400">
+                      {club.federation}
+                    </Badge>
+                    {club.website && (
+                      <Badge variant="outline" className="text-xs border-cyan-600 text-cyan-400">
+                        Web
+                      </Badge>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          
+          {filteredClubs.length === 0 && (
+            <div className="text-center py-12">
+              <Globe className="w-12 h-12 text-slate-600 mx-auto mb-3" />
+              <p className="text-slate-400">Aucun club trouvé</p>
+            </div>
+          )}
+          
+          {/* Note source */}
+          <div className="mt-6 p-4 bg-slate-800/30 rounded-xl">
+            <p className="text-xs text-slate-500">
+              <strong>Sources :</strong> FFAAA, FFAB, Ligues régionales. Données compilées à titre informatif.
+              Pour des informations à jour, consultez <a href="https://aikido.com.fr" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">aikido.com.fr</a>
+            </p>
+          </div>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
