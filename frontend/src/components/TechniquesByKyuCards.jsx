@@ -135,9 +135,6 @@ const TechniquesByKyuCards = ({
     }
   };
   
-  // État pour la démo d'animation
-  const [showAnimationDemo, setShowAnimationDemo] = useState(false);
-  
   // État pour la section Philosophie et Histoire
   const [showPhilosophieHistoire, setShowPhilosophieHistoire] = useState(false);
   
