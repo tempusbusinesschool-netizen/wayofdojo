@@ -326,7 +326,8 @@ async def validate_user_grade(user_id: str, grade_id: str):
     """
     Valide un grade complet pour un utilisateur.
     """
-    from server import db
+    if db is None:
+        raise HTTPException(status_code=500, detail="Database not configured")
     
     await db.user_grade_progress.update_one(
         {"user_id": user_id, "grade_id": grade_id},
@@ -334,7 +335,7 @@ async def validate_user_grade(user_id: str, grade_id: str):
             "$set": {
                 "valide": True,
                 "en_cours": False,
-                "date_validation": datetime.utcnow()
+                "date_validation": datetime.now(timezone.utc)
             }
         }
     )
