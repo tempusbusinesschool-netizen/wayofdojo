@@ -693,5 +693,5 @@ export const AdminSectionPlaceholder = ({ section }) => {
   );
 };
 
-export { ADMIN_SECTIONS, colorClasses, AdminGalleryContent };
+export { ADMIN_SECTIONS, colorClasses };
 export default AdminDashboard;
