@@ -1002,6 +1002,8 @@ function AppContent() {
               <AdminFilesContent />
             ) : adminSection === 'passages_grades' ? (
               <PassagesGradesViewer />
+            ) : adminSection === 'galerie' ? (
+              <AdminGalleryContent />
             ) : adminSection === 'jo' ? (
               <TechniquesSectionViewer
                 techniques={TECHNIQUES_JO}
