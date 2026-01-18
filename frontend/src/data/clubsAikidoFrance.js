@@ -96,6 +96,10 @@ export const CLUBS_AIKIDO_FRANCE = [
   // BRETAGNE (22, 29, 35, 56)
   // ═══════════════════════════════════════════════════════════════════════════
   { id: 'aikido-rennes', name: 'Aïkido Club de Rennes', city: 'Rennes', region: 'bretagne', federation: 'FFAAA' },
+  { id: 'dokan-rennes', name: 'Association Dokan Rennes', city: 'Rennes', region: 'bretagne', address: '8 passage du Couëdic', phone: '06 88 17 37 71', website: 'dokan-rennes.fr', federation: 'FFAAA', president: 'Olivier Eberhardt', instructors: ['Olivier Eberhardt (5e Dan)', 'Fabien Lucas (4e Dan)'], description: '~500 membres, Aikido Iwama Ryu' },
+  { id: 'aikido-35-rennes', name: 'Aïkido 35 Rennes', city: 'Rennes', region: 'bretagne', address: 'Avenue Jules Maniez, La Courrouze', federation: 'FFAAA', description: 'Enseignement traditionnel japonais' },
+  { id: 'budo-raji', name: 'Ecole de Budo Raji (Aikido Jodo Iaido)', city: 'Rennes', region: 'bretagne', address: '183 rue de Nantes', phone: '06 08 57 26 43', email: 'office.budoraji@gmail.com', federation: 'FFAAA' },
+  { id: 'ja-bruz', name: 'Association J.A. Bruz Aïkido', city: 'Bruz', region: 'bretagne', address: 'Salle COSEC E. Tabarly', federation: 'FFAAA', instructors: ['Olivier Eberhardt (5e Dan)', 'Frédéric Pigeon (3e Dan)', 'Thomas Duval (2e Dan)'] },
   { id: 'aikido-brest', name: 'Aïkido Club de Brest', city: 'Brest', region: 'bretagne', federation: 'FFAAA' },
   { id: 'aikido-vannes', name: 'Aïkido Club de Vannes', city: 'Vannes', region: 'bretagne', federation: 'FFAAA' },
   { id: 'aikido-lorient', name: 'Aïkido Club de Lorient', city: 'Lorient', region: 'bretagne', federation: 'FFAAA' },
@@ -113,6 +117,10 @@ export const CLUBS_AIKIDO_FRANCE = [
   // NOUVELLE-AQUITAINE (16, 17, 19, 23, 24, 33, 40, 47, 64, 79, 86, 87)
   // ═══════════════════════════════════════════════════════════════════════════
   { id: 'cid-aquitaine', name: 'Aïkido CID Aquitaine', city: 'Bordeaux', region: 'nouvelle_aquitaine', website: 'aikido-cid-aquitaine-ffaaa.fr', federation: 'FFAAA' },
+  { id: 'matsukaze-bordeaux', name: 'Association Matsukazé Bordeaux', city: 'Bordeaux', region: 'nouvelle_aquitaine', address: 'Dojo Alice Milliat, Stade Chaban & 46 rue du Bocage', website: 'aikido-matsukaze.com', federation: 'Aïkikaï', president: 'Association Matsukazé', instructors: ['Ludovic Caudéran (6e Dan Aïkikaï Tokyo)'], description: 'Aikido, cérémonie du thé, calligraphie japonaise' },
+  { id: 'us-chartrons', name: 'US Chartrons - Section Aïkido', city: 'Bordeaux', region: 'nouvelle_aquitaine', address: 'Gymnase Dupaty, 62 rue Chantecrit', website: 'uschartrons.fr/aikido', federation: 'FFAAA', instructors: ['Javier Iglesias', 'Nicolas Garay'] },
+  { id: 'coqs-rouges-bordeaux', name: 'Coqs Rouges Bordeaux - Aïkido', city: 'Bordeaux', region: 'nouvelle_aquitaine', website: 'coqsrouges.fr/aikido', federation: 'FFAAA', description: 'Centre historique de Bordeaux' },
+  { id: 'jsa-bordeaux', name: 'JSA Bordeaux - Aïkido', city: 'Bordeaux', region: 'nouvelle_aquitaine', website: 'jsabordeaux.fr', federation: 'FFAAA', description: 'Aikido, Iaido, Kenjutsu' },
   { id: 'aikido-bordeaux', name: 'Aïkido Club de Bordeaux', city: 'Bordeaux', region: 'nouvelle_aquitaine', federation: 'FFAAA' },
   { id: 'aikido-limoges', name: 'Aïkido Club de Limoges', city: 'Limoges', region: 'nouvelle_aquitaine', federation: 'FFAAA' },
   { id: 'aikido-poitiers', name: 'Aïkido Club de Poitiers', city: 'Poitiers', region: 'nouvelle_aquitaine', federation: 'FFAAA' },
