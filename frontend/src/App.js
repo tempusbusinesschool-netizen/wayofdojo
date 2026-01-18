@@ -656,18 +656,8 @@ function AppContent() {
                 className="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-opacity cursor-pointer group"
                 title="Retour à l'accueil"
               >
-                <div className="relative w-10 h-10 sm:w-16 sm:h-16 group-hover:scale-105 transition-transform flex-shrink-0">
-                  {/* Yin-Yang style logo in yellow/gold */}
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-br from-amber-400 via-yellow-500 to-amber-600 shadow-lg shadow-amber-500/30"></div>
-                  <div className="absolute inset-0.5 sm:inset-1 rounded-full bg-slate-900 flex items-center justify-center">
-                    <div className="relative w-6 h-6 sm:w-10 sm:h-10">
-                      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3 h-3 sm:w-5 sm:h-5 rounded-full bg-gradient-to-b from-amber-400 to-yellow-500"></div>
-                      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3 h-3 sm:w-5 sm:h-5 rounded-full bg-slate-900 border sm:border-2 border-amber-500"></div>
-                      <div className="absolute top-0.5 sm:top-1 left-1/2 -translate-x-1/2 w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-slate-900"></div>
-                      <div className="absolute bottom-0.5 sm:bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-amber-400"></div>
-                    </div>
-                  </div>
-                </div>
+                {/* Logo animé Tanaka */}
+                <TanakaAnimatedLogo size="md" />
                 <div className="text-left hidden sm:block">
                   <p className="text-xs sm:text-sm text-amber-400 font-medium group-hover:text-amber-300 transition-colors">Aikido@Game</p>
                   <p className="text-sm sm:text-lg md:text-xl text-white font-bold group-hover:text-slate-200 transition-colors">Votre parcours</p>
