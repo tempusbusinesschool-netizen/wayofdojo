@@ -141,6 +141,16 @@ export const CLUBS_AIKIDO_FRANCE = [
   // AUVERGNE-RHÔNE-ALPES (01, 03, 07, 15, 26, 38, 42, 43, 63, 69, 73, 74)
   // ═══════════════════════════════════════════════════════════════════════════
   { id: 'aikido-lyon', name: 'Aïkido Club de Lyon', city: 'Lyon', region: 'ara', federation: 'FFAAA' },
+  { id: 'aikikaï-lyon', name: 'Aïkikaï de Lyon', city: 'Lyon', region: 'ara', website: 'aikido-lyon.org', federation: 'FFAB', description: 'Adultes et ados 16+' },
+  { id: 'unsui-dojo-lyon', name: 'Unsui Dojo - Section Aïkido Confluence', city: 'Lyon 2e', region: 'ara', federation: 'FFAB' },
+  { id: 'clat-lozanne', name: 'Cercle Lyonnais Aïkido et Tradition (C-L-A-T)', city: 'Lozanne', region: 'ara', federation: 'FFAB' },
+  { id: 'aikikai-grenoble', name: 'Aïkikaï de Grenoble', city: 'Grenoble', region: 'ara', address: '16 rue Thiers / Centre Sportif Hoche, 7 rue François Raoult', website: 'aikikai-grenoble.fr', federation: 'FFAB', description: 'Cours mardi, jeudi 20h, samedi 9h-12h' },
+  { id: 'sansuikan-gieres', name: 'Sansuikan Aïkido Gières', city: 'Gières', region: 'ara', federation: 'FFAB' },
+  { id: 'guc-grenoble', name: 'Grenoble Université Club - Aïkido', city: 'Saint-Martin-d\'Hères', region: 'ara', address: '388 rue de la Passerelle, 38400', federation: 'FFAAA' },
+  { id: 'as-fontaine', name: 'AS Fontaine Aïkido', city: 'Fontaine', region: 'ara', website: 'aikido-fontaine-38.fr', federation: 'FFAAA', description: 'Stage Micheline Tissier 7e Dan' },
+  { id: 'aikido-38-dojo', name: 'Aïkido 38 Dojo', city: 'Grenoble', region: 'ara', website: 'aikido-dojo-38.aikidoepa.com', federation: 'EPA', description: 'Cours d\'essai gratuits' },
+  { id: 'aikido-pays-gex', name: 'Aikido Pays de Gex', city: 'Péron', region: 'ara', website: 'aikidoperon.com', federation: 'FFAAA', description: 'Cours débutants lundi 18h15, mercredi 18h30' },
+  { id: 'aikido-monts-tarare', name: 'Aikido Club Monts de Tarare', city: 'Tarare', region: 'ara', address: 'Gymnase Joseph Perrier, rue Léon Blum, 69170', federation: 'FFAAA' },
   { id: 'aikido-grenoble', name: 'Aïkido Club de Grenoble', city: 'Grenoble', region: 'ara', federation: 'FFAAA' },
   { id: 'aikido-saint-etienne', name: 'Aïkido Club de Saint-Étienne', city: 'Saint-Étienne', region: 'ara', federation: 'FFAAA' },
   { id: 'aikido-clermont', name: 'Aïkido Club de Clermont-Ferrand', city: 'Clermont-Ferrand', region: 'ara', federation: 'FFAAA' },
@@ -151,6 +161,18 @@ export const CLUBS_AIKIDO_FRANCE = [
   // PROVENCE-ALPES-CÔTE D'AZUR (04, 05, 06, 13, 83, 84)
   // ═══════════════════════════════════════════════════════════════════════════
   { id: 'aikido-marseille', name: 'Aïkido Club de Marseille', city: 'Marseille', region: 'paca', federation: 'FFAAA' },
+  { id: 'aiki-dojo-marseille', name: 'Aïki Dojo Marseille', city: 'Marseille 9e', region: 'paca', address: '16 bis Avenue Viton, 13009', phone: '06 88 08 92 06', website: 'aikido-marseille.org', federation: 'FFAAA', description: 'Aikido, Qi Gong, Yoga' },
+  { id: 'midori-marseille', name: 'Midori Aikido Marseille (Midori No Bokujo)', city: 'Marseille 9e', region: 'paca', address: '82 Avenue Paul Claudel, 13009', phone: '06 63 45 19 39', website: 'midori-aikido-marseille.fr', federation: 'FFAAA', description: 'Aikido, Shiatsu, Krav Maga' },
+  { id: 'meiseikan-marseille', name: 'Meïseïkan Dojo Marseille', city: 'Marseille', region: 'paca', address: '81 rue Chateaubriand 13007 / CMA Rouet 7 rue de Benedetti 13008', federation: 'FFAB', instructors: ['Sylvain Frezzato (3e Dan)'], description: '310€/an + licence' },
+  { id: 'nami-dojo-marseille', name: 'Nami Dojo Aïkido (ex Saints Anges)', city: 'Marseille 8e', region: 'paca', address: '272 Avenue de Mazargues, 13008', website: 'dojosaintsanges.fr', federation: 'FFAAA', description: 'Cours lundi/mercredi/vendredi soir' },
+  { id: 'aikido-phoceen', name: 'Aikido Phocéen C.A.P.', city: 'Marseille 12e', region: 'paca', address: 'CMA La Rosière, 40 Avenue de la Rosière 13012', phone: '07 69 12 70 88', email: 'aikidophoceen@free.fr', website: 'aikidophoceen.com', federation: 'FFAAA' },
+  { id: 'provence-aikido', name: 'Provence Aikido Club', city: 'Les Pennes-Mirabeau', region: 'paca', address: 'Dojo Point Chaud, 27 rue des Pennes Mirabeau', website: 'provenceaikido.com', federation: 'FFAB', description: 'Mar/Ven 19h-20h30, Sam 10h30-12h' },
+  { id: 'ki-aikido-marseille', name: 'Ki Aïkido Marseille', city: 'Marseille', region: 'paca', federation: 'FFAAA', description: 'Fondé en 1982' },
+  { id: 'kiai-club-marseille', name: 'Le Kiai Club', city: 'Marseille', region: 'paca', federation: 'FFAAA' },
+  { id: 'aikisan-dojo', name: 'Aïkisan Dojo', city: 'Marseille', region: 'paca', federation: 'FFAAA' },
+  { id: 'asptt-marseille', name: 'ASPTT Marseille 1907 - Aïkido', city: 'Marseille', region: 'paca', federation: 'FFAAA' },
+  { id: 'usam-toulon', name: 'USAM Toulon - Aïkido', city: 'Toulon', region: 'paca', federation: 'FFAB' },
+  { id: 'istres-sports', name: 'Istres Sports Aïkido', city: 'Istres', region: 'paca', federation: 'FFAB' },
   { id: 'aikido-nice', name: 'Aïkido Club de Nice', city: 'Nice', region: 'paca', federation: 'FFAAA' },
   { id: 'aikido-toulon', name: 'Aïkido Club de Toulon', city: 'Toulon', region: 'paca', federation: 'FFAAA' },
   { id: 'aikido-aix', name: 'Aïkido Club d\'Aix-en-Provence', city: 'Aix-en-Provence', region: 'paca', federation: 'FFAAA' },
@@ -161,6 +183,12 @@ export const CLUBS_AIKIDO_FRANCE = [
   // PAYS DE LA LOIRE (44, 49, 53, 72, 85)
   // ═══════════════════════════════════════════════════════════════════════════
   { id: 'aikido-nantes', name: 'Aïkido Club de Nantes', city: 'Nantes', region: 'pdl', federation: 'FFAAA' },
+  { id: 'aikido-nantes-yama', name: 'Aikido-Nantes (Yama Biko no Michi)', city: 'Nantes', region: 'pdl', address: 'Salle Raspail 7 rue Raspail / Palais des Sports Beaulieu', website: 'aikido-nantes.org', federation: 'Aïkikaï', president: 'Association Aikido-Nantes', instructors: ['Didier Lejard (6e Dan Aïkikaï Tokyo)'], description: 'Fondé en 1992' },
+  { id: 'aikido-nantes-metropole', name: 'Aïkido Nantes Métropole', city: 'Nantes', region: 'pdl', federation: 'FFAAA', description: 'Aikido et Aikitaïso' },
+  { id: 'aikikai-nantes', name: 'Aikikai de Nantes', city: 'Nantes', region: 'pdl', federation: 'FFAB' },
+  { id: 'aikikai-sud-loire', name: 'Aikikai Sud Loire', city: 'Bouguenais', region: 'pdl', federation: 'FFAB' },
+  { id: 'nac-aikido', name: 'NAC Aikido', city: 'Nort-sur-Erdre', region: 'pdl', federation: 'FFAB' },
+  { id: 'sautron-omnisport', name: 'Sautron Omnisport - Aïkido', city: 'Sautron', region: 'pdl', federation: 'FFAB' },
   { id: 'aikido-angers', name: 'Aïkido Club d\'Angers', city: 'Angers', region: 'pdl', federation: 'FFAAA' },
   { id: 'aikido-lemans', name: 'Aïkido Club du Mans', city: 'Le Mans', region: 'pdl', federation: 'FFAAA' },
   { id: 'aikido-larochesuryon', name: 'Aïkido Club de La Roche-sur-Yon', city: 'La Roche-sur-Yon', region: 'pdl', federation: 'FFAAA' },
