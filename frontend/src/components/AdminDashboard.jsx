@@ -556,21 +556,23 @@ const AdminDashboard = ({
             <span className={colors.text}>{currentSection.label}</span>
           </div>
 
-          {/* Section Header */}
-          <div className={`${colors.bg} border ${colors.border} rounded-2xl p-6 mb-6`}>
-            <div className="flex items-center gap-4">
-              <div className={`w-14 h-14 rounded-xl ${colors.active} flex items-center justify-center shadow-lg`}>
-                <currentSection.icon className="w-7 h-7 text-white" />
-              </div>
-              <div>
-                <h2 className="text-2xl font-bold text-white">{currentSection.label}</h2>
-                <p className="text-slate-400">{currentSection.description}</p>
-                {currentSection.filePath && (
-                  <p className="text-xs text-sky-400 mt-1 font-mono">📁 {currentSection.filePath}</p>
-                )}
+          {/* Section Header - Masqué pour les sections avec header intégré */}
+          {!['dojos', 'stages', 'users_credentials'].includes(activeSection) && (
+            <div className={`${colors.bg} border ${colors.border} rounded-2xl p-6 mb-6`}>
+              <div className="flex items-center gap-4">
+                <div className={`w-14 h-14 rounded-xl ${colors.active} flex items-center justify-center shadow-lg`}>
+                  <currentSection.icon className="w-7 h-7 text-white" />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold text-white">{currentSection.label}</h2>
+                  <p className="text-slate-400">{currentSection.description}</p>
+                  {currentSection.filePath && (
+                    <p className="text-xs text-sky-400 mt-1 font-mono">📁 {currentSection.filePath}</p>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
+          )}
 
           {/* Content */}
           <div className="bg-slate-800/30 rounded-2xl border border-slate-700 min-h-[500px]">
