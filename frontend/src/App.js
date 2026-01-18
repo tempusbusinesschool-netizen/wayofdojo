@@ -78,7 +78,7 @@ import ModeEmploiPage from "@/pages/ModeEmploiPage";
 import TarificationPage from "@/pages/TarificationPage";
 import PhilosophiePage from "@/pages/PhilosophiePage";
 import CombinaisonsPage from "@/pages/CombinaisonsPage";
-import AdminDashboard, { ADMIN_SECTIONS, AdminTechniquesContent } from "@/components/AdminDashboard";
+import AdminDashboard, { ADMIN_SECTIONS, AdminTechniquesContent, AdminFilesContent } from "@/components/AdminDashboard";
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
