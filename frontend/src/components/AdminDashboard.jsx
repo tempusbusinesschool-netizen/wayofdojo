@@ -329,6 +329,149 @@ export const AdminTechniquesContent = ({ onBack }) => {
 };
 
 /**
+ * Configuration des fichiers de référence
+ */
+const REFERENCE_FILES = [
+  {
+    id: 'techniques_aikido',
+    name: 'Techniques d\'aikido.js',
+    description: '141 combinaisons techniques (96 Kyu + 45 Dan) du programme traditionnel d\'Aïkido',
+    path: 'Sports/Aikido/Techniques d\'aikido/Techniques d\'aikido.js',
+    category: 'Programme technique',
+    size: '42 Ko',
+    icon: FileCode,
+    color: 'amber',
+    details: [
+      '6e Kyu → 1er Kyu : 96 techniques',
+      '1er Dan → 4e Dan : 45 techniques',
+      'Attaques, déplacements, finales',
+      'Fonctions utilitaires incluses'
+    ]
+  }
+];
+
+/**
+ * Contenu de la section Fichiers de référence
+ */
+export const AdminFilesContent = () => {
+  const handleDownload = (file) => {
+    // Créer un lien de téléchargement
+    const link = document.createElement('a');
+    link.href = `/files/${file.path}`;
+    link.download = file.name;
+    link.click();
+  };
+
+  const handleViewPath = (file) => {
+    // Copier le chemin dans le presse-papiers
+    navigator.clipboard.writeText(`/app/${file.path}`);
+    alert(`Chemin copié : /app/${file.path}`);
+  };
+
+  return (
+    <div className="p-6">
+      {/* En-tête */}
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <h3 className="text-xl font-bold text-white mb-1">Fichiers de référence</h3>
+          <p className="text-slate-400 text-sm">Documents et ressources techniques du projet</p>
+        </div>
+        <div className="flex items-center gap-2 text-sm text-slate-400">
+          <Database className="w-4 h-4" />
+          <span>{REFERENCE_FILES.length} fichier(s)</span>
+        </div>
+      </div>
+
+      {/* Liste des fichiers */}
+      <div className="space-y-4">
+        {REFERENCE_FILES.map((file) => {
+          const Icon = file.icon;
+          const colors = colorClasses[file.color] || colorClasses.sky;
+          
+          return (
+            <motion.div
+              key={file.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className={`${colors.bg} border ${colors.border} rounded-xl p-5 hover:border-opacity-80 transition-all`}
+            >
+              <div className="flex items-start gap-4">
+                {/* Icône */}
+                <div className={`w-14 h-14 rounded-xl ${colors.active} flex items-center justify-center shadow-lg flex-shrink-0`}>
+                  <Icon className="w-7 h-7 text-white" />
+                </div>
+
+                {/* Informations */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-3 mb-1">
+                    <h4 className="text-lg font-bold text-white">{file.name}</h4>
+                    <span className="px-2 py-0.5 bg-slate-700 rounded text-xs text-slate-300">
+                      {file.category}
+                    </span>
+                  </div>
+                  
+                  <p className="text-slate-400 text-sm mb-3">{file.description}</p>
+                  
+                  {/* Chemin du fichier */}
+                  <div className="flex items-center gap-2 mb-3 bg-slate-800/50 rounded-lg px-3 py-2">
+                    <FolderOpen className="w-4 h-4 text-slate-500 flex-shrink-0" />
+                    <code className="text-xs text-sky-400 font-mono truncate">{file.path}</code>
+                    <button 
+                      onClick={() => handleViewPath(file)}
+                      className="ml-auto text-slate-400 hover:text-white transition-colors"
+                      title="Copier le chemin"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                    </button>
+                  </div>
+
+                  {/* Détails */}
+                  {file.details && (
+                    <div className="grid grid-cols-2 gap-2 mb-4">
+                      {file.details.map((detail, idx) => (
+                        <div key={idx} className="flex items-center gap-2 text-xs text-slate-400">
+                          <span className="w-1.5 h-1.5 rounded-full bg-slate-500"></span>
+                          {detail}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Actions */}
+                  <div className="flex items-center gap-3">
+                    <span className="text-xs text-slate-500">Taille : {file.size}</span>
+                    <button
+                      onClick={() => handleViewPath(file)}
+                      className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-700 hover:bg-slate-600 rounded-lg text-xs text-white transition-colors"
+                    >
+                      <ExternalLink className="w-3.5 h-3.5" />
+                      Copier chemin
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
+
+      {/* Information supplémentaire */}
+      <div className="mt-8 p-4 bg-slate-800/30 rounded-xl border border-slate-700">
+        <div className="flex items-start gap-3">
+          <HelpCircle className="w-5 h-5 text-slate-400 flex-shrink-0 mt-0.5" />
+          <div className="text-sm text-slate-400">
+            <p className="mb-1"><strong className="text-slate-300">À propos des fichiers de référence</strong></p>
+            <p>Ces fichiers contiennent les données structurées du programme technique d'Aïkido. 
+            Ils sont utilisés par l'application pour afficher les techniques, gérer les progressions 
+            et accompagner l'apprentissage des pratiquants.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/**
  * Placeholder pour les sections non implémentées
  */
 export const AdminSectionPlaceholder = ({ section }) => {
