@@ -1004,6 +1004,8 @@ function AppContent() {
               <PassagesGradesViewer />
             ) : adminSection === 'galerie' ? (
               <AdminGalleryContent />
+            ) : adminSection === 'videos' || adminSection === 'videos_techniques' || adminSection === 'videos_stages' || adminSection === 'videos_cours' || adminSection === 'videos_demonstrations' ? (
+              <AdminVideosContent category={adminSection.replace('videos_', '')} />
             ) : adminSection === 'jo' ? (
               <TechniquesSectionViewer
                 techniques={TECHNIQUES_JO}
