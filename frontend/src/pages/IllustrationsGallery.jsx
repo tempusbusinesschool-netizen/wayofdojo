@@ -152,19 +152,10 @@ const IllustrationsGallery = ({ embedded = false }) => {
           </div>
         </div>
       )}
-              animate={{ width: `${(techniquesWithImages / totalTechniques) * 100}%` }}
-              transition={{ duration: 1 }}
-            />
-          </div>
-          <p className="text-white/70 text-sm mt-2">
-            {Math.round((techniquesWithImages / totalTechniques) * 100)}% des techniques illustrées
-          </p>
-        </div>
-      </div>
 
       {/* Filtres */}
-      <div className="sticky top-0 z-10 bg-slate-800/95 backdrop-blur-sm border-b border-slate-700 p-4">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center gap-4">
+      <div className={`${embedded ? '' : 'sticky top-0'} z-10 bg-slate-800/95 backdrop-blur-sm border-b border-slate-700 p-4`}>
+        <div className={`${embedded ? '' : 'max-w-7xl mx-auto'} flex flex-wrap items-center gap-4`}>
           {/* Recherche */}
           <div className="relative flex-1 min-w-[200px]">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
