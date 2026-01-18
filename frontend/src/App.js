@@ -947,13 +947,15 @@ function AppContent() {
                   </Button>
                 </div>
               </div>
-            ) : adminSection === 'users' ? (
+            ) : adminSection === 'users' || adminSection === 'users_list' ? (
               <div className="p-6">
                 <DojoMembersList 
                   isAdmin={true} 
                   onMemberSelect={(member) => console.log('Member selected:', member)}
                 />
               </div>
+            ) : adminSection === 'users_credentials' ? (
+              <UserCredentialsManager />
             ) : adminSection === 'dojos' ? (
               <div className="p-6">
                 <DojoManagement />
