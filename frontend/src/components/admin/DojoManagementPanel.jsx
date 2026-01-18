@@ -2,23 +2,26 @@
  * 🏢 DOJO MANAGEMENT PANEL
  * 
  * Panneau de gestion des dojos intégré directement dans l'admin
- * Fonctionnalités: Créer dojos, créer adhérents, voir membres
+ * Fonctionnalités: Créer dojos, créer adhérents, voir membres, importer clubs FFAAA
  */
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import axios from "axios";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
   Building2, Plus, Trash2, Users, MapPin, Shield, 
   UserPlus, ChevronDown, ChevronUp, Mail, Phone, Calendar,
-  Award, Eye, EyeOff, RefreshCw, Search, X
+  Award, Eye, EyeOff, RefreshCw, Search, X, Download, Globe,
+  CheckCircle2, Filter
 } from "lucide-react";
+import CLUBS_AIKIDO_FRANCE, { REGIONS_FRANCE, getRegionStats } from "@/data/clubsAikidoFrance";
 
 const API = process.env.REACT_APP_BACKEND_URL + "/api";
 
