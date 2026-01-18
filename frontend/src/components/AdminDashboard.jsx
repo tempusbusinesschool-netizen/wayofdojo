@@ -19,6 +19,7 @@ import {
 import { Button } from '@/components/ui/button';
 import CombinaisonsPage from '@/pages/CombinaisonsPage';
 import IllustrationsGallery from '@/pages/IllustrationsGallery';
+import VideosSection from '@/pages/VideosSection';
 
 // Configuration des sections admin (structure hiérarchique)
 const ADMIN_SECTIONS = [
