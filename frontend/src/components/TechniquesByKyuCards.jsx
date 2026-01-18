@@ -543,22 +543,6 @@ const TechniquesByKyuCards = ({
               <BookOpen className="w-5 h-5" />
               Programme Technique
             </h2>
-            <div className="flex flex-wrap items-center gap-2">
-              {/* Bouton Philosophie et Histoire */}
-              <Button
-                onClick={() => setShowPhilosophieHistoire(true)}
-                variant="outline"
-                size="sm"
-                className="border-purple-400/50 text-purple-200 hover:bg-purple-500/20 text-xs"
-                data-testid="philosophie-histoire-btn"
-              >
-                <History className="w-3 h-3 mr-1" />
-                <span className="hidden xs:inline">Philosophie et </span>histoire
-              </Button>
-              <div className="text-cyan-200 text-xs sm:text-sm font-medium">
-                {localMastered.length} en confiance
-              </div>
-            </div>
           </div>
         </div>
 
