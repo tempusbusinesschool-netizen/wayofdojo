@@ -2012,6 +2012,7 @@ function AppContent() {
             </TabsContent>
           )}
         </Tabs>
+        )}
       </main>
       )}
       
