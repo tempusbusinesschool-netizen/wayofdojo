@@ -922,7 +922,7 @@ function AppContent() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   <Button
                     variant="outline"
-                    className="h-auto py-4 flex flex-col items-center gap-2 border-slate-600 hover:bg-slate-700"
+                    className="h-auto py-4 flex flex-col items-center gap-2 bg-slate-700/50 border-slate-500 hover:bg-slate-600 hover:border-violet-500 text-white transition-all"
                     onClick={() => setAdminSection('users')}
                   >
                     <Users className="w-6 h-6 text-violet-400" />
@@ -930,7 +930,7 @@ function AppContent() {
                   </Button>
                   <Button
                     variant="outline"
-                    className="h-auto py-4 flex flex-col items-center gap-2 border-slate-600 hover:bg-slate-700"
+                    className="h-auto py-4 flex flex-col items-center gap-2 bg-slate-700/50 border-slate-500 hover:bg-slate-600 hover:border-orange-500 text-white transition-all"
                     onClick={() => setAdminSection('dojos')}
                   >
                     <Building2 className="w-6 h-6 text-orange-400" />
@@ -938,7 +938,7 @@ function AppContent() {
                   </Button>
                   <Button
                     variant="outline"
-                    className="h-auto py-4 flex flex-col items-center gap-2 border-slate-600 hover:bg-slate-700"
+                    className="h-auto py-4 flex flex-col items-center gap-2 bg-slate-700/50 border-slate-500 hover:bg-slate-600 hover:border-amber-500 text-white transition-all"
                     onClick={() => setAdminSection('techniques')}
                   >
                     <Swords className="w-6 h-6 text-amber-400" />
