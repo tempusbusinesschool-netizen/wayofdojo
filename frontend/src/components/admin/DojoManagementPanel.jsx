@@ -366,28 +366,49 @@ function DojoManagementPanel() {
             placeholder="Entrez le mot de passe Super Admin pour les actions sensibles"
             className="bg-slate-800/50 border-amber-500/30 text-white"
           />
-          <p className="text-xs text-amber-400/70 mt-2">Requis pour créer/supprimer des dojos</p>
+          <p className="text-xs text-amber-400/70 mt-2">Requis pour créer/supprimer des dojos et importer des clubs</p>
         </CardContent>
       </Card>
 
-      {/* Create Dojo Button / Form */}
-      <AnimatePresence>
-        {showCreateForm ? (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
+      {/* Onglets */}
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+        <TabsList className="bg-slate-800 border-slate-700 mb-6 w-full justify-start">
+          <TabsTrigger 
+            value="mes-dojos"
+            className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-orange-600 data-[state=active]:to-amber-600"
           >
-            <Card className="mb-6 bg-blue-900/20 border-blue-500/30">
-              <CardHeader>
-                <CardTitle className="text-blue-300 flex items-center gap-2">
-                  <Plus className="w-5 h-5" />
-                  Créer un nouveau dojo
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
+            <Building2 className="w-4 h-4 mr-2" />
+            Mes Dojos ({dojos.length})
+          </TabsTrigger>
+          <TabsTrigger 
+            value="annuaire"
+            className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-cyan-600"
+          >
+            <Globe className="w-4 h-4 mr-2" />
+            Annuaire FFAAA ({CLUBS_AIKIDO_FRANCE.length})
+          </TabsTrigger>
+        </TabsList>
+        
+        {/* Onglet Mes Dojos */}
+        <TabsContent value="mes-dojos">
+          {/* Create Dojo Button / Form */}
+          <AnimatePresence>
+            {showCreateForm ? (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+              >
+                <Card className="mb-6 bg-blue-900/20 border-blue-500/30">
+                  <CardHeader>
+                    <CardTitle className="text-blue-300 flex items-center gap-2">
+                      <Plus className="w-5 h-5" />
+                      Créer un nouveau dojo
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div>
                     <label className="text-sm text-slate-400 mb-1 block">Nom du dojo *</label>
                     <Input
                       value={formData.name}
