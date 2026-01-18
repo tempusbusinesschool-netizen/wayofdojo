@@ -1077,6 +1077,10 @@ function AppContent() {
               </div>
             )}
             
+            {activePage === 'combinaisons' && (
+              <CombinaisonsPage />
+            )}
+            
             {/* Grade Sections - Visible uniquement pour les utilisateurs connectés */}
             {isAuthenticated && (
             <div className="space-y-2">
