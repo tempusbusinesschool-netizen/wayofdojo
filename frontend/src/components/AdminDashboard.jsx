@@ -208,6 +208,48 @@ const ADMIN_SECTIONS = [
             ]
           }
         ]
+      },
+      {
+        id: 'videos',
+        label: 'Vidéos',
+        icon: Video,
+        color: 'red',
+        description: 'Bibliothèque de vidéos pédagogiques',
+        isParent: true,
+        children: [
+          {
+            id: 'videos_techniques',
+            label: 'Techniques',
+            icon: Video,
+            color: 'red',
+            description: 'Vidéos des techniques d\'Aïkido',
+            isVideoSection: true
+          },
+          {
+            id: 'videos_stages',
+            label: 'Stages & Séminaires',
+            icon: Video,
+            color: 'orange',
+            description: 'Enregistrements de stages',
+            isVideoSection: true
+          },
+          {
+            id: 'videos_cours',
+            label: 'Cours en ligne',
+            icon: Video,
+            color: 'amber',
+            description: 'Leçons pédagogiques',
+            isVideoSection: true
+          },
+          {
+            id: 'videos_demonstrations',
+            label: 'Démonstrations',
+            icon: Video,
+            color: 'emerald',
+            description: 'Démonstrations de maîtres',
+            isVideoSection: true
+          }
+        ]
       }
     ]
   },
