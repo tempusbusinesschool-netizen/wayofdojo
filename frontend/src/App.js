@@ -1025,6 +1025,8 @@ function AppContent() {
                   </Card>
                 </div>
               </div>
+            ) : adminSection === 'files' ? (
+              <AdminFilesContent />
             ) : null}
           </AdminDashboard>
         )}
