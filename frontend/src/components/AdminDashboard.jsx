@@ -83,6 +83,13 @@ const ADMIN_SECTIONS = [
             hasVideo: true
           },
           {
+            id: 'animations_techniques',
+            label: 'Animations Techniques',
+            icon: FileCode,
+            color: 'cyan',
+            description: 'Animations SVG des mouvements'
+          },
+          {
             id: 'armes',
             label: 'Armes',
             icon: Swords,
