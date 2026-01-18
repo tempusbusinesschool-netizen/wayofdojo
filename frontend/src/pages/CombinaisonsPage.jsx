@@ -80,7 +80,7 @@ const KYU_COLORS = {
   '1er_kyu': { bg: 'bg-purple-100', text: 'text-purple-800', border: 'border-purple-500', label: '1er Kyu' }
 };
 
-const CombinaisonsPage = ({ onBack }) => {
+const CombinaisonsPage = ({ onBack, embedded = false }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedKyu, setSelectedKyu] = useState('all');
   const [selectedType, setSelectedType] = useState('all');
