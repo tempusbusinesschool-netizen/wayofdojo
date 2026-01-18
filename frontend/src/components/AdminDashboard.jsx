@@ -67,12 +67,50 @@ const ADMIN_SECTIONS = [
         children: [
           {
             id: 'techniques',
-            label: 'Techniques d\'Aikido',
+            label: 'Toutes les techniques',
             icon: FileCode,
             color: 'amber',
             description: '284 combinaisons du programme',
             filePath: 'Sports/Aikido/Techniques d\'aikido/Techniques d\'aikido.js'
+          },
+          {
+            id: 'armes',
+            label: 'Armes',
+            icon: Swords,
+            color: 'orange',
+            description: 'Techniques avec armes',
+            isParent: true,
+            children: [
+              {
+                id: 'jo',
+                label: 'Jo (Bâton)',
+                icon: FileCode,
+                color: 'orange',
+                description: '46 techniques - Suburi, Kata, Kumijo',
+                filePath: 'Sports/Aikido/Techniques d\'aikido/Armes/Jo/Techniques_Jo.js'
+              },
+              {
+                id: 'bokken',
+                label: 'Bokken (Sabre)',
+                icon: FileCode,
+                color: 'red',
+                description: '32 techniques - Suburi, Kumitachi, Tachi Dori',
+                filePath: 'Sports/Aikido/Techniques d\'aikido/Armes/Bokken/Techniques_Bokken.js'
+              },
+              {
+                id: 'tanto',
+                label: 'Tanto (Couteau)',
+                icon: FileCode,
+                color: 'rose',
+                description: '38 techniques - Défenses contre couteau',
+                filePath: 'Sports/Aikido/Techniques d\'aikido/Armes/Tanto/Techniques_Tanto.js'
+              }
+            ]
           }
+        ]
+      }
+    ]
+  },
         ]
       }
     ]
