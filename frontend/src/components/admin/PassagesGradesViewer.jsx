@@ -519,7 +519,7 @@ const GradeDetailPage = ({ gradeId, onBack }) => {
         <CardHeader>
           <CardTitle className="text-lg text-amber-400 flex items-center gap-2">
             <Table className="w-5 h-5" />
-            Programme technique
+            Apprendre les différentes techniques en Aikido
           </CardTitle>
         </CardHeader>
         <CardContent>
