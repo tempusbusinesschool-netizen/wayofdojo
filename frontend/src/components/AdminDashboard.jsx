@@ -325,9 +325,17 @@ const AdminDashboard = ({
 
         {/* Main Content */}
         <main className="flex-1 p-6">
-          {/* Breadcrumb */}
-          <div className="flex items-center gap-2 text-sm text-slate-400 mb-6">
+          {/* Breadcrumb dynamique */}
+          <div className="flex items-center gap-2 text-sm text-slate-400 mb-6 flex-wrap">
             <span>Administration</span>
+            {activeSection === 'techniques' && (
+              <>
+                <ChevronRight className="w-4 h-4" />
+                <span className="text-amber-400">Sports</span>
+                <ChevronRight className="w-4 h-4" />
+                <span className="text-amber-400">Aikido</span>
+              </>
+            )}
             <ChevronRight className="w-4 h-4" />
             <span className={colors.text}>{currentSection.label}</span>
           </div>
@@ -341,6 +349,9 @@ const AdminDashboard = ({
               <div>
                 <h2 className="text-2xl font-bold text-white">{currentSection.label}</h2>
                 <p className="text-slate-400">{currentSection.description}</p>
+                {currentSection.filePath && (
+                  <p className="text-xs text-sky-400 mt-1 font-mono">📁 {currentSection.filePath}</p>
+                )}
               </div>
             </div>
           </div>
