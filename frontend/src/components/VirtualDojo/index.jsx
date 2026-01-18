@@ -943,22 +943,90 @@ const VirtualDojo = ({
                       Mes Validations
                     </h3>
                     <p className="text-pink-200 text-sm max-w-md mx-auto">
-                      Quand tu termines un jeu, tes parents valident ici !<br/>
-                      <span className="text-slate-400">Ils reçoivent une notification.</span>
+                      Quand tu termines un entraînement, tes parents valident ici !
                     </p>
                   </div>
 
+                  {/* Mode validation parent activé */}
+                  {parentValidationMode && completedGames.length > 0 && (
+                    <motion.div 
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="bg-gradient-to-br from-purple-900/50 to-pink-900/50 rounded-xl p-5 border-2 border-purple-400/50 mb-4"
+                    >
+                      <div className="flex items-center gap-2 mb-4">
+                        <span className="text-2xl">👨‍👩‍👧</span>
+                        <h4 className="text-purple-200 font-bold">Espace Parent - Validation</h4>
+                      </div>
+                      
+                      <p className="text-slate-300 text-sm mb-4">
+                        Saisissez vos informations pour valider les activités de votre enfant :
+                      </p>
+                      
+                      <div className="grid grid-cols-2 gap-3 mb-4">
+                        <div>
+                          <label className="text-xs text-slate-400 block mb-1">Prénom du parent</label>
+                          <input
+                            type="text"
+                            placeholder="Prénom"
+                            value={parentForm.prenom}
+                            onChange={(e) => setParentForm(prev => ({ ...prev, prenom: e.target.value }))}
+                            className="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:border-purple-400 focus:outline-none text-sm"
+                            data-testid="parent-prenom-input"
+                          />
+                        </div>
+                        <div>
+                          <label className="text-xs text-slate-400 block mb-1">Nom du parent</label>
+                          <input
+                            type="text"
+                            placeholder="Nom"
+                            value={parentForm.nom}
+                            onChange={(e) => setParentForm(prev => ({ ...prev, nom: e.target.value }))}
+                            className="w-full px-3 py-2 bg-slate-800 border border-slate-600 rounded-lg text-white placeholder-slate-500 focus:border-purple-400 focus:outline-none text-sm"
+                            data-testid="parent-nom-input"
+                          />
+                        </div>
+                      </div>
+                      
+                      <div className="flex gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            setParentValidationMode(false);
+                            setParentForm({ nom: '', prenom: '' });
+                          }}
+                          className="flex-1 border-slate-600 text-slate-300 hover:bg-slate-700"
+                        >
+                          Annuler
+                        </Button>
+                      </div>
+                    </motion.div>
+                  )}
+
                   {/* Liste des jeux complétés en attente de validation */}
                   <div className="bg-slate-800/50 rounded-xl p-4 border border-pink-500/30">
-                    <h4 className="text-pink-300 font-bold text-sm mb-3 flex items-center gap-2">
-                      <span className="text-lg">⏳</span>
-                      En attente de validation
-                    </h4>
+                    <div className="flex items-center justify-between mb-3">
+                      <h4 className="text-pink-300 font-bold text-sm flex items-center gap-2">
+                        <span className="text-lg">⏳</span>
+                        En attente de validation
+                      </h4>
+                      {completedGames.length > 0 && !parentValidationMode && (
+                        <Button
+                          size="sm"
+                          onClick={() => setParentValidationMode(true)}
+                          className="bg-purple-600 hover:bg-purple-700 text-white text-xs"
+                          data-testid="parent-validate-btn"
+                        >
+                          👨‍👩‍👧 Je suis le parent
+                        </Button>
+                      )}
+                    </div>
                     
                     {completedGames.length === 0 ? (
                       <div className="text-center py-6 text-slate-400">
-                        <span className="text-4xl block mb-2">🎮</span>
-                        <p className="text-sm">Joue à un jeu pour demander une validation !</p>
+                        <span className="text-4xl block mb-2">🏋️</span>
+                        <p className="text-sm">Fais un entraînement pour demander une validation !</p>
                       </div>
                     ) : (
                       <div className="space-y-2">
@@ -971,12 +1039,23 @@ const VirtualDojo = ({
                                 <span className="text-2xl">{game.emoji}</span>
                                 <div>
                                   <p className="text-white font-medium text-sm">{game.name}</p>
-                                  <p className="text-slate-400 text-xs">Complété</p>
+                                  <p className="text-slate-400 text-xs">Complété - en attente</p>
                                 </div>
                               </div>
-                              <span className="bg-amber-500/20 text-amber-300 px-2 py-1 rounded-full text-xs font-medium">
-                                ⏳ En attente
-                              </span>
+                              {parentValidationMode && parentForm.nom && parentForm.prenom ? (
+                                <Button
+                                  size="sm"
+                                  onClick={() => handleParentValidation(gameId)}
+                                  className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs"
+                                  data-testid={`validate-${gameId}`}
+                                >
+                                  ✅ Valider
+                                </Button>
+                              ) : (
+                                <span className="bg-amber-500/20 text-amber-300 px-2 py-1 rounded-full text-xs font-medium">
+                                  ⏳ En attente
+                                </span>
+                              )}
                             </div>
                           );
                         })}
@@ -988,24 +1067,47 @@ const VirtualDojo = ({
                   <div className="bg-slate-800/50 rounded-xl p-4 border border-emerald-500/30">
                     <h4 className="text-emerald-300 font-bold text-sm mb-3 flex items-center gap-2">
                       <span className="text-lg">✅</span>
-                      Validés par mes parents
+                      Validés par mes parents ({validatedByParent.length})
                     </h4>
                     
-                    <div className="text-center py-6 text-slate-400">
-                      <span className="text-4xl block mb-2">🌟</span>
-                      <p className="text-sm">Les validations de tes parents apparaîtront ici !</p>
-                    </div>
+                    {validatedByParent.length === 0 ? (
+                      <div className="text-center py-6 text-slate-400">
+                        <span className="text-4xl block mb-2">🌟</span>
+                        <p className="text-sm">Les validations de tes parents apparaîtront ici !</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-2">
+                        {validatedByParent.map((validation, idx) => (
+                          <div key={idx} className="flex items-center justify-between bg-emerald-900/30 rounded-lg p-3 border border-emerald-500/20">
+                            <div className="flex items-center gap-3">
+                              <span className="text-2xl">{validation.gameEmoji}</span>
+                              <div>
+                                <p className="text-white font-medium text-sm">{validation.gameName}</p>
+                                <p className="text-emerald-400 text-xs">
+                                  Validé par {validation.parentPrenom} {validation.parentNom}
+                                </p>
+                              </div>
+                            </div>
+                            <span className="bg-emerald-500/20 text-emerald-300 px-2 py-1 rounded-full text-xs font-medium">
+                              ✅ Validé
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
 
                   {/* Message d'information */}
-                  <div className="bg-pink-500/10 border border-pink-500/30 rounded-xl p-4 text-center">
+                  <div className="bg-pink-500/10 border border-pink-500/30 rounded-xl p-4">
                     <p className="text-pink-200 text-sm">
-                      👨‍👩‍👧 <strong>Comment ça marche ?</strong><br/>
-                      <span className="text-slate-400">
-                        Quand tu termines un jeu, tes parents reçoivent une notification.<br/>
-                        Ils peuvent valider depuis leur espace ou le bouton "Espace Parent".
-                      </span>
+                      <strong>👨‍👩‍👧 Comment ça marche ?</strong>
                     </p>
+                    <ol className="text-slate-300 text-xs mt-2 space-y-1 list-decimal list-inside">
+                      <li>L'enfant termine un entraînement</li>
+                      <li>Le parent clique sur "Je suis le parent"</li>
+                      <li>Le parent saisit son nom et prénom</li>
+                      <li>Le parent valide chaque activité complétée</li>
+                    </ol>
                   </div>
                 </div>
               )}
