@@ -22,22 +22,45 @@ Application web pour le club d'Aïkido "Aikido@Game" servant de référence digi
 
 ### 2025-01-18 (Session actuelle)
 - ✅ **Menu Admin unifié** : "Techniques Kyu" + "Grades Dan" → "Techniques d'Aikido" (141 techniques)
-- ✅ **Affichage des sections Armes** : Jo (46 techniques), Bokken (24 techniques), Tanto (21 techniques)
-- ✅ **Affichage des sections Mouvements** : Tai Sabaki, Ukemi, Kamae, Atemi, Kokyu Waza, Kansetsu Waza, Suwariwaza, Hanmi Handachi
-- ✅ **Nouveau composant TechniquesSectionViewer** : Affiche les techniques avec recherche, filtres par niveau, et groupement par catégorie
-- ✅ **Fichier de données centralisé** : `/app/frontend/src/constants/aikidoTechniquesData.js` avec toutes les techniques organisées
+- ✅ **Affichage complet des 11 sections** avec données détaillées :
+  - **Armes** : Jo (46), Bokken (24), Tanto (21) 
+  - **Mouvements** : Tai Sabaki (10), Ukemi (9), Kamae (8), Atemi (9), Kokyu Waza (6), Kansetsu Waza (10), Suwariwaza (10), Hanmi Handachi (8)
+- ✅ **161 techniques/mouvements** avec niveau de détail approfondi incluant :
+  - Noms japonais (漢字) et traductions
+  - Descriptions complètes
+  - Points clés d'exécution (section verte)
+  - Erreurs courantes à éviter (section orange)
+  - Niveaux requis (6ème Kyu → 4ème Dan)
+  - Catégorisation hiérarchique
+
+### Nouveaux fichiers créés
+- `/app/frontend/src/components/admin/TechniquesSectionViewer.jsx` - Composant d'affichage unifié
+- `/app/frontend/src/constants/aikidoTechniquesData.js` - **2000+ lignes** de données détaillées
 
 ### Précédent
 - ✅ Structure hiérarchique fichiers sous `/app/Sports/Aikido/`
 - ✅ Menu sidebar récursif avec navigation multi-niveaux
 - ✅ Fil d'Ariane dynamique dans admin
-- ✅ Données pour 45 techniques Dan avec placeholders vidéo
 - ✅ Section "Passages de Grades" créée
 
-## Prioritized Backlog
+## Récapitulatif des techniques
 
-### P0 (Critical)
-- Aucun actuellement
+| Catégorie | Nombre |
+|-----------|--------|
+| Jo (Bâton) | 46 |
+| Bokken (Sabre) | 24 |
+| Tanto (Couteau) | 21 |
+| Tai Sabaki (Déplacements) | 10 |
+| Ukemi (Chutes) | 9 |
+| Kamae (Postures) | 8 |
+| Atemi (Frappes) | 9 |
+| Kokyu Waza (Respiration) | 6 |
+| Kansetsu Waza (Clés) | 10 |
+| Suwariwaza (À genoux) | 10 |
+| Hanmi Handachi (Semi-debout) | 8 |
+| **TOTAL** | **161** |
+
+## Prioritized Backlog
 
 ### P1 (High)
 - Implémenter filtres niveau Dan dans `CombinaisonsPage.jsx` pour l'affichage utilisateur
@@ -45,21 +68,19 @@ Application web pour le club d'Aïkido "Aikido@Game" servant de référence digi
 - Analyse globale et nettoyage du code
 
 ### P2 (Medium)
-- Prototyper plus d'animations de techniques (bloqué: attente choix utilisateur)
+- Prototyper plus d'animations de techniques
 - Différencier "Zone Adultes" avec UX moins gamifié
 - Section clés API production dans admin
 
 ### P3 (Low)
-- Corriger erreurs lint dans `StatisticsDashboard.js` (setIsTimelinePanelOpen, setIsJournalPanelOpen)
+- Corriger erreurs lint dans `StatisticsDashboard.js`
 - Nouveaux blocs "Les différentes techniques" et "Défis collectifs"
 - 2FA pour Super Admin
 
 ## Key Files
 - `/app/frontend/src/components/AdminDashboard.jsx` - Menu sidebar hiérarchique
-- `/app/frontend/src/components/admin/TechniquesSectionViewer.jsx` - **NOUVEAU** Composant d'affichage des techniques
-- `/app/frontend/src/constants/aikidoTechniquesData.js` - **NOUVEAU** Données centralisées des techniques
-- `/app/frontend/src/constants/aikidoCombinaisons.js` - Données techniques Kyu+Dan
-- `/app/Sports/Aikido/Techniques d'aikido/` - Structure fichiers techniques
+- `/app/frontend/src/components/admin/TechniquesSectionViewer.jsx` - Affichage des techniques
+- `/app/frontend/src/constants/aikidoTechniquesData.js` - Données complètes des 161 techniques
 - `/app/frontend/src/App.js` - Routage et logique admin
 
 ## Test Credentials
@@ -69,9 +90,7 @@ Application web pour le club d'Aïkido "Aikido@Game" servant de référence digi
 | Parent | parent@gmail.com | parent123 |
 | Admin | - | aikido2024 |
 
-## Known Issues
-- Lint errors dans StatisticsDashboard.js (P3)
-
 ## Project Status
 - **Broken**: NO
 - **Mocked**: NO
+- **Testing**: Screenshots confirmant le bon fonctionnement
