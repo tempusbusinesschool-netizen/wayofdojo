@@ -336,7 +336,9 @@ function DojoManagementPanel() {
           </div>
           <div>
             <h1 className="text-2xl font-bold text-white">Gestion des Dojos</h1>
-            <p className="text-slate-400">{dojos.length} dojo(s) • {totalMembers} adhérent(s) au total</p>
+            <p className="text-slate-400">
+              {dojos.length} dojo(s) enregistré(s) • {totalMembers} adhérent(s) • {CLUBS_AIKIDO_FRANCE.length} clubs dans l'annuaire FFAAA
+            </p>
           </div>
         </div>
         
