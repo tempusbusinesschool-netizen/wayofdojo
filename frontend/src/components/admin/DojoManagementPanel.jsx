@@ -962,12 +962,42 @@ function DojoManagementPanel() {
                       {club.address && (
                         <p className="text-slate-500 text-xs mt-1 truncate">{club.address}</p>
                       )}
+                      
+                      {/* Téléphone et Email */}
+                      {(club.phone || club.email) && (
+                        <div className="mt-2 space-y-1">
+                          {club.phone && (
+                            <p className="text-cyan-400 text-xs flex items-center gap-1">
+                              <Phone className="w-3 h-3" />
+                              <a 
+                                href={`tel:${club.phone}`} 
+                                onClick={(e) => e.stopPropagation()}
+                                className="hover:underline"
+                              >
+                                {club.phone}
+                              </a>
+                            </p>
+                          )}
+                          {club.email && (
+                            <p className="text-emerald-400 text-xs flex items-center gap-1">
+                              <Mail className="w-3 h-3" />
+                              <a 
+                                href={`mailto:${club.email}`} 
+                                onClick={(e) => e.stopPropagation()}
+                                className="hover:underline truncate"
+                              >
+                                {club.email}
+                              </a>
+                            </p>
+                          )}
+                        </div>
+                      )}
                     </div>
                     <div className="text-right flex-shrink-0">
                       <span className="text-lg">{region?.emoji}</span>
                       {isAlreadyImported && (
                         <Badge className="mt-1 bg-emerald-600 text-xs">Importé</Badge>
-                      )}
+                      )}}
                     </div>
                   </div>
                   <div className="flex items-center gap-2 mt-2">
