@@ -316,29 +316,7 @@ const AdminDashboard = ({
                 </div>
                 
                 <nav className="space-y-2">
-                  {ADMIN_SECTIONS.map((section) => {
-                    const Icon = section.icon;
-                    const sectionColors = colorClasses[section.color];
-                    const isActive = activeSection === section.id;
-                    
-                    return (
-                      <button
-                        key={section.id}
-                        onClick={() => {
-                          onSectionChange(section.id);
-                          setMobileMenuOpen(false);
-                        }}
-                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                          isActive 
-                            ? `${sectionColors.active} text-white` 
-                            : 'hover:bg-slate-700/50 text-slate-400'
-                        }`}
-                      >
-                        <Icon className={`w-5 h-5 ${isActive ? 'text-white' : sectionColors.text}`} />
-                        <span className="font-medium">{section.label}</span>
-                      </button>
-                    );
-                  })}
+                  {ADMIN_SECTIONS.map((section) => renderMenuItem(section))}
                 </nav>
               </div>
             </motion.div>
