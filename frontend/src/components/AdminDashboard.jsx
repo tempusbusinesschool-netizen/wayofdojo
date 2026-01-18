@@ -83,6 +83,14 @@ const ADMIN_SECTIONS = [
             hasVideo: true
           },
           {
+            id: 'galerie',
+            label: 'Galerie Illustrations',
+            icon: Image,
+            color: 'pink',
+            description: 'Illustrations des techniques d\'Aïkido',
+            isGallery: true
+          },
+          {
             id: 'armes',
             label: 'Armes',
             icon: Swords,
