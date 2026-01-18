@@ -384,7 +384,7 @@ const REFERENCE_FILES = [
   {
     id: 'techniques_aikido',
     name: 'Techniques d\'aikido.js',
-    description: '141 combinaisons techniques (96 Kyu + 45 Dan) du programme traditionnel d\'Aïkido',
+    description: '284 combinaisons techniques du programme traditionnel d\'Aïkido',
     path: 'Sports/Aikido/Techniques d\'aikido/Techniques d\'aikido.js',
     category: 'Programme technique',
     size: '42 Ko',
