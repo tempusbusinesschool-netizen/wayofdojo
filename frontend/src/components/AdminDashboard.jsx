@@ -70,7 +70,7 @@ const ADMIN_SECTIONS = [
             label: 'Techniques d\'Aikido',
             icon: FileCode,
             color: 'amber',
-            description: '141 combinaisons du programme',
+            description: '284 combinaisons du programme',
             filePath: 'Sports/Aikido/Techniques d\'aikido/Techniques d\'aikido.js'
           }
         ]
