@@ -3,7 +3,7 @@
 Routes pour accéder au programme FFAAA et gérer la progression utilisateur
 """
 
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, Query
 from typing import List, Optional
 from pydantic import BaseModel
 from datetime import datetime, timezone
@@ -13,6 +13,8 @@ from models.passages_grades import (
     PROGRAMME_FFAAA,
     get_programme_grade,
     get_all_grades,
+    get_kyu_grades,
+    get_dan_grades,
     count_techniques_by_category
 )
 
@@ -42,6 +44,7 @@ class GradeResume(BaseModel):
     nb_techniques: int
     nb_mouvements: int
     categories: dict
+    type_grade: str = "kyu"  # "kyu" ou "dan"
 
 
 class GradeComplet(BaseModel):
