@@ -959,9 +959,7 @@ function AppContent() {
             ) : adminSection === 'users_credentials' ? (
               <UserCredentialsManager />
             ) : adminSection === 'dojos' ? (
-              <div className="p-6">
-                <DojoManagement />
-              </div>
+              <DojoManagementPanel />
             ) : adminSection === 'stages' ? (
               <StagesCalendar embedded={true} />
             ) : adminSection === 'subscriptions' ? (
