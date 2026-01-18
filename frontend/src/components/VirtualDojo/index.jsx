@@ -813,7 +813,7 @@ const VirtualDojo = ({
               </div>
 
               {activeDojoTab === 'jeux' ? (
-                // Grille des jeux numériques
+                // Grille des entrainements physiques
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
                   {DOJO_GAMES.map((game, index) => {
                     const unlocked = isGameUnlocked(game);
