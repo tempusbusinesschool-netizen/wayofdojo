@@ -259,6 +259,14 @@ const VirtualDojo = ({
   // Onglet actif : 'jeux', 'dojo' ou 'validations'
   const [activeDojoTab, setActiveDojoTab] = useState('jeux');
   
+  // États pour la validation parentale
+  const [parentValidationMode, setParentValidationMode] = useState(false);
+  const [parentForm, setParentForm] = useState({ nom: '', prenom: '' });
+  const [validatedByParent, setValidatedByParent] = useState(() => {
+    const saved = localStorage.getItem(`aikido-validated-${userId}`);
+    return saved ? JSON.parse(saved) : [];
+  });
+  
   // États pour l'audio de Tanaka
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
   const [audioMuted, setAudioMuted] = useState(false);
