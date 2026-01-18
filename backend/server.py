@@ -3301,31 +3301,63 @@ async def validate_member(member_id: str, club_signature: str = None):
 
 @api_router.get("/members-stats")
 async def get_members_stats():
-    """Get members statistics"""
-    total = await db.members.count_documents({})
-    pending = await db.members.count_documents({"status": "pending"})
-    active = await db.members.count_documents({"status": "active"})
-    inactive = await db.members.count_documents({"status": "inactive"})
-    
-    # Count children
-    pipeline = [
-        {"$project": {"children_count": {"$size": {"$ifNull": ["$children", []]}}}},
-        {"$group": {"_id": None, "total_children": {"$sum": "$children_count"}}}
-    ]
-    result = await db.members.aggregate(pipeline).to_list(1)
-    total_children = result[0]["total_children"] if result else 0
-    
-    # Count adult members
-    adult_members = await db.members.count_documents({"is_adult_member": True})
-    
-    return {
-        "total_members": total,
-        "pending": pending,
-        "active": active,
-        "inactive": inactive,
-        "total_children": total_children,
-        "adult_members": adult_members
-    }
+    """Get members statistics - combines users and dojos data"""
+    try:
+        # Count users from users collection
+        total_users = await db.users.count_documents({})
+        active_users = await db.users.count_documents({"is_active": True})
+        inactive_users = await db.users.count_documents({"is_active": False})
+        
+        # Count users with active subscriptions
+        active_subscriptions = await db.users.count_documents({
+            "subscription_status": {"$in": ["active", "trialing"]}
+        })
+        
+        # Count dojos
+        total_dojos = await db.dojos.count_documents({})
+        active_dojos = await db.dojos.count_documents({"is_active": True})
+        
+        # Count children (users with role 'enfant' or parent_id set)
+        total_children = await db.users.count_documents({
+            "$or": [
+                {"role": "enfant"},
+                {"parent_id": {"$exists": True, "$ne": None}}
+            ]
+        })
+        
+        # Count adult members
+        adult_members = total_users - total_children
+        
+        # Also check legacy members collection
+        legacy_total = await db.members.count_documents({})
+        legacy_active = await db.members.count_documents({"status": "active"})
+        
+        return {
+            "total_members": total_users + legacy_total,
+            "totalUsers": total_users,
+            "totalDojos": total_dojos,
+            "activeDojos": active_dojos,
+            "activeSubscriptions": active_subscriptions,
+            "pending": 0,
+            "active": active_users + legacy_active,
+            "inactive": inactive_users,
+            "total_children": total_children,
+            "adult_members": adult_members
+        }
+    except Exception as e:
+        logger.error(f"Error getting members stats: {e}")
+        return {
+            "total_members": 0,
+            "totalUsers": 0,
+            "totalDojos": 0,
+            "activeDojos": 0,
+            "activeSubscriptions": 0,
+            "pending": 0,
+            "active": 0,
+            "inactive": 0,
+            "total_children": 0,
+            "adult_members": 0
+        }
 
 
 @api_router.get("/visitors-stats")
