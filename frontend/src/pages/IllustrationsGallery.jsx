@@ -84,40 +84,74 @@ const IllustrationsGallery = ({ embedded = false }) => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-900 flex items-center justify-center">
+      <div className={`${embedded ? 'min-h-[400px]' : 'min-h-screen'} bg-slate-900 flex items-center justify-center`}>
         <div className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950">
-      {/* Header */}
-      <div className="bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 p-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center gap-4 mb-4">
-            <a 
-              href="/"
-              className="p-2 rounded-lg bg-white/20 hover:bg-white/30 transition-colors"
-            >
-              <ArrowLeft className="w-5 h-5 text-white" />
-            </a>
-            <div>
-              <h1 className="text-3xl font-bold text-white flex items-center gap-3">
-                <ImageIcon className="w-8 h-8" />
-                Galerie des Illustrations
-              </h1>
-              <p className="text-cyan-100">
-                {techniquesWithImages} illustrations sur {totalTechniques} techniques
-              </p>
+    <div className={`${embedded ? '' : 'min-h-screen'} bg-gradient-to-b from-slate-900 via-slate-900 to-slate-950`}>
+      {/* Header - Masqué en mode embedded */}
+      {!embedded && (
+        <div className="bg-gradient-to-r from-cyan-600 via-blue-600 to-indigo-600 p-6">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex items-center gap-4 mb-4">
+              <a 
+                href="/"
+                className="p-2 rounded-lg bg-white/20 hover:bg-white/30 transition-colors"
+              >
+                <ArrowLeft className="w-5 h-5 text-white" />
+              </a>
+              <div>
+                <h1 className="text-3xl font-bold text-white flex items-center gap-3">
+                  <ImageIcon className="w-8 h-8" />
+                  Galerie des Illustrations
+                </h1>
+                <p className="text-cyan-100">
+                  {techniquesWithImages} illustrations sur {totalTechniques} techniques
+                </p>
+              </div>
+            </div>
+
+            {/* Barre de progression */}
+            <div className="h-3 bg-white/20 rounded-full overflow-hidden">
+              <motion.div 
+                className="h-full bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full"
+                initial={{ width: 0 }}
+                animate={{ width: `${(techniquesWithImages / totalTechniques) * 100}%` }}
+                transition={{ duration: 1 }}
+              />
+            </div>
+            <p className="text-white/70 text-sm mt-2">
+              {Math.round((techniquesWithImages / totalTechniques) * 100)}% des techniques illustrées
+            </p>
+          </div>
+        </div>
+      )}
+      
+      {/* Stats en mode embedded */}
+      {embedded && (
+        <div className="p-4 bg-slate-800/50 border-b border-slate-700">
+          <div className="flex items-center justify-between flex-wrap gap-4">
+            <div className="flex items-center gap-3">
+              <ImageIcon className="w-6 h-6 text-pink-400" />
+              <div>
+                <p className="text-white font-medium">{techniquesWithImages} illustrations</p>
+                <p className="text-slate-400 text-sm">sur {totalTechniques} techniques ({Math.round((techniquesWithImages / totalTechniques) * 100)}%)</p>
+              </div>
+            </div>
+            <div className="w-48 h-2 bg-slate-700 rounded-full overflow-hidden">
+              <motion.div 
+                className="h-full bg-gradient-to-r from-pink-500 to-purple-500 rounded-full"
+                initial={{ width: 0 }}
+                animate={{ width: `${(techniquesWithImages / totalTechniques) * 100}%` }}
+                transition={{ duration: 1 }}
+              />
             </div>
           </div>
-
-          {/* Barre de progression */}
-          <div className="h-3 bg-white/20 rounded-full overflow-hidden">
-            <motion.div 
-              className="h-full bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full"
-              initial={{ width: 0 }}
+        </div>
+      )}
               animate={{ width: `${(techniquesWithImages / totalTechniques) * 100}%` }}
               transition={{ duration: 1 }}
             />
