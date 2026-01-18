@@ -1769,7 +1769,7 @@ async def forgot_password(data: ForgotPasswordRequest):
     })
     
     # Generate reset link (frontend will handle this route)
-    frontend_url = os.environ.get("FRONTEND_URL", "https://aikido-path-2.preview.emergentagent.com")
+    frontend_url = os.environ.get("FRONTEND_URL", "https://aikido-journey-1.preview.emergentagent.com")
     reset_link = f"{frontend_url}?reset_token={reset_token}&email={data.email}"
     
     # Send email
