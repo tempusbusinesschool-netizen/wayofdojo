@@ -50,17 +50,6 @@ const AppStepsNavigation = ({ onStepClick, activeStep = null }) => {
       gradient: 'from-violet-500 to-purple-600',
       hoverGradient: 'hover:from-violet-400 hover:to-purple-500',
       shadowColor: 'shadow-violet-500/30'
-    },
-    {
-      id: 'histoire',
-      icon: BookOpen,
-      label: 'Histoire',
-      shortLabel: 'Histoire',
-      emoji: '📜',
-      description: 'Hakama & O Sensei',
-      gradient: 'from-amber-500 to-orange-600',
-      hoverGradient: 'hover:from-amber-400 hover:to-orange-500',
-      shadowColor: 'shadow-amber-500/30'
     }
   ];
 
