@@ -1277,6 +1277,10 @@ function AppContent() {
               <CombinaisonsPage onBack={() => setActivePage(null)} />
             )}
             
+            {activePage === 'illustrations' && (
+              <IllustrationsGallery />
+            )}
+            
             {/* Grade Sections - Visible uniquement pour les utilisateurs connectés */}
             {isAuthenticated && (
             <div className="space-y-2">
