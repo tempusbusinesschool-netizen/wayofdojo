@@ -41,6 +41,7 @@ const BELT_OPTIONS = [
 ];
 
 function DojoManagementPanel() {
+  const [activeTab, setActiveTab] = useState('mes-dojos');
   const [dojos, setDojos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showCreateForm, setShowCreateForm] = useState(false);
@@ -67,6 +68,26 @@ function DojoManagementPanel() {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [dojoMembers, setDojoMembers] = useState({});
+  
+  // États pour l'annuaire FFAAA
+  const [annuaireSearch, setAnnuaireSearch] = useState('');
+  const [annuaireRegion, setAnnuaireRegion] = useState('all');
+  const [selectedClubs, setSelectedClubs] = useState([]);
+  const [importingClubs, setImportingClubs] = useState(false);
+  
+  // Statistiques des régions
+  const regionStats = useMemo(() => getRegionStats(), []);
+  
+  // Filtrer les clubs de l'annuaire
+  const filteredClubs = useMemo(() => {
+    return CLUBS_AIKIDO_FRANCE.filter(club => {
+      const matchesSearch = annuaireSearch === '' || 
+        club.name.toLowerCase().includes(annuaireSearch.toLowerCase()) ||
+        club.city.toLowerCase().includes(annuaireSearch.toLowerCase());
+      const matchesRegion = annuaireRegion === 'all' || club.region === annuaireRegion;
+      return matchesSearch && matchesRegion;
+    });
+  }, [annuaireSearch, annuaireRegion]);
 
   useEffect(() => {
     fetchDojos();
