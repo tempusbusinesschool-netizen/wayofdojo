@@ -3,22 +3,205 @@
  * 
  * Composant pour visualiser le programme officiel des passages de grades
  * en Aïkido, du 6e Kyu (débutant) au 4e Dan (maître).
+ * 
+ * Affiche les détails COMPLETS de chaque technique et mouvement requis.
  */
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Award, Clock, Target, AlertCircle, BookOpen, Video,
   ChevronDown, ChevronRight, CheckCircle2, Circle,
   Swords, Users, GraduationCap, Star, Shield,
-  Play, FileText, Timer, TrendingUp
+  Play, FileText, Timer, TrendingUp, Zap, Info
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 
-// Import des données
+// Import des données des grades
 import { PASSAGES_DE_GRADES, getGradesKyu, getGradesDan, getNombreTechniquesGrade } from '@/constants/passagesGrades';
+
+// Import des données détaillées des techniques
+import {
+  TAI_SABAKI,
+  UKEMI,
+  KAMAE,
+  ATEMI,
+  KOKYU_WAZA,
+  KANSETSU_WAZA,
+  SUWARIWAZA,
+  HANMI_HANDACHI,
+  TECHNIQUES_JO,
+  TECHNIQUES_BOKKEN,
+  TECHNIQUES_TANTO
+} from '@/constants/aikidoTechniquesData';
+
+// Créer un index de toutes les techniques pour recherche rapide
+const ALL_TECHNIQUES = [
+  ...TAI_SABAKI,
+  ...UKEMI,
+  ...KAMAE,
+  ...ATEMI,
+  ...KOKYU_WAZA,
+  ...KANSETSU_WAZA,
+  ...SUWARIWAZA,
+  ...HANMI_HANDACHI,
+  ...TECHNIQUES_JO,
+  ...TECHNIQUES_BOKKEN,
+  ...TECHNIQUES_TANTO
+];
+
+/**
+ * Recherche une technique par nom dans la base de données
+ */
+const findTechniqueDetails = (nomTechnique) => {
+  if (!nomTechnique) return null;
+  
+  const normalizedSearch = nomTechnique.toLowerCase()
+    .replace(/omote\/ura/gi, '')
+    .replace(/omote/gi, '')
+    .replace(/ura/gi, '')
+    .replace(/[àâä]/g, 'a')
+    .replace(/[éèêë]/g, 'e')
+    .replace(/[îï]/g, 'i')
+    .replace(/[ôö]/g, 'o')
+    .replace(/[ùûü]/g, 'u')
+    .trim();
+  
+  // Recherche exacte d'abord
+  let found = ALL_TECHNIQUES.find(t => 
+    t.nom?.toLowerCase() === nomTechnique.toLowerCase()
+  );
+  
+  // Recherche partielle
+  if (!found) {
+    found = ALL_TECHNIQUES.find(t => {
+      const techName = t.nom?.toLowerCase() || '';
+      return techName.includes(normalizedSearch) || normalizedSearch.includes(techName);
+    });
+  }
+  
+  // Recherche par mots-clés
+  if (!found) {
+    const keywords = normalizedSearch.split(' ').filter(k => k.length > 2);
+    found = ALL_TECHNIQUES.find(t => {
+      const techName = (t.nom?.toLowerCase() || '') + ' ' + (t.traduction?.toLowerCase() || '');
+      return keywords.some(kw => techName.includes(kw));
+    });
+  }
+  
+  return found;
+};
+
+/**
+ * Carte détaillée pour une technique/mouvement
+ */
+const TechniqueDetailCard = ({ nom, description, obligatoire, techniqueData }) => {
+  const [expanded, setExpanded] = useState(false);
+  const hasDetails = techniqueData && (techniqueData.points_cles?.length > 0 || techniqueData.erreurs_communes?.length > 0);
+  
+  return (
+    <div className={`rounded-lg border ${obligatoire ? 'bg-emerald-500/10 border-emerald-500/30' : 'bg-slate-700/30 border-slate-600/30'}`}>
+      <button
+        onClick={() => hasDetails && setExpanded(!expanded)}
+        className={`w-full p-3 text-left ${hasDetails ? 'cursor-pointer hover:bg-white/5' : 'cursor-default'}`}
+      >
+        <div className="flex items-start gap-2">
+          {obligatoire ? (
+            <CheckCircle2 className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
+          ) : (
+            <Circle className="w-5 h-5 text-slate-500 flex-shrink-0 mt-0.5" />
+          )}
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-white font-medium">{nom}</span>
+              {techniqueData?.nom_japonais && (
+                <span className="text-slate-500 text-sm">({techniqueData.nom_japonais})</span>
+              )}
+              {hasDetails && (
+                <Badge variant="outline" className="text-xs bg-cyan-500/10 text-cyan-400 border-cyan-500/30">
+                  <Info className="w-3 h-3 mr-1" />
+                  Détails
+                </Badge>
+              )}
+            </div>
+            {techniqueData?.traduction && (
+              <p className="text-xs text-slate-400 italic mt-0.5">"{techniqueData.traduction}"</p>
+            )}
+            {(description || techniqueData?.description) && (
+              <p className="text-sm text-slate-400 mt-1">
+                {techniqueData?.description || description}
+              </p>
+            )}
+          </div>
+          {hasDetails && (
+            <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform flex-shrink-0 ${expanded ? 'rotate-180' : ''}`} />
+          )}
+        </div>
+      </button>
+      
+      <AnimatePresence>
+        {expanded && hasDetails && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="border-t border-slate-600/30 overflow-hidden"
+          >
+            <div className="p-3 space-y-3">
+              {/* Points clés */}
+              {techniqueData.points_cles && techniqueData.points_cles.length > 0 && (
+                <div>
+                  <h6 className="text-xs font-semibold text-emerald-400 mb-2 flex items-center gap-1">
+                    <Target className="w-3 h-3" />
+                    Points clés
+                  </h6>
+                  <ul className="space-y-1">
+                    {techniqueData.points_cles.map((point, idx) => (
+                      <li key={idx} className="text-xs text-slate-300 flex items-start gap-2">
+                        <span className="w-1 h-1 rounded-full bg-emerald-500 mt-1.5 flex-shrink-0"></span>
+                        {point}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              
+              {/* Erreurs communes */}
+              {techniqueData.erreurs_communes && techniqueData.erreurs_communes.length > 0 && (
+                <div>
+                  <h6 className="text-xs font-semibold text-amber-400 mb-2 flex items-center gap-1">
+                    <AlertCircle className="w-3 h-3" />
+                    Erreurs à éviter
+                  </h6>
+                  <ul className="space-y-1">
+                    {techniqueData.erreurs_communes.map((erreur, idx) => (
+                      <li key={idx} className="text-xs text-slate-300 flex items-start gap-2">
+                        <span className="w-1 h-1 rounded-full bg-amber-500 mt-1.5 flex-shrink-0"></span>
+                        {erreur}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              
+              {/* Niveau requis */}
+              {techniqueData.niveau && (
+                <div className="flex items-center gap-2 pt-1">
+                  <Award className="w-3 h-3 text-violet-400" />
+                  <span className="text-xs text-violet-300">
+                    Niveau habituel : {techniqueData.niveau.replace(/_/g, ' ')}
+                  </span>
+                </div>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
 
 /**
  * Carte pour un grade individuel dans la liste
@@ -82,7 +265,7 @@ const GradeCard = ({ grade, isSelected, onSelect }) => {
 };
 
 /**
- * Section des mouvements requis
+ * Section des mouvements requis avec détails
  */
 const MouvementsSection = ({ mouvements }) => {
   const [expandedCat, setExpandedCat] = useState(null);
@@ -96,62 +279,82 @@ const MouvementsSection = ({ mouvements }) => {
         Mouvements fondamentaux requis
       </h4>
       
-      {mouvements.map((cat, idx) => (
-        <div key={idx} className="bg-slate-800/50 rounded-lg overflow-hidden">
-          <button
-            onClick={() => setExpandedCat(expandedCat === idx ? null : idx)}
-            className="w-full p-3 flex items-center justify-between hover:bg-slate-700/50 transition-colors"
-          >
-            <span className="font-medium text-white">{cat.categorie}</span>
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-slate-400">{cat.elements?.length || 0} éléments</span>
-              <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${expandedCat === idx ? 'rotate-180' : ''}`} />
-            </div>
-          </button>
-          
-          <AnimatePresence>
-            {expandedCat === idx && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: 'auto', opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                className="border-t border-slate-700"
-              >
-                <div className="p-3 space-y-2">
-                  {cat.elements?.map((elem, i) => (
-                    <div key={i} className="flex items-start gap-2">
-                      {elem.obligatoire ? (
-                        <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-                      ) : (
-                        <Circle className="w-4 h-4 text-slate-500 mt-0.5 flex-shrink-0" />
-                      )}
-                      <div>
-                        <span className="text-white font-medium">{elem.nom}</span>
-                        {elem.description && (
-                          <span className="text-slate-400 text-sm ml-2">— {elem.description}</span>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                  
-                  {cat.video?.placeholder && (
-                    <div className="mt-3 p-2 bg-violet-500/10 rounded-lg flex items-center gap-2">
-                      <Play className="w-4 h-4 text-violet-400" />
-                      <span className="text-sm text-violet-300">Vidéo : {cat.video.placeholder}</span>
-                    </div>
-                  )}
+      {mouvements.map((cat, idx) => {
+        const totalElements = cat.elements?.length || 0;
+        const obligatoires = cat.elements?.filter(e => e.obligatoire).length || 0;
+        
+        return (
+          <div key={idx} className="bg-slate-800/50 rounded-xl overflow-hidden border border-slate-700">
+            <button
+              onClick={() => setExpandedCat(expandedCat === idx ? null : idx)}
+              className="w-full p-4 flex items-center justify-between hover:bg-slate-700/50 transition-colors"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center">
+                  <Zap className="w-5 h-5 text-cyan-400" />
                 </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      ))}
+                <div className="text-left">
+                  <span className="font-semibold text-white block">{cat.categorie}</span>
+                  <span className="text-xs text-slate-400">
+                    {obligatoires} obligatoire{obligatoires > 1 ? 's' : ''} sur {totalElements}
+                  </span>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                {cat.video?.placeholder && (
+                  <Badge variant="outline" className="text-xs bg-violet-500/10 text-violet-400 border-violet-500/30">
+                    <Video className="w-3 h-3 mr-1" />
+                    Vidéo
+                  </Badge>
+                )}
+                <ChevronDown className={`w-5 h-5 text-slate-400 transition-transform ${expandedCat === idx ? 'rotate-180' : ''}`} />
+              </div>
+            </button>
+            
+            <AnimatePresence>
+              {expandedCat === idx && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  className="border-t border-slate-700"
+                >
+                  <div className="p-4 space-y-2">
+                    {cat.elements?.map((elem, i) => {
+                      const techniqueData = findTechniqueDetails(elem.nom);
+                      return (
+                        <TechniqueDetailCard
+                          key={i}
+                          nom={elem.nom}
+                          description={elem.description}
+                          obligatoire={elem.obligatoire}
+                          techniqueData={techniqueData}
+                        />
+                      );
+                    })}
+                    
+                    {cat.video?.placeholder && (
+                      <div className="mt-4 p-3 bg-violet-500/10 rounded-lg flex items-center gap-3 border border-violet-500/20">
+                        <Play className="w-5 h-5 text-violet-400" />
+                        <div>
+                          <span className="text-sm text-white font-medium">Vidéo de démonstration</span>
+                          <p className="text-xs text-violet-300 font-mono">{cat.video.placeholder}</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        );
+      })}
     </div>
   );
 };
 
 /**
- * Section des techniques requises
+ * Section des techniques requises avec détails
  */
 const TechniquesSection = ({ techniques }) => {
   const [expandedAttaque, setExpandedAttaque] = useState(null);
@@ -165,75 +368,81 @@ const TechniquesSection = ({ techniques }) => {
         Techniques requises par attaque
       </h4>
       
-      {techniques.map((attaque, idx) => (
-        <div key={idx} className="bg-slate-800/50 rounded-lg overflow-hidden border border-slate-700">
-          <button
-            onClick={() => setExpandedAttaque(expandedAttaque === idx ? null : idx)}
-            className="w-full p-4 flex items-start justify-between hover:bg-slate-700/50 transition-colors text-left"
-          >
-            <div>
-              <div className="flex items-center gap-2 mb-1">
-                <span className="font-bold text-white">{attaque.attaque}</span>
-                {attaque.attaque_jp && (
-                  <span className="text-slate-500 text-sm">({attaque.attaque_jp})</span>
-                )}
+      {techniques.map((attaque, idx) => {
+        const totalTechs = attaque.techniques?.length || 0;
+        const obligatoires = attaque.techniques?.filter(t => t.obligatoire).length || 0;
+        
+        return (
+          <div key={idx} className="bg-slate-800/50 rounded-xl overflow-hidden border border-slate-700">
+            <button
+              onClick={() => setExpandedAttaque(expandedAttaque === idx ? null : idx)}
+              className="w-full p-4 flex items-start justify-between hover:bg-slate-700/50 transition-colors text-left"
+            >
+              <div className="flex items-start gap-3">
+                <div className="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center flex-shrink-0">
+                  <Swords className="w-5 h-5 text-amber-400" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-1 flex-wrap">
+                    <span className="font-bold text-white">{attaque.attaque}</span>
+                    {attaque.attaque_jp && (
+                      <span className="text-slate-500 text-sm">({attaque.attaque_jp})</span>
+                    )}
+                  </div>
+                  {attaque.description && (
+                    <p className="text-sm text-slate-400">{attaque.description}</p>
+                  )}
+                  <span className="text-xs text-slate-500 mt-1 block">
+                    {obligatoires} obligatoire{obligatoires > 1 ? 's' : ''} sur {totalTechs}
+                  </span>
+                </div>
               </div>
-              {attaque.description && (
-                <p className="text-sm text-slate-400">{attaque.description}</p>
-              )}
-            </div>
-            <div className="flex items-center gap-2 flex-shrink-0">
-              <Badge variant="outline" className="bg-amber-500/20 text-amber-400 border-amber-500/50">
-                {attaque.techniques?.length || 0} techniques
-              </Badge>
-              <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${expandedAttaque === idx ? 'rotate-180' : ''}`} />
-            </div>
-          </button>
-          
-          <AnimatePresence>
-            {expandedAttaque === idx && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: 'auto', opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                className="border-t border-slate-700"
-              >
-                <div className="p-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                    {attaque.techniques?.map((tech, i) => (
-                      <div 
-                        key={i} 
-                        className={`p-3 rounded-lg ${tech.obligatoire ? 'bg-emerald-500/10 border border-emerald-500/30' : 'bg-slate-700/30'}`}
-                      >
-                        <div className="flex items-start gap-2">
-                          {tech.obligatoire ? (
-                            <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
-                          ) : (
-                            <Circle className="w-4 h-4 text-slate-500 mt-0.5 flex-shrink-0" />
-                          )}
-                          <div>
-                            <span className="text-white font-medium">{tech.nom}</span>
-                            {tech.description && (
-                              <p className="text-xs text-slate-400 mt-0.5">{tech.description}</p>
-                            )}
-                          </div>
+              <div className="flex items-center gap-2 flex-shrink-0 ml-2">
+                <Badge variant="outline" className="bg-amber-500/20 text-amber-400 border-amber-500/50">
+                  {totalTechs} techniques
+                </Badge>
+                <ChevronDown className={`w-5 h-5 text-slate-400 transition-transform ${expandedAttaque === idx ? 'rotate-180' : ''}`} />
+              </div>
+            </button>
+            
+            <AnimatePresence>
+              {expandedAttaque === idx && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  className="border-t border-slate-700"
+                >
+                  <div className="p-4 space-y-2">
+                    {attaque.techniques?.map((tech, i) => {
+                      const techniqueData = findTechniqueDetails(tech.nom);
+                      return (
+                        <TechniqueDetailCard
+                          key={i}
+                          nom={tech.nom}
+                          description={tech.description}
+                          obligatoire={tech.obligatoire}
+                          techniqueData={techniqueData}
+                        />
+                      );
+                    })}
+                    
+                    {attaque.video?.placeholder && (
+                      <div className="mt-4 p-3 bg-violet-500/10 rounded-lg flex items-center gap-3 border border-violet-500/20">
+                        <Play className="w-5 h-5 text-violet-400" />
+                        <div>
+                          <span className="text-sm text-white font-medium">Vidéo de démonstration</span>
+                          <p className="text-xs text-violet-300 font-mono">{attaque.video.placeholder}</p>
                         </div>
                       </div>
-                    ))}
+                    )}
                   </div>
-                  
-                  {attaque.video?.placeholder && (
-                    <div className="mt-3 p-2 bg-violet-500/10 rounded-lg flex items-center gap-2">
-                      <Video className="w-4 h-4 text-violet-400" />
-                      <span className="text-sm text-violet-300">{attaque.video.placeholder}</span>
-                    </div>
-                  )}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-      ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        );
+      })}
     </div>
   );
 };
@@ -245,6 +454,9 @@ const GradeDetailView = ({ grade, onBack }) => {
   if (!grade) return null;
   
   const nombreTechniques = getNombreTechniquesGrade(grade.id);
+  
+  // Calculer le nombre total de mouvements
+  const nombreMouvements = grade.mouvements_requis?.reduce((acc, cat) => acc + (cat.elements?.length || 0), 0) || 0;
   
   return (
     <motion.div
@@ -283,7 +495,7 @@ const GradeDetailView = ({ grade, onBack }) => {
             <p className="text-slate-300 mb-4">{grade.description}</p>
             
             {/* Stats */}
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap gap-3">
               <div className="flex items-center gap-2 bg-slate-700/50 px-3 py-2 rounded-lg">
                 <div className="w-3 h-3 rounded-full" style={{ backgroundColor: grade.couleur_ceinture }}></div>
                 <span className="text-white font-medium">Ceinture {grade.ceinture}</span>
@@ -296,10 +508,16 @@ const GradeDetailView = ({ grade, onBack }) => {
                 <Timer className="w-4 h-4 text-violet-400" />
                 <span className="text-white">{grade.heures_minimales}h minimum</span>
               </div>
+              {nombreMouvements > 0 && (
+                <div className="flex items-center gap-2 bg-cyan-500/20 px-3 py-2 rounded-lg">
+                  <Users className="w-4 h-4 text-cyan-400" />
+                  <span className="text-cyan-400 font-medium">{nombreMouvements} mouvements</span>
+                </div>
+              )}
               {nombreTechniques > 0 && (
-                <div className="flex items-center gap-2 bg-emerald-500/20 px-3 py-2 rounded-lg">
-                  <Target className="w-4 h-4 text-emerald-400" />
-                  <span className="text-emerald-400 font-medium">{nombreTechniques} techniques</span>
+                <div className="flex items-center gap-2 bg-amber-500/20 px-3 py-2 rounded-lg">
+                  <Swords className="w-4 h-4 text-amber-400" />
+                  <span className="text-amber-400 font-medium">{nombreTechniques} techniques</span>
                 </div>
               )}
             </div>
@@ -327,7 +545,7 @@ const GradeDetailView = ({ grade, onBack }) => {
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {grade.objectifs.map((obj, idx) => (
-                <div key={idx} className="flex items-start gap-2 p-3 bg-slate-700/30 rounded-lg">
+                <div key={idx} className="flex items-start gap-2 p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
                   <CheckCircle2 className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" />
                   <span className="text-white">{obj}</span>
                 </div>
@@ -338,7 +556,7 @@ const GradeDetailView = ({ grade, onBack }) => {
       )}
       
       {/* Mouvements requis */}
-      {grade.mouvements_requis && (
+      {grade.mouvements_requis && grade.mouvements_requis.length > 0 && (
         <Card className="bg-slate-800/50 border-slate-700">
           <CardContent className="pt-6">
             <MouvementsSection mouvements={grade.mouvements_requis} />
@@ -347,10 +565,62 @@ const GradeDetailView = ({ grade, onBack }) => {
       )}
       
       {/* Techniques requises */}
-      {grade.techniques_requises && (
+      {grade.techniques_requises && grade.techniques_requises.length > 0 && (
         <Card className="bg-slate-800/50 border-slate-700">
           <CardContent className="pt-6">
             <TechniquesSection techniques={grade.techniques_requises} />
+          </CardContent>
+        </Card>
+      )}
+      
+      {/* Techniques spécifiques (pour les Dan) */}
+      {grade.techniques_specifiques && grade.techniques_specifiques.length > 0 && (
+        <Card className="bg-slate-800/50 border-slate-700">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-lg text-violet-400 flex items-center gap-2">
+              <Star className="w-5 h-5" />
+              Techniques spécifiques au niveau
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-2">
+              {grade.techniques_specifiques.map((tech, idx) => {
+                const techniqueData = findTechniqueDetails(tech.nom);
+                return (
+                  <TechniqueDetailCard
+                    key={idx}
+                    nom={tech.nom}
+                    description={tech.description}
+                    obligatoire={true}
+                    techniqueData={techniqueData}
+                  />
+                );
+              })}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+      
+      {/* Programme complet (pour Shodan) */}
+      {grade.programme_complet && (
+        <Card className="bg-slate-800/50 border-slate-700">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-lg text-cyan-400 flex items-center gap-2">
+              <BookOpen className="w-5 h-5" />
+              Programme complet
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {Object.entries(grade.programme_complet).map(([key, value], idx) => (
+                <div key={idx} className="p-3 bg-slate-700/30 rounded-lg">
+                  <span className="text-cyan-400 text-sm font-medium block mb-1">
+                    {key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                  </span>
+                  <span className="text-white text-sm">{value}</span>
+                </div>
+              ))}
+            </div>
           </CardContent>
         </Card>
       )}
@@ -416,6 +686,16 @@ const PassagesGradesViewer = () => {
     setSelectedGrade(grade);
   };
   
+  // Statistiques
+  const stats = useMemo(() => {
+    const grades = activeTab === 'kyu' ? gradesKyu : gradesDan;
+    const totalTechniques = grades.reduce((acc, g) => acc + getNombreTechniquesGrade(g.id), 0);
+    const totalMouvements = grades.reduce((acc, g) => {
+      return acc + (g.mouvements_requis?.reduce((a, m) => a + (m.elements?.length || 0), 0) || 0);
+    }, 0);
+    return { totalTechniques, totalMouvements };
+  }, [activeTab, gradesKyu, gradesDan]);
+  
   return (
     <div className="p-6">
       {/* Header */}
@@ -425,7 +705,7 @@ const PassagesGradesViewer = () => {
             <GraduationCap className="w-8 h-8 text-emerald-400" />
             Passages de Grades
           </h2>
-          <p className="text-slate-400 mt-1">Programme officiel de 6e Kyu à 4e Dan</p>
+          <p className="text-slate-400 mt-1">Programme officiel de 6e Kyu à 4e Dan • Détails complets</p>
         </div>
         
         <div className="flex items-center gap-3">
@@ -472,7 +752,7 @@ const PassagesGradesViewer = () => {
             />
           ))}
           
-          {/* Légende */}
+          {/* Stats et Légende */}
           <div className="mt-6 p-4 bg-slate-800/30 rounded-xl border border-slate-700">
             <h4 className="text-sm font-semibold text-slate-400 mb-3">Légende</h4>
             <div className="space-y-2 text-sm">
@@ -485,6 +765,13 @@ const PassagesGradesViewer = () => {
                 <span className="text-slate-300">Élément optionnel</span>
               </div>
               <div className="flex items-center gap-2">
+                <Badge variant="outline" className="text-xs bg-cyan-500/10 text-cyan-400 border-cyan-500/30">
+                  <Info className="w-3 h-3 mr-1" />
+                  Détails
+                </Badge>
+                <span className="text-slate-300">Cliquer pour plus d'infos</span>
+              </div>
+              <div className="flex items-center gap-2">
                 <Video className="w-4 h-4 text-violet-400" />
                 <span className="text-slate-300">Vidéo disponible</span>
               </div>
@@ -493,7 +780,7 @@ const PassagesGradesViewer = () => {
         </div>
         
         {/* Détail du grade sélectionné */}
-        <div className="lg:col-span-2">
+        <div className="lg:col-span-2 max-h-[calc(100vh-200px)] overflow-y-auto pr-2">
           <AnimatePresence mode="wait">
             {selectedGrade ? (
               <GradeDetailView 
@@ -512,8 +799,9 @@ const PassagesGradesViewer = () => {
                   <h3 className="text-xl font-semibold text-slate-400 mb-2">
                     Sélectionnez un grade
                   </h3>
-                  <p className="text-slate-500">
-                    Cliquez sur un grade pour voir le programme détaillé
+                  <p className="text-slate-500 max-w-md mx-auto">
+                    Cliquez sur un grade pour voir le programme détaillé avec toutes les techniques, 
+                    mouvements, points clés et erreurs à éviter.
                   </p>
                 </div>
               </motion.div>
