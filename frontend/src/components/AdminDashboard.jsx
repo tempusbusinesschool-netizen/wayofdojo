@@ -520,6 +520,17 @@ export const AdminTechniquesContent = ({ onBack }) => {
 };
 
 /**
+ * Contenu de la section Galerie des Illustrations
+ */
+export const AdminGalleryContent = () => {
+  return (
+    <div className="p-0">
+      <IllustrationsGallery embedded={true} />
+    </div>
+  );
+};
+
+/**
  * Configuration des fichiers de référence
  */
 const REFERENCE_FILES = [
