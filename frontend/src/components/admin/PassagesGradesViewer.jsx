@@ -127,10 +127,12 @@ const GradeListCard = ({ grade, onClick }) => {
 };
 
 /**
- * Tableau des techniques structuré par attaque
+ * Tableau des techniques structuré par attaque - Version Accordéon Amélioré
  */
 const TechniquesTable = ({ techniques }) => {
   const [expandedRows, setExpandedRows] = useState({});
+  const [expandedGroups, setExpandedGroups] = useState({});
+  const [allExpanded, setAllExpanded] = useState(false);
   
   // Grouper par attaque
   const groupedByAttack = useMemo(() => {
@@ -149,9 +151,52 @@ const TechniquesTable = ({ techniques }) => {
     return Object.values(groups);
   }, [techniques]);
   
+  // Calculer le total des techniques avec détails
+  const techniquesWithDetails = useMemo(() => {
+    return techniques.filter(t => t.points_cles?.length > 0 || t.erreurs_communes?.length > 0 || t.description).length;
+  }, [techniques]);
+  
   const toggleRow = (idx) => {
     setExpandedRows(prev => ({ ...prev, [idx]: !prev[idx] }));
   };
+  
+  const toggleGroup = (groupIdx) => {
+    setExpandedGroups(prev => ({ ...prev, [groupIdx]: !prev[groupIdx] }));
+  };
+  
+  // Tout ouvrir / Tout fermer
+  const toggleAll = () => {
+    if (allExpanded) {
+      // Fermer tout
+      setExpandedRows({});
+      setExpandedGroups({});
+      setAllExpanded(false);
+    } else {
+      // Ouvrir tous les groupes
+      const newExpandedGroups = {};
+      groupedByAttack.forEach((_, idx) => {
+        newExpandedGroups[idx] = true;
+      });
+      
+      // Ouvrir toutes les techniques avec détails
+      const newExpandedRows = {};
+      groupedByAttack.forEach((group, groupIdx) => {
+        group.techniques.forEach((tech, techIdx) => {
+          const hasDetails = tech.points_cles?.length > 0 || tech.erreurs_communes?.length > 0 || tech.description;
+          if (hasDetails) {
+            newExpandedRows[`${groupIdx}-${techIdx}`] = true;
+          }
+        });
+      });
+      
+      setExpandedGroups(newExpandedGroups);
+      setExpandedRows(newExpandedRows);
+      setAllExpanded(true);
+    }
+  };
+  
+  // Compter le nombre d'éléments ouverts
+  const expandedCount = Object.values(expandedRows).filter(Boolean).length + Object.values(expandedGroups).filter(Boolean).length;
   
   if (!techniques || techniques.length === 0) {
     return (
@@ -163,152 +208,319 @@ const TechniquesTable = ({ techniques }) => {
   
   return (
     <div className="space-y-4">
-      {groupedByAttack.map((group, groupIdx) => (
-        <div key={groupIdx} className="bg-slate-800/50 rounded-xl overflow-hidden border border-slate-700">
-          {/* Header du groupe d'attaque */}
-          <div className="bg-slate-700/50 px-4 py-3 flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center">
-                <Swords className="w-5 h-5 text-amber-400" />
-              </div>
-              <div>
-                <h4 className="font-bold text-white">{group.attaque}</h4>
-                {group.attaque_japonais && (
-                  <span className="text-xs text-slate-400">{group.attaque_japonais}</span>
-                )}
-              </div>
-            </div>
-            <Badge className="bg-amber-500/20 text-amber-400 border-0">
-              {group.techniques.length} technique{group.techniques.length > 1 ? 's' : ''}
-            </Badge>
+      {/* Barre de contrôle - Tout ouvrir/fermer */}
+      <div className="flex items-center justify-between bg-slate-800/30 rounded-lg px-4 py-3 border border-slate-700/50">
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 text-sm text-slate-400">
+            <Swords className="w-4 h-4 text-amber-400" />
+            <span className="font-medium text-white">{techniques.length}</span> techniques
+            <span className="text-slate-500">•</span>
+            <span className="font-medium text-cyan-400">{groupedByAttack.length}</span> catégories
           </div>
-          
-          {/* Table des techniques */}
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-slate-700 text-xs text-slate-400 uppercase">
-                  <th className="px-4 py-2 text-left w-8"></th>
-                  <th className="px-4 py-2 text-left">Technique</th>
-                  <th className="px-4 py-2 text-left hidden md:table-cell">Japonais</th>
-                  <th className="px-4 py-2 text-left hidden lg:table-cell">Catégorie</th>
-                  <th className="px-4 py-2 text-center w-20">Détails</th>
-                </tr>
-              </thead>
-              <tbody>
-                {group.techniques.map((tech, techIdx) => {
-                  const rowKey = `${groupIdx}-${techIdx}`;
-                  const isExpanded = expandedRows[rowKey];
-                  const hasDetails = tech.points_cles?.length > 0 || tech.erreurs_communes?.length > 0 || tech.description;
-                  const catInfo = CATEGORY_LABELS[tech.categorie] || { label: tech.categorie, color: 'bg-slate-500/20 text-slate-400' };
-                  
-                  return (
-                    <React.Fragment key={techIdx}>
-                      <tr 
-                        className={`border-b border-slate-700/50 hover:bg-slate-700/30 transition-colors ${isExpanded ? 'bg-slate-700/30' : ''}`}
-                      >
-                        <td className="px-4 py-3">
-                          {tech.obligatoire !== false ? (
-                            <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                          ) : (
-                            <Circle className="w-4 h-4 text-slate-500" />
-                          )}
-                        </td>
-                        <td className="px-4 py-3">
-                          <span className="text-white font-medium">{tech.nom}</span>
-                        </td>
-                        <td className="px-4 py-3 hidden md:table-cell">
-                          <span className="text-slate-400 text-sm">{tech.nom_japonais || '-'}</span>
-                        </td>
-                        <td className="px-4 py-3 hidden lg:table-cell">
-                          <Badge className={`${catInfo.color} border-0 text-xs`}>
-                            {catInfo.label.split(' ')[0]}
-                          </Badge>
-                        </td>
-                        <td className="px-4 py-3 text-center">
-                          {hasDetails && (
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => toggleRow(rowKey)}
-                              className="h-8 w-8 p-0"
-                            >
-                              <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
-                            </Button>
-                          )}
-                        </td>
-                      </tr>
-                      
-                      {/* Ligne de détails expandée */}
-                      <AnimatePresence>
-                        {isExpanded && hasDetails && (
-                          <tr>
-                            <td colSpan={5} className="px-0">
-                              <motion.div
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: 'auto', opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                className="overflow-hidden"
-                              >
-                                <div className="px-4 py-4 bg-slate-900/50 border-b border-slate-700/50">
-                                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                                    {/* Description */}
-                                    {tech.description && (
-                                      <div className="lg:col-span-3">
-                                        <p className="text-sm text-slate-300 italic">{tech.description}</p>
-                                      </div>
-                                    )}
-                                    
-                                    {/* Points clés */}
-                                    {tech.points_cles && tech.points_cles.length > 0 && (
-                                      <div>
-                                        <h6 className="text-xs font-semibold text-emerald-400 mb-2 flex items-center gap-1">
-                                          <Target className="w-3 h-3" />
-                                          Points clés
-                                        </h6>
-                                        <ul className="space-y-1">
-                                          {tech.points_cles.map((point, idx) => (
-                                            <li key={idx} className="text-xs text-slate-300 flex items-start gap-2">
-                                              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 flex-shrink-0"></span>
-                                              {point}
-                                            </li>
-                                          ))}
-                                        </ul>
-                                      </div>
-                                    )}
-                                    
-                                    {/* Erreurs communes */}
-                                    {tech.erreurs_communes && tech.erreurs_communes.length > 0 && (
-                                      <div>
-                                        <h6 className="text-xs font-semibold text-amber-400 mb-2 flex items-center gap-1">
-                                          <AlertCircle className="w-3 h-3" />
-                                          Erreurs à éviter
-                                        </h6>
-                                        <ul className="space-y-1">
-                                          {tech.erreurs_communes.map((erreur, idx) => (
-                                            <li key={idx} className="text-xs text-slate-300 flex items-start gap-2">
-                                              <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 flex-shrink-0"></span>
-                                              {erreur}
-                                            </li>
-                                          ))}
-                                        </ul>
-                                      </div>
-                                    )}
-                                  </div>
-                                </div>
-                              </motion.div>
-                            </td>
-                          </tr>
-                        )}
-                      </AnimatePresence>
-                    </React.Fragment>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+          {techniquesWithDetails > 0 && (
+            <>
+              <span className="text-slate-500">•</span>
+              <span className="text-xs text-slate-500">
+                {techniquesWithDetails} avec détails
+              </span>
+            </>
+          )}
         </div>
-      ))}
+        
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={toggleAll}
+          className={`
+            transition-all duration-300 border-slate-600 
+            ${allExpanded 
+              ? 'bg-amber-500/20 text-amber-400 hover:bg-amber-500/30 border-amber-500/50' 
+              : 'bg-slate-700/50 text-slate-300 hover:bg-slate-600 hover:text-white'
+            }
+          `}
+        >
+          {allExpanded ? (
+            <>
+              <ChevronDown className="w-4 h-4 mr-2 rotate-180 transition-transform" />
+              Tout fermer
+            </>
+          ) : (
+            <>
+              <ChevronDown className="w-4 h-4 mr-2 transition-transform" />
+              Tout ouvrir
+            </>
+          )}
+          {expandedCount > 0 && (
+            <Badge className="ml-2 bg-slate-600 text-white text-xs px-1.5 py-0">
+              {expandedCount}
+            </Badge>
+          )}
+        </Button>
+      </div>
+      
+      {/* Groupes accordéon */}
+      {groupedByAttack.map((group, groupIdx) => {
+        const isGroupExpanded = expandedGroups[groupIdx] !== false; // Par défaut ouvert
+        const obligatoireCount = group.techniques.filter(t => t.obligatoire !== false).length;
+        const optionnelCount = group.techniques.length - obligatoireCount;
+        
+        return (
+          <motion.div 
+            key={groupIdx} 
+            className="bg-slate-800/50 rounded-xl overflow-hidden border border-slate-700"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: groupIdx * 0.05, duration: 0.3 }}
+          >
+            {/* Header du groupe d'attaque - Cliquable */}
+            <button
+              onClick={() => toggleGroup(groupIdx)}
+              className="w-full bg-slate-700/50 px-4 py-3 flex items-center justify-between hover:bg-slate-700/70 transition-colors"
+            >
+              <div className="flex items-center gap-3">
+                <motion.div 
+                  className="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Swords className="w-5 h-5 text-amber-400" />
+                </motion.div>
+                <div className="text-left">
+                  <h4 className="font-bold text-white">{group.attaque}</h4>
+                  {group.attaque_japonais && (
+                    <span className="text-xs text-slate-400">{group.attaque_japonais}</span>
+                  )}
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-3">
+                {/* Compteurs détaillés */}
+                <div className="flex items-center gap-2">
+                  <Badge className="bg-emerald-500/20 text-emerald-400 border-0 text-xs">
+                    <CheckCircle2 className="w-3 h-3 mr-1" />
+                    {obligatoireCount}
+                  </Badge>
+                  {optionnelCount > 0 && (
+                    <Badge className="bg-slate-600/50 text-slate-400 border-0 text-xs">
+                      <Circle className="w-3 h-3 mr-1" />
+                      {optionnelCount}
+                    </Badge>
+                  )}
+                </div>
+                
+                <Badge className="bg-amber-500/20 text-amber-400 border-0">
+                  {group.techniques.length} technique{group.techniques.length > 1 ? 's' : ''}
+                </Badge>
+                
+                <motion.div
+                  animate={{ rotate: isGroupExpanded ? 180 : 0 }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                >
+                  <ChevronDown className="w-5 h-5 text-slate-400" />
+                </motion.div>
+              </div>
+            </button>
+            
+            {/* Contenu du groupe avec animation fluide */}
+            <AnimatePresence initial={false}>
+              {isGroupExpanded && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ 
+                    height: 'auto', 
+                    opacity: 1,
+                    transition: {
+                      height: { duration: 0.4, ease: [0.04, 0.62, 0.23, 0.98] },
+                      opacity: { duration: 0.25, delay: 0.1 }
+                    }
+                  }}
+                  exit={{ 
+                    height: 0, 
+                    opacity: 0,
+                    transition: {
+                      height: { duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] },
+                      opacity: { duration: 0.2 }
+                    }
+                  }}
+                  className="overflow-hidden"
+                >
+                  {/* Table des techniques */}
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="border-b border-slate-700 text-xs text-slate-400 uppercase">
+                          <th className="px-4 py-2 text-left w-8"></th>
+                          <th className="px-4 py-2 text-left">Technique</th>
+                          <th className="px-4 py-2 text-left hidden md:table-cell">Japonais</th>
+                          <th className="px-4 py-2 text-left hidden lg:table-cell">Catégorie</th>
+                          <th className="px-4 py-2 text-center w-20">Détails</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {group.techniques.map((tech, techIdx) => {
+                          const rowKey = `${groupIdx}-${techIdx}`;
+                          const isExpanded = expandedRows[rowKey];
+                          const hasDetails = tech.points_cles?.length > 0 || tech.erreurs_communes?.length > 0 || tech.description;
+                          const catInfo = CATEGORY_LABELS[tech.categorie] || { label: tech.categorie, color: 'bg-slate-500/20 text-slate-400' };
+                          
+                          return (
+                            <React.Fragment key={techIdx}>
+                              <motion.tr 
+                                className={`border-b border-slate-700/50 hover:bg-slate-700/30 transition-colors cursor-pointer ${isExpanded ? 'bg-slate-700/30' : ''}`}
+                                onClick={() => hasDetails && toggleRow(rowKey)}
+                                initial={{ opacity: 0, x: -10 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: techIdx * 0.03, duration: 0.2 }}
+                              >
+                                <td className="px-4 py-3">
+                                  {tech.obligatoire !== false ? (
+                                    <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                                  ) : (
+                                    <Circle className="w-4 h-4 text-slate-500" />
+                                  )}
+                                </td>
+                                <td className="px-4 py-3">
+                                  <span className="text-white font-medium">{tech.nom}</span>
+                                </td>
+                                <td className="px-4 py-3 hidden md:table-cell">
+                                  <span className="text-slate-400 text-sm">{tech.nom_japonais || '-'}</span>
+                                </td>
+                                <td className="px-4 py-3 hidden lg:table-cell">
+                                  <Badge className={`${catInfo.color} border-0 text-xs`}>
+                                    {catInfo.label.split(' ')[0]}
+                                  </Badge>
+                                </td>
+                                <td className="px-4 py-3 text-center">
+                                  {hasDetails && (
+                                    <motion.div
+                                      animate={{ rotate: isExpanded ? 180 : 0 }}
+                                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                                      className="inline-flex items-center justify-center w-8 h-8 rounded-md hover:bg-slate-600/50"
+                                    >
+                                      <ChevronDown className="w-4 h-4 text-slate-400" />
+                                    </motion.div>
+                                  )}
+                                </td>
+                              </motion.tr>
+                              
+                              {/* Ligne de détails expandée avec animation fluide */}
+                              <AnimatePresence initial={false}>
+                                {isExpanded && hasDetails && (
+                                  <tr>
+                                    <td colSpan={5} className="px-0">
+                                      <motion.div
+                                        initial={{ height: 0, opacity: 0 }}
+                                        animate={{ 
+                                          height: 'auto', 
+                                          opacity: 1,
+                                          transition: {
+                                            height: { duration: 0.35, ease: [0.04, 0.62, 0.23, 0.98] },
+                                            opacity: { duration: 0.25, delay: 0.1 }
+                                          }
+                                        }}
+                                        exit={{ 
+                                          height: 0, 
+                                          opacity: 0,
+                                          transition: {
+                                            height: { duration: 0.25, ease: [0.04, 0.62, 0.23, 0.98] },
+                                            opacity: { duration: 0.15 }
+                                          }
+                                        }}
+                                        className="overflow-hidden"
+                                      >
+                                        <motion.div 
+                                          className="px-4 py-4 bg-slate-900/50 border-b border-slate-700/50"
+                                          initial={{ y: -10 }}
+                                          animate={{ y: 0 }}
+                                          transition={{ duration: 0.2, delay: 0.1 }}
+                                        >
+                                          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                            {/* Description */}
+                                            {tech.description && (
+                                              <motion.div 
+                                                className="lg:col-span-3"
+                                                initial={{ opacity: 0 }}
+                                                animate={{ opacity: 1 }}
+                                                transition={{ delay: 0.15 }}
+                                              >
+                                                <p className="text-sm text-slate-300 italic">{tech.description}</p>
+                                              </motion.div>
+                                            )}
+                                            
+                                            {/* Points clés */}
+                                            {tech.points_cles && tech.points_cles.length > 0 && (
+                                              <motion.div
+                                                initial={{ opacity: 0, x: -10 }}
+                                                animate={{ opacity: 1, x: 0 }}
+                                                transition={{ delay: 0.2 }}
+                                              >
+                                                <h6 className="text-xs font-semibold text-emerald-400 mb-2 flex items-center gap-1">
+                                                  <Target className="w-3 h-3" />
+                                                  Points clés ({tech.points_cles.length})
+                                                </h6>
+                                                <ul className="space-y-1">
+                                                  {tech.points_cles.map((point, idx) => (
+                                                    <motion.li 
+                                                      key={idx} 
+                                                      className="text-xs text-slate-300 flex items-start gap-2"
+                                                      initial={{ opacity: 0, x: -5 }}
+                                                      animate={{ opacity: 1, x: 0 }}
+                                                      transition={{ delay: 0.25 + idx * 0.05 }}
+                                                    >
+                                                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-1.5 flex-shrink-0"></span>
+                                                      {point}
+                                                    </motion.li>
+                                                  ))}
+                                                </ul>
+                                              </motion.div>
+                                            )}
+                                            
+                                            {/* Erreurs communes */}
+                                            {tech.erreurs_communes && tech.erreurs_communes.length > 0 && (
+                                              <motion.div
+                                                initial={{ opacity: 0, x: -10 }}
+                                                animate={{ opacity: 1, x: 0 }}
+                                                transition={{ delay: 0.25 }}
+                                              >
+                                                <h6 className="text-xs font-semibold text-amber-400 mb-2 flex items-center gap-1">
+                                                  <AlertCircle className="w-3 h-3" />
+                                                  Erreurs à éviter ({tech.erreurs_communes.length})
+                                                </h6>
+                                                <ul className="space-y-1">
+                                                  {tech.erreurs_communes.map((erreur, idx) => (
+                                                    <motion.li 
+                                                      key={idx} 
+                                                      className="text-xs text-slate-300 flex items-start gap-2"
+                                                      initial={{ opacity: 0, x: -5 }}
+                                                      animate={{ opacity: 1, x: 0 }}
+                                                      transition={{ delay: 0.3 + idx * 0.05 }}
+                                                    >
+                                                      <span className="w-1.5 h-1.5 rounded-full bg-amber-500 mt-1.5 flex-shrink-0"></span>
+                                                      {erreur}
+                                                    </motion.li>
+                                                  ))}
+                                                </ul>
+                                              </motion.div>
+                                            )}
+                                          </div>
+                                        </motion.div>
+                                      </motion.div>
+                                    </td>
+                                  </tr>
+                                )}
+                              </AnimatePresence>
+                            </React.Fragment>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </motion.div>
+        );
+      })}
     </div>
   );
 };
