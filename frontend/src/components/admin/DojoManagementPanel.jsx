@@ -19,7 +19,7 @@ import {
   Building2, Plus, Trash2, Users, MapPin, Shield, 
   UserPlus, ChevronDown, ChevronUp, Mail, Phone, Calendar,
   Award, Eye, EyeOff, RefreshCw, Search, X, Download, Globe,
-  CheckCircle2, Filter
+  CheckCircle2, Filter, UserCog, GraduationCap
 } from "lucide-react";
 import CLUBS_AIKIDO_FRANCE, { REGIONS_FRANCE, getRegionStats } from "@/data/clubsAikidoFrance";
 
