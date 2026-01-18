@@ -20,16 +20,17 @@ Application web pour le club d'Aïkido "Aikido@Game" servant de référence digi
 
 ## What's Been Implemented
 
-### 2025-01-18
-- ✅ Fusion menu admin : "Techniques Kyu" + "Grades Dan" → "Techniques d'Aikido" (141 techniques)
+### 2025-01-18 (Session actuelle)
+- ✅ **Menu Admin unifié** : "Techniques Kyu" + "Grades Dan" → "Techniques d'Aikido" (141 techniques)
+- ✅ **Affichage des sections Armes** : Jo (46 techniques), Bokken (24 techniques), Tanto (21 techniques)
+- ✅ **Affichage des sections Mouvements** : Tai Sabaki, Ukemi, Kamae, Atemi, Kokyu Waza, Kansetsu Waza, Suwariwaza, Hanmi Handachi
+- ✅ **Nouveau composant TechniquesSectionViewer** : Affiche les techniques avec recherche, filtres par niveau, et groupement par catégorie
+- ✅ **Fichier de données centralisé** : `/app/frontend/src/constants/aikidoTechniquesData.js` avec toutes les techniques organisées
+
+### Précédent
 - ✅ Structure hiérarchique fichiers sous `/app/Sports/Aikido/`
 - ✅ Menu sidebar récursif avec navigation multi-niveaux
 - ✅ Fil d'Ariane dynamique dans admin
-- ✅ Données étendues : Armes (Jo, Bokken, Tanto), Mouvements (Tai Sabaki, Ukemi, etc.)
-
-### Précédent
-- ✅ Système de fichiers hiérarchique pour techniques
-- ✅ Dashboard Admin avec sidebar collapsible
 - ✅ Données pour 45 techniques Dan avec placeholders vidéo
 - ✅ Section "Passages de Grades" créée
 
@@ -39,8 +40,7 @@ Application web pour le club d'Aïkido "Aikido@Game" servant de référence digi
 - Aucun actuellement
 
 ### P1 (High)
-- Afficher contenu des nouvelles sections Admin (Jo, Bokken, Tanto, Tai Sabaki, etc.)
-- Implémenter filtres niveau Dan dans `CombinaisonsPage.jsx`
+- Implémenter filtres niveau Dan dans `CombinaisonsPage.jsx` pour l'affichage utilisateur
 - Fonction "Retour à la première étape" dans parcours utilisateur
 - Analyse globale et nettoyage du code
 
@@ -56,7 +56,9 @@ Application web pour le club d'Aïkido "Aikido@Game" servant de référence digi
 
 ## Key Files
 - `/app/frontend/src/components/AdminDashboard.jsx` - Menu sidebar hiérarchique
-- `/app/frontend/src/constants/aikidoCombinaisons.js` - Données techniques
+- `/app/frontend/src/components/admin/TechniquesSectionViewer.jsx` - **NOUVEAU** Composant d'affichage des techniques
+- `/app/frontend/src/constants/aikidoTechniquesData.js` - **NOUVEAU** Données centralisées des techniques
+- `/app/frontend/src/constants/aikidoCombinaisons.js` - Données techniques Kyu+Dan
 - `/app/Sports/Aikido/Techniques d'aikido/` - Structure fichiers techniques
 - `/app/frontend/src/App.js` - Routage et logique admin
 
@@ -65,10 +67,9 @@ Application web pour le club d'Aïkido "Aikido@Game" servant de référence digi
 |------|-------|--------------|
 | Enfant | bill@gmail.com | 123 |
 | Parent | parent@gmail.com | parent123 |
-| Admin | admin@aikido.com | admin123 |
+| Admin | - | aikido2024 |
 
 ## Known Issues
-- Contenu des nouvelles sections admin (armes, mouvements) : pages vides
 - Lint errors dans StatisticsDashboard.js (P3)
 
 ## Project Status
