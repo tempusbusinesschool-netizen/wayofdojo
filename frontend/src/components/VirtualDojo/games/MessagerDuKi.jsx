@@ -209,7 +209,7 @@ const MessagerDuKi = ({ userName, onComplete, onExit, tanakaSpeak }) => {
       setScore(finalScore);
       speakTanaka(
         TANAKA_GAME_MESSAGES.messager_success,
-        `Magnifique ${userName || 'ninja'} ! Tu as traversé le dojo avec calme et maîtrise ! Ton Ki est puissant !`
+        "Bravo, tu as terminé cette étape !"
       );
     }
     

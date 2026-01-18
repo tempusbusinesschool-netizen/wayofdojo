@@ -129,7 +129,7 @@ const ParcoursduSouffle = ({ userName, onComplete, onExit, tanakaSpeak }) => {
       setGameState('success');
       const finalScore = score + perfectBreaths * 50;
       setScore(finalScore);
-      speakTanaka(TANAKA_GAME_MESSAGES.souffle_success, `Magnifique ${userName || 'ninja'} ! Tu as maîtrisé le parcours du souffle ! Ta respiration est celle d'un vrai aikidoka !`);
+      speakTanaka(TANAKA_GAME_MESSAGES.souffle_success, "Bravo, tu as terminé cette étape !");
     }
   }, [position, gameState, score, perfectBreaths, userName, speakTanaka]);
 
