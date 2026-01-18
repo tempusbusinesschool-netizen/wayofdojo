@@ -84,6 +84,7 @@ import AdminDashboard, { ADMIN_SECTIONS, AdminTechniquesContent, AdminFilesConte
 import TechniquesSectionViewer from "@/components/admin/TechniquesSectionViewer";
 import PassagesGradesViewer from "@/components/admin/PassagesGradesViewer";
 import UserCredentialsManager from "@/components/admin/UserCredentialsManager";
+import DojoManagementPanel from "@/components/admin/DojoManagementPanel";
 import StagesCalendar from "@/pages/StagesCalendar";
 import {
   TECHNIQUES_JO,
