@@ -111,10 +111,6 @@ const ADMIN_SECTIONS = [
       }
     ]
   },
-        ]
-      }
-    ]
-  },
   {
     id: 'legal',
     label: 'Juridique',
