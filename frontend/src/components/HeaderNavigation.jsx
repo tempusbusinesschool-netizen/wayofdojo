@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { 
   UserPlus, LogIn, Building2, GraduationCap, Settings, 
-  ChevronDown, User, Lock, Heart
+  ChevronDown, User, Lock
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -13,7 +13,6 @@ const HeaderNavigation = ({
   onRegisterDojo,
   onLoginUser,
   onLoginEnseignant,
-  onLoginParent,
   onAdminAccess,
   isAdmin,
   isAdminMode
