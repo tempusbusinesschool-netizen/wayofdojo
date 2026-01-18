@@ -40,6 +40,94 @@ const REGIONS = {
   reunion: { label: 'La Réunion', emoji: '🌴' }
 };
 
+// Base de données des Senseis avec leurs grades et photos
+const SENSEIS = {
+  'farid_simoussa': {
+    name: 'Farid Si Moussa',
+    grade: '6e Dan',
+    title: 'Sensei',
+    role: 'CTN - Comité Technique National',
+    photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop'
+  },
+  'laurent_sanselme': {
+    name: 'Laurent Sanselme',
+    grade: '6e Dan',
+    title: 'Sensei',
+    role: 'CTN - Comité Technique National',
+    photo: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop'
+  },
+  'laurent_boudet': {
+    name: 'Laurent Boudet',
+    grade: '6e Dan',
+    title: 'Sensei',
+    role: 'CTN - Comité Technique National',
+    photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop'
+  },
+  'pascal_leon': {
+    name: 'Pascal Léon',
+    grade: '6e Dan',
+    title: 'Sensei',
+    role: 'CTR Nouvelle-Aquitaine',
+    photo: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=150&h=150&fit=crop'
+  },
+  'frederic_croize': {
+    name: 'Frédéric Croizé',
+    grade: '5e Dan',
+    title: 'Sensei',
+    role: 'CTR Grand-Est',
+    photo: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop'
+  },
+  'yoko_okamoto': {
+    name: 'Yoko Okamoto',
+    grade: '7e Dan',
+    title: 'Shihan',
+    role: 'Directrice Technique',
+    photo: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop'
+  },
+  'marc_bachraty': {
+    name: 'Marc Bachraty',
+    grade: '6e Dan',
+    title: 'Sensei',
+    role: 'Expert Fédéral',
+    photo: 'https://images.unsplash.com/photo-1507591064344-4c6ce005b128?w=150&h=150&fit=crop'
+  },
+  'roberto_dalessandro': {
+    name: 'Roberto Dalessandro',
+    grade: '6e Dan',
+    title: 'Sensei',
+    role: 'Expert Interfédéral',
+    photo: 'https://images.unsplash.com/photo-1463453091185-61582044d556?w=150&h=150&fit=crop'
+  },
+  'dominique_rascle': {
+    name: 'Dominique Rascle',
+    grade: '5e Dan',
+    title: 'Sensei',
+    role: 'Organisateur Stage d\'été',
+    photo: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=150&h=150&fit=crop'
+  },
+  'nicolas_sanchez': {
+    name: 'Nicolas Sanchez',
+    grade: '4e Dan',
+    title: 'Sensei',
+    role: 'LRFFAAA - La Réunion',
+    photo: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&h=150&fit=crop'
+  },
+  'yanis_hoarau': {
+    name: 'Yanis Hoarau',
+    grade: '5e Dan UFA',
+    title: 'Sensei',
+    role: 'DFR Réunion',
+    photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop'
+  },
+  'jacques_mussard': {
+    name: 'Jacques Mussard',
+    grade: '4e Dan',
+    title: 'Sensei',
+    role: 'ACSP Saint-Pierre',
+    photo: 'https://images.unsplash.com/photo-1504257432389-52343af06ae3?w=150&h=150&fit=crop'
+  }
+};
+
 // Données des stages FFAAA 2026
 const STAGES_2026 = [
   // JANVIER 2026
@@ -51,10 +139,12 @@ const STAGES_2026 = [
     endDate: '2026-01-11',
     location: 'Rennes',
     region: 'bretagne',
-    instructors: ['F. Si Moussa', 'L. Sanselme'],
-    description: 'Stage module de 3 jours en Bretagne',
+    senseis: ['farid_simoussa', 'laurent_sanselme'],
+    instructors: ['Farid Si Moussa (6e Dan)', 'Laurent Sanselme (6e Dan)'],
+    description: 'Stage module de 3 jours en Bretagne avec deux membres du CTN',
     validant: true,
-    federation: 'FFAAA'
+    federation: 'FFAAA',
+    poster: 'https://static.prod-images.emergentagent.com/jobs/aed388a5-3792-46cb-ab6f-bbb44df7f516/images/0f24c27b2736d2042ccbf9a7f90aba1de7686dcd4fa66f6b67f5e3d613c664b5.png'
   },
   {
     id: '2',
@@ -64,8 +154,9 @@ const STAGES_2026 = [
     endDate: '2026-01-18',
     location: 'Île-de-France',
     region: 'idf',
-    instructors: ['Plusieurs experts'],
-    description: 'Stage inter-disciplines FFAAA',
+    senseis: [],
+    instructors: ['Experts multi-disciplines'],
+    description: 'Stage inter-disciplines FFAAA réunissant plusieurs experts',
     validant: true,
     federation: 'FFAAA'
   },
@@ -77,8 +168,9 @@ const STAGES_2026 = [
     endDate: '2026-01-25',
     location: 'Mulhouse',
     region: 'grand_est',
-    instructors: ['À préciser'],
-    description: 'Stage fédéral dédié aux jeunes pratiquants',
+    senseis: [],
+    instructors: ['Équipe pédagogique FFAAA'],
+    description: 'Stage fédéral dédié aux jeunes pratiquants (6-17 ans)',
     validant: false,
     federation: 'FFAAA'
   },
@@ -90,24 +182,29 @@ const STAGES_2026 = [
     endDate: '2026-01-31',
     location: 'Saint-Pierre - Dojo Casabona',
     region: 'reunion',
-    instructors: ['Nicolas Sanchez', 'Yanis Hoarau', 'Jacques Mussard'],
-    description: 'Stage de ligue LRFFAAA de 15h00 à 17h15 au dojo Casabona',
+    senseis: ['nicolas_sanchez', 'yanis_hoarau', 'jacques_mussard'],
+    instructors: ['Nicolas Sanchez (4e Dan)', 'Yanis Hoarau (5e Dan UFA - DFR)', 'Jacques Mussard (4e Dan)'],
+    description: 'Stage interclubs LRFFAAA - Aïkido Club de Saint-Pierre & Kishinkai Sainte-Clotilde',
     time: '15:00 - 17:15',
     validant: true,
-    federation: 'LRFFAAA'
+    federation: 'LRFFAAA',
+    poster: 'https://static.prod-images.emergentagent.com/jobs/aed388a5-3792-46cb-ab6f-bbb44df7f516/images/623d85c6fa57db767cdf3dc4d14d72b43651391bb12757459a4ae010f6917899.png',
+    highlight: true
   },
   {
     id: '5',
-    title: 'Stage Ligue - Yoko Okamoto',
+    title: 'Stage Ligue - Yoko Okamoto Shihan',
     type: 'ligue',
     startDate: '2026-01-31',
-    endDate: '2026-01-31',
-    location: 'Île-de-France',
+    endDate: '2026-02-01',
+    location: 'Paris - Institut du Judo',
     region: 'idf',
+    senseis: ['yoko_okamoto'],
     instructors: ['Yoko Okamoto (7e Dan Shihan)'],
-    description: 'Stage exceptionnel avec Yoko Okamoto, 7e Dan Shihan',
+    description: 'Stage exceptionnel avec Yoko Okamoto Shihan, 7e Dan - Directrice Technique',
     validant: true,
     federation: 'FFAAA IDF',
+    poster: 'https://static.prod-images.emergentagent.com/jobs/aed388a5-3792-46cb-ab6f-bbb44df7f516/images/ca22de8ce9c58d1ccfe74b34b79a4add4eb5bb997513b76e2295685fd6fb7ca1.png',
     highlight: true
   },
   
@@ -120,8 +217,9 @@ const STAGES_2026 = [
     endDate: '2026-02-01',
     location: 'Montreuil',
     region: 'idf',
-    instructors: ['L. Boudet', 'L. Sanselme'],
-    description: 'Stage module de 2 jours en Île-de-France',
+    senseis: ['laurent_boudet', 'laurent_sanselme'],
+    instructors: ['Laurent Boudet (6e Dan)', 'Laurent Sanselme (6e Dan)'],
+    description: 'Stage module de 2 jours en Île-de-France avec deux membres du CTN',
     validant: true,
     federation: 'FFAAA'
   },
@@ -133,7 +231,8 @@ const STAGES_2026 = [
     endDate: '2026-02-07',
     location: 'Cestas',
     region: 'nouvelle_aquitaine',
-    instructors: ['P. Léon', 'L. Sanselme'],
+    senseis: ['pascal_leon', 'laurent_sanselme'],
+    instructors: ['Pascal Léon (6e Dan - CTR)', 'Laurent Sanselme (6e Dan)'],
     description: 'Stage module en Nouvelle-Aquitaine',
     validant: true,
     federation: 'FFAAA'
@@ -148,8 +247,9 @@ const STAGES_2026 = [
     endDate: '2026-03-08',
     location: 'Fontenay-sous-Bois',
     region: 'idf',
-    instructors: ['À préciser'],
-    description: 'Stage de préparation au 5e Dan',
+    senseis: [],
+    instructors: ['Jury National FFAAA'],
+    description: 'Stage de préparation au 5e Dan - Travail technique approfondi',
     validant: true,
     federation: 'FFAAA'
   },
@@ -159,10 +259,11 @@ const STAGES_2026 = [
     type: 'interfederal',
     startDate: '2026-03-21',
     endDate: '2026-03-22',
-    location: 'Nouvelle-Aquitaine',
+    location: 'Bordeaux',
     region: 'nouvelle_aquitaine',
-    instructors: ['R. Dalessandro', 'P. Léon'],
-    description: 'Stage interfédéral en Nouvelle-Aquitaine',
+    senseis: ['roberto_dalessandro', 'pascal_leon'],
+    instructors: ['Roberto Dalessandro (6e Dan)', 'Pascal Léon (6e Dan - CTR)'],
+    description: 'Stage interfédéral FFAAA/FFAB en Nouvelle-Aquitaine',
     validant: true,
     federation: 'FFAAA'
   },
@@ -176,7 +277,8 @@ const STAGES_2026 = [
     endDate: '2026-04-12',
     location: 'Strasbourg',
     region: 'grand_est',
-    instructors: ['F. Croizé', 'L. Sanselme'],
+    senseis: ['frederic_croize', 'laurent_sanselme'],
+    instructors: ['Frédéric Croizé (5e Dan - CTR)', 'Laurent Sanselme (6e Dan)'],
     description: 'Stage module Ligue Grand-Est',
     validant: true,
     federation: 'FFAAA LGE'
@@ -189,10 +291,27 @@ const STAGES_2026 = [
     endDate: '2026-04-26',
     location: 'Nantes',
     region: 'pays_loire',
-    instructors: ['À préciser'],
-    description: 'Stage Section Sportive et Bien-Être FFAAA',
+    senseis: [],
+    instructors: ['Équipe SSBE FFAAA'],
+    description: 'Stage Section Sportive et Bien-Être - Approche santé de l\'Aïkido',
     validant: true,
     federation: 'FFAAA'
+  },
+  
+  // MAI 2026
+  {
+    id: '18',
+    title: 'Stage de Ligue',
+    type: 'ligue',
+    startDate: '2026-05-17',
+    endDate: '2026-05-17',
+    location: 'Paris',
+    region: 'idf',
+    senseis: ['laurent_boudet', 'farid_simoussa'],
+    instructors: ['Laurent Boudet (6e Dan)', 'Farid Si Moussa (6e Dan)'],
+    description: 'Stage de Ligue Île-de-France avec deux membres du CTN',
+    validant: true,
+    federation: 'FFAAA IDF'
   },
   
   // JUIN 2026
@@ -204,8 +323,9 @@ const STAGES_2026 = [
     endDate: '2026-06-07',
     location: 'Clamart',
     region: 'idf',
-    instructors: ['Marc Bachraty'],
-    description: 'Stage avec Marc Bachraty à Clamart',
+    senseis: ['marc_bachraty'],
+    instructors: ['Marc Bachraty (6e Dan)'],
+    description: 'Stage avec Marc Bachraty, expert fédéral, à Clamart',
     validant: true,
     federation: 'FFAAA IDF'
   },
@@ -215,23 +335,26 @@ const STAGES_2026 = [
     type: 'seminaire',
     startDate: '2026-06-10',
     endDate: '2026-06-12',
-    location: 'À préciser',
+    location: 'Paris - Institut du Judo',
     region: 'idf',
-    instructors: ['Comité Technique National'],
-    description: 'Séminaire du Comité Technique National FFAAA',
+    senseis: ['yoko_okamoto', 'farid_simoussa', 'laurent_sanselme', 'laurent_boudet'],
+    instructors: ['Comité Technique National au complet'],
+    description: 'Séminaire annuel du Comité Technique National FFAAA - Tous les experts nationaux réunis',
     validant: true,
     federation: 'FFAAA',
+    poster: 'https://static.prod-images.emergentagent.com/jobs/aed388a5-3792-46cb-ab6f-bbb44df7f516/images/f30f163ed87f4186aa146f00c111e72c750d79ac95ead18d414f090737e69993.png',
     highlight: true
   },
   {
     id: '14',
-    title: 'Examen 3e & 4e Dan (Métropole)',
+    title: 'Examen 3e & 4e Dan',
     type: 'examen',
     startDate: '2026-06-13',
     endDate: '2026-06-14',
-    location: 'À préciser',
+    location: 'Paris - Institut du Judo',
     region: 'idf',
-    instructors: ['Jury FFAAA'],
+    senseis: [],
+    instructors: ['Jury National FFAAA'],
     description: 'Examens officiels 3e et 4e Dan métropole',
     validant: false,
     federation: 'FFAAA',
@@ -243,9 +366,10 @@ const STAGES_2026 = [
     type: 'examen',
     startDate: '2026-06-14',
     endDate: '2026-06-14',
-    location: 'Île-de-France',
+    location: 'Paris - Institut du Judo',
     region: 'idf',
-    instructors: ['Jury FFAAA'],
+    senseis: [],
+    instructors: ['Jury National FFAAA'],
     description: 'Examen officiel 5e Dan',
     validant: false,
     federation: 'FFAAA',
@@ -259,8 +383,9 @@ const STAGES_2026 = [
     endDate: '2026-06-21',
     location: 'Clamart',
     region: 'idf',
-    instructors: ['Marc Bachraty'],
-    description: 'Stage avec Marc Bachraty à Clamart',
+    senseis: ['marc_bachraty'],
+    instructors: ['Marc Bachraty (6e Dan)'],
+    description: 'Second stage avec Marc Bachraty à Clamart',
     validant: true,
     federation: 'FFAAA IDF'
   },
@@ -274,10 +399,29 @@ const STAGES_2026 = [
     endDate: '2026-07-31',
     location: 'Ruoms (Ardèche)',
     region: 'nouvelle_aquitaine',
-    instructors: ['Dominique Rascle'],
-    description: 'Stage d\'été d\'une semaine en Ardèche avec Dominique Rascle',
+    senseis: ['dominique_rascle'],
+    instructors: ['Dominique Rascle (5e Dan)'],
+    description: 'Stage d\'été d\'une semaine en Ardèche - Pratique intensive dans un cadre naturel exceptionnel',
     validant: true,
     federation: 'FFAAA',
+    poster: 'https://static.prod-images.emergentagent.com/jobs/aed388a5-3792-46cb-ab6f-bbb44df7f516/images/9c2c1fd34b29b7ac3daa5bb543c365bc2cb7abe279ff0fef31e6b2e417118efb.png',
+    highlight: true
+  },
+  
+  // OCTOBRE 2026
+  {
+    id: '19',
+    title: 'Stage Alain Peyrache',
+    type: 'regional',
+    startDate: '2026-10-21',
+    endDate: '2026-10-21',
+    location: 'La Réunion',
+    region: 'reunion',
+    senseis: [],
+    instructors: ['Alain Peyrache Sensei'],
+    description: 'Stage exceptionnel avec Alain Peyrache Sensei à La Réunion',
+    validant: true,
+    federation: 'EPA',
     highlight: true
   }
 ];
