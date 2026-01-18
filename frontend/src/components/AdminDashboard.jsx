@@ -109,6 +109,13 @@ const colorClasses = {
     gradient: 'from-amber-600 to-yellow-600',
     active: 'bg-gradient-to-r from-amber-600 to-yellow-600'
   },
+  sky: {
+    bg: 'bg-sky-500/20',
+    border: 'border-sky-500/50',
+    text: 'text-sky-400',
+    gradient: 'from-sky-600 to-blue-600',
+    active: 'bg-gradient-to-r from-sky-600 to-blue-600'
+  },
   rose: {
     bg: 'bg-rose-500/20',
     border: 'border-rose-500/50',
