@@ -1041,6 +1041,83 @@ function AppContent() {
               </div>
             ) : adminSection === 'files' ? (
               <AdminFilesContent />
+            ) : adminSection === 'jo' ? (
+              <TechniquesSectionViewer
+                techniques={TECHNIQUES_JO}
+                category="jo"
+                title="Techniques au Jo (Bâton)"
+                subtitle="Le bâton traditionnel de l'Aïkido - 128 cm"
+              />
+            ) : adminSection === 'bokken' ? (
+              <TechniquesSectionViewer
+                techniques={TECHNIQUES_BOKKEN}
+                category="bokken"
+                title="Techniques au Bokken (Sabre)"
+                subtitle="Le sabre en bois traditionnel"
+              />
+            ) : adminSection === 'tanto' ? (
+              <TechniquesSectionViewer
+                techniques={TECHNIQUES_TANTO}
+                category="tanto"
+                title="Techniques au Tanto (Couteau)"
+                subtitle="Défense contre couteau - Tanto Dori"
+              />
+            ) : adminSection === 'tai_sabaki' ? (
+              <TechniquesSectionViewer
+                techniques={TAI_SABAKI}
+                category="tai_sabaki"
+                title="Tai Sabaki (Déplacements)"
+                subtitle="Les mouvements fondamentaux du corps"
+              />
+            ) : adminSection === 'ukemi' ? (
+              <TechniquesSectionViewer
+                techniques={UKEMI}
+                category="ukemi"
+                title="Ukemi (Chutes)"
+                subtitle="L'art de recevoir et de tomber en sécurité"
+              />
+            ) : adminSection === 'kamae' ? (
+              <TechniquesSectionViewer
+                techniques={KAMAE}
+                category="kamae"
+                title="Kamae (Postures)"
+                subtitle="Les gardes et positions fondamentales"
+              />
+            ) : adminSection === 'atemi' ? (
+              <TechniquesSectionViewer
+                techniques={ATEMI}
+                category="atemi"
+                title="Atemi (Frappes)"
+                subtitle="Les frappes et coups de l'Aïkido"
+              />
+            ) : adminSection === 'kokyu_waza' ? (
+              <TechniquesSectionViewer
+                techniques={KOKYU_WAZA}
+                category="kokyu_waza"
+                title="Kokyu Waza (Techniques de respiration)"
+                subtitle="Les techniques utilisant le souffle et le Ki"
+              />
+            ) : adminSection === 'kansetsu_waza' ? (
+              <TechniquesSectionViewer
+                techniques={KANSETSU_WAZA}
+                category="kansetsu_waza"
+                title="Kansetsu Waza (Clés articulaires)"
+                subtitle="Les techniques de contrôle et immobilisation"
+              />
+            ) : adminSection === 'suwariwaza' ? (
+              <TechniquesSectionViewer
+                techniques={SUWARIWAZA}
+                category="suwariwaza"
+                title="Suwariwaza (Techniques à genoux)"
+                subtitle="Pratique traditionnelle au sol"
+              />
+            ) : adminSection === 'hanmi_handachi' ? (
+              <TechniquesSectionViewer
+                techniques={HANMI_HANDACHI}
+                category="hanmi_handachi"
+                title="Hanmi Handachi (Semi-debout)"
+                subtitle="Tori à genoux, Uke debout"
+              />
             ) : null}
           </AdminDashboard>
         )}
