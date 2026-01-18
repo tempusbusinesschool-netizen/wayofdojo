@@ -12,14 +12,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Shield, Users, Building2, CreditCard, ScrollText, 
   LayoutDashboard, Settings, BookOpen, Swords,
-  ChevronRight, LogOut, Menu, X, FileText,
+  ChevronRight, ChevronDown, LogOut, Menu, X, FileText,
   BarChart3, UserCog, Bell, Database, HelpCircle,
-  FolderOpen, Download, ExternalLink, FileCode
+  FolderOpen, Download, ExternalLink, FileCode, Dumbbell
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import CombinaisonsPage from '@/pages/CombinaisonsPage';
 
-// Configuration des sections admin
+// Configuration des sections admin (structure hiérarchique)
 const ADMIN_SECTIONS = [
   {
     id: 'dashboard',
@@ -50,18 +50,32 @@ const ADMIN_SECTIONS = [
     description: 'Suivi des paiements et formules'
   },
   {
-    id: 'techniques',
-    label: 'Techniques d\'Aïkido',
-    icon: Swords,
+    id: 'sports',
+    label: 'Sports',
+    icon: Dumbbell,
     color: 'amber',
-    description: '141 combinaisons du programme'
-  },
-  {
-    id: 'files',
-    label: 'Fichiers de référence',
-    icon: FolderOpen,
-    color: 'sky',
-    description: 'Documents et ressources techniques'
+    description: 'Gestion des disciplines sportives',
+    isParent: true,
+    children: [
+      {
+        id: 'aikido',
+        label: 'Aikido',
+        icon: Swords,
+        color: 'amber',
+        description: 'Art martial japonais',
+        isParent: true,
+        children: [
+          {
+            id: 'techniques',
+            label: 'Techniques d\'Aikido',
+            icon: FileCode,
+            color: 'amber',
+            description: '141 combinaisons du programme',
+            filePath: 'Sports/Aikido/Techniques d\'aikido/Techniques d\'aikido.js'
+          }
+        ]
+      }
+    ]
   },
   {
     id: 'legal',
