@@ -871,43 +871,169 @@ function AppContent() {
       {!enseignantMode && !showModeEmploi && !showTarification && (
       <main className="max-w-7xl mx-auto px-4 py-6">
         {/* Tabs for Techniques and Members */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
-          {/* Admin Tabs - Gestion plateforme HUMAN KNOWLEDGE */}
-          {isAdmin && (
-            <div className="mb-4">
-              <div className="flex items-center gap-2 mb-3">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
-                  <Shield className="w-4 h-4 text-white" />
+        {/* ═══════════════════════════════════════════════════════════════════════════ */}
+        {/* NOUVEAU DESIGN ADMIN - Sidebar + Content */}
+        {/* ═══════════════════════════════════════════════════════════════════════════ */}
+        {isAdmin && (
+          <AdminDashboard
+            activeSection={adminSection}
+            onSectionChange={setAdminSection}
+            onLogout={() => {
+              setAdminType(null);
+              sessionStorage.removeItem('aikido_admin');
+              toast.success("Déconnexion réussie");
+            }}
+          >
+            {/* Contenu selon la section active */}
+            {adminSection === 'techniques' ? (
+              <CombinaisonsPage onBack={() => setAdminSection('dashboard')} embedded={true} />
+            ) : adminSection === 'dashboard' ? (
+              <div className="p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                  <Card className="bg-slate-800/50 border-slate-700">
+                    <CardContent className="p-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-cyan-500/20 flex items-center justify-center">
+                          <Users className="w-5 h-5 text-cyan-400" />
+                        </div>
+                        <div>
+                          <p className="text-2xl font-bold text-white">{membersStats?.totalUsers || 0}</p>
+                          <p className="text-xs text-slate-400">Utilisateurs</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                  <Card className="bg-slate-800/50 border-slate-700">
+                    <CardContent className="p-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-orange-500/20 flex items-center justify-center">
+                          <Building2 className="w-5 h-5 text-orange-400" />
+                        </div>
+                        <div>
+                          <p className="text-2xl font-bold text-white">{membersStats?.totalDojos || 0}</p>
+                          <p className="text-xs text-slate-400">Dojos actifs</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                  <Card className="bg-slate-800/50 border-slate-700">
+                    <CardContent className="p-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center">
+                          <CreditCard className="w-5 h-5 text-emerald-400" />
+                        </div>
+                        <div>
+                          <p className="text-2xl font-bold text-white">{membersStats?.activeSubscriptions || 0}</p>
+                          <p className="text-xs text-slate-400">Abonnements</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                  <Card className="bg-slate-800/50 border-slate-700">
+                    <CardContent className="p-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-amber-500/20 flex items-center justify-center">
+                          <Swords className="w-5 h-5 text-amber-400" />
+                        </div>
+                        <div>
+                          <p className="text-2xl font-bold text-white">96</p>
+                          <p className="text-xs text-slate-400">Techniques</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
                 </div>
-                <span className="text-cyan-400 font-semibold">🛡️ Espace de gestion</span>
-                <span className="text-xs text-slate-500 hidden sm:inline">Cadre • Contrôle • Conformité</span>
+                
+                {/* Actions rapides */}
+                <h3 className="text-lg font-semibold text-white mb-4">Actions rapides</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  <Button
+                    variant="outline"
+                    className="h-auto py-4 flex flex-col items-center gap-2 border-slate-600 hover:bg-slate-700"
+                    onClick={() => setAdminSection('users')}
+                  >
+                    <Users className="w-6 h-6 text-violet-400" />
+                    <span>Gérer les utilisateurs</span>
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="h-auto py-4 flex flex-col items-center gap-2 border-slate-600 hover:bg-slate-700"
+                    onClick={() => setAdminSection('dojos')}
+                  >
+                    <Building2 className="w-6 h-6 text-orange-400" />
+                    <span>Gérer les dojos</span>
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="h-auto py-4 flex flex-col items-center gap-2 border-slate-600 hover:bg-slate-700"
+                    onClick={() => setAdminSection('techniques')}
+                  >
+                    <Swords className="w-6 h-6 text-amber-400" />
+                    <span>Voir les techniques</span>
+                  </Button>
+                </div>
               </div>
-              <TabsList className="bg-slate-800 border-slate-700 flex flex-wrap gap-1">
-                <TabsTrigger value="dashboard" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-cyan-600 data-[state=active]:to-blue-600 text-xs sm:text-sm">
-                  <LayoutDashboard className="w-4 h-4 sm:mr-2 text-cyan-400" />
-                  <span className="hidden sm:inline text-cyan-300">Tableau de bord</span>
-                </TabsTrigger>
-                <TabsTrigger value="users" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-violet-600 data-[state=active]:to-purple-600 text-xs sm:text-sm">
-                  <Users className="w-4 h-4 sm:mr-2 text-violet-400" />
-                  <span className="hidden sm:inline text-violet-300">Utilisateurs</span>
-                </TabsTrigger>
-                <TabsTrigger value="dojos" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-orange-600 data-[state=active]:to-amber-600 text-xs sm:text-sm">
-                  <Building2 className="w-4 h-4 sm:mr-2 text-orange-400" />
-                  <span className="hidden sm:inline text-orange-300">Gestion Dojos</span>
-                </TabsTrigger>
-                <TabsTrigger value="subscriptions" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-600 data-[state=active]:to-green-600 text-xs sm:text-sm">
-                  <CreditCard className="w-4 h-4 sm:mr-2 text-emerald-400" />
-                  <span className="hidden sm:inline text-emerald-300">Abonnements</span>
-                </TabsTrigger>
-                <TabsTrigger value="legal" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-rose-600 data-[state=active]:to-pink-600 text-xs sm:text-sm">
-                  <ScrollText className="w-4 h-4 sm:mr-2 text-rose-400" />
-                  <span className="hidden sm:inline text-rose-300">Juridique</span>
-                </TabsTrigger>
-              </TabsList>
-            </div>
-          )}
-          
-          {/* Espace Dojo Tabs - Gestion club */}
+            ) : adminSection === 'users' ? (
+              <div className="p-6">
+                <DojoMembersList 
+                  isAdmin={true} 
+                  onMemberSelect={(member) => console.log('Member selected:', member)}
+                />
+              </div>
+            ) : adminSection === 'dojos' ? (
+              <div className="p-6">
+                <DojoManagement />
+              </div>
+            ) : adminSection === 'subscriptions' ? (
+              <div className="p-6">
+                <div className="text-center py-12">
+                  <CreditCard className="w-16 h-16 text-emerald-400 mx-auto mb-4 opacity-50" />
+                  <h3 className="text-xl font-bold text-white mb-2">Gestion des abonnements</h3>
+                  <p className="text-slate-400">Module de gestion des paiements et formules</p>
+                </div>
+              </div>
+            ) : adminSection === 'legal' ? (
+              <div className="p-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <Card className="bg-slate-800/50 border-slate-700 hover:border-rose-500/50 transition-colors cursor-pointer">
+                    <CardContent className="p-6">
+                      <ScrollText className="w-8 h-8 text-rose-400 mb-3" />
+                      <h4 className="font-bold text-white mb-1">CGU</h4>
+                      <p className="text-sm text-slate-400">Conditions générales d'utilisation</p>
+                    </CardContent>
+                  </Card>
+                  <Card className="bg-slate-800/50 border-slate-700 hover:border-rose-500/50 transition-colors cursor-pointer">
+                    <CardContent className="p-6">
+                      <ScrollText className="w-8 h-8 text-rose-400 mb-3" />
+                      <h4 className="font-bold text-white mb-1">CGV</h4>
+                      <p className="text-sm text-slate-400">Conditions générales de vente</p>
+                    </CardContent>
+                  </Card>
+                  <Card className="bg-slate-800/50 border-slate-700 hover:border-rose-500/50 transition-colors cursor-pointer">
+                    <CardContent className="p-6">
+                      <Shield className="w-8 h-8 text-rose-400 mb-3" />
+                      <h4 className="font-bold text-white mb-1">RGPD</h4>
+                      <p className="text-sm text-slate-400">Protection des données personnelles</p>
+                    </CardContent>
+                  </Card>
+                  <Card className="bg-slate-800/50 border-slate-700 hover:border-rose-500/50 transition-colors cursor-pointer">
+                    <CardContent className="p-6">
+                      <ScrollText className="w-8 h-8 text-rose-400 mb-3" />
+                      <h4 className="font-bold text-white mb-1">Mentions légales</h4>
+                      <p className="text-sm text-slate-400">Informations légales obligatoires</p>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+            ) : null}
+          </AdminDashboard>
+        )}
+        
+        {/* ═══════════════════════════════════════════════════════════════════════════ */}
+        {/* INTERFACE NON-ADMIN (Espace Dojo, Utilisateurs normaux) */}
+        {/* ═══════════════════════════════════════════════════════════════════════════ */}
+        {!isAdmin && (
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
           {isEspaceDojo && (
             <div className="mb-4">
               <div className="flex items-center gap-2 mb-3">
