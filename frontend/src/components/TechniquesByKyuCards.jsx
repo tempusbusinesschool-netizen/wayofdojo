@@ -382,14 +382,24 @@ const TechniquesByKyuCards = ({
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.02 }}
-                className={`w-full p-4 rounded-xl text-left transition-all border-2 flex items-center gap-4 hover:shadow-lg ${masteryInfo.bg} border-slate-700 hover:border-slate-500`}
+                className={`w-full p-3 rounded-xl text-left transition-all border-2 flex items-center gap-3 hover:shadow-lg ${masteryInfo.bg} border-slate-700 hover:border-slate-500`}
               >
-                {/* Numéro */}
-                <div className={`w-10 h-10 rounded-lg flex items-center justify-center font-bold flex-shrink-0 ${
-                  isMastered ? 'bg-emerald-500 text-white' : 'bg-slate-700 text-slate-300'
-                }`}>
-                  {isMastered ? <Star className="w-5 h-5" /> : index + 1}
-                </div>
+                {/* Image miniature ou Numéro */}
+                {technique.image_url ? (
+                  <div className="w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-slate-800 border border-slate-600">
+                    <img 
+                      src={technique.image_url} 
+                      alt={technique.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div className={`w-14 h-14 rounded-lg flex items-center justify-center font-bold text-xl flex-shrink-0 ${
+                    isMastered ? 'bg-emerald-500 text-white' : 'bg-slate-700 text-slate-300'
+                  }`}>
+                    {isMastered ? <Star className="w-6 h-6" /> : index + 1}
+                  </div>
+                )}
                 
                 {/* Infos */}
                 <div className="flex-1 min-w-0">
