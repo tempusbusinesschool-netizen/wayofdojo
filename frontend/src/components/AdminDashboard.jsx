@@ -106,6 +106,88 @@ const ADMIN_SECTIONS = [
                 filePath: 'Sports/Aikido/Techniques d\'aikido/Armes/Tanto/Techniques_Tanto.js'
               }
             ]
+          },
+          {
+            id: 'mouvements',
+            label: 'Mouvements',
+            icon: FileCode,
+            color: 'cyan',
+            description: 'Mouvements fondamentaux',
+            isParent: true,
+            children: [
+              {
+                id: 'tai_sabaki',
+                label: 'Tai Sabaki (Déplacements)',
+                icon: FileCode,
+                color: 'cyan',
+                description: '10 mouvements - Irimi, Tenkan, Kaiten...',
+                filePath: 'Sports/Aikido/Techniques d\'aikido/Mouvements/Tai_Sabaki/Tai_Sabaki.js',
+                hasVideo: true
+              },
+              {
+                id: 'ukemi',
+                label: 'Ukemi (Chutes)',
+                icon: FileCode,
+                color: 'sky',
+                description: '9 chutes - Mae, Ushiro, Tobi...',
+                filePath: 'Sports/Aikido/Techniques d\'aikido/Mouvements/Ukemi/Ukemi.js',
+                hasVideo: true
+              },
+              {
+                id: 'kamae',
+                label: 'Kamae (Postures)',
+                icon: FileCode,
+                color: 'emerald',
+                description: '8 gardes - Ai Hanmi, Gyaku Hanmi...',
+                filePath: 'Sports/Aikido/Techniques d\'aikido/Mouvements/Kamae/Kamae.js',
+                hasVideo: true
+              },
+              {
+                id: 'atemi',
+                label: 'Atemi (Frappes)',
+                icon: FileCode,
+                color: 'red',
+                description: '9 frappes - Shomen, Yokomen, Tsuki...',
+                filePath: 'Sports/Aikido/Techniques d\'aikido/Mouvements/Atemi/Atemi.js',
+                hasVideo: true
+              },
+              {
+                id: 'kokyu_waza',
+                label: 'Kokyu Waza (Respiration)',
+                icon: FileCode,
+                color: 'violet',
+                description: '6 techniques - Kokyu Dosa, Tenchi Nage...',
+                filePath: 'Sports/Aikido/Techniques d\'aikido/Mouvements/Kokyu_Waza/Kokyu_Waza.js',
+                hasVideo: true
+              },
+              {
+                id: 'kansetsu_waza',
+                label: 'Kansetsu Waza (Clés)',
+                icon: FileCode,
+                color: 'rose',
+                description: '10 techniques - Ikkyo à Gokyo, Kote Gaeshi...',
+                filePath: 'Sports/Aikido/Techniques d\'aikido/Mouvements/Kansetsu_Waza/Kansetsu_Waza.js',
+                hasVideo: true
+              },
+              {
+                id: 'suwariwaza',
+                label: 'Suwariwaza (À genoux)',
+                icon: FileCode,
+                color: 'amber',
+                description: '10 techniques - Pratique à genoux',
+                filePath: 'Sports/Aikido/Techniques d\'aikido/Mouvements/Suwariwaza/Suwariwaza.js',
+                hasVideo: true
+              },
+              {
+                id: 'hanmi_handachi',
+                label: 'Hanmi Handachi (Semi-debout)',
+                icon: FileCode,
+                color: 'orange',
+                description: '8 techniques - Tori à genoux vs Uke debout',
+                filePath: 'Sports/Aikido/Techniques d\'aikido/Mouvements/Hanmi_Handachi/Hanmi_Handachi.js',
+                hasVideo: true
+              }
+            ]
           }
         ]
       }
