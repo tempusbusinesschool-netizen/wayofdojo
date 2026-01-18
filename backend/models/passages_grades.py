@@ -714,7 +714,17 @@ def get_programme_grade(grade_id: str) -> dict:
 
 def get_all_grades() -> list:
     """Retourne tous les grades dans l'ordre"""
+    ordre = ["6e_kyu", "5e_kyu", "4e_kyu", "3e_kyu", "2e_kyu", "1er_kyu", "shodan", "nidan", "sandan", "yondan"]
+    return [PROGRAMME_FFAAA[g] for g in ordre if g in PROGRAMME_FFAAA]
+
+def get_kyu_grades() -> list:
+    """Retourne uniquement les grades Kyu"""
     ordre = ["6e_kyu", "5e_kyu", "4e_kyu", "3e_kyu", "2e_kyu", "1er_kyu"]
+    return [PROGRAMME_FFAAA[g] for g in ordre if g in PROGRAMME_FFAAA]
+
+def get_dan_grades() -> list:
+    """Retourne uniquement les grades Dan"""
+    ordre = ["shodan", "nidan", "sandan", "yondan"]
     return [PROGRAMME_FFAAA[g] for g in ordre if g in PROGRAMME_FFAAA]
 
 def count_techniques_by_category(grade_id: str) -> dict:
