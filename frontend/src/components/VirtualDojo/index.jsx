@@ -451,6 +451,54 @@ const VirtualDojo = ({
     setTimeout(() => setIsTanakaSpeaking(false), 3000);
   };
 
+  // Validation parentale - les parents saisissent leurs infos pour valider
+  const handleParentValidation = (gameId) => {
+    if (!parentForm.nom.trim() || !parentForm.prenom.trim()) {
+      setTanakaMessage('Le parent doit saisir son nom et prénom pour valider ! 📝');
+      setIsTanakaSpeaking(true);
+      setTimeout(() => setIsTanakaSpeaking(false), 3000);
+      return;
+    }
+    
+    const game = DOJO_GAMES.find(g => g.id === gameId);
+    if (!game) return;
+    
+    // Ajouter à la liste des validés
+    const validation = {
+      gameId,
+      gameName: game.name,
+      gameEmoji: game.emoji,
+      parentNom: parentForm.nom,
+      parentPrenom: parentForm.prenom,
+      validatedAt: new Date().toISOString()
+    };
+    
+    const newValidated = [...validatedByParent, validation];
+    setValidatedByParent(newValidated);
+    localStorage.setItem(`aikido-validated-${userId}`, JSON.stringify(newValidated));
+    
+    // Retirer des jeux en attente
+    const newCompleted = completedGames.filter(id => id !== gameId);
+    setCompletedGames(newCompleted);
+    
+    // Sauvegarder
+    const progressData = {
+      completedGames: newCompleted,
+      gameScores,
+      totalKi
+    };
+    localStorage.setItem('aikido_dojo_progress', JSON.stringify(progressData));
+    
+    // Message de félicitations
+    setTanakaMessage(`Bravo ! ${parentForm.prenom} ${parentForm.nom} a validé "${game.name}" ! 🎉✅`);
+    setIsTanakaSpeaking(true);
+    setTimeout(() => setIsTanakaSpeaking(false), 4000);
+    
+    // Reset le mode validation
+    setParentValidationMode(false);
+    setParentForm({ nom: '', prenom: '' });
+  };
+
   // Sauvegarder la progression
   const saveProgress = useCallback((newCompleted, newScores, newKi) => {
     const data = { completedGames: newCompleted, gameScores: newScores, totalKi: newKi };
