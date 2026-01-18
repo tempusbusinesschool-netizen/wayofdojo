@@ -69,8 +69,8 @@ SUPER_ADMIN_PASSWORD = os.environ.get("SUPER_ADMIN_PASSWORD", "superaikido2024")
 
 # Default dojo
 DEFAULT_DOJO = {
-    "id": "aikido-la-riviere",
-    "name": "Aikido La Rivière",
+    "id": "club-test",
+    "name": "Club test",
     "description": "Dojo principal - Club d'Aïkido La Rivière",
     "address": "",
     "city": "",
