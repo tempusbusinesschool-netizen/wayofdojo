@@ -785,23 +785,40 @@ const StagesCalendar = ({ embedded = false }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4 overflow-y-auto"
             onClick={() => setSelectedStage(null)}
           >
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-slate-800 rounded-2xl max-w-lg w-full border border-slate-700 overflow-hidden"
+              className="bg-slate-800 rounded-2xl max-w-2xl w-full border border-slate-700 overflow-hidden my-4"
               onClick={e => e.stopPropagation()}
             >
-              {/* Header */}
-              <div className={`p-6 ${STAGE_TYPES[selectedStage.type]?.color || 'bg-orange-500'}`}>
-                <Badge className="bg-white/20 text-white mb-2">
-                  {STAGE_TYPES[selectedStage.type]?.icon} {STAGE_TYPES[selectedStage.type]?.label}
-                </Badge>
-                <h2 className="text-2xl font-bold text-white">{selectedStage.title}</h2>
-              </div>
+              {/* Affiche en header si disponible */}
+              {selectedStage.poster ? (
+                <div className="relative h-48 overflow-hidden">
+                  <img 
+                    src={selectedStage.poster} 
+                    alt={selectedStage.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-800 via-slate-800/50 to-transparent" />
+                  <div className="absolute bottom-4 left-4 right-4">
+                    <Badge className={`${STAGE_TYPES[selectedStage.type]?.color || 'bg-orange-500'} text-white mb-2`}>
+                      {STAGE_TYPES[selectedStage.type]?.icon} {STAGE_TYPES[selectedStage.type]?.label}
+                    </Badge>
+                    <h2 className="text-2xl font-bold text-white drop-shadow-lg">{selectedStage.title}</h2>
+                  </div>
+                </div>
+              ) : (
+                <div className={`p-6 ${STAGE_TYPES[selectedStage.type]?.color || 'bg-orange-500'}`}>
+                  <Badge className="bg-white/20 text-white mb-2">
+                    {STAGE_TYPES[selectedStage.type]?.icon} {STAGE_TYPES[selectedStage.type]?.label}
+                  </Badge>
+                  <h2 className="text-2xl font-bold text-white">{selectedStage.title}</h2>
+                </div>
+              )}
               
               {/* Content */}
               <div className="p-6 space-y-4">
@@ -827,22 +844,58 @@ const StagesCalendar = ({ embedded = false }) => {
                   </div>
                 )}
                 
-                <div className="flex items-start gap-3 text-slate-300">
-                  <User className="w-5 h-5 text-orange-400 mt-0.5" />
-                  <div>
-                    <p className="font-medium">Animateur(s)</p>
-                    <p className="text-slate-400">{selectedStage.instructors?.join(', ') || 'À préciser'}</p>
+                {/* Senseis avec photos dans le modal */}
+                {selectedStage.senseis && selectedStage.senseis.length > 0 && (
+                  <div className="p-4 bg-slate-700/50 rounded-xl">
+                    <p className="text-sm text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-2">
+                      <GraduationCap className="w-4 h-4" />
+                      Animé par
+                    </p>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      {selectedStage.senseis.map(senseiId => {
+                        const sensei = SENSEIS[senseiId];
+                        if (!sensei) return null;
+                        return (
+                          <div key={senseiId} className="flex items-center gap-3 p-2 bg-slate-800/50 rounded-lg">
+                            <img 
+                              src={sensei.photo} 
+                              alt={sensei.name}
+                              className="w-12 h-12 rounded-full object-cover border-2 border-orange-500/50"
+                            />
+                            <div>
+                              <p className="text-white font-semibold">{sensei.name}</p>
+                              <p className="text-orange-400 text-sm">{sensei.grade} • {sensei.title}</p>
+                              <p className="text-slate-500 text-xs">{sensei.role}</p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
+                )}
+                
+                {/* Instructeurs texte si pas de senseis */}
+                {(!selectedStage.senseis || selectedStage.senseis.length === 0) && selectedStage.instructors && (
+                  <div className="flex items-start gap-3 text-slate-300">
+                    <User className="w-5 h-5 text-orange-400 mt-0.5" />
+                    <div>
+                      <p className="font-medium">Animateur(s)</p>
+                      <p className="text-slate-400">{selectedStage.instructors?.join(', ') || 'À préciser'}</p>
+                    </div>
+                  </div>
+                )}
                 
                 <p className="text-slate-400">{selectedStage.description}</p>
                 
-                <div className="flex gap-2 pt-4">
+                <div className="flex flex-wrap gap-2 pt-4">
                   <Badge className={selectedStage.validant ? 'bg-emerald-500' : 'bg-slate-600'}>
                     {selectedStage.validant ? '✓ Validant pour les grades' : 'Non validant'}
                   </Badge>
                   <Badge variant="outline" className="border-slate-600 text-slate-400">
                     {selectedStage.federation}
+                  </Badge>
+                  <Badge variant="outline" className="border-slate-600 text-slate-400">
+                    {REGIONS[selectedStage.region]?.emoji} {REGIONS[selectedStage.region]?.label}
                   </Badge>
                 </div>
               </div>
