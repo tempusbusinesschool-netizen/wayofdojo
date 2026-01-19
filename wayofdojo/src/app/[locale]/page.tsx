@@ -70,7 +70,7 @@ export default function HomePage() {
     setCheckingAuth(false);
   }, [locale, router]);
 
-  const handleStepClick = (stepId: number) => {
+  const handleStepClick = (_stepId: number) => {
     // Si l'utilisateur clique sur une étape, on l'invite à s'inscrire
     if (!isLoggedIn) {
       router.push(`/${locale}/aikido/register`);
