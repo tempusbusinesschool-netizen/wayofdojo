@@ -43,6 +43,21 @@ export default function LandingPage() {
     router.push(`/${locale}/aikido/dojo`);
   };
 
+  // Afficher un écran de chargement pendant la vérification d'authentification
+  if (checkingAuth) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg shadow-amber-500/30 mx-auto mb-4 animate-pulse">
+            <Swords className="w-8 h-8 text-white" />
+          </div>
+          <p className="text-white font-bold">WayofDojo</p>
+          <p className="text-slate-400 text-sm">Chargement...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
       {/* Header */}
