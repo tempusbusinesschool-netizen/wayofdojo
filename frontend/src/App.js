@@ -857,7 +857,7 @@ function AppContent() {
             onSectionChange={setAdminSection}
             onLogout={() => {
               setAdminType(null);
-              sessionStorage.removeItem('aikido_admin');
+              localStorage.removeItem('aikido_admin');
               toast.success("Déconnexion réussie");
             }}
           >
