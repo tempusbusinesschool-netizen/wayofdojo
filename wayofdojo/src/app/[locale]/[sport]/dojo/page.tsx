@@ -72,7 +72,6 @@ export default function DojoPage() {
     (g) => g.id === user.grade
   );
 
-  const xpForNextLevel = user.gamification.level * 100;
   const xpProgress = (user.gamification.xp % 100) / 100 * 100;
 
   const isJeuneNinja = user.profile === 'jeune_ninja';
