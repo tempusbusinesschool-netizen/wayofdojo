@@ -50,7 +50,7 @@ export default function LandingPage() {
             </div>
             <div>
               <span className="text-xl font-black text-white">WayofDojo</span>
-              <p className="text-xs text-violet-300">L'Aïkido, c'est du jeu !</p>
+              <p className="text-xs text-violet-300">L&apos;Aïkido, c&apos;est du jeu !</p>
             </div>
           </Link>
 
@@ -59,7 +59,7 @@ export default function LandingPage() {
             <p className="text-white font-semibold">
               Deviens un vrai Ninja ! <span className="text-amber-400">🥷</span>
             </p>
-            <p className="text-violet-300 text-sm">Apprends l'Aikido en t'amusant</p>
+            <p className="text-violet-300 text-sm">Apprends l&apos;Aikido en t&apos;amusant</p>
           </div>
 
           {/* Auth Buttons */}
