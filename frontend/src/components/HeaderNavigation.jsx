@@ -12,7 +12,7 @@ const HeaderNavigation = ({
   onRegisterUser,
   onRegisterDojo,
   onLoginUser,
-  onLoginEnseignant,
+  onLoginDojo,
   onAdminAccess,
   isAdmin,
   isAdminMode
