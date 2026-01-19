@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Swords, LogIn, UserPlus, LogOut, User, Sparkles, CreditCard, ScrollText, Lock, Menu, X, ChevronDown } from 'lucide-react';
+import { Swords, LogIn, UserPlus, LogOut, User, Sparkles, Lock, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import MaitreTanaka from '@/components/MaitreTanaka';
 import NinjaJourney from '@/components/NinjaJourney';
