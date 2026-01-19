@@ -46,7 +46,6 @@ const TanakaAnimatedLogo = ({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) => {
 };
 
 export default function HomePage() {
-  const t = useTranslations('common');
   const params = useParams();
   const locale = params.locale as string || 'fr';
   const router = useRouter();
