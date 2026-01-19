@@ -19,9 +19,9 @@ const ENFANT_SALUT_IMG = AIKIDO_CHARACTERS.ENFANT_SALUT;
  */
 const AgeSelector = ({ onSelect }) => {
   const [stats, setStats] = useState({ 
-    total_techniques: 200, 
-    grades_label: "6 Kyu + 1 Dan",
-    total_grades: 7,
+    total_techniques: 214, 
+    grades_label: "6 Kyu + 4 Dan",
+    total_grades: 10,
     total_challenges: 84
   });
   const [showBudoDialog, setShowBudoDialog] = useState(false);
