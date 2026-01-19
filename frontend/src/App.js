@@ -896,7 +896,7 @@ function AppContent() {
               <CombinaisonsPage onBack={() => setAdminSection('dashboard')} embedded={true} />
             ) : adminSection === 'dashboard' ? (
               <div className="p-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                   <Card className="bg-slate-800/50 border-slate-700">
                     <CardContent className="p-4">
                       <div className="flex items-center gap-3">
@@ -936,24 +936,11 @@ function AppContent() {
                       </div>
                     </CardContent>
                   </Card>
-                  <Card className="bg-slate-800/50 border-slate-700">
-                    <CardContent className="p-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-xl bg-amber-500/20 flex items-center justify-center">
-                          <Swords className="w-5 h-5 text-amber-400" />
-                        </div>
-                        <div>
-                          <p className="text-2xl font-bold text-white">96</p>
-                          <p className="text-xs text-slate-400">Techniques Kyu</p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
                 </div>
                 
                 {/* Actions rapides */}
                 <h3 className="text-lg font-semibold text-white mb-4">Actions rapides</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <Button
                     variant="outline"
                     className="h-auto py-4 flex flex-col items-center gap-2 bg-slate-700/50 border-slate-500 hover:bg-slate-600 hover:border-violet-500 text-white transition-all"
