@@ -286,7 +286,7 @@ function DojoManagementPanel() {
             city: club.city,
             address: club.address || '',
             description: `${club.federation} - ${REGIONS_FRANCE[club.region]?.name || club.region}${club.description ? ' - ' + club.description : ''}`,
-            admin_password: 'aikido2024', // Mot de passe par défaut
+            admin_password: '123456', // Mot de passe par défaut
             email: club.email || '',
             phone: club.phone || '',
             website: club.website || ''
