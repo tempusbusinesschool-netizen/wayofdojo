@@ -739,8 +739,8 @@ function AppContent() {
                   onRegisterUser={() => setShowAuthDialog(true)}
                   onRegisterDojo={() => setShowDojoRegistration(true)}
                   onLoginUser={() => setShowLoginDialog(true)}
-                  onLoginEnseignant={() => setShowEnseignantLogin(true)}
-                  onAdminAccess={() => setShowAdminLogin(true)}
+                  onLoginDojo={() => { setAdminLoginMode('dojo'); setShowAdminLogin(true); }}
+                  onAdminAccess={() => { setAdminLoginMode('admin'); setShowAdminLogin(true); }}
                   isAdmin={isAdmin}
                   isAdminMode={isAdminMode}
                 />
