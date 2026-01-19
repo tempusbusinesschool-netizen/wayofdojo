@@ -144,8 +144,9 @@ function AppContent() {
   const [ninjaMode, setNinjaMode] = useState(() => localStorage.getItem('ninja-aikido-mode'));
   
   // Admin state - supports two types: 'admin' (plateforme) and 'espace_dojo' (club)
+  // Using localStorage for persistent sessions across page reloads
   const [adminType, setAdminType] = useState(() => {
-    const stored = sessionStorage.getItem('aikido_admin');
+    const stored = localStorage.getItem('aikido_admin');
     return stored && stored !== 'false' ? stored : null;
   });
   const [showAdminLogin, setShowAdminLogin] = useState(false);
