@@ -23,6 +23,18 @@ function AdminLoginDialog({ isOpen, onClose, onSuccess, initialMode = 'choice' }
   const [loadingDojos, setLoadingDojos] = useState(false);
   const [loginMethod, setLoginMethod] = useState('select'); // 'select' or 'email'
 
+  const fetchDojos = async () => {
+    setLoadingDojos(true);
+    try {
+      const response = await axios.get(`${API}/dojos`);
+      setDojos(response.data.dojos || []);
+    } catch (err) {
+      console.error("Error fetching dojos:", err);
+      toast.error("Erreur lors du chargement des dojos");
+    }
+    setLoadingDojos(false);
+  };
+
   // Reset step when initialMode changes
   useEffect(() => {
     if (isOpen) {
@@ -36,18 +48,6 @@ function AdminLoginDialog({ isOpen, onClose, onSuccess, initialMode = 'choice' }
       fetchDojos();
     }
   }, [step]);
-
-  const fetchDojos = async () => {
-    setLoadingDojos(true);
-    try {
-      const response = await axios.get(`${API}/dojos`);
-      setDojos(response.data.dojos || []);
-    } catch (error) {
-      console.error("Error fetching dojos:", error);
-      toast.error("Erreur lors du chargement des dojos");
-    }
-    setLoadingDojos(false);
-  };
 
   const handleClose = () => {
     setStep('choice');
