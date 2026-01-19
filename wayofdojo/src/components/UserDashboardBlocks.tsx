@@ -106,6 +106,15 @@ export const UserDashboardBlocks: React.FC<UserDashboardBlocksProps> = ({
                   <span className={`w-2 h-2 rounded-full ${currentBelt?.bgColor || 'bg-white'}`}></span>
                   {currentBelt?.name || 'Ceinture Blanche'}
                 </p>
+                <div className="flex items-center gap-3 mt-1 text-xs">
+                  <span className="text-amber-400 font-bold">⭐ {displayXp} XP</span>
+                  <span className="text-cyan-400">Niv. {displayLevel}</span>
+                  {displayStreak > 0 && (
+                    <span className="text-orange-400 flex items-center gap-1">
+                      🔥 {displayStreak}j
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
             
