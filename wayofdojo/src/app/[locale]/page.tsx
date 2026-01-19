@@ -17,13 +17,17 @@ export default function LandingPage() {
   const router = useRouter();
   const locale = params.locale as string || 'fr';
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [checkingAuth, setCheckingAuth] = useState(true);
 
   useEffect(() => {
     const user = localStorage.getItem('wayofdojo_user');
     if (user) {
       setIsLoggedIn(true);
+      // Redirection automatique vers le dojo si déjà connecté
+      router.push(`/${locale}/aikido/dojo`);
     }
-  }, []);
+    setCheckingAuth(false);
+  }, [locale, router]);
 
   const handleStepClick = (step: number) => {
     if (step === 1) {
