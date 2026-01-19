@@ -1,5 +1,6 @@
 'use client';
 
+/* eslint-disable @next/next/no-img-element */
 import React, { useState, useRef, useEffect } from 'react';
 import { Mic, MicOff, Volume2, X, Loader2 } from 'lucide-react';
 import { playTanakaPhrase } from '@/services/tanakaVoiceService';
