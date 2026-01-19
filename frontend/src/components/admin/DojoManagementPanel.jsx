@@ -16,7 +16,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
-  Building2, Plus, Trash2, Users, MapPin, Shield, 
+  Building2, Plus, Trash2, Users, MapPin, 
   UserPlus, ChevronDown, ChevronUp, Mail, Phone, Calendar,
   Award, Eye, EyeOff, RefreshCw, Search, X, Download, Globe,
   CheckCircle2, Filter, UserCog, GraduationCap
