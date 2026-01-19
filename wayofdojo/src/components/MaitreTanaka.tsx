@@ -27,6 +27,8 @@ interface MaitreTanakaProps {
   childContext?: ChildContext | null;
   isVisible?: boolean;
   apiUrl?: string;
+  isJeuneNinja?: boolean;
+  messages?: string[];
 }
 
 /**
@@ -36,8 +38,14 @@ interface MaitreTanakaProps {
 export const MaitreTanaka: React.FC<MaitreTanakaProps> = ({ 
   childContext = null, 
   isVisible = true,
-  apiUrl = '/api/voice-agent'
+  apiUrl = '/api/voice-agent',
+  isJeuneNinja = true,
+  messages = []
 }) => {
+  // Use isJeuneNinja for styling decisions  
+  const buttonLabel = isJeuneNinja ? "Parle-moi !" : "Assistance";
+  // Store messages for potential random display
+  const tipsMessages = messages.length > 0 ? messages : ["Bienvenue !"];
   const [isOpen, setIsOpen] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
