@@ -19,21 +19,34 @@ export function useSessionTimeout({
   onTimeout,
   onWarning
 }) {
-  const [state, setState] = useState({
-    showWarning: false,
-    remainingTime: timeout
-  });
+  const [showWarning, setShowWarning] = useState(false);
+  const [remainingTime, setRemainingTime] = useState(timeout);
   
   const timeoutRef = useRef(null);
   const warningRef = useRef(null);
   const countdownRef = useRef(null);
   const lastActivityRef = useRef(0);
   const callbacksRef = useRef({ onTimeout, onWarning });
+  const isActiveRef = useRef(isActive);
+  const mountedRef = useRef(false);
+
+  // Track mounted state
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
 
   // Keep callbacks ref updated in an effect
   useEffect(() => {
     callbacksRef.current = { onTimeout, onWarning };
   }, [onTimeout, onWarning]);
+
+  // Track isActive changes
+  useEffect(() => {
+    isActiveRef.current = isActive;
+  }, [isActive]);
 
   // Cleanup function
   const cleanup = useCallback(() => {
@@ -51,53 +64,74 @@ export function useSessionTimeout({
     }
   }, []);
 
-  // Setup timers function - called from event handler, not directly in effect
+  // Setup timers function
   const setupTimers = useCallback(() => {
+    if (!mountedRef.current) return;
+    
     cleanup();
     
     lastActivityRef.current = Date.now();
-    setState({ showWarning: false, remainingTime: timeout });
+    setShowWarning(false);
+    setRemainingTime(timeout);
 
     // Set warning timer (5 min before timeout)
     warningRef.current = setTimeout(() => {
-      setState(prev => ({ ...prev, showWarning: true }));
+      if (!mountedRef.current || !isActiveRef.current) return;
+      
+      setShowWarning(true);
       if (callbacksRef.current.onWarning) {
         callbacksRef.current.onWarning();
       }
       
       // Start countdown
       let remaining = warningBefore;
-      setState(prev => ({ ...prev, remainingTime: remaining }));
+      setRemainingTime(remaining);
       
       countdownRef.current = setInterval(() => {
+        if (!mountedRef.current) {
+          clearInterval(countdownRef.current);
+          return;
+        }
         remaining -= 1000;
-        setState(prev => ({ ...prev, remainingTime: Math.max(0, remaining) }));
+        setRemainingTime(Math.max(0, remaining));
         
-        if (remaining <= 0) {
-          if (countdownRef.current) {
-            clearInterval(countdownRef.current);
-            countdownRef.current = null;
-          }
+        if (remaining <= 0 && countdownRef.current) {
+          clearInterval(countdownRef.current);
+          countdownRef.current = null;
         }
       }, 1000);
     }, timeout - warningBefore);
 
     // Set timeout timer
     timeoutRef.current = setTimeout(() => {
+      if (!mountedRef.current) return;
+      
       cleanup();
-      setState({ showWarning: false, remainingTime: 0 });
+      setShowWarning(false);
+      setRemainingTime(0);
       if (callbacksRef.current.onTimeout) {
         callbacksRef.current.onTimeout();
       }
     }, timeout);
   }, [timeout, warningBefore, cleanup]);
 
+  // Reset when becoming inactive - using a separate state to track
+  const [wasActive, setWasActive] = useState(isActive);
+  
+  // Handle isActive changes via derived state pattern
+  if (isActive !== wasActive) {
+    setWasActive(isActive);
+    if (!isActive) {
+      cleanup();
+      if (showWarning) {
+        setShowWarning(false);
+      }
+    }
+  }
+
   // Effect for setting up event listeners only
   useEffect(() => {
     if (!isActive) {
-      cleanup();
-      // Use callback form to avoid lint warning
-      setState(prev => prev.showWarning ? { showWarning: false, remainingTime: timeout } : prev);
       return;
     }
 
@@ -116,12 +150,8 @@ export function useSessionTimeout({
       document.addEventListener(event, handleActivity, { passive: true });
     });
 
-    // Initial setup via a microtask to avoid direct setState in effect
-    Promise.resolve().then(() => {
-      if (isActive) {
-        setupTimers();
-      }
-    });
+    // Initial setup
+    setupTimers();
 
     // Cleanup
     return () => {
@@ -130,19 +160,19 @@ export function useSessionTimeout({
       });
       cleanup();
     };
-  }, [isActive, setupTimers, cleanup, timeout]);
+  }, [isActive, setupTimers, cleanup]);
 
   // Formater le temps restant
   const remainingTimeFormatted = useMemo(() => {
-    const ms = state.remainingTime;
+    const ms = remainingTime;
     const minutes = Math.floor(ms / 60000);
     const seconds = Math.floor((ms % 60000) / 1000);
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-  }, [state.remainingTime]);
+  }, [remainingTime]);
 
   return {
-    showWarning: state.showWarning,
-    remainingTime: state.remainingTime,
+    showWarning,
+    remainingTime,
     remainingTimeFormatted,
     extendSession: setupTimers
   };
