@@ -38,13 +38,6 @@ const ADMIN_SECTIONS = [
     description: 'Calendrier des stages FFAAA 2026'
   },
   {
-    id: 'subscriptions',
-    label: 'Abonnements',
-    icon: CreditCard,
-    color: 'emerald',
-    description: 'Suivi des paiements et formules'
-  },
-  {
     id: 'sports',
     label: 'Sports',
     icon: Dumbbell,
