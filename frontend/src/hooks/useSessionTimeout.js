@@ -30,8 +30,10 @@ export function useSessionTimeout({
   const lastActivityRef = useRef(0);
   const callbacksRef = useRef({ onTimeout, onWarning });
 
-  // Keep callbacks ref updated
-  callbacksRef.current = { onTimeout, onWarning };
+  // Keep callbacks ref updated in an effect
+  useEffect(() => {
+    callbacksRef.current = { onTimeout, onWarning };
+  }, [onTimeout, onWarning]);
 
   // Cleanup function
   const cleanup = useCallback(() => {
