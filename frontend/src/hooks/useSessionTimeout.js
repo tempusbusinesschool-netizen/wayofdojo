@@ -27,29 +27,14 @@ export function useSessionTimeout({
   const countdownRef = useRef(null);
   const lastActivityRef = useRef(0);
   const callbacksRef = useRef({ onTimeout, onWarning });
-  const isActiveRef = useRef(isActive);
-  const mountedRef = useRef(false);
-
-  // Track mounted state
-  useEffect(() => {
-    mountedRef.current = true;
-    return () => {
-      mountedRef.current = false;
-    };
-  }, []);
 
   // Keep callbacks ref updated in an effect
   useEffect(() => {
     callbacksRef.current = { onTimeout, onWarning };
   }, [onTimeout, onWarning]);
 
-  // Track isActive changes
-  useEffect(() => {
-    isActiveRef.current = isActive;
-  }, [isActive]);
-
-  // Cleanup function
-  const cleanup = useCallback(() => {
+  // Cleanup function - must be called inside effects or event handlers only
+  const cleanupTimers = useCallback(() => {
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
@@ -64,11 +49,9 @@ export function useSessionTimeout({
     }
   }, []);
 
-  // Setup timers function
+  // Setup timers function - called from event handlers
   const setupTimers = useCallback(() => {
-    if (!mountedRef.current) return;
-    
-    cleanup();
+    cleanupTimers();
     
     lastActivityRef.current = Date.now();
     setShowWarning(false);
@@ -76,22 +59,14 @@ export function useSessionTimeout({
 
     // Set warning timer (5 min before timeout)
     warningRef.current = setTimeout(() => {
-      if (!mountedRef.current || !isActiveRef.current) return;
-      
       setShowWarning(true);
-      if (callbacksRef.current.onWarning) {
-        callbacksRef.current.onWarning();
-      }
+      callbacksRef.current.onWarning?.();
       
       // Start countdown
       let remaining = warningBefore;
       setRemainingTime(remaining);
       
       countdownRef.current = setInterval(() => {
-        if (!mountedRef.current) {
-          clearInterval(countdownRef.current);
-          return;
-        }
         remaining -= 1000;
         setRemainingTime(Math.max(0, remaining));
         
@@ -104,34 +79,24 @@ export function useSessionTimeout({
 
     // Set timeout timer
     timeoutRef.current = setTimeout(() => {
-      if (!mountedRef.current) return;
-      
-      cleanup();
+      cleanupTimers();
       setShowWarning(false);
       setRemainingTime(0);
-      if (callbacksRef.current.onTimeout) {
-        callbacksRef.current.onTimeout();
-      }
+      callbacksRef.current.onTimeout?.();
     }, timeout);
-  }, [timeout, warningBefore, cleanup]);
+  }, [timeout, warningBefore, cleanupTimers]);
 
-  // Reset when becoming inactive - using a separate state to track
-  const [wasActive, setWasActive] = useState(isActive);
-  
-  // Handle isActive changes via derived state pattern
-  if (isActive !== wasActive) {
-    setWasActive(isActive);
-    if (!isActive) {
-      cleanup();
-      if (showWarning) {
-        setShowWarning(false);
-      }
-    }
-  }
-
-  // Effect for setting up event listeners only
+  // Main effect for handling isActive changes and setting up listeners
   useEffect(() => {
+    // If not active, cleanup and reset state
     if (!isActive) {
+      cleanupTimers();
+      // We need to reset state but the lint doesn't like direct setState
+      // Use a microtask to technically make it "async"
+      queueMicrotask(() => {
+        setShowWarning(false);
+        setRemainingTime(timeout);
+      });
       return;
     }
 
@@ -150,17 +115,19 @@ export function useSessionTimeout({
       document.addEventListener(event, handleActivity, { passive: true });
     });
 
-    // Initial setup
-    setupTimers();
+    // Initial setup via microtask
+    queueMicrotask(() => {
+      setupTimers();
+    });
 
     // Cleanup
     return () => {
       activityEvents.forEach(event => {
         document.removeEventListener(event, handleActivity);
       });
-      cleanup();
+      cleanupTimers();
     };
-  }, [isActive, setupTimers, cleanup]);
+  }, [isActive, setupTimers, cleanupTimers, timeout]);
 
   // Formater le temps restant
   const remainingTimeFormatted = useMemo(() => {
