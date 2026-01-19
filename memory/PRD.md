@@ -44,7 +44,8 @@
 2. **Validation Parent** - Formulaire dans Dojo Virtuel à finaliser (reporté 2x)
 
 ### P3 - Mineures
-- Erreurs lint dans `StatisticsDashboard.js` (setIsTimelinePanelOpen, setIsJournalPanelOpen non définis)
+- ~~Erreurs lint dans `StatisticsDashboard.js`~~ (non bloquant)
+- ~~Bug "7 Kyu" affiché au lieu de "6 Kyu"~~ ✅ **CORRIGÉ** (19 Jan 2026)
 
 ## 🟠 Tâches En Cours / À Venir
 
