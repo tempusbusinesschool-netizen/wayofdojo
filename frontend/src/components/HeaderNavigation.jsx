@@ -143,8 +143,8 @@ const HeaderNavigation = ({
               >
                 <Lock className="w-4 h-4 text-red-400" />
                 <div>
-                  <div className="font-medium">Espace de gestion</div>
-                  <div className="text-xs text-slate-400">Super Admin</div>
+                  <div className="font-medium">Admin</div>
+                  <div className="text-xs text-slate-400">Gestion plateforme</div>
                 </div>
               </button>
             </div>
