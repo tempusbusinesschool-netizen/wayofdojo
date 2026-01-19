@@ -342,24 +342,6 @@ function DojoManagementPanel() {
         </Button>
       </div>
 
-      {/* Super Admin Password */}
-      <Card className="mb-6 bg-amber-900/20 border-amber-500/30">
-        <CardContent className="p-4">
-          <div className="flex items-center gap-2 mb-3">
-            <Shield className="w-5 h-5 text-amber-400" />
-            <span className="text-amber-300 font-semibold">Authentification Super Admin</span>
-          </div>
-          <Input
-            type="password"
-            value={superAdminPassword}
-            onChange={(e) => setSuperAdminPassword(e.target.value)}
-            placeholder="Entrez le mot de passe Super Admin pour les actions sensibles"
-            className="bg-slate-800/50 border-amber-500/30 text-white"
-          />
-          <p className="text-xs text-amber-400/70 mt-2">Requis pour créer/supprimer des dojos et importer des clubs</p>
-        </CardContent>
-      </Card>
-
       {/* Onglets */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="bg-slate-800 border-slate-700 mb-6 w-full justify-start">
