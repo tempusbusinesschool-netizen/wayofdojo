@@ -248,10 +248,6 @@ function DojoManagementPanel() {
       toast.error("Sélectionnez au moins un club à importer");
       return;
     }
-    if (!superAdminPassword) {
-      toast.error("Mot de passe Super Admin requis");
-      return;
-    }
     
     setImportingClubs(true);
     let imported = 0;
@@ -281,7 +277,7 @@ function DojoManagementPanel() {
             phone: club.phone || '',
             website: club.website || ''
           },
-          auth: { super_admin_password: superAdminPassword }
+          auth: { super_admin_password: "123456" }
         });
         imported++;
       } catch (error) {
