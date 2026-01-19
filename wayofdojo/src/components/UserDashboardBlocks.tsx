@@ -1,0 +1,308 @@
+'use client';
+
+import { motion } from 'framer-motion';
+import { 
+  Flame, Star, Trophy, Target, Zap, TrendingUp, 
+  Calendar, Download, Sparkles, Award 
+} from 'lucide-react';
+
+interface UserDashboardBlocksProps {
+  userName: string;
+  statistics?: {
+    overall_progress?: number;
+    mastered_techniques?: number;
+    practiced_techniques?: number;
+    in_progress_techniques?: number;
+  };
+  currentBelt?: {
+    grade: string;
+    name: string;
+    color: string;
+    gradient: string;
+    animalSpirit: string;
+    nextGrade?: string;
+  };
+  totalPoints?: number;
+  xp?: number;
+  level?: number;
+  streak?: number;
+  onOpenTimeline?: () => void;
+  onOpenJournal?: () => void;
+  onDownloadPDF?: () => void;
+  onDownloadCSV?: () => void;
+  onNavigateToSection?: (sectionId: string) => void;
+}
+
+const defaultBelt = {
+  grade: '6e KYU',
+  name: 'Ceinture Blanche',
+  color: '#FFFFFF',
+  gradient: 'from-slate-200 to-white',
+  animalSpirit: '🐣',
+  nextGrade: '5e KYU',
+};
+
+export default function UserDashboardBlocks({
+  userName = 'Ninja',
+  statistics = {},
+  currentBelt = defaultBelt,
+  totalPoints = 0,
+  xp = 0,
+  level = 1,
+  streak = 0,
+  onOpenTimeline,
+  onOpenJournal,
+  onDownloadPDF,
+  onDownloadCSV,
+  onNavigateToSection,
+}: UserDashboardBlocksProps) {
+  const progressPercent = statistics.overall_progress || 0;
+  const masteredCount = statistics.mastered_techniques || 0;
+  const practicedCount = statistics.practiced_techniques || 0;
+  const inProgressCount = statistics.in_progress_techniques || 0;
+
+  const handleSectionClick = (sectionId: string) => {
+    if (onNavigateToSection) {
+      onNavigateToSection(sectionId);
+    }
+  };
+
+  return (
+    <div className="space-y-6" data-testid="user-dashboard-blocks">
+      {/* Main Card */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="relative overflow-hidden bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800 rounded-3xl border border-slate-700 shadow-2xl"
+      >
+        {/* Background Decorations */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-emerald-500/10 to-cyan-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-br from-violet-500/10 to-pink-500/10 rounded-full blur-3xl" />
+
+        <div className="relative p-6">
+          {/* Header - Welcome + Belt + Progress */}
+          <div className="flex flex-col lg:flex-row items-center gap-6 mb-6">
+            {/* Avatar + Belt */}
+            <div className="flex items-center gap-4">
+              <div className="relative">
+                <div 
+                  className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${currentBelt.gradient} flex items-center justify-center shadow-xl border-2 border-white/20`}
+                >
+                  <span className="text-4xl">{currentBelt.animalSpirit}</span>
+                </div>
+                <div className="absolute -bottom-2 -right-2 bg-amber-500 text-slate-900 px-2 py-0.5 rounded-full text-xs font-black">
+                  {currentBelt.grade}
+                </div>
+              </div>
+              
+              <div>
+                <p className="text-slate-400 text-sm">Bienvenue,</p>
+                <h1 className="text-2xl md:text-3xl font-black text-white">
+                  {userName} <span className="text-2xl">🥷</span>
+                </h1>
+                <p className="text-emerald-400 font-semibold text-sm flex items-center gap-1">
+                  <span 
+                    className="w-2 h-2 rounded-full"
+                    style={{ backgroundColor: currentBelt.color }}
+                  />
+                  {currentBelt.name}
+                </p>
+              </div>
+            </div>
+
+            {/* Circular Progress */}
+            <div className="flex-1 flex justify-center lg:justify-end">
+              <div className="relative w-32 h-32">
+                <svg className="w-full h-full transform -rotate-90">
+                  <circle
+                    cx="64"
+                    cy="64"
+                    r="56"
+                    stroke="currentColor"
+                    strokeWidth="8"
+                    fill="none"
+                    className="text-slate-700"
+                  />
+                  <circle
+                    cx="64"
+                    cy="64"
+                    r="56"
+                    stroke="url(#progressGradient)"
+                    strokeWidth="8"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeDasharray={`${progressPercent * 3.52} 352`}
+                    className="transition-all duration-1000"
+                  />
+                  <defs>
+                    <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#10b981" />
+                      <stop offset="50%" stopColor="#06b6d4" />
+                      <stop offset="100%" stopColor="#8b5cf6" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <div className="absolute inset-0 flex flex-col items-center justify-center">
+                  <span className="text-3xl font-black text-white">{progressPercent}%</span>
+                  <span className="text-slate-400 text-xs">Progression</span>
+                </div>
+                <motion.div 
+                  className="absolute -top-1 -right-1 bg-orange-500 rounded-full p-1.5 shadow-lg"
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  <Flame className="w-4 h-4 text-white" />
+                </motion.div>
+              </div>
+            </div>
+          </div>
+
+          {/* Separator */}
+          <div className="h-px bg-gradient-to-r from-transparent via-slate-600 to-transparent mb-6" />
+
+          {/* Stats Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            {/* Stat 1 - Mastered */}
+            <button
+              onClick={() => handleSectionClick('section-techniques-maitrisees')}
+              className="bg-gradient-to-br from-emerald-600/20 to-emerald-800/20 rounded-2xl p-4 border border-emerald-500/30 text-center group hover:scale-105 transition-all cursor-pointer hover:border-emerald-400/50 hover:shadow-lg hover:shadow-emerald-500/20"
+            >
+              <div className="w-12 h-12 mx-auto mb-2 rounded-xl bg-emerald-500/20 flex items-center justify-center group-hover:animate-bounce">
+                <Trophy className="w-6 h-6 text-emerald-400" />
+              </div>
+              <p className="text-3xl font-black text-emerald-400">{masteredCount}</p>
+              <p className="text-slate-400 text-xs">Maîtrisées</p>
+            </button>
+
+            {/* Stat 2 - Practiced */}
+            <button
+              onClick={() => handleSectionClick('section-techniques-dojo')}
+              className="bg-gradient-to-br from-cyan-600/20 to-cyan-800/20 rounded-2xl p-4 border border-cyan-500/30 text-center group hover:scale-105 transition-all cursor-pointer hover:border-cyan-400/50 hover:shadow-lg hover:shadow-cyan-500/20"
+            >
+              <div className="w-12 h-12 mx-auto mb-2 rounded-xl bg-cyan-500/20 flex items-center justify-center group-hover:animate-bounce">
+                <Target className="w-6 h-6 text-cyan-400" />
+              </div>
+              <p className="text-3xl font-black text-cyan-400">{practicedCount}</p>
+              <p className="text-slate-400 text-xs">Au Dojo</p>
+            </button>
+
+            {/* Stat 3 - In Progress */}
+            <button
+              onClick={() => handleSectionClick('section-techniques-encours')}
+              className="bg-gradient-to-br from-violet-600/20 to-violet-800/20 rounded-2xl p-4 border border-violet-500/30 text-center group hover:scale-105 transition-all cursor-pointer hover:border-violet-400/50 hover:shadow-lg hover:shadow-violet-500/20"
+            >
+              <div className="w-12 h-12 mx-auto mb-2 rounded-xl bg-violet-500/20 flex items-center justify-center group-hover:animate-bounce">
+                <Sparkles className="w-6 h-6 text-violet-400" />
+              </div>
+              <p className="text-3xl font-black text-violet-400">{inProgressCount}</p>
+              <p className="text-slate-400 text-xs">En cours</p>
+            </button>
+
+            {/* Stat 4 - Points */}
+            <button
+              onClick={() => handleSectionClick('section-points')}
+              className="bg-gradient-to-br from-amber-600/20 to-amber-800/20 rounded-2xl p-4 border border-amber-500/30 text-center group hover:scale-105 transition-all cursor-pointer hover:border-amber-400/50 hover:shadow-lg hover:shadow-amber-500/20"
+            >
+              <div className="w-12 h-12 mx-auto mb-2 rounded-xl bg-amber-500/20 flex items-center justify-center group-hover:animate-bounce">
+                <Star className="w-6 h-6 text-amber-400" />
+              </div>
+              <p className="text-3xl font-black text-amber-400">{totalPoints}</p>
+              <p className="text-slate-400 text-xs">Points</p>
+            </button>
+          </div>
+
+          {/* XP Progress Bar */}
+          <div className="bg-slate-800/50 rounded-xl p-4 border border-slate-700 mb-6">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-white font-semibold text-sm flex items-center gap-2">
+                <Award className="w-4 h-4 text-cyan-400" />
+                Prochain grade
+              </span>
+              <span className="text-cyan-400 font-bold text-sm">{progressPercent}%</span>
+            </div>
+            <div className="h-3 bg-slate-700 rounded-full overflow-hidden">
+              <motion.div
+                className="h-full bg-gradient-to-r from-emerald-500 via-cyan-500 to-violet-500 rounded-full"
+                initial={{ width: 0 }}
+                animate={{ width: `${Math.max(3, progressPercent)}%` }}
+                transition={{ duration: 1 }}
+              />
+            </div>
+            <div className="flex justify-between mt-1 text-xs text-slate-500">
+              <span>{currentBelt.grade}</span>
+              <span>{currentBelt.nextGrade || 'Prochain'}</span>
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <button
+              onClick={onOpenTimeline}
+              className="bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white font-bold shadow-lg shadow-violet-500/20 py-3 rounded-xl flex items-center justify-center gap-2 transition-all hover:scale-105"
+            >
+              <Calendar className="w-4 h-4" />
+              Timeline
+            </button>
+            <button
+              onClick={onOpenJournal}
+              className="bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-500 hover:to-rose-500 text-white font-bold shadow-lg shadow-pink-500/20 py-3 rounded-xl flex items-center justify-center gap-2 transition-all hover:scale-105"
+            >
+              <Sparkles className="w-4 h-4" />
+              Journal
+            </button>
+            <button
+              onClick={onDownloadPDF}
+              className="bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold shadow-lg shadow-cyan-500/20 py-3 rounded-xl flex items-center justify-center gap-2 transition-all hover:scale-105"
+            >
+              <Download className="w-4 h-4" />
+              PDF
+            </button>
+            <button
+              onClick={onDownloadCSV}
+              className="bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-500 hover:to-green-500 text-white font-bold shadow-lg shadow-emerald-500/20 py-3 rounded-xl flex items-center justify-center gap-2 transition-all hover:scale-105"
+            >
+              <Download className="w-4 h-4" />
+              CSV
+            </button>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Quick Stats Row */}
+      <div className="grid grid-cols-3 gap-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="bg-gradient-to-br from-amber-500/20 to-amber-600/10 rounded-2xl p-4 border border-amber-500/30 text-center"
+        >
+          <Zap className="w-8 h-8 text-amber-400 mx-auto mb-2" />
+          <p className="text-2xl font-black text-white">{xp}</p>
+          <p className="text-amber-400 text-xs font-semibold">XP Total</p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="bg-gradient-to-br from-cyan-500/20 to-cyan-600/10 rounded-2xl p-4 border border-cyan-500/30 text-center"
+        >
+          <TrendingUp className="w-8 h-8 text-cyan-400 mx-auto mb-2" />
+          <p className="text-2xl font-black text-white">{level}</p>
+          <p className="text-cyan-400 text-xs font-semibold">Niveau</p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="bg-gradient-to-br from-orange-500/20 to-orange-600/10 rounded-2xl p-4 border border-orange-500/30 text-center"
+        >
+          <Flame className="w-8 h-8 text-orange-400 mx-auto mb-2" />
+          <p className="text-2xl font-black text-white">{streak}</p>
+          <p className="text-orange-400 text-xs font-semibold">Série</p>
+        </motion.div>
+      </div>
+    </div>
+  );
+}
