@@ -1,12 +1,16 @@
 {
   "name": "wayofdojo",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "description": "Plateforme de gamification pour arts martiaux - WayofDojo.com",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "dependencies": {
     "@auth/mongodb-adapter": "^3.11.1",
