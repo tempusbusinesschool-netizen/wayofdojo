@@ -110,11 +110,11 @@ function AdminLoginDialog({ isOpen, onClose, onSuccess }) {
       
       if (response.data.success) {
         const dojo = response.data.dojo;
-        sessionStorage.setItem('aikido_admin', 'espace_dojo');
-        sessionStorage.setItem('aikido_dojo_id', dojo.id);
-        sessionStorage.setItem('aikido_dojo_name', dojo.name);
-        sessionStorage.setItem('aikido_dojo_email', dojo.email || email);
-        sessionStorage.setItem('aikido_dojo_token', response.data.token);
+        localStorage.setItem('aikido_admin', 'espace_dojo');
+        localStorage.setItem('aikido_dojo_id', dojo.id);
+        localStorage.setItem('aikido_dojo_name', dojo.name);
+        localStorage.setItem('aikido_dojo_email', dojo.email || email);
+        localStorage.setItem('aikido_dojo_token', response.data.token);
         toast.success(`🏯 Connexion à ${dojo.name} réussie`);
         onSuccess('espace_dojo', dojo);
         handleClose();
