@@ -767,11 +767,11 @@ function AppContent() {
                   className="text-cyan-400 hover:text-cyan-300 hover:bg-cyan-900/20 h-8 px-2 sm:px-3"
                 >
                   <ScrollText className="w-4 h-4 sm:mr-1" />
-                  <span className="hidden lg:inline">Guide</span>
+                  <span className="hidden lg:inline">Guide & Questions</span>
                 </Button>
               )}
               
-              {/* Bouton Tarifs */}
+              {/* Bouton Abonnements */}
               {!enseignantMode && !isAdminMode && (
                 <Button
                   variant="ghost"
@@ -780,7 +780,7 @@ function AppContent() {
                   className="text-emerald-400 hover:text-emerald-300 hover:bg-emerald-900/20 h-8 px-2 sm:px-3"
                 >
                   <CreditCard className="w-4 h-4 sm:mr-1" />
-                  <span className="hidden lg:inline">Tarifs</span>
+                  <span className="hidden lg:inline">Abonnements</span>
                 </Button>
               )}
 
