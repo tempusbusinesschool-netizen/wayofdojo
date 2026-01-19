@@ -13,7 +13,13 @@ import axios from "axios";
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
 function AdminLoginDialog({ isOpen, onClose, onSuccess, initialMode = 'choice' }) {
-  const [step, setStep] = useState(initialMode === 'admin' ? 'admin' : initialMode === 'dojo' ? 'espace_dojo_method' : 'choice');
+  const getInitialStep = () => {
+    if (initialMode === 'admin') return 'admin';
+    if (initialMode === 'dojo') return 'espace_dojo_method';
+    return 'choice';
+  };
+  
+  const [step, setStep] = useState(getInitialStep);
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
@@ -22,6 +28,8 @@ function AdminLoginDialog({ isOpen, onClose, onSuccess, initialMode = 'choice' }
   const [selectedDojo, setSelectedDojo] = useState(null);
   const [loadingDojos, setLoadingDojos] = useState(false);
   const [loginMethod, setLoginMethod] = useState('select'); // 'select' or 'email'
+  const [prevIsOpen, setPrevIsOpen] = useState(false);
+  const [prevInitialMode, setPrevInitialMode] = useState(initialMode);
 
   const fetchDojos = async () => {
     setLoadingDojos(true);
@@ -35,17 +43,33 @@ function AdminLoginDialog({ isOpen, onClose, onSuccess, initialMode = 'choice' }
     setLoadingDojos(false);
   };
 
-  // Reset step when initialMode changes
-  useEffect(() => {
-    if (isOpen) {
-      setStep(initialMode === 'admin' ? 'admin' : initialMode === 'dojo' ? 'espace_dojo_method' : 'choice');
+  // Derived state pattern - update step when dialog opens
+  if (isOpen && !prevIsOpen) {
+    setPrevIsOpen(true);
+    const newStep = initialMode === 'admin' ? 'admin' : initialMode === 'dojo' ? 'espace_dojo_method' : 'choice';
+    if (step !== newStep) {
+      setStep(newStep);
     }
-  }, [initialMode, isOpen]);
+  }
+  if (!isOpen && prevIsOpen) {
+    setPrevIsOpen(false);
+  }
+  if (initialMode !== prevInitialMode) {
+    setPrevInitialMode(initialMode);
+    if (isOpen) {
+      const newStep = initialMode === 'admin' ? 'admin' : initialMode === 'dojo' ? 'espace_dojo_method' : 'choice';
+      setStep(newStep);
+    }
+  }
 
-  // Fetch dojos when opening Espace Dojo
+  // Fetch dojos when needed
   useEffect(() => {
     if (step === 'espace_dojo_select') {
-      fetchDojos();
+      // Use setTimeout to avoid synchronous setState warning
+      const timeoutId = setTimeout(() => {
+        fetchDojos();
+      }, 0);
+      return () => clearTimeout(timeoutId);
     }
   }, [step]);
 
