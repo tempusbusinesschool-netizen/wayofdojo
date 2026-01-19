@@ -277,7 +277,7 @@ export const phraseExists = (phraseKey: string): boolean => {
   return phraseKey in TANAKA_PHRASES;
 };
 
-export default {
+const tanakaVoiceService = {
   playTanakaPhrase,
   getGreetingPhrase,
   getBeltPhrase,
@@ -287,3 +287,5 @@ export default {
   phraseExists,
   TANAKA_PHRASES
 };
+
+export default tanakaVoiceService;
