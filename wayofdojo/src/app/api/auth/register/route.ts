@@ -9,6 +9,11 @@ import { hashPassword, generateToken } from '@/lib/auth';
 
 export async function POST(request: NextRequest) {
   try {
+    // Debug: Check environment variable
+    const mongoUri = process.env.MONGODB_URI;
+    console.log('MONGODB_URI exists:', !!mongoUri);
+    console.log('MONGODB_URI starts with:', mongoUri?.substring(0, 20));
+    
     await dbConnect();
     
     const body = await request.json();
