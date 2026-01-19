@@ -108,7 +108,7 @@ const HeaderNavigation = ({
               </div>
             </button>
             <button
-              onClick={() => { onLoginEnseignant(); setOpenMenu(null); }}
+              onClick={() => { onLoginDojo(); setOpenMenu(null); }}
               className="w-full flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 text-left text-slate-200 hover:bg-orange-900/30 transition-colors border-t border-slate-700"
             >
               <Building2 className="w-4 h-4 text-orange-400 flex-shrink-0" />
