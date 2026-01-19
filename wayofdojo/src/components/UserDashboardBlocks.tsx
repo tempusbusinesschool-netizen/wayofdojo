@@ -56,6 +56,9 @@ export const UserDashboardBlocks: React.FC<UserDashboardBlocksProps> = ({
   const masteredCount = statistics.mastered_techniques || 0;
   const practicedCount = statistics.practiced_techniques || 0;
   const inProgressCount = statistics.in_progress_techniques || 0;
+  const displayXp = xp || totalPoints;
+  const displayLevel = level || 1;
+  const displayStreak = streak || 0;
 
   const handleSectionClick = (sectionId: string) => {
     if (onNavigateToSection) {
