@@ -21,10 +21,17 @@ export function useSessionTimeout({
 }) {
   const [showWarning, setShowWarning] = useState(false);
   const [remainingTime, setRemainingTime] = useState(timeout);
+  
   const timeoutRef = useRef(null);
   const warningRef = useRef(null);
   const countdownRef = useRef(null);
   const lastActivityRef = useRef(0);
+  const isActiveRef = useRef(isActive);
+
+  // Keep isActiveRef in sync
+  useEffect(() => {
+    isActiveRef.current = isActive;
+  }, [isActive]);
 
   // Réinitialiser les timers
   const resetTimers = useCallback(() => {
@@ -37,7 +44,7 @@ export function useSessionTimeout({
     if (warningRef.current) clearTimeout(warningRef.current);
     if (countdownRef.current) clearInterval(countdownRef.current);
 
-    if (!isActive) return;
+    if (!isActiveRef.current) return;
 
     // Set warning timer (5 min before timeout)
     warningRef.current = setTimeout(() => {
@@ -50,7 +57,7 @@ export function useSessionTimeout({
       
       countdownRef.current = setInterval(() => {
         remaining -= 1000;
-        setRemainingTime(remaining);
+        setRemainingTime(Math.max(0, remaining));
         
         if (remaining <= 0) {
           clearInterval(countdownRef.current);
@@ -63,16 +70,19 @@ export function useSessionTimeout({
       setShowWarning(false);
       if (onTimeout) onTimeout();
     }, timeout);
-  }, [isActive, timeout, warningBefore, onTimeout, onWarning]);
+  }, [timeout, warningBefore, onTimeout, onWarning]);
 
-  // Écouter les événements d'activité
+  // Setup and cleanup effect
   useEffect(() => {
-    if (!isActive) {
-      // Clean up when not active
+    // Cleanup function
+    const cleanup = () => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
       if (warningRef.current) clearTimeout(warningRef.current);
       if (countdownRef.current) clearInterval(countdownRef.current);
-      setShowWarning(false);
+    };
+
+    if (!isActive) {
+      cleanup();
       return;
     }
 
@@ -98,11 +108,16 @@ export function useSessionTimeout({
       activityEvents.forEach(event => {
         document.removeEventListener(event, handleActivity);
       });
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-      if (warningRef.current) clearTimeout(warningRef.current);
-      if (countdownRef.current) clearInterval(countdownRef.current);
+      cleanup();
     };
   }, [isActive, resetTimers]);
+
+  // Reset warning when isActive becomes false
+  useEffect(() => {
+    if (!isActive) {
+      setShowWarning(false);
+    }
+  }, [isActive]);
 
   // Formater le temps restant
   const formatTime = (ms) => {
