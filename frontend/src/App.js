@@ -263,15 +263,9 @@ function AppContent() {
       // Set user name for transition
       setTransitionUserName(user.first_name || '');
       
-      // Check if user has a subscription
-      const hasSubscription = user.subscription_status === 'active' || user.subscription_status === 'trialing';
-      
-      // Determine destination based on user profile
-      if (hasSubscription) {
-        setLoginDestination('dashboard');
-      } else {
-        setLoginDestination('tarification');
-      }
+      // All users go to dashboard (game start page)
+      // Free users will have limited features but can still access the game
+      setLoginDestination('dashboard');
       
       // Show transition animation
       setShowLoginTransition(true);
