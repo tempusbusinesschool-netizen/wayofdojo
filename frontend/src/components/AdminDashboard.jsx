@@ -31,37 +31,6 @@ const ADMIN_SECTIONS = [
     description: 'Vue d\'ensemble de la plateforme'
   },
   {
-    id: 'users',
-    label: 'Utilisateurs',
-    icon: Users,
-    color: 'violet',
-    description: 'Gestion des comptes et profils',
-    isParent: true,
-    children: [
-      {
-        id: 'users_credentials',
-        label: 'Mots de passe',
-        icon: KeyRound,
-        color: 'amber',
-        description: 'Comptes par Dojo, Admin, Adhérent'
-      },
-      {
-        id: 'users_list',
-        label: 'Liste des utilisateurs',
-        icon: Users,
-        color: 'violet',
-        description: 'Tous les comptes utilisateurs'
-      }
-    ]
-  },
-  {
-    id: 'dojos',
-    label: 'Gestion Dojos',
-    icon: Building2,
-    color: 'orange',
-    description: 'Configuration des clubs affiliés'
-  },
-  {
     id: 'stages',
     label: 'Stages & Séminaires',
     icon: CalendarDays,
