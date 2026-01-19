@@ -1,110 +1,113 @@
 # Aikido@Game - Product Requirements Document
 
-## 📋 Original Problem Statement
-Application web pour le club "Aikido@Game" servant de référence numérique pour le programme d'entraînement, gestion des adhésions, et suivi de progression individuelle avec gamification et philosophie du Budō.
+## 📋 Présentation du Projet
 
-## 🎯 Core Requirements
-1. **Gamification & Philosophie** : Système de points et intégration des principes du Budō
-2. **Rôles Utilisateurs** : Pratiquant, Parent, Enseignant, Admin
-3. **Validation stricte** : Règles de contenu non-négociables
-4. **UX différenciée** : "Jeune Ninja" (enfants) vs "Ninja Confirmé" (adultes)
-5. **Animations techniques** : Illustrations et vidéos des techniques d'Aïkido
-6. **Contrôle parental** : Validation dans le Dojo Virtuel de l'enfant
-7. **Dashboard Admin** : Gestion complète du contenu et utilisateurs
-8. **Programme officiel FFAAA** : Passages de grades avec suivi de progression
+**Application web** pour le club "Aikido@Game" servant de référence numérique pour le programme d'entraînement, gestion des adhésions et suivi de progression personnalisé avec gamification et philosophie Budō.
 
-## 👥 User Personas
-- **Enfants (6-12 ans)** : Interface ludique "Jeune Ninja"
-- **Adultes/Ados** : Interface "Ninja Confirmé" plus sérieuse
-- **Parents** : Suivi et validation de progression
-- **Enseignants** : Gestion des élèves et observations
-- **Administrateurs** : Gestion plateforme et dojos
+## 🎯 Objectifs Principaux
 
-## 🏗️ Technical Architecture
+1. **Gamification & Philosophie** - Motiver via un système de points et intégrer les principes du Budō
+2. **Rôles Utilisateurs** - Pratiquant, Parent, Enseignant, Admin
+3. **Expérience Différenciée** - "Jeune Ninja" (enfants) vs "Ninja Confirmé" (adultes)
+4. **Animations Techniques** - Illustrations/vidéos des techniques d'Aikido
+5. **Programme Officiel** - Aligné avec la FFAAA
+
+## 🔐 Identifiants de Test
+
+| Rôle | Email | Mot de passe |
+|------|-------|--------------|
+| Admin | `admin@aikido.com` | `aikido2024` |
+| Enfant | `bill@gmail.com` | `123` |
+| Dojo | `dojo@gmail.com` | `aikido2024` |
+
+## ✅ Fonctionnalités Complétées
+
+### Session Janvier 2026
+- [x] **Admin "Mots de passe"** - UI organisée par rôles (Dojo/Admin/Adhérent)
+- [x] **Calendrier Stages FFAAA 2026** - Affiches, infos senseis, filtres
+- [x] **Annuaire FFAAA** - 136 clubs France + DOM-TOM avec recherche/filtres
+- [x] **Formulaire création adhérents** - Dans "Gestion Dojos"
+- [x] **Intégration associations sportives** - Vérifiée et fonctionnelle
+
+### Sessions Précédentes
+- [x] Interface gamifiée pour enfants
+- [x] Système de points et défis
+- [x] Passages de grades (structure)
+- [x] Galerie d'illustrations
+- [x] Espace Dojo
+- [x] Tableau de bord admin
+
+## 🔴 Issues Ouvertes
+
+### P0 - Critiques
+1. **Persistance de session** - État perdu au rechargement (bloquant tests)
+2. **Validation Parent** - Formulaire dans Dojo Virtuel à finaliser (reporté 2x)
+
+### P3 - Mineures
+- Erreurs lint dans `StatisticsDashboard.js` (setIsTimelinePanelOpen, setIsJournalPanelOpen non définis)
+
+## 🟠 Tâches En Cours / À Venir
+
+### P1 - Haute Priorité
+- [ ] UI suivi progression utilisateur (Passages de Grades)
+- [ ] Générer illustrations techniques supplémentaires
+
+### P2 - Moyenne Priorité
+- [ ] Cleanup global du projet
+- [ ] Différencier UX "Zone Adultes" (moins gamifié)
+
+## 🗂️ Backlog
+
+- Import CSV pour création adhérents en lot
+- Coordonnées GPS pour carte interactive des clubs
+- Système inscription stages avec notifications email
+- Horaires et tarifs dans l'annuaire
+- Lecture vidéo sur fiches techniques
+- 2FA pour Super Admin
+
+## 🏗️ Architecture Technique
+
 ```
 /app/
 ├── backend/
-│   └── server.py (FastAPI + MongoDB)
-└── frontend/
-    └── src/
-        ├── App.js (Main routing)
-        ├── components/
-        │   ├── AdminDashboard.jsx
-        │   ├── admin/
-        │   │   ├── UserCredentialsManager.jsx (NEW - Jan 2026)
-        │   │   ├── PassagesGradesViewer.jsx
-        │   │   └── TechniquesSectionViewer.jsx
-        │   └── ...
-        └── pages/
-            ├── IllustrationsGallery.jsx
-            └── VideosSection.jsx
+│   └── server.py                  # FastAPI
+├── frontend/
+│   ├── src/
+│   │   ├── App.js                 # Routing principal
+│   │   ├── components/
+│   │   │   ├── AdminDashboard.jsx
+│   │   │   ├── admin/
+│   │   │   │   ├── DojoManagementPanel.jsx
+│   │   │   │   └── UserCredentialsManager.jsx
+│   │   ├── data/
+│   │   │   └── clubsAikidoFrance.js  # Base 136 clubs
+│   │   └── pages/
+│   │       └── StagesCalendar.jsx
+│   └── package.json
+└── memory/
+    └── PRD.md
 ```
 
-## ✅ Completed Features (as of Jan 18, 2026)
+## 🔌 Intégrations Tierces
 
-### Session Jan 18, 2026
-- [x] **Gestion des comptes par catégorie** : Nouvelle section "Mots de passe" dans Admin
-  - Comptes organisés par Dojo, Admin, Adhérent
-  - Interface avec onglets colorés et recherche
-  - Composant: `/app/frontend/src/components/admin/UserCredentialsManager.jsx`
+- **Stripe** - Paiements
+- **ElevenLabs** - Text-to-Speech
+- **Resend** - Emails transactionnels
+- **Framer Motion** - Animations UI
+- **Emergent LLM Key** - TTS backend
 
-- [x] **Calendrier Stages FFAAA 2026** : Nouvelle section "Stages & Séminaires"
-  - 17 stages référencés (France + La Réunion)
-  - Filtres par mois, région, type
-  - Sources : FFAAA officiel, LRFFAAA, Ligue IDF
-  - Composant: `/app/frontend/src/pages/StagesCalendar.jsx`
+## 📊 API Endpoints Clés
 
-### Previous Sessions
-- [x] UI/UX Overhaul pour techniques (enfants et admin)
-- [x] 6e KYU (ceinture blanche) avec 8 techniques
-- [x] 12 illustrations générées pour techniques clés
-- [x] Galerie Illustrations dans admin
-- [x] Section Vidéos dans admin
-- [x] Bouton "Dojo & Clubs" remplaçant "Enseignant"
-- [x] Système d'authentification (JWT)
-- [x] Intégration Stripe pour paiements
-- [x] TTS avec ElevenLabs
-- [x] Emails transactionnels avec Resend
+- `GET /api/dojos` - Liste des dojos
+- `PUT /api/dojos/{id}` - Modifier un dojo
+- `GET /api/users` - Liste utilisateurs
+- `POST /api/auth/login` - Connexion
 
-## 🚧 In Progress Tasks
-1. **P1 - Validation Parent** : Section dans Dojo Virtuel pour validation parentale
-   - Fichier: `/app/frontend/src/components/VirtualDojo/index.jsx`
+## ⚠️ Points d'Attention
 
-## 📋 Prioritized Backlog
+1. **Données statiques** - `clubsAikidoFrance.js` alourdit le bundle frontend → migrer vers API backend
+2. **Routing** - Rendu conditionnel dans App.js → considérer React Router
+3. **State Management** - Problème persistance → implémenter localStorage ou Context robuste
 
-### P0 - Critical
-- Persistance de l'état utilisateur lors de la navigation (bug connu)
-
-### P1 - High Priority
-- [ ] UI suivi de progression (cocher techniques maîtrisées)
-- [ ] Générer illustrations restantes (12/214 faites)
-- [ ] Finaliser Validation Parent
-
-### P2 - Medium Priority
-- [ ] Nettoyage global du code (refactoring)
-- [ ] Différencier "Zone Adultes" avec UX sérieuse
-- [ ] Section clés API de production dans admin
-- [ ] Corriger lint errors dans StatisticsDashboard.js
-
-### P3 - Future
-- [ ] Blocs "Les différentes techniques" et "Défis collectifs"
-- [ ] Lecture vidéo sur cartes techniques
-- [ ] 2FA pour Super Admin
-
-## 🔐 Credentials
-| Rôle | Email | Mot de passe |
-|------|-------|--------------|
-| Admin | admin@aikido.com | aikido2024 |
-| Enfant Test | bill@gmail.com | 123 |
-| Dojo | dojo@gmail.com | (dans DB) |
-
-## 🔗 3rd Party Integrations
-- **Stripe** : Paiements
-- **ElevenLabs** : Text-to-Speech
-- **Resend** : Emails transactionnels
-- **Emergent LLM Key** : TTS backend
-- **framer-motion** : Animations UI
-
-## ⚠️ Known Issues
-1. **État non persistant** : sessionStorage perdu lors du reload dans screenshot tool
-2. **Lint warnings** : `setIsTimelinePanelOpen` et `setIsJournalPanelOpen` non définis dans StatisticsDashboard.js
+---
+*Dernière mise à jour: 18 Janvier 2026*
