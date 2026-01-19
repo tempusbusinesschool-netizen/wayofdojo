@@ -4,54 +4,102 @@ import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Swords, LogIn, UserPlus, LogOut, User, Sparkles, CreditCard, ScrollText, Lock, Menu, X, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { motion } from 'framer-motion';
-import { Swords, LogIn, UserPlus } from 'lucide-react';
 import MaitreTanaka from '@/components/MaitreTanaka';
 import NinjaJourney from '@/components/NinjaJourney';
 import VisitorStepsBlocks from '@/components/VisitorStepsBlocks';
 
-export default function LandingPage() {
-  const t = useTranslations();
+// Image de Maître Tanaka pour le logo animé
+const TANAKA_IMAGE = "/images/tanaka/portrait.png";
+
+// Logo animé Tanaka (cercle orange flottant)
+const TanakaAnimatedLogo = ({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) => {
+  const sizeClasses = {
+    sm: 'w-10 h-10',
+    md: 'w-12 h-12',
+    lg: 'w-16 h-16'
+  };
+  
+  return (
+    <motion.div
+      animate={{ y: [0, -3, 0] }}
+      transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+      className={`${sizeClasses[size]} rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg shadow-amber-500/30 overflow-hidden border-2 border-amber-300/50`}
+    >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img 
+        src={TANAKA_IMAGE} 
+        alt="Maître Tanaka" 
+        className="w-full h-full object-cover"
+        onError={(e) => {
+          const target = e.target as HTMLImageElement;
+          target.style.display = 'none';
+          if (target.parentElement) {
+            target.parentElement.innerHTML = '<span class="text-white text-xl">🥋</span>';
+          }
+        }}
+      />
+    </motion.div>
+  );
+};
+
+export default function HomePage() {
+  const t = useTranslations('common');
   const params = useParams();
-  const router = useRouter();
   const locale = params.locale as string || 'fr';
+  const router = useRouter();
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [checkingAuth, setCheckingAuth] = useState(true);
+  const [userName, setUserName] = useState('');
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
 
   useEffect(() => {
     const user = localStorage.getItem('wayofdojo_user');
     if (user) {
-      setIsLoggedIn(true);
-      // Redirection automatique vers le dojo si déjà connecté
-      router.push(`/${locale}/aikido/dojo`);
+      try {
+        const userData = JSON.parse(user);
+        setIsLoggedIn(true);
+        setUserName(userData.first_name || '');
+        // Redirection automatique vers le dojo si déjà connecté
+        router.push(`/${locale}/aikido/dojo`);
+      } catch {
+        setIsLoggedIn(false);
+      }
     }
     setCheckingAuth(false);
   }, [locale, router]);
 
-  const handleStepClick = (step: number) => {
-    if (step === 1) {
+  const handleStepClick = (stepId: number) => {
+    // Si l'utilisateur clique sur une étape, on l'invite à s'inscrire
+    if (!isLoggedIn) {
       router.push(`/${locale}/aikido/register`);
-    } else if (isLoggedIn) {
-      router.push(`/${locale}/aikido/dojo`);
     } else {
-      router.push(`/${locale}/aikido/register`);
+      router.push(`/${locale}/aikido/dojo`);
     }
   };
 
-  const handleGoToDojo = () => {
-    router.push(`/${locale}/aikido/dojo`);
+  const handleLogout = () => {
+    localStorage.removeItem('wayofdojo_user');
+    localStorage.removeItem('wayofdojo_token');
+    setIsLoggedIn(false);
+    setUserName('');
   };
 
   // Afficher un écran de chargement pendant la vérification d'authentification
   if (checkingAuth) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center">
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
         <div className="text-center">
-          <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg shadow-amber-500/30 mx-auto mb-4 animate-pulse">
-            <Swords className="w-8 h-8 text-white" />
-          </div>
-          <p className="text-white font-bold">WayofDojo</p>
+          <motion.div
+            animate={{ scale: [1, 1.1, 1], rotate: [0, 5, -5, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+          >
+            <TanakaAnimatedLogo size="lg" />
+          </motion.div>
+          <p className="text-white font-bold mt-4">Aikido@Game</p>
           <p className="text-slate-400 text-sm">Chargement...</p>
         </div>
       </div>
@@ -59,199 +107,316 @@ export default function LandingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-violet-900/90 via-purple-900/90 to-violet-900/90 backdrop-blur-md border-b border-violet-500/20">
-        <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-          {/* Logo */}
-          <Link href={`/${locale}`} className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg shadow-amber-500/30">
-              <Swords className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <span className="text-xl font-black text-white">WayofDojo</span>
-              <p className="text-xs text-violet-300">L&apos;Aïkido, c&apos;est du jeu !</p>
-            </div>
-          </Link>
+    <div className="min-h-screen bg-slate-950">
+      
+      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+      {/* HEADER - Style identique à l'ancien projet */}
+      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+      <header className="sticky top-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
+        <div className="max-w-7xl mx-auto px-2 sm:px-4 py-2 sm:py-3">
+          <div className="flex items-center justify-between gap-2">
+            
+            {/* Logo + Titre */}
+            <Link 
+              href={`/${locale}`} 
+              className="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-opacity group"
+            >
+              <TanakaAnimatedLogo size="md" />
+              <div className="text-left">
+                <p className="text-xs sm:text-sm text-amber-400 font-medium group-hover:text-amber-300 transition-colors">Aikido@Game</p>
+                <p className="text-sm sm:text-lg text-white font-bold group-hover:text-slate-200 transition-colors hidden sm:block">Votre parcours</p>
+              </div>
+            </Link>
 
-          {/* Tagline Center */}
-          <div className="hidden lg:block text-center">
-            <p className="text-white font-semibold">
-              Deviens un vrai Ninja ! <span className="text-amber-400">🥷</span>
-            </p>
-            <p className="text-violet-300 text-sm">Apprends l&apos;Aikido en t&apos;amusant</p>
-          </div>
-
-          {/* Auth Buttons */}
-          <div className="flex items-center gap-3">
-            {isLoggedIn ? (
-              <Button 
-                onClick={handleGoToDojo}
-                className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold shadow-lg shadow-amber-500/30"
-              >
-                Mon Dojo 🥋
-              </Button>
-            ) : (
-              <>
-                <Link href={`/${locale}/aikido/login`}>
-                  <Button variant="ghost" className="text-white hover:bg-white/10">
+            {/* Navigation Desktop */}
+            <div className="hidden md:flex items-center gap-2">
+              {isLoggedIn ? (
+                <>
+                  <div className="flex items-center gap-2 bg-emerald-600/20 border border-emerald-500/30 px-3 py-1.5 rounded-full">
+                    <User className="w-4 h-4 text-emerald-400" />
+                    <span className="text-emerald-300 text-sm font-medium">Bienvenue {userName}</span>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => router.push(`/${locale}/aikido/dojo`)}
+                    className="text-cyan-400 hover:text-cyan-300 hover:bg-cyan-900/20"
+                  >
+                    <Swords className="w-4 h-4 mr-2" />
+                    Mon Dojo
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleLogout}
+                    className="text-slate-400 hover:text-white hover:bg-slate-700"
+                  >
+                    <LogOut className="w-4 h-4 mr-1" />
+                    Déconnexion
+                  </Button>
+                </>
+              ) : (
+                <>
+                  {/* Boutons d'accès */}
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => router.push(`/${locale}/aikido/login`)}
+                    className="text-slate-300 hover:text-white hover:bg-slate-700"
+                  >
                     <LogIn className="w-4 h-4 mr-2" />
-                    {t('common.login')}
+                    Connexion
                   </Button>
-                </Link>
-                <Link href={`/${locale}/aikido/register`}>
-                  <Button className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold shadow-lg shadow-amber-500/30">
+                  <Button
+                    size="sm"
+                    onClick={() => router.push(`/${locale}/aikido/register`)}
+                    className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold"
+                  >
                     <UserPlus className="w-4 h-4 mr-2" />
-                    Créer mon compte Ninja
+                    Inscription
                   </Button>
-                </Link>
-              </>
-            )}
+                  
+                  {/* Séparateur */}
+                  <div className="w-px h-6 bg-slate-700 mx-1" />
+                  
+                  {/* Bouton Espace Gestion (Admin/Dojo) */}
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="text-slate-400 hover:text-white hover:bg-slate-700"
+                  >
+                    <Lock className="w-4 h-4 mr-2" />
+                    Espace Gestion
+                  </Button>
+                </>
+              )}
+            </div>
+
+            {/* Menu Mobile */}
+            <div className="md:hidden flex items-center gap-2">
+              {!isLoggedIn && (
+                <Button
+                  size="sm"
+                  onClick={() => router.push(`/${locale}/aikido/register`)}
+                  className="bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold text-xs px-3"
+                >
+                  <UserPlus className="w-4 h-4" />
+                </Button>
+              )}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowMobileMenu(!showMobileMenu)}
+                className="text-slate-400 hover:text-white"
+              >
+                {showMobileMenu ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+              </Button>
+            </div>
           </div>
+
+          {/* Menu Mobile Dropdown */}
+          <AnimatePresence>
+            {showMobileMenu && (
+              <motion.div
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                className="md:hidden mt-3 pt-3 border-t border-slate-800"
+              >
+                <div className="flex flex-col gap-2">
+                  {isLoggedIn ? (
+                    <>
+                      <div className="flex items-center gap-2 bg-emerald-600/20 border border-emerald-500/30 px-3 py-2 rounded-lg">
+                        <User className="w-4 h-4 text-emerald-400" />
+                        <span className="text-emerald-300 text-sm">Bienvenue {userName}</span>
+                      </div>
+                      <Button
+                        variant="ghost"
+                        onClick={() => { router.push(`/${locale}/aikido/dojo`); setShowMobileMenu(false); }}
+                        className="justify-start text-cyan-400"
+                      >
+                        <Swords className="w-4 h-4 mr-2" />
+                        Mon Dojo
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        onClick={() => { handleLogout(); setShowMobileMenu(false); }}
+                        className="justify-start text-slate-400"
+                      >
+                        <LogOut className="w-4 h-4 mr-2" />
+                        Déconnexion
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button
+                        variant="ghost"
+                        onClick={() => { router.push(`/${locale}/aikido/login`); setShowMobileMenu(false); }}
+                        className="justify-start text-slate-300"
+                      >
+                        <LogIn className="w-4 h-4 mr-2" />
+                        Connexion
+                      </Button>
+                      <Button
+                        onClick={() => { router.push(`/${locale}/aikido/register`); setShowMobileMenu(false); }}
+                        className="justify-start bg-gradient-to-r from-amber-500 to-orange-500 text-white"
+                      >
+                        <UserPlus className="w-4 h-4 mr-2" />
+                        Inscription gratuite
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        onClick={() => setShowMobileMenu(false)}
+                        className="justify-start text-slate-400"
+                      >
+                        <Lock className="w-4 h-4 mr-2" />
+                        Espace Gestion
+                      </Button>
+                    </>
+                  )}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="pt-24 pb-12">
-        {/* Hero Section with Journey */}
-        <section className="container mx-auto px-4 py-8">
+      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+      {/* HERO SECTION - Titre principal avec animation */}
+      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+      <section className="relative overflow-hidden">
+        {/* Fond animé */}
+        <div className="absolute inset-0 bg-gradient-to-b from-violet-900/20 via-slate-900 to-slate-950" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-violet-500/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl" />
+        
+        <div className="relative container mx-auto px-4 py-8 sm:py-12">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
             className="text-center mb-8"
           >
-            <h1 className="text-4xl md:text-6xl font-black text-white mb-4">
-              Bienvenue sur <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">WayofDojo</span>
+            {/* Badge */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2 }}
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 px-4 py-2 rounded-full mb-4"
+            >
+              <Sparkles className="w-4 h-4 text-amber-400" />
+              <span className="text-amber-300 text-sm font-medium">L&apos;Aïkido, c&apos;est du jeu !</span>
+            </motion.div>
+
+            {/* Titre principal */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 leading-tight">
+              Deviens un vrai{' '}
+              <span className="bg-gradient-to-r from-amber-400 via-orange-400 to-red-400 bg-clip-text text-transparent">
+                Ninja !
+              </span>{' '}
+              🥷
             </h1>
-            <p className="text-xl text-slate-400 max-w-2xl mx-auto">
-              La plateforme gamifiée pour progresser en arts martiaux.
-              <br />
-              <span className="text-amber-400">Transforme ton entraînement en aventure !</span>
+
+            <p className="text-slate-400 text-lg sm:text-xl max-w-2xl mx-auto mb-6">
+              Apprends l&apos;Aïkido en t&apos;amusant avec Maître Tanaka. 
+              <span className="text-white font-semibold"> 206+ techniques</span>, 
+              <span className="text-amber-400 font-semibold"> 7 vertus magiques</span>, 
+              et plein de défis à relever !
             </p>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Button
+                size="lg"
+                onClick={() => router.push(`/${locale}/aikido/register`)}
+                className="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 hover:from-amber-400 hover:via-orange-400 hover:to-red-400 text-white font-bold text-lg px-8 py-6 rounded-2xl shadow-xl shadow-amber-500/30 transform hover:scale-105 transition-all"
+                data-testid="hero-cta-register"
+              >
+                <span className="text-2xl mr-2">🥷</span>
+                Commencer l&apos;aventure
+                <span className="text-2xl ml-2">🚀</span>
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                onClick={() => router.push(`/${locale}/aikido/login`)}
+                className="border-slate-600 text-slate-300 hover:bg-slate-800 hover:text-white font-semibold px-8 py-6 rounded-2xl"
+              >
+                <LogIn className="w-5 h-5 mr-2" />
+                J&apos;ai déjà un compte
+              </Button>
+            </div>
           </motion.div>
+        </div>
+      </section>
 
-          {/* 6 Steps Journey */}
+      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+      {/* PARCOURS EN 6 ÉTAPES - NinjaJourney */}
+      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+      <section className="container mx-auto px-4 py-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
           <NinjaJourney onStepClick={handleStepClick} currentStep={0} />
-        </section>
+        </motion.div>
+      </section>
 
-        {/* Aperçu du contenu pour visiteurs */}
-        <section className="container mx-auto px-4 py-8">
+      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+      {/* 8 BLOCS DE PRÉVISUALISATION - VisitorStepsBlocks */}
+      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+      <section className="container mx-auto px-4 py-6 sm:py-10">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+        >
           <VisitorStepsBlocks 
             mode="enfant" 
             onSignupClick={() => router.push(`/${locale}/aikido/register`)}
           />
-        </section>
+        </motion.div>
+      </section>
 
-        {/* Features Section */}
-        <section className="container mx-auto px-4 py-16">
-          <motion.h2
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            className="text-3xl font-bold text-center text-white mb-12"
-          >
-            Pourquoi choisir WayofDojo ? 🎯
-          </motion.h2>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              {
-                emoji: '🎮',
-                title: 'Gamification',
-                desc: 'XP, badges, défis quotidiens et niveaux',
-                color: 'from-emerald-500/20 to-emerald-600/10',
-                border: 'border-emerald-500/30',
-              },
-              {
-                emoji: '📊',
-                title: 'Suivi complet',
-                desc: '206+ techniques documentées par grade',
-                color: 'from-cyan-500/20 to-cyan-600/10',
-                border: 'border-cyan-500/30',
-              },
-              {
-                emoji: '🥷',
-                title: '2 Modes',
-                desc: 'Jeune Ninja (enfants) et Ninja Confirmé (adultes)',
-                color: 'from-amber-500/20 to-amber-600/10',
-                border: 'border-amber-500/30',
-              },
-              {
-                emoji: '🏆',
-                title: '7 Vertus',
-                desc: 'Développe les vertus du Budo',
-                color: 'from-violet-500/20 to-violet-600/10',
-                border: 'border-violet-500/30',
-              },
-            ].map((feature, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-                className={`bg-gradient-to-br ${feature.color} rounded-2xl p-6 border ${feature.border} hover:scale-105 transition-transform`}
-              >
-                <div className="text-4xl mb-4">{feature.emoji}</div>
-                <h3 className="text-xl font-bold text-white mb-2">{feature.title}</h3>
-                <p className="text-slate-400 text-sm">{feature.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </section>
-
-        {/* CTA Section */}
-        <section className="container mx-auto px-4 py-16">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            className="bg-gradient-to-r from-violet-600/20 via-purple-600/20 to-violet-600/20 rounded-3xl p-8 md:p-12 text-center border border-violet-500/30"
-          >
-            <h2 className="text-3xl md:text-4xl font-black text-white mb-4">
-              Prêt à devenir un Ninja ? 🥷
-            </h2>
-            <p className="text-slate-300 mb-8 max-w-2xl mx-auto">
-              Rejoins des milliers de pratiquants qui transforment leur entraînement en aventure.
-              Inscription gratuite, commence dès maintenant !
-            </p>
-            <Link href={`/${locale}/aikido/register`}>
-              <Button 
-                size="lg"
-                className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-black text-lg px-8 py-6 shadow-xl shadow-amber-500/30"
-              >
-                Créer mon compte Ninja gratuitement 🚀
-              </Button>
-            </Link>
-          </motion.div>
-        </section>
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t border-slate-800 py-8">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="flex items-center gap-2">
-              <Swords className="w-5 h-5 text-amber-400" />
-              <span className="font-bold text-white">WayofDojo</span>
-              <span className="text-slate-500 text-sm">© 2026</span>
+      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+      {/* FOOTER */}
+      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+      <footer className="bg-slate-900/50 border-t border-slate-800 mt-12">
+        <div className="container mx-auto px-4 py-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <TanakaAnimatedLogo size="sm" />
+              <div>
+                <p className="text-amber-400 font-bold">Aikido@Game</p>
+                <p className="text-slate-500 text-xs">L&apos;Aïkido, c&apos;est du jeu !</p>
+              </div>
             </div>
-            <nav className="flex flex-wrap justify-center gap-6 text-sm text-slate-400">
-              <Link href="#" className="hover:text-white">{t('footer.legalMentions')}</Link>
-              <Link href="#" className="hover:text-white">{t('footer.cgu')}</Link>
-              <Link href="#" className="hover:text-white">{t('footer.cgv')}</Link>
-              <Link href="#" className="hover:text-white">{t('footer.privacy')}</Link>
-              <Link href="#" className="hover:text-white">{t('footer.contact')}</Link>
-            </nav>
+            
+            <div className="flex flex-wrap items-center justify-center gap-4 text-slate-500 text-sm">
+              <Link href="#" className="hover:text-white transition-colors">CGU</Link>
+              <Link href="#" className="hover:text-white transition-colors">CGV</Link>
+              <Link href="#" className="hover:text-white transition-colors">Mentions légales</Link>
+              <Link href="#" className="hover:text-white transition-colors">RGPD</Link>
+            </div>
+            
+            <p className="text-slate-600 text-xs">
+              © 2025 WayofDojo - Tous droits réservés
+            </p>
           </div>
         </div>
       </footer>
 
-      {/* Maître Tanaka Assistant */}
+      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+      {/* MAÎTRE TANAKA FLOTTANT */}
+      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
       <MaitreTanaka 
+        isVisible={true}
+        isJeuneNinja={true}
         messages={[
-          "Bienvenue sur WayofDojo ! 🥋",
-          "Je suis Maître Tanaka, ton guide.",
-          "Clique sur une étape pour commencer !",
-          "L'Aïkido, c'est du jeu ! 🎮",
-          "Le respect est la première vertu.",
+          "Bienvenue jeune Ninja ! Je suis Maître Tanaka, ton guide sur la Voie de l'Aïkido.",
+          "Inscris-toi pour commencer ton aventure et découvrir les secrets des grands maîtres !",
+          "Chaque vertu t'aidera à devenir un vrai guerrier pacifique.",
         ]}
       />
     </div>
