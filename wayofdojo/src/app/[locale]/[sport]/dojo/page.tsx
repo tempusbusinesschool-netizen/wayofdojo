@@ -2,13 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { 
   Swords, LogOut, Settings, BookOpen, Target,
-  Calendar, Award, Users, MessageCircle
+  Calendar, Award, MessageCircle
 } from 'lucide-react';
 import UserDashboardBlocks from '@/components/UserDashboardBlocks';
 import MaitreTanaka from '@/components/MaitreTanaka';
@@ -34,7 +33,6 @@ interface User {
 export default function DojoPage() {
   const router = useRouter();
   const params = useParams();
-  const t = useTranslations();
   const locale = params.locale as string;
   const sport = params.sport as string;
 
