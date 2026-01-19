@@ -701,9 +701,9 @@ function AppContent() {
               {/* User Auth Button */}
               {isAuthenticated ? (
                 <div className="flex items-center gap-1 sm:gap-2">
-                  <Badge className="bg-emerald-600 text-white hidden sm:flex text-xs">
+                  <Badge className="bg-emerald-600 text-white hidden sm:flex text-xs px-3 py-1">
                     <User className="w-3 h-3 mr-1" />
-                    {user?.first_name}
+                    Bienvenue {user?.first_name}
                   </Badge>
                   <Button
                     variant="ghost"
@@ -714,16 +714,18 @@ function AppContent() {
                     <LogOut className="w-4 h-4 sm:mr-1" />
                     <span className="hidden sm:inline">Déconnexion</span>
                   </Button>
-                  {/* Show upgrade button for users without subscription */}
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setShowPaywall(true)}
-                    className="text-amber-400 hover:text-amber-300 hover:bg-amber-900/20 h-8 px-2"
-                    title="Voir les offres"
-                  >
-                    <Sparkles className="w-4 h-4" />
-                  </Button>
+                  {/* Show upgrade button only for users without full access */}
+                  {user?.subscription_status !== 'lifetime_free' && user?.subscription_status !== 'active' && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setShowPaywall(true)}
+                      className="text-amber-400 hover:text-amber-300 hover:bg-amber-900/20 h-8 px-2"
+                      title="Voir les offres"
+                    >
+                      <Sparkles className="w-4 h-4" />
+                    </Button>
+                  )}
                 </div>
               ) : (
                 <HeaderNavigation
