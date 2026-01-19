@@ -40,7 +40,7 @@
 ## 🔴 Issues Ouvertes
 
 ### P0 - Critiques
-1. **Persistance de session** - État perdu au rechargement (bloquant tests)
+1. ~~**Persistance de session** - État perdu au rechargement (bloquant tests)~~ ✅ **CORRIGÉ** (19 Jan 2026)
 2. **Validation Parent** - Formulaire dans Dojo Virtuel à finaliser (reporté 2x)
 
 ### P3 - Mineures
