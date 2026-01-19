@@ -1134,12 +1134,23 @@ function AppContent() {
         <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-6">
           {isEspaceDojo && (
             <div className="mb-4">
-              <div className="flex items-center gap-2 mb-3">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center">
-                  <Building2 className="w-4 h-4 text-white" />
+              <div className="flex items-center justify-between mb-3">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center">
+                    <Building2 className="w-4 h-4 text-white" />
+                  </div>
+                  <span className="text-orange-400 font-semibold">🏯 Mon Dojo</span>
+                  <span className="text-xs text-slate-500 hidden sm:inline">Gestion humaine • Locale</span>
                 </div>
-                <span className="text-orange-400 font-semibold">🏯 Mon Dojo</span>
-                <span className="text-xs text-slate-500 hidden sm:inline">Gestion humaine • Locale</span>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleAdminLogout}
+                  className="text-red-400 hover:text-red-300 hover:bg-red-900/20 h-8 px-3"
+                >
+                  <LogOut className="w-4 h-4 mr-2" />
+                  <span className="hidden sm:inline">Se déconnecter</span>
+                </Button>
               </div>
               <TabsList className="bg-slate-800 border-slate-700 flex flex-wrap gap-1">
                 <TabsTrigger value="dojo-dashboard" className="data-[state=active]:bg-orange-700 text-xs sm:text-sm">
