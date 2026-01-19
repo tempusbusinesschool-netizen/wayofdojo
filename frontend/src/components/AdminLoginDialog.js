@@ -82,10 +82,10 @@ function AdminLoginDialog({ isOpen, onClose, onSuccess }) {
       const dojoPassword = selectedDojo?.admin_password || 'senseiclub';
       
       if (password === dojoPassword || password === 'senseiclub') {
-        sessionStorage.setItem('aikido_admin', 'espace_dojo');
-        sessionStorage.setItem('aikido_dojo_id', selectedDojo?.id || '');
-        sessionStorage.setItem('aikido_dojo_name', selectedDojo?.name || '');
-        sessionStorage.setItem('aikido_dojo_email', selectedDojo?.email || '');
+        localStorage.setItem('aikido_admin', 'espace_dojo');
+        localStorage.setItem('aikido_dojo_id', selectedDojo?.id || '');
+        localStorage.setItem('aikido_dojo_name', selectedDojo?.name || '');
+        localStorage.setItem('aikido_dojo_email', selectedDojo?.email || '');
         toast.success(`🏯 Connexion à ${selectedDojo?.name || 'Espace Dojo'} réussie`);
         onSuccess('espace_dojo', selectedDojo);
         handleClose();
