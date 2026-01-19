@@ -70,6 +70,7 @@ export default function HomePage() {
     setCheckingAuth(false);
   }, [locale, router]);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleStepClick = (_stepId: number) => {
     // Si l'utilisateur clique sur une étape, on l'invite à s'inscrire
     if (!isLoggedIn) {
