@@ -363,9 +363,9 @@ function AppContent() {
   };
   
   const handleAdminLogout = () => {
-    sessionStorage.removeItem('aikido_admin');
-    sessionStorage.removeItem('aikido_dojo_id');
-    sessionStorage.removeItem('aikido_dojo_name');
+    localStorage.removeItem('aikido_admin');
+    localStorage.removeItem('aikido_dojo_id');
+    localStorage.removeItem('aikido_dojo_name');
     setAdminType(null);
     setSelectedDojoForAdmin(null);
     setActiveTab("techniques");
