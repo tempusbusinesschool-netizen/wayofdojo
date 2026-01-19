@@ -953,7 +953,7 @@ function AppContent() {
                 
                 {/* Actions rapides */}
                 <h3 className="text-lg font-semibold text-white mb-4">Actions rapides</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                   <Button
                     variant="outline"
                     className="h-auto py-4 flex flex-col items-center gap-2 bg-slate-700/50 border-slate-500 hover:bg-slate-600 hover:border-violet-500 text-white transition-all"
@@ -969,6 +969,14 @@ function AppContent() {
                   >
                     <Building2 className="w-6 h-6 text-orange-400" />
                     <span>Gérer les dojos</span>
+                  </Button>
+                  <Button
+                    variant="outline"
+                    className="h-auto py-4 flex flex-col items-center gap-2 bg-slate-700/50 border-slate-500 hover:bg-slate-600 hover:border-emerald-500 text-white transition-all"
+                    onClick={() => setAdminSection('subscriptions')}
+                  >
+                    <CreditCard className="w-6 h-6 text-emerald-400" />
+                    <span>Abonnements</span>
                   </Button>
                   <Button
                     variant="outline"
