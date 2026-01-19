@@ -13,7 +13,7 @@ import {
   BookOpen, Filter, ArrowRight
 } from 'lucide-react';
 import { aikidoConfig } from '@/config/sports/aikido.config';
-import { AIKIDO_TECHNIQUES, getTechniquesByGrade, type Technique } from '@/config/sports/aikido-techniques';
+import { AIKIDO_TECHNIQUES, getTechniquesByGrade } from '@/config/sports/aikido-techniques';
 
 export default function TechniquesPage() {
   const params = useParams();

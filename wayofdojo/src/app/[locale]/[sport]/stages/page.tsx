@@ -12,7 +12,7 @@ import {
   ChevronLeft, Calendar, MapPin, Users, Clock, 
   Search, Filter, Globe, Award, Check, X
 } from 'lucide-react';
-import { AIKIDO_STAGES, getUpcomingStages, formatPrice, isStageFull, type Stage } from '@/config/sports/aikido-stages';
+import { AIKIDO_STAGES, getUpcomingStages, formatPrice, isStageFull } from '@/config/sports/aikido-stages';
 
 export default function StagesPage() {
   const params = useParams();
@@ -23,7 +23,6 @@ export default function StagesPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedLevel, setSelectedLevel] = useState<string | null>(null);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
-  const [viewMode, setViewMode] = useState<'list' | 'calendar'>('list');
 
   const upcomingStages = getUpcomingStages();
 
