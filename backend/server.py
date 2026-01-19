@@ -75,7 +75,7 @@ DEFAULT_DOJO = {
     "address": "",
     "city": "",
     "email": "contact@aikido-lariviere.fr",
-    "admin_password": "aikido2024",
+    "admin_password": "123456",
     "is_default": True,
     "created_at": "2024-01-01T00:00:00+00:00"
 }
