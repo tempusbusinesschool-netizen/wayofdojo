@@ -253,7 +253,7 @@ export default function LandingPage() {
           </h2>
           <p className="text-slate-400 mb-8 max-w-2xl mx-auto">
             Rejoignez des milliers de pratiquants qui transforment leur entraînement en aventure.
-            7 jours d'essai gratuit, sans engagement.
+            7 jours d&apos;essai gratuit, sans engagement.
           </p>
           <Link href="/fr/aikido/register">
             <Button size="xl" variant="gradient" className="gap-2">
