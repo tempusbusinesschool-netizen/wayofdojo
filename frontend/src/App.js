@@ -12,6 +12,10 @@ import { Swords, Users, BarChart3, LogOut, Baby, User, LogIn, Lock, ScrollText, 
 // Import belt utilities for normalization
 import { normalizeBeltKey } from "@/constants/aikidoBelts";
 
+// Import session timeout hook and warning component
+import useSessionTimeout from "@/hooks/useSessionTimeout";
+import SessionTimeoutWarning from "@/components/SessionTimeoutWarning";
+
 // Aikido Belt System - for display
 const AIKIDO_BELTS = {
   "6e_kyu": { name: "Blanche", grade: "6e kyu", emoji: "⚪", color: "#E5E7EB" },
