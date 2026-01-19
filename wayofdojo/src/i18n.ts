@@ -29,13 +29,17 @@ export function isValidSport(sport: string): sport is Sport {
 
 export default getRequestConfig(async ({ locale }) => {
   // Validate that the incoming `locale` parameter is valid
-  if (!isValidLocale(locale)) notFound();
+  const validLocale = locale || defaultLocale;
+  
+  if (!isValidLocale(validLocale)) {
+    notFound();
+  }
 
   // Load core translations
-  const coreMessages = (await import(`./locales/core/${locale}.json`)).default;
+  const coreMessages = (await import(`./locales/core/${validLocale}.json`)).default;
   
   return {
-    locale,
+    locale: validLocale,
     messages: coreMessages,
     timeZone: 'Europe/Paris',
     now: new Date(),
