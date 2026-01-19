@@ -1,0 +1,52 @@
+{
+  "name": "Aïkido",
+  "description": "L'Aïkido est un art martial japonais fondé par Morihei Ueshiba. Il se distingue par sa philosophie non-violente et l'utilisation de l'énergie de l'adversaire.",
+  "shortDescription": "Art martial de l'harmonie",
+  "founder": "Morihei Ueshiba (O-Sensei)",
+  "origin": "Japon",
+  "categories": {
+    "tachi_waza": {
+      "name": "Tachi Waza",
+      "description": "Techniques réalisées debout"
+    },
+    "suwari_waza": {
+      "name": "Suwari Waza", 
+      "description": "Techniques réalisées à genoux"
+    },
+    "hanmi_handachi": {
+      "name": "Hanmi Handachi Waza",
+      "description": "Uke debout, Tori à genoux"
+    },
+    "bukiwaza": {
+      "name": "Buki Waza",
+      "description": "Techniques avec armes (Jo, Bokken, Tanto)"
+    },
+    "ukemi": {
+      "name": "Ukemi",
+      "description": "L'art de chuter en toute sécurité"
+    },
+    "tai_sabaki": {
+      "name": "Tai Sabaki",
+      "description": "Déplacements et esquives"
+    }
+  },
+  "grades": {
+    "explanation": "Le système de grades en Aïkido commence par le 6e Kyu (ceinture blanche) et progresse jusqu'aux grades Dan (ceintures noires).",
+    "kyu": "Grades Kyu (élèves)",
+    "dan": "Grades Dan (experts)"
+  },
+  "philosophy": {
+    "title": "Philosophie de l'Aïkido",
+    "principles": [
+      "L'Aïkido n'est pas un sport de compétition",
+      "Le but est de neutraliser l'agresseur sans le blesser",
+      "L'harmonie (Ai) avec l'énergie (Ki) est essentielle",
+      "La pratique développe le corps et l'esprit"
+    ]
+  },
+  "tanaka": {
+    "welcome": "Bienvenue sur le chemin de l'Aïkido !",
+    "encouragement": "Continue ainsi, jeune pratiquant !",
+    "gradeUp": "Félicitations pour ton nouveau grade !"
+  }
+}

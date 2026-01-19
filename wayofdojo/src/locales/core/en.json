@@ -1,0 +1,107 @@
+{
+  "common": {
+    "appName": "WayofDojo",
+    "tagline": "The Way of the Dojo",
+    "login": "Log in",
+    "register": "Sign up",
+    "logout": "Log out",
+    "welcome": "Welcome",
+    "home": "Home",
+    "profile": "Profile",
+    "settings": "Settings",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "submit": "Submit",
+    "close": "Close"
+  },
+  "auth": {
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "forgotPassword": "Forgot password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "createAccount": "Create account",
+    "loginTitle": "Log in",
+    "registerTitle": "Sign up",
+    "loginSuccess": "Successfully logged in!",
+    "registerSuccess": "Account created successfully!",
+    "invalidCredentials": "Invalid email or password"
+  },
+  "navigation": {
+    "virtualDojo": "Virtual Dojo",
+    "techniques": "Techniques",
+    "progression": "Progression",
+    "stages": "Seminars",
+    "philosophy": "Philosophy",
+    "challenges": "Challenges",
+    "badges": "Badges",
+    "leaderboard": "Leaderboard"
+  },
+  "profiles": {
+    "jeuneNinja": "Young Ninja",
+    "jeuneNinjaDesc": "Fun mode for ages 6-14",
+    "ninjaConfirme": "Advanced Ninja",
+    "ninjaConfirmeDesc": "Advanced mode for ages 15+",
+    "chooseProfile": "Choose your profile",
+    "canChangeLater": "You can change anytime"
+  },
+  "subscription": {
+    "free": "Free",
+    "premium": "Premium",
+    "choosePlan": "Choose your plan",
+    "perMonth": "/month",
+    "features": {
+      "limitedTechniques": "5 techniques",
+      "allTechniques": "All techniques",
+      "basicBadges": "Basic badges",
+      "allBadges": "All badges",
+      "advancedStats": "Detailed statistics",
+      "noAds": "No ads"
+    },
+    "startFreeTrial": "Start 7-day free trial",
+    "subscribe": "Subscribe"
+  },
+  "gamification": {
+    "xp": "XP",
+    "level": "Level",
+    "streak": "Streak",
+    "streakDays": "{count} days",
+    "dailyChallenge": "Daily Challenge",
+    "weeklyChallenge": "Weekly Challenge",
+    "newBadge": "New badge unlocked!",
+    "levelUp": "Level up!",
+    "virtues": "The 7 Virtues of Bushido"
+  },
+  "stages": {
+    "title": "Seminars & Workshops",
+    "upcoming": "Upcoming",
+    "past": "Past",
+    "register": "Register",
+    "registered": "Registered",
+    "full": "Full",
+    "sensei": "Instructor",
+    "location": "Location",
+    "date": "Date",
+    "price": "Price"
+  },
+  "footer": {
+    "legalMentions": "Legal mentions",
+    "cgu": "Terms of Use",
+    "cgv": "Terms of Sale",
+    "privacy": "Privacy Policy",
+    "contact": "Contact",
+    "copyright": "© {year} WayofDojo. All rights reserved."
+  }
+}
