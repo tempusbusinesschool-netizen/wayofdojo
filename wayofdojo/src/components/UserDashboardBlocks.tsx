@@ -24,6 +24,9 @@ interface UserDashboardBlocksProps {
   statistics?: Statistics;
   currentBelt?: Belt;
   totalPoints?: number;
+  xp?: number;
+  level?: number;
+  streak?: number;
   onOpenTimeline?: () => void;
   onOpenJournal?: () => void;
   onDownloadPDF?: () => void;
