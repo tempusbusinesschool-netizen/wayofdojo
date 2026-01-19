@@ -45,7 +45,6 @@ function DojoManagementPanel() {
   const [dojos, setDojos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showCreateForm, setShowCreateForm] = useState(false);
-  const [superAdminPassword, setSuperAdminPassword] = useState("");
   const [formData, setFormData] = useState({
     name: "",
     description: "",
