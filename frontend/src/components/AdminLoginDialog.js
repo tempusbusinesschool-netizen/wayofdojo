@@ -59,7 +59,7 @@ function AdminLoginDialog({ isOpen, onClose, onSuccess }) {
     
     setTimeout(() => {
       if (password === SUPER_ADMIN_PASSWORD) {
-        sessionStorage.setItem('aikido_admin', 'admin');
+        localStorage.setItem('aikido_admin', 'admin');
         toast.success("🛡️ Connexion Admin réussie");
         onSuccess('admin');
         handleClose();
