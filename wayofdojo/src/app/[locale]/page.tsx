@@ -115,6 +115,14 @@ export default function LandingPage() {
           <NinjaJourney onStepClick={handleStepClick} currentStep={0} />
         </section>
 
+        {/* Aperçu du contenu pour visiteurs */}
+        <section className="container mx-auto px-4 py-8">
+          <VisitorStepsBlocks 
+            mode="enfant" 
+            onSignupClick={() => router.push(`/${locale}/aikido/register`)}
+          />
+        </section>
+
         {/* Features Section */}
         <section className="container mx-auto px-4 py-16">
           <motion.h2
