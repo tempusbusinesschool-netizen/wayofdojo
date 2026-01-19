@@ -346,7 +346,7 @@ export default function DojoPage() {
         >
           <h2 className="text-xl font-bold text-white mb-4">{t('gamification.virtues')}</h2>
           <div className="grid grid-cols-7 gap-2">
-            {aikidoConfig.gamification.virtues.map((virtue, i) => (
+            {aikidoConfig.gamification.virtues.map((virtue) => (
               <Card key={virtue.id} className={`text-center ${isJeuneNinja ? 'bg-amber-900/30 border-amber-700/50' : ''}`}>
                 <CardContent className="p-3">
                   <div className="text-2xl mb-1">{virtue.icon}</div>
