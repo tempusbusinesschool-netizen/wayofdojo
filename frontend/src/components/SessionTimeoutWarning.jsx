@@ -30,10 +30,10 @@ function SessionTimeoutWarning({
             >
               <Clock className={`w-6 h-6 ${isUrgent ? 'text-red-400' : 'text-amber-400'}`} />
             </motion.div>
-            Session {adminType === 'admin' ? 'Admin' : 'Dojo'} sur le point d'expirer
+            Session {adminType === 'admin' ? 'Admin' : 'Dojo'} sur le point d&apos;expirer
           </DialogTitle>
           <DialogDescription className="text-slate-300 pt-2">
-            Pour des raisons de sécurité, votre session sera automatiquement fermée après une période d'inactivité.
+            Pour des raisons de sécurité, votre session sera automatiquement fermée après une période d&apos;inactivité.
           </DialogDescription>
         </DialogHeader>
 
@@ -52,7 +52,7 @@ function SessionTimeoutWarning({
 
           {/* Info message */}
           <p className="text-sm text-slate-400 text-center mt-4">
-            Cliquez sur "Continuer" pour prolonger votre session de 30 minutes.
+            Cliquez sur &quot;Continuer&quot; pour prolonger votre session de 30 minutes.
           </p>
         </div>
 
