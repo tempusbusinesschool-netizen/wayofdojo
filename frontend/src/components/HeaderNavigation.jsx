@@ -103,18 +103,18 @@ const HeaderNavigation = ({
             >
               <User className="w-4 h-4 text-emerald-400 flex-shrink-0" />
               <div className="min-w-0">
-                <div className="font-medium text-sm sm:text-base truncate">Adhérent</div>
+                <div className="font-medium text-sm sm:text-base truncate">Connexion utilisateur</div>
                 <div className="text-[10px] sm:text-xs text-slate-400 truncate">Espace personnel</div>
               </div>
             </button>
             <button
               onClick={() => { onLoginEnseignant(); setOpenMenu(null); }}
-              className="w-full flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 text-left text-slate-200 hover:bg-amber-900/30 transition-colors border-t border-slate-700"
+              className="w-full flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 text-left text-slate-200 hover:bg-orange-900/30 transition-colors border-t border-slate-700"
             >
-              <Building2 className="w-4 h-4 text-amber-400 flex-shrink-0" />
+              <Building2 className="w-4 h-4 text-orange-400 flex-shrink-0" />
               <div className="min-w-0">
-                <div className="font-medium text-sm sm:text-base truncate">Dojo & Clubs</div>
-                <div className="text-[10px] sm:text-xs text-slate-400 truncate">Espace club affilié</div>
+                <div className="font-medium text-sm sm:text-base truncate">Connexion Espace Dojo</div>
+                <div className="text-[10px] sm:text-xs text-slate-400 truncate">Gestion club affilié</div>
               </div>
             </button>
           </div>
