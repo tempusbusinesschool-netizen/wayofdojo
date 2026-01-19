@@ -664,6 +664,15 @@ function AppContent() {
     <div className="min-h-screen bg-slate-950">
       <Toaster richColors position="top-right" />
       
+      {/* Session Timeout Warning for Admin/Dojo */}
+      <SessionTimeoutWarning
+        isOpen={showSessionWarning}
+        remainingTime={remainingTimeFormatted}
+        onExtend={extendSession}
+        onLogout={handleAdminLogout}
+        adminType={adminType}
+      />
+      
       {/* Header */}
       <header className="sticky top-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-2 sm:px-4 py-2 sm:py-4">
