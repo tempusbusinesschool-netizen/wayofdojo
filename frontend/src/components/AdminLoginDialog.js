@@ -12,8 +12,8 @@ import axios from "axios";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
-function AdminLoginDialog({ isOpen, onClose, onSuccess }) {
-  const [step, setStep] = useState('choice'); // 'choice', 'admin', 'espace_dojo_method', 'espace_dojo_select', 'espace_dojo_password', 'espace_dojo_email'
+function AdminLoginDialog({ isOpen, onClose, onSuccess, initialMode = 'choice' }) {
+  const [step, setStep] = useState(initialMode === 'admin' ? 'admin' : initialMode === 'dojo' ? 'espace_dojo_method' : 'choice');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
@@ -22,6 +22,13 @@ function AdminLoginDialog({ isOpen, onClose, onSuccess }) {
   const [selectedDojo, setSelectedDojo] = useState(null);
   const [loadingDojos, setLoadingDojos] = useState(false);
   const [loginMethod, setLoginMethod] = useState('select'); // 'select' or 'email'
+
+  // Reset step when initialMode changes
+  useEffect(() => {
+    if (isOpen) {
+      setStep(initialMode === 'admin' ? 'admin' : initialMode === 'dojo' ? 'espace_dojo_method' : 'choice');
+    }
+  }, [initialMode, isOpen]);
 
   // Fetch dojos when opening Espace Dojo
   useEffect(() => {
