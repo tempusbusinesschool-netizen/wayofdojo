@@ -2137,8 +2137,9 @@ function AppContent() {
       {/* Admin Login Dialog */}
       <AdminLoginDialog
         isOpen={showAdminLogin}
-        onClose={() => setShowAdminLogin(false)}
+        onClose={() => { setShowAdminLogin(false); setAdminLoginMode('choice'); }}
         onSuccess={handleAdminLogin}
+        initialMode={adminLoginMode}
       />
       
       {/* Enseignant Login Dialog */}
