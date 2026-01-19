@@ -65,7 +65,7 @@ app = FastAPI()
 api_router = APIRouter(prefix="/api")
 
 # Super Admin password (for creating dojos)
-SUPER_ADMIN_PASSWORD = os.environ.get("SUPER_ADMIN_PASSWORD", "superaikido2024")
+SUPER_ADMIN_PASSWORD = os.environ.get("SUPER_ADMIN_PASSWORD", "123456")
 
 # Default dojo
 DEFAULT_DOJO = {
