@@ -24,7 +24,7 @@ export function useSessionTimeout({
   const timeoutRef = useRef(null);
   const warningRef = useRef(null);
   const countdownRef = useRef(null);
-  const lastActivityRef = useRef(Date.now());
+  const lastActivityRef = useRef(0);
 
   // Réinitialiser les timers
   const resetTimers = useCallback(() => {
