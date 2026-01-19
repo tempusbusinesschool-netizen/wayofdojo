@@ -128,10 +128,9 @@ const HeaderNavigation = ({
             variant="ghost"
             size="sm"
             onClick={() => toggleMenu('admin')}
-            className="text-slate-400 hover:text-white hover:bg-slate-700 h-8 px-3 text-sm"
+            className="text-slate-400 hover:text-white hover:bg-slate-700 h-8 px-2 text-sm"
           >
-            <Settings className="w-4 h-4 mr-1" />
-            <span>Administration</span>
+            <Settings className="w-4 h-4" />
             <ChevronDown className={`w-3 h-3 ml-1 transition-transform ${openMenu === 'admin' ? 'rotate-180' : ''}`} />
           </Button>
           
