@@ -276,7 +276,7 @@ export default function DojoPage() {
               {isJeuneNinja ? "🎯 Que veux-tu faire ?" : "Actions rapides"}
             </h2>
             <div className="grid grid-cols-2 gap-4">
-              {quickActions.map((action, i) => (
+              {quickActions.map((action) => (
                 <Link key={action.label} href={action.href}>
                   <Card className={`h-full hover:border-${action.color}-500/50 transition-colors cursor-pointer ${isJeuneNinja ? 'bg-amber-900/30 border-amber-700/50' : ''}`}>
                     <CardContent className="p-4 flex flex-col items-center text-center">
