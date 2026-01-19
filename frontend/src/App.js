@@ -339,10 +339,10 @@ function AppContent() {
     };
   }, []);
   
-  // Selected dojo for Espace Dojo
+  // Selected dojo for Espace Dojo - using localStorage for persistence
   const [selectedDojoForAdmin, setSelectedDojoForAdmin] = useState(() => {
-    const storedId = sessionStorage.getItem('aikido_dojo_id');
-    const storedName = sessionStorage.getItem('aikido_dojo_name');
+    const storedId = localStorage.getItem('aikido_dojo_id');
+    const storedName = localStorage.getItem('aikido_dojo_name');
     if (storedId && storedName) {
       return { id: storedId, name: storedName };
     }
