@@ -35,6 +35,7 @@ export default getRequestConfig(async ({ locale }) => {
   const coreMessages = (await import(`./locales/core/${locale}.json`)).default;
   
   return {
+    locale,
     messages: coreMessages,
     timeZone: 'Europe/Paris',
     now: new Date(),
