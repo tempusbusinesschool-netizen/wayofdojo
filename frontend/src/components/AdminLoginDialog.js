@@ -334,7 +334,7 @@ function AdminLoginDialog({ isOpen, onClose, onSuccess, initialMode = 'choice' }
           🏯 Connexion Espace Dojo
         </h3>
         <p className="text-slate-400 text-sm">
-          Entrez l'email et le mot de passe du dojo
+          Entrez l&apos;email et le mot de passe du dojo
         </p>
       </div>
       
