@@ -3102,24 +3102,32 @@ async def get_public_stats():
     kyu_levels = await db.kyu_levels.find({}, {"_id": 0}).to_list(100)
     
     total_techniques = 0
-    total_grades = len(kyu_levels)
     
-    # Count Kyu and Dan separately
+    # Count Kyu and Dan separately (exclude weapon categories like BOKKEN, JO, TANTO)
     kyu_count = 0
     dan_count = 0
+    weapon_categories = ['bokken', 'jo', 'tanto', 'aïkiken', 'aikiken', 'aïkijo', 'aikijo']
     
     for kyu in kyu_levels:
         kyu_total = len(kyu.get('techniques', []))
         total_techniques += kyu_total
         
         name = kyu.get('name', '').lower()
-        if 'dan' in name or 'shodan' in name:
+        
+        # Skip weapon categories - they are not grades
+        if any(weapon in name for weapon in weapon_categories):
+            continue
+            
+        if 'dan' in name or 'shodan' in name or 'nidan' in name or 'sandan' in name or 'yondan' in name:
             dan_count += 1
-        else:
+        elif 'kyu' in name:
             kyu_count += 1
     
     # Number of challenges (7 virtues x 5 daily + 3 weekly each = ~56 + badges)
     total_challenges = 84  # Based on virtuesGamification.js count
+    
+    # Total actual grades (Kyu + Dan only, not weapon categories)
+    total_grades = kyu_count + dan_count
     
     return {
         "total_techniques": total_techniques,
