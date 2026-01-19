@@ -1,12 +1,12 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { 
-  BookOpen, ChevronLeft, ChevronRight, Trophy, Star,
-  CheckCircle2, Target, Swords, Sparkles, Search, Filter,
+  BookOpen, ChevronLeft, ChevronRight,
+  Swords, Search,
   ArrowLeft, Home
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
