@@ -366,7 +366,7 @@ function AppContent() {
     }
   };
   
-  const handleAdminLogout = () => {
+  const handleAdminLogout = useCallback(() => {
     localStorage.removeItem('aikido_admin');
     localStorage.removeItem('aikido_dojo_id');
     localStorage.removeItem('aikido_dojo_name');
@@ -374,7 +374,27 @@ function AppContent() {
     setSelectedDojoForAdmin(null);
     setActiveTab("techniques");
     toast.success("Déconnexion réussie");
-  };
+  }, []);
+  
+  // Session timeout for admin/dojo - 30 minutes of inactivity
+  const { 
+    showWarning: showSessionWarning, 
+    remainingTimeFormatted,
+    extendSession 
+  } = useSessionTimeout({
+    isActive: isAdminMode,
+    timeout: 30 * 60 * 1000, // 30 minutes
+    warningBefore: 5 * 60 * 1000, // Warning 5 min before
+    onTimeout: () => {
+      handleAdminLogout();
+      toast.warning("Session expirée par inactivité", {
+        description: "Vous avez été déconnecté pour des raisons de sécurité."
+      });
+    },
+    onWarning: () => {
+      // Optional: play a sound or other notification
+    }
+  });
   
   // Refs for grade sections to enable scrolling
   const gradeSectionRefs = useRef({});
