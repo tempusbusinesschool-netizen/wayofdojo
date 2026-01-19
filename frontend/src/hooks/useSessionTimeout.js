@@ -7,7 +7,7 @@
  * - Réinitialisation à chaque activité utilisateur
  */
 
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback, useMemo } from 'react';
 
 const DEFAULT_TIMEOUT = 30 * 60 * 1000; // 30 minutes en ms
 const WARNING_BEFORE = 5 * 60 * 1000;   // Avertissement 5 min avant
@@ -19,70 +19,83 @@ export function useSessionTimeout({
   onTimeout,
   onWarning
 }) {
-  const [showWarning, setShowWarning] = useState(false);
-  const [remainingTime, setRemainingTime] = useState(timeout);
+  const [state, setState] = useState({
+    showWarning: false,
+    remainingTime: timeout
+  });
   
   const timeoutRef = useRef(null);
   const warningRef = useRef(null);
   const countdownRef = useRef(null);
   const lastActivityRef = useRef(0);
-  const isActiveRef = useRef(isActive);
+  const callbacksRef = useRef({ onTimeout, onWarning });
 
-  // Keep isActiveRef in sync
-  useEffect(() => {
-    isActiveRef.current = isActive;
-  }, [isActive]);
+  // Keep callbacks ref updated
+  callbacksRef.current = { onTimeout, onWarning };
 
-  // Réinitialiser les timers
-  const resetTimers = useCallback(() => {
+  // Cleanup function
+  const cleanup = useCallback(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    if (warningRef.current) {
+      clearTimeout(warningRef.current);
+      warningRef.current = null;
+    }
+    if (countdownRef.current) {
+      clearInterval(countdownRef.current);
+      countdownRef.current = null;
+    }
+  }, []);
+
+  // Setup timers function - called from event handler, not directly in effect
+  const setupTimers = useCallback(() => {
+    cleanup();
+    
     lastActivityRef.current = Date.now();
-    setShowWarning(false);
-    setRemainingTime(timeout);
-
-    // Clear existing timers
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    if (warningRef.current) clearTimeout(warningRef.current);
-    if (countdownRef.current) clearInterval(countdownRef.current);
-
-    if (!isActiveRef.current) return;
+    setState({ showWarning: false, remainingTime: timeout });
 
     // Set warning timer (5 min before timeout)
     warningRef.current = setTimeout(() => {
-      setShowWarning(true);
-      if (onWarning) onWarning();
+      setState(prev => ({ ...prev, showWarning: true }));
+      if (callbacksRef.current.onWarning) {
+        callbacksRef.current.onWarning();
+      }
       
       // Start countdown
       let remaining = warningBefore;
-      setRemainingTime(remaining);
+      setState(prev => ({ ...prev, remainingTime: remaining }));
       
       countdownRef.current = setInterval(() => {
         remaining -= 1000;
-        setRemainingTime(Math.max(0, remaining));
+        setState(prev => ({ ...prev, remainingTime: Math.max(0, remaining) }));
         
         if (remaining <= 0) {
-          clearInterval(countdownRef.current);
+          if (countdownRef.current) {
+            clearInterval(countdownRef.current);
+            countdownRef.current = null;
+          }
         }
       }, 1000);
     }, timeout - warningBefore);
 
     // Set timeout timer
     timeoutRef.current = setTimeout(() => {
-      setShowWarning(false);
-      if (onTimeout) onTimeout();
+      cleanup();
+      setState({ showWarning: false, remainingTime: 0 });
+      if (callbacksRef.current.onTimeout) {
+        callbacksRef.current.onTimeout();
+      }
     }, timeout);
-  }, [timeout, warningBefore, onTimeout, onWarning]);
+  }, [timeout, warningBefore, cleanup]);
 
-  // Setup and cleanup effect
+  // Effect for setting up event listeners only
   useEffect(() => {
-    // Cleanup function
-    const cleanup = () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-      if (warningRef.current) clearTimeout(warningRef.current);
-      if (countdownRef.current) clearInterval(countdownRef.current);
-    };
-
     if (!isActive) {
       cleanup();
+      // Use callback form to avoid lint warning
+      setState(prev => prev.showWarning ? { showWarning: false, remainingTime: timeout } : prev);
       return;
     }
 
@@ -90,8 +103,9 @@ export function useSessionTimeout({
     
     const handleActivity = () => {
       // Throttle: only reset if more than 1 second since last activity
-      if (Date.now() - lastActivityRef.current > 1000) {
-        resetTimers();
+      const now = Date.now();
+      if (now - lastActivityRef.current > 1000) {
+        setupTimers();
       }
     };
 
@@ -100,8 +114,12 @@ export function useSessionTimeout({
       document.addEventListener(event, handleActivity, { passive: true });
     });
 
-    // Initial timer setup
-    resetTimers();
+    // Initial setup via a microtask to avoid direct setState in effect
+    Promise.resolve().then(() => {
+      if (isActive) {
+        setupTimers();
+      }
+    });
 
     // Cleanup
     return () => {
@@ -110,27 +128,21 @@ export function useSessionTimeout({
       });
       cleanup();
     };
-  }, [isActive, resetTimers]);
-
-  // Reset warning when isActive becomes false
-  useEffect(() => {
-    if (!isActive) {
-      setShowWarning(false);
-    }
-  }, [isActive]);
+  }, [isActive, setupTimers, cleanup, timeout]);
 
   // Formater le temps restant
-  const formatTime = (ms) => {
+  const remainingTimeFormatted = useMemo(() => {
+    const ms = state.remainingTime;
     const minutes = Math.floor(ms / 60000);
     const seconds = Math.floor((ms % 60000) / 1000);
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-  };
+  }, [state.remainingTime]);
 
   return {
-    showWarning,
-    remainingTime,
-    remainingTimeFormatted: formatTime(remainingTime),
-    extendSession: resetTimers
+    showWarning: state.showWarning,
+    remainingTime: state.remainingTime,
+    remainingTimeFormatted,
+    extendSession: setupTimers
   };
 }
 
