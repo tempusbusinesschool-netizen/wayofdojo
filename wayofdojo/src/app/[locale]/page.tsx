@@ -9,6 +9,7 @@ import { motion } from 'framer-motion';
 import { Swords, LogIn, UserPlus } from 'lucide-react';
 import MaitreTanaka from '@/components/MaitreTanaka';
 import NinjaJourney from '@/components/NinjaJourney';
+import VisitorStepsBlocks from '@/components/VisitorStepsBlocks';
 
 export default function LandingPage() {
   const t = useTranslations();
