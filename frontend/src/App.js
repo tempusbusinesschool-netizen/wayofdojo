@@ -965,14 +965,6 @@ function AppContent() {
                     <CreditCard className="w-6 h-6 text-emerald-400" />
                     <span>Abonnements</span>
                   </Button>
-                  <Button
-                    variant="outline"
-                    className="h-auto py-4 flex flex-col items-center gap-2 bg-slate-700/50 border-slate-500 hover:bg-slate-600 hover:border-amber-500 text-white transition-all"
-                    onClick={() => setAdminSection('techniques')}
-                  >
-                    <Swords className="w-6 h-6 text-amber-400" />
-                    <span>Voir les techniques</span>
-                  </Button>
                 </div>
               </div>
             ) : adminSection === 'users' || adminSection === 'users_list' ? (
