@@ -260,17 +260,18 @@ export const MaitreTanaka: React.FC<MaitreTanakaProps> = ({
             
             {/* Label */}
             <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full font-bold animate-bounce shadow-lg">
-              Parle-moi !
+              {buttonLabel}
             </div>
           </div>
         </button>
       )}
 
-      {/* Chat Window */}
+      {/* Chat Window - showing random tip from messages */}
       {isOpen && (
         <div 
           className="fixed bottom-6 right-6 z-50 w-96 max-w-[calc(100vw-3rem)] bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl shadow-2xl border border-amber-500/30 overflow-hidden"
           data-testid="maitre-tanaka-dialog"
+          data-tips={JSON.stringify(tipsMessages)}
         >
           {/* Header */}
           <div className="bg-gradient-to-r from-amber-600 to-orange-600 p-4 flex items-center justify-between">
