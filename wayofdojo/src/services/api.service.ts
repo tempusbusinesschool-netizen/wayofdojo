@@ -1,0 +1,100 @@
+/**
+ * 🌐 API SERVICE
+ * Service centralisé pour les appels API
+ * Gère automatiquement le préfixe d'API selon l'environnement
+ */
+
+const API_PREFIX = typeof window !== 'undefined' && window.location.hostname.includes('preview.emergentagent.com') 
+  ? '/next-api' 
+  : '/api';
+
+export interface ApiResponse<T = unknown> {
+  success: boolean;
+  data?: T;
+  error?: string;
+}
+
+class ApiService {
+  private getAuthHeader(): HeadersInit {
+    const token = typeof window !== 'undefined' ? localStorage.getItem('wayofdojo_token') : null;
+    return token ? { Authorization: `Bearer ${token}` } : {};
+  }
+
+  async request<T>(
+    endpoint: string,
+    options: RequestInit = {}
+  ): Promise<T> {
+    const url = `${API_PREFIX}${endpoint}`;
+    
+    const response = await fetch(url, {
+      ...options,
+      headers: {
+        'Content-Type': 'application/json',
+        ...this.getAuthHeader(),
+        ...options.headers,
+      },
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || `HTTP error! status: ${response.status}`);
+    }
+
+    return data;
+  }
+
+  // Auth endpoints
+  async login(email: string, password: string) {
+    return this.request('/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+    });
+  }
+
+  async register(userData: {
+    email: string;
+    password: string;
+    firstName: string;
+    lastName: string;
+    profile?: string;
+    sport?: string;
+    grade?: string;
+    locale?: string;
+  }) {
+    return this.request('/auth/register', {
+      method: 'POST',
+      body: JSON.stringify(userData),
+    });
+  }
+
+  async getCurrentUser() {
+    return this.request('/auth/me');
+  }
+
+  // Admin endpoints
+  async getAdminStats() {
+    return this.request('/admin/stats');
+  }
+
+  async getUsers(params?: { page?: number; limit?: number; search?: string; role?: string }) {
+    const searchParams = new URLSearchParams();
+    if (params?.page) searchParams.set('page', params.page.toString());
+    if (params?.limit) searchParams.set('limit', params.limit.toString());
+    if (params?.search) searchParams.set('search', params.search);
+    if (params?.role) searchParams.set('role', params.role);
+    
+    const queryString = searchParams.toString();
+    return this.request(`/admin/users${queryString ? `?${queryString}` : ''}`);
+  }
+
+  async updateUserRole(userId: string, role: string) {
+    return this.request('/admin/users', {
+      method: 'PATCH',
+      body: JSON.stringify({ userId, role }),
+    });
+  }
+}
+
+export const apiService = new ApiService();
+export default apiService;
