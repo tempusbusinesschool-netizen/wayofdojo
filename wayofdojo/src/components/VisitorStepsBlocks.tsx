@@ -246,6 +246,7 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
       previewTitle: 'Système de Grades',
       previewDescription: 'Du 6e Kyu (blanche) au Shodan (noire) !',
       stats: [{ label: 'Grades Kyu', value: '6' }, { label: 'Grades Dan', value: '10' }],
+      demoLink: '/fr/aikido/progression',
       previewContent: (
         <div className="space-y-2">
           {realBelts.map((belt, i) => (
