@@ -350,19 +350,6 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-      {/* PARCOURS EN 6 ÉTAPES - NinjaJourney */}
-      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-      <section className="container mx-auto px-4 py-6">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-        >
-          <NinjaJourney onStepClick={handleStepClick} currentStep={0} />
-        </motion.div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
       {/* 8 BLOCS DE PRÉVISUALISATION - VisitorStepsBlocks */}
       {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
       <section className="container mx-auto px-4 py-6 sm:py-10">
