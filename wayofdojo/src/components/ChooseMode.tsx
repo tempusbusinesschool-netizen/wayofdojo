@@ -22,7 +22,7 @@ export default function ChooseMode({ onModeSelect }: ChooseModeProps) {
   };
 
   return (
-    <div className="w-full py-4 px-4" data-testid="choose-mode">
+    <div className="w-full py-2 px-4" data-testid="choose-mode">
       {/* Titre - Exactement comme l'original */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
