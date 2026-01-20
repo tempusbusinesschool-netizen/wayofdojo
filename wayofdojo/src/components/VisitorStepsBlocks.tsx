@@ -402,7 +402,7 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
             animate={{ opacity: 1, y: 0 }}
             className="text-xl sm:text-2xl font-bold text-white mb-2"
           >
-            🎮 Découvre ce qui t&apos;attend ! 🎮
+            🎮 Réviser ses cours d&apos;Aikido en s&apos;amusant ! 🎮
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0 }}

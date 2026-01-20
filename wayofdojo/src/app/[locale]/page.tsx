@@ -113,7 +113,7 @@ export default function HomePage() {
               <TanakaAnimatedLogo size="md" />
               <div className="text-left">
                 <p className="text-xs sm:text-sm text-amber-400 font-medium group-hover:text-amber-300 transition-colors">Way of Dojo</p>
-                <p className="text-sm sm:text-lg text-white font-bold group-hover:text-slate-200 transition-colors hidden sm:block">Votre parcours</p>
+                <p className="text-sm sm:text-lg text-white font-bold group-hover:text-slate-200 transition-colors hidden sm:block">L&apos;Aïkido, prolongé au-delà du dojo !</p>
               </div>
             </Link>
 
@@ -319,7 +319,7 @@ export default function HomePage() {
               className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 px-4 py-2 rounded-full mb-6"
             >
               <Sparkles className="w-4 h-4 text-amber-400" />
-              <span className="text-amber-300 text-sm font-medium">L&apos;Aïkido, prolongé au-delà du dojo !</span>
+              <span className="text-amber-300 text-sm font-medium">Way Of Dojo, l&apos;Aïkido, prolongé au-delà du dojo !</span>
             </motion.div>
 
             {/* Titre principal - Descendu pour harmonie */}
