@@ -1,5 +1,32 @@
 # 📝 WayofDojo - CHANGELOG
 
+## [2025-01-20] - Session Actuelle (3ème partie)
+
+### ✅ Modifié
+
+#### 🏠 Page d'accueil - Refonte complète
+- **Suppression** de la section "Parcours Ninja en 6 étapes"
+- **Ajout** de la section "Choisis ton mode pour commencer !" avec deux cartes :
+  - **Carte "Jeune Samouraï"** (Moins de 14 ans) : fond orange, étoiles animées, personnage enfant 3D, 3 icônes, avatar Tanaka + "Parle-moi !"
+  - **Carte "Samouraï Confirmé"** (Plus de 14 ans) : fond sombre, fleurs de cerisier, couple adulte 3D, badge ☯️, 3 icônes
+- **Remplacement global** du mot "Ninja" par "Samouraï" dans toute l'application
+- **Maître Tanaka animé** en haut à droite avec label "Parle-moi !" et indicateur vert pulsant
+- **Badge "APP INTERACTIVE ! POSE TES QUESTIONS À TANAKA !"** ajouté
+- **Titre principal** "Deviens un vrai Samouraï !" repositionné pour plus d'harmonie
+
+#### 🎨 Design fidèle à l'original Aikido@Game
+- Images des personnages 3D originaux intégrées (enfant.png, adultes.png)
+- Bordures dorées/argentées avec effets de lueur
+- Particules scintillantes animées
+- Icônes carrées colorées (violet, ambre, cyan, rose)
+- Message de confidentialité avec cadenas
+
+### 🔧 Corrigé
+- Erreurs de lint ESLint (variables non utilisées)
+- Textes de Tanaka : remplacement de "Ninja/jeune Ninja" par "Samouraï"
+
+---
+
 ## [2025-01-20] - Session Actuelle (2ème partie)
 
 ### ✅ Ajouté
