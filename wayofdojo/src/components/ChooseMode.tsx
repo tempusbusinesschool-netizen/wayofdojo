@@ -53,17 +53,15 @@ export default function ChooseMode({ onModeSelect }: ChooseModeProps) {
           }}
           data-testid="mode-jeune-samourai"
         >
-          {/* Image du personnage 3D - Réduit de 15% */}
-          <div className="relative aspect-[4/5] w-full flex items-center justify-center overflow-hidden bg-gradient-to-b from-amber-400 via-orange-400 to-amber-500">
-            <div className="relative w-[85%] h-[85%]">
-              <Image
-                src="/images/modes/enfant.png"
-                alt="Jeune Samouraï"
-                fill
-                className="object-contain"
-                priority
-              />
-            </div>
+          {/* Image du personnage 3D */}
+          <div className="relative aspect-[4/5] w-full">
+            <Image
+              src="/images/modes/enfant.png"
+              alt="Jeune Samouraï"
+              fill
+              className="object-cover"
+              priority
+            />
           </div>
 
           {/* Section jaune/dorée du bas */}
