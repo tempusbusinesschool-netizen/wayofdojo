@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Swords, Mail, Lock, ArrowRight } from 'lucide-react';
+import apiService from '@/services/api.service';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -30,15 +31,14 @@ export default function LoginPage() {
     setError('');
 
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      });
+      const data = await apiService.login(formData.email, formData.password) as {
+        success: boolean;
+        token: string;
+        user: Record<string, unknown>;
+        error?: string;
+      };
 
-      const data = await response.json();
-
-      if (!response.ok) {
+      if (!data.success) {
         throw new Error(data.error || 'Erreur lors de la connexion');
       }
 
