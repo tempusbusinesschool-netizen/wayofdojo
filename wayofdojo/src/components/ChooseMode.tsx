@@ -27,12 +27,12 @@ export default function ChooseMode({ onModeSelect }: ChooseModeProps) {
   };
 
   return (
-    <div className="w-full py-4 px-4" data-testid="choose-mode">
-      {/* Title - Remonté */}
+    <div className="w-full py-2 px-4" data-testid="choose-mode">
+      {/* Title */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-6"
+        className="text-center mb-4"
       >
         <h2 className="text-2xl md:text-3xl font-black text-white mb-2">
           Choisis ton mode pour commencer !
@@ -40,8 +40,8 @@ export default function ChooseMode({ onModeSelect }: ChooseModeProps) {
         <p className="text-slate-400">Tu pourras changer à tout moment 🥋</p>
       </motion.div>
 
-      {/* Mode Cards - Images originales */}
-      <div className="max-w-4xl mx-auto flex flex-col md:flex-row justify-center items-center gap-6 md:gap-8">
+      {/* Mode Cards - Images originales identiques à Aikido@Game */}
+      <div className="max-w-4xl mx-auto flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6">
         {/* Jeune Samouraï Card - Image originale */}
         <motion.button
           initial={{ opacity: 0, x: -30 }}
@@ -56,8 +56,8 @@ export default function ChooseMode({ onModeSelect }: ChooseModeProps) {
           <Image
             src="/images/modes/jeune-ninja-card.png"
             alt="Jeune Samouraï - Moins de 14 ans"
-            width={350}
-            height={450}
+            width={320}
+            height={420}
             className="object-contain"
             priority
           />
@@ -77,8 +77,8 @@ export default function ChooseMode({ onModeSelect }: ChooseModeProps) {
           <Image
             src="/images/modes/ninja-confirme-card.png"
             alt="Samouraï Confirmé - Plus de 14 ans"
-            width={350}
-            height={450}
+            width={320}
+            height={420}
             className="object-contain"
             priority
           />
@@ -90,7 +90,7 @@ export default function ChooseMode({ onModeSelect }: ChooseModeProps) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.4 }}
-        className="flex items-center justify-center gap-2 mt-6 text-slate-500 text-sm"
+        className="flex items-center justify-center gap-2 mt-4 text-slate-500 text-sm"
       >
         <Lock className="w-4 h-4" />
         <span>Aucune donnée personnelle n&apos;est collectée. Ton choix est enregistré uniquement sur ton appareil.</span>
