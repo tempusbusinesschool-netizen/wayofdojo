@@ -408,7 +408,7 @@ export default function DemoPage() {
                     <Award className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h2 className="text-xl font-bold text-white">3 Vertus d'exemple</h2>
+                    <h2 className="text-xl font-bold text-white">3 Vertus d&apos;exemple</h2>
                     <p className="text-slate-400 text-sm">Sur les 7 Vertus du Bushido</p>
                   </div>
                 </div>
