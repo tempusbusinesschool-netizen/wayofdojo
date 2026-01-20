@@ -164,7 +164,7 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
               <span className="bg-cyan-500/30 text-cyan-100 text-xs px-2 py-1 rounded-full">{tech.grade}</span>
             </motion.div>
           ))}
-          <p className="text-center text-cyan-200 text-sm pt-2">+ 200 autres techniques à découvrir...</p>
+          <p className="text-center text-cyan-200 text-sm pt-2">+ 209 autres techniques à découvrir...</p>
         </div>
       )
     },
@@ -175,6 +175,7 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
       previewTitle: 'Tes Défis du Jour',
       previewDescription: 'Complète des défis pour gagner XP et badges !',
       stats: [{ label: 'Défis dispo', value: '25+' }, { label: 'XP/jour max', value: '100' }],
+      demoLink: '/fr/aikido/dojo',
       previewContent: (
         <div className="space-y-3">
           {realChallenges.map((challenge, i) => (
