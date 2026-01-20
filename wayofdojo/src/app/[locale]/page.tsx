@@ -325,8 +325,7 @@ export default function HomePage() {
               Deviens un vrai{' '}
               <span className="bg-gradient-to-r from-amber-400 via-orange-400 to-red-400 bg-clip-text text-transparent">
                 Samouraï !
-              </span>{' '}
-              🥷
+              </span>
             </h1>
 
             <p className="text-slate-400 text-lg sm:text-xl max-w-2xl mx-auto mb-6">
