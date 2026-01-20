@@ -157,8 +157,8 @@ export default function StagesPage() {
   const locale = params.locale as string;
   const sport = params.sport as string;
 
-  const [stages] = useState<Stage[]>(MOCK_STAGES);
-  const [filteredStages, setFilteredStages] = useState<Stage[]>(MOCK_STAGES);
+  const [stages, setStages] = useState<Stage[]>(FALLBACK_STAGES);
+  const [filteredStages, setFilteredStages] = useState<Stage[]>(FALLBACK_STAGES);
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [searchQuery, setSearchQuery] = useState('');
   const [levelFilter, setLevelFilter] = useState<LevelFilter>('tous');
@@ -166,11 +166,30 @@ export default function StagesPage() {
   const [showFilters, setShowFilters] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  const [loading, setLoading] = useState(true);
 
+  // Load stages from API
   useEffect(() => {
+    const loadStages = async () => {
+      try {
+        const data = await apiService.request<{ success: boolean; stages: Stage[] }>(`/stages?sport=${sport}&upcoming=true`);
+        if (data.success && data.stages.length > 0) {
+          setStages(data.stages);
+          setFilteredStages(data.stages);
+        }
+      } catch (error) {
+        console.log('Using fallback stages data');
+        // Keep fallback data
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    loadStages();
+    
     const user = localStorage.getItem('wayofdojo_user');
     setIsLoggedIn(!!user);
-  }, []);
+  }, [sport]);
 
   useEffect(() => {
     let result = stages;
