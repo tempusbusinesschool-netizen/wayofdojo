@@ -25,9 +25,9 @@
 
 | Portail | Cible | Fonctionnalités clés | Status |
 |---------|-------|---------------------|--------|
-| 👤 **PRATIQUANT** | Utilisateurs isolés | Gamification, Techniques, Progression, Stages | 🟡 En cours |
+| 👤 **PRATIQUANT** | Utilisateurs isolés | Gamification, Techniques, Progression, Stages | 🟢 En cours (Dashboard, Stages, Défis) |
 | 🏯 **CLUB** | Dojos / Clubs | CRM, Adhérents, Planning, Finance, Stages | ⬜ À faire |
-| 🛡️ **ADMIN** | Gestionnaires plateforme | Dashboard global, Config, Modération, Billing | ⬜ À faire |
+| 🛡️ **ADMIN** | Gestionnaires plateforme | Dashboard global, Config, Modération, Billing | 🟢 Implémenté (Stats, Users, Rôles) |
 
 ### Segmentation Utilisateurs
 
