@@ -164,6 +164,27 @@ const demoVirtues = [
 ];
 
 export default function DemoPage() {
+  return (
+    <Suspense fallback={<DemoPageLoading />}>
+      <DemoPageContent />
+    </Suspense>
+  );
+}
+
+function DemoPageLoading() {
+  return (
+    <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+      <div className="text-center">
+        <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-3xl animate-pulse mx-auto">
+          🥋
+        </div>
+        <p className="text-white font-bold mt-4">Chargement...</p>
+      </div>
+    </div>
+  );
+}
+
+function DemoPageContent() {
   const params = useParams();
   const router = useRouter();
   const searchParams = useSearchParams();
