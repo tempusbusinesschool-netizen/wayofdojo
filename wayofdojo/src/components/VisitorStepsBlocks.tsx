@@ -148,7 +148,7 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
       )
     },
     {
-      id: 2, slug: 'techniques', emoji: '🥋', title: '+ 214 Techniques',
+      id: 2, slug: 'techniques', emoji: '🥋', title: '+ 214 Techniques officielles',
       subtitle: 'Tout le programme Aïkido',
       gradient: 'from-cyan-500 to-blue-600', shadowColor: 'shadow-cyan-500/40',
       previewTitle: 'Bibliothèque des Techniques',
@@ -216,7 +216,7 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
       )
     },
     {
-      id: 4, slug: 'vertus', emoji: '☯️', title: 'Les 7 Vertus',
+      id: 4, slug: 'vertus', emoji: '☯️', title: 'Les 7 Vertus du Samouraï',
       subtitle: 'Deviens un vrai guerrier',
       gradient: 'from-amber-500 to-orange-600', shadowColor: 'shadow-amber-500/40',
       previewTitle: 'Les 7 Vertus du Samouraï',
@@ -250,7 +250,7 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
       )
     },
     {
-      id: 5, slug: 'ceintures', emoji: '🎖️', title: 'Les Ceintures',
+      id: 5, slug: 'ceintures', emoji: '🎖️', title: 'Les Passages de Grades',
       subtitle: 'Ta progression visible',
       gradient: 'from-slate-600 to-slate-800', shadowColor: 'shadow-slate-500/40',
       previewTitle: 'Système de Grades',
@@ -281,7 +281,7 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
       )
     },
     {
-      id: 6, slug: 'histoire', emoji: '📜', title: "L'Histoire",
+      id: 6, slug: 'histoire', emoji: '📜', title: "L'Histoire de l'Aïkido",
       subtitle: 'Découvre O-Sensei',
       gradient: 'from-amber-600 to-yellow-700', shadowColor: 'shadow-amber-600/40',
       previewTitle: "L'Histoire de l'Aïkido",
