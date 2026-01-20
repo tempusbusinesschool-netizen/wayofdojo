@@ -13,6 +13,7 @@ import {
   User, Mail, Lock, ArrowRight, Sparkles
 } from 'lucide-react';
 import { aikidoConfig } from '@/config/sports/aikido.config';
+import apiService from '@/services/api.service';
 
 type Step = 'profile' | 'info' | 'sport' | 'complete';
 
@@ -68,24 +69,23 @@ export default function RegisterPage() {
     setError('');
 
     try {
-      const response = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          profile: formData.profile,
-          sport: sport,
-          grade: formData.grade,
-          locale: locale,
-        }),
-      });
+      const data = await apiService.register({
+        email: formData.email,
+        password: formData.password,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        profile: formData.profile || undefined,
+        sport: sport,
+        grade: formData.grade,
+        locale: locale,
+      }) as {
+        success: boolean;
+        token: string;
+        user: Record<string, unknown>;
+        error?: string;
+      };
 
-      const data = await response.json();
-
-      if (!response.ok) {
+      if (!data.success) {
         throw new Error(data.error || 'Erreur lors de l\'inscription');
       }
 
