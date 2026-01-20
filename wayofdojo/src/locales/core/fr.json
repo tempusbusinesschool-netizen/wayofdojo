@@ -50,10 +50,10 @@
     "leaderboard": "Classement"
   },
   "profiles": {
-    "jeuneNinja": "Jeune Ninja",
-    "jeuneNinjaDesc": "Mode ludique pour les 6-14 ans",
-    "ninjaConfirme": "Ninja Confirmé",
-    "ninjaConfirmeDesc": "Mode avancé pour les 15 ans et plus",
+    "jeuneSamourai": "Jeune Samouraï",
+    "jeuneSamouraiDesc": "Mode ludique pour les moins de 14 ans",
+    "samouraiConfirme": "Samouraï Confirmé",
+    "samouraiConfirmeDesc": "Mode avancé pour les plus de 14 ans",
     "chooseProfile": "Choisis ton profil",
     "canChangeLater": "Tu pourras changer à tout moment"
   },
