@@ -212,6 +212,7 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
       previewTitle: 'Les 7 Vertus du Samouraï',
       previewDescription: 'Chaque vertu a son animal gardien qui évolue !',
       stats: [{ label: 'Vertus', value: '7' }, { label: 'Niveaux/vertu', value: '5' }],
+      demoLink: '/fr/aikido/progression',
       previewContent: (
         <div className="space-y-3">
           <div className="grid grid-cols-2 gap-2">
