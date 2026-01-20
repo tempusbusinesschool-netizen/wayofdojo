@@ -6,7 +6,7 @@ import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { 
   ArrowLeft, ChevronRight, Play, Sparkles, Lock, UserPlus,
-  Swords, Target, BookOpen, Award, Trophy, Star, Zap
+  Swords, Target, BookOpen, Award, Star, Zap
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
