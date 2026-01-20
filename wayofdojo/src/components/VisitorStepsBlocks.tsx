@@ -304,6 +304,7 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
       previewTitle: 'Tes Trophées & Badges',
       previewDescription: 'Débloque des badges rares et légendaires !',
       stats: [{ label: 'Badges', value: '50+' }, { label: 'Trophées', value: '12' }],
+      demoLink: '/fr/aikido/badges',
       previewContent: (
         <div className="space-y-2">
           {realTrophies.map((trophy, i) => (
