@@ -342,21 +342,21 @@ export default function HomePage() {
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 px-4 py-2 rounded-full mb-4"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 px-4 py-2 rounded-full mb-6"
             >
               <Sparkles className="w-4 h-4 text-amber-400" />
               <span className="text-amber-300 text-sm font-medium">L&apos;Aïkido, c&apos;est du jeu !</span>
             </motion.div>
 
-            {/* Titre principal */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 leading-tight">
+            {/* Titre principal - Descendu pour harmonie */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 leading-tight mt-4">
               Deviens un vrai{' '}
               <span className="bg-gradient-to-r from-amber-400 via-orange-400 to-red-400 bg-clip-text text-transparent">
                 Samouraï !
               </span>
             </h1>
 
-            <p className="text-slate-400 text-lg sm:text-xl max-w-2xl mx-auto mb-6">
+            <p className="text-slate-400 text-lg sm:text-xl max-w-2xl mx-auto mb-5">
               Apprends l&apos;Aïkido en t&apos;amusant avec Maître Tanaka. 
               <span className="text-white font-semibold"> 206+ techniques</span>, 
               <span className="text-amber-400 font-semibold"> 7 vertus magiques</span>, 
