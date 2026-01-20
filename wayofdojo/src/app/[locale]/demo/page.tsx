@@ -268,7 +268,7 @@ export default function DemoPage() {
                     <Swords className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h2 className="text-xl font-bold text-white">3 Techniques d'exemple</h2>
+                    <h2 className="text-xl font-bold text-white">3 Techniques d&apos;exemple</h2>
                     <p className="text-slate-400 text-sm">Sur les 214+ techniques disponibles</p>
                   </div>
                 </div>
