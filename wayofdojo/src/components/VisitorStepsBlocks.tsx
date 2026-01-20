@@ -390,6 +390,76 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
           </div>
         </div>
       )
+    },
+    {
+      id: 9, slug: 'stages', emoji: '🎪', title: 'Stages et Séminaires',
+      subtitle: 'Événements à venir',
+      gradient: 'from-indigo-500 to-purple-600', shadowColor: 'shadow-indigo-500/40',
+      previewTitle: 'Stages et Séminaires',
+      previewDescription: 'Découvre les prochains événements Aïkido !',
+      stats: [{ label: 'Stages/an', value: '20+' }, { label: 'Senseis', value: '15+' }],
+      demoLink: `/${locale}/demo?section=techniques`,
+      previewContent: (
+        <div className="space-y-3">
+          <div className="bg-white/10 rounded-xl p-4">
+            <div className="flex items-center gap-3 mb-2">
+              <span className="text-3xl">📅</span>
+              <div>
+                <p className="text-white font-bold">Stage National</p>
+                <p className="text-indigo-200 text-sm">15-16 Mars 2025</p>
+              </div>
+            </div>
+            <p className="text-white/70 text-xs">Paris • Sensei Yamada</p>
+          </div>
+          <div className="bg-white/10 rounded-xl p-4">
+            <div className="flex items-center gap-3 mb-2">
+              <span className="text-3xl">🌍</span>
+              <div>
+                <p className="text-white font-bold">Séminaire International</p>
+                <p className="text-indigo-200 text-sm">20-22 Juin 2025</p>
+              </div>
+            </div>
+            <p className="text-white/70 text-xs">Lyon • Multiple Senseis</p>
+          </div>
+          <p className="text-center text-indigo-200 text-sm pt-2">+ 18 autres événements à découvrir...</p>
+        </div>
+      )
+    },
+    {
+      id: 10, slug: 'armes', emoji: '⚔️', title: 'Le Bokken, Le Jo, Le Tanto !',
+      subtitle: 'Les armes traditionnelles',
+      gradient: 'from-rose-500 to-red-600', shadowColor: 'shadow-rose-500/40',
+      previewTitle: 'Les Armes de l\'Aïkido',
+      previewDescription: 'Découvre les 3 armes traditionnelles !',
+      stats: [{ label: 'Armes', value: '3' }, { label: 'Katas', value: '31+' }],
+      demoLink: `/${locale}/demo?section=techniques`,
+      previewContent: (
+        <div className="space-y-3">
+          <div className="grid grid-cols-3 gap-2">
+            <div className="bg-white/10 rounded-xl p-3 text-center">
+              <span className="text-3xl block mb-1">🗡️</span>
+              <p className="text-white font-bold text-sm">Bokken</p>
+              <p className="text-rose-200 text-[10px]">Sabre en bois</p>
+            </div>
+            <div className="bg-white/10 rounded-xl p-3 text-center">
+              <span className="text-3xl block mb-1">🥢</span>
+              <p className="text-white font-bold text-sm">Jo</p>
+              <p className="text-rose-200 text-[10px]">Bâton court</p>
+            </div>
+            <div className="bg-white/10 rounded-xl p-3 text-center">
+              <span className="text-3xl block mb-1">🔪</span>
+              <p className="text-white font-bold text-sm">Tanto</p>
+              <p className="text-rose-200 text-[10px]">Couteau en bois</p>
+            </div>
+          </div>
+          <div className="bg-white/10 rounded-xl p-3">
+            <p className="text-rose-100 text-sm text-center">
+              Les armes prolongent les techniques à mains nues et développent la précision, la distance et le timing.
+            </p>
+          </div>
+          <p className="text-center text-rose-200 text-sm pt-1">+ 31 katas d&apos;armes à maîtriser...</p>
+        </div>
+      )
     }
   ];
 
