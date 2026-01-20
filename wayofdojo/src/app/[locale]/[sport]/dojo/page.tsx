@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -15,6 +15,7 @@ import UserDashboardBlocks from '@/components/UserDashboardBlocks';
 import MaitreTanaka from '@/components/MaitreTanaka';
 import { aikidoConfig } from '@/config/sports/aikido.config';
 import { VIRTUES_GAMIFICATION } from '@/constants/virtuesGamification';
+import apiService from '@/services/api.service';
 
 interface User {
   id: string;
@@ -31,8 +32,18 @@ interface User {
     streak: number;
     badges: string[];
     completedTechniques: string[];
+    completedChallenges?: string[];
     virtuesProgress?: Record<string, number>;
   };
+}
+
+interface GamificationProgress {
+  xp: { total: number; toNextLevel: { current: number; required: number; progress: number } };
+  level: number;
+  streak: { current: number; status: string };
+  badges: { unlocked: number; total: number };
+  challenges: { completed: number; list: string[] };
+  title: { emoji: string; title: string } | null;
 }
 
 export default function DojoPage() {
@@ -45,16 +56,48 @@ export default function DojoPage() {
   const [loading, setLoading] = useState(true);
   const [selectedVirtue, setSelectedVirtue] = useState<string | null>(null);
   const [showXpAnimation, setShowXpAnimation] = useState(false);
+  const [xpGained, setXpGained] = useState(0);
+  const [gamificationData, setGamificationData] = useState<GamificationProgress | null>(null);
+  const [completedChallenges, setCompletedChallenges] = useState<string[]>([]);
+  const [processingChallenge, setProcessingChallenge] = useState<string | null>(null);
+
+  // Load gamification progress
+  const loadProgress = useCallback(async () => {
+    try {
+      const data = await apiService.getProgress() as { success: boolean; progress: GamificationProgress };
+      if (data.success) {
+        setGamificationData(data.progress);
+        setCompletedChallenges(data.progress.challenges.list || []);
+        
+        // Update local user data
+        const storedUser = localStorage.getItem('wayofdojo_user');
+        if (storedUser) {
+          const userData = JSON.parse(storedUser);
+          userData.gamification = {
+            ...userData.gamification,
+            xp: data.progress.xp.total,
+            level: data.progress.level,
+            streak: data.progress.streak.current,
+          };
+          localStorage.setItem('wayofdojo_user', JSON.stringify(userData));
+          setUser(userData);
+        }
+      }
+    } catch (error) {
+      console.error('Failed to load progress:', error);
+    }
+  }, []);
 
   useEffect(() => {
     const storedUser = localStorage.getItem('wayofdojo_user');
     if (storedUser) {
       setUser(JSON.parse(storedUser));
+      loadProgress();
     } else {
       router.push(`/${locale}/${sport}/login`);
     }
     setLoading(false);
-  }, [locale, sport, router]);
+  }, [locale, sport, router, loadProgress]);
 
   const handleLogout = () => {
     localStorage.removeItem('wayofdojo_token');
