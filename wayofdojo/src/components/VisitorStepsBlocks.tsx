@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Lock, ChevronRight, Sparkles, Eye, X, Star, Trophy, Target, Heart, Zap, ExternalLink } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 
 /**
  * VisitorStepsBlocks - Présentation du VRAI CONTENU pour visiteurs NON CONNECTÉS
