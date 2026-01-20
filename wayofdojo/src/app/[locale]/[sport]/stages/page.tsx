@@ -793,7 +793,7 @@ export default function StagesPage() {
 
       {/* Maître Tanaka */}
       <MaitreTanaka 
-        isJeuneSamouraï={false}
+        isJeuneSamourai={false}
         messages={[
           "Les stages sont une excellente opportunité de progresser !",
           "Chaque rencontre avec un nouveau sensei enrichit ta pratique.",

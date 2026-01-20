@@ -27,7 +27,7 @@ interface MaitreTanakaProps {
   childContext?: ChildContext | null;
   isVisible?: boolean;
   apiUrl?: string;
-  isJeuneSamouraï?: boolean;
+  isJeuneSamourai?: boolean;
   messages?: string[];
 }
 
@@ -39,11 +39,11 @@ export const MaitreTanaka: React.FC<MaitreTanakaProps> = ({
   childContext = null, 
   isVisible = true,
   apiUrl = '/api/voice-agent',
-  isJeuneSamouraï = true,
+  isJeuneSamourai = true,
   messages = []
 }) => {
-  // Use isJeuneSamouraï for styling decisions  
-  const buttonLabel = isJeuneSamouraï ? "Parle-moi !" : "Assistance";
+  // Use isJeuneSamourai for styling decisions  
+  const buttonLabel = isJeuneSamourai ? "Parle-moi !" : "Assistance";
   // Store messages for potential random display
   const tipsMessages = messages.length > 0 ? messages : ["Bienvenue !"];
   const [isOpen, setIsOpen] = useState(false);

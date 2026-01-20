@@ -364,7 +364,7 @@ export default function AdminPage() {
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-white text-sm">🎒 Jeune Samouraï</span>
-                      <span className="text-amber-400 font-bold">{stats.usersByProfile.jeune_samouraï || 0}</span>
+                      <span className="text-amber-400 font-bold">{stats.usersByProfile.jeune_samourai || 0}</span>
                     </div>
                   </div>
                 </div>

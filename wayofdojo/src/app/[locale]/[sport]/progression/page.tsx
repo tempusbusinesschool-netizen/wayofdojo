@@ -62,7 +62,7 @@ export default function ProgressionPage() {
 
   const currentBelt = getBeltByKey(user.grade);
   const nextBelt = getNextBelt(currentBelt);
-  const isJeuneSamouraï = user.profile === 'jeune_samouraï';
+  const isJeuneSamourai = user.profile === 'jeune_samourai';
   const completedTechniques = user.gamification.completedTechniques || [];
 
   // Calculate progress for each grade
@@ -99,13 +99,13 @@ export default function ProgressionPage() {
   const xpProgress = Math.min(100, (user.gamification.xp % 100));
 
   return (
-    <div className={`min-h-screen ${isJeuneSamouraï 
+    <div className={`min-h-screen ${isJeuneSamourai 
       ? 'bg-gradient-to-br from-amber-950 via-orange-950 to-amber-950' 
       : 'bg-gradient-to-br from-slate-950 via-emerald-950 to-slate-950'
     }`}>
       {/* Header */}
       <header className={`sticky top-0 z-50 backdrop-blur-md border-b ${
-        isJeuneSamouraï 
+        isJeuneSamourai 
           ? 'bg-amber-900/80 border-amber-500/20' 
           : 'bg-emerald-900/80 border-emerald-500/20'
       }`}>
@@ -115,7 +115,7 @@ export default function ProgressionPage() {
               animate={{ scale: [1, 1.1, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
               className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-lg ${
-                isJeuneSamouraï 
+                isJeuneSamourai 
                   ? 'bg-gradient-to-br from-amber-400 to-orange-500 shadow-amber-500/30' 
                   : 'bg-gradient-to-br from-emerald-400 to-green-500 shadow-emerald-500/30'
               }`}
@@ -124,7 +124,7 @@ export default function ProgressionPage() {
             </motion.div>
             <div>
               <span className="text-lg font-bold text-white">Ma Progression</span>
-              <p className={`text-xs ${isJeuneSamouraï ? 'text-amber-300' : 'text-emerald-300'}`}>
+              <p className={`text-xs ${isJeuneSamourai ? 'text-amber-300' : 'text-emerald-300'}`}>
                 Parcours de {user.firstName}
               </p>
             </div>
@@ -145,7 +145,7 @@ export default function ProgressionPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className={`rounded-3xl p-6 border mb-8 ${
-            isJeuneSamouraï 
+            isJeuneSamourai 
               ? 'bg-gradient-to-br from-amber-600/20 to-orange-600/20 border-amber-500/30' 
               : 'bg-gradient-to-br from-emerald-600/20 to-green-600/20 border-emerald-500/30'
           }`}
@@ -167,7 +167,7 @@ export default function ProgressionPage() {
               <h1 className="text-3xl font-black text-white mb-1">
                 {currentBelt.name}
               </h1>
-              <p className={`text-lg ${isJeuneSamouraï ? 'text-amber-400' : 'text-emerald-400'}`}>
+              <p className={`text-lg ${isJeuneSamourai ? 'text-amber-400' : 'text-emerald-400'}`}>
                 {currentBelt.grade}
               </p>
               <p className="text-slate-400 text-sm mt-2">{currentBelt.message}</p>
@@ -233,7 +233,7 @@ export default function ProgressionPage() {
               Prochain Objectif
             </h2>
             <div className={`rounded-2xl p-5 border ${
-              isJeuneSamouraï 
+              isJeuneSamourai 
                 ? 'bg-amber-900/20 border-amber-700/50' 
                 : 'bg-slate-800/50 border-slate-700'
             }`}>
@@ -420,12 +420,12 @@ export default function ProgressionPage() {
             <motion.div
               whileHover={{ scale: 1.02 }}
               className={`p-5 rounded-2xl border ${
-                isJeuneSamouraï 
+                isJeuneSamourai 
                   ? 'bg-amber-900/30 border-amber-700/50 hover:border-amber-500/50' 
                   : 'bg-slate-800/50 border-slate-700 hover:border-emerald-500/50'
               }`}
             >
-              <BookOpen className={`w-8 h-8 mb-3 ${isJeuneSamouraï ? 'text-amber-400' : 'text-emerald-400'}`} />
+              <BookOpen className={`w-8 h-8 mb-3 ${isJeuneSamourai ? 'text-amber-400' : 'text-emerald-400'}`} />
               <h3 className="text-white font-bold">Techniques</h3>
               <p className="text-slate-400 text-sm">{totalCompleted}/{totalTechniques} maîtrisées</p>
             </motion.div>
@@ -435,12 +435,12 @@ export default function ProgressionPage() {
             <motion.div
               whileHover={{ scale: 1.02 }}
               className={`p-5 rounded-2xl border ${
-                isJeuneSamouraï 
+                isJeuneSamourai 
                   ? 'bg-amber-900/30 border-amber-700/50 hover:border-amber-500/50' 
                   : 'bg-slate-800/50 border-slate-700 hover:border-violet-500/50'
               }`}
             >
-              <Award className={`w-8 h-8 mb-3 ${isJeuneSamouraï ? 'text-amber-400' : 'text-violet-400'}`} />
+              <Award className={`w-8 h-8 mb-3 ${isJeuneSamourai ? 'text-amber-400' : 'text-violet-400'}`} />
               <h3 className="text-white font-bold">Badges</h3>
               <p className="text-slate-400 text-sm">{user.gamification.completedTechniques?.length || 0} obtenus</p>
             </motion.div>
@@ -450,7 +450,7 @@ export default function ProgressionPage() {
 
       {/* Maître Tanaka */}
       <MaitreTanaka 
-        isJeuneSamouraï={isJeuneSamouraï}
+        isJeuneSamourai={isJeuneSamourai}
         messages={[
           `${user.firstName}, ton parcours est impressionnant !`,
           currentBelt.encouragement,

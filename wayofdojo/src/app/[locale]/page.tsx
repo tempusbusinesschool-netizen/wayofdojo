@@ -401,7 +401,7 @@ export default function HomePage() {
       {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
       <MaitreTanaka 
         isVisible={true}
-        isJeuneSamouraï={true}
+        isJeuneSamourai={true}
         messages={[
           "Bienvenue jeune Samouraï ! Je suis Maître Tanaka, ton guide sur la Voie de l'Aïkido.",
           "Inscris-toi pour commencer ton aventure et découvrir les secrets des grands maîtres !",

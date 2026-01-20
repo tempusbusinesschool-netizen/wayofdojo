@@ -23,7 +23,7 @@ interface User {
   lastName: string;
   email: string;
   role?: string;
-  profile: 'jeune_samouraï' | 'samouraï_confirme';
+  profile: 'jeune_samourai' | 'samouraï_confirme';
   sport: string;
   grade: string;
   gamification: {
@@ -168,7 +168,7 @@ export default function DojoPage() {
     (g) => g.id === user.grade
   );
 
-  const isJeuneSamouraï = user.profile === 'jeune_samouraï';
+  const isJeuneSamourai = user.profile === 'jeune_samourai';
   const isAdmin = user.role === 'admin' || user.role === 'super_admin';
 
   // Build belt config
@@ -177,7 +177,7 @@ export default function DojoPage() {
     name: currentGrade?.name || 'Ceinture Blanche',
     color: currentGrade?.color || '#FFFFFF',
     gradient: 'from-slate-200 to-white',
-    animalSpirit: isJeuneSamouraï ? '🐣' : '🥋',
+    animalSpirit: isJeuneSamourai ? '🐣' : '🥋',
     nextGrade: '5e KYU',
   };
 
@@ -262,7 +262,7 @@ export default function DojoPage() {
   const virtueProgress = user.gamification.virtuesProgress || {};
 
   return (
-    <div className={`min-h-screen ${isJeuneSamouraï 
+    <div className={`min-h-screen ${isJeuneSamourai 
       ? 'bg-gradient-to-br from-amber-950 via-orange-950 to-amber-950' 
       : 'bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950'
     }`}>
@@ -286,7 +286,7 @@ export default function DojoPage() {
 
       {/* Header */}
       <header className={`sticky top-0 z-50 backdrop-blur-md border-b ${
-        isJeuneSamouraï 
+        isJeuneSamourai 
           ? 'bg-gradient-to-r from-amber-900/90 to-orange-900/90 border-amber-500/20' 
           : 'bg-gradient-to-r from-violet-900/90 to-purple-900/90 border-violet-500/20'
       }`}>
@@ -296,7 +296,7 @@ export default function DojoPage() {
               animate={{ rotate: [0, 5, -5, 0] }}
               transition={{ duration: 4, repeat: Infinity }}
               className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-lg ${
-                isJeuneSamouraï 
+                isJeuneSamourai 
                   ? 'bg-gradient-to-br from-amber-400 to-orange-500 shadow-amber-500/30' 
                   : 'bg-gradient-to-br from-violet-500 to-purple-600 shadow-violet-500/30'
               }`}
@@ -305,8 +305,8 @@ export default function DojoPage() {
             </motion.div>
             <div>
               <span className="text-lg font-bold text-white">WayofDojo</span>
-              <p className={`text-xs ${isJeuneSamouraï ? 'text-amber-300' : 'text-violet-300'}`}>
-                {isJeuneSamouraï ? 'Mode Jeune Samouraï 🥷' : 'Mode Samouraï Confirmé'}
+              <p className={`text-xs ${isJeuneSamourai ? 'text-amber-300' : 'text-violet-300'}`}>
+                {isJeuneSamourai ? 'Mode Jeune Samouraï 🥷' : 'Mode Samouraï Confirmé'}
               </p>
             </div>
           </Link>
@@ -369,7 +369,7 @@ export default function DojoPage() {
           className="mt-6"
         >
           <div className={`rounded-2xl p-4 border ${
-            isJeuneSamouraï 
+            isJeuneSamourai 
               ? 'bg-gradient-to-r from-amber-600/20 to-orange-600/20 border-amber-500/30'
               : 'bg-gradient-to-r from-violet-600/20 to-purple-600/20 border-violet-500/30'
           }`}>
@@ -438,7 +438,7 @@ export default function DojoPage() {
           className="mt-8"
         >
           <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-            {isJeuneSamouraï ? '🎯 Que veux-tu faire ?' : '⚡ Actions rapides'}
+            {isJeuneSamourai ? '🎯 Que veux-tu faire ?' : '⚡ Actions rapides'}
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {quickActions.map((action, i) => (
@@ -510,7 +510,7 @@ export default function DojoPage() {
                 className={`p-4 rounded-2xl border transition-all cursor-pointer ${
                   challenge.completed
                     ? 'bg-emerald-500/20 border-emerald-500/50'
-                    : isJeuneSamouraï 
+                    : isJeuneSamourai 
                       ? 'bg-amber-900/30 border-amber-700/50 hover:border-amber-500/50' 
                       : 'bg-slate-800/50 border-slate-700 hover:border-violet-500/50'
                 }`}
@@ -578,7 +578,7 @@ export default function DojoPage() {
                   className={`text-center p-3 rounded-xl border cursor-pointer transition-all ${
                     selectedVirtue === virtue.id
                       ? `bg-gradient-to-br ${virtue.gradient} border-white/30`
-                      : isJeuneSamouraï 
+                      : isJeuneSamourai 
                         ? 'bg-amber-900/30 border-amber-700/50 hover:border-amber-500/50' 
                         : 'bg-slate-800/50 border-slate-700 hover:border-violet-500/50'
                   }`}
@@ -686,7 +686,7 @@ export default function DojoPage() {
                 transition={{ delay: 0.9 + index * 0.1 }}
                 whileHover={{ scale: 1.05 }}
                 className={`p-4 rounded-xl border ${
-                  isJeuneSamouraï 
+                  isJeuneSamourai 
                     ? 'bg-amber-900/20 border-amber-700/30' 
                     : 'bg-slate-800/30 border-slate-700/50'
                 }`}
@@ -703,8 +703,8 @@ export default function DojoPage() {
 
       {/* Maître Tanaka */}
       <MaitreTanaka 
-        isJeuneSamouraï={isJeuneSamouraï}
-        messages={isJeuneSamouraï ? [
+        isJeuneSamourai={isJeuneSamourai}
+        messages={isJeuneSamourai ? [
           `Super ${user.firstName} ! Tu as ${user.gamification.xp} XP ! 🌟`,
           "Continue comme ça, tu progresses bien !",
           "N'oublie pas tes défis du jour !",

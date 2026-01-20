@@ -18,7 +18,7 @@ import apiService from '@/services/api.service';
 type Step = 'profile' | 'info' | 'sport' | 'complete';
 
 interface FormData {
-  profile: 'jeune_samouraï' | 'samouraï_confirme' | null;
+  profile: 'jeune_samourai' | 'samouraï_confirme' | null;
   firstName: string;
   lastName: string;
   email: string;
@@ -166,11 +166,11 @@ export default function RegisterPage() {
                 {/* Jeune Samouraï */}
                 <Card
                   className={`cursor-pointer transition-all ${
-                    formData.profile === 'jeune_samouraï'
+                    formData.profile === 'jeune_samourai'
                       ? 'border-amber-500 ring-2 ring-amber-500/50'
                       : 'hover:border-amber-500/50'
                   }`}
-                  onClick={() => setFormData({ ...formData, profile: 'jeune_samouraï' })}
+                  onClick={() => setFormData({ ...formData, profile: 'jeune_samourai' })}
                 >
                   <CardContent className="p-6 flex items-center gap-4">
                     <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-amber-500/20 to-orange-600/20 flex items-center justify-center flex-shrink-0">
@@ -184,7 +184,7 @@ export default function RegisterPage() {
                         {t('profiles.jeuneSamouraïDesc')}
                       </p>
                     </div>
-                    {formData.profile === 'jeune_samouraï' && (
+                    {formData.profile === 'jeune_samourai' && (
                       <Check className="w-6 h-6 text-amber-500" />
                     )}
                   </CardContent>
