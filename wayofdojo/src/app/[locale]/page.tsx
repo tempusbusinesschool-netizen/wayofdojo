@@ -340,6 +340,19 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+      {/* CHOIX DU MODE - ChooseMode */}
+      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+      <section className="container mx-auto px-4 py-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
+          <ChooseMode />
+        </motion.div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
       {/* 8 BLOCS DE PRÉVISUALISATION - VisitorStepsBlocks */}
       {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
       <section className="container mx-auto px-4 py-6 sm:py-10">
