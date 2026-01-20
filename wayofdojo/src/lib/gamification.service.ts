@@ -144,7 +144,8 @@ export function checkBadgeEligibility(
 // Get all badges with unlock status
 export function getAllBadgesWithStatus(
   earnedBadges: string[],
-  userStats: {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _userStats: {
     xp: number;
     level: number;
     streak: number;
