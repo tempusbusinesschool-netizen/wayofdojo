@@ -105,6 +105,7 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
       previewTitle: 'Ton Profil de Samouraï',
       previewDescription: 'Personnalise ton avatar et suis ta progression !',
       stats: [{ label: 'Samouraïs actifs', value: '2,847' }],
+      demoLink: '/fr/aikido/dojo',
       previewContent: (
         <div className="space-y-4">
           <div className="flex items-center gap-4 bg-white/10 rounded-xl p-4">
