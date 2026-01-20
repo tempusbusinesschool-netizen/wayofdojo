@@ -7,6 +7,14 @@ const nextConfig = {
   images: {
     domains: ['images.unsplash.com', 'res.cloudinary.com'],
   },
+  async rewrites() {
+    return [
+      {
+        source: '/next-api/:path*',
+        destination: '/api/:path*',
+      },
+    ];
+  },
 };
 
 export default withNextIntl(nextConfig);
