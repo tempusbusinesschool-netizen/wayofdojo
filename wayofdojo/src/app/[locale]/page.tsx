@@ -279,27 +279,45 @@ export default function HomePage() {
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-violet-500/10 rounded-full blur-3xl" />
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl" />
         
-        <div className="relative container mx-auto px-4 py-8 sm:py-12">
-          {/* Maître Tanaka agrandi en haut à droite */}
+        <div className="relative container mx-auto px-4 py-6 sm:py-8">
+          {/* Maître Tanaka animé en haut à droite - Comme la bulle du bas */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3, duration: 0.5 }}
-            className="absolute top-4 right-4 md:top-8 md:right-8 z-10"
+            className="absolute top-2 right-2 md:top-4 md:right-4 z-20 flex flex-col items-end"
           >
+            {/* Label "Parle-moi !" animé */}
             <motion.div
-              animate={{ y: [0, -8, 0] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              className="w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 p-1 shadow-2xl shadow-amber-500/40"
+              animate={{ y: [0, -3, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              className="bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs md:text-sm font-bold px-3 py-1 rounded-full mb-1 shadow-lg"
             >
-              <div className="w-full h-full rounded-full overflow-hidden bg-amber-900/50 border-2 border-amber-300/50">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img 
-                  src="/images/tanaka/portrait.png" 
-                  alt="Maître Tanaka"
-                  className="w-full h-full object-cover"
-                />
+              Parle-moi !
+            </motion.div>
+            
+            {/* Avatar Tanaka animé */}
+            <motion.div
+              animate={{ y: [0, -8, 0], scale: [1, 1.02, 1] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              className="relative cursor-pointer group"
+            >
+              <div className="w-20 h-20 md:w-28 md:h-28 lg:w-36 lg:h-36 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 p-1 shadow-2xl shadow-amber-500/40 group-hover:shadow-amber-500/60 transition-shadow">
+                <div className="w-full h-full rounded-full overflow-hidden bg-amber-900/50 border-2 border-amber-300/50">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img 
+                    src="/images/tanaka/portrait.png" 
+                    alt="Maître Tanaka"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
               </div>
+              {/* Indicateur de pulsation */}
+              <motion.div
+                animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="absolute -bottom-1 -right-1 w-4 h-4 md:w-5 md:h-5 bg-green-500 rounded-full border-2 border-white"
+              />
             </motion.div>
           </motion.div>
 
@@ -307,9 +325,19 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-8"
+            className="text-center mb-4"
           >
-            {/* Badge */}
+            {/* Badge APP INTERACTIVE */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.1 }}
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 border border-emerald-500/30 px-4 py-2 rounded-full mb-3"
+            >
+              <span className="text-emerald-300 text-xs md:text-sm font-bold">🎯 APP INTERACTIVE ! POSE TES QUESTIONS À TANAKA !</span>
+            </motion.div>
+
+            {/* Badge L'Aïkido c'est du jeu */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
