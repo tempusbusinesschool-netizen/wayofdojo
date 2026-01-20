@@ -462,18 +462,6 @@ export default function HomePage() {
         </div>
       </footer>
 
-      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-      {/* MAÎTRE TANAKA FLOTTANT */}
-      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-      <MaitreTanaka 
-        isVisible={true}
-        isJeuneSamourai={true}
-        messages={[
-          "Bienvenue jeune Samouraï ! Je suis Maître Tanaka, ton guide sur la Voie de l'Aïkido.",
-          "Inscris-toi pour commencer ton aventure et découvrir les secrets des grands maîtres !",
-          "Chaque vertu t'aidera à devenir un vrai guerrier pacifique.",
-        ]}
-      />
     </div>
   );
 }
