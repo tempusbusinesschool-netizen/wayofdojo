@@ -453,7 +453,7 @@ export default function DemoPage() {
                     </div>
                     
                     <div className="bg-slate-700/50 rounded-xl p-3">
-                      <p className="text-white/80 text-sm italic text-center">"{virtue.quote}"</p>
+                      <p className="text-white/80 text-sm italic text-center">&quot;{virtue.quote}&quot;</p>
                     </div>
                   </motion.div>
                 ))}
