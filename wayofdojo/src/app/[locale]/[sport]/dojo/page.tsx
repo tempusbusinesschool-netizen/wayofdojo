@@ -105,11 +105,48 @@ export default function DojoPage() {
     router.push(`/${locale}`);
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleCompleteChallenge = (_challengeId: number) => {
-    setShowXpAnimation(true);
-    setTimeout(() => setShowXpAnimation(false), 2000);
-    // TODO: Implement challenge completion logic
+  // Complete a challenge
+  const handleCompleteChallenge = async (challengeId: string, virtueId: string, xp: number) => {
+    if (completedChallenges.includes(challengeId) || processingChallenge) return;
+    
+    setProcessingChallenge(challengeId);
+    
+    try {
+      const data = await apiService.completeChallenge(challengeId, virtueId) as {
+        success: boolean;
+        xp: { added: number; total: number };
+        level: { current: number; levelUp: boolean };
+        badges: { newlyUnlocked: Array<{ name: string; emoji: string }> };
+      };
+      
+      if (data.success) {
+        // Show XP animation
+        setXpGained(data.xp.added);
+        setShowXpAnimation(true);
+        setTimeout(() => setShowXpAnimation(false), 2500);
+        
+        // Update completed challenges
+        setCompletedChallenges(prev => [...prev, challengeId]);
+        
+        // Reload progress
+        await loadProgress();
+        
+        // Show level up notification if applicable
+        if (data.level.levelUp) {
+          alert(`🎉 Niveau ${data.level.current} atteint !`);
+        }
+        
+        // Show new badges
+        if (data.badges.newlyUnlocked.length > 0) {
+          const badgeNames = data.badges.newlyUnlocked.map(b => `${b.emoji} ${b.name}`).join(', ');
+          alert(`🏆 Nouveau badge débloqué : ${badgeNames}`);
+        }
+      }
+    } catch (error) {
+      console.error('Failed to complete challenge:', error);
+    } finally {
+      setProcessingChallenge(null);
+    }
   };
 
   if (loading) {
