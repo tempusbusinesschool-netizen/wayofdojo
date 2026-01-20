@@ -138,46 +138,6 @@ export default function AdminPage() {
   const handleSearch = () => {
     loadUsers(searchQuery);
   };
-      const response = await fetch(url, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      if (response.ok) {
-        const data = await response.json();
-        setUsers(data.users);
-      }
-    } catch (error) {
-      console.error('Load users error:', error);
-    }
-  };
-
-  const handleRoleChange = async (userId: string, newRole: string) => {
-    const token = localStorage.getItem('wayofdojo_token');
-    if (!token) return;
-
-    try {
-      const response = await fetch('/api/admin/users', {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({ userId, role: newRole })
-      });
-
-      if (response.ok) {
-        await loadUsers(token, searchQuery);
-      }
-    } catch (error) {
-      console.error('Role change error:', error);
-    }
-  };
-
-  const handleSearch = () => {
-    const token = localStorage.getItem('wayofdojo_token');
-    if (token) {
-      loadUsers(token, searchQuery);
-    }
-  };
 
   const handleLogout = () => {
     localStorage.removeItem('wayofdojo_token');
