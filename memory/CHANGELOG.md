@@ -1,6 +1,52 @@
 # 📝 WayofDojo - CHANGELOG
 
-## [2025-01-20] - Session Actuelle
+## [2025-01-20] - Session Actuelle (2ème partie)
+
+### ✅ Ajouté
+
+#### 🎯 Page Progression (`/[locale]/[sport]/progression`)
+- Affichage ceinture actuelle avec gradient de couleur et animal esprit
+- Stats gamification : XP total, Niveau, Streak, Progression globale
+- Barre de progression vers le prochain niveau
+- **Prochain Objectif** : Prévisualisation de la prochaine ceinture
+- **Parcours des Ceintures** : Timeline interactive de toutes les ceintures (6e Kyu → Dan)
+  - État complété/actuel/verrouillé pour chaque ceinture
+  - Compteur de techniques par grade
+  - Détails expandables avec rôle symbolique
+  - Liens vers les techniques de chaque grade
+- Quick links vers Techniques et Badges
+
+#### 🏆 Page Badges (`/[locale]/[sport]/badges`)
+- 34 badges répartis en 7 vertus + trophées globaux
+- Stats collection : Badges obtenus, Total disponible, % complété
+- Titre actuel et progression vers le prochain (Jeune Ninja → Maître)
+- Barre de recherche par nom/description
+- 9 filtres de catégories (Tous, Respect, Courage, Maîtrise, Humilité, Bienveillance, Attention, Responsabilité, Trophées)
+- Grille de badges avec état verrouillé/débloqué
+- Modal de détail avec condition d'obtention
+- Section **Titres Spéciaux** : 7 titres progressifs par XP
+
+#### 📅 API et DB pour Stages
+- Modèle MongoDB `Stage` (`/lib/models/stage.model.ts`)
+- API `GET /api/stages` - Liste publique avec filtres (sport, level, search, featured, upcoming)
+- API `GET /api/stages/[id]` - Détail d'un stage
+- API `POST /api/stages` - Création (admin only)
+- API `PATCH /api/stages/[id]` - Mise à jour (admin only)
+- API `DELETE /api/stages/[id]` - Suppression (admin only)
+- API `POST /api/stages/seed` - Seeding des données de démo
+- 6 stages en base de données
+- Page Stages charge maintenant depuis l'API (avec fallback données statiques)
+
+### 🔧 Corrigé
+- Encodage HTML `&apos;` dans les titres de stages (fallback data)
+
+### ✅ Tests
+- **17/17 tests backend passés** (Stages API CRUD, filtres, pagination, auth)
+- **Frontend entièrement validé** (Progression, Badges, Stages avec 3 vues)
+
+---
+
+## [2025-01-20] - Session Actuelle (1ère partie)
 
 ### ✅ Ajouté
 
