@@ -15,10 +15,11 @@ export default createMiddleware({
 export const config = {
   // Match all pathnames except for
   // - API routes
+  // - next-api routes (for preview environment)
   // - Static files
   // - _next (Next.js internals)
   matcher: [
-    '/((?!api|_next|_vercel|.*\\..*).*)',
+    '/((?!api|next-api|_next|_vercel|.*\\..*).*)',
     // Match all locale-prefixed paths
     '/(fr|en)/:path*',
   ],
