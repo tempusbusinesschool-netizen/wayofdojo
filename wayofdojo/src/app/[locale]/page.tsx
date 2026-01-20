@@ -8,6 +8,7 @@ import { Swords, LogIn, UserPlus, LogOut, User, Sparkles, Lock, Menu, X } from '
 import { Button } from '@/components/ui/button';
 import MaitreTanaka from '@/components/MaitreTanaka';
 import VisitorStepsBlocks from '@/components/VisitorStepsBlocks';
+import ChooseMode from '@/components/ChooseMode';
 
 // Image de Maître Tanaka pour le logo animé
 const TANAKA_IMAGE = "/images/tanaka/portrait.png";
