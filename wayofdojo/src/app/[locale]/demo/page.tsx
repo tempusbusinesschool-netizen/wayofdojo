@@ -338,7 +338,7 @@ export default function DemoPage() {
                     <Target className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h2 className="text-xl font-bold text-white">3 Défis d'exemple</h2>
+                    <h2 className="text-xl font-bold text-white">3 Défis d&apos;exemple</h2>
                     <p className="text-slate-400 text-sm">Sur les 25+ défis disponibles</p>
                   </div>
                 </div>
