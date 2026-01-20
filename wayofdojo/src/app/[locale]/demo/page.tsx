@@ -489,7 +489,7 @@ export default function DemoPage() {
               <Sparkles className="w-5 h-5 mr-2" />
               Créer mon compte Samouraï
             </Button>
-            <p className="text-slate-500 text-xs mt-3">C'est gratuit et ça prend 30 secondes !</p>
+            <p className="text-slate-500 text-xs mt-3">C&apos;est gratuit et ça prend 30 secondes !</p>
           </motion.div>
         </div>
       </section>
