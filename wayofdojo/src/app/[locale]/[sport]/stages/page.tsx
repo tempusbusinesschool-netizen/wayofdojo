@@ -166,6 +166,7 @@ export default function StagesPage() {
   const [showFilters, setShowFilters] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(new Date());
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState(true);
 
   // Load stages from API
