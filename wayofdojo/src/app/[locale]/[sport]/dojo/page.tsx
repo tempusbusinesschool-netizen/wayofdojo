@@ -346,16 +346,16 @@ export default function DojoPage() {
           <UserDashboardBlocks
             userName={user.firstName}
             statistics={{
-              overall_progress: Math.min(100, user.gamification.completedTechniques?.length * 5 || 0),
+              overall_progress: Math.min(100, (currentXp / 10) || 0),
               mastered_techniques: user.gamification.completedTechniques?.length || 0,
               practiced_techniques: Math.floor((user.gamification.completedTechniques?.length || 0) * 1.5),
-              in_progress_techniques: 3,
+              in_progress_techniques: completedCount,
             }}
             currentBelt={currentBelt}
-            totalPoints={user.gamification.xp}
-            xp={user.gamification.xp}
-            level={user.gamification.level}
-            streak={user.gamification.streak}
+            totalPoints={currentXp}
+            xp={currentXp}
+            level={currentLevel}
+            streak={currentStreak}
           />
         </motion.div>
 
