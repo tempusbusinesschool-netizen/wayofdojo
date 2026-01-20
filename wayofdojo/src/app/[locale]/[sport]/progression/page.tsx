@@ -6,8 +6,8 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ChevronLeft, Star, Target, Trophy, TrendingUp,
-  Award, Zap, CheckCircle2, Circle, Lock, Sparkles,
-  ChevronRight, BookOpen, Calendar, Flame
+  Award, CheckCircle2, Lock, Sparkles,
+  ChevronRight, BookOpen, Flame
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import MaitreTanaka from '@/components/MaitreTanaka';
@@ -96,7 +96,6 @@ export default function ProgressionPage() {
   const overallProgress = totalTechniques > 0 ? Math.round((totalCompleted / totalTechniques) * 100) : 0;
 
   // XP to next level
-  const xpForNextLevel = (user.gamification.level + 1) * 100;
   const xpProgress = Math.min(100, (user.gamification.xp % 100));
 
   return (

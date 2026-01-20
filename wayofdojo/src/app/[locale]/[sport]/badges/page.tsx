@@ -5,8 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  ChevronLeft, Award, Star, Lock, CheckCircle2,
-  Sparkles, Trophy, Filter, Search
+  ChevronLeft, Award, Star, Lock, CheckCircle2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
