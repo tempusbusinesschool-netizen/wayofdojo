@@ -113,7 +113,7 @@ export default function HomePage() {
               <TanakaAnimatedLogo size="md" />
               <div className="text-left">
                 <p className="text-xs sm:text-sm text-amber-400 font-medium group-hover:text-amber-300 transition-colors">Way of Dojo</p>
-                <p className="text-sm sm:text-lg text-white font-bold group-hover:text-slate-200 transition-colors hidden sm:block">L&apos;Aïkido, prolongé au-delà du dojo !</p>
+                <p className="text-xs sm:text-sm text-white font-bold group-hover:text-slate-200 transition-colors hidden sm:block">L&apos;Aïkido, prolongé au-delà du dojo !</p>
               </div>
             </Link>
 
