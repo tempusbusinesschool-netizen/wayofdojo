@@ -273,6 +273,65 @@ export default function HomePage() {
       {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
       {/* HERO SECTION - Titre principal avec animation */}
       {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+      {/* MAÎTRE TANAKA FLOTTANT EN HAUT À DROITE - Identique à la bulle du bas */}
+      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+      <motion.button
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.3, duration: 0.5 }}
+        className="fixed top-4 right-4 md:top-6 md:right-6 z-50 group"
+        onClick={() => {
+          const tanakaButton = document.querySelector('[data-testid="maitre-tanaka-button"]') as HTMLButtonElement;
+          if (tanakaButton) {
+            tanakaButton.click();
+          }
+        }}
+        data-testid="tanaka-top-button"
+      >
+        <div className="relative">
+          {/* Pulse animation - Halo identique à la bulle du bas */}
+          <div className="absolute inset-0 bg-gradient-to-br from-orange-400 to-amber-500 rounded-full animate-ping opacity-30"></div>
+          
+          {/* Second halo plus grand */}
+          <motion.div
+            animate={{ scale: [1, 1.2, 1], opacity: [0.2, 0.4, 0.2] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -inset-2 bg-gradient-to-br from-orange-400 to-amber-500 rounded-full blur-md"
+          />
+          
+          {/* Cercle orange principal - Style identique à la bulle du bas */}
+          <motion.div
+            animate={{ y: [0, -5, 0] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            className="relative w-20 h-20 md:w-24 md:h-24 rounded-full shadow-2xl overflow-hidden bg-gradient-to-br from-orange-500 via-amber-500 to-orange-600 border-4 border-orange-300 transform transition-all duration-300 group-hover:scale-110 group-hover:shadow-orange-500/50"
+          >
+            <div className="absolute inset-2 rounded-full overflow-hidden bg-slate-900/20">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img 
+                src="/images/tanaka/portrait.png" 
+                alt="Maître Tanaka - Clique pour me parler !"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            {/* Reflet lumineux */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent rounded-full pointer-events-none"></div>
+          </motion.div>
+          
+          {/* Label "Parle-moi !" - Style identique */}
+          <div className="absolute -top-2 -left-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full font-bold animate-bounce shadow-lg">
+            Parle-moi !
+          </div>
+          
+          {/* Indicateur vert de disponibilité */}
+          <motion.div
+            animate={{ scale: [1, 1.3, 1], opacity: [0.6, 1, 0.6] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+            className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white shadow-lg"
+          />
+        </div>
+      </motion.button>
+
+      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
       <section className="relative overflow-hidden">
         {/* Fond animé */}
         <div className="absolute inset-0 bg-gradient-to-b from-violet-900/20 via-slate-900 to-slate-950" />
@@ -280,57 +339,6 @@ export default function HomePage() {
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl" />
         
         <div className="relative container mx-auto px-4 py-6 sm:py-8">
-          {/* Maître Tanaka animé en haut à droite - CLIQUABLE pour ouvrir le dialogue */}
-          <motion.button
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
-            className="absolute top-2 right-2 md:top-4 md:right-4 z-20 flex flex-col items-end"
-            onClick={() => {
-              // Déclenche un clic sur le bouton MaitreTanaka flottant en bas
-              const tanakaButton = document.querySelector('[data-testid="maitre-tanaka-button"]') as HTMLButtonElement;
-              if (tanakaButton) {
-                tanakaButton.click();
-              }
-            }}
-            data-testid="tanaka-top-button"
-          >
-            {/* Label "Parle-moi !" animé */}
-            <motion.div
-              animate={{ y: [0, -3, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="bg-gradient-to-r from-red-500 to-orange-500 text-white text-xs md:text-sm font-bold px-3 py-1 rounded-full mb-1 shadow-lg animate-bounce"
-            >
-              Parle-moi !
-            </motion.div>
-            
-            {/* Avatar Tanaka animé */}
-            <motion.div
-              animate={{ y: [0, -8, 0], scale: [1, 1.02, 1] }}
-              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-              className="relative cursor-pointer group"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <div className="w-20 h-20 md:w-28 md:h-28 lg:w-36 lg:h-36 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 p-1 shadow-2xl shadow-amber-500/40 group-hover:shadow-amber-500/60 transition-all duration-300">
-                <div className="w-full h-full rounded-full overflow-hidden bg-amber-900/50 border-2 border-amber-300/50">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img 
-                    src="/images/tanaka/portrait.png" 
-                    alt="Maître Tanaka - Clique pour me parler !"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </div>
-              {/* Indicateur de pulsation - vert = disponible */}
-              <motion.div
-                animate={{ scale: [1, 1.3, 1], opacity: [0.6, 1, 0.6] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-                className="absolute -bottom-1 -right-1 w-5 h-5 md:w-6 md:h-6 bg-green-500 rounded-full border-2 border-white shadow-lg"
-              />
-            </motion.div>
-          </motion.button>
-
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
