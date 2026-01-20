@@ -78,7 +78,7 @@ const FALLBACK_STAGES: Stage[] = [
   {
     id: '3',
     title: 'Stage Débutants - Premiers Pas',
-    description: 'Stage d&apos;initiation pour les nouveaux pratiquants. Découverte des bases de l&apos;Aïkido.',
+    description: "Stage d'initiation pour les nouveaux pratiquants. Découverte des bases de l'Aïkido.",
     date: '2025-02-08',
     location: 'Dojo du Soleil Levant',
     city: 'Marseille',
@@ -94,7 +94,7 @@ const FALLBACK_STAGES: Stage[] = [
   },
   {
     id: '4',
-    title: 'Stage International d&apos;Été',
+    title: "Stage International d'Été",
     description: 'Stage international annuel avec des maîtres du monde entier. 5 jours intensifs de pratique.',
     date: '2025-07-14',
     endDate: '2025-07-19',
