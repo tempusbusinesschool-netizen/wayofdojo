@@ -388,13 +388,13 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-      {/* CHOIX DU MODE - ChooseMode */}
+      {/* CHOIX DU MODE - ChooseMode - Remonté pour plus d'ergonomie */}
       {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-      <section className="container mx-auto px-4 py-6">
+      <section className="container mx-auto px-4 py-2 -mt-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
+          transition={{ delay: 0.2 }}
         >
           <ChooseMode />
         </motion.div>
