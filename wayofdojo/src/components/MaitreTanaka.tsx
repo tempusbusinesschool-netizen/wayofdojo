@@ -245,16 +245,21 @@ export const MaitreTanaka: React.FC<MaitreTanakaProps> = ({
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-50 group"
+          className={`${positionClasses} z-50 group`}
           data-testid="maitre-tanaka-button"
         >
           <div className="relative">
             {/* Pulse animation */}
             <div className="absolute inset-0 bg-gradient-to-br from-orange-400 to-amber-500 rounded-full animate-ping opacity-30"></div>
             
+            {/* Second halo plus grand */}
+            <div 
+              className="absolute -inset-3 bg-gradient-to-br from-orange-400 to-amber-500 rounded-full blur-md opacity-40 animate-pulse"
+            />
+            
             {/* Cercle orange principal */}
-            <div className="relative w-20 h-20 rounded-full shadow-2xl overflow-hidden bg-gradient-to-br from-orange-500 via-amber-500 to-orange-600 border-4 border-orange-300 transform transition-all duration-300 group-hover:scale-110 group-hover:shadow-orange-500/50">
-              <div className="absolute inset-2 rounded-full overflow-hidden bg-slate-900/20">
+            <div className={`relative ${sizeClasses} rounded-full shadow-2xl overflow-hidden bg-gradient-to-br from-orange-500 via-amber-500 to-orange-600 border-4 border-orange-300 transform transition-all duration-300 group-hover:scale-110 group-hover:shadow-orange-500/50`}>
+              <div className={`absolute ${innerSizeClasses} rounded-full overflow-hidden bg-slate-900/20`}>
                 <img 
                   src={TANAKA_IMAGE} 
                   alt="Maître Tanaka" 
@@ -273,9 +278,12 @@ export const MaitreTanaka: React.FC<MaitreTanakaProps> = ({
             </div>
             
             {/* Label */}
-            <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full font-bold animate-bounce shadow-lg">
+            <div className="absolute -top-2 -left-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full font-bold animate-bounce shadow-lg">
               {buttonLabel}
             </div>
+            
+            {/* Indicateur vert de disponibilité */}
+            <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white shadow-lg animate-pulse" />
           </div>
         </button>
       )}
