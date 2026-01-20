@@ -195,7 +195,7 @@ export default function DemoPage() {
               className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-white font-bold"
             >
               <UserPlus className="w-4 h-4 mr-2" />
-              S'inscrire
+              S&apos;inscrire
             </Button>
           </div>
         </div>
