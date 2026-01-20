@@ -94,6 +94,49 @@ class ApiService {
       body: JSON.stringify({ userId, role }),
     });
   }
+
+  // Stages endpoints
+  async getStages(params?: { sport?: string; level?: string; search?: string; upcoming?: boolean; featured?: boolean }) {
+    const searchParams = new URLSearchParams();
+    if (params?.sport) searchParams.set('sport', params.sport);
+    if (params?.level) searchParams.set('level', params.level);
+    if (params?.search) searchParams.set('search', params.search);
+    if (params?.upcoming) searchParams.set('upcoming', 'true');
+    if (params?.featured) searchParams.set('featured', 'true');
+    
+    const queryString = searchParams.toString();
+    return this.request(`/stages${queryString ? `?${queryString}` : ''}`);
+  }
+
+  async getStage(id: string) {
+    return this.request(`/stages/${id}`);
+  }
+
+  async createStage(stageData: Record<string, unknown>) {
+    return this.request('/stages', {
+      method: 'POST',
+      body: JSON.stringify(stageData),
+    });
+  }
+
+  async updateStage(id: string, stageData: Record<string, unknown>) {
+    return this.request(`/stages/${id}`, {
+      method: 'PATCH',
+      body: JSON.stringify(stageData),
+    });
+  }
+
+  async deleteStage(id: string) {
+    return this.request(`/stages/${id}`, {
+      method: 'DELETE',
+    });
+  }
+
+  async seedStages() {
+    return this.request('/stages/seed', {
+      method: 'POST',
+    });
+  }
 }
 
 export const apiService = new ApiService();
