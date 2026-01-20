@@ -186,7 +186,7 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
       previewTitle: 'Tes Défis du Jour',
       previewDescription: 'Complète des défis pour gagner XP et badges !',
       stats: [{ label: 'Défis dispo', value: '25+' }, { label: 'XP/jour max', value: '100' }],
-      demoLink: '/fr/aikido/dojo',
+      demoLink: `/${locale}/demo?section=defis`,
       previewContent: (
         <div className="space-y-3">
           {realChallenges.map((challenge, i) => (
