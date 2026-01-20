@@ -12,6 +12,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import MaitreTanaka from '@/components/MaitreTanaka';
+import apiService from '@/services/api.service';
 
 // Types
 interface Stage {
@@ -36,8 +37,8 @@ interface Stage {
   isFeatured?: boolean;
 }
 
-// Données de démonstration
-const MOCK_STAGES: Stage[] = [
+// Données de fallback (si l'API ne retourne rien)
+const FALLBACK_STAGES: Stage[] = [
   {
     id: '1',
     title: 'Stage National Printemps',
@@ -93,7 +94,7 @@ const MOCK_STAGES: Stage[] = [
   },
   {
     id: '4',
-    title: 'Stage International d\'Été',
+    title: 'Stage International d&apos;Été',
     description: 'Stage international annuel avec des maîtres du monde entier. 5 jours intensifs de pratique.',
     date: '2025-07-14',
     endDate: '2025-07-19',
