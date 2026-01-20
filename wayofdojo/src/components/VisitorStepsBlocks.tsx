@@ -154,7 +154,7 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
       previewTitle: 'Bibliothèque des Techniques',
       previewDescription: '+ 214 techniques officielles en Aikido !',
       stats: [{ label: 'Techniques', value: '214+' }, { label: 'Vidéos', value: '150+' }],
-      demoLink: '/fr/aikido/techniques/ikkyo',
+      demoLink: `/${locale}/demo?section=techniques`,
       previewContent: (
         <div className="space-y-3">
           {realTechniques.slice(0, 5).map((tech, i) => (
