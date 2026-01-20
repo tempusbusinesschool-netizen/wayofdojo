@@ -18,7 +18,7 @@ import apiService from '@/services/api.service';
 type Step = 'profile' | 'info' | 'sport' | 'complete';
 
 interface FormData {
-  profile: 'jeune_samourai' | 'samouraï_confirme' | null;
+  profile: 'jeune_samourai' | 'samourai_confirme' | null;
   firstName: string;
   lastName: string;
   email: string;

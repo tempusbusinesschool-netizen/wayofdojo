@@ -23,7 +23,7 @@ interface User {
   lastName: string;
   email: string;
   role?: string;
-  profile: 'jeune_samourai' | 'samouraï_confirme';
+  profile: 'jeune_samourai' | 'samourai_confirme';
   sport: string;
   grade: string;
   gamification: {

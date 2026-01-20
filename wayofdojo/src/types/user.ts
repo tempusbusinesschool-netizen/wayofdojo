@@ -4,7 +4,7 @@
  */
 
 export type UserRole = 'practitioner' | 'club_admin' | 'platform_admin';
-export type UserProfile = 'jeune_samourai' | 'samouraï_confirme';
+export type UserProfile = 'jeune_samourai' | 'samourai_confirme';
 export type SubscriptionStatus = 'free' | 'trial' | 'active' | 'cancelled' | 'lifetime_free';
 
 export interface UserGamification {

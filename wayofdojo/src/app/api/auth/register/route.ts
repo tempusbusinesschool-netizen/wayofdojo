@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
       passwordHash,
       firstName,
       lastName,
-      profile: profile || 'samouraï_confirme',
+      profile: profile || 'samourai_confirme',
       sport: sport || 'aikido',
       grade: grade || '6e_kyu',
       locale: locale || 'fr',

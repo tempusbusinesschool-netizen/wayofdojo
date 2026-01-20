@@ -360,7 +360,7 @@ export default function AdminPage() {
                   <div className="space-y-2">
                     <div className="flex justify-between items-center">
                       <span className="text-white text-sm">🥷 Samouraï Confirmé</span>
-                      <span className="text-cyan-400 font-bold">{stats.usersByProfile.samouraï_confirme || 0}</span>
+                      <span className="text-cyan-400 font-bold">{stats.usersByProfile.samourai_confirme || 0}</span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-white text-sm">🎒 Jeune Samouraï</span>
