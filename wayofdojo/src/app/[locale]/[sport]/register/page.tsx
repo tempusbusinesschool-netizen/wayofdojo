@@ -178,10 +178,10 @@ export default function RegisterPage() {
                     </div>
                     <div className="flex-1">
                       <h3 className="text-xl font-bold text-amber-400">
-                        {t('profiles.jeuneSamouraï')}
+                        {t('profiles.jeuneSamourai')}
                       </h3>
                       <p className="text-slate-400 text-sm">
-                        {t('profiles.jeuneSamouraïDesc')}
+                        {t('profiles.jeuneSamouraiDesc')}
                       </p>
                     </div>
                     {formData.profile === 'jeune_samourai' && (
@@ -190,14 +190,14 @@ export default function RegisterPage() {
                   </CardContent>
                 </Card>
 
-                {/* Samouraï Confirmé */}
+                {/* Samourai Confirmé */}
                 <Card
                   className={`cursor-pointer transition-all ${
-                    formData.profile === 'samouraï_confirme'
+                    formData.profile === 'samourai_confirme'
                       ? 'border-cyan-500 ring-2 ring-cyan-500/50'
                       : 'hover:border-cyan-500/50'
                   }`}
-                  onClick={() => setFormData({ ...formData, profile: 'samouraï_confirme' })}
+                  onClick={() => setFormData({ ...formData, profile: 'samourai_confirme' })}
                 >
                   <CardContent className="p-6 flex items-center gap-4">
                     <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 flex items-center justify-center flex-shrink-0">
@@ -205,13 +205,13 @@ export default function RegisterPage() {
                     </div>
                     <div className="flex-1">
                       <h3 className="text-xl font-bold text-cyan-400">
-                        {t('profiles.samouraïConfirme')}
+                        {t('profiles.samouraiConfirme')}
                       </h3>
                       <p className="text-slate-400 text-sm">
-                        {t('profiles.samouraïConfirmeDesc')}
+                        {t('profiles.samouraiConfirmeDesc')}
                       </p>
                     </div>
-                    {formData.profile === 'samouraï_confirme' && (
+                    {formData.profile === 'samourai_confirme' && (
                       <Check className="w-6 h-6 text-cyan-500" />
                     )}
                   </CardContent>
