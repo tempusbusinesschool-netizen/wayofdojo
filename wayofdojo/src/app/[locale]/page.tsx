@@ -88,7 +88,7 @@ export default function HomePage() {
           >
             <TanakaAnimatedLogo size="lg" />
           </motion.div>
-          <p className="text-white font-bold mt-4">Aikido@Game</p>
+          <p className="text-white font-bold mt-4">Way of Dojo</p>
           <p className="text-slate-400 text-sm">Chargement...</p>
         </div>
       </div>
@@ -112,7 +112,7 @@ export default function HomePage() {
             >
               <TanakaAnimatedLogo size="md" />
               <div className="text-left">
-                <p className="text-xs sm:text-sm text-amber-400 font-medium group-hover:text-amber-300 transition-colors">Aikido@Game</p>
+                <p className="text-xs sm:text-sm text-amber-400 font-medium group-hover:text-amber-300 transition-colors">Way of Dojo</p>
                 <p className="text-sm sm:text-lg text-white font-bold group-hover:text-slate-200 transition-colors hidden sm:block">Votre parcours</p>
               </div>
             </Link>
@@ -400,7 +400,7 @@ export default function HomePage() {
             <div className="flex items-center gap-3">
               <TanakaAnimatedLogo size="sm" />
               <div>
-                <p className="text-amber-400 font-bold">Aikido@Game</p>
+                <p className="text-amber-400 font-bold">Way of Dojo</p>
                 <p className="text-slate-500 text-xs">L&apos;Aïkido, c&apos;est du jeu !</p>
               </div>
             </div>
