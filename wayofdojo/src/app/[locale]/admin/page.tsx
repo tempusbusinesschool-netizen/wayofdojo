@@ -77,16 +77,10 @@ export default function AdminPage() {
 
     try {
       // Vérifier le rôle de l'utilisateur
-      const userResponse = await fetch('/api/auth/me', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-
-      if (!userResponse.ok) {
-        router.push(`/${locale}/aikido/login`);
-        return;
-      }
-
-      const userData = await userResponse.json();
+      const userData = await apiService.getCurrentUser() as { 
+        success: boolean; 
+        user: { role: string; firstName: string } 
+      };
       const userRole = userData.user.role;
 
       if (!['admin', 'super_admin'].includes(userRole)) {
@@ -98,8 +92,8 @@ export default function AdminPage() {
       setAuthorized(true);
 
       // Charger les stats
-      await loadStats(token);
-      await loadUsers(token);
+      await loadStats();
+      await loadUsers();
     } catch (error) {
       console.error('Admin access check error:', error);
       router.push(`/${locale}/aikido/login`);
@@ -108,13 +102,10 @@ export default function AdminPage() {
     }
   };
 
-  const loadStats = async (token: string) => {
+  const loadStats = async () => {
     try {
-      const response = await fetch('/api/admin/stats', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      if (response.ok) {
-        const data = await response.json();
+      const data = await apiService.getAdminStats() as { success: boolean; stats: AdminStats };
+      if (data.success) {
         setStats(data.stats);
       }
     } catch (error) {
@@ -122,12 +113,31 @@ export default function AdminPage() {
     }
   };
 
-  const loadUsers = async (token: string, search = '') => {
+  const loadUsers = async (search = '') => {
     try {
-      const url = search 
-        ? `/api/admin/users?search=${encodeURIComponent(search)}`
-        : '/api/admin/users';
-      
+      const data = await apiService.getUsers({ search }) as { success: boolean; users: User[] };
+      if (data.success) {
+        setUsers(data.users);
+      }
+    } catch (error) {
+      console.error('Load users error:', error);
+    }
+  };
+
+  const handleRoleChange = async (userId: string, newRole: string) => {
+    try {
+      const response = await apiService.updateUserRole(userId, newRole) as { success: boolean };
+      if (response.success) {
+        await loadUsers(searchQuery);
+      }
+    } catch (error) {
+      console.error('Role change error:', error);
+    }
+  };
+
+  const handleSearch = () => {
+    loadUsers(searchQuery);
+  };
       const response = await fetch(url, {
         headers: { Authorization: `Bearer ${token}` }
       });
