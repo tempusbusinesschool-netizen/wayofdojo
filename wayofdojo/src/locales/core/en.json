@@ -50,10 +50,10 @@
     "leaderboard": "Leaderboard"
   },
   "profiles": {
-    "jeuneNinja": "Young Ninja",
-    "jeuneNinjaDesc": "Fun mode for ages 6-14",
-    "ninjaConfirme": "Advanced Ninja",
-    "ninjaConfirmeDesc": "Advanced mode for ages 15+",
+    "jeuneSamourai": "Young Samurai",
+    "jeuneSamouraiDesc": "Fun mode for under 14 years",
+    "samouraiConfirme": "Advanced Samurai",
+    "samouraiConfirmeDesc": "Advanced mode for 14+ years",
     "chooseProfile": "Choose your profile",
     "canChangeLater": "You can change anytime"
   },
