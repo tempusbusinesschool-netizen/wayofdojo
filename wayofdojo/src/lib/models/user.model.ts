@@ -24,7 +24,12 @@ export interface IUser extends Document {
     lastActivity: Date;
     badges: string[];
     completedTechniques: string[];
+    completedChallenges: string[];
     virtuesProgress: Record<string, number>;
+    techniqueProgress: Record<string, string>;
+    totalChallengesCompleted: number;
+    totalTechniquesCompleted: number;
+    loginDays: number;
   };
   createdAt: Date;
   updatedAt: Date;
@@ -63,7 +68,12 @@ const UserSchema = new Schema<IUser>(
       lastActivity: { type: Date, default: Date.now },
       badges: { type: [String], default: [] },
       completedTechniques: { type: [String], default: [] },
+      completedChallenges: { type: [String], default: [] },
       virtuesProgress: { type: Map, of: Number, default: {} },
+      techniqueProgress: { type: Map, of: String, default: {} },
+      totalChallengesCompleted: { type: Number, default: 0 },
+      totalTechniquesCompleted: { type: Number, default: 0 },
+      loginDays: { type: Number, default: 0 },
     },
   },
   { timestamps: true }
