@@ -546,20 +546,34 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
 
                 {/* Footer CTA */}
                 <div className="sticky bottom-0 p-5 bg-gradient-to-t from-black/40 to-transparent border-t border-white/10">
-                  <div className="flex items-center gap-4">
-                    <div className="flex-1 flex items-center gap-2 text-white/80">
-                      <Lock className="w-5 h-5" />
-                      <span className="text-sm">Inscris-toi pour débloquer tout !</span>
+                  <div className="flex flex-col gap-3">
+                    {/* Bouton Voir l'exemple */}
+                    {previewBlock.demoLink && (
+                      <motion.button
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={() => handleDemoClick(previewBlock.demoLink!)}
+                        className="w-full bg-white/20 backdrop-blur-sm text-white font-bold px-5 py-3 rounded-xl hover:bg-white/30 transition-colors flex items-center justify-center gap-2 border border-white/30"
+                      >
+                        <ExternalLink className="w-5 h-5" />
+                        <span>Voir un exemple concret</span>
+                      </motion.button>
+                    )}
+                    <div className="flex items-center gap-4">
+                      <div className="flex-1 flex items-center gap-2 text-white/80">
+                        <Lock className="w-5 h-5" />
+                        <span className="text-sm">Inscris-toi pour débloquer tout !</span>
+                      </div>
+                      <motion.button
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        onClick={handleSignupClick}
+                        className="bg-white text-slate-900 font-bold px-5 py-2.5 rounded-xl hover:bg-white/90 transition-colors flex items-center gap-2 shadow-lg"
+                      >
+                        <Sparkles className="w-5 h-5" />
+                        <span>S&apos;inscrire</span>
+                      </motion.button>
                     </div>
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={handleSignupClick}
-                      className="bg-white text-slate-900 font-bold px-5 py-2.5 rounded-xl hover:bg-white/90 transition-colors flex items-center gap-2 shadow-lg"
-                    >
-                      <Sparkles className="w-5 h-5" />
-                      <span>S&apos;inscrire</span>
-                    </motion.button>
                   </div>
                 </div>
               </motion.div>
