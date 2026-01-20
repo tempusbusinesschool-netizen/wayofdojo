@@ -277,6 +277,7 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
       previewTitle: "L'Histoire de l'Aïkido",
       previewDescription: 'Découvre le fondateur et la philosophie !',
       stats: [{ label: 'Fondateur', value: 'O-Sensei' }, { label: 'Création', value: '1942' }],
+      demoLink: '/fr/aikido/stages',
       previewContent: (
         <div className="space-y-4">
           <div className="bg-white/10 rounded-xl p-4 text-center">
