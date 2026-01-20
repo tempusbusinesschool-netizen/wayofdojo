@@ -301,7 +301,7 @@ export default function HomePage() {
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 leading-tight">
               Deviens un vrai{' '}
               <span className="bg-gradient-to-r from-amber-400 via-orange-400 to-red-400 bg-clip-text text-transparent">
-                Ninja !
+                Samouraï !
               </span>{' '}
               🥷
             </h1>
@@ -401,9 +401,9 @@ export default function HomePage() {
       {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
       <MaitreTanaka 
         isVisible={true}
-        isJeuneNinja={true}
+        isJeuneSamouraï={true}
         messages={[
-          "Bienvenue jeune Ninja ! Je suis Maître Tanaka, ton guide sur la Voie de l'Aïkido.",
+          "Bienvenue jeune Samouraï ! Je suis Maître Tanaka, ton guide sur la Voie de l'Aïkido.",
           "Inscris-toi pour commencer ton aventure et découvrir les secrets des grands maîtres !",
           "Chaque vertu t'aidera à devenir un vrai guerrier pacifique.",
         ]}

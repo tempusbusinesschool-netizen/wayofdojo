@@ -10,7 +10,7 @@ export interface IUser extends Document {
   firstName: string;
   lastName: string;
   role: 'user' | 'club_admin' | 'admin' | 'super_admin';
-  profile: 'jeune_ninja' | 'ninja_confirme';
+  profile: 'jeune_samouraï' | 'samouraï_confirme';
   sport: string;
   grade: string;
   locale: string;
@@ -48,8 +48,8 @@ const UserSchema = new Schema<IUser>(
     },
     profile: { 
       type: String, 
-      enum: ['jeune_ninja', 'ninja_confirme'], 
-      default: 'ninja_confirme' 
+      enum: ['jeune_samouraï', 'samouraï_confirme'], 
+      default: 'samouraï_confirme' 
     },
     sport: { type: String, default: 'aikido' },
     grade: { type: String, default: '6e_kyu' },

@@ -108,7 +108,7 @@ const SEED_STAGES = [
     sport: 'aikido',
   },
   {
-    title: 'Stage Jeunes Ninjas',
+    title: 'Stage Jeunes Samouraïs',
     description: 'Stage ludique pour les enfants de 6 à 14 ans. Jeux, techniques adaptées et certificats.',
     date: new Date('2025-02-15'),
     location: 'Complexe Sportif des Enfants',

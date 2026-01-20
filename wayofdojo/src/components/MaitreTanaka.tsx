@@ -27,7 +27,7 @@ interface MaitreTanakaProps {
   childContext?: ChildContext | null;
   isVisible?: boolean;
   apiUrl?: string;
-  isJeuneNinja?: boolean;
+  isJeuneSamouraï?: boolean;
   messages?: string[];
 }
 
@@ -39,11 +39,11 @@ export const MaitreTanaka: React.FC<MaitreTanakaProps> = ({
   childContext = null, 
   isVisible = true,
   apiUrl = '/api/voice-agent',
-  isJeuneNinja = true,
+  isJeuneSamouraï = true,
   messages = []
 }) => {
-  // Use isJeuneNinja for styling decisions  
-  const buttonLabel = isJeuneNinja ? "Parle-moi !" : "Assistance";
+  // Use isJeuneSamouraï for styling decisions  
+  const buttonLabel = isJeuneSamouraï ? "Parle-moi !" : "Assistance";
   // Store messages for potential random display
   const tipsMessages = messages.length > 0 ? messages : ["Bienvenue !"];
   const [isOpen, setIsOpen] = useState(false);
@@ -68,7 +68,7 @@ export const MaitreTanaka: React.FC<MaitreTanakaProps> = ({
     if (isOpen && !sessionId) {
       setSessionId(`tanaka_${Date.now()}`);
       
-      const welcomeText = "Bienvenue dans mon dojo virtuel, jeune ninja ! 🥋 Je suis Maître Tanaka. Appuie sur le microphone pour me parler.";
+      const welcomeText = "Bienvenue dans mon dojo virtuel, jeune samouraï ! 🥋 Je suis Maître Tanaka. Appuie sur le microphone pour me parler.";
       setConversation([{
         role: 'master',
         text: welcomeText,
@@ -179,7 +179,7 @@ export const MaitreTanaka: React.FC<MaitreTanakaProps> = ({
         ...prev,
         { 
           role: 'master', 
-          text: "Pardonne-moi, jeune ninja, mes vieilles oreilles fatiguent. Peux-tu répéter ?", 
+          text: "Pardonne-moi, jeune samouraï, mes vieilles oreilles fatiguent. Peux-tu répéter ?", 
           audio: null 
         }
       ]);

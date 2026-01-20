@@ -126,7 +126,7 @@ export const AIKIDO_STAGES: Stage[] = [
   },
   {
     id: 'stage_nantes_2026_06',
-    title: 'Stage Jeunes - Ninja Camp',
+    title: 'Stage Jeunes - Samouraï Camp',
     sensei: 'Sophie Martin',
     senseiGrade: '4e Dan',
     date: '2026-04-05',

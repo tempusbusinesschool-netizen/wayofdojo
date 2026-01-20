@@ -131,7 +131,7 @@ const FALLBACK_STAGES: Stage[] = [
   },
   {
     id: '6',
-    title: 'Stage Jeunes Ninjas',
+    title: 'Stage Jeunes Samouraïs',
     description: 'Stage ludique pour les enfants de 6 à 14 ans. Jeux, techniques adaptées et certificats.',
     date: '2025-02-15',
     location: 'Complexe Sportif des Enfants',
@@ -793,7 +793,7 @@ export default function StagesPage() {
 
       {/* Maître Tanaka */}
       <MaitreTanaka 
-        isJeuneNinja={false}
+        isJeuneSamouraï={false}
         messages={[
           "Les stages sont une excellente opportunité de progresser !",
           "Chaque rencontre avec un nouveau sensei enrichit ta pratique.",

@@ -65,7 +65,7 @@ export async function GET(request: NextRequest) {
           return acc;
         }, {} as Record<string, number>),
         usersByProfile: usersByProfile.reduce((acc, item) => {
-          acc[item._id || 'ninja_confirme'] = item.count;
+          acc[item._id || 'samouraï_confirme'] = item.count;
           return acc;
         }, {} as Record<string, number>),
         usersBySubscription: usersBySubscription.reduce((acc, item) => {

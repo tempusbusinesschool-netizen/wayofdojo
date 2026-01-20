@@ -39,7 +39,7 @@ interface UserDashboardBlocksProps {
  * Version améliorée avec design unifié et navigation vers les sections
  */
 export const UserDashboardBlocks: React.FC<UserDashboardBlocksProps> = ({ 
-  userName = "Ninja",
+  userName = "Samouraï",
   statistics = {},
   currentBelt = {},
   totalPoints = 0,

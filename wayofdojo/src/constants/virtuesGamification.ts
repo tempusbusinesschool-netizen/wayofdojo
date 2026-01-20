@@ -103,7 +103,7 @@ export const VIRTUES_GAMIFICATION: Record<string, Virtue> = {
       { id: "respect_tatami", name: "Gardien du Tatami", description: "Aide à nettoyer ou ranger le tatami", xp: 15, emoji: "🧹" },
       { id: "respect_ecoute", name: "Oreilles Attentives", description: "Écoute ton sensei sans interrompre", xp: 10, emoji: "👂" },
       { id: "respect_merci", name: "Merci Sensei", description: "Remercie ton sensei à la fin du cours", xp: 5, emoji: "🙏" },
-      { id: "respect_ponctuel", name: "Ninja Ponctuel", description: "Arrive à l'heure au dojo", xp: 10, emoji: "⏰" }
+      { id: "respect_ponctuel", name: "Samouraï Ponctuel", description: "Arrive à l'heure au dojo", xp: 10, emoji: "⏰" }
     ],
     weeklyChallenges: [
       { id: "respect_week_saluts", name: "Semaine du Salut", description: "Fais des saluts parfaits pendant 5 cours", xp: 50, emoji: "🌟" },
@@ -209,11 +209,11 @@ export const VIRTUES_GAMIFICATION: Record<string, Virtue> = {
       { level: 5, name: "Maître", xpRequired: 500, badge: "👑", title: "Maître Zen" }
     ],
     dailyChallenges: [
-      { id: "maitrise_respire", name: "Respiration Ninja", description: "Fais 3 grandes respirations avant le cours", xp: 10, emoji: "🌬️" },
+      { id: "maitrise_respire", name: "Respiration Samouraï", description: "Fais 3 grandes respirations avant le cours", xp: 10, emoji: "🌬️" },
       { id: "maitrise_lent", name: "Mouvement Lent", description: "Exécute une technique très lentement avec contrôle", xp: 15, emoji: "🐌" },
       { id: "maitrise_silence", name: "Silence d'Or", description: "Reste silencieux et concentré pendant 10 minutes", xp: 10, emoji: "🤫" },
       { id: "maitrise_erreur", name: "Erreur Zen", description: "Accepte une erreur sans t'énerver", xp: 15, emoji: "😌" },
-      { id: "maitrise_attente", name: "Patience du Ninja", description: "Attends ton tour calmement", xp: 10, emoji: "⏳" }
+      { id: "maitrise_attente", name: "Patience du Samouraï", description: "Attends ton tour calmement", xp: 10, emoji: "⏳" }
     ],
     weeklyChallenges: [
       { id: "maitrise_week_calme", name: "Semaine Zen", description: "Reste calme pendant tous les cours de la semaine", xp: 60, emoji: "🧘" },
@@ -319,7 +319,7 @@ export const VIRTUES_GAMIFICATION: Record<string, Virtue> = {
       { level: 5, name: "Maître", xpRequired: 500, badge: "👑", title: "Maître Bienveillant" }
     ],
     dailyChallenges: [
-      { id: "bienveillance_sourire", name: "Sourire Ninja", description: "Souris à 5 personnes au dojo", xp: 10, emoji: "😊" },
+      { id: "bienveillance_sourire", name: "Sourire Samouraï", description: "Souris à 5 personnes au dojo", xp: 10, emoji: "😊" },
       { id: "bienveillance_aide", name: "Coup de Main", description: "Aide quelqu'un spontanément", xp: 15, emoji: "🤝" },
       { id: "bienveillance_encourager", name: "Encourageur", description: "Encourage un camarade en difficulté", xp: 10, emoji: "💪" },
       { id: "bienveillance_accueil", name: "Comité d'Accueil", description: "Accueille un nouveau avec gentillesse", xp: 20, emoji: "👋" },
@@ -374,7 +374,7 @@ export const VIRTUES_GAMIFICATION: Record<string, Virtue> = {
       { level: 5, name: "Maître", xpRequired: 500, badge: "👑", title: "Maître Vigilant" }
     ],
     dailyChallenges: [
-      { id: "attention_regarder", name: "Regard Ninja", description: "Observe attentivement une démonstration du sensei", xp: 10, emoji: "👀" },
+      { id: "attention_regarder", name: "Regard Samouraï", description: "Observe attentivement une démonstration du sensei", xp: 10, emoji: "👀" },
       { id: "attention_details", name: "Chasseur de Détails", description: "Remarque un détail technique et applique-le", xp: 15, emoji: "🔍" },
       { id: "attention_ecouter", name: "Super Oreilles", description: "Répète correctement une instruction du sensei", xp: 10, emoji: "👂" },
       { id: "attention_present", name: "100% Présent", description: "Reste concentré pendant tout le cours", xp: 15, emoji: "🎯" },
@@ -464,7 +464,7 @@ export const GLOBAL_TROPHIES: Trophy[] = [
   { id: "three_virtues", name: "Triangle des Vertus", description: "Tu as atteint le niveau 2 dans 3 vertus différentes", emoji: "🔺", condition: "three_virtues_level_2", xpBonus: 100 },
   { id: "all_virtues_started", name: "Explorateur des Vertus", description: "Tu as commencé à travailler les 7 vertus", emoji: "🗺️", condition: "all_virtues_started", xpBonus: 150 },
   { id: "week_streak", name: "Semaine Parfaite", description: "Tu as validé au moins un défi chaque jour pendant 7 jours", emoji: "🔥", condition: "7_day_streak", xpBonus: 200 },
-  { id: "balanced_ninja", name: "Ninja Équilibré", description: "Tu as le même niveau dans toutes les vertus", emoji: "☯️", condition: "all_same_level", xpBonus: 250 },
+  { id: "balanced_samouraï", name: "Samouraï Équilibré", description: "Tu as le même niveau dans toutes les vertus", emoji: "☯️", condition: "all_same_level", xpBonus: 250 },
   { id: "grand_master", name: "Grand Maître des Vertus", description: "Tu as atteint le niveau 5 dans toutes les vertus !", emoji: "🏯", condition: "all_level_5", xpBonus: 1000 }
 ];
 
@@ -477,12 +477,12 @@ export interface SpecialTitle {
 }
 
 export const SPECIAL_TITLES: SpecialTitle[] = [
-  { id: "debutant", title: "Jeune Ninja", condition: "default", emoji: "🥋" },
-  { id: "apprenti", title: "Apprenti Ninja", condition: "total_xp_100", emoji: "🌱" },
-  { id: "ninja", title: "Ninja", condition: "total_xp_500", emoji: "🥷" },
-  { id: "ninja_star", title: "Ninja Étoilé", condition: "total_xp_1000", emoji: "⭐" },
-  { id: "super_ninja", title: "Super Ninja", condition: "total_xp_2000", emoji: "💫" },
-  { id: "ninja_master", title: "Ninja Maître", condition: "total_xp_5000", emoji: "🌟" },
+  { id: "debutant", title: "Jeune Samouraï", condition: "default", emoji: "🥋" },
+  { id: "apprenti", title: "Apprenti Samouraï", condition: "total_xp_100", emoji: "🌱" },
+  { id: "samouraï", title: "Samouraï", condition: "total_xp_500", emoji: "🥷" },
+  { id: "samouraï_star", title: "Samouraï Étoilé", condition: "total_xp_1000", emoji: "⭐" },
+  { id: "super_samouraï", title: "Super Samouraï", condition: "total_xp_2000", emoji: "💫" },
+  { id: "samouraï_master", title: "Samouraï Maître", condition: "total_xp_5000", emoji: "🌟" },
   { id: "legend", title: "Légende du Dojo", condition: "total_xp_10000", emoji: "👑" }
 ];
 

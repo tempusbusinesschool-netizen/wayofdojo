@@ -38,7 +38,7 @@ export const AIKIDO_BELTS: Record<string, Belt> = {
     funMessage: "Tu commences une grande aventure ! 🌟",
     animalSpirit: "🪲",
     animalName: "Petit Scarabée",
-    encouragement: "Chaque ninja commence par le premier pas !"
+    encouragement: "Chaque samouraï commence par le premier pas !"
   },
   "5e_kyu": {
     name: "Ceinture Jaune",
@@ -137,7 +137,7 @@ export const AIKIDO_BELTS: Record<string, Belt> = {
     symbolicRole: { name: "Gardien de la transmission", virtue: "Loyauté", intention: "Responsabilité de transmettre (assiste le sensei)" },
     associatedVirtue: "Loyauté",
     message: "Tu es prêt à transmettre ton savoir !",
-    funMessage: "Tu es devenu un vrai Ninja Maître ! 🥷",
+    funMessage: "Tu es devenu un vrai Samouraï Maître ! 🥷",
     animalSpirit: "🐉",
     animalName: "Dragon Légendaire",
     encouragement: "Le voyage continue, toujours plus haut !"

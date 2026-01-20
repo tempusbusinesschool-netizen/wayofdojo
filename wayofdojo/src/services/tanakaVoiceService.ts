@@ -12,7 +12,7 @@ export interface TanakaPhrase {
 export const TANAKA_PHRASES: Record<string, TanakaPhrase> = {
   // Bienvenue et salutations
   welcome: {
-    text: "Bienvenue dans mon dojo virtuel, jeune ninja ! Je suis Maître Tanaka, ton guide sur la Voie de l'Aïkido.",
+    text: "Bienvenue dans mon dojo virtuel, jeune samouraï ! Je suis Maître Tanaka, ton guide sur la Voie de l'Aïkido.",
     file: "/audio/tanaka/welcome.mp3"
   },
   hello_morning: {
@@ -20,7 +20,7 @@ export const TANAKA_PHRASES: Record<string, TanakaPhrase> = {
     file: "/audio/tanaka/hello_morning.mp3"
   },
   hello_afternoon: {
-    text: "Konnichiwa, jeune ninja ! Es-tu prêt pour ta pratique aujourd'hui ?",
+    text: "Konnichiwa, jeune samouraï ! Es-tu prêt pour ta pratique aujourd'hui ?",
     file: "/audio/tanaka/hello_afternoon.mp3"
   },
   goodbye: {
@@ -34,7 +34,7 @@ export const TANAKA_PHRASES: Record<string, TanakaPhrase> = {
     file: "/audio/tanaka/challenge_complete.mp3"
   },
   challenge_first: {
-    text: "Ton premier défi est accompli ! C'est le premier pas sur un long chemin. Je suis fier de toi, jeune ninja !",
+    text: "Ton premier défi est accompli ! C'est le premier pas sur un long chemin. Je suis fier de toi, jeune samouraï !",
     file: "/audio/tanaka/challenge_first.mp3"
   },
   challenge_hard: {
@@ -74,7 +74,7 @@ export const TANAKA_PHRASES: Record<string, TanakaPhrase> = {
 
   // Séries de pratique (streaks)
   streak_3: {
-    text: "Trois jours consécutifs ! La régularité forge le caractère, jeune ninja. Continue ainsi !",
+    text: "Trois jours consécutifs ! La régularité forge le caractère, jeune samouraï. Continue ainsi !",
     file: "/audio/tanaka/streak_3.mp3"
   },
   streak_7: {
@@ -96,7 +96,7 @@ export const TANAKA_PHRASES: Record<string, TanakaPhrase> = {
 
   // Encouragements généraux
   encourage_practice: {
-    text: "N'oublie pas, jeune ninja : la pratique quotidienne, même courte, vaut mieux qu'une longue séance occasionnelle.",
+    text: "N'oublie pas, jeune samouraï : la pratique quotidienne, même courte, vaut mieux qu'une longue séance occasionnelle.",
     file: "/audio/tanaka/encourage_practice.mp3"
   },
   encourage_patience: {
@@ -126,7 +126,7 @@ export const TANAKA_PHRASES: Record<string, TanakaPhrase> = {
 
   // Erreurs et échecs (encouragements)
   fail_encourage: {
-    text: "Ne t'inquiète pas, jeune ninja. L'échec est le meilleur professeur. Essaie encore, tu y arriveras !",
+    text: "Ne t'inquiète pas, jeune samouraï. L'échec est le meilleur professeur. Essaie encore, tu y arriveras !",
     file: "/audio/tanaka/fail_encourage.mp3"
   },
 
@@ -158,7 +158,7 @@ export const TANAKA_PHRASES: Record<string, TanakaPhrase> = {
     file: "/audio/tanaka/step_5_progress.mp3"
   },
   step_6_mastery: {
-    text: "Félicitations, jeune ninja ! Tu as parcouru tout le chemin de l'initiation ! Maintenant, ta véritable aventure commence. Vise le titre de Légende du Dojo ! Je crois en toi !",
+    text: "Félicitations, jeune samouraï ! Tu as parcouru tout le chemin de l'initiation ! Maintenant, ta véritable aventure commence. Vise le titre de Légende du Dojo ! Je crois en toi !",
     file: "/audio/tanaka/step_6_mastery.mp3"
   }
 };

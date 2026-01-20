@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { Rocket, BookOpen, Dumbbell, CheckCircle, Sparkles, Crown } from 'lucide-react';
 
-interface NinjaJourneyProps {
+interface SamouraïJourneyProps {
   onStepClick?: (step: number) => void;
   currentStep?: number;
 }
@@ -12,7 +12,7 @@ const journeySteps = [
   {
     id: 1,
     title: 'Commence',
-    subtitle: 'Crée ton compte Ninja',
+    subtitle: 'Crée ton compte Samouraï',
     icon: Rocket,
     color: 'from-emerald-500 to-green-600',
     bgGlow: 'shadow-emerald-500/30',
@@ -65,9 +65,9 @@ const journeySteps = [
   },
 ];
 
-export default function NinjaJourney({ onStepClick, currentStep = 0 }: NinjaJourneyProps) {
+export default function SamouraïJourney({ onStepClick, currentStep = 0 }: SamouraïJourneyProps) {
   return (
-    <div className="w-full py-8" data-testid="ninja-journey">
+    <div className="w-full py-8" data-testid="samouraï-journey">
       {/* Title */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
@@ -75,7 +75,7 @@ export default function NinjaJourney({ onStepClick, currentStep = 0 }: NinjaJour
         className="text-center mb-8"
       >
         <h2 className="text-2xl md:text-3xl font-black text-white mb-2">
-          Ton Parcours Ninja en 6 étapes ! 🥷
+          Ton Parcours Samouraï en 6 étapes ! 🥷
         </h2>
         <p className="text-slate-400">Clique sur une étape pour en savoir plus !</p>
       </motion.div>

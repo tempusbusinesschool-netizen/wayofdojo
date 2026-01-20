@@ -359,12 +359,12 @@ export default function AdminPage() {
                   <p className="text-slate-400 text-sm mb-3">Par profil</p>
                   <div className="space-y-2">
                     <div className="flex justify-between items-center">
-                      <span className="text-white text-sm">🥷 Ninja Confirmé</span>
-                      <span className="text-cyan-400 font-bold">{stats.usersByProfile.ninja_confirme || 0}</span>
+                      <span className="text-white text-sm">🥷 Samouraï Confirmé</span>
+                      <span className="text-cyan-400 font-bold">{stats.usersByProfile.samouraï_confirme || 0}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-white text-sm">🎒 Jeune Ninja</span>
-                      <span className="text-amber-400 font-bold">{stats.usersByProfile.jeune_ninja || 0}</span>
+                      <span className="text-white text-sm">🎒 Jeune Samouraï</span>
+                      <span className="text-amber-400 font-bold">{stats.usersByProfile.jeune_samouraï || 0}</span>
                     </div>
                   </div>
                 </div>

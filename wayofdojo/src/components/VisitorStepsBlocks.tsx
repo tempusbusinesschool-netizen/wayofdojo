@@ -60,8 +60,8 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
     { name: "Salut Parfait", xp: 10, emoji: "🙇", desc: "Fais un salut sincère au dojo" },
     { name: "Gardien du Tatami", xp: 15, emoji: "🧹", desc: "Aide à ranger le tatami" },
     { name: "Première Chute", xp: 20, emoji: "🔄", desc: "Réussir 5 ukemi avant" },
-    { name: "Ninja Ponctuel", xp: 10, emoji: "⏰", desc: "Arrive à l'heure au cours" },
-    { name: "Parole du Ninja", xp: 15, emoji: "🗣️", desc: "Compte en japonais" },
+    { name: "Samouraï Ponctuel", xp: 10, emoji: "⏰", desc: "Arrive à l'heure au cours" },
+    { name: "Parole du Samouraï", xp: 15, emoji: "🗣️", desc: "Compte en japonais" },
   ];
 
   // Vraies 7 Vertus avec animaux
@@ -99,12 +99,12 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
   // Blocs version enfant avec contenu de prévisualisation amélioré
   const blocksEnfant: Block[] = [
     {
-      id: 1, slug: 'profil', emoji: '🥷', title: 'Mon Profil Ninja',
+      id: 1, slug: 'profil', emoji: '🥷', title: 'Mon Profil Samouraï',
       subtitle: 'Ton identité de guerrier',
       gradient: 'from-violet-500 to-purple-600', shadowColor: 'shadow-violet-500/40',
-      previewTitle: 'Ton Profil de Ninja',
+      previewTitle: 'Ton Profil de Samouraï',
       previewDescription: 'Personnalise ton avatar et suis ta progression !',
-      stats: [{ label: 'Ninjas actifs', value: '2,847' }],
+      stats: [{ label: 'Samouraïs actifs', value: '2,847' }],
       previewContent: (
         <div className="space-y-4">
           <div className="flex items-center gap-4 bg-white/10 rounded-xl p-4">
@@ -112,7 +112,7 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
               🥷
             </div>
             <div className="flex-1">
-              <p className="text-white font-bold text-lg">Ninja Apprenti</p>
+              <p className="text-white font-bold text-lg">Samouraï Apprenti</p>
               <p className="text-violet-200 text-sm">Niveau 5 • 450 XP</p>
               <div className="mt-2 h-2 bg-white/20 rounded-full overflow-hidden">
                 <div className="h-full w-3/5 bg-gradient-to-r from-amber-400 to-orange-500 rounded-full" />
@@ -206,7 +206,7 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
       id: 4, slug: 'vertus', emoji: '☯️', title: 'Les 7 Vertus',
       subtitle: 'Deviens un vrai guerrier',
       gradient: 'from-amber-500 to-orange-600', shadowColor: 'shadow-amber-500/40',
-      previewTitle: 'Les 7 Vertus du Ninja',
+      previewTitle: 'Les 7 Vertus du Samouraï',
       previewDescription: 'Chaque vertu a son animal gardien qui évolue !',
       stats: [{ label: 'Vertus', value: '7' }, { label: 'Niveaux/vertu', value: '5' }],
       previewContent: (
@@ -460,7 +460,7 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
           >
             <span className="relative flex items-center gap-3">
               <span className="text-2xl">🥷</span>
-              <span>Créer mon compte Ninja</span>
+              <span>Créer mon compte Samouraï</span>
               <span className="text-2xl">🚀</span>
             </span>
           </button>

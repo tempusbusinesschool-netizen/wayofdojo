@@ -68,7 +68,7 @@ export default function BadgesPage() {
 
   if (!user) return null;
 
-  const isJeuneNinja = user.profile === 'jeune_ninja';
+  const isJeuneSamouraï = user.profile === 'jeune_samouraï';
   const earnedBadges = user.gamification.badges || [];
 
   // Collect all badges from all virtues
@@ -144,13 +144,13 @@ export default function BadgesPage() {
   });
 
   return (
-    <div className={`min-h-screen ${isJeuneNinja 
+    <div className={`min-h-screen ${isJeuneSamouraï 
       ? 'bg-gradient-to-br from-amber-950 via-orange-950 to-amber-950' 
       : 'bg-gradient-to-br from-slate-950 via-violet-950 to-slate-950'
     }`}>
       {/* Header */}
       <header className={`sticky top-0 z-50 backdrop-blur-md border-b ${
-        isJeuneNinja 
+        isJeuneSamouraï 
           ? 'bg-amber-900/80 border-amber-500/20' 
           : 'bg-violet-900/80 border-violet-500/20'
       }`}>
@@ -160,7 +160,7 @@ export default function BadgesPage() {
               animate={{ rotate: [0, 10, -10, 0] }}
               transition={{ duration: 3, repeat: Infinity }}
               className={`w-10 h-10 rounded-xl flex items-center justify-center shadow-lg ${
-                isJeuneNinja 
+                isJeuneSamouraï 
                   ? 'bg-gradient-to-br from-amber-400 to-orange-500 shadow-amber-500/30' 
                   : 'bg-gradient-to-br from-violet-400 to-purple-500 shadow-violet-500/30'
               }`}
@@ -169,7 +169,7 @@ export default function BadgesPage() {
             </motion.div>
             <div>
               <span className="text-lg font-bold text-white">Mes Badges</span>
-              <p className={`text-xs ${isJeuneNinja ? 'text-amber-300' : 'text-violet-300'}`}>
+              <p className={`text-xs ${isJeuneSamouraï ? 'text-amber-300' : 'text-violet-300'}`}>
                 Collection de {user.firstName}
               </p>
             </div>
@@ -190,7 +190,7 @@ export default function BadgesPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className={`rounded-3xl p-6 border mb-8 ${
-            isJeuneNinja 
+            isJeuneSamouraï 
               ? 'bg-gradient-to-br from-amber-600/20 to-orange-600/20 border-amber-500/30' 
               : 'bg-gradient-to-br from-violet-600/20 to-purple-600/20 border-violet-500/30'
           }`}
@@ -234,7 +234,7 @@ export default function BadgesPage() {
           <div className="mt-6">
             <div className="flex justify-between text-sm mb-2">
               <span className="text-slate-400">Progression collection</span>
-              <span className={isJeuneNinja ? 'text-amber-400' : 'text-violet-400'}>
+              <span className={isJeuneSamouraï ? 'text-amber-400' : 'text-violet-400'}>
                 {earnedCount} / {totalBadges}
               </span>
             </div>
@@ -244,7 +244,7 @@ export default function BadgesPage() {
                 animate={{ width: `${(earnedCount / totalBadges) * 100}%` }}
                 transition={{ duration: 1, ease: "easeOut" }}
                 className={`h-full rounded-full ${
-                  isJeuneNinja 
+                  isJeuneSamouraï 
                     ? 'bg-gradient-to-r from-amber-500 to-orange-500' 
                     : 'bg-gradient-to-r from-violet-500 to-purple-500'
                 }`}
@@ -281,7 +281,7 @@ export default function BadgesPage() {
                 size="sm"
                 onClick={() => setSelectedCategory(cat.id)}
                 className={selectedCategory === cat.id 
-                  ? (isJeuneNinja ? 'bg-amber-600' : 'bg-violet-600')
+                  ? (isJeuneSamouraï ? 'bg-amber-600' : 'bg-violet-600')
                   : 'border-slate-600 text-slate-300'
                 }
               >
@@ -314,7 +314,7 @@ export default function BadgesPage() {
                 className={`relative p-4 rounded-2xl border cursor-pointer transition-all ${
                   isEarned
                     ? 'bg-gradient-to-br from-amber-600/20 to-orange-600/20 border-amber-500/50'
-                    : `${isJeuneNinja ? 'bg-amber-900/20 border-amber-700/30' : 'bg-slate-800/30 border-slate-700/50'} opacity-60`
+                    : `${isJeuneSamouraï ? 'bg-amber-900/20 border-amber-700/30' : 'bg-slate-800/30 border-slate-700/50'} opacity-60`
                 }`}
               >
                 {/* Earned indicator */}
@@ -484,7 +484,7 @@ export default function BadgesPage() {
 
       {/* Maître Tanaka */}
       <MaitreTanaka 
-        isJeuneNinja={isJeuneNinja}
+        isJeuneSamouraï={isJeuneSamouraï}
         messages={[
           `${user.firstName}, tu as ${earnedCount} badges !`,
           "Chaque badge représente un accomplissement.",
