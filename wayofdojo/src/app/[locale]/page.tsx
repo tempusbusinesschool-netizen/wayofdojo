@@ -332,7 +332,7 @@ export default function HomePage() {
 
             <p className="text-slate-400 text-base sm:text-lg max-w-3xl mx-auto mb-5">
               Apprends l&apos;Aïkido en t&apos;amusant avec Maître Tanaka. 
-              <span className="text-white font-semibold"> Plus de 214 techniques à maîtriser</span>, 
+              <span className="text-white font-semibold"> + 214 techniques officielles du 6ᵉ kyu au 3ᵉ dan à maîtriser</span>, 
               apprendre leurs noms et les pratiquer avec ton sensei au Dojo ! 
               <span className="text-amber-400 font-semibold"> Comprendre les valeurs du Budo</span> 
               {' '}et plein de défis à relever tout au long de l&apos;année !
