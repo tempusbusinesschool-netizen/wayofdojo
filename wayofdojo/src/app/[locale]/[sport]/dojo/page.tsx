@@ -220,37 +220,44 @@ export default function DojoPage() {
     },
   ];
 
-  // Daily challenges with animation states
+  // Daily challenges from virtues (select a few from each virtue)
   const dailyChallenges = [
-    { id: 1, title: '🙇 Salut Parfait', desc: 'Faire un salut sincère', xp: 10, completed: false, virtue: 'respect' },
-    { id: 2, title: '🧹 Gardien du Tatami', desc: 'Aider à ranger', xp: 15, completed: false, virtue: 'responsabilite' },
-    { id: 3, title: '👂 Oreilles Attentives', desc: 'Écouter le sensei', xp: 10, completed: true, virtue: 'attention' },
-    { id: 4, title: '⏰ Ninja Ponctuel', desc: 'Arriver à l\'heure', xp: 5, completed: true, virtue: 'respect' },
-    { id: 5, title: '💪 Technique du Jour', desc: 'Pratiquer Ikkyo', xp: 20, completed: false, virtue: 'maitrise' },
-    { id: 6, title: '🤝 Bon Partenaire', desc: 'Aider un débutant', xp: 15, completed: false, virtue: 'bienveillance' },
-  ];
+    // Respect
+    { id: 'respect_salut', title: '🙇 Salut Parfait', desc: 'Faire un salut sincère', xp: 10, virtue: 'respect' },
+    // Courage
+    { id: 'courage_chute', title: '🌪️ Maître des Chutes', desc: 'Tomber sans crainte', xp: 15, virtue: 'courage' },
+    // Attention
+    { id: 'attention_ecoute', title: '👂 Oreilles Attentives', desc: 'Écouter le sensei', xp: 10, virtue: 'attention' },
+    // Responsabilité
+    { id: 'responsabilite_rangement', title: '🧹 Gardien du Tatami', desc: 'Aider à ranger', xp: 15, virtue: 'responsabilite' },
+    // Maîtrise
+    { id: 'maitrise_repetition', title: '💪 Technique du Jour', desc: 'Répéter une technique', xp: 20, virtue: 'maitrise' },
+    // Bienveillance
+    { id: 'bienveillance_aide', title: '🤝 Bon Partenaire', desc: 'Aider un débutant', xp: 15, virtue: 'bienveillance' },
+  ].map(c => ({
+    ...c,
+    completed: completedChallenges.includes(c.id),
+  }));
 
   const completedCount = dailyChallenges.filter(c => c.completed).length;
   const totalXpToday = dailyChallenges.filter(c => c.completed).reduce((sum, c) => sum + c.xp, 0);
 
+  // Use gamification data if available
+  const currentXp = gamificationData?.xp.total ?? user.gamification.xp ?? 0;
+  const currentLevel = gamificationData?.level ?? user.gamification.level ?? 1;
+  const currentStreak = gamificationData?.streak.current ?? user.gamification.streak ?? 0;
+  const badgesUnlocked = gamificationData?.badges.unlocked ?? user.gamification.badges?.length ?? 0;
+
   // Weekly stats
   const weeklyStats = {
     trainings: 3,
-    techniques: 12,
-    xpGained: 180,
-    streakDays: user.gamification.streak || 0,
+    techniques: gamificationData?.challenges.completed ?? 0,
+    xpGained: currentXp,
+    streakDays: currentStreak,
   };
 
-  // Virtue progress (mock data for now)
-  const virtueProgress = user.gamification.virtuesProgress || {
-    respect: 45,
-    courage: 30,
-    maitrise: 60,
-    humilite: 25,
-    bienveillance: 55,
-    attention: 40,
-    responsabilite: 35,
-  };
+  // Virtue progress from gamification data
+  const virtueProgress = user.gamification.virtuesProgress || {};
 
   return (
     <div className={`min-h-screen ${isJeuneNinja 
@@ -268,7 +275,7 @@ export default function DojoPage() {
           >
             <div className="text-4xl font-black text-amber-400 flex items-center gap-2">
               <Sparkles className="w-8 h-8" />
-              +10 XP
+              +{xpGained} XP
               <Sparkles className="w-8 h-8" />
             </div>
           </motion.div>
