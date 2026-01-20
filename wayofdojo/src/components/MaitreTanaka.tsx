@@ -29,6 +29,8 @@ interface MaitreTanakaProps {
   apiUrl?: string;
   isJeuneSamourai?: boolean;
   messages?: string[];
+  position?: 'bottom-right' | 'top-right';
+  size?: 'normal' | 'large';
 }
 
 /**
@@ -40,12 +42,24 @@ export const MaitreTanaka: React.FC<MaitreTanakaProps> = ({
   isVisible = true,
   apiUrl = '/api/voice-agent',
   isJeuneSamourai = true,
-  messages = []
+  messages = [],
+  position = 'bottom-right',
+  size = 'normal'
 }) => {
   // Use isJeuneSamourai for styling decisions  
   const buttonLabel = isJeuneSamourai ? "Parle-moi !" : "Assistance";
   // Store messages for potential random display
   const tipsMessages = messages.length > 0 ? messages : ["Bienvenue !"];
+  
+  // Position classes based on prop
+  const positionClasses = position === 'top-right' 
+    ? 'fixed top-[140px] right-[20px] md:top-[150px] md:right-[24px] lg:top-[160px] lg:right-[28px]' 
+    : 'fixed bottom-6 right-6';
+  
+  // Size classes - large is 30% bigger
+  const sizeClasses = size === 'large' ? 'w-[104px] h-[104px]' : 'w-20 h-20';
+  const innerSizeClasses = size === 'large' ? 'inset-[10px]' : 'inset-2';
+  
   const [isOpen, setIsOpen] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
