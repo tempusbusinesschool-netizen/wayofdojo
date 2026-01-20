@@ -191,15 +191,6 @@ export default function StagesPage() {
     setIsLoggedIn(!!user);
   }, [sport]);
 
-  // Filter loading indicator
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-cyan-950 to-slate-950 flex items-center justify-center">
-        <div className="w-12 h-12 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
-  }
-
   useEffect(() => {
     let result = stages;
 
