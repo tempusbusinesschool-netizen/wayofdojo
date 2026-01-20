@@ -311,7 +311,7 @@ export default function HomePage() {
               <span className="text-emerald-300 text-xs md:text-sm font-bold">🎯 APP INTERACTIVE ! POSE TES QUESTIONS À TANAKA !</span>
             </motion.div>
 
-            {/* Badge L'Aïkido c'est du jeu */}
+            {/* Badge L'Aïkido prolongé */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -319,7 +319,7 @@ export default function HomePage() {
               className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 px-4 py-2 rounded-full mb-6"
             >
               <Sparkles className="w-4 h-4 text-amber-400" />
-              <span className="text-amber-300 text-sm font-medium">L&apos;Aïkido, c&apos;est du jeu !</span>
+              <span className="text-amber-300 text-sm font-medium">L&apos;Aïkido, prolongé au-delà du dojo !</span>
             </motion.div>
 
             {/* Titre principal - Descendu pour harmonie */}
@@ -330,11 +330,12 @@ export default function HomePage() {
               </span>
             </h1>
 
-            <p className="text-slate-400 text-lg sm:text-xl max-w-2xl mx-auto mb-5">
+            <p className="text-slate-400 text-base sm:text-lg max-w-3xl mx-auto mb-5">
               Apprends l&apos;Aïkido en t&apos;amusant avec Maître Tanaka. 
-              <span className="text-white font-semibold"> 206+ techniques</span>, 
-              <span className="text-amber-400 font-semibold"> 7 vertus magiques</span>, 
-              et plein de défis à relever !
+              <span className="text-white font-semibold"> Plus de 214 techniques à maîtriser</span>, 
+              apprendre leurs noms et les pratiquer au dojo ! 
+              <span className="text-amber-400 font-semibold"> Comprendre les valeurs du Budo</span> 
+              {' '}et plein de défis à relever tout au long de l&apos;année !
             </p>
 
             {/* CTA Buttons */}
