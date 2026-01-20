@@ -416,15 +416,14 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
           </motion.p>
         </div>
 
-        {/* Grille des 8 blocs */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        {/* Grille des 10 blocs */}
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
           {blocksEnfant.map((block, index) => (
-            <motion.button
+            <motion.div
               key={block.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.05 }}
-              onClick={() => setPreviewBlock(block)}
               data-testid={`visitor-block-${block.slug}`}
               className={`
                 relative group rounded-2xl p-4 text-left
@@ -433,17 +432,26 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
                 border-2 border-white/20 hover:border-white/50 hover:scale-[1.03] cursor-pointer
                 min-h-[180px] sm:min-h-[200px]
               `}
+              onClick={() => setPreviewBlock(block)}
             >
               {/* Numéro */}
               <div className="absolute top-2 left-2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center">
                 <span className="text-lg sm:text-xl font-black text-white drop-shadow-lg">{block.id}</span>
               </div>
 
-              {/* Badge Aperçu */}
-              <div className="absolute top-2 right-2 bg-white/25 backdrop-blur-sm text-white text-[10px] px-2 py-1 rounded-full flex items-center gap-1 group-hover:bg-white/40 transition-colors">
-                <Eye className="w-3 h-3" />
-                <span className="hidden sm:inline">Aperçu</span>
-              </div>
+              {/* Badge Aperçu - Lien vers la page de démo */}
+              {block.demoLink && (
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDemoClick(block.demoLink!);
+                  }}
+                  className="absolute top-2 right-2 bg-white/25 backdrop-blur-sm text-white text-[10px] px-2 py-1 rounded-full flex items-center gap-1 hover:bg-white/50 transition-colors z-10"
+                >
+                  <Eye className="w-3 h-3" />
+                  <span className="hidden sm:inline">Aperçu</span>
+                </button>
+              )}
 
               {/* Contenu */}
               <div className="mt-10 sm:mt-12">
@@ -457,7 +465,7 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
                 <span>Voir</span>
                 <ChevronRight className="w-4 h-4" />
               </div>
-            </motion.button>
+            </motion.div>
           ))}
         </div>
 
