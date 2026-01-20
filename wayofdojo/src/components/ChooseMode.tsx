@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { useRouter, useParams } from 'next/navigation';
-import { Lock, Gamepad2, Trophy, Sparkles, BarChart3, Target, ScrollText } from 'lucide-react';
+import { Lock } from 'lucide-react';
 import Image from 'next/image';
 
 interface ChooseModeProps {
@@ -24,7 +24,7 @@ export default function ChooseMode({ onModeSelect }: ChooseModeProps) {
 
   return (
     <div className="w-full py-2 px-4" data-testid="choose-mode">
-      {/* Titre - Identique à l'original */}
+      {/* Titre */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -36,11 +36,11 @@ export default function ChooseMode({ onModeSelect }: ChooseModeProps) {
         <p className="text-slate-400 text-sm">Tu pourras changer à tout moment 🥋</p>
       </motion.div>
 
-      {/* Mode Cards - Design EXACT de Aikido@Game */}
+      {/* Mode Cards - Reproduction FIDÈLE */}
       <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-4 md:gap-6">
         
         {/* ═══════════════════════════════════════════════════════════════════════ */}
-        {/* CARTE JEUNE NINJA - Design identique à l'original */}
+        {/* CARTE JEUNE SAMOURAÏ - Reproduction fidèle */}
         {/* ═══════════════════════════════════════════════════════════════════════ */}
         <motion.button
           initial={{ opacity: 0, x: -30 }}
@@ -49,93 +49,125 @@ export default function ChooseMode({ onModeSelect }: ChooseModeProps) {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => handleModeClick('enfant')}
-          className="group relative overflow-hidden rounded-3xl border-2 border-amber-500/60 hover:border-amber-400 transition-all duration-300 shadow-2xl hover:shadow-amber-500/30"
+          className="group relative overflow-hidden rounded-[2rem] transition-all duration-300"
+          style={{
+            boxShadow: '0 0 20px rgba(255, 193, 7, 0.4), inset 0 0 0 3px rgba(255, 215, 0, 0.8)'
+          }}
           data-testid="mode-jeune-samourai"
         >
-          {/* Background - Dégradé identique à l'original */}
-          <div className="absolute inset-0 bg-gradient-to-b from-amber-700/95 via-orange-600/90 to-amber-800/95" />
+          {/* Background orange avec particules */}
+          <div className="absolute inset-0 bg-gradient-to-br from-orange-500 via-amber-500 to-orange-600" />
           
-          {/* Glow effect */}
-          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-64 h-64 bg-amber-400/40 rounded-full blur-3xl" />
-          
-          {/* Badge Agent IA - Position identique */}
-          <div className="absolute top-4 right-4 z-20 bg-gradient-to-r from-violet-600 to-purple-600 text-white text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1 shadow-lg">
-            <span>Jeune Samouraï - Agent IA</span>
-            <span>✨⭐</span>
+          {/* Particules brillantes */}
+          <div className="absolute inset-0 overflow-hidden">
+            {[...Array(20)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-1 h-1 bg-yellow-200 rounded-full"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 60}%`,
+                }}
+                animate={{
+                  opacity: [0.3, 1, 0.3],
+                  scale: [0.5, 1.5, 0.5],
+                }}
+                transition={{
+                  duration: 2 + Math.random() * 2,
+                  repeat: Infinity,
+                  delay: Math.random() * 2,
+                }}
+              />
+            ))}
+          </div>
+
+          {/* Étoile en haut à gauche */}
+          <motion.div
+            className="absolute top-4 left-4 z-10"
+            animate={{ rotate: [0, 10, -10, 0], scale: [1, 1.1, 1] }}
+            transition={{ duration: 3, repeat: Infinity }}
+          >
+            <span className="text-3xl drop-shadow-lg">⭐</span>
+          </motion.div>
+
+          {/* Étoiles scintillantes en haut à droite */}
+          <div className="absolute top-6 right-8 z-10">
+            <motion.span
+              className="text-xl text-yellow-300 drop-shadow-lg"
+              animate={{ opacity: [0.5, 1, 0.5] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+            >
+              ✦
+            </motion.span>
+          </div>
+          <div className="absolute top-12 right-4 z-10">
+            <motion.span
+              className="text-2xl text-yellow-200 drop-shadow-lg"
+              animate={{ opacity: [0.7, 1, 0.7] }}
+              transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+            >
+              ✦
+            </motion.span>
           </div>
 
           {/* Contenu */}
-          <div className="relative z-10 p-4 pt-14">
-            {/* Étoiles décoratives - Identiques à l'original */}
-            <motion.div
-              animate={{ scale: [1, 1.2, 1], rotate: [0, 10, -10, 0] }}
-              transition={{ duration: 3, repeat: Infinity }}
-              className="absolute top-16 left-6 text-amber-300 text-2xl drop-shadow-lg"
-            >
-              ⭐
-            </motion.div>
-            <motion.div
-              animate={{ scale: [1, 1.3, 1] }}
-              transition={{ duration: 2.5, repeat: Infinity, delay: 0.5 }}
-              className="absolute top-20 right-8 text-amber-200 text-xl drop-shadow-lg"
-            >
-              ⭐
-            </motion.div>
-
-            {/* Image du personnage enfant - EXACTE */}
-            <div className="relative h-48 md:h-56 flex items-center justify-center mb-2">
+          <div className="relative z-10">
+            {/* Image du personnage enfant */}
+            <div className="relative h-56 md:h-64 flex items-center justify-center pt-4">
               <Image
                 src="/images/modes/enfant.png"
                 alt="Jeune Samouraï"
-                width={220}
-                height={280}
+                width={200}
+                height={250}
                 className="object-contain drop-shadow-2xl"
                 priority
               />
             </div>
 
-            {/* Titre et sous-titre - Design identique */}
-            <div className="bg-gradient-to-r from-amber-500 to-orange-500 rounded-2xl p-4 shadow-xl">
-              <h3 className="text-xl md:text-2xl font-black text-white mb-0.5">
+            {/* Section jaune du bas */}
+            <div 
+              className="relative bg-yellow-400 pt-4 pb-4 px-4"
+              style={{
+                boxShadow: '0 -10px 30px rgba(255, 215, 0, 0.5)'
+              }}
+            >
+              {/* Titre */}
+              <h3 className="text-2xl md:text-3xl font-black text-white drop-shadow-md text-center">
                 Jeune Samouraï
               </h3>
-              <p className="text-amber-100 text-sm font-medium mb-3">
+              
+              {/* Sous-titre */}
+              <p className="text-yellow-100 text-sm font-medium text-center mb-3">
                 Moins de 14 ans
               </p>
 
-              {/* 3 Icônes - Identiques à l'original */}
-              <div className="flex justify-center gap-3">
-                <div className="w-10 h-10 bg-violet-600 rounded-xl flex items-center justify-center shadow-lg">
-                  <Gamepad2 className="w-5 h-5 text-white" />
+              {/* 3 Icônes emojis */}
+              <div className="flex justify-center gap-3 mb-3">
+                <span className="text-2xl">🎮</span>
+                <span className="text-2xl">🏆</span>
+                <span className="text-2xl">🐉</span>
+              </div>
+
+              {/* Bouton Parle-moi avec avatar Tanaka */}
+              <div className="flex justify-center items-center gap-2">
+                <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-white shadow-lg">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img 
+                    src="/images/tanaka/portrait.png" 
+                    alt="Maître Tanaka"
+                    className="w-full h-full object-cover"
+                  />
                 </div>
-                <div className="w-10 h-10 bg-amber-600 rounded-xl flex items-center justify-center shadow-lg">
-                  <Trophy className="w-5 h-5 text-white" />
-                </div>
-                <div className="w-10 h-10 bg-emerald-600 rounded-xl flex items-center justify-center shadow-lg">
-                  <Sparkles className="w-5 h-5 text-white" />
-                </div>
+                <span className="bg-red-500 text-white text-sm font-bold px-3 py-1.5 rounded-full shadow-lg">
+                  Parle-moi !
+                </span>
               </div>
             </div>
-          </div>
-
-          {/* Maître Tanaka - Parle-moi ! - Position identique */}
-          <div className="absolute bottom-3 right-3 z-10 flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-amber-400/50 shadow-lg">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img 
-                src="/images/tanaka/portrait.png" 
-                alt="Maître Tanaka"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <span className="bg-amber-500/40 text-amber-100 text-xs font-medium px-2 py-1 rounded-full border border-amber-400/40">
-              Parle-moi !
-            </span>
           </div>
         </motion.button>
 
         {/* ═══════════════════════════════════════════════════════════════════════ */}
-        {/* CARTE NINJA CONFIRMÉ - Design identique à l'original */}
+        {/* CARTE SAMOURAÏ CONFIRMÉ - Reproduction fidèle */}
         {/* ═══════════════════════════════════════════════════════════════════════ */}
         <motion.button
           initial={{ opacity: 0, x: 30 }}
@@ -144,70 +176,73 @@ export default function ChooseMode({ onModeSelect }: ChooseModeProps) {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => handleModeClick('adulte')}
-          className="group relative overflow-hidden rounded-3xl border-2 border-slate-500/60 hover:border-cyan-400/70 transition-all duration-300 shadow-2xl hover:shadow-cyan-500/20"
+          className="group relative overflow-hidden rounded-[2rem] transition-all duration-300"
+          style={{
+            boxShadow: '0 0 20px rgba(148, 163, 184, 0.3), inset 0 0 0 3px rgba(203, 213, 225, 0.5)'
+          }}
           data-testid="mode-samourai-confirme"
         >
-          {/* Background - Dégradé identique à l'original */}
-          <div className="absolute inset-0 bg-gradient-to-b from-slate-700/95 via-slate-600/90 to-slate-800/95" />
-          
-          {/* Fleurs de cerisier - Identiques à l'original */}
-          <div className="absolute top-0 right-0 w-32 h-32 opacity-30">
-            <div className="absolute top-4 right-8 text-pink-300 text-lg">🌸</div>
-            <div className="absolute top-12 right-4 text-pink-200 text-sm">🌸</div>
-            <div className="absolute top-8 right-16 text-pink-300 text-xs">🌸</div>
+          {/* Background sombre */}
+          <div className="absolute inset-0 bg-gradient-to-b from-slate-800 via-slate-700 to-slate-800" />
+
+          {/* Icône gi en haut à gauche */}
+          <div className="absolute top-4 left-4 z-10">
+            <span className="text-2xl opacity-60">👘</span>
           </div>
-          <div className="absolute top-0 left-0 w-32 h-32 opacity-30">
-            <div className="absolute top-6 left-6 text-pink-300 text-sm">🌸</div>
-            <div className="absolute top-14 left-12 text-pink-200 text-xs">🌸</div>
+
+          {/* Badge Yin Yang en haut à droite */}
+          <div className="absolute top-4 right-4 z-20 w-10 h-10 bg-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+            <span className="text-xl">☯️</span>
           </div>
-          
-          {/* Badge Agent IA - Position identique */}
-          <div className="absolute top-4 right-4 z-20 bg-gradient-to-r from-cyan-600 to-blue-600 text-white text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1 shadow-lg">
-            <span>Samouraï Confirmé - Agent IA</span>
-            <span>☯️🥋</span>
+
+          {/* Fleurs de cerisier */}
+          <div className="absolute top-0 right-0 w-full h-32 overflow-hidden opacity-40 z-0">
+            <div className="absolute top-2 right-20">🌸</div>
+            <div className="absolute top-8 right-8 text-sm">🌸</div>
+            <div className="absolute top-4 right-32 text-xs">🌸</div>
+            <div className="absolute top-10 right-40">🌸</div>
+            <div className="absolute top-6 left-20 text-sm">🌸</div>
+            <div className="absolute top-12 left-8 text-xs">🌸</div>
           </div>
 
           {/* Contenu */}
-          <div className="relative z-10 p-4 pt-14">
-            {/* Image du couple adulte - EXACTE */}
-            <div className="relative h-48 md:h-56 flex items-center justify-center mb-2">
+          <div className="relative z-10">
+            {/* Image du couple adulte */}
+            <div className="relative h-56 md:h-64 flex items-center justify-center pt-8">
               <Image
                 src="/images/modes/adultes.png"
                 alt="Samouraï Confirmé"
-                width={260}
-                height={280}
+                width={240}
+                height={260}
                 className="object-contain drop-shadow-2xl"
                 priority
               />
             </div>
 
-            {/* Titre et sous-titre - Design identique */}
-            <div className="bg-gradient-to-r from-slate-600 to-slate-500 rounded-2xl p-4 shadow-xl">
-              <h3 className="text-xl md:text-2xl font-black text-white mb-0.5">
+            {/* Section du bas */}
+            <div className="relative bg-slate-700/80 pt-4 pb-4 px-4">
+              {/* Titre */}
+              <h3 className="text-2xl md:text-3xl font-black text-white drop-shadow-md text-center">
                 Samouraï Confirmé
               </h3>
-              <p className="text-slate-200 text-sm font-medium mb-3">
+              
+              {/* Sous-titre */}
+              <p className="text-slate-300 text-sm font-medium text-center mb-3">
                 Plus de 14 ans
               </p>
 
-              {/* 3 Icônes - Identiques à l'original */}
+              {/* 3 Icônes emojis */}
               <div className="flex justify-center gap-3">
-                <div className="w-10 h-10 bg-cyan-600 rounded-xl flex items-center justify-center shadow-lg">
-                  <BarChart3 className="w-5 h-5 text-white" />
-                </div>
-                <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center shadow-lg">
-                  <Target className="w-5 h-5 text-white" />
-                </div>
-                <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
-                  <ScrollText className="w-5 h-5 text-white" />
-                </div>
+                <span className="text-2xl">📊</span>
+                <span className="text-2xl">🎯</span>
+                <span className="text-2xl">📜</span>
               </div>
             </div>
           </div>
         </motion.button>
       </div>
 
-      {/* Message de confidentialité - Identique à l'original */}
+      {/* Message de confidentialité */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
