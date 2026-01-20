@@ -129,15 +129,12 @@ export async function POST(request: NextRequest) {
         user.gamification.completedChallenges,
         foundVirtueId
       );
-      // Use set method for Mongoose Map
-      if (!user.gamification.virtuesProgress) {
-        user.gamification.virtuesProgress = new Map();
-      }
-      if (user.gamification.virtuesProgress instanceof Map) {
-        user.gamification.virtuesProgress.set(foundVirtueId, virtueProgress);
-      } else {
-        user.gamification.virtuesProgress = { [foundVirtueId]: virtueProgress };
-      }
+      // Use simple object assignment
+      user.gamification.virtuesProgress = {
+        ...(user.gamification.virtuesProgress || {}),
+        [foundVirtueId]: virtueProgress,
+      };
+      user.markModified('gamification.virtuesProgress');
     }
 
     // Update user stats
