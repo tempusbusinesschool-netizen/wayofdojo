@@ -137,12 +137,13 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
       )
     },
     {
-      id: 2, slug: 'techniques', emoji: '🥋', title: '206+ Techniques',
+      id: 2, slug: 'techniques', emoji: '🥋', title: '+ 214 Techniques',
       subtitle: 'Tout le programme Aïkido',
       gradient: 'from-cyan-500 to-blue-600', shadowColor: 'shadow-cyan-500/40',
       previewTitle: 'Bibliothèque des Techniques',
-      previewDescription: 'Plus de 206 techniques documentées par grade !',
-      stats: [{ label: 'Techniques', value: '206+' }, { label: 'Vidéos', value: '150+' }],
+      previewDescription: '+ 214 techniques officielles en Aikido !',
+      stats: [{ label: 'Techniques', value: '214+' }, { label: 'Vidéos', value: '150+' }],
+      demoLink: '/fr/aikido/techniques/ikkyo',
       previewContent: (
         <div className="space-y-3">
           {realTechniques.slice(0, 5).map((tech, i) => (
