@@ -506,7 +506,7 @@ export default function DojoPage() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.5 + index * 0.05 }}
                 whileHover={{ scale: 1.02 }}
-                onClick={() => !challenge.completed && handleCompleteChallenge(challenge.id)}
+                onClick={() => !challenge.completed && handleCompleteChallenge(challenge.id, challenge.virtue, challenge.xp)}
                 className={`p-4 rounded-2xl border transition-all cursor-pointer ${
                   challenge.completed
                     ? 'bg-emerald-500/20 border-emerald-500/50'
