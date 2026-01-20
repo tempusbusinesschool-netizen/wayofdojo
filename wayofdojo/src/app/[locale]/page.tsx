@@ -7,7 +7,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Swords, LogIn, UserPlus, LogOut, User, Sparkles, Lock, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import MaitreTanaka from '@/components/MaitreTanaka';
-import NinjaJourney from '@/components/NinjaJourney';
 import VisitorStepsBlocks from '@/components/VisitorStepsBlocks';
 
 // Image de Maître Tanaka pour le logo animé
@@ -69,16 +68,6 @@ export default function HomePage() {
     }
     setCheckingAuth(false);
   }, [locale, router]);
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleStepClick = (_stepId: number) => {
-    // Si l'utilisateur clique sur une étape, on l'invite à s'inscrire
-    if (!isLoggedIn) {
-      router.push(`/${locale}/aikido/register`);
-    } else {
-      router.push(`/${locale}/aikido/dojo`);
-    }
-  };
 
   const handleLogout = () => {
     localStorage.removeItem('wayofdojo_user');
