@@ -106,7 +106,8 @@ export default function DojoPage() {
   };
 
   // Complete a challenge
-  const handleCompleteChallenge = async (challengeId: string, virtueId: string, _xp: number) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleCompleteChallenge = async (challengeId: string, virtueId: string, xpReward: number) => {
     if (completedChallenges.includes(challengeId) || processingChallenge) return;
     
     setProcessingChallenge(challengeId);
@@ -246,7 +247,8 @@ export default function DojoPage() {
   const currentXp = gamificationData?.xp.total ?? user.gamification.xp ?? 0;
   const currentLevel = gamificationData?.level ?? user.gamification.level ?? 1;
   const currentStreak = gamificationData?.streak.current ?? user.gamification.streak ?? 0;
-  const _badgesUnlocked = gamificationData?.badges.unlocked ?? user.gamification.badges?.length ?? 0;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const badgesUnlocked = gamificationData?.badges.unlocked ?? user.gamification.badges?.length ?? 0;
 
   // Weekly stats
   const weeklyStats = {
