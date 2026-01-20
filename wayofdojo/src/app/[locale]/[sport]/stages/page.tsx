@@ -307,7 +307,7 @@ export default function StagesPage() {
             📅 Stages & Séminaires
           </h1>
           <p className="text-slate-400 max-w-2xl mx-auto">
-            Découvrez les prochains stages d'Aïkido et inscrivez-vous pour progresser avec les meilleurs senseis !
+            Découvrez les prochains stages d&apos;Aïkido et inscrivez-vous pour progresser avec les meilleurs senseis !
           </p>
         </motion.div>
 

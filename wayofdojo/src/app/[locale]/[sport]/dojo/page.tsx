@@ -62,6 +62,7 @@ export default function DojoPage() {
     router.push(`/${locale}`);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleCompleteChallenge = (_challengeId: number) => {
     setShowXpAnimation(true);
     setTimeout(() => setShowXpAnimation(false), 2000);
