@@ -51,9 +51,9 @@ export const MaitreTanaka: React.FC<MaitreTanakaProps> = ({
   // Store messages for potential random display
   const tipsMessages = messages.length > 0 ? messages : ["Bienvenue !"];
   
-  // Position classes based on prop
+  // Position classes based on prop - Tanaka déplacé de 2cm (~75px) vers la gauche
   const positionClasses = position === 'top-right' 
-    ? 'fixed top-[140px] right-[20px] md:top-[150px] md:right-[24px] lg:top-[160px] lg:right-[28px]' 
+    ? 'fixed top-[140px] right-[95px] md:top-[150px] md:right-[100px] lg:top-[160px] lg:right-[105px]' 
     : 'fixed bottom-6 right-6';
   
   // Size classes - large is 30% bigger
