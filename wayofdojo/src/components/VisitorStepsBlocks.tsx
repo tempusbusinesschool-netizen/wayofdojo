@@ -40,6 +40,8 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
   const isEnfant = mode === 'enfant';
   const [previewBlock, setPreviewBlock] = useState<Block | null>(null);
   const router = useRouter();
+  const params = useParams();
+  const locale = params.locale as string || 'fr';
 
   const handleSignupClick = () => {
     setPreviewBlock(null);
