@@ -9,6 +9,7 @@ export interface IUser extends Document {
   passwordHash: string;
   firstName: string;
   lastName: string;
+  role: 'user' | 'club_admin' | 'admin' | 'super_admin';
   profile: 'jeune_ninja' | 'ninja_confirme';
   sport: string;
   grade: string;
@@ -35,6 +36,11 @@ const UserSchema = new Schema<IUser>(
     passwordHash: { type: String, required: true },
     firstName: { type: String, required: true },
     lastName: { type: String, required: true },
+    role: {
+      type: String,
+      enum: ['user', 'club_admin', 'admin', 'super_admin'],
+      default: 'user'
+    },
     profile: { 
       type: String, 
       enum: ['jeune_ninja', 'ninja_confirme'], 
