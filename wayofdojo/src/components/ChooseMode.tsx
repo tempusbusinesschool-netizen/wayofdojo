@@ -36,11 +36,11 @@ export default function ChooseMode({ onModeSelect }: ChooseModeProps) {
         <p className="text-slate-400 text-sm">Tu pourras changer à tout moment 🥋</p>
       </motion.div>
 
-      {/* Mode Cards - Reproduction FIDÈLE de l'interface de référence */}
-      <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-4 md:gap-6">
+      {/* Mode Cards - Réduites de 20% */}
+      <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-4 md:gap-5">
         
         {/* ═══════════════════════════════════════════════════════════════════════ */}
-        {/* CARTE GAUCHE — Jeune Samouraï (identique à la référence) */}
+        {/* CARTE GAUCHE — Jeune Samouraï */}
         {/* ═══════════════════════════════════════════════════════════════════════ */}
         <motion.button
           initial={{ opacity: 0, x: -30 }}
@@ -49,9 +49,9 @@ export default function ChooseMode({ onModeSelect }: ChooseModeProps) {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => handleModeClick('enfant')}
-          className="group relative overflow-hidden rounded-[1.5rem] transition-all duration-300"
+          className="group relative overflow-hidden rounded-[1.25rem] transition-all duration-300"
           style={{
-            boxShadow: '0 0 30px rgba(255, 215, 0, 0.6), inset 0 0 0 3px rgba(255, 215, 0, 0.9)'
+            boxShadow: '0 0 25px rgba(255, 215, 0, 0.5), inset 0 0 0 2px rgba(255, 215, 0, 0.8)'
           }}
           data-testid="mode-jeune-samourai"
         >
@@ -67,49 +67,34 @@ export default function ChooseMode({ onModeSelect }: ChooseModeProps) {
           </div>
 
           {/* Section jaune/dorée du bas - UI overlay */}
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-amber-500 via-amber-500 to-amber-500/95 pt-4 pb-4 px-4">
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-amber-500 via-amber-500 to-amber-500/95 pt-3 pb-3 px-3">
             {/* Titre */}
-            <h3 className="text-2xl md:text-3xl font-black text-white drop-shadow-md text-center">
+            <h3 className="text-xl md:text-2xl font-black text-white drop-shadow-md text-center">
               Jeune Samouraï
             </h3>
             
             {/* Sous-titre */}
-            <p className="text-amber-100 text-sm font-medium text-center mb-3">
+            <p className="text-amber-100 text-xs font-medium text-center mb-2">
               Moins de 14 ans
             </p>
 
             {/* 3 Icônes ludiques */}
-            <div className="flex justify-center gap-2 mb-3">
-              <div className="w-10 h-10 bg-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-                <span className="text-lg">🎮</span>
+            <div className="flex justify-center gap-2">
+              <div className="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center shadow-lg">
+                <span className="text-sm">🎮</span>
               </div>
-              <div className="w-10 h-10 bg-amber-600 rounded-xl flex items-center justify-center shadow-lg">
-                <span className="text-lg">🏆</span>
+              <div className="w-8 h-8 bg-amber-600 rounded-lg flex items-center justify-center shadow-lg">
+                <span className="text-sm">🏆</span>
               </div>
-              <div className="w-10 h-10 bg-teal-500 rounded-xl flex items-center justify-center shadow-lg">
-                <span className="text-lg">🐉</span>
+              <div className="w-8 h-8 bg-teal-500 rounded-lg flex items-center justify-center shadow-lg">
+                <span className="text-sm">🐉</span>
               </div>
-            </div>
-
-            {/* Badge "Parle-moi !" avec avatar Tanaka */}
-            <div className="flex justify-center items-center gap-2">
-              <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-white/80 shadow-lg bg-orange-500">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img 
-                  src="/images/tanaka/portrait.png" 
-                  alt="Maître Tanaka"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <span className="bg-red-500 text-white text-sm font-bold px-4 py-2 rounded-full shadow-lg">
-                Parle-moi !
-              </span>
             </div>
           </div>
         </motion.button>
 
         {/* ═══════════════════════════════════════════════════════════════════════ */}
-        {/* CARTE DROITE — Samouraï Confirmé (identique à la référence) */}
+        {/* CARTE DROITE — Samouraï Confirmé */}
         {/* ═══════════════════════════════════════════════════════════════════════ */}
         <motion.button
           initial={{ opacity: 0, x: 30 }}
@@ -118,9 +103,9 @@ export default function ChooseMode({ onModeSelect }: ChooseModeProps) {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => handleModeClick('adulte')}
-          className="group relative overflow-hidden rounded-[1.5rem] transition-all duration-300"
+          className="group relative overflow-hidden rounded-[1.25rem] transition-all duration-300"
           style={{
-            boxShadow: '0 0 20px rgba(100, 116, 139, 0.4), inset 0 0 0 2px rgba(148, 163, 184, 0.5)'
+            boxShadow: '0 0 15px rgba(100, 116, 139, 0.4), inset 0 0 0 2px rgba(148, 163, 184, 0.5)'
           }}
           data-testid="mode-samourai-confirme"
         >
@@ -136,27 +121,27 @@ export default function ChooseMode({ onModeSelect }: ChooseModeProps) {
           </div>
 
           {/* Section du bas - UI overlay */}
-          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-700 via-slate-700 to-slate-700/95 pt-4 pb-4 px-4">
+          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-700 via-slate-700 to-slate-700/95 pt-3 pb-3 px-3">
             {/* Titre */}
-            <h3 className="text-2xl md:text-3xl font-black text-white drop-shadow-md text-center">
+            <h3 className="text-xl md:text-2xl font-black text-white drop-shadow-md text-center">
               Samouraï Confirmé
             </h3>
             
             {/* Sous-titre */}
-            <p className="text-slate-300 text-sm font-medium text-center mb-3">
+            <p className="text-slate-300 text-xs font-medium text-center mb-2">
               Plus de 14 ans
             </p>
 
             {/* 3 Icônes analytiques */}
             <div className="flex justify-center gap-2">
-              <div className="w-10 h-10 bg-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-                <span className="text-lg">📊</span>
+              <div className="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center shadow-lg">
+                <span className="text-sm">📊</span>
               </div>
-              <div className="w-10 h-10 bg-pink-500 rounded-xl flex items-center justify-center shadow-lg">
-                <span className="text-lg">🎯</span>
+              <div className="w-8 h-8 bg-pink-500 rounded-lg flex items-center justify-center shadow-lg">
+                <span className="text-sm">🎯</span>
               </div>
-              <div className="w-10 h-10 bg-amber-600 rounded-xl flex items-center justify-center shadow-lg">
-                <span className="text-lg">📜</span>
+              <div className="w-8 h-8 bg-amber-600 rounded-lg flex items-center justify-center shadow-lg">
+                <span className="text-sm">📜</span>
               </div>
             </div>
           </div>
