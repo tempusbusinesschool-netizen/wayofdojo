@@ -39,12 +39,18 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
 }) => {
   const isEnfant = mode === 'enfant';
   const [previewBlock, setPreviewBlock] = useState<Block | null>(null);
+  const router = useRouter();
 
   const handleSignupClick = () => {
     setPreviewBlock(null);
     if (onSignupClick) {
       onSignupClick();
     }
+  };
+
+  const handleDemoClick = (link: string) => {
+    setPreviewBlock(null);
+    router.push(link);
   };
 
   // Vraies techniques d'Aïkido
