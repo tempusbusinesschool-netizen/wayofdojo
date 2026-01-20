@@ -12,7 +12,6 @@ import {
   xpToNextLevel, 
   checkNewBadges,
   getCurrentTitle,
-  XP_CONFIG,
   shouldResetStreak,
   isNewDayForStreak
 } from '@/lib/gamification.service';
