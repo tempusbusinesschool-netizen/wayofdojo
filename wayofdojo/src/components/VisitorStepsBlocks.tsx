@@ -24,6 +24,7 @@ interface Block {
   previewDescription: string;
   previewContent: React.ReactNode;
   stats?: { label: string; value: string }[];
+  demoLink?: string;
 }
 
 interface VisitorStepsBlocksProps {
