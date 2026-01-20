@@ -273,13 +273,13 @@ export default function HomePage() {
       {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
       {/* HERO SECTION - Titre principal avec animation */}
       {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-      {/* MAÎTRE TANAKA FLOTTANT EN HAUT À DROITE - Identique à la bulle du bas */}
+      {/* MAÎTRE TANAKA FLOTTANT - Aligné avec le titre "Samouraï !" */}
       {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
       <motion.button
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ delay: 0.3, duration: 0.5 }}
-        className="fixed top-4 right-4 md:top-6 md:right-6 z-50 group"
+        className="fixed top-28 right-4 md:top-32 md:right-6 lg:top-36 lg:right-8 z-50 group"
         onClick={() => {
           const tanakaButton = document.querySelector('[data-testid="maitre-tanaka-button"]') as HTMLButtonElement;
           if (tanakaButton) {
