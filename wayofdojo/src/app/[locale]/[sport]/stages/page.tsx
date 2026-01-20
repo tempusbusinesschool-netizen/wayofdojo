@@ -5,8 +5,8 @@ import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Calendar, MapPin, Users, Clock, Filter, Search,
-  ChevronLeft, ChevronRight, X, Star, Award, User,
+  Calendar, MapPin, Users, Filter, Search,
+  ChevronLeft, ChevronRight, X, Star, User,
   CalendarDays, Grid3X3, List, Heart
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -77,7 +77,7 @@ const MOCK_STAGES: Stage[] = [
   {
     id: '3',
     title: 'Stage Débutants - Premiers Pas',
-    description: 'Stage d\'initiation pour les nouveaux pratiquants. Découverte des bases de l\'Aïkido.',
+    description: 'Stage d&apos;initiation pour les nouveaux pratiquants. Découverte des bases de l&apos;Aïkido.',
     date: '2025-02-08',
     location: 'Dojo du Soleil Levant',
     city: 'Marseille',
@@ -156,7 +156,7 @@ export default function StagesPage() {
   const locale = params.locale as string;
   const sport = params.sport as string;
 
-  const [stages, setStages] = useState<Stage[]>(MOCK_STAGES);
+  const [stages] = useState<Stage[]>(MOCK_STAGES);
   const [filteredStages, setFilteredStages] = useState<Stage[]>(MOCK_STAGES);
   const [viewMode, setViewMode] = useState<ViewMode>('grid');
   const [searchQuery, setSearchQuery] = useState('');

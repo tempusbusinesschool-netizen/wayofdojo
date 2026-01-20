@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { 
   Shield, Users, BarChart3, Settings, LogOut, Home,
   TrendingUp, UserCheck, Crown, Activity, Search,
-  ChevronRight, Award, Flame, Star
+  ChevronRight, Flame, Star
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -64,6 +64,7 @@ export default function AdminPage() {
 
   useEffect(() => {
     checkAdminAccess();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const checkAdminAccess = async () => {

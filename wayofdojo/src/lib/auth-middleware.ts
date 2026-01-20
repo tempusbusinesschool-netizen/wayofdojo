@@ -6,7 +6,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { verifyToken } from './auth';
 import dbConnect from './db';
-import { User, IUser } from './models/user.model';
+import { User } from './models/user.model';
 
 export type UserRole = 'user' | 'club_admin' | 'admin' | 'super_admin';
 

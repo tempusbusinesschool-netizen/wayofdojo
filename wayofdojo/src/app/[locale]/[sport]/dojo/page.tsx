@@ -7,8 +7,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { 
   Swords, LogOut, Settings, BookOpen, Target,
-  Calendar, Award, MessageCircle, Shield, Zap,
-  TrendingUp, Star, Flame, Trophy, Heart, 
+  Calendar, Award, MessageCircle, Shield,
+  TrendingUp, Flame, Trophy,
   CheckCircle2, Circle, Sparkles
 } from 'lucide-react';
 import UserDashboardBlocks from '@/components/UserDashboardBlocks';
@@ -62,7 +62,7 @@ export default function DojoPage() {
     router.push(`/${locale}`);
   };
 
-  const handleCompleteChallenge = (challengeId: number) => {
+  const handleCompleteChallenge = (_challengeId: number) => {
     setShowXpAnimation(true);
     setTimeout(() => setShowXpAnimation(false), 2000);
     // TODO: Implement challenge completion logic
