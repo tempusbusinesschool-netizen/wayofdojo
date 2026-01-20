@@ -280,6 +280,29 @@ export default function HomePage() {
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl" />
         
         <div className="relative container mx-auto px-4 py-8 sm:py-12">
+          {/* Maître Tanaka agrandi en haut à droite */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+            className="absolute top-4 right-4 md:top-8 md:right-8 z-10"
+          >
+            <motion.div
+              animate={{ y: [0, -8, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              className="w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 p-1 shadow-2xl shadow-amber-500/40"
+            >
+              <div className="w-full h-full rounded-full overflow-hidden bg-amber-900/50 border-2 border-amber-300/50">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img 
+                  src="/images/tanaka/portrait.png" 
+                  alt="Maître Tanaka"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </motion.div>
+          </motion.div>
+
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
