@@ -28,21 +28,9 @@ export default function ChooseMode({ onModeSelect }: ChooseModeProps) {
 
   return (
     <div className="w-full py-2 px-4" data-testid="choose-mode">
-      {/* Title */}
-      <motion.div
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-4"
-      >
-        <h2 className="text-2xl md:text-3xl font-black text-white mb-2">
-          Choisis ton mode pour commencer !
-        </h2>
-        <p className="text-slate-400">Tu pourras changer à tout moment 🥋</p>
-      </motion.div>
-
-      {/* Mode Cards - Images originales identiques à Aikido@Game */}
-      <div className="max-w-4xl mx-auto flex flex-col md:flex-row justify-center items-center gap-4 md:gap-6">
-        {/* Jeune Samouraï Card - Image originale */}
+      {/* Mode Cards - Images originales identiques à Aikido@Game - SANS titre supplémentaire car inclus dans les images */}
+      <div className="max-w-4xl mx-auto flex flex-col md:flex-row justify-center items-stretch gap-4 md:gap-6">
+        {/* Jeune Samouraï Card - Image originale exacte */}
         <motion.button
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
@@ -50,20 +38,20 @@ export default function ChooseMode({ onModeSelect }: ChooseModeProps) {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => handleModeClick('enfant')}
-          className="relative overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-xl hover:shadow-amber-500/20"
+          className="relative overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-xl hover:shadow-amber-500/20 flex-1"
           data-testid="mode-jeune-samourai"
         >
           <Image
             src="/images/modes/jeune-ninja-card.png"
             alt="Jeune Samouraï - Moins de 14 ans"
-            width={320}
-            height={420}
-            className="object-contain"
+            width={500}
+            height={650}
+            className="object-contain w-full h-auto"
             priority
           />
         </motion.button>
 
-        {/* Samouraï Confirmé Card - Image originale */}
+        {/* Samouraï Confirmé Card - Image originale exacte */}
         <motion.button
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
@@ -71,15 +59,15 @@ export default function ChooseMode({ onModeSelect }: ChooseModeProps) {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={() => handleModeClick('adulte')}
-          className="relative overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-xl hover:shadow-cyan-500/20"
+          className="relative overflow-hidden rounded-2xl transition-all duration-300 hover:shadow-xl hover:shadow-cyan-500/20 flex-1"
           data-testid="mode-samourai-confirme"
         >
           <Image
             src="/images/modes/ninja-confirme-card.png"
             alt="Samouraï Confirmé - Plus de 14 ans"
-            width={320}
-            height={420}
-            className="object-contain"
+            width={500}
+            height={650}
+            className="object-contain w-full h-auto"
             priority
           />
         </motion.button>
