@@ -343,9 +343,7 @@ export default function HomePage() {
                 className="bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 hover:from-amber-400 hover:via-orange-400 hover:to-red-400 text-white font-bold text-lg px-8 py-6 rounded-2xl shadow-xl shadow-amber-500/30 transform hover:scale-105 transition-all"
                 data-testid="hero-cta-register"
               >
-                <span className="text-2xl mr-2">🥷</span>
-                Commencer l&apos;aventure
-                <span className="text-2xl ml-2">🚀</span>
+                🥋 Commencer l&apos;aventure 🚀
               </Button>
               <Button
                 size="lg"
