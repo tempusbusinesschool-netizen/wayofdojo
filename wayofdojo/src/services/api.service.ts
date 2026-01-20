@@ -137,6 +137,48 @@ class ApiService {
       method: 'POST',
     });
   }
+
+  // Gamification endpoints
+  async addXp(amount: number, reason?: string) {
+    return this.request('/gamification/xp', {
+      method: 'POST',
+      body: JSON.stringify({ amount, reason }),
+    });
+  }
+
+  async completeChallenge(challengeId: string, virtueId?: string) {
+    return this.request('/gamification/challenge', {
+      method: 'POST',
+      body: JSON.stringify({ challengeId, virtueId }),
+    });
+  }
+
+  async updateTechniqueProgress(techniqueId: string, status: string, kyuId?: string) {
+    return this.request('/gamification/technique', {
+      method: 'POST',
+      body: JSON.stringify({ techniqueId, status, kyuId }),
+    });
+  }
+
+  async getProgress() {
+    return this.request('/gamification/progress');
+  }
+
+  async recordDailyLogin() {
+    return this.request('/gamification/progress', {
+      method: 'POST',
+    });
+  }
+
+  async getBadges() {
+    return this.request('/gamification/badges');
+  }
+
+  async checkBadges() {
+    return this.request('/gamification/badges', {
+      method: 'POST',
+    });
+  }
 }
 
 export const apiService = new ApiService();
