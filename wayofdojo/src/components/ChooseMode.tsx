@@ -27,16 +27,16 @@ export default function ChooseMode({ onModeSelect }: ChooseModeProps) {
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="text-center mb-6"
+        className="text-center mb-4"
       >
-        <h2 className="text-2xl md:text-3xl font-black text-white mb-2">
+        <h2 className="text-2xl md:text-3xl font-black text-white mb-1">
           Choisis ton mode pour commencer !
         </h2>
-        <p className="text-slate-400">Tu pourras changer à tout moment 🥋</p>
+        <p className="text-slate-400 text-sm">Tu pourras changer à tout moment 🥋</p>
       </motion.div>
 
       {/* Mode Cards - Rigoureusement identique à l'original Aikido@Game */}
-      <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-6 md:gap-8">
+      <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-4 md:gap-6">
         
         {/* ═══════════════════════════════════════════════════════════════════════ */}
         {/* CARTE JEUNE NINJA - Exactement comme l'original */}
