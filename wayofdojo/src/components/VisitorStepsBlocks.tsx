@@ -352,7 +352,7 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
       previewTitle: 'Espace Parents',
       previewDescription: 'Suivez et validez la progression de votre enfant !',
       stats: [{ label: 'Rapports', value: 'Hebdo' }, { label: 'Validation', value: 'Simple' }],
-      demoLink: '/fr/aikido/admin',
+      demoLink: `/${locale}/demo?section=defis`,
       previewContent: (
         <div className="space-y-4">
           <div className="bg-white/10 rounded-xl p-4">
