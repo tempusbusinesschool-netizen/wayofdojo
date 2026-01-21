@@ -8,8 +8,7 @@ import {
   ArrowLeft, Home, BookOpen, Swords, 
   Target, Activity, Shield, Wind,
   ChevronDown, ChevronUp, Play, Info,
-  CheckCircle2, Circle, Loader2, Sparkles,
-  Filter, TrendingUp
+  Loader2, Sparkles, Filter
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import MaitreTanaka from '@/components/MaitreTanaka';
@@ -22,7 +21,6 @@ import {
   TECHNIQUES_JO, JO_STATISTICS,
   TECHNIQUES_TANTO, TANTO_STATISTICS,
   TECHNIQUES_BOKKEN, BOKKEN_STATISTICS,
-  AIKIDO_GLOBAL_STATS,
   Mouvement, TechniqueArme
 } from '@/data/aikido';
 
