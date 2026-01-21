@@ -1,154 +1,215 @@
 {
-  "identity": {
-    "persona": "E1",
-    "philosophy": "Fusion over Imitation. Emotion First. Content is King.",
-    "anti_patterns": [
-      "Generic Bootstrap layouts",
-      "Inter font for headings",
-      "Gradient overload",
-      "Symmetry addiction"
-    ]
+  "metadata": {
+    "project_name": "WayofDojo Admin Redesign",
+    "version": "1.0.0",
+    "last_updated": "2023-10-27",
+    "author": "E1 Design Agent",
+    "description": "Design guidelines for the WayofDojo Admin Space redesign, focusing on ergonomics, hierarchy, and dark mode aesthetics."
   },
-  "typography": {
-    "kids_mode": {
-      "headings": {
-        "family": "Fredoka",
-        "weights": ["600", "700"],
-        "usage": "Main titles, Module names",
-        "letter_spacing": "tracking-wide"
+  "design_system": {
+    "theme": {
+      "mode": "dark",
+      "strategy": "class-based",
+      "primary_palette": "slate-amber-violet"
+    },
+    "colors": {
+      "background": {
+        "app": "bg-slate-950",
+        "sidebar": "bg-slate-900/95 border-r border-slate-800",
+        "card": "bg-slate-900 border border-slate-800",
+        "card_hover": "hover:border-slate-700 transition-colors duration-200",
+        "input": "bg-slate-950 border-slate-800 focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
       },
-      "body": {
-        "family": "Quicksand",
-        "weights": ["500", "700"],
-        "usage": "Descriptions, Instructions"
+      "text": {
+        "primary": "text-slate-50",
+        "secondary": "text-slate-400",
+        "muted": "text-slate-500",
+        "accent": "text-amber-500",
+        "brand": "text-violet-400"
+      },
+      "status": {
+        "success": "text-emerald-400 bg-emerald-400/10 border-emerald-400/20",
+        "warning": "text-amber-400 bg-amber-400/10 border-amber-400/20",
+        "error": "text-red-400 bg-red-400/10 border-red-400/20",
+        "info": "text-blue-400 bg-blue-400/10 border-blue-400/20"
+      },
+      "gradients": {
+        "brand_glow": "bg-gradient-to-br from-violet-600/20 via-transparent to-transparent",
+        "active_item": "bg-gradient-to-r from-amber-500/10 to-transparent border-l-2 border-amber-500"
       }
     },
-    "adults_mode": {
-      "headings": {
-        "family": "Cinzel",
-        "weights": ["700", "900"],
-        "usage": "Main titles, Ranks",
-        "letter_spacing": "tracking-tighter"
+    "typography": {
+      "font_family": {
+        "sans": "Inter, system-ui, sans-serif",
+        "mono": "JetBrains Mono, monospace"
       },
-      "body": {
-        "family": "Manrope",
-        "weights": ["400", "600"],
-        "usage": "Technical descriptions, Progress"
+      "hierarchy": {
+        "h1": "text-3xl font-bold tracking-tight text-slate-50",
+        "h2": "text-xl font-semibold tracking-tight text-slate-100",
+        "h3": "text-lg font-medium text-slate-200",
+        "body": "text-sm text-slate-400 leading-relaxed",
+        "label": "text-xs font-semibold uppercase tracking-wider text-slate-500",
+        "stat_value": "text-2xl font-bold text-slate-50 tracking-tight"
       }
-    }
-  },
-  "colors": {
-    "palette_strategy": "Dual Mode Dojo",
-    "kids_theme": {
-      "name": "Jeune Ninja",
-      "background": "#FFFBF0",
-      "foreground": "#2D3436",
-      "primary": "#FF6B35",
-      "secondary": "#7CB518",
-      "accent": "#FDCB6E",
-      "card_bg": "#FFFFFF",
-      "border": "#FFEAA7"
     },
-    "adults_theme": {
-      "name": "Ninja Confirmé",
-      "background": "#0F172A",
-      "foreground": "#F8FAFC",
-      "primary": "#6366F1",
-      "secondary": "#0EA5E9",
-      "accent": "#10B981",
-      "card_bg": "#1E293B",
-      "border": "#334155"
+    "spacing": {
+      "container_padding": "p-6 md:p-8 lg:p-10",
+      "card_padding": "p-6",
+      "section_gap": "gap-8",
+      "item_gap": "gap-4"
     },
-    "common": {
-      "success": "#10B981",
-      "warning": "#F59E0B",
-      "error": "#EF4444"
+    "radius": {
+      "card": "rounded-xl",
+      "button": "rounded-lg",
+      "input": "rounded-md"
+    },
+    "shadows": {
+      "card": "shadow-sm shadow-black/20",
+      "dropdown": "shadow-xl shadow-black/40 border border-slate-800",
+      "glow": "shadow-[0_0_15px_rgba(245,158,11,0.15)]"
     }
   },
   "layout_strategy": {
-    "mobile_first": true,
-    "spacing_scale": "Generous (p-6, p-8)",
-    "grid_system": "Bento Grid (Mode A)",
-    "breakpoints": {
-      "sm": "640px",
-      "md": "768px",
-      "lg": "1024px"
-    }
-  },
-  "pages": {
-    "selection_page": {
-      "name": "Dojo Entrance",
-      "structure": "Split Screen Vertical (Mobile)",
-      "components": [
-        {
-          "name": "ModeCard",
-          "props": {
-            "variant": "kid | adult",
-            "image": "3D Character Asset",
-            "action": "Select Mode"
-          },
-          "styling": "h-[45vh] w-full flex flex-col justify-center items-center relative overflow-hidden transition-all duration-500 hover:h-[55vh]"
-        }
-      ]
+    "structure": "sidebar_layout",
+    "grid_system": {
+      "dashboard": "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6",
+      "detail_view": "grid grid-cols-1 lg:grid-cols-3 gap-8"
     },
-    "dashboard_page": {
-      "name": "Training Scroll",
-      "structure": "Vertical Bento Grid",
-      "modules": [
-        "Commence (Start)",
-        "Apprends (Learn)",
-        "Entraine (Train)",
-        "Valide (Validate)",
-        "Progresse (Progress)",
-        "Maitrise (Master)"
-      ],
-      "components": [
-        {
-          "name": "ModuleCard",
-          "styling": "rounded-2xl p-6 shadow-lg border-l-4 transition-transform hover:scale-[1.02] active:scale-95"
-        },
-        {
-          "name": "TanakaWidget",
-          "visibility": "Kids Mode Only",
-          "position": "fixed bottom-4 right-4 z-50",
-          "styling": "w-16 h-16 rounded-full border-4 border-white shadow-xl bg-cover"
-        }
-      ]
+    "sidebar": {
+      "width": "w-64",
+      "collapsed_width": "w-16",
+      "behavior": "fixed h-screen left-0 top-0 z-40 hidden lg:block",
+      "mobile_trigger": "lg:hidden fixed top-4 left-4 z-50"
+    },
+    "main_content": {
+      "margin": "lg:ml-64",
+      "max_width": "max-w-7xl mx-auto"
     }
   },
   "components": {
-    "ui_library": "shadcn/ui",
-    "customizations": [
-      {
-        "component": "Button",
-        "style": "rounded-full font-bold uppercase tracking-widest shadow-lg hover:shadow-xl transition-all"
-      },
-      {
-        "component": "Card",
-        "style": "backdrop-blur-md bg-opacity-90 border-opacity-50"
-      }
-    ],
-    "animations": {
-      "library": "framer-motion",
-      "presets": {
-        "fade_in": { "initial": { "opacity": 0 }, "animate": { "opacity": 1 } },
-        "slide_up": { "initial": { "y": 20, "opacity": 0 }, "animate": { "y": 0, "opacity": 1 } },
-        "hover_scale": { "scale": 1.05 }
-      }
+    "sidebar": {
+      "name": "AdminSidebar",
+      "description": "Vertical navigation sidebar replacing horizontal tabs.",
+      "elements": [
+        {
+          "name": "LogoArea",
+          "style": "h-16 flex items-center px-6 border-b border-slate-800",
+          "content": "WayofDojo Brand (Text + Icon)"
+        },
+        {
+          "name": "NavMenu",
+          "style": "flex-1 py-6 space-y-1 px-3",
+          "item_style": "flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors",
+          "active_state": "bg-slate-800 text-amber-500",
+          "inactive_state": "text-slate-400 hover:text-slate-100 hover:bg-slate-800/50"
+        },
+        {
+          "name": "UserProfile",
+          "style": "p-4 border-t border-slate-800 mt-auto",
+          "content": "Avatar + Name + Role (Admin)"
+        }
+      ]
+    },
+    "dashboard_widgets": {
+      "name": "DashboardWidgets",
+      "description": "Modular widgets for the main dashboard view.",
+      "types": [
+        {
+          "type": "StatCard",
+          "layout": "flex flex-col justify-between p-6 bg-slate-900 border border-slate-800 rounded-xl",
+          "content": "Icon (top-right), Label (top-left), Value (center/bottom), Trend (bottom-right)",
+          "visuals": "Subtle gradient glow based on metric type (e.g., Amber for Users, Violet for XP)"
+        },
+        {
+          "type": "ChartWidget",
+          "layout": "col-span-2 p-6 bg-slate-900 border border-slate-800 rounded-xl",
+          "content": "Header with Date Range Picker, Recharts AreaChart/BarChart",
+          "style": "Minimalist axes, custom tooltips (dark bg)"
+        },
+        {
+          "type": "ActivityFeed",
+          "layout": "col-span-1 row-span-2 p-0 bg-slate-900 border border-slate-800 rounded-xl overflow-hidden",
+          "content": "List of recent actions. Each item: Avatar + Action Text + Time",
+          "style": "Divide-y divide-slate-800"
+        }
+      ]
+    },
+    "data_table": {
+      "name": "AdminDataTable",
+      "description": "High-density table for Users and Dojos.",
+      "features": [
+        "Sticky Header (bg-slate-900/95 backdrop-blur)",
+        "Row Hover (bg-slate-800/30)",
+        "Bulk Actions Bar (appears when rows selected)",
+        "Pagination (bottom right)",
+        "Filter Popover (Shadcn Popover)"
+      ],
+      "style": "w-full text-sm text-left",
+      "header_cell": "h-10 px-4 text-xs font-medium text-slate-500 uppercase tracking-wider border-b border-slate-800",
+      "body_cell": "p-4 border-b border-slate-800/50 align-middle"
+    },
+    "page_header": {
+      "name": "PageHeader",
+      "description": "Standard header for every admin page.",
+      "layout": "flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8",
+      "elements": [
+        "Title (H1)",
+        "Breadcrumbs (optional)",
+        "Primary Action Button (bg-amber-500 hover:bg-amber-600 text-slate-950 font-semibold)"
+      ]
     }
   },
   "assets": {
-    "instructions": "Use existing 3D character assets for 'Jeune Ninja' and 'Ninja Confirmé'. Use existing 'Maître Tanaka' portrait.",
-    "placeholders": {
-      "kid_mode_bg": "https://images.pexels.com/photos/7233323/pexels-photo-7233323.jpeg",
-      "adult_mode_bg": "https://images.pexels.com/photos/7859016/pexels-photo-7859016.jpeg"
+    "icons": {
+      "library": "lucide-react",
+      "style": "stroke-[1.5px] w-5 h-5",
+      "mapping": {
+        "dashboard": "LayoutDashboard",
+        "users": "Users",
+        "dojos": "Tent",
+        "directory": "Map",
+        "settings": "Settings",
+        "logout": "LogOut",
+        "search": "Search",
+        "filter": "Filter",
+        "add": "Plus",
+        "edit": "Pencil",
+        "delete": "Trash2"
+      }
+    },
+    "images": {
+      "placeholders": {
+        "user_avatar": "https://ui.shadcn.com/avatars/01.png",
+        "dojo_cover": "https://images.unsplash.com/photo-1584515502149-667e307a5260?auto=format&fit=crop&w=800&q=80"
+      }
     }
   },
-  "universal_guidelines": [
-    "Do not use gradients for text readability.",
-    "Ensure 44px+ touch targets for all mobile interactions.",
-    "Use 'sonner' for toast notifications.",
-    "Respect 'prefers-reduced-motion'.",
-    "Add data-testid to all interactive elements."
-  ]
+  "universal_guidelines": {
+    "accessibility": {
+      "contrast": "Ensure text-slate-400 or lighter on slate-900 backgrounds.",
+      "focus_states": "Visible focus rings (ring-2 ring-amber-500/50) on all interactive elements.",
+      "aria_labels": "Required for icon-only buttons."
+    },
+    "testing": {
+      "attribute": "data-testid",
+      "format": "kebab-case (e.g., 'user-table-row-1', 'sidebar-nav-dashboard')"
+    },
+    "motion": {
+      "micro_interactions": "Button press scale (active:scale-95), Link hover color fade (duration-200).",
+      "page_transition": "Fade in (opacity-0 to opacity-100 duration-300).",
+      "reduced_motion": "Respect prefers-reduced-motion media query."
+    },
+    "implementation_notes": {
+      "do_not_touch": "Public homepage, Auth pages.",
+      "tech_stack": "React, Tailwind CSS, Shadcn UI (customized).",
+      "file_structure": "Keep components in /src/components/admin/..."
+    }
+  },
+  "instructions_to_main_agent": {
+    "step_1": "Create the layout shell (Sidebar + Main Content Area).",
+    "step_2": "Implement the Dashboard view with mock data widgets.",
+    "step_3": "Build the Data Table component for Users/Dojos.",
+    "step_4": "Apply the 'WayofDojo' dark theme variables to Shadcn components.",
+    "step_5": "Ensure all interactive elements have data-testid attributes."
+  }
 }
