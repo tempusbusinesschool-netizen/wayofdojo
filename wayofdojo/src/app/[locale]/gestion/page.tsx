@@ -239,7 +239,7 @@ export default function GestionPage() {
     }
   };
 
-  const handleCreateMember = async (dojoId: string, _dojoName: string) => {
+  const handleCreateMember = async (dojoId: string) => {
     if (!memberFormData.first_name || !memberFormData.last_name || !memberFormData.email || !memberFormData.password) {
       toast.error('Prénom, nom, email et mot de passe requis');
       return;
