@@ -1233,3 +1233,12 @@ function AdminPageContent() {
     </div>
   );
 }
+
+// Export with ThemeProvider wrapper
+export default function AdminPage() {
+  return (
+    <ThemeProvider>
+      <AdminPageContent />
+    </ThemeProvider>
+  );
+}
