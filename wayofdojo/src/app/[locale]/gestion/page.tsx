@@ -8,15 +8,13 @@ import {
   ArrowLeft, Building2, Users, Shield, Settings, RefreshCw,
   Plus, Trash2, MapPin, UserPlus, ChevronDown, ChevronUp,
   Mail, Phone, Calendar, Award, Eye, EyeOff, Search, X,
-  Download, Globe, CheckCircle2, Filter, UserCog, GraduationCap,
-  Key, Copy, Edit3, Lock, ChevronRight, BarChart3, Home
+  Download, Globe, CheckCircle2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { toast } from 'sonner';
 import apiService from '@/services/api.service';
 
