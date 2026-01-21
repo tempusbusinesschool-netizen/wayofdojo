@@ -355,7 +355,7 @@ export function XPProgressChart({ data, theme = 'dark', className }: XPProgressC
               boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.2)',
               color: colors.tooltip.text
             }}
-            formatter={(value: number) => [`${value.toLocaleString()} XP`, 'XP gagnés']}
+            formatter={(value) => [`${Number(value).toLocaleString()} XP`, 'XP gagnés']}
           />
           <Line
             type="monotone"
