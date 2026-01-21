@@ -79,9 +79,9 @@ Tu es sur "Way of Dojo", une application qui aide les pratiquants à réviser le
 async def transcribe_with_whisper(audio_bytes: bytes, filename: str = "audio.webm") -> str:
     """Transcribe audio using OpenAI Whisper via emergentintegrations"""
     try:
-        from emergentintegrations.llm.openai_stt import OpenAiStt
+        from emergentintegrations.llm.openai.speech_to_text import OpenAISpeechToText
         
-        stt = OpenAiStt(api_key=EMERGENT_LLM_KEY)
+        stt = OpenAISpeechToText(api_key=EMERGENT_LLM_KEY)
         
         # Save temporarily
         temp_path = f"/tmp/tanaka_audio_{uuid.uuid4().hex}.webm"
@@ -94,7 +94,14 @@ async def transcribe_with_whisper(audio_bytes: bytes, filename: str = "audio.web
         if os.path.exists(temp_path):
             os.remove(temp_path)
         
-        return result.text if hasattr(result, 'text') else str(result)
+        # Extract text from result
+        if hasattr(result, 'text'):
+            return result.text
+        elif isinstance(result, dict) and 'text' in result:
+            return result['text']
+        else:
+            return str(result)
+            
     except Exception as e:
         logger.error(f"Whisper STT error: {e}")
         raise HTTPException(status_code=500, detail=f"Erreur de transcription: {str(e)}")
