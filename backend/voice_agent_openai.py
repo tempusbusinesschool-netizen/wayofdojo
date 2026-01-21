@@ -143,30 +143,36 @@ async def generate_response_with_gpt(
         return "Pardonne-moi, jeune samouraï, mes vieilles oreilles n'ont pas bien compris. Peux-tu répéter ?"
 
 async def generate_speech_with_tts(text: str) -> bytes:
-    """Generate speech using OpenAI TTS via emergentintegrations"""
+    """Generate speech using OpenAI TTS API directly"""
     try:
-        from emergentintegrations.llm.openai_tts import OpenAiTts
+        import httpx
         
-        tts = OpenAiTts(api_key=EMERGENT_LLM_KEY)
-        
-        # Generate speech
-        output_path = f"/tmp/tanaka_speech_{uuid.uuid4().hex}.mp3"
-        await tts.generate(
-            text=text,
-            output_path=output_path,
-            voice="onyx",  # Deep male voice for wise master
-            speed=0.95  # Slightly slower for wisdom
-        )
-        
-        # Read file
-        with open(output_path, 'rb') as f:
-            audio_bytes = f.read()
-        
-        # Cleanup
-        if os.path.exists(output_path):
-            os.remove(output_path)
-        
-        return audio_bytes
+        async with httpx.AsyncClient() as client:
+            response = await client.post(
+                "https://api.openai.com/v1/audio/speech",
+                headers={
+                    "Authorization": f"Bearer {EMERGENT_LLM_KEY}",
+                    "Content-Type": "application/json"
+                },
+                json={
+                    "model": "tts-1",
+                    "input": text,
+                    "voice": "onyx",  # Deep male voice for wise master
+                    "response_format": "mp3",
+                    "speed": 0.95
+                },
+                timeout=30.0
+            )
+            
+            if response.status_code != 200:
+                logger.error(f"TTS API error: {response.status_code} - {response.text}")
+                raise HTTPException(status_code=500, detail=f"TTS error: {response.text}")
+            
+            return response.content
+            
+    except httpx.TimeoutException:
+        logger.error("TTS timeout")
+        raise HTTPException(status_code=504, detail="TTS timeout")
     except Exception as e:
         logger.error(f"TTS error: {e}")
         raise HTTPException(status_code=500, detail=f"Erreur de synthèse vocale: {str(e)}")
