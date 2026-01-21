@@ -337,6 +337,27 @@ Utilisé comme source pour le design et les données.
 - [x] Images et assets
 - [x] Fichiers audio Maître Tanaka
 
+### 🆕 MIGRATION AIKIDO@GAME (21 Janvier 2025)
+
+**134 éléments techniques migrés** depuis `/app/Sports/Aikido/` vers `/app/wayofdojo/src/data/aikido/` :
+
+| Catégorie | Fichier | Éléments | Description |
+|-----------|---------|----------|-------------|
+| **Ukemi** | `mouvements/ukemi.ts` | 9 | Techniques de chute (Mae, Ushiro, Yoko, Tobi...) |
+| **Kansetsu Waza** | `mouvements/kansetsu-waza.ts` | 12 | Techniques articulaires (Ikkyo→Rokkyo, Kote Gaeshi...) |
+| **Tai Sabaki** | `mouvements/tai-sabaki.ts` | 11 | Déplacements (Irimi, Tenkan, Kaiten...) |
+| **Jo** | `armes/jo.ts` | 28 | Bâton: Suburi, Kata, Kumijo, Jo Dori/Nage |
+| **Tanto** | `armes/tanto.ts` | 19 | Défense couteau: Shomen, Yokomen, Tsuki |
+| **Bokken** | `armes/bokken.ts` | 29 | Sabre: Ken Suburi, Kumitachi, Tachi Dori, Ken Tai Jo |
+| **Grades Dan** | `grades/dan.ts` | 26 | Shodan→Nanadan: techniques requises, programmes |
+
+**Nouvelle page créée** : `/[locale]/[sport]/mouvements`
+- 6 catégories avec navigation
+- Cartes expandables (points clés, erreurs communes)
+- Recherche français/japonais
+- Design responsive mobile/tablette
+- Lien depuis le dashboard Dojo
+
 ### Logique ✅
 - [x] Système gamification
 - [x] Calculs XP/badges (structure définie)
@@ -354,7 +375,7 @@ Utilisé comme source pour le design et les données.
 
 1. **🔴 Page Stages/Séminaires** - Calendrier et inscriptions
 2. **🔴 Améliorer Dashboard Dojo** - Plus de widgets gamification
-3. **🟠 Page 7 Vertus** - Système complet avec progression
+3. **🟠 Intégrer les animations** - Depuis l'ancien projet Aikido@Game
 4. **🟠 Intégrer NextAuth.js** - Remplacer auth custom
 5. **🟠 Intégrer Stripe** - Abonnements Premium
 6. **🟡 Espace Club** - Premier module CRM
