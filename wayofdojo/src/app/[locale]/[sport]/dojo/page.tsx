@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import UserDashboardBlocks from '@/components/UserDashboardBlocks';
 import MaitreTanaka from '@/components/MaitreTanaka';
+import DailyChallengeWidget from '@/components/DailyChallengeWidget';
 import { aikidoConfig } from '@/config/sports/aikido.config';
 import { VIRTUES_GAMIFICATION } from '@/constants/virtuesGamification';
 import apiService from '@/services/api.service';
