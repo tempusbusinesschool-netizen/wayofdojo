@@ -789,15 +789,22 @@ function AdminPageContent() {
               </div>
               
               {/* Pagination */}
-              <div className="flex items-center justify-between px-4 py-3 border-t border-slate-800">
-                <p className="text-sm text-slate-500">
+              <div className={cn(
+                "flex items-center justify-between px-4 py-3 border-t",
+                theme === 'dark' ? "border-slate-800" : "border-slate-200"
+              )}>
+                <p className={cn("text-sm", theme === 'dark' ? "text-slate-500" : "text-slate-500")}>
                   Affichage de {users.length} utilisateur(s)
                 </p>
                 <div className="flex gap-2">
-                  <Button size="sm" variant="outline" disabled className="border-slate-700 text-slate-500">
+                  <Button size="sm" variant="outline" disabled className={cn(
+                    theme === 'dark' ? "border-slate-700 text-slate-500" : "border-slate-300 text-slate-400"
+                  )}>
                     Précédent
                   </Button>
-                  <Button size="sm" variant="outline" disabled className="border-slate-700 text-slate-500">
+                  <Button size="sm" variant="outline" disabled className={cn(
+                    theme === 'dark' ? "border-slate-700 text-slate-500" : "border-slate-300 text-slate-400"
+                  )}>
                     Suivant
                   </Button>
                 </div>
@@ -819,6 +826,7 @@ function AdminPageContent() {
             <PageHeader 
               title="Gestion des Dojos"
               subtitle={`${dojos.length} dojo(s) • ${totalDojoMembers} adhérent(s)`}
+              theme={theme}
               actions={
                 <Button 
                   onClick={() => setShowCreateForm(!showCreateForm)}
