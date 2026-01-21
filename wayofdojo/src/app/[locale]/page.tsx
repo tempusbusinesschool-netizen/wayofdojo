@@ -169,14 +169,16 @@ export default function HomePage() {
                   <div className="w-px h-6 bg-slate-700 mx-1" />
                   
                   {/* Bouton Espace Gestion (Admin/Dojo) */}
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="text-slate-400 hover:text-white hover:bg-slate-700"
-                  >
-                    <Lock className="w-4 h-4 mr-2" />
-                    Espace Gestion
-                  </Button>
+                  <Link href={`/${locale}/admin`}>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="text-slate-400 hover:text-white hover:bg-slate-700"
+                    >
+                      <Lock className="w-4 h-4 mr-2" />
+                      Espace Gestion
+                    </Button>
+                  </Link>
                 </>
               )}
             </div>
