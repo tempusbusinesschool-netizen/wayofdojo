@@ -1,5 +1,41 @@
 # 📝 WayofDojo - CHANGELOG
 
+## [2025-01-21] - Session Actuelle - Intégration IA Maître Tanaka
+
+### ✅ Ajouté
+
+#### 🤖 Agent Conversationnel "Maître Tanaka" (COMPLET)
+- **Backend FastAPI** (`/app/backend/voice_agent_openai.py`) avec intégration complète :
+  - **Speech-to-Text** : OpenAI Whisper via `emergentintegrations`
+  - **Chat IA** : GPT-4o via `emergentintegrations.llm.chat.LlmChat`
+  - **Text-to-Speech** : OpenAI TTS (voix "onyx") via `emergentintegrations`
+- **Endpoints API** :
+  - `GET /api/voice-agent/status` - Vérification du service
+  - `POST /api/voice-agent/conversation` - Conversation complète (audio/texte → réponse audio)
+  - `POST /api/voice-agent/text-only` - Conversation texte uniquement
+- **Route Next.js proxy** (`/app/wayofdojo/src/app/api/voice-agent/conversation/route.ts`) pour rediriger vers FastAPI
+- **Personnalité Tanaka** : Sensei bienveillant de 65 ans, 6e Dan, expert en philosophie du Budo
+- **Audio de réponse en Base64** pour lecture immédiate dans le frontend
+
+#### 👤 Gestion des comptes Admin
+- Création du compte admin : `admin@wayofdojo.com` / `admin123` (super_admin)
+- Script de gestion des comptes utilisateurs MongoDB
+
+### 🔧 Corrigé
+- Routing frontend : `/api/voice-agent/conversation` au lieu de `/next-api/`
+- Architecture proxy : Next.js → FastAPI backend pour l'IA
+
+### 🗑️ Supprimé
+- `/app/backend/voice_agent.py` (ancien agent ElevenLabs non utilisé)
+- Code mort dans la route Next.js (appels directs OpenAI API)
+
+### 📋 Notes techniques
+- La clé `EMERGENT_LLM_KEY` doit être utilisée via la bibliothèque `emergentintegrations`, pas en appels HTTP directs
+- L'historique de conversation est stocké en mémoire (session_id)
+- L'audio TTS est généré en MP3 à vitesse 0.95 pour un effet "sagesse"
+
+---
+
 ## [2025-01-20] - Session Actuelle (3ème partie)
 
 ### ✅ Modifié
