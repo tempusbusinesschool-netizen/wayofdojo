@@ -1,5 +1,44 @@
 # 📝 WayofDojo - CHANGELOG
 
+## [2025-01-21] - Refonte Espace Admin
+
+### ✅ Ajouté
+
+#### 🎨 Nouveau Design Admin (COMPLET)
+- **Sidebar Verticale** (`/app/wayofdojo/src/components/admin/AdminSidebar.tsx`)
+  - Navigation collapsible avec branding WayofDojo
+  - Profil utilisateur en bas avec rôle
+  - Support mobile (hamburger menu)
+  - États actifs avec accent amber
+  
+- **Widgets Dashboard** (`/app/wayofdojo/src/components/admin/AdminWidgets.tsx`)
+  - `StatCard`: KPIs avec tendances et variantes couleurs
+  - `TopUsersTable`: Classement XP avec médailles
+  - `DistributionCard`: Barres de progression par catégorie
+  - `PageHeader`: En-tête standardisé pour chaque page
+  
+- **Pages Admin Redesignées** (`/app/wayofdojo/src/app/[locale]/admin/page.tsx`)
+  - **Dashboard**: Grille KPIs + Top 10 XP + Distributions
+  - **Utilisateurs**: Table haute densité avec checkboxes, pagination, filtres
+  - **Dojos**: Cards expandables avec gestion des membres
+  - **Annuaire FFAAA**: Filtres par région, import multi-sélection
+  - **Paramètres**: Accordéon avec sections thématiques
+
+### 🎯 Améliorations UX/UI
+- Mode sombre unifié (slate-950 background)
+- Accents amber/orange pour les actions principales
+- Badges de rôle colorés (Super Admin = orange, Pratiquant = gris)
+- Animations Framer Motion sur tous les éléments
+- Support responsive complet
+
+### 📋 Notes
+- Page d'accueil publique **NON MODIFIÉE**
+- Toutes les fonctionnalités existantes préservées
+- Guidelines de design documentées dans `/app/design_guidelines.json`
+- Maquettes visuelles disponibles dans `/app/memory/ADMIN_DESIGN_PROPOSALS.md`
+
+---
+
 ## [2025-01-21] - Session Actuelle - Intégration IA Maître Tanaka
 
 ### ✅ Ajouté
