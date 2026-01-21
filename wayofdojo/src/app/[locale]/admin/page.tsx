@@ -546,6 +546,12 @@ function AdminPageContent() {
               />
             </div>
 
+            {/* Charts Row - Interactive Recharts */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <UserGrowthChart theme={theme} />
+              <ActivityChart theme={theme} />
+            </div>
+
             {/* Charts & Tables Row */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Top Users */}
@@ -565,24 +571,31 @@ function AdminPageContent() {
 
               {/* Distribution */}
               <div className="space-y-6">
-                <DistributionCard
-                  title="Par Profil"
+                <DistributionPieChart
+                  title="🎭 Répartition Profils"
+                  subtitle="Par type de pratiquant"
                   theme={theme}
-                  items={[
-                    { label: 'Samouraï Confirmé', value: stats.usersByProfile.samourai_confirme || 0, color: '#8b5cf6' },
-                    { label: 'Jeune Samouraï', value: stats.usersByProfile.jeune_samourai || 0, color: '#f59e0b' },
+                  data={[
+                    { name: 'Samouraï Confirmé', value: stats.usersByProfile.samourai_confirme || 0, color: '#8b5cf6' },
+                    { name: 'Jeune Samouraï', value: stats.usersByProfile.jeune_samourai || 0, color: '#f59e0b' },
                   ]}
                 />
-                <DistributionCard
-                  title="Par Abonnement"
-                  theme={theme}
-                  items={Object.entries(stats.usersBySubscription).map(([key, value], i) => ({
-                    label: key.replace('_', ' '),
-                    value: value as number,
-                    color: ['#10b981', '#3b82f6', '#ec4899', '#f59e0b'][i % 4]
-                  }))}
-                />
               </div>
+            </div>
+
+            {/* XP Progress + Subscription Distribution */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <XPProgressChart theme={theme} />
+              <DistributionPieChart
+                title="💳 Abonnements"
+                subtitle="Par type de plan"
+                theme={theme}
+                data={Object.entries(stats.usersBySubscription).map(([key, value], i) => ({
+                  name: key.replace('_', ' '),
+                  value: value as number,
+                  color: ['#10b981', '#3b82f6', '#ec4899', '#f59e0b'][i % 4]
+                }))}
+              />
             </div>
           </motion.div>
         )}
