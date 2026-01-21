@@ -37,11 +37,44 @@ const navItems = [
   { id: 'settings', label: 'Paramètres', icon: Settings },
 ];
 
+// Theme Toggle Component
+function ThemeToggle({ collapsed }: { collapsed: boolean }) {
+  const { theme, toggleTheme } = useTheme();
+  
+  return (
+    <Button
+      variant="ghost"
+      onClick={toggleTheme}
+      data-testid="theme-toggle"
+      className={cn(
+        "w-full transition-all duration-300",
+        collapsed ? "px-2 justify-center" : "justify-start",
+        theme === 'dark' 
+          ? "text-slate-400 hover:text-amber-400 hover:bg-amber-500/10" 
+          : "text-slate-600 hover:text-amber-600 hover:bg-amber-500/10"
+      )}
+    >
+      {theme === 'dark' ? (
+        <>
+          <Sun className="w-5 h-5" />
+          {!collapsed && <span className="ml-2">Mode Clair</span>}
+        </>
+      ) : (
+        <>
+          <Moon className="w-5 h-5" />
+          {!collapsed && <span className="ml-2">Mode Sombre</span>}
+        </>
+      )}
+    </Button>
+  );
+}
+
 export function AdminSidebar({ currentUser, onLogout, activeTab, onTabChange }: AdminSidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const params = useParams();
   const locale = params.locale as string;
+  const { theme } = useTheme();
 
   const SidebarContent = () => (
     <>
