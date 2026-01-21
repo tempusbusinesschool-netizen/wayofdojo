@@ -19,7 +19,7 @@ interface StatCardProps {
 
 export function StatCard({ label, value, icon, trend, variant = 'default', className }: StatCardProps) {
   const variantStyles = {
-    default: 'from-slate-800/50 to-transparent',
+    default: 'from-slate-800/50 to-transparent dark:from-slate-800/50 light:from-slate-200/50',
     amber: 'from-amber-500/10 to-transparent',
     violet: 'from-violet-500/10 to-transparent',
     emerald: 'from-emerald-500/10 to-transparent',
@@ -39,7 +39,9 @@ export function StatCard({ label, value, icon, trend, variant = 'default', class
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       className={cn(
-        "relative overflow-hidden p-6 bg-slate-900 border border-slate-800 rounded-xl hover:border-slate-700 transition-colors duration-200",
+        "relative overflow-hidden p-6 rounded-xl transition-colors duration-200",
+        "bg-slate-900 dark:bg-slate-900 border border-slate-800 dark:border-slate-800 hover:border-slate-700",
+        "light:bg-white light:border-slate-200 light:hover:border-slate-300 light:shadow-sm",
         className
       )}
     >
@@ -49,15 +51,15 @@ export function StatCard({ label, value, icon, trend, variant = 'default', class
       <div className="relative z-10">
         {/* Header */}
         <div className="flex items-start justify-between mb-4">
-          <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">{label}</span>
-          <div className={cn("p-2 rounded-lg bg-slate-800/50", iconColors[variant])}>
+          <span className="text-xs font-semibold uppercase tracking-wider text-slate-500 dark:text-slate-500 light:text-slate-600">{label}</span>
+          <div className={cn("p-2 rounded-lg bg-slate-800/50 dark:bg-slate-800/50 light:bg-slate-100", iconColors[variant])}>
             {icon}
           </div>
         </div>
         
         {/* Value */}
         <div className="flex items-end justify-between">
-          <span className="text-3xl font-bold text-slate-50 tracking-tight">{value}</span>
+          <span className="text-3xl font-bold text-slate-50 dark:text-slate-50 light:text-slate-900 tracking-tight">{value}</span>
           
           {/* Trend */}
           {trend && (
