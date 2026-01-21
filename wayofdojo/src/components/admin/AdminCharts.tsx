@@ -465,8 +465,8 @@ export function DistributionPieChart({ title, subtitle, data, theme = 'dark', cl
               boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.2)',
               color: colors.tooltip.text
             }}
-            formatter={(value: number, name: string) => [
-              `${value} (${total > 0 ? Math.round((value / total) * 100) : 0}%)`,
+            formatter={(value, name) => [
+              `${Number(value)} (${total > 0 ? Math.round((Number(value) / total) * 100) : 0}%)`,
               name
             ]}
           />
