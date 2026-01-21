@@ -282,6 +282,7 @@ function TechniqueArmeCard({
   mastery,
   onMasteryChange,
   isUpdating,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   categoryType
 }: { 
   item: TechniqueArme; 
