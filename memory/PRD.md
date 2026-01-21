@@ -358,6 +358,22 @@ Utilisé comme source pour le design et les données.
 - Design responsive mobile/tablette
 - Lien depuis le dashboard Dojo
 
+### 🎮 SYSTÈME DE PROGRESSION (21 Janvier 2025)
+
+**Fonctionnalités implémentées** :
+- **Suivi par technique** : 4 niveaux (Non démarré → En apprentissage → En pratique → Maîtrisé)
+- **Synchronisation backend** : MongoDB via `/api/gamification/mouvement`
+- **Barres de progression** : Globales et par catégorie
+- **Filtres** : Par niveau de maîtrise
+- **Fallback localStorage** : Pour utilisateurs non connectés
+
+### 🎊 ANIMATIONS MIGRÉES (21 Janvier 2025)
+
+**Composants** dans `/app/wayofdojo/src/components/animations/` :
+- **TechniqueCelebration.tsx** : Animation confettis + son + trophée lors de la maîtrise
+- **StepTransition.tsx** : Animation de transition entre étapes
+- Dépendance ajoutée : `canvas-confetti`
+
 ### Logique ✅
 - [x] Système gamification
 - [x] Calculs XP/badges (structure définie)
