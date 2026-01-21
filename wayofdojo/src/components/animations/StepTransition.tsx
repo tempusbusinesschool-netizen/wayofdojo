@@ -37,6 +37,7 @@ const StepTransition: React.FC<StepTransitionProps> = ({
   onComplete 
 }) => {
   const [stage, setStage] = useState(0);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showConfetti, setShowConfetti] = useState(false);
 
   // Messages adaptés selon le type d'action
