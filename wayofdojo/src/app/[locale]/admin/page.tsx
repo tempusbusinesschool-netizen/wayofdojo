@@ -24,7 +24,6 @@ import { ThemeProvider, useTheme } from '@/components/admin/ThemeProvider';
 import { 
   StatCard, 
   TopUsersTable, 
-  DistributionCard, 
   PageHeader
 } from '@/components/admin/AdminWidgets';
 import {
