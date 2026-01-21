@@ -1117,6 +1117,7 @@ function AdminPageContent() {
             <PageHeader 
               title="Annuaire FFAAA"
               subtitle="Clubs d'Aïkido affiliés en France"
+              theme={theme}
             />
 
             {/* Region Filters */}
@@ -1128,7 +1129,9 @@ function AdminPageContent() {
                   "transition-all",
                   annuaireRegion === 'all' 
                     ? "bg-amber-500 text-slate-950" 
-                    : "bg-slate-800 text-slate-400 hover:bg-slate-700"
+                    : theme === 'dark' 
+                      ? "bg-slate-800 text-slate-400 hover:bg-slate-700" 
+                      : "bg-slate-200 text-slate-600 hover:bg-slate-300"
                 )}
               >
                 Toutes ({CLUBS_AIKIDO_FRANCE.length})
@@ -1145,7 +1148,9 @@ function AdminPageContent() {
                       "transition-all",
                       annuaireRegion === key 
                         ? "bg-amber-500 text-slate-950" 
-                        : "bg-slate-800 text-slate-400 hover:bg-slate-700"
+                        : theme === 'dark' 
+                          ? "bg-slate-800 text-slate-400 hover:bg-slate-700" 
+                          : "bg-slate-200 text-slate-600 hover:bg-slate-300"
                     )}
                   >
                     {region.emoji} {count}
@@ -1156,7 +1161,7 @@ function AdminPageContent() {
 
             {/* Search */}
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+              <Search className={cn("absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4", theme === 'dark' ? "text-slate-500" : "text-slate-400")} />
               <Input 
                 value={annuaireSearch} 
                 onChange={(e) => setAnnuaireSearch(e.target.value)} 
