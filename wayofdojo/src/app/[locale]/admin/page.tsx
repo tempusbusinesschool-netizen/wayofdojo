@@ -2,16 +2,15 @@
 
 import { useEffect, useState, useMemo } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Shield, Users, BarChart3, Settings, LogOut, Home,
-  TrendingUp, UserCheck, Crown, Activity, Search,
-  ChevronRight, Flame, Star, Building2, Globe,
+  Shield, Users, BarChart3,
+  TrendingUp, Crown, Activity, Search,
+  ChevronRight, Flame, Star, Globe,
   Plus, Trash2, MapPin, UserPlus, ChevronDown, ChevronUp,
-  Mail, Phone, Calendar, Award, Eye, EyeOff, X,
+  Mail, Eye, EyeOff, X,
   Download, CheckCircle2, RefreshCw, Filter, MoreVertical,
-  LayoutDashboard, Tent, Map
+  Tent
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -23,11 +22,9 @@ import apiService from '@/services/api.service';
 import { AdminSidebar } from '@/components/admin/AdminSidebar';
 import { 
   StatCard, 
-  ChartWidget, 
   TopUsersTable, 
   DistributionCard, 
-  PageHeader,
-  ActivityFeed
+  PageHeader
 } from '@/components/admin/AdminWidgets';
 import { cn } from '@/lib/utils';
 
