@@ -724,7 +724,7 @@ export default function GestionPage() {
                                 </div>
                               </div>
                               <Button
-                                onClick={() => handleCreateMember(dojo.id, dojo.name)}
+                                onClick={() => handleCreateMember(dojo.id)}
                                 className="w-full bg-gradient-to-r from-emerald-500 to-green-500"
                               >
                                 <UserPlus className="w-4 h-4 mr-2" />
