@@ -1,5 +1,34 @@
 # 📝 WayofDojo - CHANGELOG
 
+## [2025-01-21] - Mode Clair Complet + Vérification Gamification
+
+### ✅ Implémenté
+
+#### 🌓 Mode Clair/Sombre Complet
+- **Tous les widgets** supportent maintenant le thème clair :
+  - `StatCard` : Fond blanc, ombres subtiles
+  - `TopUsersTable` : Lignes alternées claires
+  - `DistributionCard` : Barres de progression adaptées
+  - `PageHeader` : Texte sombre sur fond clair
+  - `ActivityFeed` : Fond blanc, bordures légères
+- **Table Utilisateurs** : Fond blanc, hover gris clair
+- **Cards Dojos** : Fond blanc avec bordures subtiles
+- **Paramètres** : Cards blanches avec icônes colorées
+- **Boutons et inputs** : Adaptation complète au thème
+- **Toggle visible** : "Mode Clair" ↔ "Mode Sombre" en bas de la sidebar
+
+#### 🎮 Gamification Frontend (Vérification)
+- La fonction `handleCompleteChallenge` existe et fonctionne dans `/app/wayofdojo/src/app/[locale]/[sport]/dojo/page.tsx`
+- Les défis quotidiens sont cliquables et appellent l'API gamification
+- L'XP et le niveau sont mis à jour après chaque action
+
+### 📋 Notes techniques
+- Le thème est passé via la prop `theme` à tous les composants
+- La préférence est sauvegardée dans `localStorage`
+- Transition fluide de 300ms entre les thèmes
+
+---
+
 ## [2025-01-21] - Toggle Mode Sombre/Clair
 
 ### ✅ Ajouté
