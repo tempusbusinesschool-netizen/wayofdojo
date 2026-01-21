@@ -193,6 +193,15 @@ export default function DojoPage() {
       description: '64 techniques'
     },
     { 
+      icon: Swords, 
+      label: 'Mouvements', 
+      href: `/${locale}/${sport}/mouvements`,
+      color: 'from-rose-500 to-pink-600',
+      shadow: 'shadow-rose-500/30',
+      emoji: '⚔️',
+      description: 'Armes & Mouvements'
+    },
+    { 
       icon: Target, 
       label: 'Progression', 
       href: `/${locale}/${sport}/progression`,
