@@ -449,7 +449,7 @@ export default function DojoPage() {
           <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
             {isJeuneSamourai ? '🎯 Que veux-tu faire ?' : '⚡ Actions rapides'}
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
             {quickActions.map((action, i) => (
               <Link key={action.label} href={action.href}>
                 <motion.div
