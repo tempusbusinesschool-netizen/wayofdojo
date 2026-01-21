@@ -489,11 +489,17 @@ function AdminPageContent() {
             <PageHeader 
               title="Tableau de Bord"
               subtitle="Vue d'ensemble de votre plateforme"
+              theme={theme}
               actions={
                 <Button 
                   onClick={() => Promise.all([loadStats(), loadUsers(), fetchDojos()])} 
                   variant="outline"
-                  className="border-slate-700 text-slate-300 hover:bg-slate-800"
+                  className={cn(
+                    "transition-colors",
+                    theme === 'dark' 
+                      ? "border-slate-700 text-slate-300 hover:bg-slate-800" 
+                      : "border-slate-300 text-slate-700 hover:bg-slate-100"
+                  )}
                 >
                   <RefreshCw className="w-4 h-4 mr-2" />
                   Actualiser
@@ -509,12 +515,14 @@ function AdminPageContent() {
                 icon={<Users className="w-5 h-5" />}
                 variant="violet"
                 trend={{ value: 12, positive: true }}
+                theme={theme}
               />
               <StatCard
                 label="Nouveaux (7j)"
                 value={`+${stats.newUsersThisWeek}`}
                 icon={<TrendingUp className="w-5 h-5" />}
                 variant="emerald"
+                theme={theme}
               />
               <StatCard
                 label="Actifs (7j)"
