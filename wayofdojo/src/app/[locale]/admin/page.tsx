@@ -27,6 +27,12 @@ import {
   DistributionCard, 
   PageHeader
 } from '@/components/admin/AdminWidgets';
+import {
+  UserGrowthChart,
+  ActivityChart,
+  XPProgressChart,
+  DistributionPieChart
+} from '@/components/admin/AdminCharts';
 import { cn } from '@/lib/utils';
 
 // ═══════════════════════════════════════════════════════════════════════════
