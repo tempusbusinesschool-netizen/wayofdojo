@@ -1,14 +1,14 @@
 """
-Maître Tanaka - Agent Vocal Aikido avec OpenAI
+🥋 Maître Tanaka - Agent Vocal Conversationnel
 OpenAI Whisper (STT) + GPT-4o (LLM) + OpenAI TTS
-Utilise Emergent LLM Key pour toutes les intégrations
+Utilise Emergent LLM Key via emergentintegrations library
 """
 
 import os
-import io
 import base64
 import logging
 import uuid
+import tempfile
 from typing import Optional
 from pydantic import BaseModel
 from fastapi import APIRouter, HTTPException, UploadFile, File, Form
@@ -20,10 +20,10 @@ load_dotenv()
 logger = logging.getLogger(__name__)
 
 # Configuration
-EMERGENT_LLM_KEY = os.environ.get('EMERGENT_LLM_KEY', 'sk-emergent-40aA14d79D180Ff79D')
+EMERGENT_LLM_KEY = os.environ.get('EMERGENT_LLM_KEY')
 
 # Router
-voice_router_openai = APIRouter(prefix="/api/voice-agent", tags=["Voice Agent OpenAI"])
+voice_router_openai = APIRouter(prefix="/voice-agent", tags=["Voice Agent OpenAI"])
 
 # Session storage (in production, use Redis or DB)
 conversation_history: dict = {}
@@ -79,32 +79,42 @@ Tu es sur "Way of Dojo", une application qui aide les pratiquants à réviser le
 async def transcribe_with_whisper(audio_bytes: bytes, filename: str = "audio.webm") -> str:
     """Transcribe audio using OpenAI Whisper via emergentintegrations"""
     try:
-        from emergentintegrations.llm.openai.speech_to_text import OpenAISpeechToText
+        from emergentintegrations.llm.openai import OpenAISpeechToText
         
         stt = OpenAISpeechToText(api_key=EMERGENT_LLM_KEY)
         
-        # Save temporarily
-        temp_path = f"/tmp/tanaka_audio_{uuid.uuid4().hex}.webm"
-        with open(temp_path, 'wb') as f:
-            f.write(audio_bytes)
+        # Save to temp file
+        suffix = ".webm" if "webm" in filename.lower() else ".mp3"
+        with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as temp_file:
+            temp_file.write(audio_bytes)
+            temp_path = temp_file.name
         
-        result = await stt.transcribe(temp_path, language="fr")
-        
-        # Cleanup
-        if os.path.exists(temp_path):
-            os.remove(temp_path)
-        
-        # Extract text from result
-        if hasattr(result, 'text'):
-            return result.text
-        elif isinstance(result, dict) and 'text' in result:
-            return result['text']
-        else:
-            return str(result)
+        try:
+            # Transcribe using the library
+            with open(temp_path, 'rb') as audio_file:
+                result = await stt.transcribe(
+                    file=audio_file,
+                    model="whisper-1",
+                    language="fr",
+                    response_format="json"
+                )
+            
+            # Extract text from result
+            if hasattr(result, 'text'):
+                return result.text
+            elif isinstance(result, dict) and 'text' in result:
+                return result['text']
+            else:
+                return str(result)
+        finally:
+            # Cleanup temp file
+            if os.path.exists(temp_path):
+                os.remove(temp_path)
             
     except Exception as e:
         logger.error(f"Whisper STT error: {e}")
         raise HTTPException(status_code=500, detail=f"Erreur de transcription: {str(e)}")
+
 
 async def generate_response_with_gpt(
     user_message: str, 
@@ -145,14 +155,16 @@ async def generate_response_with_gpt(
             conversation_history[session_id] = history[-20:]
         
         return response
+        
     except Exception as e:
         logger.error(f"GPT error: {e}")
         return "Pardonne-moi, jeune samouraï, mes vieilles oreilles n'ont pas bien compris. Peux-tu répéter ?"
 
+
 async def generate_speech_with_tts(text: str) -> bytes:
     """Generate speech using OpenAI TTS via emergentintegrations"""
     try:
-        from emergentintegrations.llm.openai.text_to_speech import OpenAITextToSpeech
+        from emergentintegrations.llm.openai import OpenAITextToSpeech
         
         tts = OpenAITextToSpeech(api_key=EMERGENT_LLM_KEY)
         
@@ -171,6 +183,7 @@ async def generate_speech_with_tts(text: str) -> bytes:
         logger.error(f"TTS error: {e}")
         raise HTTPException(status_code=500, detail=f"Erreur de synthèse vocale: {str(e)}")
 
+
 # ═══════════════════════════════════════════════════════════════════════════════════
 # API ENDPOINTS
 # ═══════════════════════════════════════════════════════════════════════════════════
@@ -182,8 +195,10 @@ async def get_status():
         "status": "online",
         "service": "Maître Tanaka Voice Agent (OpenAI)",
         "capabilities": ["whisper-stt", "gpt-4o-chat", "openai-tts"],
-        "version": "2.0.0"
+        "version": "2.0.0",
+        "key_configured": bool(EMERGENT_LLM_KEY)
     }
+
 
 @voice_router_openai.post("/conversation")
 async def voice_conversation(
@@ -198,6 +213,9 @@ async def voice_conversation(
     Returns text response + audio (base64 encoded MP3)
     """
     try:
+        if not EMERGENT_LLM_KEY:
+            raise HTTPException(status_code=500, detail="EMERGENT_LLM_KEY non configurée")
+        
         # Generate session ID if not provided
         if not session_id:
             session_id = str(uuid.uuid4())
@@ -205,7 +223,7 @@ async def voice_conversation(
         user_message = ""
         
         # 1. Handle audio input
-        if audio and audio.size > 0:
+        if audio and audio.size and audio.size > 0:
             logger.info(f"🎤 Processing audio input for session {session_id}")
             audio_bytes = await audio.read()
             user_message = await transcribe_with_whisper(audio_bytes, audio.filename or "audio.webm")
@@ -249,6 +267,7 @@ async def voice_conversation(
         logger.error(f"Conversation error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+
 @voice_router_openai.post("/text-only")
 async def text_conversation(
     text: str = Form(...),
@@ -256,6 +275,9 @@ async def text_conversation(
     child_first_name: Optional[str] = Form(None)
 ):
     """Text-only conversation (no audio output)"""
+    if not EMERGENT_LLM_KEY:
+        raise HTTPException(status_code=500, detail="EMERGENT_LLM_KEY non configurée")
+    
     if not session_id:
         session_id = str(uuid.uuid4())
     
