@@ -147,7 +147,6 @@ export default function AdminPage() {
   const [authorized, setAuthorized] = useState(false);
   const [activeTab, setActiveTab] = useState<TabType>('dashboard');
   const [currentUser, setCurrentUser] = useState<{ role: string; firstName: string } | null>(null);
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   // États Dashboard
   const [stats, setStats] = useState<AdminStats | null>(null);
