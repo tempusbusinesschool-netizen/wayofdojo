@@ -247,14 +247,11 @@ export default function GestionPage() {
 
     try {
       await apiService.register({
-        first_name: memberFormData.first_name,
-        last_name: memberFormData.last_name,
+        firstName: memberFormData.first_name,
+        lastName: memberFormData.last_name,
         email: memberFormData.email,
         password: memberFormData.password,
-        phone: memberFormData.phone || undefined,
-        belt: memberFormData.belt,
-        dojo_id: dojoId,
-        dojo_name: dojoName
+        grade: memberFormData.belt,
       });
       toast.success(`Adhérent ${memberFormData.first_name} ${memberFormData.last_name} créé !`);
       resetMemberForm();
