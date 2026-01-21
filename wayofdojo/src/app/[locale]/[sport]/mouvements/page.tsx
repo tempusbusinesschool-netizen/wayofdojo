@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import MaitreTanaka from '@/components/MaitreTanaka';
+import { TechniqueCelebration } from '@/components/animations';
 
 // Import des données migrées
 import { 
