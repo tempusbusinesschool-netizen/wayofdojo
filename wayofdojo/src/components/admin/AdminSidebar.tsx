@@ -153,7 +153,10 @@ export function AdminSidebar({ currentUser, onLogout, activeTab, onTabChange }: 
       </nav>
 
       {/* Theme Toggle & User Profile & Logout */}
-      <div className="p-4 border-t border-slate-800 dark:border-slate-800 light:border-slate-200 mt-auto space-y-3">
+      <div className={cn(
+        "p-4 mt-auto space-y-3 transition-colors border-t",
+        theme === 'dark' ? "border-slate-800" : "border-slate-200"
+      )}>
         {/* Theme Toggle */}
         <ThemeToggle collapsed={collapsed} />
         
@@ -163,7 +166,10 @@ export function AdminSidebar({ currentUser, onLogout, activeTab, onTabChange }: 
               {currentUser.firstName?.charAt(0).toUpperCase() || 'A'}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-slate-200 dark:text-slate-200 light:text-slate-800 truncate">{currentUser.firstName}</p>
+              <p className={cn(
+                "text-sm font-medium truncate transition-colors",
+                theme === 'dark' ? "text-slate-200" : "text-slate-800"
+              )}>{currentUser.firstName}</p>
               <p className="text-xs text-slate-500 capitalize">{currentUser.role?.replace('_', ' ')}</p>
             </div>
           </div>
