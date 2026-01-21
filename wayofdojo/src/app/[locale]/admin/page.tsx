@@ -138,10 +138,11 @@ const BELT_OPTIONS = [
 // COMPOSANT PRINCIPAL
 // ═══════════════════════════════════════════════════════════════════════════
 
-export default function AdminPage() {
+function AdminPageContent() {
   const router = useRouter();
   const params = useParams();
   const locale = params.locale as string;
+  const { theme } = useTheme();
 
   // États généraux
   const [loading, setLoading] = useState(true);
