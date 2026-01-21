@@ -158,7 +158,7 @@ export const MaitreTanaka: React.FC<MaitreTanakaProps> = ({
         formData.append('child_first_name', childContext.first_name);
       }
 
-      const response = await fetch('/next-api/voice-agent/conversation', {
+      const response = await fetch('/api/voice-agent/conversation', {
         method: 'POST',
         body: formData
       });
@@ -253,7 +253,7 @@ export const MaitreTanaka: React.FC<MaitreTanakaProps> = ({
         formData.append('child_first_name', childContext.first_name);
       }
 
-      const response = await fetch('/next-api/voice-agent/conversation', {
+      const response = await fetch('/api/voice-agent/conversation', {
         method: 'POST',
         body: formData
       });
