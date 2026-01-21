@@ -219,13 +219,21 @@ export function AdminSidebar({ currentUser, onLogout, activeTab, onTabChange }: 
               animate={{ x: 0 }}
               exit={{ x: -280 }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="lg:hidden fixed left-0 top-0 h-screen w-64 bg-slate-900/95 backdrop-blur-xl border-r border-slate-800 z-50 flex flex-col"
+              className={cn(
+                "lg:hidden fixed left-0 top-0 h-screen w-64 backdrop-blur-xl z-50 flex flex-col transition-colors",
+                theme === 'dark' 
+                  ? "bg-slate-900/95 border-r border-slate-800" 
+                  : "bg-white/95 border-r border-slate-200"
+              )}
             >
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => setMobileOpen(false)}
-                className="absolute top-4 right-4 text-slate-400 hover:text-slate-100"
+                className={cn(
+                  "absolute top-4 right-4 transition-colors",
+                  theme === 'dark' ? "text-slate-400 hover:text-slate-100" : "text-slate-600 hover:text-slate-900"
+                )}
               >
                 <X className="w-5 h-5" />
               </Button>
@@ -238,7 +246,10 @@ export function AdminSidebar({ currentUser, onLogout, activeTab, onTabChange }: 
       {/* Desktop Sidebar */}
       <aside
         className={cn(
-          "hidden lg:flex fixed left-0 top-0 h-screen bg-slate-900/95 backdrop-blur-xl border-r border-slate-800 z-40 flex-col transition-all duration-300",
+          "hidden lg:flex fixed left-0 top-0 h-screen backdrop-blur-xl z-40 flex-col transition-all duration-300",
+          theme === 'dark' 
+            ? "bg-slate-900/95 border-r border-slate-800" 
+            : "bg-white/95 border-r border-slate-200 shadow-sm",
           collapsed ? "w-16" : "w-64"
         )}
         data-testid="admin-sidebar"
