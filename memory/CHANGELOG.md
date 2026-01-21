@@ -228,4 +228,4 @@
 
 ---
 
-*Dernière mise à jour: 20 Janvier 2025*
+**Dernière mise à jour: 21 Janvier 2025*
