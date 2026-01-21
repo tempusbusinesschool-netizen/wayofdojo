@@ -137,7 +137,7 @@ function MouvementCard({
   item: Mouvement; 
   index: number; 
   mastery: MasteryLevel;
-  onMasteryChange: (id: string, level: MasteryLevel) => void;
+  onMasteryChange: (id: string, level: MasteryLevel, techniqueName?: string) => void;
   isUpdating: boolean;
   categoryType: 'mouvement' | 'arme';
 }) {
@@ -290,7 +290,7 @@ function TechniqueArmeCard({
   item: TechniqueArme; 
   index: number;
   mastery: MasteryLevel;
-  onMasteryChange: (id: string, level: MasteryLevel) => void;
+  onMasteryChange: (id: string, level: MasteryLevel, techniqueName?: string) => void;
   isUpdating: boolean;
   categoryType: 'mouvement' | 'arme';
 }) {
