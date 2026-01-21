@@ -840,9 +840,9 @@ function AdminPageContent() {
 
             {/* Stats Mini */}
             <div className="grid grid-cols-3 gap-4">
-              <StatCard label="Dojos" value={dojos.length} icon={<Tent className="w-5 h-5" />} variant="amber" />
-              <StatCard label="Adhérents" value={totalDojoMembers} icon={<Users className="w-5 h-5" />} variant="emerald" />
-              <StatCard label="Moyenne/Dojo" value={dojos.length > 0 ? Math.round(totalDojoMembers / dojos.length) : 0} icon={<BarChart3 className="w-5 h-5" />} variant="blue" />
+              <StatCard label="Dojos" value={dojos.length} icon={<Tent className="w-5 h-5" />} variant="amber" theme={theme} />
+              <StatCard label="Adhérents" value={totalDojoMembers} icon={<Users className="w-5 h-5" />} variant="emerald" theme={theme} />
+              <StatCard label="Moyenne/Dojo" value={dojos.length > 0 ? Math.round(totalDojoMembers / dojos.length) : 0} icon={<BarChart3 className="w-5 h-5" />} variant="blue" theme={theme} />
             </div>
 
             {/* Create Form */}
@@ -853,9 +853,12 @@ function AdminPageContent() {
                   animate={{ opacity: 1, height: 'auto' }}
                   exit={{ opacity: 0, height: 0 }}
                 >
-                  <Card className="bg-slate-900 border-amber-500/30">
+                  <Card className={cn(
+                    "border-amber-500/30",
+                    theme === 'dark' ? "bg-slate-900" : "bg-amber-50/50"
+                  )}>
                     <CardHeader>
-                      <CardTitle className="text-amber-400 flex items-center gap-2">
+                      <CardTitle className="text-amber-500 flex items-center gap-2">
                         <Plus className="w-5 h-5" />
                         Créer un nouveau dojo
                       </CardTitle>
@@ -863,11 +866,11 @@ function AdminPageContent() {
                     <CardContent className="space-y-4">
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                          <label className="text-sm text-slate-400 mb-1 block">Nom du dojo *</label>
-                          <Input value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder="Aikido Paris" className="bg-slate-950 border-slate-800 text-white" />
+                          <label className={cn("text-sm mb-1 block", theme === 'dark' ? "text-slate-400" : "text-slate-600")}>Nom du dojo *</label>
+                          <Input value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder="Aikido Paris" className={cn(theme === 'dark' ? "bg-slate-950 border-slate-800 text-white" : "bg-white border-slate-300 text-slate-900")} />
                         </div>
                         <div>
-                          <label className="text-sm text-slate-400 mb-1 block">Ville</label>
+                          <label className={cn("text-sm mb-1 block", theme === 'dark' ? "text-slate-400" : "text-slate-600")}>Ville</label>
                           <Input value={formData.city} onChange={(e) => setFormData({ ...formData, city: e.target.value })} placeholder="Paris" className="bg-slate-950 border-slate-800 text-white" />
                         </div>
                       </div>
