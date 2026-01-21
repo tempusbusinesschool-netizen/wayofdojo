@@ -1,5 +1,26 @@
 # 📝 WayofDojo - CHANGELOG
 
+## [2025-01-21] - Toggle Mode Sombre/Clair
+
+### ✅ Ajouté
+- **ThemeProvider** (`/app/wayofdojo/src/components/admin/ThemeProvider.tsx`)
+  - Context React pour gérer le thème
+  - Sauvegarde automatique dans localStorage
+  - Hook `useTheme()` pour accéder au thème
+  
+- **Toggle dans la Sidebar**
+  - Bouton ☀️ "Mode Clair" / 🌙 "Mode Sombre"
+  - Position: en bas de la sidebar avant le profil utilisateur
+  - Animation de transition
+  - Préférence persistée entre les sessions
+
+### 📋 Notes
+- Le mode sombre est le thème par défaut
+- La préférence est stockée sous la clé `wayofdojo_admin_theme`
+- Support partiel du mode clair (sidebar + page principale)
+
+---
+
 ## [2025-01-21] - Refonte Espace Admin
 
 ### ✅ Ajouté
