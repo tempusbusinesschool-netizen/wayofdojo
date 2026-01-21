@@ -436,7 +436,10 @@ function AdminPageContent() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
+      <div className={cn(
+        "min-h-screen flex items-center justify-center transition-colors",
+        theme === 'dark' ? "bg-slate-950" : "bg-slate-100"
+      )}>
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
@@ -453,7 +456,13 @@ function AdminPageContent() {
   // ═══════════════════════════════════════════════════════════════════════════
 
   return (
-    <div className="min-h-screen bg-slate-950" data-testid="admin-page">
+    <div 
+      className={cn(
+        "min-h-screen transition-colors duration-300",
+        theme === 'dark' ? "bg-slate-950" : "bg-slate-100"
+      )} 
+      data-testid="admin-page"
+    >
       {/* Sidebar */}
       <AdminSidebar
         currentUser={currentUser}
