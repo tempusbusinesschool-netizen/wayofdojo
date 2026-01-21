@@ -90,8 +90,8 @@ export function AdminSidebar({ currentUser, onLogout, activeTab, onTabChange }: 
               className={cn(
                 "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
                 isActive
-                  ? "bg-slate-800 text-amber-500 border-l-2 border-amber-500 shadow-[0_0_15px_rgba(245,158,11,0.1)]"
-                  : "text-slate-400 hover:text-slate-100 hover:bg-slate-800/50",
+                  ? "bg-slate-800 dark:bg-slate-800 light:bg-slate-200 text-amber-500 border-l-2 border-amber-500 shadow-[0_0_15px_rgba(245,158,11,0.1)]"
+                  : "text-slate-400 dark:text-slate-400 light:text-slate-600 hover:text-slate-100 dark:hover:text-slate-100 light:hover:text-slate-900 hover:bg-slate-800/50 dark:hover:bg-slate-800/50 light:hover:bg-slate-200/50",
                 collapsed && "justify-center px-2"
               )}
             >
@@ -102,15 +102,18 @@ export function AdminSidebar({ currentUser, onLogout, activeTab, onTabChange }: 
         })}
       </nav>
 
-      {/* User Profile & Logout */}
-      <div className="p-4 border-t border-slate-800 mt-auto">
+      {/* Theme Toggle & User Profile & Logout */}
+      <div className="p-4 border-t border-slate-800 dark:border-slate-800 light:border-slate-200 mt-auto space-y-3">
+        {/* Theme Toggle */}
+        <ThemeToggle collapsed={collapsed} />
+        
         {currentUser && !collapsed && (
-          <div className="flex items-center gap-3 mb-3 px-2">
+          <div className="flex items-center gap-3 px-2">
             <div className="w-9 h-9 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white font-semibold text-sm">
               {currentUser.firstName?.charAt(0).toUpperCase() || 'A'}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-slate-200 truncate">{currentUser.firstName}</p>
+              <p className="text-sm font-medium text-slate-200 dark:text-slate-200 light:text-slate-800 truncate">{currentUser.firstName}</p>
               <p className="text-xs text-slate-500 capitalize">{currentUser.role?.replace('_', ' ')}</p>
             </div>
           </div>
