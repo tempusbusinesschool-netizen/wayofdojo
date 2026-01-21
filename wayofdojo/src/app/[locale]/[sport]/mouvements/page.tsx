@@ -479,7 +479,7 @@ export default function MouvementsPage() {
   }, [loadProgress]);
 
   // Mettre à jour la maîtrise
-  const handleMasteryChange = async (itemId: string, level: MasteryLevel) => {
+  const handleMasteryChange = async (itemId: string, level: MasteryLevel, techniqueName?: string) => {
     const previousLevel = masteryLevels[itemId] || 'not_started';
     if (previousLevel === level) return;
     
@@ -499,6 +499,12 @@ export default function MouvementsPage() {
     
     const token = localStorage.getItem('wayofdojo_token');
     if (!token) {
+      // Still show celebration for non-logged users (stored locally)
+      if (level === 'mastered' && previousLevel !== 'mastered') {
+        setCelebrationTechnique(techniqueName || itemId);
+        setCelebrationXp(30);
+        setShowCelebration(true);
+      }
       setUpdatingId(null);
       return;
     }
@@ -523,6 +529,13 @@ export default function MouvementsPage() {
           setXpGained(data.mouvement.xpEarned);
           setShowXpAnimation(true);
           setTimeout(() => setShowXpAnimation(false), 2000);
+          
+          // Show celebration animation for mastery
+          if (level === 'mastered' && previousLevel !== 'mastered') {
+            setCelebrationTechnique(techniqueName || itemId);
+            setCelebrationXp(data.mouvement.xpEarned);
+            setShowCelebration(true);
+          }
         }
       }
     } catch (error) {
