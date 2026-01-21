@@ -80,7 +80,9 @@ export function AdminSidebar({ currentUser, onLogout, activeTab, onTabChange }: 
     <>
       {/* Logo Area */}
       <div className={cn(
-        "h-16 flex items-center border-b border-slate-800 px-4",
+        "h-16 flex items-center px-4 transition-colors",
+        "border-b border-slate-800 dark:border-slate-800",
+        theme === 'light' && "border-slate-200",
         collapsed ? "justify-center" : "justify-between"
       )}>
         {!collapsed && (
@@ -88,7 +90,10 @@ export function AdminSidebar({ currentUser, onLogout, activeTab, onTabChange }: 
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center">
               <Shield className="w-5 h-5 text-white" />
             </div>
-            <span className="font-bold text-slate-50">WayofDojo</span>
+            <span className={cn(
+              "font-bold transition-colors",
+              theme === 'dark' ? "text-slate-50" : "text-slate-900"
+            )}>WayofDojo</span>
           </Link>
         )}
         {collapsed && (
@@ -100,7 +105,12 @@ export function AdminSidebar({ currentUser, onLogout, activeTab, onTabChange }: 
           variant="ghost"
           size="icon"
           onClick={() => setCollapsed(!collapsed)}
-          className="hidden lg:flex text-slate-400 hover:text-slate-100 hover:bg-slate-800"
+          className={cn(
+            "hidden lg:flex transition-colors",
+            theme === 'dark' 
+              ? "text-slate-400 hover:text-slate-100 hover:bg-slate-800" 
+              : "text-slate-600 hover:text-slate-900 hover:bg-slate-200"
+          )}
         >
           <ChevronLeft className={cn("w-4 h-4 transition-transform", collapsed && "rotate-180")} />
         </Button>
