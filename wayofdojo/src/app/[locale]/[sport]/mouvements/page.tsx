@@ -190,7 +190,7 @@ function MouvementCard({
           {MASTERY_LEVELS.map((level) => (
             <button
               key={level.id}
-              onClick={() => onMasteryChange(prefixedId, level.id)}
+              onClick={() => onMasteryChange(prefixedId, level.id, item.nom)}
               disabled={isUpdating}
               className={`flex-1 py-1.5 rounded text-xs transition-all flex items-center justify-center gap-1 ${
                 mastery === level.id
