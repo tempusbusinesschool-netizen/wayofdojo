@@ -33,7 +33,8 @@ interface CategoryConfig {
   icon: React.ElementType;
   color: string;
   data: (Mouvement | TechniqueArme)[];
-  stats: Record<string, number>;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  stats: any;
   description: string;
   categoryType: 'mouvement' | 'arme';
 }
