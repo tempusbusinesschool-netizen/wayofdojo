@@ -1,12 +1,11 @@
 /**
  * 🌐 API SERVICE
  * Service centralisé pour les appels API
- * Gère automatiquement le préfixe d'API selon l'environnement
+ * Utilise /next-api pour accéder aux API routes Next.js
  */
 
-const API_PREFIX = typeof window !== 'undefined' && window.location.hostname.includes('preview.emergentagent.com') 
-  ? '/next-api' 
-  : '/api';
+// Always use /next-api to ensure Next.js API routes are called
+const API_PREFIX = '/next-api';
 
 export interface ApiResponse<T = unknown> {
   success: boolean;
