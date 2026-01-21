@@ -20,6 +20,7 @@ import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import apiService from '@/services/api.service';
 import { AdminSidebar } from '@/components/admin/AdminSidebar';
+import { ThemeProvider, useTheme } from '@/components/admin/ThemeProvider';
 import { 
   StatCard, 
   TopUsersTable, 
