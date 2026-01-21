@@ -14,10 +14,13 @@ import {
   ChevronLeft,
   Menu,
   X,
-  Shield
+  Shield,
+  Sun,
+  Moon
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
+import { useTheme } from './ThemeProvider';
 
 interface AdminSidebarProps {
   currentUser: { firstName: string; role: string } | null;
