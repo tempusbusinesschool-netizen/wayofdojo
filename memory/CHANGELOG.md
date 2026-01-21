@@ -1,5 +1,32 @@
 # 📝 WayofDojo - CHANGELOG
 
+## [2025-01-21] - Graphiques Recharts Dashboard
+
+### ✅ Ajouté
+
+#### 📊 Graphiques Interactifs (Recharts)
+- **UserGrowthChart** : Area chart montrant la croissance des utilisateurs (30 jours)
+  - Dégradé violet, courbe fluide
+  - Tooltips interactifs au survol
+- **ActivityChart** : Bar chart tri-couleur pour l'activité hebdomadaire
+  - Connexions (amber), Défis (violet), Techniques (emerald)
+  - Légende cliquable
+- **XPProgressChart** : Line chart pour les XP gagnés (14 jours)
+  - Points interactifs
+- **DistributionPieChart** : Donut chart pour les distributions
+  - Labels en pourcentage
+  - Animation d'entrée
+
+### 📋 Fichiers créés
+- `/app/wayofdojo/src/components/admin/AdminCharts.tsx`
+
+### 🎨 Support Thème
+- Tous les graphiques supportent le mode clair ET sombre
+- Tooltips, grilles et axes adaptés au thème
+- Couleurs cohérentes avec l'identité WayofDojo
+
+---
+
 ## [2025-01-21] - Mode Clair Complet + Vérification Gamification
 
 ### ✅ Implémenté
