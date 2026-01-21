@@ -662,7 +662,10 @@ function AdminPageContent() {
                     {selectedUsers.length} utilisateur(s) sélectionné(s)
                   </span>
                   <div className="flex gap-2">
-                    <Button size="sm" variant="outline" onClick={() => setSelectedUsers([])} className="border-slate-700 text-slate-300">
+                    <Button size="sm" variant="outline" onClick={() => setSelectedUsers([])} className={cn(
+                      "transition-colors",
+                      theme === 'dark' ? "border-slate-700 text-slate-300" : "border-slate-300 text-slate-700"
+                    )}>
                       Annuler
                     </Button>
                     <Button size="sm" className="bg-red-600 hover:bg-red-500">
@@ -675,15 +678,26 @@ function AdminPageContent() {
             </AnimatePresence>
 
             {/* Data Table */}
-            <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
+            <div className={cn(
+              "rounded-xl overflow-hidden transition-colors",
+              theme === 'dark' 
+                ? "bg-slate-900 border border-slate-800" 
+                : "bg-white border border-slate-200 shadow-sm"
+            )}>
               <div className="overflow-x-auto">
                 <table className="w-full" data-testid="users-table">
-                  <thead className="bg-slate-900/95 backdrop-blur sticky top-0">
-                    <tr className="border-b border-slate-800">
+                  <thead className={cn(
+                    "backdrop-blur sticky top-0",
+                    theme === 'dark' ? "bg-slate-900/95" : "bg-slate-50/95"
+                  )}>
+                    <tr className={cn("border-b", theme === 'dark' ? "border-slate-800" : "border-slate-200")}>
                       <th className="w-10 px-4 py-3">
                         <input 
                           type="checkbox" 
-                          className="rounded border-slate-600 bg-slate-800"
+                          className={cn(
+                            "rounded",
+                            theme === 'dark' ? "border-slate-600 bg-slate-800" : "border-slate-300 bg-white"
+                          )}
                           onChange={(e) => {
                             if (e.target.checked) {
                               setSelectedUsers(users.map(u => u.id));
@@ -700,12 +714,13 @@ function AdminPageContent() {
                       <th className="text-right px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Actions</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-800/50">
+                  <tbody className={cn("divide-y", theme === 'dark' ? "divide-slate-800/50" : "divide-slate-100")}>
                     {users.map((user) => (
                       <tr 
                         key={user.id} 
                         className={cn(
-                          "hover:bg-slate-800/30 transition-colors",
+                          "transition-colors",
+                          theme === 'dark' ? "hover:bg-slate-800/30" : "hover:bg-slate-50",
                           selectedUsers.includes(user.id) && "bg-amber-500/5"
                         )}
                         data-testid={`user-row-${user.id}`}
@@ -715,7 +730,10 @@ function AdminPageContent() {
                             type="checkbox" 
                             checked={selectedUsers.includes(user.id)}
                             onChange={() => toggleUserSelection(user.id)}
-                            className="rounded border-slate-600 bg-slate-800"
+                            className={cn(
+                              "rounded",
+                              theme === 'dark' ? "border-slate-600 bg-slate-800" : "border-slate-300 bg-white"
+                            )}
                           />
                         </td>
                         <td className="px-4 py-4">
