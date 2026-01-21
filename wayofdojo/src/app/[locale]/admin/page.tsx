@@ -10,7 +10,8 @@ import {
   ChevronRight, Flame, Star, Building2, Globe,
   Plus, Trash2, MapPin, UserPlus, ChevronDown, ChevronUp,
   Mail, Phone, Calendar, Award, Eye, EyeOff, X,
-  Download, CheckCircle2, RefreshCw
+  Download, CheckCircle2, RefreshCw, Filter, MoreVertical,
+  LayoutDashboard, Tent, Map
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -19,6 +20,16 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
 import apiService from '@/services/api.service';
+import { AdminSidebar } from '@/components/admin/AdminSidebar';
+import { 
+  StatCard, 
+  ChartWidget, 
+  TopUsersTable, 
+  DistributionCard, 
+  PageHeader,
+  ActivityFeed
+} from '@/components/admin/AdminWidgets';
+import { cn } from '@/lib/utils';
 
 // ═══════════════════════════════════════════════════════════════════════════
 // TYPES
@@ -139,6 +150,7 @@ export default function AdminPage() {
   const [authorized, setAuthorized] = useState(false);
   const [activeTab, setActiveTab] = useState<TabType>('dashboard');
   const [currentUser, setCurrentUser] = useState<{ role: string; firstName: string } | null>(null);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   // États Dashboard
   const [stats, setStats] = useState<AdminStats | null>(null);
@@ -146,6 +158,7 @@ export default function AdminPage() {
   // États Users
   const [users, setUsers] = useState<User[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
 
   // États Dojos
   const [dojos, setDojos] = useState<Dojo[]>([]);
@@ -280,9 +293,13 @@ export default function AdminPage() {
   const handleRoleChange = async (userId: string, newRole: string) => {
     try {
       const response = await apiService.updateUserRole(userId, newRole) as { success: boolean };
-      if (response.success) await loadUsers(searchQuery);
+      if (response.success) {
+        toast.success('Rôle mis à jour');
+        await loadUsers(searchQuery);
+      }
     } catch (error) {
       console.error('Role change error:', error);
+      toast.error('Erreur lors du changement de rôle');
     }
   };
 
@@ -391,6 +408,12 @@ export default function AdminPage() {
     );
   };
 
+  const toggleUserSelection = (userId: string) => {
+    setSelectedUsers(prev =>
+      prev.includes(userId) ? prev.filter(id => id !== userId) : [...prev, userId]
+    );
+  };
+
   // ═══════════════════════════════════════════════════════════════════════════
   // CONSTANTES UI
   // ═══════════════════════════════════════════════════════════════════════════
@@ -409,25 +432,17 @@ export default function AdminPage() {
     super_admin: 'Super Admin'
   };
 
-  const tabs = [
-    { id: 'dashboard' as TabType, label: 'Dashboard', icon: BarChart3, color: 'from-violet-500 to-purple-500' },
-    { id: 'users' as TabType, label: 'Utilisateurs', icon: Users, color: 'from-cyan-500 to-blue-500' },
-    { id: 'dojos' as TabType, label: `Dojos (${dojos.length})`, icon: Building2, color: 'from-orange-500 to-amber-500' },
-    { id: 'annuaire' as TabType, label: 'Annuaire FFAAA', icon: Globe, color: 'from-emerald-500 to-green-500' },
-    { id: 'settings' as TabType, label: 'Paramètres', icon: Settings, color: 'from-slate-500 to-slate-600' },
-  ];
-
   // ═══════════════════════════════════════════════════════════════════════════
   // LOADING & AUTH CHECK
   // ═══════════════════════════════════════════════════════════════════════════
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-violet-950 to-slate-950 flex items-center justify-center">
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center">
         <motion.div
           animate={{ rotate: 360 }}
           transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-          className="w-12 h-12 border-4 border-violet-500 border-t-transparent rounded-full"
+          className="w-12 h-12 border-4 border-amber-500 border-t-transparent rounded-full"
         />
       </div>
     );
@@ -440,189 +455,108 @@ export default function AdminPage() {
   // ═══════════════════════════════════════════════════════════════════════════
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-violet-950 to-slate-950">
-      {/* Header */}
-      <header className="sticky top-0 z-50 backdrop-blur-md bg-violet-900/80 border-b border-violet-500/20">
-        <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <motion.div
-              animate={{ rotate: [0, 10, -10, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center shadow-lg shadow-violet-500/30"
-            >
-              <Shield className="w-5 h-5 text-white" />
-            </motion.div>
-            <div>
-              <span className="text-lg font-bold text-white">Espace Administration</span>
-              <p className="text-xs text-violet-300">
-                {currentUser?.role === 'super_admin' ? '👑 Super Admin' : '🛡️ Administrateur'} • Cadre • Contrôle • Conformité
-              </p>
-            </div>
-          </div>
+    <div className="min-h-screen bg-slate-950" data-testid="admin-page">
+      {/* Sidebar */}
+      <AdminSidebar
+        currentUser={currentUser}
+        onLogout={handleLogout}
+        activeTab={activeTab}
+        onTabChange={(tab) => setActiveTab(tab as TabType)}
+      />
 
-          <nav className="flex items-center gap-2">
-            <Button onClick={() => Promise.all([loadStats(), loadUsers(), fetchDojos()])} variant="ghost" size="sm" className="text-white/70 hover:text-white hover:bg-white/10">
-              <RefreshCw className="w-4 h-4" />
-            </Button>
-            <Link href={`/${locale}/aikido/dojo`}>
-              <Button variant="ghost" size="sm" className="text-white/70 hover:text-white hover:bg-white/10">
-                <Home className="w-4 h-4 mr-2" />
-                Dojo
-              </Button>
-            </Link>
-            <Button 
-              variant="ghost" 
-              size="sm" 
-              className="text-white/70 hover:text-white hover:bg-white/10"
-              onClick={handleLogout}
-            >
-              <LogOut className="w-4 h-4" />
-            </Button>
-          </nav>
-        </div>
-      </header>
-
-      <div className="container mx-auto px-4 py-8">
-        {/* Navigation Tabs */}
-        <div className="flex flex-wrap gap-2 mb-8">
-          {tabs.map((tab) => (
-            <Button
-              key={tab.id}
-              variant={activeTab === tab.id ? 'default' : 'ghost'}
-              onClick={() => setActiveTab(tab.id)}
-              className={activeTab === tab.id 
-                ? `bg-gradient-to-r ${tab.color} text-white shadow-lg` 
-                : 'text-slate-300 hover:text-white hover:bg-white/10'
-              }
-            >
-              <tab.icon className="w-4 h-4 mr-2" />
-              {tab.label}
-            </Button>
-          ))}
-        </div>
-
+      {/* Main Content Area */}
+      <main className={cn(
+        "min-h-screen transition-all duration-300",
+        "lg:ml-64 p-6 lg:p-8"
+      )}>
         {/* ════════════════════════════════════════════════════════════════════ */}
         {/* TAB: DASHBOARD */}
         {/* ════════════════════════════════════════════════════════════════════ */}
         {activeTab === 'dashboard' && stats && (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-            {/* Stats Cards */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <motion.div whileHover={{ scale: 1.02 }} className="bg-gradient-to-br from-violet-600/20 to-purple-600/20 rounded-2xl p-5 border border-violet-500/30">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-xl bg-violet-500/20 flex items-center justify-center">
-                    <Users className="w-5 h-5 text-violet-400" />
-                  </div>
-                  <span className="text-slate-400 text-sm">Total Utilisateurs</span>
-                </div>
-                <p className="text-3xl font-black text-white">{stats.totalUsers}</p>
-              </motion.div>
+          <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            className="space-y-8"
+            data-testid="admin-dashboard"
+          >
+            <PageHeader 
+              title="Tableau de Bord"
+              subtitle="Vue d'ensemble de votre plateforme"
+              actions={
+                <Button 
+                  onClick={() => Promise.all([loadStats(), loadUsers(), fetchDojos()])} 
+                  variant="outline"
+                  className="border-slate-700 text-slate-300 hover:bg-slate-800"
+                >
+                  <RefreshCw className="w-4 h-4 mr-2" />
+                  Actualiser
+                </Button>
+              }
+            />
 
-              <motion.div whileHover={{ scale: 1.02 }} className="bg-gradient-to-br from-emerald-600/20 to-green-600/20 rounded-2xl p-5 border border-emerald-500/30">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center">
-                    <TrendingUp className="w-5 h-5 text-emerald-400" />
-                  </div>
-                  <span className="text-slate-400 text-sm">Nouveaux (7j)</span>
-                </div>
-                <p className="text-3xl font-black text-emerald-400">+{stats.newUsersThisWeek}</p>
-              </motion.div>
-
-              <motion.div whileHover={{ scale: 1.02 }} className="bg-gradient-to-br from-cyan-600/20 to-blue-600/20 rounded-2xl p-5 border border-cyan-500/30">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-xl bg-cyan-500/20 flex items-center justify-center">
-                    <Activity className="w-5 h-5 text-cyan-400" />
-                  </div>
-                  <span className="text-slate-400 text-sm">Actifs (7j)</span>
-                </div>
-                <p className="text-3xl font-black text-cyan-400">{stats.activeUsers}</p>
-              </motion.div>
-
-              <motion.div whileHover={{ scale: 1.02 }} className="bg-gradient-to-br from-amber-600/20 to-orange-600/20 rounded-2xl p-5 border border-amber-500/30">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-xl bg-amber-500/20 flex items-center justify-center">
-                    <Crown className="w-5 h-5 text-amber-400" />
-                  </div>
-                  <span className="text-slate-400 text-sm">Dojos</span>
-                </div>
-                <p className="text-3xl font-black text-amber-400">{dojos.length}</p>
-              </motion.div>
+            {/* KPI Stats Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <StatCard
+                label="Total Utilisateurs"
+                value={stats.totalUsers}
+                icon={<Users className="w-5 h-5" />}
+                variant="violet"
+                trend={{ value: 12, positive: true }}
+              />
+              <StatCard
+                label="Nouveaux (7j)"
+                value={`+${stats.newUsersThisWeek}`}
+                icon={<TrendingUp className="w-5 h-5" />}
+                variant="emerald"
+              />
+              <StatCard
+                label="Actifs (7j)"
+                value={stats.activeUsers}
+                icon={<Activity className="w-5 h-5" />}
+                variant="blue"
+              />
+              <StatCard
+                label="Dojos"
+                value={dojos.length}
+                icon={<Tent className="w-5 h-5" />}
+                variant="amber"
+              />
             </div>
 
-            {/* Top Users & Distribution */}
-            <div className="grid md:grid-cols-2 gap-6">
-              <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.2 }} className="bg-slate-800/50 rounded-2xl p-6 border border-slate-700">
-                <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                  <Star className="w-5 h-5 text-amber-400" />
-                  Top 10 par XP
-                </h3>
-                <div className="space-y-3">
-                  {stats.topUsersByXp.map((user, index) => (
-                    <div key={user.id} className="flex items-center justify-between p-3 rounded-xl bg-slate-700/50 hover:bg-slate-700 transition-colors">
-                      <div className="flex items-center gap-3">
-                        <span className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                          index === 0 ? 'bg-amber-500 text-slate-900' :
-                          index === 1 ? 'bg-slate-400 text-slate-900' :
-                          index === 2 ? 'bg-orange-600 text-white' : 'bg-slate-600 text-white'
-                        }`}>{index + 1}</span>
-                        <div>
-                          <p className="text-white font-semibold text-sm">{user.name}</p>
-                          <p className="text-slate-400 text-xs">Niv. {user.level}</p>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-amber-400 font-bold">{user.xp} XP</p>
-                        <p className="text-slate-500 text-xs">{user.grade}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
+            {/* Charts & Tables Row */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+              {/* Top Users */}
+              <div className="lg:col-span-2">
+                <TopUsersTable
+                  users={stats.topUsersByXp.map(u => ({
+                    id: u.id,
+                    name: u.name,
+                    email: u.email,
+                    xp: u.xp,
+                    level: u.level,
+                    grade: u.grade
+                  }))}
+                />
+              </div>
 
-              <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 }} className="bg-slate-800/50 rounded-2xl p-6 border border-slate-700">
-                <h3 className="text-lg font-bold text-white mb-4 flex items-center gap-2">
-                  <UserCheck className="w-5 h-5 text-cyan-400" />
-                  Distribution
-                </h3>
-                
-                <div className="mb-6">
-                  <p className="text-slate-400 text-sm mb-3">Par profil</p>
-                  <div className="space-y-2">
-                    <div className="flex justify-between items-center">
-                      <span className="text-white text-sm">🥷 Samouraï Confirmé</span>
-                      <span className="text-cyan-400 font-bold">{stats.usersByProfile.samourai_confirme || 0}</span>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <span className="text-white text-sm">🎒 Jeune Samouraï</span>
-                      <span className="text-amber-400 font-bold">{stats.usersByProfile.jeune_samourai || 0}</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="mb-6">
-                  <p className="text-slate-400 text-sm mb-3">Par abonnement</p>
-                  <div className="space-y-2">
-                    {Object.entries(stats.usersBySubscription).map(([status, count]) => (
-                      <div key={status} className="flex justify-between items-center">
-                        <span className="text-white text-sm capitalize">{status.replace('_', ' ')}</span>
-                        <span className="text-violet-400 font-bold">{count}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <div>
-                  <p className="text-slate-400 text-sm mb-3">Par grade</p>
-                  <div className="grid grid-cols-2 gap-2">
-                    {stats.usersByGrade.slice(0, 6).map((item) => (
-                      <div key={item.grade} className="flex justify-between items-center bg-slate-700/50 rounded-lg px-3 py-2">
-                        <span className="text-white text-xs">{item.grade}</span>
-                        <span className="text-emerald-400 font-bold text-sm">{item.count}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
+              {/* Distribution */}
+              <div className="space-y-6">
+                <DistributionCard
+                  title="Par Profil"
+                  items={[
+                    { label: 'Samouraï Confirmé', value: stats.usersByProfile.samourai_confirme || 0, color: '#8b5cf6' },
+                    { label: 'Jeune Samouraï', value: stats.usersByProfile.jeune_samourai || 0, color: '#f59e0b' },
+                  ]}
+                />
+                <DistributionCard
+                  title="Par Abonnement"
+                  items={Object.entries(stats.usersBySubscription).map(([key, value], i) => ({
+                    label: key.replace('_', ' '),
+                    value: value as number,
+                    color: ['#10b981', '#3b82f6', '#ec4899', '#f59e0b'][i % 4]
+                  }))}
+                />
+              </div>
             </div>
           </motion.div>
         )}
@@ -631,59 +565,159 @@ export default function AdminPage() {
         {/* TAB: USERS */}
         {/* ════════════════════════════════════════════════════════════════════ */}
         {activeTab === 'users' && (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-            <div className="flex gap-3">
+          <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            className="space-y-6"
+            data-testid="admin-users"
+          >
+            <PageHeader 
+              title="Utilisateurs"
+              subtitle={`${users.length} utilisateur(s) enregistré(s)`}
+              actions={
+                <Button className="bg-amber-500 hover:bg-amber-600 text-slate-950 font-semibold">
+                  <Plus className="w-4 h-4 mr-2" />
+                  Ajouter
+                </Button>
+              }
+            />
+
+            {/* Toolbar */}
+            <div className="flex flex-col sm:flex-row gap-4">
               <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-500" />
                 <Input
                   placeholder="Rechercher par nom ou email..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                  className="pl-10 bg-slate-800 border-slate-700 text-white"
+                  className="pl-10 bg-slate-900 border-slate-800 text-slate-100 focus:border-amber-500"
+                  data-testid="user-search-input"
                 />
               </div>
-              <Button onClick={handleSearch} className="bg-violet-600 hover:bg-violet-500">Rechercher</Button>
+              <div className="flex gap-2">
+                <Button 
+                  onClick={handleSearch} 
+                  className="bg-slate-800 hover:bg-slate-700 text-slate-200"
+                >
+                  <Search className="w-4 h-4 mr-2" />
+                  Rechercher
+                </Button>
+                <Button variant="outline" className="border-slate-800 text-slate-400">
+                  <Filter className="w-4 h-4 mr-2" />
+                  Filtres
+                </Button>
+              </div>
             </div>
 
-            <div className="bg-slate-800/50 rounded-2xl border border-slate-700 overflow-hidden">
+            {/* Bulk Actions Bar */}
+            <AnimatePresence>
+              {selectedUsers.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  className="flex items-center justify-between p-4 bg-amber-500/10 border border-amber-500/30 rounded-xl"
+                >
+                  <span className="text-amber-400 font-medium">
+                    {selectedUsers.length} utilisateur(s) sélectionné(s)
+                  </span>
+                  <div className="flex gap-2">
+                    <Button size="sm" variant="outline" onClick={() => setSelectedUsers([])} className="border-slate-700 text-slate-300">
+                      Annuler
+                    </Button>
+                    <Button size="sm" className="bg-red-600 hover:bg-red-500">
+                      <Trash2 className="w-4 h-4 mr-1" />
+                      Supprimer
+                    </Button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Data Table */}
+            <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
               <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead className="bg-slate-700/50">
-                    <tr>
-                      <th className="text-left px-4 py-3 text-slate-300 text-sm font-semibold">Utilisateur</th>
-                      <th className="text-left px-4 py-3 text-slate-300 text-sm font-semibold">Rôle</th>
-                      <th className="text-left px-4 py-3 text-slate-300 text-sm font-semibold">Grade</th>
-                      <th className="text-left px-4 py-3 text-slate-300 text-sm font-semibold">Stats</th>
-                      <th className="text-left px-4 py-3 text-slate-300 text-sm font-semibold">Actions</th>
+                <table className="w-full" data-testid="users-table">
+                  <thead className="bg-slate-900/95 backdrop-blur sticky top-0">
+                    <tr className="border-b border-slate-800">
+                      <th className="w-10 px-4 py-3">
+                        <input 
+                          type="checkbox" 
+                          className="rounded border-slate-600 bg-slate-800"
+                          onChange={(e) => {
+                            if (e.target.checked) {
+                              setSelectedUsers(users.map(u => u.id));
+                            } else {
+                              setSelectedUsers([]);
+                            }
+                          }}
+                        />
+                      </th>
+                      <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Utilisateur</th>
+                      <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Rôle</th>
+                      <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Grade</th>
+                      <th className="text-left px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Stats</th>
+                      <th className="text-right px-4 py-3 text-xs font-semibold text-slate-500 uppercase tracking-wider">Actions</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody className="divide-y divide-slate-800/50">
                     {users.map((user) => (
-                      <tr key={user.id} className="border-t border-slate-700 hover:bg-slate-700/30">
-                        <td className="px-4 py-3">
-                          <div>
-                            <p className="text-white font-semibold">{user.firstName} {user.lastName}</p>
-                            <p className="text-slate-400 text-sm">{user.email}</p>
+                      <tr 
+                        key={user.id} 
+                        className={cn(
+                          "hover:bg-slate-800/30 transition-colors",
+                          selectedUsers.includes(user.id) && "bg-amber-500/5"
+                        )}
+                        data-testid={`user-row-${user.id}`}
+                      >
+                        <td className="px-4 py-4">
+                          <input 
+                            type="checkbox" 
+                            checked={selectedUsers.includes(user.id)}
+                            onChange={() => toggleUserSelection(user.id)}
+                            className="rounded border-slate-600 bg-slate-800"
+                          />
+                        </td>
+                        <td className="px-4 py-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white font-semibold text-sm">
+                              {user.firstName?.charAt(0)}{user.lastName?.charAt(0)}
+                            </div>
+                            <div>
+                              <p className="font-medium text-slate-200">{user.firstName} {user.lastName}</p>
+                              <p className="text-sm text-slate-500">{user.email}</p>
+                            </div>
                           </div>
                         </td>
-                        <td className="px-4 py-3">
-                          <span className={`px-2 py-1 rounded-full text-xs font-semibold text-white ${roleColors[user.role] || 'bg-slate-600'}`}>
+                        <td className="px-4 py-4">
+                          <span className={cn(
+                            "px-2.5 py-1 rounded-full text-xs font-semibold text-white",
+                            roleColors[user.role] || 'bg-slate-600'
+                          )}>
                             {roleLabels[user.role] || user.role}
                           </span>
                         </td>
-                        <td className="px-4 py-3"><span className="text-white">{user.grade}</span></td>
-                        <td className="px-4 py-3">
-                          <div className="flex items-center gap-3 text-sm">
-                            <span className="text-amber-400 flex items-center gap-1"><Star className="w-3 h-3" /> {user.gamification?.xp || 0}</span>
-                            <span className="text-orange-400 flex items-center gap-1"><Flame className="w-3 h-3" /> {user.gamification?.streak || 0}</span>
+                        <td className="px-4 py-4">
+                          <span className="text-slate-300">{user.grade}</span>
+                        </td>
+                        <td className="px-4 py-4">
+                          <div className="flex items-center gap-4 text-sm">
+                            <span className="text-amber-400 flex items-center gap-1">
+                              <Star className="w-3.5 h-3.5" />
+                              {user.gamification?.xp || 0}
+                            </span>
+                            <span className="text-orange-400 flex items-center gap-1">
+                              <Flame className="w-3.5 h-3.5" />
+                              {user.gamification?.streak || 0}
+                            </span>
                           </div>
                         </td>
-                        <td className="px-4 py-3">
+                        <td className="px-4 py-4 text-right">
                           <select
                             value={user.role}
                             onChange={(e) => handleRoleChange(user.id, e.target.value)}
-                            className="bg-slate-700 text-white text-sm rounded-lg px-2 py-1 border border-slate-600"
+                            className="bg-slate-800 text-slate-200 text-sm rounded-lg px-3 py-1.5 border border-slate-700 focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
                           >
                             <option value="user">Pratiquant</option>
                             <option value="club_admin">Admin Club</option>
@@ -696,6 +730,21 @@ export default function AdminPage() {
                   </tbody>
                 </table>
               </div>
+              
+              {/* Pagination */}
+              <div className="flex items-center justify-between px-4 py-3 border-t border-slate-800">
+                <p className="text-sm text-slate-500">
+                  Affichage de {users.length} utilisateur(s)
+                </p>
+                <div className="flex gap-2">
+                  <Button size="sm" variant="outline" disabled className="border-slate-700 text-slate-500">
+                    Précédent
+                  </Button>
+                  <Button size="sm" variant="outline" disabled className="border-slate-700 text-slate-500">
+                    Suivant
+                  </Button>
+                </div>
+              </div>
             </div>
           </motion.div>
         )}
@@ -704,30 +753,44 @@ export default function AdminPage() {
         {/* TAB: DOJOS */}
         {/* ════════════════════════════════════════════════════════════════════ */}
         {activeTab === 'dojos' && (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-            {/* Stats rapides */}
+          <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            className="space-y-6"
+            data-testid="admin-dojos"
+          >
+            <PageHeader 
+              title="Gestion des Dojos"
+              subtitle={`${dojos.length} dojo(s) • ${totalDojoMembers} adhérent(s)`}
+              actions={
+                <Button 
+                  onClick={() => setShowCreateForm(!showCreateForm)}
+                  className="bg-amber-500 hover:bg-amber-600 text-slate-950 font-semibold"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  Nouveau Dojo
+                </Button>
+              }
+            />
+
+            {/* Stats Mini */}
             <div className="grid grid-cols-3 gap-4">
-              <div className="bg-orange-500/20 rounded-xl p-4 border border-orange-500/30 text-center">
-                <p className="text-3xl font-black text-orange-400">{dojos.length}</p>
-                <p className="text-slate-400 text-sm">Dojos</p>
-              </div>
-              <div className="bg-emerald-500/20 rounded-xl p-4 border border-emerald-500/30 text-center">
-                <p className="text-3xl font-black text-emerald-400">{totalDojoMembers}</p>
-                <p className="text-slate-400 text-sm">Adhérents</p>
-              </div>
-              <div className="bg-cyan-500/20 rounded-xl p-4 border border-cyan-500/30 text-center">
-                <p className="text-3xl font-black text-cyan-400">{dojos.length > 0 ? Math.round(totalDojoMembers / dojos.length) : 0}</p>
-                <p className="text-slate-400 text-sm">Moyenne/dojo</p>
-              </div>
+              <StatCard label="Dojos" value={dojos.length} icon={<Tent className="w-5 h-5" />} variant="amber" />
+              <StatCard label="Adhérents" value={totalDojoMembers} icon={<Users className="w-5 h-5" />} variant="emerald" />
+              <StatCard label="Moyenne/Dojo" value={dojos.length > 0 ? Math.round(totalDojoMembers / dojos.length) : 0} icon={<BarChart3 className="w-5 h-5" />} variant="blue" />
             </div>
 
-            {/* Formulaire création */}
+            {/* Create Form */}
             <AnimatePresence>
-              {showCreateForm ? (
-                <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}>
-                  <Card className="bg-blue-900/20 border-blue-500/30">
+              {showCreateForm && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: 'auto' }}
+                  exit={{ opacity: 0, height: 0 }}
+                >
+                  <Card className="bg-slate-900 border-amber-500/30">
                     <CardHeader>
-                      <CardTitle className="text-blue-300 flex items-center gap-2">
+                      <CardTitle className="text-amber-400 flex items-center gap-2">
                         <Plus className="w-5 h-5" />
                         Créer un nouveau dojo
                       </CardTitle>
@@ -736,27 +799,27 @@ export default function AdminPage() {
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
                           <label className="text-sm text-slate-400 mb-1 block">Nom du dojo *</label>
-                          <Input value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder="Aikido Paris" className="bg-slate-800/50 border-slate-600 text-white" />
+                          <Input value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} placeholder="Aikido Paris" className="bg-slate-950 border-slate-800 text-white" />
                         </div>
                         <div>
                           <label className="text-sm text-slate-400 mb-1 block">Ville</label>
-                          <Input value={formData.city} onChange={(e) => setFormData({ ...formData, city: e.target.value })} placeholder="Paris" className="bg-slate-800/50 border-slate-600 text-white" />
+                          <Input value={formData.city} onChange={(e) => setFormData({ ...formData, city: e.target.value })} placeholder="Paris" className="bg-slate-950 border-slate-800 text-white" />
                         </div>
                       </div>
                       <div>
                         <label className="text-sm text-slate-400 mb-1 block">Adresse</label>
-                        <Input value={formData.address} onChange={(e) => setFormData({ ...formData, address: e.target.value })} placeholder="123 rue de l'Aïkido" className="bg-slate-800/50 border-slate-600 text-white" />
+                        <Input value={formData.address} onChange={(e) => setFormData({ ...formData, address: e.target.value })} placeholder="123 rue de l'Aïkido" className="bg-slate-950 border-slate-800 text-white" />
                       </div>
                       <div>
                         <label className="text-sm text-slate-400 mb-1 block">Description</label>
-                        <Textarea value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} placeholder="Description du dojo..." className="bg-slate-800/50 border-slate-600 text-white min-h-[80px]" />
+                        <Textarea value={formData.description} onChange={(e) => setFormData({ ...formData, description: e.target.value })} placeholder="Description du dojo..." className="bg-slate-950 border-slate-800 text-white min-h-[80px]" />
                       </div>
                       <div>
                         <label className="text-sm text-slate-400 mb-1 block">Mot de passe Admin *</label>
-                        <Input type="password" value={formData.admin_password} onChange={(e) => setFormData({ ...formData, admin_password: e.target.value })} placeholder="Mot de passe pour les admins" className="bg-slate-800/50 border-slate-600 text-white" />
+                        <Input type="password" value={formData.admin_password} onChange={(e) => setFormData({ ...formData, admin_password: e.target.value })} placeholder="Mot de passe pour les admins" className="bg-slate-950 border-slate-800 text-white" />
                       </div>
                       <div className="flex gap-3 pt-2">
-                        <Button onClick={handleCreateDojo} className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-500">
+                        <Button onClick={handleCreateDojo} className="flex-1 bg-amber-500 hover:bg-amber-600 text-slate-950 font-semibold">
                           <Plus className="w-4 h-4 mr-2" />Créer le dojo
                         </Button>
                         <Button onClick={resetDojoForm} variant="ghost" className="text-slate-400">Annuler</Button>
@@ -764,42 +827,56 @@ export default function AdminPage() {
                     </CardContent>
                   </Card>
                 </motion.div>
-              ) : (
-                <Button onClick={() => setShowCreateForm(true)} className="w-full bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-bold py-4 text-lg">
-                  <Plus className="w-5 h-5 mr-2" />Créer un nouveau dojo
-                </Button>
               )}
             </AnimatePresence>
 
-            {/* Liste des dojos */}
+            {/* Dojos Grid */}
             {dojos.length === 0 ? (
-              <Card className="bg-slate-800/30 border-slate-700">
+              <Card className="bg-slate-900 border-slate-800">
                 <CardContent className="text-center py-16">
-                  <Building2 className="w-16 h-16 text-slate-600 mx-auto mb-4" />
+                  <Tent className="w-16 h-16 text-slate-700 mx-auto mb-4" />
                   <p className="text-slate-300 font-semibold text-lg mb-2">Aucun dojo</p>
                   <p className="text-slate-500">Créez votre premier dojo pour commencer</p>
                 </CardContent>
               </Card>
             ) : (
-              <div className="space-y-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 {dojos.map((dojo) => (
-                  <motion.div key={dojo.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-                    <Card className={`overflow-hidden border transition-all ${dojo.is_default ? 'bg-gradient-to-r from-amber-900/30 to-yellow-900/20 border-amber-500/50' : 'bg-slate-800/50 border-slate-700 hover:border-orange-500/30'}`}>
+                  <motion.div 
+                    key={dojo.id} 
+                    initial={{ opacity: 0, y: 20 }} 
+                    animate={{ opacity: 1, y: 0 }}
+                    data-testid={`dojo-card-${dojo.id}`}
+                  >
+                    <Card className={cn(
+                      "overflow-hidden transition-all",
+                      dojo.is_default 
+                        ? "bg-gradient-to-br from-amber-900/20 to-orange-900/10 border-amber-500/40" 
+                        : "bg-slate-900 border-slate-800 hover:border-slate-700"
+                    )}>
                       <div className="p-5">
                         <div className="flex items-start justify-between">
                           <div className="flex items-start gap-4 flex-1">
-                            <div className={`w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0 shadow-lg ${dojo.is_default ? 'bg-gradient-to-br from-amber-500 to-yellow-500' : 'bg-gradient-to-br from-orange-500 to-red-500'}`}>
-                              <Building2 className="w-7 h-7 text-white" />
+                            <div className={cn(
+                              "w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0",
+                              dojo.is_default 
+                                ? "bg-gradient-to-br from-amber-500 to-orange-600" 
+                                : "bg-gradient-to-br from-slate-700 to-slate-800"
+                            )}>
+                              <Tent className="w-6 h-6 text-white" />
                             </div>
-                            <div className="flex-1">
+                            <div className="flex-1 min-w-0">
                               <div className="flex items-center gap-2 flex-wrap">
-                                <h3 className="text-xl font-bold text-white">{dojo.name}</h3>
-                                {dojo.is_default && <Badge className="bg-amber-500 text-white">Par défaut</Badge>}
+                                <h3 className="text-lg font-bold text-slate-100">{dojo.name}</h3>
+                                {dojo.is_default && <Badge className="bg-amber-500 text-white text-xs">Par défaut</Badge>}
                               </div>
-                              {dojo.city && <p className="text-slate-400 flex items-center gap-1 mt-1"><MapPin className="w-4 h-4" />{dojo.city}</p>}
-                              {dojo.description && <p className="text-slate-500 text-sm mt-2">{dojo.description}</p>}
+                              {dojo.city && (
+                                <p className="text-slate-400 text-sm flex items-center gap-1 mt-1">
+                                  <MapPin className="w-3.5 h-3.5" />{dojo.city}
+                                </p>
+                              )}
                               <div className="flex items-center gap-4 mt-3">
-                                <span className="text-orange-400 flex items-center gap-1 font-medium">
+                                <span className="text-amber-400 flex items-center gap-1 text-sm font-medium">
                                   <Users className="w-4 h-4" />
                                   {dojo.members_count || 0} adhérent{(dojo.members_count || 0) > 1 ? 's' : ''}
                                 </span>
@@ -807,110 +884,146 @@ export default function AdminPage() {
                             </div>
                           </div>
                           <div className="flex gap-2">
-                            <Button onClick={() => { if (showAddMember === dojo.id) setShowAddMember(null); else { setShowAddMember(dojo.id); resetMemberForm(); } }} className="bg-emerald-600 hover:bg-emerald-500 text-white" size="sm">
-                              <UserPlus className="w-4 h-4 mr-1" />Adhérent
+                            <Button 
+                              onClick={() => toggleDojoExpand(dojo.id)} 
+                              variant="ghost" 
+                              size="icon"
+                              className="text-slate-400 hover:text-slate-100"
+                            >
+                              {expandedDojo === dojo.id ? <ChevronUp className="w-5 h-5" /> : <ChevronDown className="w-5 h-5" />}
                             </Button>
-                            <Button onClick={() => toggleDojoExpand(dojo.id)} variant="outline" size="sm" className="border-slate-600 text-slate-300 hover:bg-slate-700">
-                              {expandedDojo === dojo.id ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="text-slate-400 hover:text-slate-100"
+                            >
+                              <MoreVertical className="w-5 h-5" />
                             </Button>
-                            {!dojo.is_default && (
-                              <Button onClick={() => handleDeleteDojo(dojo.id, dojo.name)} variant="outline" size="sm" className="border-red-500/50 text-red-400 hover:bg-red-900/30">
-                                <Trash2 className="w-4 h-4" />
-                              </Button>
-                            )}
                           </div>
                         </div>
                       </div>
 
-                      {/* Formulaire création adhérent */}
-                      <AnimatePresence>
-                        {showAddMember === dojo.id && (
-                          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="border-t border-emerald-500/30">
-                            <div className="p-5 bg-emerald-900/20">
-                              <div className="flex items-center justify-between mb-4">
-                                <h4 className="font-bold text-emerald-300 flex items-center gap-2"><UserPlus className="w-5 h-5" />Nouvel adhérent pour {dojo.name}</h4>
-                                <button onClick={() => setShowAddMember(null)} className="text-slate-400 hover:text-white"><X className="w-5 h-5" /></button>
-                              </div>
-                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                                <div>
-                                  <label className="text-sm text-slate-400 mb-1 block">Prénom *</label>
-                                  <Input value={memberFormData.first_name} onChange={(e) => setMemberFormData({ ...memberFormData, first_name: e.target.value })} placeholder="Jean" className="bg-slate-800/50 border-slate-600 text-white" />
-                                </div>
-                                <div>
-                                  <label className="text-sm text-slate-400 mb-1 block">Nom *</label>
-                                  <Input value={memberFormData.last_name} onChange={(e) => setMemberFormData({ ...memberFormData, last_name: e.target.value })} placeholder="Dupont" className="bg-slate-800/50 border-slate-600 text-white" />
-                                </div>
-                              </div>
-                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                                <div>
-                                  <label className="text-sm text-slate-400 mb-1 block flex items-center gap-1"><Mail className="w-3 h-3" /> Email *</label>
-                                  <Input type="email" value={memberFormData.email} onChange={(e) => setMemberFormData({ ...memberFormData, email: e.target.value })} placeholder="jean.dupont@email.com" className="bg-slate-800/50 border-slate-600 text-white" />
-                                </div>
-                                <div>
-                                  <label className="text-sm text-slate-400 mb-1 block flex items-center gap-1"><Phone className="w-3 h-3" /> Téléphone</label>
-                                  <Input value={memberFormData.phone} onChange={(e) => setMemberFormData({ ...memberFormData, phone: e.target.value })} placeholder="06 12 34 56 78" className="bg-slate-800/50 border-slate-600 text-white" />
-                                </div>
-                              </div>
-                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                                <div>
-                                  <label className="text-sm text-slate-400 mb-1 block flex items-center gap-1"><Award className="w-3 h-3" /> Grade</label>
-                                  <select value={memberFormData.belt} onChange={(e) => setMemberFormData({ ...memberFormData, belt: e.target.value })} className="w-full h-10 px-3 bg-slate-800/50 border border-slate-600 rounded-md text-white">
-                                    {BELT_OPTIONS.map(belt => <option key={belt.value} value={belt.value}>{belt.label}</option>)}
-                                  </select>
-                                </div>
-                                <div>
-                                  <label className="text-sm text-slate-400 mb-1 block flex items-center gap-1"><Calendar className="w-3 h-3" /> Date de naissance</label>
-                                  <Input type="date" value={memberFormData.birth_date} onChange={(e) => setMemberFormData({ ...memberFormData, birth_date: e.target.value })} className="bg-slate-800/50 border-slate-600 text-white" />
-                                </div>
-                              </div>
-                              <div className="mb-4">
-                                <label className="text-sm text-slate-400 mb-1 block">Mot de passe *</label>
-                                <div className="flex gap-2">
-                                  <div className="relative flex-1">
-                                    <Input type={showPassword ? 'text' : 'password'} value={memberFormData.password} onChange={(e) => setMemberFormData({ ...memberFormData, password: e.target.value })} placeholder="Mot de passe" className="bg-slate-800/50 border-slate-600 text-white pr-10" />
-                                    <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white">
-                                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                                    </button>
-                                  </div>
-                                  <Button type="button" onClick={generatePassword} variant="outline" className="border-slate-600 text-slate-300"><RefreshCw className="w-4 h-4" /></Button>
-                                </div>
-                              </div>
-                              <Button onClick={() => handleCreateMember(dojo.id)} className="w-full bg-gradient-to-r from-emerald-500 to-green-500">
-                                <UserPlus className="w-4 h-4 mr-2" />Créer l&apos;adhérent
-                              </Button>
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-
-                      {/* Liste membres */}
+                      {/* Expanded Content */}
                       <AnimatePresence>
                         {expandedDojo === dojo.id && (
-                          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }} className="border-t border-slate-600/50">
-                            <div className="p-5 bg-slate-900/30">
-                              <h4 className="text-sm font-semibold text-slate-300 mb-4 flex items-center gap-2">
-                                <Users className="w-4 h-4" />Membres du dojo ({dojoMembers[dojo.id]?.length || 0})
-                              </h4>
-                              {!dojoMembers[dojo.id] ? (
-                                <div className="text-center py-6"><div className="w-8 h-8 border-2 border-orange-500 border-t-transparent rounded-full animate-spin mx-auto" /></div>
-                              ) : dojoMembers[dojo.id].length === 0 ? (
-                                <p className="text-slate-500 text-center py-6">Aucun membre inscrit</p>
-                              ) : (
-                                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                                  {dojoMembers[dojo.id].map((member) => (
-                                    <div key={member.id} className="flex items-center gap-3 p-3 bg-slate-800/50 rounded-lg border border-slate-700">
-                                      <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0" style={{ backgroundColor: BELT_OPTIONS.find(b => b.value === member.belt)?.color || '#666', color: member.belt?.includes('Kyu') && !member.belt?.includes('1er') ? '#000' : '#fff' }}>
-                                        {member.first_name?.[0]}{member.last_name?.[0]}
-                                      </div>
-                                      <div className="flex-1 min-w-0">
-                                        <p className="text-white font-medium truncate">{member.first_name} {member.last_name}</p>
-                                        <p className="text-slate-500 text-xs truncate">{member.email}</p>
-                                        <Badge className="mt-1 text-xs" variant="outline">{member.belt || '6e Kyu'}</Badge>
-                                      </div>
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            className="border-t border-slate-800"
+                          >
+                            <div className="p-5 bg-slate-950/50 space-y-4">
+                              {/* Actions */}
+                              <div className="flex gap-2">
+                                <Button 
+                                  onClick={() => { 
+                                    if (showAddMember === dojo.id) setShowAddMember(null); 
+                                    else { setShowAddMember(dojo.id); resetMemberForm(); } 
+                                  }} 
+                                  size="sm"
+                                  className="bg-emerald-600 hover:bg-emerald-500"
+                                >
+                                  <UserPlus className="w-4 h-4 mr-1" />Ajouter adhérent
+                                </Button>
+                                {!dojo.is_default && (
+                                  <Button 
+                                    onClick={() => handleDeleteDojo(dojo.id, dojo.name)} 
+                                    variant="outline" 
+                                    size="sm" 
+                                    className="border-red-500/50 text-red-400 hover:bg-red-900/30"
+                                  >
+                                    <Trash2 className="w-4 h-4 mr-1" />Supprimer
+                                  </Button>
+                                )}
+                              </div>
+
+                              {/* Add Member Form */}
+                              <AnimatePresence>
+                                {showAddMember === dojo.id && (
+                                  <motion.div 
+                                    initial={{ opacity: 0, height: 0 }} 
+                                    animate={{ opacity: 1, height: 'auto' }} 
+                                    exit={{ opacity: 0, height: 0 }}
+                                    className="p-4 bg-emerald-900/20 rounded-xl border border-emerald-500/30"
+                                  >
+                                    <div className="flex items-center justify-between mb-4">
+                                      <h4 className="font-bold text-emerald-300 flex items-center gap-2">
+                                        <UserPlus className="w-4 h-4" />Nouvel adhérent
+                                      </h4>
+                                      <button onClick={() => setShowAddMember(null)} className="text-slate-400 hover:text-white">
+                                        <X className="w-4 h-4" />
+                                      </button>
                                     </div>
-                                  ))}
-                                </div>
-                              )}
+                                    <div className="grid grid-cols-2 gap-3 mb-3">
+                                      <Input value={memberFormData.first_name} onChange={(e) => setMemberFormData({ ...memberFormData, first_name: e.target.value })} placeholder="Prénom *" className="bg-slate-950 border-slate-800 text-white text-sm" />
+                                      <Input value={memberFormData.last_name} onChange={(e) => setMemberFormData({ ...memberFormData, last_name: e.target.value })} placeholder="Nom *" className="bg-slate-950 border-slate-800 text-white text-sm" />
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-3 mb-3">
+                                      <Input type="email" value={memberFormData.email} onChange={(e) => setMemberFormData({ ...memberFormData, email: e.target.value })} placeholder="Email *" className="bg-slate-950 border-slate-800 text-white text-sm" />
+                                      <select value={memberFormData.belt} onChange={(e) => setMemberFormData({ ...memberFormData, belt: e.target.value })} className="h-10 px-3 bg-slate-950 border border-slate-800 rounded-md text-white text-sm">
+                                        {BELT_OPTIONS.map(belt => <option key={belt.value} value={belt.value}>{belt.label}</option>)}
+                                      </select>
+                                    </div>
+                                    <div className="flex gap-2 mb-3">
+                                      <Input 
+                                        type={showPassword ? 'text' : 'password'} 
+                                        value={memberFormData.password} 
+                                        onChange={(e) => setMemberFormData({ ...memberFormData, password: e.target.value })} 
+                                        placeholder="Mot de passe *" 
+                                        className="bg-slate-950 border-slate-800 text-white text-sm flex-1" 
+                                      />
+                                      <Button type="button" onClick={() => setShowPassword(!showPassword)} variant="ghost" size="icon" className="text-slate-400">
+                                        {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                                      </Button>
+                                      <Button type="button" onClick={generatePassword} variant="outline" size="icon" className="border-slate-700">
+                                        <RefreshCw className="w-4 h-4" />
+                                      </Button>
+                                    </div>
+                                    <Button onClick={() => handleCreateMember(dojo.id)} className="w-full bg-emerald-600 hover:bg-emerald-500" size="sm">
+                                      <UserPlus className="w-4 h-4 mr-2" />Créer l&apos;adhérent
+                                    </Button>
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
+
+                              {/* Members List */}
+                              <div>
+                                <h4 className="text-sm font-semibold text-slate-400 mb-3 flex items-center gap-2">
+                                  <Users className="w-4 h-4" />Membres ({dojoMembers[dojo.id]?.length || 0})
+                                </h4>
+                                {!dojoMembers[dojo.id] ? (
+                                  <div className="text-center py-4">
+                                    <div className="w-6 h-6 border-2 border-amber-500 border-t-transparent rounded-full animate-spin mx-auto" />
+                                  </div>
+                                ) : dojoMembers[dojo.id].length === 0 ? (
+                                  <p className="text-slate-500 text-center py-4 text-sm">Aucun membre inscrit</p>
+                                ) : (
+                                  <div className="grid grid-cols-1 gap-2">
+                                    {dojoMembers[dojo.id].slice(0, 5).map((member) => (
+                                      <div key={member.id} className="flex items-center gap-3 p-2 bg-slate-900/50 rounded-lg">
+                                        <div 
+                                          className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold" 
+                                          style={{ 
+                                            backgroundColor: BELT_OPTIONS.find(b => b.value === member.belt)?.color || '#666', 
+                                            color: member.belt?.includes('Kyu') && !member.belt?.includes('1er') ? '#000' : '#fff' 
+                                          }}
+                                        >
+                                          {member.first_name?.[0]}{member.last_name?.[0]}
+                                        </div>
+                                        <div className="flex-1 min-w-0">
+                                          <p className="text-slate-200 text-sm font-medium truncate">{member.first_name} {member.last_name}</p>
+                                          <p className="text-slate-500 text-xs truncate">{member.belt || '6e Kyu'}</p>
+                                        </div>
+                                      </div>
+                                    ))}
+                                    {dojoMembers[dojo.id].length > 5 && (
+                                      <p className="text-slate-500 text-xs text-center py-2">
+                                        +{dojoMembers[dojo.id].length - 5} autres membres
+                                      </p>
+                                    )}
+                                  </div>
+                                )}
+                              </div>
                             </div>
                           </motion.div>
                         )}
@@ -927,77 +1040,133 @@ export default function AdminPage() {
         {/* TAB: ANNUAIRE FFAAA */}
         {/* ════════════════════════════════════════════════════════════════════ */}
         {activeTab === 'annuaire' && (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
-            {/* Stats régions */}
-            <div className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-7 gap-2">
+          <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            className="space-y-6"
+            data-testid="admin-annuaire"
+          >
+            <PageHeader 
+              title="Annuaire FFAAA"
+              subtitle="Clubs d'Aïkido affiliés en France"
+            />
+
+            {/* Region Filters */}
+            <div className="flex flex-wrap gap-2">
+              <Button
+                size="sm"
+                onClick={() => setAnnuaireRegion('all')}
+                className={cn(
+                  "transition-all",
+                  annuaireRegion === 'all' 
+                    ? "bg-amber-500 text-slate-950" 
+                    : "bg-slate-800 text-slate-400 hover:bg-slate-700"
+                )}
+              >
+                Toutes ({CLUBS_AIKIDO_FRANCE.length})
+              </Button>
               {Object.entries(REGIONS_FRANCE).map(([key, region]) => {
                 const count = regionStats[key]?.count || 0;
                 if (count === 0) return null;
                 return (
-                  <button key={key} onClick={() => setAnnuaireRegion(annuaireRegion === key ? 'all' : key)} className={`p-2 rounded-lg text-center transition-all ${annuaireRegion === key ? 'bg-blue-500 text-white' : 'bg-slate-800 text-slate-400 hover:bg-slate-700'}`}>
-                    <span className="text-lg">{region.emoji}</span>
-                    <p className="text-xs font-medium truncate">{region.name.split(' ')[0]}</p>
-                    <p className="text-xs opacity-70">{count}</p>
-                  </button>
+                  <Button
+                    key={key}
+                    size="sm"
+                    onClick={() => setAnnuaireRegion(annuaireRegion === key ? 'all' : key)}
+                    className={cn(
+                      "transition-all",
+                      annuaireRegion === key 
+                        ? "bg-amber-500 text-slate-950" 
+                        : "bg-slate-800 text-slate-400 hover:bg-slate-700"
+                    )}
+                  >
+                    {region.emoji} {count}
+                  </Button>
                 );
               })}
             </div>
 
-            {/* Recherche */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                <Input value={annuaireSearch} onChange={(e) => setAnnuaireSearch(e.target.value)} placeholder="Rechercher un club par nom ou ville..." className="pl-10 bg-slate-800 border-slate-700 text-white" />
-              </div>
-              <select value={annuaireRegion} onChange={(e) => setAnnuaireRegion(e.target.value)} className="px-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white">
-                <option value="all">Toutes les régions ({CLUBS_AIKIDO_FRANCE.length})</option>
-                {Object.entries(REGIONS_FRANCE).map(([key, region]) => {
-                  const count = regionStats[key]?.count || 0;
-                  return <option key={key} value={key}>{region.emoji} {region.name} ({count})</option>;
-                })}
-              </select>
+            {/* Search */}
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+              <Input 
+                value={annuaireSearch} 
+                onChange={(e) => setAnnuaireSearch(e.target.value)} 
+                placeholder="Rechercher un club par nom ou ville..." 
+                className="pl-10 bg-slate-900 border-slate-800 text-white" 
+              />
             </div>
 
             <p className="text-slate-400 text-sm">{filteredClubs.length} club(s) trouvé(s)</p>
 
-            {/* Liste clubs */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+            {/* Clubs Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {filteredClubs.map(club => {
                 const region = REGIONS_FRANCE[club.region];
                 const isSelected = selectedClubs.includes(club.id);
                 return (
-                  <div key={club.id} onClick={() => toggleClubSelection(club.id)} className={`p-4 rounded-xl border cursor-pointer transition-all ${isSelected ? 'bg-blue-900/30 border-blue-500/50 ring-2 ring-blue-500/30' : 'bg-slate-800/50 border-slate-700 hover:border-blue-500/30'}`}>
+                  <div 
+                    key={club.id} 
+                    onClick={() => toggleClubSelection(club.id)} 
+                    className={cn(
+                      "p-4 rounded-xl border cursor-pointer transition-all",
+                      isSelected 
+                        ? "bg-amber-500/10 border-amber-500/50 ring-2 ring-amber-500/30" 
+                        : "bg-slate-900 border-slate-800 hover:border-slate-700"
+                    )}
+                    data-testid={`club-card-${club.id}`}
+                  >
                     <div className="flex items-start justify-between gap-2">
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
-                          {isSelected && <CheckCircle2 className="w-4 h-4 text-blue-400 flex-shrink-0" />}
-                          <h4 className="text-white font-medium truncate">{club.name}</h4>
+                          {isSelected && <CheckCircle2 className="w-4 h-4 text-amber-400 flex-shrink-0" />}
+                          <h4 className="text-slate-100 font-medium truncate">{club.name}</h4>
                         </div>
-                        <p className="text-slate-400 text-sm flex items-center gap-1 mt-1"><MapPin className="w-3 h-3" />{club.city}</p>
+                        <p className="text-slate-400 text-sm flex items-center gap-1 mt-1">
+                          <MapPin className="w-3 h-3" />{club.city}
+                        </p>
                         {club.address && <p className="text-slate-500 text-xs mt-1 truncate">{club.address}</p>}
                       </div>
-                      <Badge variant="outline" className="text-xs flex-shrink-0">{region?.emoji} {club.federation}</Badge>
+                      <Badge variant="outline" className="text-xs flex-shrink-0 border-slate-700 text-slate-400">
+                        {region?.emoji} {club.federation}
+                      </Badge>
                     </div>
                   </div>
                 );
               })}
             </div>
 
-            {/* Actions import */}
-            {selectedClubs.length > 0 && (
-              <div className="sticky bottom-4 p-4 bg-emerald-900/90 backdrop-blur-lg border border-emerald-500/30 rounded-xl flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-                  <span className="text-emerald-300 font-medium">{selectedClubs.length} club(s) sélectionné(s)</span>
-                </div>
-                <div className="flex gap-2">
-                  <Button onClick={() => setSelectedClubs([])} variant="outline" size="sm" className="border-slate-600 text-slate-300">Annuler</Button>
-                  <Button onClick={() => { toast.success(`${selectedClubs.length} club(s) importé(s) !`); setSelectedClubs([]); }} className="bg-emerald-500 hover:bg-emerald-400" size="sm">
-                    <Download className="w-4 h-4 mr-2" />Importer
-                  </Button>
-                </div>
-              </div>
-            )}
+            {/* Import Bar */}
+            <AnimatePresence>
+              {selectedClubs.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  className="sticky bottom-4 p-4 bg-slate-900/95 backdrop-blur-xl border border-amber-500/30 rounded-xl flex items-center justify-between"
+                >
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-amber-400" />
+                    <span className="text-amber-300 font-medium">{selectedClubs.length} club(s) sélectionné(s)</span>
+                  </div>
+                  <div className="flex gap-2">
+                    <Button onClick={() => setSelectedClubs([])} variant="outline" size="sm" className="border-slate-700 text-slate-300">
+                      Annuler
+                    </Button>
+                    <Button 
+                      onClick={() => { 
+                        toast.success(`${selectedClubs.length} club(s) importé(s) !`); 
+                        setSelectedClubs([]); 
+                      }} 
+                      className="bg-amber-500 hover:bg-amber-600 text-slate-950 font-semibold" 
+                      size="sm"
+                    >
+                      <Download className="w-4 h-4 mr-2" />Importer
+                    </Button>
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
         )}
 
@@ -1005,32 +1174,55 @@ export default function AdminPage() {
         {/* TAB: SETTINGS */}
         {/* ════════════════════════════════════════════════════════════════════ */}
         {activeTab === 'settings' && (
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="bg-slate-800/50 rounded-2xl p-6 border border-slate-700">
-            <h3 className="text-lg font-bold text-white mb-4">Paramètres</h3>
-            <p className="text-slate-400">Les paramètres avancés seront disponibles prochainement.</p>
-            
-            <div className="mt-6 space-y-4">
-              <div className="p-4 rounded-xl bg-slate-700/50 border border-slate-600">
-                <h4 className="text-white font-semibold mb-2">🌍 Internationalisation</h4>
-                <p className="text-slate-400 text-sm">Gérer les traductions et les langues supportées.</p>
-                <Button variant="outline" size="sm" className="mt-3" disabled><ChevronRight className="w-4 h-4 mr-2" />Bientôt disponible</Button>
-              </div>
-              
-              <div className="p-4 rounded-xl bg-slate-700/50 border border-slate-600">
-                <h4 className="text-white font-semibold mb-2">💳 Abonnements</h4>
-                <p className="text-slate-400 text-sm">Configuration des plans Stripe et tarification.</p>
-                <Button variant="outline" size="sm" className="mt-3" disabled><ChevronRight className="w-4 h-4 mr-2" />Bientôt disponible</Button>
-              </div>
-              
-              <div className="p-4 rounded-xl bg-slate-700/50 border border-slate-600">
-                <h4 className="text-white font-semibold mb-2">🎮 Gamification</h4>
-                <p className="text-slate-400 text-sm">Configurer les points XP, badges et défis.</p>
-                <Button variant="outline" size="sm" className="mt-3" disabled><ChevronRight className="w-4 h-4 mr-2" />Bientôt disponible</Button>
-              </div>
+          <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            className="space-y-6"
+            data-testid="admin-settings"
+          >
+            <PageHeader 
+              title="Paramètres"
+              subtitle="Configuration de la plateforme"
+            />
+
+            {/* Settings Accordion */}
+            <div className="space-y-4">
+              {[
+                { id: 'i18n', icon: Globe, title: 'Internationalisation', desc: 'Gérer les traductions et les langues supportées', color: 'blue' },
+                { id: 'subscription', icon: Crown, title: 'Abonnements', desc: 'Configuration des plans Stripe et tarification', color: 'violet' },
+                { id: 'gamification', icon: Star, title: 'Gamification', desc: 'Configurer les points XP, badges et défis', color: 'amber' },
+                { id: 'notifications', icon: Mail, title: 'Notifications', desc: 'Emails automatiques et webhooks', color: 'emerald' },
+                { id: 'security', icon: Shield, title: 'Sécurité', desc: 'Sessions, 2FA et journaux d\'activité', color: 'red' },
+              ].map((section) => (
+                <Card key={section.id} className="bg-slate-900 border-slate-800 hover:border-slate-700 transition-colors">
+                  <CardContent className="p-6">
+                    <div className="flex items-start gap-4">
+                      <div className={cn(
+                        "w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0",
+                        section.color === 'blue' && "bg-blue-500/20 text-blue-400",
+                        section.color === 'violet' && "bg-violet-500/20 text-violet-400",
+                        section.color === 'amber' && "bg-amber-500/20 text-amber-400",
+                        section.color === 'emerald' && "bg-emerald-500/20 text-emerald-400",
+                        section.color === 'red' && "bg-red-500/20 text-red-400",
+                      )}>
+                        <section.icon className="w-6 h-6" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="text-lg font-semibold text-slate-100">{section.title}</h3>
+                        <p className="text-slate-400 text-sm mt-1">{section.desc}</p>
+                      </div>
+                      <Button variant="outline" size="sm" disabled className="border-slate-700 text-slate-500">
+                        <ChevronRight className="w-4 h-4 mr-1" />
+                        Bientôt
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
             </div>
           </motion.div>
         )}
-      </div>
+      </main>
     </div>
   );
 }
