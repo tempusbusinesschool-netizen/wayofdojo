@@ -880,6 +880,14 @@ export default function MouvementsPage() {
           `Tu as maîtrisé ${globalStats.mastered} techniques. Continue ainsi !`,
         ]}
       />
+
+      {/* Celebration Animation */}
+      <TechniqueCelebration
+        isVisible={showCelebration}
+        techniqueName={celebrationTechnique}
+        xpEarned={celebrationXp}
+        onComplete={() => setShowCelebration(false)}
+      />
     </div>
   );
 }
