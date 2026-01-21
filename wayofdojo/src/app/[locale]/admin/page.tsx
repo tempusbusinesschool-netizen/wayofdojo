@@ -529,12 +529,14 @@ function AdminPageContent() {
                 value={stats.activeUsers}
                 icon={<Activity className="w-5 h-5" />}
                 variant="blue"
+                theme={theme}
               />
               <StatCard
                 label="Dojos"
                 value={dojos.length}
                 icon={<Tent className="w-5 h-5" />}
                 variant="amber"
+                theme={theme}
               />
             </div>
 
@@ -543,6 +545,7 @@ function AdminPageContent() {
               {/* Top Users */}
               <div className="lg:col-span-2">
                 <TopUsersTable
+                  theme={theme}
                   users={stats.topUsersByXp.map(u => ({
                     id: u.id,
                     name: u.name,
@@ -558,6 +561,7 @@ function AdminPageContent() {
               <div className="space-y-6">
                 <DistributionCard
                   title="Par Profil"
+                  theme={theme}
                   items={[
                     { label: 'Samouraï Confirmé', value: stats.usersByProfile.samourai_confirme || 0, color: '#8b5cf6' },
                     { label: 'Jeune Samouraï', value: stats.usersByProfile.jeune_samourai || 0, color: '#f59e0b' },
@@ -565,6 +569,7 @@ function AdminPageContent() {
                 />
                 <DistributionCard
                   title="Par Abonnement"
+                  theme={theme}
                   items={Object.entries(stats.usersBySubscription).map(([key, value], i) => ({
                     label: key.replace('_', ' '),
                     value: value as number,
