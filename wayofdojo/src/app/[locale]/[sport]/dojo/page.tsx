@@ -477,16 +477,29 @@ export default function DojoPage() {
           </div>
         </motion.div>
 
-        {/* Daily Challenges - Enhanced */}
+        {/* Daily Challenge Widget - Dynamic */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
           className="mt-8"
         >
+          <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+            🎯 Défi du jour
+          </h2>
+          <DailyChallengeWidget locale={locale} sport={sport} />
+        </motion.div>
+
+        {/* Quick Daily Challenges - Vertus */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.45 }}
+          className="mt-8"
+        >
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-bold text-white flex items-center gap-2">
-              🔥 Défis du jour
+              🔥 Mini-défis
             </h2>
             <div className="flex items-center gap-3">
               <span className="text-sm text-slate-400">
