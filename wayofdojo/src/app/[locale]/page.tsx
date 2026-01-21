@@ -255,15 +255,16 @@ export default function HomePage() {
                         <UserPlus className="w-4 h-4 mr-2" />
                         Inscription gratuite
                       </Button>
-                      <Button
-                        variant="ghost"
-                        onClick={() => setShowMobileMenu(false)}
-                        className="justify-start text-slate-400"
-                      >
-                        <Lock className="w-4 h-4 mr-2" />
-                        Espace Gestion
-                      </Button>
-                    </Link>
+                      <Link href={`/${locale}/admin`}>
+                        <Button
+                          variant="ghost"
+                          onClick={() => setShowMobileMenu(false)}
+                          className="justify-start text-slate-400 w-full"
+                        >
+                          <Lock className="w-4 h-4 mr-2" />
+                          Espace Gestion
+                        </Button>
+                      </Link>
                     </>
                   )}
                 </div>
