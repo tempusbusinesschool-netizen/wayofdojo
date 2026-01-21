@@ -26,7 +26,6 @@ interface ChildContext {
 interface MaitreTanakaProps {
   childContext?: ChildContext | null;
   isVisible?: boolean;
-  apiUrl?: string;
   isJeuneSamourai?: boolean;
   messages?: string[];
   position?: 'bottom-right' | 'top-right';
