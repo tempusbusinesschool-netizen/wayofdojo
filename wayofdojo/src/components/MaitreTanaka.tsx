@@ -227,6 +227,69 @@ export const MaitreTanaka: React.FC<MaitreTanakaProps> = ({
     }
   };
 
+  // Envoyer un message texte
+  const [textInput, setTextInput] = useState('');
+  
+  const sendTextMessage = async () => {
+    if (!textInput.trim()) return;
+    
+    setIsProcessing(true);
+    const message = textInput;
+    setTextInput('');
+    
+    // Ajouter le message utilisateur immédiatement
+    setConversation(prev => [
+      ...prev,
+      { role: 'child', text: message, audio: null }
+    ]);
+    
+    try {
+      const formData = new FormData();
+      formData.append('text', message);
+      
+      if (sessionId) {
+        formData.append('session_id', sessionId);
+      }
+      
+      if (childContext?.first_name) {
+        formData.append('child_first_name', childContext.first_name);
+      }
+
+      const response = await fetch('/next-api/voice-agent/conversation', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!response.ok) {
+        throw new Error('Erreur de communication avec Maître Tanaka');
+      }
+
+      const data = await response.json();
+
+      setConversation(prev => [
+        ...prev,
+        { role: 'master', text: data.assistantMessage, audio: data.audioBase64 }
+      ]);
+
+      if (data.audioBase64) {
+        playAudio(data.audioBase64);
+      }
+      
+    } catch (error) {
+      console.error('Error sending text:', error);
+      setConversation(prev => [
+        ...prev,
+        { 
+          role: 'master', 
+          text: "Pardonne-moi, jeune samouraï, je n'ai pas bien compris. Peux-tu reformuler ?", 
+          audio: null 
+        }
+      ]);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
   const handleClose = () => {
     stopAudio();
     stopRecording();
