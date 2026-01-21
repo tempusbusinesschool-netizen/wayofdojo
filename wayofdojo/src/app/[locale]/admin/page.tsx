@@ -1256,6 +1256,7 @@ function AdminPageContent() {
             <PageHeader 
               title="Paramètres"
               subtitle="Configuration de la plateforme"
+              theme={theme}
             />
 
             {/* Settings Accordion */}
@@ -1267,24 +1268,37 @@ function AdminPageContent() {
                 { id: 'notifications', icon: Mail, title: 'Notifications', desc: 'Emails automatiques et webhooks', color: 'emerald' },
                 { id: 'security', icon: Shield, title: 'Sécurité', desc: 'Sessions, 2FA et journaux d\'activité', color: 'red' },
               ].map((section) => (
-                <Card key={section.id} className="bg-slate-900 border-slate-800 hover:border-slate-700 transition-colors">
+                <Card key={section.id} className={cn(
+                  "transition-colors",
+                  theme === 'dark' 
+                    ? "bg-slate-900 border-slate-800 hover:border-slate-700" 
+                    : "bg-white border-slate-200 hover:border-slate-300 shadow-sm"
+                )}>
                   <CardContent className="p-6">
                     <div className="flex items-start gap-4">
                       <div className={cn(
                         "w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0",
-                        section.color === 'blue' && "bg-blue-500/20 text-blue-400",
-                        section.color === 'violet' && "bg-violet-500/20 text-violet-400",
-                        section.color === 'amber' && "bg-amber-500/20 text-amber-400",
-                        section.color === 'emerald' && "bg-emerald-500/20 text-emerald-400",
-                        section.color === 'red' && "bg-red-500/20 text-red-400",
+                        section.color === 'blue' && "bg-blue-500/20 text-blue-500",
+                        section.color === 'violet' && "bg-violet-500/20 text-violet-500",
+                        section.color === 'amber' && "bg-amber-500/20 text-amber-500",
+                        section.color === 'emerald' && "bg-emerald-500/20 text-emerald-500",
+                        section.color === 'red' && "bg-red-500/20 text-red-500",
                       )}>
                         <section.icon className="w-6 h-6" />
                       </div>
                       <div className="flex-1">
-                        <h3 className="text-lg font-semibold text-slate-100">{section.title}</h3>
-                        <p className="text-slate-400 text-sm mt-1">{section.desc}</p>
+                        <h3 className={cn(
+                          "text-lg font-semibold",
+                          theme === 'dark' ? "text-slate-100" : "text-slate-900"
+                        )}>{section.title}</h3>
+                        <p className={cn(
+                          "text-sm mt-1",
+                          theme === 'dark' ? "text-slate-400" : "text-slate-500"
+                        )}>{section.desc}</p>
                       </div>
-                      <Button variant="outline" size="sm" disabled className="border-slate-700 text-slate-500">
+                      <Button variant="outline" size="sm" disabled className={cn(
+                        theme === 'dark' ? "border-slate-700 text-slate-500" : "border-slate-300 text-slate-400"
+                      )}>
                         <ChevronRight className="w-4 h-4 mr-1" />
                         Bientôt
                       </Button>
