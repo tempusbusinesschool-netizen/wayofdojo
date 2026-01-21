@@ -150,21 +150,17 @@ export const MaitreTanaka: React.FC<MaitreTanakaProps> = ({
     
     try {
       const formData = new FormData();
-      formData.append('audio_file', audioBlob, 'recording.webm');
+      formData.append('audio', audioBlob, 'recording.webm');
       
       if (sessionId) {
         formData.append('session_id', sessionId);
       }
       
-      if (childContext) {
-        if (childContext.first_name) formData.append('child_first_name', childContext.first_name);
-        if (childContext.belt_level) formData.append('child_belt_level', childContext.belt_level);
-        if (childContext.level) formData.append('child_level', childContext.level.toString());
-        if (childContext.level_name) formData.append('child_level_name', childContext.level_name);
-        if (childContext.total_xp) formData.append('child_total_xp', childContext.total_xp.toString());
+      if (childContext?.first_name) {
+        formData.append('child_first_name', childContext.first_name);
       }
 
-      const response = await fetch(`${apiUrl}/conversation`, {
+      const response = await fetch('/next-api/voice-agent/conversation', {
         method: 'POST',
         body: formData
       });
@@ -174,18 +170,18 @@ export const MaitreTanaka: React.FC<MaitreTanakaProps> = ({
       }
 
       const data = await response.json();
-      
-      if (data.session_id) {
-        setSessionId(data.session_id);
-      }
 
+      // Ajouter les messages à la conversation
       setConversation(prev => [
         ...prev,
-        { role: 'child', text: '🎤 (message vocal)', audio: null },
-        { role: 'master', text: data.response_text, audio: data.audio_base64 }
+        { role: 'child', text: data.userMessage || '🎤 (message vocal)', audio: null },
+        { role: 'master', text: data.assistantMessage, audio: data.audioBase64 }
       ]);
 
-      playAudio(data.audio_base64);
+      // Jouer l'audio de réponse
+      if (data.audioBase64) {
+        playAudio(data.audioBase64);
+      }
       
     } catch (error) {
       console.error('Error sending audio:', error);
