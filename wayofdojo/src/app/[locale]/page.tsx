@@ -263,6 +263,7 @@ export default function HomePage() {
                         <Lock className="w-4 h-4 mr-2" />
                         Espace Gestion
                       </Button>
+                    </Link>
                     </>
                   )}
                 </div>
