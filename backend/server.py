@@ -6035,9 +6035,20 @@ async def get_child_stats_for_parent(
 # Include the router in the main app
 app.include_router(api_router)
 
-# Import and include voice agent router
-from voice_agent import voice_router
-app.include_router(voice_router)
+# Import and include voice agent router (OpenAI version)
+try:
+    from voice_agent_openai import voice_router_openai
+    app.include_router(voice_router_openai)
+    logger.info("✅ Voice Agent OpenAI router loaded")
+except ImportError as e:
+    logger.warning(f"⚠️ Voice Agent OpenAI not available: {e}")
+    # Fallback to ElevenLabs version
+    try:
+        from voice_agent import voice_router
+        app.include_router(voice_router)
+        logger.info("✅ Voice Agent ElevenLabs router loaded")
+    except ImportError as e2:
+        logger.warning(f"⚠️ No voice agent available: {e2}")
 
 # Import and include grades routes
 from routes.grades_routes import router as grades_router, set_database as set_grades_db
