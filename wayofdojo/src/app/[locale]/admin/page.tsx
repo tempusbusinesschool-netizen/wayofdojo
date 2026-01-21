@@ -594,6 +594,7 @@ function AdminPageContent() {
             <PageHeader 
               title="Utilisateurs"
               subtitle={`${users.length} utilisateur(s) enregistré(s)`}
+              theme={theme}
               actions={
                 <Button className="bg-amber-500 hover:bg-amber-600 text-slate-950 font-semibold">
                   <Plus className="w-4 h-4 mr-2" />
@@ -605,25 +606,43 @@ function AdminPageContent() {
             {/* Toolbar */}
             <div className="flex flex-col sm:flex-row gap-4">
               <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-slate-500" />
+                <Search className={cn(
+                  "absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4",
+                  theme === 'dark' ? "text-slate-500" : "text-slate-400"
+                )} />
                 <Input
                   placeholder="Rechercher par nom ou email..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
-                  className="pl-10 bg-slate-900 border-slate-800 text-slate-100 focus:border-amber-500"
+                  className={cn(
+                    "pl-10 transition-colors",
+                    theme === 'dark' 
+                      ? "bg-slate-900 border-slate-800 text-slate-100 focus:border-amber-500" 
+                      : "bg-white border-slate-200 text-slate-900 focus:border-amber-500"
+                  )}
                   data-testid="user-search-input"
                 />
               </div>
               <div className="flex gap-2">
                 <Button 
                   onClick={handleSearch} 
-                  className="bg-slate-800 hover:bg-slate-700 text-slate-200"
+                  className={cn(
+                    "transition-colors",
+                    theme === 'dark' 
+                      ? "bg-slate-800 hover:bg-slate-700 text-slate-200" 
+                      : "bg-slate-100 hover:bg-slate-200 text-slate-800"
+                  )}
                 >
                   <Search className="w-4 h-4 mr-2" />
                   Rechercher
                 </Button>
-                <Button variant="outline" className="border-slate-800 text-slate-400">
+                <Button variant="outline" className={cn(
+                  "transition-colors",
+                  theme === 'dark' 
+                    ? "border-slate-800 text-slate-400" 
+                    : "border-slate-300 text-slate-600"
+                )}>
                   <Filter className="w-4 h-4 mr-2" />
                   Filtres
                 </Button>
