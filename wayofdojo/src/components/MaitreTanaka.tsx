@@ -445,6 +445,27 @@ export const MaitreTanaka: React.FC<MaitreTanakaProps> = ({
 
           {/* Controls */}
           <div className="p-4 bg-slate-900 border-t border-slate-700">
+            {/* Text Input */}
+            <div className="flex gap-2 mb-3">
+              <input
+                type="text"
+                value={textInput}
+                onChange={(e) => setTextInput(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && sendTextMessage()}
+                placeholder="Écris ta question ici..."
+                disabled={isProcessing || isRecording}
+                className="flex-1 bg-slate-800 border border-slate-600 rounded-xl px-4 py-2 text-white text-sm placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500/50 disabled:opacity-50"
+              />
+              <button
+                onClick={sendTextMessage}
+                disabled={isProcessing || isRecording || !textInput.trim()}
+                className="bg-amber-500 hover:bg-amber-400 disabled:bg-slate-600 disabled:cursor-not-allowed text-white px-4 py-2 rounded-xl transition-colors text-sm font-medium"
+              >
+                Envoyer
+              </button>
+            </div>
+            
+            {/* Voice Button */}
             <div className="flex items-center justify-center gap-4">
               <button
                 onClick={isRecording ? stopRecording : startRecording}
@@ -482,7 +503,7 @@ export const MaitreTanaka: React.FC<MaitreTanakaProps> = ({
                 ? "🔴 J'écoute... Appuie pour envoyer" 
                 : isProcessing 
                 ? "⏳ Maître Tanaka te répond..." 
-                : "🎤 Appuie pour parler au Maître"
+                : "🎤 Appuie pour parler ou écris ta question"
               }
             </p>
           </div>
