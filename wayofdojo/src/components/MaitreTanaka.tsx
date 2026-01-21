@@ -40,7 +40,6 @@ interface MaitreTanakaProps {
 export const MaitreTanaka: React.FC<MaitreTanakaProps> = ({ 
   childContext = null, 
   isVisible = true,
-  apiUrl = '/api/voice-agent',
   isJeuneSamourai = true,
   messages = [],
   position = 'bottom-right',
