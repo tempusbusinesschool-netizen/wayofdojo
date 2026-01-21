@@ -2,9 +2,9 @@
 
 ## 📋 Document de Référence
 
-**Version:** 1.0  
+**Version:** 1.1  
 **Date de création:** 19 Janvier 2025  
-**Dernière mise à jour:** 19 Janvier 2025
+**Dernière mise à jour:** 21 Janvier 2025
 
 ---
 
