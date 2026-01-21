@@ -374,6 +374,30 @@ Utilisé comme source pour le design et les données.
 - **StepTransition.tsx** : Animation de transition entre étapes
 - Dépendance ajoutée : `canvas-confetti`
 
+### 🎯 SYSTÈME DE DÉFIS QUOTIDIENS (21 Janvier 2025)
+
+**API créée** : `/api/gamification/daily-challenge`
+- **GET** : Récupère le défi du jour (généré pseudo-aléatoirement par date+userId)
+- **POST** : Valide la complétion du défi
+
+**Types de défis** :
+| Type | Description | XP Base |
+|------|-------------|---------|
+| `discover` | Découvre X nouvelles techniques | 15 |
+| `practice` | Passe X techniques en "En pratique" | 20 |
+| `master` | Maîtrise X technique(s) | 40 |
+| `explore` | Visite une catégorie | 10 |
+| `review` | Revois X techniques | 25 |
+
+**Bonus** :
+- **Streak** : +10% XP par jour consécutif (max +50%)
+- **Weekend** : Double XP samedi/dimanche
+
+**Widget** : `DailyChallengeWidget.tsx`
+- Affiche le défi du jour avec progression
+- Animation de récompense lors de la complétion
+- Intégré dans le Dashboard Dojo
+
 ### Logique ✅
 - [x] Système gamification
 - [x] Calculs XP/badges (structure définie)
