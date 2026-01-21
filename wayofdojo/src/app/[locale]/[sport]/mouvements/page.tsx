@@ -425,6 +425,11 @@ export default function MouvementsPage() {
   const [xpGained, setXpGained] = useState(0);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   
+  // State for celebration animation
+  const [showCelebration, setShowCelebration] = useState(false);
+  const [celebrationTechnique, setCelebrationTechnique] = useState('');
+  const [celebrationXp, setCelebrationXp] = useState(0);
+  
   const currentCategory = CATEGORIES.find(c => c.id === selectedCategory)!;
   const Icon = currentCategory.icon;
 
