@@ -150,36 +150,23 @@ async def generate_response_with_gpt(
         return "Pardonne-moi, jeune samouraï, mes vieilles oreilles n'ont pas bien compris. Peux-tu répéter ?"
 
 async def generate_speech_with_tts(text: str) -> bytes:
-    """Generate speech using OpenAI TTS API directly"""
+    """Generate speech using OpenAI TTS via emergentintegrations"""
     try:
-        import httpx
+        from emergentintegrations.llm.openai.text_to_speech import OpenAITextToSpeech
         
-        async with httpx.AsyncClient() as client:
-            response = await client.post(
-                "https://api.openai.com/v1/audio/speech",
-                headers={
-                    "Authorization": f"Bearer {EMERGENT_LLM_KEY}",
-                    "Content-Type": "application/json"
-                },
-                json={
-                    "model": "tts-1",
-                    "input": text,
-                    "voice": "onyx",  # Deep male voice for wise master
-                    "response_format": "mp3",
-                    "speed": 0.95
-                },
-                timeout=30.0
-            )
+        tts = OpenAITextToSpeech(api_key=EMERGENT_LLM_KEY)
+        
+        # Generate speech - use onyx voice for Tanaka (deep male voice)
+        audio_bytes = await tts.generate_speech(
+            text=text,
+            model="tts-1",
+            voice="onyx",
+            speed=0.95,  # Slightly slower for wisdom
+            response_format="mp3"
+        )
+        
+        return audio_bytes
             
-            if response.status_code != 200:
-                logger.error(f"TTS API error: {response.status_code} - {response.text}")
-                raise HTTPException(status_code=500, detail=f"TTS error: {response.text}")
-            
-            return response.content
-            
-    except httpx.TimeoutException:
-        logger.error("TTS timeout")
-        raise HTTPException(status_code=504, detail="TTS timeout")
     except Exception as e:
         logger.error(f"TTS error: {e}")
         raise HTTPException(status_code=500, detail=f"Erreur de synthèse vocale: {str(e)}")
