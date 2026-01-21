@@ -22,8 +22,8 @@ logger = logging.getLogger(__name__)
 # Configuration
 EMERGENT_LLM_KEY = os.environ.get('EMERGENT_LLM_KEY')
 
-# Router
-voice_router_openai = APIRouter(prefix="/voice-agent", tags=["Voice Agent OpenAI"])
+# Router - prefix /api/voice-agent pour le routing K8s
+voice_router_openai = APIRouter(prefix="/api/voice-agent", tags=["Voice Agent OpenAI"])
 
 # Session storage (in production, use Redis or DB)
 conversation_history: dict = {}
