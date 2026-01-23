@@ -1,10 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   BookOpen, PenLine, Calendar, Sparkles, 
-  X, Save, Trash2, ChevronDown 
+  X, Save, Trash2, ChevronDown, TrendingUp, Award, Flame
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -37,6 +37,75 @@ const TAG_SUGGESTIONS = [
   'stratégie', 'leadership', 'calme', 'décision', 'transmission'
 ];
 
+// Calculate journal statistics
+function useJournalStats(entries: JournalEntry[]) {
+  return useMemo(() => {
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const startOfWeek = new Date(now);
+    startOfWeek.setDate(now.getDate() - now.getDay());
+    
+    const thisMonth = entries.filter(e => new Date(e.createdAt) >= startOfMonth);
+    const thisWeek = entries.filter(e => new Date(e.createdAt) >= startOfWeek);
+    
+    // Calculate streak (consecutive days with entries)
+    const sortedByDate = [...entries].sort((a, b) => 
+      new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+    
+    let streak = 0;
+    let currentDate = new Date();
+    currentDate.setHours(0, 0, 0, 0);
+    
+    for (const entry of sortedByDate) {
+      const entryDate = new Date(entry.createdAt);
+      entryDate.setHours(0, 0, 0, 0);
+      
+      const diffDays = Math.floor((currentDate.getTime() - entryDate.getTime()) / (1000 * 60 * 60 * 24));
+      
+      if (diffDays <= 1) {
+        streak++;
+        currentDate = entryDate;
+      } else {
+        break;
+      }
+    }
+
+    // Mood distribution
+    const moodCounts = entries.reduce((acc, e) => {
+      if (e.mood) acc[e.mood] = (acc[e.mood] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+
+    // Most used tags
+    const tagCounts = entries.reduce((acc, e) => {
+      e.tags?.forEach(tag => {
+        acc[tag] = (acc[tag] || 0) + 1;
+      });
+      return acc;
+    }, {} as Record<string, number>);
+    
+    const topTags = Object.entries(tagCounts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 3)
+      .map(([tag]) => tag);
+
+    return {
+      total: entries.length,
+      thisMonth: thisMonth.length,
+      thisWeek: thisWeek.length,
+      xpEarned: entries.length * 5,
+      xpThisMonth: thisMonth.length * 5,
+      streak,
+      moodCounts,
+      topTags,
+      averageLength: entries.length > 0 
+        ? Math.round(entries.reduce((sum, e) => sum + e.content.length, 0) / entries.length)
+        : 0
+    };
+  }, [entries]);
+}
+
 export function ReflectiveJournal({
   entries,
   currentCityId,
@@ -51,6 +120,10 @@ export function ReflectiveJournal({
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [isSaving, setIsSaving] = useState(false);
   const [showXpAnimation, setShowXpAnimation] = useState(false);
+  const [showStats, setShowStats] = useState(false);
+
+  // Calculate statistics
+  const stats = useJournalStats(entries);
 
   // Filtrer les entrées pour la ville actuelle
   const cityEntries = entries.filter(e => e.cityId === currentCityId);
