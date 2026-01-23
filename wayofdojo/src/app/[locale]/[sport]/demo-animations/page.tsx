@@ -9,7 +9,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { TechniqueCelebration, StepTransition, TanakaAnimatedLogo } from '@/components/animations';
 import { MusashiQuoteCard } from '@/components/adult-journey';
-import { getDailyQuote, MUSASHI_QUOTES } from '@/data/musashi/quotes';
+import { MUSASHI_QUOTES } from '@/data/musashi/quotes';
 
 export default function AnimationsDemoPage() {
   // Animation states
