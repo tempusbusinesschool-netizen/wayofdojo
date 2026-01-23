@@ -102,7 +102,7 @@ export function MusashiQuoteCard({ quote, variant = 'default', showChapter = fal
         {quote.romaji}
       </p>
       <p className="text-white text-base leading-relaxed">
-        "{quote.french}"
+        &ldquo;{quote.french}&rdquo;
       </p>
       <p className="text-slate-500 text-sm mt-3 text-right">
         — Musashi, {chapterNames[quote.chapter]}
