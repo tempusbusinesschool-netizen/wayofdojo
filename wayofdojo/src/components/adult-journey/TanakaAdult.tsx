@@ -105,7 +105,7 @@ export function TanakaAdult({ message, isVisible = true, onClose }: TanakaAdultP
             {/* Footer with signature */}
             <div className="px-4 pb-3 flex items-center justify-between">
               <p className="text-slate-500 text-xs italic">
-                "La sagesse est le fruit de l'expérience."
+                &ldquo;La sagesse est le fruit de l&apos;expérience.&rdquo;
               </p>
               <div className="text-amber-500/50 text-lg">道</div>
             </div>
