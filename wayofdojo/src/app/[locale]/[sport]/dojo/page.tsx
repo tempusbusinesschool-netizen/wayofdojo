@@ -781,26 +781,24 @@ export default function DojoPage() {
             ))}
           </div>
         </motion.div>
+          </>
+        )}
       </main>
 
-      {/* Maître Tanaka */}
+      {/* Maître Tanaka - Only for Junior mode */}
+      {isJeuneSamourai && (
       <MaitreTanaka 
         isJeuneSamourai={isJeuneSamourai}
-        messages={isJeuneSamourai ? [
+        messages={[
           `Super ${user.firstName} ! Tu as ${user.gamification.xp} XP ! 🌟`,
           "Continue comme ça, tu progresses bien !",
           "N'oublie pas tes défis du jour !",
           "Le respect est la première vertu du Samouraï.",
           "Entraîne-toi dur et tu deviendras Maître !",
           `Tu as une série de ${user.gamification.streak || 0} jours ! 🔥`,
-        ] : [
-          `Bienvenue ${user.firstName}.`,
-          "Votre progression est enregistrée.",
-          "Consultez vos techniques et défis.",
-          "La voie du Budo est longue mais gratifiante.",
-          "Chaque jour est une opportunité d'apprendre.",
         ]}
       />
+      )}
     </div>
   );
 }
