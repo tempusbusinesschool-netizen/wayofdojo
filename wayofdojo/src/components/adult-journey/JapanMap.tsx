@@ -3,16 +3,15 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ADULT_JOURNEY_CITIES, City } from '@/data/musashi/journey';
-import { Lock, Check, MapPin } from 'lucide-react';
+import { Lock, Check } from 'lucide-react';
 
 interface JapanMapProps {
   completedMissions: string[];
-  totalXp: number;
   onCitySelect: (city: City) => void;
   selectedCityId?: string;
 }
 
-export function JapanMap({ completedMissions, totalXp, onCitySelect, selectedCityId }: JapanMapProps) {
+export function JapanMap({ completedMissions, onCitySelect, selectedCityId }: JapanMapProps) {
   const [hoveredCity, setHoveredCity] = useState<string | null>(null);
 
   const isCityUnlocked = (city: City): boolean => {
