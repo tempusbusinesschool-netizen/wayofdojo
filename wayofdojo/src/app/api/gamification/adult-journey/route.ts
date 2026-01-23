@@ -2,14 +2,7 @@ import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import dbConnect from '@/lib/db';
 import { User } from '@/lib/models/user.model';
-import jwt from 'jsonwebtoken';
-
-const JWT_SECRET = process.env.JWT_SECRET || 'wayofdojo-secret-key-2024';
-
-interface JWTPayload {
-  userId: string;
-  email: string;
-}
+import { verifyToken } from '@/lib/auth';
 
 // GET - Fetch adult journey progress
 export async function GET() {
