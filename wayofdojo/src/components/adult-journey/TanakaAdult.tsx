@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X } from 'lucide-react';
+import TanakaAnimatedLogo from '@/components/animations/TanakaAnimatedLogo';
 
 interface TanakaAdultProps {
   message: string;
