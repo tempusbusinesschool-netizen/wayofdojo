@@ -238,6 +238,136 @@ export function ReflectiveJournal({
             transition={{ duration: 0.3 }}
           >
             <div className="p-4 pt-0 space-y-4">
+              {/* Statistics Banner */}
+              {entries.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="p-4 rounded-xl bg-gradient-to-r from-purple-500/10 via-violet-500/10 to-purple-500/10 border border-purple-500/20"
+                >
+                  {/* Toggle Stats */}
+                  <button
+                    onClick={(e) => { e.stopPropagation(); setShowStats(!showStats); }}
+                    className="w-full flex items-center justify-between text-left"
+                  >
+                    <div className="flex items-center gap-3">
+                      <TrendingUp className="w-5 h-5 text-purple-400" />
+                      <div>
+                        <p className="text-white font-semibold text-sm">
+                          {stats.thisMonth > 0 
+                            ? `Tu as écrit ${stats.thisMonth} réflexion${stats.thisMonth > 1 ? 's' : ''} ce mois-ci`
+                            : 'Commence à écrire tes réflexions !'}
+                        </p>
+                        <p className="text-purple-400 text-xs">
+                          +{stats.xpThisMonth} XP gagnés par l&apos;introspection
+                        </p>
+                      </div>
+                    </div>
+                    <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${showStats ? 'rotate-180' : ''}`} />
+                  </button>
+
+                  {/* Detailed Stats */}
+                  <AnimatePresence>
+                    {showStats && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="pt-4 mt-4 border-t border-purple-500/20">
+                          {/* Stats Grid */}
+                          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+                            <div className="text-center p-3 rounded-lg bg-slate-800/50">
+                              <div className="text-2xl font-black text-white">{stats.total}</div>
+                              <div className="text-xs text-slate-400">Total</div>
+                            </div>
+                            <div className="text-center p-3 rounded-lg bg-slate-800/50">
+                              <div className="text-2xl font-black text-amber-400">{stats.xpEarned}</div>
+                              <div className="text-xs text-slate-400">XP gagnés</div>
+                            </div>
+                            <div className="text-center p-3 rounded-lg bg-slate-800/50">
+                              <div className="text-2xl font-black text-orange-400 flex items-center justify-center gap-1">
+                                <Flame className="w-5 h-5" />
+                                {stats.streak}
+                              </div>
+                              <div className="text-xs text-slate-400">Jours de suite</div>
+                            </div>
+                            <div className="text-center p-3 rounded-lg bg-slate-800/50">
+                              <div className="text-2xl font-black text-purple-400">{stats.thisWeek}</div>
+                              <div className="text-xs text-slate-400">Cette semaine</div>
+                            </div>
+                          </div>
+
+                          {/* Mood Distribution */}
+                          {Object.keys(stats.moodCounts).length > 0 && (
+                            <div className="mb-4">
+                              <p className="text-xs text-slate-400 mb-2">Répartition des humeurs</p>
+                              <div className="flex gap-2">
+                                {MOOD_OPTIONS.map(mood => {
+                                  const count = stats.moodCounts[mood.id] || 0;
+                                  const percentage = stats.total > 0 ? Math.round((count / stats.total) * 100) : 0;
+                                  return (
+                                    <div key={mood.id} className="flex-1">
+                                      <div className="flex items-center justify-between text-xs mb-1">
+                                        <span>{mood.emoji}</span>
+                                        <span className="text-slate-400">{percentage}%</span>
+                                      </div>
+                                      <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
+                                        <motion.div
+                                          initial={{ width: 0 }}
+                                          animate={{ width: `${percentage}%` }}
+                                          className={`h-full rounded-full ${mood.color}`}
+                                        />
+                                      </div>
+                                    </div>
+                                  );
+                                })}
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Top Tags */}
+                          {stats.topTags.length > 0 && (
+                            <div>
+                              <p className="text-xs text-slate-400 mb-2">Thèmes favoris</p>
+                              <div className="flex gap-2">
+                                {stats.topTags.map((tag, i) => (
+                                  <span 
+                                    key={tag}
+                                    className={`px-3 py-1 rounded-full text-xs ${
+                                      i === 0 
+                                        ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' 
+                                        : 'bg-slate-700/50 text-slate-400'
+                                    }`}
+                                  >
+                                    {i === 0 && <Award className="w-3 h-3 inline mr-1" />}
+                                    #{tag}
+                                  </span>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+
+                          {/* Encouragement message */}
+                          <div className="mt-4 p-3 rounded-lg bg-purple-500/10 border border-purple-500/20">
+                            <p className="text-purple-300 text-xs italic">
+                              {stats.streak >= 7 
+                                ? `🔥 Incroyable ! ${stats.streak} jours de réflexion consécutifs. Tu incarnes la discipline du Budō.`
+                                : stats.streak >= 3 
+                                  ? `✨ Belle série ! Continue d'écrire pour renforcer ta pratique.`
+                                  : stats.total >= 10 
+                                    ? `📝 ${stats.total} réflexions écrites. L'introspection forge le guerrier.`
+                                    : `🌱 Chaque réflexion est une graine de sagesse. Continue !`}
+                            </p>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </motion.div>
+              )}
+
               {/* Write New Entry Button */}
               {!isWriting && (
                 <Button
