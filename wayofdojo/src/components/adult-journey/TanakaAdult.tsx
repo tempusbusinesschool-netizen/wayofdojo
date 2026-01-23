@@ -2,16 +2,15 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Volume2, VolumeX } from 'lucide-react';
+import { MessageCircle, X } from 'lucide-react';
 
 interface TanakaAdultProps {
   message: string;
   isVisible?: boolean;
   onClose?: () => void;
-  autoSpeak?: boolean;
 }
 
-export function TanakaAdult({ message, isVisible = true, onClose, autoSpeak = false }: TanakaAdultProps) {
+export function TanakaAdult({ message, isVisible = true, onClose }: TanakaAdultProps) {
   const [isMinimized, setIsMinimized] = useState(false);
   const [displayedText, setDisplayedText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
