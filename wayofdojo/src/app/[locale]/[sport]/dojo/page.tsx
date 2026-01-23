@@ -91,6 +91,21 @@ export default function DojoPage() {
     }
   }, []);
 
+  // Load adult journey progress
+  const loadAdultJourney = useCallback(async () => {
+    try {
+      const response = await fetch('/next-api/gamification/adult-journey', {
+        credentials: 'include'
+      });
+      const data = await response.json();
+      if (data.success) {
+        setAdultCompletedMissions(data.adultJourney?.completedMissions || []);
+      }
+    } catch (error) {
+      console.error('Failed to load adult journey:', error);
+    }
+  }, []);
+
   useEffect(() => {
     const storedUser = localStorage.getItem('wayofdojo_user');
     if (storedUser) {
