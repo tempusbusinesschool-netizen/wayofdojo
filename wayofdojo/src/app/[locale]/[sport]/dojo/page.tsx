@@ -109,13 +109,41 @@ export default function DojoPage() {
   useEffect(() => {
     const storedUser = localStorage.getItem('wayofdojo_user');
     if (storedUser) {
-      setUser(JSON.parse(storedUser));
+      const userData = JSON.parse(storedUser);
+      setUser(userData);
       loadProgress();
+      // Load adult journey for adult users
+      if (userData.profile === 'samourai_confirme') {
+        loadAdultJourney();
+      }
     } else {
       router.push(`/${locale}/${sport}/login`);
     }
     setLoading(false);
-  }, [locale, sport, router, loadProgress]);
+  }, [locale, sport, router, loadProgress, loadAdultJourney]);
+
+  // Handle adult mission completion
+  const handleAdultMissionComplete = async (missionId: string, xpEarned: number) => {
+    try {
+      const response = await fetch('/next-api/gamification/adult-journey', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ missionId, xpReward: xpEarned })
+      });
+      const data = await response.json();
+      if (data.success) {
+        setAdultCompletedMissions(data.completedMissions);
+        setXpGained(xpEarned);
+        setShowXpAnimation(true);
+        setTimeout(() => setShowXpAnimation(false), 2500);
+        // Reload progress to update XP
+        loadProgress();
+      }
+    } catch (error) {
+      console.error('Failed to complete mission:', error);
+    }
+  };
 
   const handleLogout = () => {
     localStorage.removeItem('wayofdojo_token');
