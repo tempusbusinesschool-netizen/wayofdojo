@@ -32,21 +32,22 @@ export function AdultJourneyWidget({
   const [selectedCity, setSelectedCity] = useState<City | null>(null);
   const [showMap, setShowMap] = useState(false);
   const [tanakaMessage, setTanakaMessage] = useState('');
+  // Initial Tanaka message
+  const initialMessage = completedMissions.length === 0 
+    ? 'Bienvenue sur la Voie du Budō. Ton voyage commence à Miyamoto, village natal de Musashi. Chaque étape forgera ton esprit.'
+    : progress >= 100
+      ? 'Tu as parcouru tout le chemin de Musashi. Tu es maintenant un Maître. La voie continue à travers ceux que tu inspires.'
+      : currentCity.tanakaScript;
+
+  const [tanakaMessage, setTanakaMessage] = useState(initialMessage);
   const [showTanaka, setShowTanaka] = useState(true);
 
   const currentRank = getRankByXp(xp);
   const nextRank = getNextRank(currentRank.id);
-  const progress = calculateProgress(completedMissions);
   const dailyQuote = getDailyQuote();
 
-  // Find current city (first incomplete)
-  const currentCity = ADULT_JOURNEY_CITIES.find(city => {
-    const cityMissions = city.missions.filter(m => completedMissions.includes(m.id)).length;
-    return cityMissions < city.missions.length;
-  }) || ADULT_JOURNEY_CITIES[0];
-
   useEffect(() => {
-    // Set initial Tanaka message based on progress
+    // Update Tanaka message when city changes
     if (completedMissions.length === 0) {
       setTanakaMessage('Bienvenue sur la Voie du Budō. Ton voyage commence à Miyamoto, village natal de Musashi. Chaque étape forgera ton esprit.');
     } else if (progress >= 100) {
@@ -54,7 +55,7 @@ export function AdultJourneyWidget({
     } else {
       setTanakaMessage(currentCity.tanakaScript);
     }
-  }, [completedMissions, currentCity, progress]);
+  }, [completedMissions.length, currentCity.id, progress]);
 
   const handleMissionComplete = (missionId: string) => {
     const mission = ADULT_JOURNEY_CITIES
