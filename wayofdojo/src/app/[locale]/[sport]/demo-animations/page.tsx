@@ -21,8 +21,6 @@ export default function AnimationsDemoPage() {
   const [logoActive, setLogoActive] = useState(true);
   const [quoteIndex, setQuoteIndex] = useState(0);
 
-  const dailyQuote = getDailyQuote();
-
   const triggerStepTransition = (type: 'step_complete' | 'challenge_done' | 'badge_earned') => {
     setStepType(type);
     setShowStepTransition(true);
