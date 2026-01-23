@@ -101,6 +101,14 @@ export function AdultJourneyWidget({
       .find(m => m.id === missionId);
     
     if (mission && onMissionComplete) {
+      // Show step transition animation
+      setTransitionData({
+        title: mission.title,
+        emoji: mission.type === 'technique' ? '⚔️' : mission.type === 'strategie' ? '🧠' : '🧘',
+        xp: mission.xpReward
+      });
+      setShowStepTransition(true);
+      
       onMissionComplete(missionId, mission.xpReward);
     }
   };
@@ -111,6 +119,39 @@ export function AdultJourneyWidget({
     setShowMap(false);
   };
 
+  // Handle journal entry
+  const handleAddJournalEntry = async (entry: Omit<JournalEntry, 'id' | 'createdAt'>) => {
+    try {
+      const response = await fetch('/next-api/gamification/journal', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(entry)
+      });
+      const data = await response.json();
+      if (data.success && data.entry) {
+        setJournalEntries(prev => [...prev, data.entry]);
+      }
+    } catch (error) {
+      console.error('Failed to add journal entry:', error);
+    }
+  };
+
+  const handleDeleteJournalEntry = async (entryId: string) => {
+    try {
+      const response = await fetch(`/next-api/gamification/journal?id=${entryId}`, {
+        method: 'DELETE',
+        credentials: 'include'
+      });
+      const data = await response.json();
+      if (data.success) {
+        setJournalEntries(prev => prev.filter(e => e.id !== entryId));
+      }
+    } catch (error) {
+      console.error('Failed to delete journal entry:', error);
+    }
+  };
+
   // Calculate XP progress to next rank
   const rankProgress = nextRank 
     ? Math.round(((xp - currentRank.minXp) / (nextRank.minXp - currentRank.minXp)) * 100)
@@ -118,6 +159,16 @@ export function AdultJourneyWidget({
 
   return (
     <div className="space-y-6">
+      {/* Step Transition Animation */}
+      <StepTransition
+        isVisible={showStepTransition}
+        stepTitle={transitionData.title}
+        stepEmoji={transitionData.emoji}
+        actionType="challenge_done"
+        xpEarned={transitionData.xp}
+        onComplete={() => setShowStepTransition(false)}
+      />
+
       {/* Header - Rank & Progress */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
