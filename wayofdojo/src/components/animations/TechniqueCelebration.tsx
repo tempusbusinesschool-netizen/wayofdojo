@@ -28,49 +28,62 @@ const TechniqueCelebration: React.FC<TechniqueCelebrationProps> = ({
   const confettiTriggered = useRef(false);
 
   // Sons de célébration (utilise Web Audio API)
-  const playSound = () => {
+  const playSound = async () => {
     try {
       const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
       const audioContext = new AudioContextClass();
       
-      // Séquence de notes pour un effet "victoire" (plus fort et plus riche)
-      const notes = [523.25, 659.25, 783.99, 1046.50]; // Do, Mi, Sol, Do aigu
+      // IMPORTANT: Résumer l'AudioContext si suspendu
+      if (audioContext.state === 'suspended') {
+        await audioContext.resume();
+      }
+      
+      const now = audioContext.currentTime;
+      
+      // Séquence de notes pour un effet "victoire" (Do, Mi, Sol, Do aigu)
+      const notes = [523.25, 659.25, 783.99, 1046.50];
       
       notes.forEach((freq, index) => {
-        const oscillator = audioContext.createOscillator();
-        const oscillator2 = audioContext.createOscillator(); // Deuxième oscillateur pour richesse
-        const gainNode = audioContext.createGain();
-        const gainNode2 = audioContext.createGain();
+        // Oscillateur principal
+        const osc1 = audioContext.createOscillator();
+        const gain1 = audioContext.createGain();
         
-        oscillator.connect(gainNode);
-        oscillator2.connect(gainNode2);
-        gainNode.connect(audioContext.destination);
-        gainNode2.connect(audioContext.destination);
+        osc1.connect(gain1);
+        gain1.connect(audioContext.destination);
         
-        oscillator.type = 'sine';
-        oscillator2.type = 'triangle'; // Harmonique pour plus de richesse
-        oscillator.frequency.value = freq;
-        oscillator2.frequency.value = freq * 2; // Octave au-dessus
+        osc1.type = 'sine';
+        osc1.frequency.value = freq;
         
-        const startTime = audioContext.currentTime + (index * 0.15);
-        const duration = 0.4;
+        const startTime = now + (index * 0.18);
         
-        // Volume plus élevé (0.4 au lieu de 0.3)
-        gainNode.gain.setValueAtTime(0.4, startTime);
-        gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + duration);
+        gain1.gain.setValueAtTime(0.001, startTime);
+        gain1.gain.exponentialRampToValueAtTime(0.5, startTime + 0.02);
+        gain1.gain.exponentialRampToValueAtTime(0.001, startTime + 0.45);
         
-        gainNode2.gain.setValueAtTime(0.15, startTime);
-        gainNode2.gain.exponentialRampToValueAtTime(0.01, startTime + duration);
+        osc1.start(startTime);
+        osc1.stop(startTime + 0.5);
         
-        oscillator.start(startTime);
-        oscillator.stop(startTime + duration);
-        oscillator2.start(startTime);
-        oscillator2.stop(startTime + duration);
+        // Harmonique pour richesse sonore
+        const osc2 = audioContext.createOscillator();
+        const gain2 = audioContext.createGain();
+        
+        osc2.connect(gain2);
+        gain2.connect(audioContext.destination);
+        
+        osc2.type = 'triangle';
+        osc2.frequency.value = freq * 2;
+        
+        gain2.gain.setValueAtTime(0.001, startTime);
+        gain2.gain.exponentialRampToValueAtTime(0.2, startTime + 0.02);
+        gain2.gain.exponentialRampToValueAtTime(0.001, startTime + 0.4);
+        
+        osc2.start(startTime);
+        osc2.stop(startTime + 0.45);
       });
       
-      console.log('🎵 Victory sound played!');
+      console.log('🎵 Victory sound played! AudioContext state:', audioContext.state);
     } catch (error) {
-      console.log('Audio not supported:', error);
+      console.error('❌ Audio error:', error);
     }
   };
 
