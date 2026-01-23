@@ -209,7 +209,6 @@ export function AdultJourneyWidget({
             >
               <JapanMap
                 completedMissions={completedMissions}
-                totalXp={xp}
                 onCitySelect={handleCitySelect}
                 selectedCityId={selectedCity?.id}
               />
