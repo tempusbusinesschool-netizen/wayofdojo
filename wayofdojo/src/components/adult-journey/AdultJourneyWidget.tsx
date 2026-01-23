@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Map, ChevronRight, Scroll } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -17,6 +17,18 @@ import { MusashiQuoteCard } from './MusashiQuoteCard';
 import { JapanMap } from './JapanMap';
 import { AdultMissionCard } from './AdultMissionCard';
 import { TanakaAdult } from './TanakaAdult';
+import { ReflectiveJournal } from './ReflectiveJournal';
+import StepTransition from '@/components/animations/StepTransition';
+
+interface JournalEntry {
+  id: string;
+  cityId: string;
+  missionId?: string;
+  content: string;
+  createdAt: string;
+  mood?: 'positive' | 'neutral' | 'challenging';
+  tags?: string[];
+}
 
 interface AdultJourneyWidgetProps {
   xp: number;
