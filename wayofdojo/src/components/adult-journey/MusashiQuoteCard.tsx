@@ -65,7 +65,7 @@ export function MusashiQuoteCard({ quote, variant = 'default', showChapter = fal
             {quote.romaji}
           </p>
           <p className="text-xl text-white font-medium leading-relaxed">
-            "{quote.french}"
+            &ldquo;{quote.french}&rdquo;
           </p>
           <div className="mt-4 flex items-center gap-3">
             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center">
