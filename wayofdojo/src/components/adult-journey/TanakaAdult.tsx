@@ -23,12 +23,13 @@ export function TanakaAdult({ message, isVisible = true, onClose }: TanakaAdultP
     setIsTyping(true);
     
     const chars = message.split('');
-    let index = 0;
+    let currentIndex = 0;
     
     const timer = setInterval(() => {
-      if (index < chars.length) {
-        setDisplayedText(prev => prev + chars[index]);
-        index++;
+      if (currentIndex < chars.length) {
+        const charToAdd = chars[currentIndex];
+        setDisplayedText(prev => prev + charToAdd);
+        currentIndex++;
       } else {
         setIsTyping(false);
         clearInterval(timer);
