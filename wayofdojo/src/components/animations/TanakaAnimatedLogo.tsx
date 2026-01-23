@@ -40,7 +40,7 @@ export function TanakaAnimatedLogo({
       transition: {
         rotate: {
           duration: 0.5,
-          ease: 'easeInOut',
+          ease: 'easeInOut' as const,
         },
       },
     },
@@ -52,7 +52,7 @@ export function TanakaAnimatedLogo({
       transition: {
         duration: 2,
         repeat: Infinity,
-        ease: 'easeInOut',
+        ease: 'easeInOut' as const,
       },
     },
   };
@@ -71,7 +71,7 @@ export function TanakaAnimatedLogo({
       transition: {
         duration: 2,
         repeat: Infinity,
-        ease: 'easeInOut',
+        ease: 'easeInOut' as const,
       },
     },
   };
@@ -83,7 +83,7 @@ export function TanakaAnimatedLogo({
       transition: {
         duration: 3,
         repeat: Infinity,
-        ease: 'easeInOut',
+        ease: 'easeInOut' as const,
       },
     },
   };
@@ -94,7 +94,7 @@ export function TanakaAnimatedLogo({
       transition: {
         duration: 1.5,
         repeat: Infinity,
-        ease: 'easeInOut',
+        ease: 'easeInOut' as const,
       },
     },
   };
