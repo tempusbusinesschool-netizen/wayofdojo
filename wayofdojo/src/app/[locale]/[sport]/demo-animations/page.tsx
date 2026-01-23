@@ -3,8 +3,8 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
-  Play, Sparkles, Trophy, BookOpen, Map, 
-  ChevronRight, RotateCcw, Volume2
+  Play, Sparkles, Trophy, BookOpen, 
+  ChevronRight, Volume2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { TechniqueCelebration, StepTransition, TanakaAnimatedLogo } from '@/components/animations';
