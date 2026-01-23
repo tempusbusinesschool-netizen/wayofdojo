@@ -22,8 +22,7 @@ export async function GET() {
     await dbConnect();
     
     const user = await User.findOne(
-      { email: decoded.email },
-      { 'progress.adultJourney': 1, 'gamification.xp': 1 }
+      { email: decoded.email }
     ).lean();
 
     if (!user) {
@@ -31,14 +30,22 @@ export async function GET() {
     }
 
     // Type assertion for the user object
-    const userData = user as { progress?: { adultJourney?: { completedMissions?: string[] } }; gamification?: { xp?: number } };
+    const userData = user as { 
+      progress?: { adultJourney?: { completedMissions?: string[]; lastCity?: string } }; 
+      gamification?: { xp?: number; adultJourneyMissions?: string[] } 
+    };
+
+    // Get completed missions from either location
+    const completedMissions = userData.progress?.adultJourney?.completedMissions || 
+                              userData.gamification?.adultJourneyMissions || 
+                              [];
 
     return NextResponse.json({
       success: true,
-      adultJourney: userData.progress?.adultJourney || {
-        completedMissions: [],
+      adultJourney: {
+        completedMissions,
         journalEntries: [],
-        lastCity: 'miyamoto',
+        lastCity: userData.progress?.adultJourney?.lastCity || 'miyamoto',
         startedAt: null
       },
       xp: userData.gamification?.xp || 0
@@ -74,8 +81,7 @@ export async function POST(request: Request) {
     
     // Check if mission already completed
     const user = await User.findOne(
-      { email: decoded.email },
-      { 'progress.adultJourney': 1, 'gamification': 1 }
+      { email: decoded.email }
     ).lean();
 
     if (!user) {
@@ -85,10 +91,13 @@ export async function POST(request: Request) {
     // Type assertion
     const userData = user as { 
       progress?: { adultJourney?: { completedMissions?: string[] } }; 
-      gamification?: { xp?: number; level?: number } 
+      gamification?: { xp?: number; level?: number; adultJourneyMissions?: string[] } 
     };
 
-    const currentMissions = userData.progress?.adultJourney?.completedMissions || [];
+    // Get completed missions from either location
+    const currentMissions = userData.progress?.adultJourney?.completedMissions || 
+                           userData.gamification?.adultJourneyMissions || 
+                           [];
     
     if (currentMissions.includes(missionId)) {
       return NextResponse.json({ 
@@ -97,20 +106,19 @@ export async function POST(request: Request) {
       });
     }
 
-    // Update user progress
+    // Update user progress - store in gamification.adultJourneyMissions for compatibility
     const currentXp = userData.gamification?.xp || 0;
     const newXp = currentXp + (xpReward || 0);
     const newLevel = Math.floor(newXp / 100) + 1;
+    const newMissions = [...currentMissions, missionId];
 
     await User.updateOne(
       { email: decoded.email },
       {
-        $push: { 
-          'progress.adultJourney.completedMissions': missionId 
-        },
         $set: {
-          'progress.adultJourney.lastCity': cityId || 'miyamoto',
-          'progress.adultJourney.lastMissionAt': new Date().toISOString(),
+          'gamification.adultJourneyMissions': newMissions,
+          'gamification.adultJourneyLastCity': cityId || 'miyamoto',
+          'gamification.adultJourneyLastMissionAt': new Date().toISOString(),
           'gamification.xp': newXp,
           'gamification.level': newLevel
         }
@@ -127,7 +135,7 @@ export async function POST(request: Request) {
         current: newLevel,
         levelUp: newLevel > (userData.gamification?.level || 1)
       },
-      completedMissions: [...currentMissions, missionId]
+      completedMissions: newMissions
     });
   } catch (error) {
     console.error('Error completing mission:', error);
