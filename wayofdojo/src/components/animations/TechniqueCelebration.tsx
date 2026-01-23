@@ -30,32 +30,47 @@ const TechniqueCelebration: React.FC<TechniqueCelebrationProps> = ({
   // Sons de célébration (utilise Web Audio API)
   const playSound = () => {
     try {
-      const audioContext = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
+      const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      const audioContext = new AudioContextClass();
       
-      // Séquence de notes pour un effet "victoire"
+      // Séquence de notes pour un effet "victoire" (plus fort et plus riche)
       const notes = [523.25, 659.25, 783.99, 1046.50]; // Do, Mi, Sol, Do aigu
       
       notes.forEach((freq, index) => {
         const oscillator = audioContext.createOscillator();
+        const oscillator2 = audioContext.createOscillator(); // Deuxième oscillateur pour richesse
         const gainNode = audioContext.createGain();
+        const gainNode2 = audioContext.createGain();
         
         oscillator.connect(gainNode);
+        oscillator2.connect(gainNode2);
         gainNode.connect(audioContext.destination);
+        gainNode2.connect(audioContext.destination);
         
         oscillator.type = 'sine';
+        oscillator2.type = 'triangle'; // Harmonique pour plus de richesse
         oscillator.frequency.value = freq;
+        oscillator2.frequency.value = freq * 2; // Octave au-dessus
         
         const startTime = audioContext.currentTime + (index * 0.15);
-        const duration = 0.3;
+        const duration = 0.4;
         
-        gainNode.gain.setValueAtTime(0.3, startTime);
+        // Volume plus élevé (0.4 au lieu de 0.3)
+        gainNode.gain.setValueAtTime(0.4, startTime);
         gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + duration);
+        
+        gainNode2.gain.setValueAtTime(0.15, startTime);
+        gainNode2.gain.exponentialRampToValueAtTime(0.01, startTime + duration);
         
         oscillator.start(startTime);
         oscillator.stop(startTime + duration);
+        oscillator2.start(startTime);
+        oscillator2.stop(startTime + duration);
       });
-    } catch {
-      console.log('Audio not supported');
+      
+      console.log('🎵 Victory sound played!');
+    } catch (error) {
+      console.log('Audio not supported:', error);
     }
   };
 
