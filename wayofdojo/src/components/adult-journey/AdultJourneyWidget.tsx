@@ -2,10 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Map, ChevronRight, Flame, Award, BookOpen,
-  Scroll, Target, TrendingUp, Sparkles
-} from 'lucide-react';
+import { Map, ChevronRight, Scroll } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { 
   ADULT_JOURNEY_CITIES, 
