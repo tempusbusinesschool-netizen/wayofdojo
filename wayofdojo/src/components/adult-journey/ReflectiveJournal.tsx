@@ -42,8 +42,7 @@ export function ReflectiveJournal({
   currentCityId,
   currentMissionId,
   onAddEntry,
-  onDeleteEntry,
-  isLoading = false
+  onDeleteEntry
 }: ReflectiveJournalProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isWriting, setIsWriting] = useState(false);
