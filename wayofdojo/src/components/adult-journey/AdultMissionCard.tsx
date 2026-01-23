@@ -40,8 +40,6 @@ export function AdultMissionCard({ mission, cityColor, onComplete, isLocked = fa
     onComplete?.(mission.id, selectedChoice || undefined);
   };
 
-  const selectedChoiceData = mission.choices?.find(c => c.id === selectedChoice);
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
