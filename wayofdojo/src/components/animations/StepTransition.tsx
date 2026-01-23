@@ -40,6 +40,73 @@ const StepTransition: React.FC<StepTransitionProps> = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showConfetti, setShowConfetti] = useState(false);
 
+  // 🔊 Son "KAI" - Cri martial avec Web Audio API
+  const playKaiSound = () => {
+    try {
+      const AudioContextClass = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      const audioContext = new AudioContextClass();
+      
+      // Son "KAI" - attaque percutante montante
+      const createKaiSound = (startTime: number) => {
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        const filterNode = audioContext.createBiquadFilter();
+        
+        oscillator.connect(filterNode);
+        filterNode.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        // Forme d'onde pour un son percutant
+        oscillator.type = 'sawtooth';
+        
+        // Fréquence montante rapide (effet "KAI!")
+        oscillator.frequency.setValueAtTime(200, startTime);
+        oscillator.frequency.exponentialRampToValueAtTime(800, startTime + 0.1);
+        oscillator.frequency.exponentialRampToValueAtTime(400, startTime + 0.3);
+        
+        // Filtre pour adoucir
+        filterNode.type = 'lowpass';
+        filterNode.frequency.setValueAtTime(2000, startTime);
+        filterNode.frequency.exponentialRampToValueAtTime(500, startTime + 0.3);
+        
+        // Enveloppe du volume (attaque forte, déclin rapide)
+        gainNode.gain.setValueAtTime(0, startTime);
+        gainNode.gain.linearRampToValueAtTime(0.5, startTime + 0.02); // Attaque rapide
+        gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.4);
+        
+        oscillator.start(startTime);
+        oscillator.stop(startTime + 0.4);
+      };
+      
+      // Son de résonance (echo martial)
+      const createResonance = (startTime: number) => {
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.type = 'sine';
+        oscillator.frequency.setValueAtTime(300, startTime);
+        oscillator.frequency.exponentialRampToValueAtTime(150, startTime + 0.5);
+        
+        gainNode.gain.setValueAtTime(0.2, startTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, startTime + 0.5);
+        
+        oscillator.start(startTime);
+        oscillator.stop(startTime + 0.5);
+      };
+      
+      const now = audioContext.currentTime;
+      createKaiSound(now);
+      createResonance(now + 0.1);
+      
+      console.log('🔊 KAI sound played!');
+    } catch (error) {
+      console.log('Audio not supported:', error);
+    }
+  };
+
   // Messages adaptés selon le type d'action
   const getActionMessages = () => {
     const messages: Record<ActionType, { status: string; congrats: string }> = {
@@ -98,6 +165,9 @@ const StepTransition: React.FC<StepTransitionProps> = ({
     if (isVisible) {
       setShowConfetti(true);
       triggerConfetti();
+      
+      // 🔊 Jouer le son "KAI" au début de l'animation
+      setTimeout(() => playKaiSound(), 100);
 
       const timer1 = setTimeout(() => setStage(1), 400);
       const timer2 = setTimeout(() => setStage(2), 1200);
