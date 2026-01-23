@@ -25,16 +25,12 @@ interface AdultJourneyWidgetProps {
   xp: number;
   completedMissions: string[];
   onMissionComplete?: (missionId: string, xpEarned: number) => void;
-  locale: string;
-  sport: string;
 }
 
 export function AdultJourneyWidget({ 
   xp, 
   completedMissions, 
-  onMissionComplete,
-  locale,
-  sport 
+  onMissionComplete
 }: AdultJourneyWidgetProps) {
   const [selectedCity, setSelectedCity] = useState<City | null>(null);
   const [showMap, setShowMap] = useState(false);
