@@ -1,5 +1,64 @@
 # 📝 WayofDojo - CHANGELOG
 
+## [2025-01-23] - Gamification "Samouraï Confirmé" (Mode Adulte)
+
+### ✅ Ajouté
+
+#### 🥋 Système de Gamification Adulte Complet
+- **9 villes japonaises** : Voyage initiatique de Miyamoto à Kumamoto
+- **Citations de Musashi** : 15 citations du Traité des Cinq Roues (japonais, romaji, français)
+- **5 rangs de progression** :
+  - Rōnin (浪人) - 0-499 XP - 6e-5e Kyu
+  - Kenshi (剣士) - 500-1499 XP - 4e-3e Kyu
+  - Bushi (武士) - 1500-3499 XP - 2e-1er Kyu
+  - Sensei (先生) - 3500-6999 XP - 1er-2e Dan
+  - Maître (師範) - 7000+ XP - 3e Dan+
+- **27 missions** réparties en 3 types :
+  - Technique : analyse de postures, entrées, timing
+  - Stratégie : scénarios avec choix multiples et feedback
+  - Intérieure : méditation et réflexion
+
+#### 🗾 Carte du Japon Interactive
+- Visualisation SVG stylisée
+- Progression ville par ville avec verrouillage
+- Indicateurs de progression (cercles)
+- Animation au survol
+
+#### 🧙‍♂️ Maître Tanaka Version Mentor
+- Design sobre et philosophique
+- Effet typewriter pour les messages
+- Messages contextuels par ville
+- Réductible/extensible
+
+#### 📡 APIs Backend
+- `GET /next-api/gamification/adult-journey` : Récupération de la progression
+- `POST /next-api/gamification/adult-journey` : Complétion de missions
+- `GET/POST /next-api/gamification/journal` : Journal de réflexion
+
+### 📋 Fichiers créés
+- `/app/wayofdojo/src/data/musashi/quotes.ts` - 15 citations de Musashi
+- `/app/wayofdojo/src/data/musashi/journey.ts` - 9 villes, 27 missions
+- `/app/wayofdojo/src/components/adult-journey/AdultJourneyWidget.tsx`
+- `/app/wayofdojo/src/components/adult-journey/AdultMissionCard.tsx`
+- `/app/wayofdojo/src/components/adult-journey/JapanMap.tsx`
+- `/app/wayofdojo/src/components/adult-journey/MusashiQuoteCard.tsx`
+- `/app/wayofdojo/src/components/adult-journey/TanakaAdult.tsx`
+- `/app/wayofdojo/src/app/api/gamification/adult-journey/route.ts`
+- `/app/wayofdojo/src/app/api/gamification/journal/route.ts`
+- `/app/backend/tests/test_adult_journey.py` - Tests automatisés
+
+### 🎨 Design
+- Style sobre et épuré pour adultes
+- Gradients cohérents par ville
+- Animations Framer Motion subtiles
+- Citation du jour de Musashi mise en valeur
+
+### 🔧 Corrigé
+- Bug JWT signature mismatch dans l'API adult-journey
+- Bug typewriter affichant "undefined" à la fin des messages
+
+---
+
 ## [2025-01-21] - Graphiques Recharts Dashboard
 
 ### ✅ Ajouté
