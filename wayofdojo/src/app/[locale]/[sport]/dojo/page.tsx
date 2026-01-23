@@ -62,6 +62,7 @@ export default function DojoPage() {
   const [gamificationData, setGamificationData] = useState<GamificationProgress | null>(null);
   const [completedChallenges, setCompletedChallenges] = useState<string[]>([]);
   const [processingChallenge, setProcessingChallenge] = useState<string | null>(null);
+  const [adultCompletedMissions, setAdultCompletedMissions] = useState<string[]>([]);
 
   // Load gamification progress
   const loadProgress = useCallback(async () => {
