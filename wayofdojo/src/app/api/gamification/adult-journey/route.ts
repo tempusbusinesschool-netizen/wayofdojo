@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { connectToDatabase } from '@/lib/mongodb';
+import dbConnect from '@/lib/db';
+import { User } from '@/lib/models/user.model';
 import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'wayofdojo-secret-key-2024';
@@ -21,26 +22,29 @@ export async function GET() {
     }
 
     const decoded = jwt.verify(token, JWT_SECRET) as JWTPayload;
-    const { db } = await connectToDatabase();
+    await dbConnect();
     
-    const user = await db.collection('users').findOne(
+    const user = await User.findOne(
       { email: decoded.email },
-      { projection: { _id: 0, 'progress.adultJourney': 1, 'gamification.xp': 1 } }
-    );
+      { 'progress.adultJourney': 1, 'gamification.xp': 1 }
+    ).lean();
 
     if (!user) {
       return NextResponse.json({ error: 'Utilisateur non trouvé' }, { status: 404 });
     }
 
+    // Type assertion for the user object
+    const userData = user as { progress?: { adultJourney?: { completedMissions?: string[] } }; gamification?: { xp?: number } };
+
     return NextResponse.json({
       success: true,
-      adultJourney: user.progress?.adultJourney || {
+      adultJourney: userData.progress?.adultJourney || {
         completedMissions: [],
         journalEntries: [],
         lastCity: 'miyamoto',
         startedAt: null
       },
-      xp: user.gamification?.xp || 0
+      xp: userData.gamification?.xp || 0
     });
   } catch (error) {
     console.error('Error fetching adult journey:', error);
@@ -59,25 +63,31 @@ export async function POST(request: Request) {
     }
 
     const decoded = jwt.verify(token, JWT_SECRET) as JWTPayload;
-    const { missionId, xpReward, choiceId, cityId } = await request.json();
+    const { missionId, xpReward, cityId } = await request.json();
 
     if (!missionId) {
       return NextResponse.json({ error: 'ID de mission requis' }, { status: 400 });
     }
 
-    const { db } = await connectToDatabase();
+    await dbConnect();
     
     // Check if mission already completed
-    const user = await db.collection('users').findOne(
+    const user = await User.findOne(
       { email: decoded.email },
-      { projection: { _id: 0, 'progress.adultJourney': 1, 'gamification': 1 } }
-    );
+      { 'progress.adultJourney': 1, 'gamification': 1 }
+    ).lean();
 
     if (!user) {
       return NextResponse.json({ error: 'Utilisateur non trouvé' }, { status: 404 });
     }
 
-    const currentMissions = user.progress?.adultJourney?.completedMissions || [];
+    // Type assertion
+    const userData = user as { 
+      progress?: { adultJourney?: { completedMissions?: string[] } }; 
+      gamification?: { xp?: number; level?: number } 
+    };
+
+    const currentMissions = userData.progress?.adultJourney?.completedMissions || [];
     
     if (currentMissions.includes(missionId)) {
       return NextResponse.json({ 
@@ -87,11 +97,11 @@ export async function POST(request: Request) {
     }
 
     // Update user progress
-    const currentXp = user.gamification?.xp || 0;
+    const currentXp = userData.gamification?.xp || 0;
     const newXp = currentXp + (xpReward || 0);
     const newLevel = Math.floor(newXp / 100) + 1;
 
-    await db.collection('users').updateOne(
+    await User.updateOne(
       { email: decoded.email },
       {
         $push: { 
@@ -102,12 +112,8 @@ export async function POST(request: Request) {
           'progress.adultJourney.lastMissionAt': new Date().toISOString(),
           'gamification.xp': newXp,
           'gamification.level': newLevel
-        },
-        $setOnInsert: {
-          'progress.adultJourney.startedAt': new Date().toISOString()
         }
-      },
-      { upsert: true }
+      }
     );
 
     return NextResponse.json({
@@ -118,7 +124,7 @@ export async function POST(request: Request) {
       },
       level: {
         current: newLevel,
-        levelUp: newLevel > (user.gamification?.level || 1)
+        levelUp: newLevel > (userData.gamification?.level || 1)
       },
       completedMissions: [...currentMissions, missionId]
     });

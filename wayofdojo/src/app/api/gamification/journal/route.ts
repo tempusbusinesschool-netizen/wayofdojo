@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { connectToDatabase } from '@/lib/mongodb';
+import dbConnect from '@/lib/db';
+import { User } from '@/lib/models/user.model';
 import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'wayofdojo-secret-key-2024';
@@ -31,20 +32,23 @@ export async function GET() {
     }
 
     const decoded = jwt.verify(token, JWT_SECRET) as JWTPayload;
-    const { db } = await connectToDatabase();
+    await dbConnect();
     
-    const user = await db.collection('users').findOne(
+    const user = await User.findOne(
       { email: decoded.email },
-      { projection: { _id: 0, 'progress.adultJourney.journalEntries': 1 } }
-    );
+      { 'progress.adultJourney.journalEntries': 1 }
+    ).lean();
 
     if (!user) {
       return NextResponse.json({ error: 'Utilisateur non trouvé' }, { status: 404 });
     }
 
+    // Type assertion
+    const userData = user as { progress?: { adultJourney?: { journalEntries?: JournalEntry[] } } };
+
     return NextResponse.json({
       success: true,
-      entries: user.progress?.adultJourney?.journalEntries || []
+      entries: userData.progress?.adultJourney?.journalEntries || []
     });
   } catch (error) {
     console.error('Error fetching journal:', error);
@@ -79,21 +83,14 @@ export async function POST(request: Request) {
       tags
     };
 
-    const { db } = await connectToDatabase();
+    await dbConnect();
     
-    await db.collection('users').updateOne(
+    await User.updateOne(
       { email: decoded.email },
       {
         $push: { 
           'progress.adultJourney.journalEntries': entry 
-        }
-      }
-    );
-
-    // Award XP for journaling (5 XP per entry)
-    await db.collection('users').updateOne(
-      { email: decoded.email },
-      {
+        },
         $inc: { 'gamification.xp': 5 }
       }
     );
@@ -127,9 +124,9 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ error: 'ID requis' }, { status: 400 });
     }
 
-    const { db } = await connectToDatabase();
+    await dbConnect();
     
-    await db.collection('users').updateOne(
+    await User.updateOne(
       { email: decoded.email },
       {
         $pull: { 
