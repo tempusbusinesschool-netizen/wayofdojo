@@ -44,6 +44,9 @@ export function AdultJourneyWidget({
   const [selectedCity, setSelectedCity] = useState<City | null>(null);
   const [showMap, setShowMap] = useState(false);
   const [showTanaka, setShowTanaka] = useState(true);
+  const [journalEntries, setJournalEntries] = useState<JournalEntry[]>([]);
+  const [showStepTransition, setShowStepTransition] = useState(false);
+  const [transitionData, setTransitionData] = useState({ title: '', emoji: '', xp: 0 });
 
   const currentRank = getRankByXp(xp);
   const nextRank = getNextRank(currentRank.id);
@@ -57,21 +60,40 @@ export function AdultJourneyWidget({
   }) || ADULT_JOURNEY_CITIES[0];
 
   // Get initial message based on progress
-  const getInitialMessage = () => {
+  const getInitialMessage = useCallback(() => {
     if (completedMissions.length === 0) {
       return 'Bienvenue sur la Voie du Budō. Ton voyage commence à Miyamoto, village natal de Musashi. Chaque étape forgera ton esprit.';
     } else if (progress >= 100) {
       return 'Tu as parcouru tout le chemin de Musashi. Tu es maintenant un Maître. La voie continue à travers ceux que tu inspires.';
     }
     return currentCity.tanakaScript;
-  };
+  }, [completedMissions.length, progress, currentCity.tanakaScript]);
 
   const [tanakaMessage, setTanakaMessage] = useState(getInitialMessage);
+
+  // Load journal entries
+  const loadJournalEntries = useCallback(async () => {
+    try {
+      const response = await fetch('/next-api/gamification/journal', {
+        credentials: 'include'
+      });
+      const data = await response.json();
+      if (data.success) {
+        setJournalEntries(data.entries || []);
+      }
+    } catch (error) {
+      console.error('Failed to load journal entries:', error);
+    }
+  }, []);
+
+  useEffect(() => {
+    loadJournalEntries();
+  }, [loadJournalEntries]);
 
   useEffect(() => {
     // Update Tanaka message when city changes
     setTanakaMessage(getInitialMessage());
-  }, [completedMissions.length, currentCity.id, progress]);
+  }, [getInitialMessage]);
 
   const handleMissionComplete = (missionId: string) => {
     const mission = ADULT_JOURNEY_CITIES
