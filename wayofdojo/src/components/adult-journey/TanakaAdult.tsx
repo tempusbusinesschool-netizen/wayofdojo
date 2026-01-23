@@ -17,15 +17,17 @@ export function TanakaAdult({ message, isVisible = true, onClose }: TanakaAdultP
 
   // Typewriter effect
   useEffect(() => {
-    if (!isVisible || isMinimized) return;
+    if (!isVisible || isMinimized || !message) return;
     
     setDisplayedText('');
     setIsTyping(true);
     
+    const chars = message.split('');
     let index = 0;
+    
     const timer = setInterval(() => {
-      if (index < message.length) {
-        setDisplayedText(prev => prev + message[index]);
+      if (index < chars.length) {
+        setDisplayedText(prev => prev + chars[index]);
         index++;
       } else {
         setIsTyping(false);
