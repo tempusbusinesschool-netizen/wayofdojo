@@ -202,8 +202,18 @@ Exemples implémentés:
 
 - [x] Dojo Virtuel (Dashboard)
 - [x] Page Techniques
-- [ ] Gamification complète
-- [ ] Page Progression
+- [x] Page Mouvements (avancés)
+- [x] Gamification Jeune Samouraï (6-14 ans)
+- [x] **Gamification Samouraï Confirmé (14+ ans) ✅ NOUVEAU**
+  - [x] 9 villes japonaises (Miyamoto → Kumamoto)
+  - [x] Citations de Musashi (Go Rin No Sho)
+  - [x] 5 rangs (Rōnin → Kenshi → Bushi → Sensei → Maître)
+  - [x] 3 types de missions (technique, stratégie, intérieure)
+  - [x] Maître Tanaka version mentor/philosophe
+  - [x] Carte interactive du Japon
+  - [x] API progression adulte
+- [x] Défi du jour (Dashboard)
+- [ ] Page Progression complète
 - [ ] Page Profil complète
 
 ### Phase 4: Stages & Séminaires ⬜ À FAIRE
