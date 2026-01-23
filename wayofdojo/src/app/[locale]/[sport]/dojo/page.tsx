@@ -14,6 +14,7 @@ import {
 import UserDashboardBlocks from '@/components/UserDashboardBlocks';
 import MaitreTanaka from '@/components/MaitreTanaka';
 import DailyChallengeWidget from '@/components/DailyChallengeWidget';
+import { AdultJourneyWidget } from '@/components/adult-journey';
 import { aikidoConfig } from '@/config/sports/aikido.config';
 import { VIRTUES_GAMIFICATION } from '@/constants/virtuesGamification';
 import apiService from '@/services/api.service';
