@@ -33,7 +33,7 @@ export function MusashiQuoteCard({ quote, variant = 'default', showChapter = fal
         animate={{ opacity: 1, y: 0 }}
         className="p-3 rounded-xl bg-slate-800/50 border border-slate-700"
       >
-        <p className="text-slate-300 text-sm italic">"{quote.french}"</p>
+        <p className="text-slate-300 text-sm italic">&ldquo;{quote.french}&rdquo;</p>
         <p className="text-slate-500 text-xs mt-1">— Musashi</p>
       </motion.div>
     );
