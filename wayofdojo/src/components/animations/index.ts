@@ -6,3 +6,4 @@
 
 export { default as TechniqueCelebration } from './TechniqueCelebration';
 export { default as StepTransition } from './StepTransition';
+export { default as TanakaAnimatedLogo } from './TanakaAnimatedLogo';
