@@ -364,8 +364,9 @@ export default function AnimationsDemoPage() {
 
       <TechniqueCelebration
         isVisible={showCelebration}
-        technique={{ name: 'Ikkyo Omote', nameJp: '一教表', level: 'maîtrisé' }}
-        onClose={() => setShowCelebration(false)}
+        techniqueName="Ikkyo Omote"
+        xpEarned={50}
+        onComplete={() => setShowCelebration(false)}
       />
     </div>
   );
