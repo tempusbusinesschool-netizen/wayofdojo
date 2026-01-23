@@ -31,30 +31,34 @@ export function AdultJourneyWidget({
 }: AdultJourneyWidgetProps) {
   const [selectedCity, setSelectedCity] = useState<City | null>(null);
   const [showMap, setShowMap] = useState(false);
-  const [tanakaMessage, setTanakaMessage] = useState('');
-  // Initial Tanaka message
-  const initialMessage = completedMissions.length === 0 
-    ? 'Bienvenue sur la Voie du Budō. Ton voyage commence à Miyamoto, village natal de Musashi. Chaque étape forgera ton esprit.'
-    : progress >= 100
-      ? 'Tu as parcouru tout le chemin de Musashi. Tu es maintenant un Maître. La voie continue à travers ceux que tu inspires.'
-      : currentCity.tanakaScript;
-
-  const [tanakaMessage, setTanakaMessage] = useState(initialMessage);
   const [showTanaka, setShowTanaka] = useState(true);
 
   const currentRank = getRankByXp(xp);
   const nextRank = getNextRank(currentRank.id);
+  const progress = calculateProgress(completedMissions);
   const dailyQuote = getDailyQuote();
+
+  // Find current city (first incomplete)
+  const currentCity = ADULT_JOURNEY_CITIES.find(city => {
+    const cityMissions = city.missions.filter(m => completedMissions.includes(m.id)).length;
+    return cityMissions < city.missions.length;
+  }) || ADULT_JOURNEY_CITIES[0];
+
+  // Get initial message based on progress
+  const getInitialMessage = () => {
+    if (completedMissions.length === 0) {
+      return 'Bienvenue sur la Voie du Budō. Ton voyage commence à Miyamoto, village natal de Musashi. Chaque étape forgera ton esprit.';
+    } else if (progress >= 100) {
+      return 'Tu as parcouru tout le chemin de Musashi. Tu es maintenant un Maître. La voie continue à travers ceux que tu inspires.';
+    }
+    return currentCity.tanakaScript;
+  };
+
+  const [tanakaMessage, setTanakaMessage] = useState(getInitialMessage);
 
   useEffect(() => {
     // Update Tanaka message when city changes
-    if (completedMissions.length === 0) {
-      setTanakaMessage('Bienvenue sur la Voie du Budō. Ton voyage commence à Miyamoto, village natal de Musashi. Chaque étape forgera ton esprit.');
-    } else if (progress >= 100) {
-      setTanakaMessage('Tu as parcouru tout le chemin de Musashi. Tu es maintenant un Maître. La voie continue à travers ceux que tu inspires.');
-    } else {
-      setTanakaMessage(currentCity.tanakaScript);
-    }
+    setTanakaMessage(getInitialMessage());
   }, [completedMissions.length, currentCity.id, progress]);
 
   const handleMissionComplete = (missionId: string) => {
