@@ -401,8 +401,6 @@ export default function DojoPage() {
             xp={currentXp}
             completedMissions={adultCompletedMissions}
             onMissionComplete={handleAdultMissionComplete}
-            locale={locale}
-            sport={sport}
           />
         )}
 
