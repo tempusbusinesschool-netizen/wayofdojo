@@ -51,24 +51,26 @@ export function TanakaAdult({ message, isVisible = true, onClose }: TanakaAdultP
         className="fixed bottom-6 right-6 z-50 max-w-sm"
       >
         {isMinimized ? (
-          // Minimized state
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
+          // Minimized state - Use animated logo
+          <TanakaAnimatedLogo
+            size="md"
+            variant="breathing"
+            isActive={true}
+            showAura={true}
             onClick={() => setIsMinimized(false)}
-            className="w-16 h-16 rounded-full bg-gradient-to-br from-slate-800 to-slate-900 border-2 border-amber-500/50 shadow-xl flex items-center justify-center"
-          >
-            <span className="text-3xl">🧙‍♂️</span>
-          </motion.button>
+          />
         ) : (
           // Full message
           <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl border border-slate-700 shadow-2xl overflow-hidden">
             {/* Header */}
             <div className="flex items-center justify-between p-3 bg-gradient-to-r from-amber-900/30 to-orange-900/30 border-b border-slate-700">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-lg">
-                  <span className="text-2xl">🧙‍♂️</span>
-                </div>
+                <TanakaAnimatedLogo
+                  size="sm"
+                  variant="glow"
+                  isActive={isTyping}
+                  showAura={false}
+                />
                 <div>
                   <h4 className="text-white font-bold text-sm">Maître Tanaka</h4>
                   <p className="text-amber-400 text-xs">先生 · Mentor</p>
