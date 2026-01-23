@@ -258,13 +258,13 @@ Exemples implémentés:
 |-------|-----|--------|-------------|
 | 1 | Fondations | ✅ | 100% |
 | 2 | Parcours Utilisateur | 🟡 | 80% (manque Stripe) |
-| 3 | Espace Pratiquant | 🟡 | 50% |
+| 3 | Espace Pratiquant | 🟡 | 70% |
 | 4 | Stages & Séminaires | ⬜ | 0% |
 | 5 | Espace Club | ⬜ | 0% |
 | 6 | Espace Admin | ⬜ | 0% |
-| 7 | Tests & Déploiement | ⬜ | 0% |
+| 7 | Tests & Déploiement | ⬜ | 10% |
 
-**Progression Globale: ~35%**
+**Progression Globale: ~40%**
 
 ---
 
