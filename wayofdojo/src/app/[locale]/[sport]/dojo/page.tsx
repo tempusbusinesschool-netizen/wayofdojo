@@ -395,6 +395,20 @@ export default function DojoPage() {
       </header>
 
       <main className="container mx-auto px-4 py-8">
+        {/* ADULT MODE: Samouraï Confirmé - Voyage Musashi */}
+        {!isJeuneSamourai && (
+          <AdultJourneyWidget
+            xp={currentXp}
+            completedMissions={adultCompletedMissions}
+            onMissionComplete={handleAdultMissionComplete}
+            locale={locale}
+            sport={sport}
+          />
+        )}
+
+        {/* JUNIOR MODE: Jeune Samouraï - Original content */}
+        {isJeuneSamourai && (
+          <>
         {/* User Dashboard Blocks */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
