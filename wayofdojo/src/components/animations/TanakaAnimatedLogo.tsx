@@ -107,7 +107,7 @@ export function TanakaAnimatedLogo({
       transition: {
         duration: 2,
         repeat: Infinity,
-        ease: 'easeOut',
+        ease: 'easeOut' as const,
       },
     },
   };
