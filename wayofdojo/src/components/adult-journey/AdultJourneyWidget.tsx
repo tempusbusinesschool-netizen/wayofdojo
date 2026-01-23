@@ -395,6 +395,21 @@ export function AdultJourneyWidget({
         </AnimatePresence>
       </motion.div>
 
+      {/* Reflective Journal */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.3 }}
+      >
+        <ReflectiveJournal
+          entries={journalEntries}
+          currentCityId={(selectedCity || currentCity).id}
+          currentMissionId={undefined}
+          onAddEntry={handleAddJournalEntry}
+          onDeleteEntry={handleDeleteJournalEntry}
+        />
+      </motion.div>
+
       {/* Tanaka Adult Mentor */}
       <TanakaAdult
         message={tanakaMessage}
