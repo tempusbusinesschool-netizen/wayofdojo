@@ -24,7 +24,6 @@ interface ReflectiveJournalProps {
   currentMissionId?: string;
   onAddEntry: (entry: Omit<JournalEntry, 'id' | 'createdAt'>) => Promise<void>;
   onDeleteEntry?: (entryId: string) => Promise<void>;
-  isLoading?: boolean;
 }
 
 const MOOD_OPTIONS = [
