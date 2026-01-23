@@ -269,10 +269,14 @@ export function AdultJourneyWidget({
               {/* City selector buttons */}
               <div className="flex flex-wrap gap-2 pt-4 border-t border-slate-700">
                 {ADULT_JOURNEY_CITIES.map(city => {
+                  const prevCity = city.unlockRequirement?.previousCity 
+                    ? ADULT_JOURNEY_CITIES.find(c => c.id === city.unlockRequirement?.previousCity)
+                    : null;
+                  const prevMissionsCount = prevCity 
+                    ? prevCity.missions.filter(m => completedMissions.includes(m.id)).length 
+                    : 0;
                   const isUnlocked = !city.unlockRequirement || 
-                    (city.unlockRequirement.previousCity && 
-                      ADULT_JOURNEY_CITIES.find(c => c.id === city.unlockRequirement?.previousCity)?.missions
-                        .filter(m => completedMissions.includes(m.id)).length! >= (city.unlockRequirement.missionsCompleted || 0));
+                    (prevCity && prevMissionsCount >= (city.unlockRequirement?.missionsCompleted || 0));
                   
                   const cityProgress = city.missions.filter(m => completedMissions.includes(m.id)).length;
                   const isComplete = cityProgress === city.missions.length;
