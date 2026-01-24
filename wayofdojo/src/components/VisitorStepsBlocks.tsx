@@ -2,8 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronRight, Sparkles, Eye, X, Star, Trophy, Target, Heart, Zap } from 'lucide-react';
-import { useRouter, useParams } from 'next/navigation';
+import { Sparkles, Eye, X } from 'lucide-react';
 import { Button } from './ui/button';
 
 /**
