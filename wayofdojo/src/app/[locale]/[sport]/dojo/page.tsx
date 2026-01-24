@@ -381,6 +381,120 @@ export default function DojoPage() {
             </motion.div>
 
             {/* ═══════════════════════════════════════════════════════════════════ */}
+            {/* BLOC DE DÉMARRAGE - "Où en es-tu ?" avec barre de progression */}
+            {/* ═══════════════════════════════════════════════════════════════════ */}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-500 via-teal-500 to-cyan-600 shadow-2xl shadow-emerald-500/30 mb-6"
+            >
+              {/* Effets de fond */}
+              <div className="absolute inset-0 overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+                <div className="absolute bottom-0 left-0 w-48 h-48 bg-black/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+              </div>
+
+              <div className="relative p-5 sm:p-6">
+                <div className="flex flex-col md:flex-row items-center gap-4">
+                  
+                  {/* Gros numéro d'étape actuelle */}
+                  <div className="relative flex-shrink-0">
+                    <motion.div
+                      initial={{ scale: 0, rotate: -180 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.2 }}
+                      className="w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-white/20 backdrop-blur-sm border-4 border-white/40 flex items-center justify-center shadow-2xl"
+                    >
+                      <span className="text-5xl sm:text-6xl font-black text-white drop-shadow-lg">
+                        {completedCount < 2 ? '1' : completedCount < 4 ? '2' : completedCount < 6 ? '3' : '🏆'}
+                      </span>
+                    </motion.div>
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ delay: 0.5 }}
+                      className="absolute -bottom-1 -right-1 bg-amber-500 text-slate-900 px-2 py-0.5 rounded-full font-bold text-xs sm:text-sm flex items-center gap-1 shadow-lg"
+                    >
+                      <Sparkles className="w-3 h-3" />
+                      +{currentXp} XP
+                    </motion.div>
+                  </div>
+
+                  {/* Contenu principal */}
+                  <div className="flex-1 text-center md:text-left">
+                    <motion.div
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.3 }}
+                      className="inline-flex items-center gap-2 bg-white/20 px-3 py-1 rounded-full mb-2"
+                    >
+                      <span className="text-white/90 text-xs sm:text-sm font-semibold">
+                        🎮 Ton parcours Ninja
+                      </span>
+                    </motion.div>
+
+                    <motion.h2
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4 }}
+                      className="text-2xl sm:text-3xl font-black text-white mb-1 drop-shadow-lg"
+                    >
+                      {completedCount === 0 ? '🚀 Commence ici !' : 
+                       completedCount < 3 ? '💪 Continue comme ça !' :
+                       completedCount < 6 ? '🔥 Tu progresses vite !' : '🏆 Bravo Champion !'}
+                    </motion.h2>
+
+                    <motion.p
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.5 }}
+                      className="text-white/80 text-sm sm:text-base"
+                    >
+                      {completedCount === 0 ? 'Clique sur le bloc 1 pour découvrir les techniques !' :
+                       `${completedCount} défis complétés - Continue d'explorer les 8 blocs !`}
+                    </motion.p>
+                  </div>
+                </div>
+
+                {/* Barre de progression du parcours */}
+                <div className="mt-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-white/80 text-xs sm:text-sm font-semibold flex items-center gap-1">
+                      <Flame className="w-4 h-4 text-amber-300" />
+                      Progression du parcours
+                    </span>
+                    <span className="text-amber-300 font-bold text-xs sm:text-sm">
+                      {Math.min(8, completedCount + Math.floor(currentXp / 50))} / 8 étapes
+                    </span>
+                  </div>
+                  <div className="h-3 bg-white/20 rounded-full overflow-hidden">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: `${Math.min(100, ((completedCount + Math.floor(currentXp / 50)) / 8) * 100)}%` }}
+                      transition={{ duration: 1, delay: 0.6 }}
+                      className="h-full bg-gradient-to-r from-amber-400 via-orange-400 to-rose-400 rounded-full"
+                    />
+                  </div>
+                  {/* Indicateurs des 8 étapes */}
+                  <div className="flex justify-between mt-2">
+                    {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
+                      <div 
+                        key={num}
+                        className={`w-6 h-6 sm:w-7 sm:h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all ${
+                          num <= (completedCount + Math.floor(currentXp / 50))
+                            ? 'bg-amber-400 text-slate-900'
+                            : 'bg-white/20 text-white/60'
+                        }`}
+                      >
+                        {num}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* ═══════════════════════════════════════════════════════════════════ */}
             {/* 8 BLOCS NUMÉROTÉS - Style aikido@game */}
             {/* ═══════════════════════════════════════════════════════════════════ */}
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
@@ -400,6 +514,12 @@ export default function DojoPage() {
                   <div className="absolute top-2 left-2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center">
                     <span className="text-xl sm:text-2xl font-black text-white">1</span>
                   </div>
+                  {/* Badge COMMENCE ICI pour le bloc 1 */}
+                  {completedCount === 0 && (
+                    <div className="absolute top-2 right-2 bg-amber-400 text-slate-900 px-2 py-0.5 rounded-full text-[10px] font-bold animate-pulse">
+                      COMMENCE ICI →
+                    </div>
+                  )}
                   {/* Contenu */}
                   <div className="mt-10 sm:mt-12">
                     <span className="text-4xl sm:text-5xl">🥋</span>
