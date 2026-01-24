@@ -6,8 +6,7 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { 
-  Swords, LogOut, Settings, BookOpen, Target,
-  Calendar, Award, MessageCircle, Shield,
+  Swords, LogOut, Settings, MessageCircle, Shield,
   Flame, CheckCircle2, Circle, Sparkles
 } from 'lucide-react';
 import UserDashboardBlocks from '@/components/UserDashboardBlocks';
