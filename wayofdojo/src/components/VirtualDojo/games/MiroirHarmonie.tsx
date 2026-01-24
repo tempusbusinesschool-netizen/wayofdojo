@@ -11,6 +11,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { X, Volume2, VolumeX } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
+import { useGameSounds } from '@/services/gameSoundService';
 
 const MOVEMENTS = [
   { id: 'up', name: 'Haut', key: 'ArrowUp', altKey: 'z', icon: '⬆️', pose: 'arms_up' },
@@ -42,6 +43,7 @@ interface MiroirHarmonieProps {
 
 const MiroirHarmonie: React.FC<MiroirHarmonieProps> = ({ userName = '', onComplete, onExit, tanakaSpeak }) => {
   const { speak } = useTanakaVoice();
+  const { play, playSuccess, playCombo } = useGameSounds();
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [gameState, setGameState] = useState<'intro' | 'showing' | 'playing' | 'feedback' | 'finished'>('intro');
   const [score, setScore] = useState(0);
@@ -76,6 +78,7 @@ const MiroirHarmonie: React.FC<MiroirHarmonieProps> = ({ userName = '', onComple
     setSequence(newSeq);
     setPlayerSequence([]);
     setCurrentShowIndex(0);
+    play('start');
     tanakaVoice("Observe les mouvements, puis reproduis-les.");
   };
 
@@ -123,9 +126,11 @@ const MiroirHarmonie: React.FC<MiroirHarmonieProps> = ({ userName = '', onComple
         setLastResult('correct');
         setScore(s => s + (10 * (combo + 1)));
         setCombo(c => c + 1);
+        playCombo(combo + 1);
       } else {
         setLastResult('wrong');
         setCombo(0);
+        play('fail');
       }
 
       const newPlayerSeq = [...playerSequence, movement];
@@ -173,8 +178,10 @@ const MiroirHarmonie: React.FC<MiroirHarmonieProps> = ({ userName = '', onComple
     const kiEarned = success ? 15 + Math.floor(finalScore / 30) : 5;
     
     if (success) {
+      playSuccess('high');
       tanakaVoice(`Bravo ${userName} ! Tu bouges comme un vrai miroir !`);
     } else {
+      play('end');
       tanakaVoice("Continue à t'entraîner, tu progresseras !");
     }
     
