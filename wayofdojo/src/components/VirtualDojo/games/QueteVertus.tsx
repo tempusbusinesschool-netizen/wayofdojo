@@ -11,6 +11,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { X, Volume2, VolumeX, CheckCircle2 } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
+import { useGameSounds } from '@/services/gameSoundService';
 
 interface Virtue {
   id: string;
@@ -117,6 +118,7 @@ interface QueteVertusProps {
 
 const QueteVertus: React.FC<QueteVertusProps> = ({ userName = '', onComplete, onExit, tanakaSpeak }) => {
   const { speak } = useTanakaVoice();
+  const { play, playSuccess } = useGameSounds();
   const [soundEnabled, setSoundEnabled] = useState(true);
   
   const [gameState, setGameState] = useState<'intro' | 'playing' | 'feedback' | 'finished'>('intro');
@@ -136,6 +138,7 @@ const QueteVertus: React.FC<QueteVertusProps> = ({ userName = '', onComplete, on
     setCurrentIndex(0);
     setScore(0);
     setCollectedVirtues([]);
+    play('start');
     speakTanaka("Découvre les 7 vertus du Budo en répondant aux questions.");
   };
 
@@ -151,6 +154,9 @@ const QueteVertus: React.FC<QueteVertusProps> = ({ userName = '', onComplete, on
     if (answer.isCorrect) {
       setScore(prev => prev + 50);
       setCollectedVirtues(prev => [...prev, virtue.id]);
+      playSuccess('medium');
+    } else {
+      play('fail');
     }
     
     setGameState('feedback');
@@ -174,8 +180,10 @@ const QueteVertus: React.FC<QueteVertusProps> = ({ userName = '', onComplete, on
     const kiEarned = 40 + Math.floor(finalScore / 20);
     
     if (collectedVirtues.length >= 6) {
+      playSuccess('high');
       speakTanaka(`Bravo ${userName} ! Tu as collecté presque toutes les vertus !`);
     } else {
+      play('end');
       speakTanaka("Tu progresses sur le chemin des vertus !");
     }
     
