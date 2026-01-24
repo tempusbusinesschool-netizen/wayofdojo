@@ -215,7 +215,7 @@ Exemples implémentés:
 - [x] Page Techniques
 - [x] Page Mouvements (avancés)
 - [x] Gamification Jeune Samouraï (6-14 ans)
-- [x] **Gamification Samouraï Confirmé (14+ ans) ✅ NOUVEAU**
+- [x] **Gamification Samouraï Confirmé (14+ ans) ✅**
   - [x] 9 villes japonaises (Miyamoto → Kumamoto)
   - [x] Citations de Musashi (Go Rin No Sho)
   - [x] 5 rangs (Rōnin → Kenshi → Bushi → Sensei → Maître)
@@ -223,6 +223,12 @@ Exemples implémentés:
   - [x] Maître Tanaka version mentor/philosophe
   - [x] Carte interactive du Japon
   - [x] API progression adulte
+- [x] **Migration aikido@game (24 Jan 2025) ✅**
+  - [x] Refactoring dojo/page.tsx → JuniorDashboard + AdultDashboard
+  - [x] JourneyPath 6 étapes intégré
+  - [x] 8 blocs de navigation style aikido@game
+  - [x] Dialog introduction Maître Tanaka
+  - [x] 7 Vertus avec barres de progression
 - [x] Défi du jour (Dashboard)
 - [ ] Page Progression complète
 - [ ] Page Profil complète
