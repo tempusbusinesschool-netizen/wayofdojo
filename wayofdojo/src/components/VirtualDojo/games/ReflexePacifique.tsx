@@ -11,6 +11,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { X, Volume2, VolumeX } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
+import { useGameSounds } from '@/services/gameSoundService';
 
 interface Scenario {
   id: string;
@@ -81,6 +82,7 @@ interface ReflexePacifiqueProps {
 
 const ReflexePacifique: React.FC<ReflexePacifiqueProps> = ({ userName = '', onComplete, onExit, tanakaSpeak }) => {
   const { speak } = useTanakaVoice();
+  const { play, playSuccess } = useGameSounds();
   const [soundEnabled, setSoundEnabled] = useState(true);
   
   const [gameState, setGameState] = useState<'intro' | 'playing' | 'feedback' | 'finished'>('intro');
@@ -100,6 +102,7 @@ const ReflexePacifique: React.FC<ReflexePacifiqueProps> = ({ userName = '', onCo
     setCurrentIndex(0);
     setScore(0);
     setWiseChoices(0);
+    play('start');
     speakTanaka("Lis bien les situations, puis choisis la réponse la plus sage.");
   };
 
@@ -115,6 +118,9 @@ const ReflexePacifique: React.FC<ReflexePacifiqueProps> = ({ userName = '', onCo
     if (choice.isWise) {
       setScore(prev => prev + 30);
       setWiseChoices(prev => prev + 1);
+      playSuccess('medium');
+    } else {
+      play('fail');
     }
     
     setGameState('feedback');
@@ -138,8 +144,10 @@ const ReflexePacifique: React.FC<ReflexePacifiqueProps> = ({ userName = '', onCo
     const kiEarned = 30 + Math.floor(finalScore / 20);
     
     if (wiseChoices >= 4) {
+      playSuccess('high');
       speakTanaka(`Bravo ${userName} ! Tu as un cœur de vrai Budoka !`);
     } else {
+      play('end');
       speakTanaka("Tu progresses. Continue à réfléchir avec sagesse !");
     }
     
