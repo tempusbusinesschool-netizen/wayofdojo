@@ -8,8 +8,7 @@ import { Button } from '@/components/ui/button';
 import { 
   Swords, LogOut, Settings, BookOpen, Target,
   Calendar, Award, MessageCircle, Shield,
-  TrendingUp, Flame, Trophy,
-  CheckCircle2, Circle, Sparkles
+  Flame, CheckCircle2, Circle, Sparkles
 } from 'lucide-react';
 import UserDashboardBlocks from '@/components/UserDashboardBlocks';
 import MaitreTanaka from '@/components/MaitreTanaka';
