@@ -223,17 +223,18 @@ interface VirtualDojoProps {
   userName?: string;
   userLevel?: number;
   userKi?: number;
-  userId?: string;
+  userId?: string; // Reserved for future parent validation
   onGameComplete?: (gameId: string, score: number, ki: number) => void;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const VirtualDojo: React.FC<VirtualDojoProps> = ({ 
   isOpen, 
   onClose, 
   userName = '',
   userLevel = 0,
   userKi = 0,
-  userId = '',
+  userId: _userId = '',
   onGameComplete
 }) => {
   const [selectedGame, setSelectedGame] = useState<typeof DOJO_GAMES[0] | null>(null);
@@ -245,7 +246,7 @@ const VirtualDojo: React.FC<VirtualDojoProps> = ({
   const [totalKi, setTotalKi] = useState(userKi);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
   const [audioMuted, setAudioMuted] = useState(false);
-  const [isAudioPlaying, setIsAudioPlaying] = useState(false);
+  const [_isAudioPlaying, setIsAudioPlaying] = useState(false);
   
   const currentAudioRef = useRef<HTMLAudioElement | null>(null);
   const hasPlayedWelcomeRef = useRef(false);

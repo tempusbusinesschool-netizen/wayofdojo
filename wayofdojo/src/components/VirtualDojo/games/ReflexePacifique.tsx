@@ -9,7 +9,7 @@
 import React, { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { X, Volume2, VolumeX, Clock } from 'lucide-react';
+import { X, Volume2, VolumeX } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 
 interface Scenario {

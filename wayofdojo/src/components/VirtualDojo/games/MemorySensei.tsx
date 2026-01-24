@@ -10,7 +10,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { X, RotateCcw, Volume2, VolumeX, Clock } from 'lucide-react';
+import { X, Volume2, VolumeX, Clock } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 
 // Cartes du jeu (techniques d'Aïkido)
