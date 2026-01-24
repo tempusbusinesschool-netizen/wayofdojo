@@ -672,131 +672,23 @@ export default function DojoPage() {
                 </span>
               </div>
               <DailyChallengeWidget locale={locale} sport={sport} />
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.15 + i * 0.05 }}
-                      whileHover={{ scale: 1.05, y: -5 }}
-                      whileTap={{ scale: 0.98 }}
-                      className={`bg-gradient-to-br ${action.color} rounded-2xl p-5 shadow-xl ${action.shadow} cursor-pointer relative overflow-hidden group`}
-                    >
-                      <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors" />
-                      <motion.div 
-                        className="text-4xl mb-3"
-                        animate={{ rotate: [0, 10, -10, 0] }}
-                        transition={{ duration: 2, repeat: Infinity, delay: i * 0.5 }}
-                      >
-                        {action.emoji}
-                      </motion.div>
-                      <h3 className="text-lg font-bold text-white">{action.label}</h3>
-                      <p className="text-xs text-white/70 mt-1">{action.description}</p>
-                    </motion.div>
-                  </Link>
-                ))}
-              </div>
             </motion.div>
 
             {/* ═══════════════════════════════════════════════════════════════════ */}
-            {/* BLOC 3: Deux colonnes - Défi du jour + Stats semaine */}
-            {/* ═══════════════════════════════════════════════════════════════════ */}
-            <div className="grid lg:grid-cols-2 gap-6">
-              
-              {/* Colonne gauche: Défi du jour */}
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2 }}
-                className="bg-slate-900/50 rounded-3xl p-6 border border-emerald-500/20"
-              >
-                <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                  🎯 Défi du jour
-                </h2>
-                <DailyChallengeWidget locale={locale} sport={sport} />
-              </motion.div>
-
-              {/* Colonne droite: Stats de la semaine */}
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.2 }}
-                className="bg-slate-900/50 rounded-3xl p-6 border border-cyan-500/20"
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                    <TrendingUp className="w-5 h-5 text-cyan-400" />
-                    Cette semaine
-                  </h2>
-                  <span className="text-xs text-slate-400 bg-slate-800 px-3 py-1 rounded-full">
-                    Du 13 au 19 Jan
-                  </span>
-                </div>
-                
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-2xl p-4 text-center border border-cyan-500/30">
-                    <motion.div 
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ delay: 0.3, type: "spring" }}
-                      className="text-4xl font-black text-cyan-400"
-                    >
-                      {weeklyStats.trainings}
-                    </motion.div>
-                    <p className="text-sm text-slate-300 mt-1">Entraînements</p>
-                  </div>
-                  
-                  <div className="bg-gradient-to-br from-emerald-500/20 to-green-500/20 rounded-2xl p-4 text-center border border-emerald-500/30">
-                    <motion.div 
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ delay: 0.35, type: "spring" }}
-                      className="text-4xl font-black text-emerald-400"
-                    >
-                      {weeklyStats.techniques}
-                    </motion.div>
-                    <p className="text-sm text-slate-300 mt-1">Techniques</p>
-                  </div>
-                  
-                  <div className="bg-gradient-to-br from-amber-500/20 to-orange-500/20 rounded-2xl p-4 text-center border border-amber-500/30">
-                    <motion.div 
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ delay: 0.4, type: "spring" }}
-                      className="text-4xl font-black text-amber-400"
-                    >
-                      +{weeklyStats.xpGained}
-                    </motion.div>
-                    <p className="text-sm text-slate-300 mt-1">XP gagnés</p>
-                  </div>
-                  
-                  <div className="bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-2xl p-4 text-center border border-orange-500/30">
-                    <motion.div 
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ delay: 0.45, type: "spring" }}
-                      className="text-4xl font-black text-orange-400 flex items-center justify-center gap-1"
-                    >
-                      <Flame className="w-6 h-6" />
-                      {weeklyStats.streakDays}
-                    </motion.div>
-                    <p className="text-sm text-slate-300 mt-1">Jours de suite</p>
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-
-            {/* ═══════════════════════════════════════════════════════════════════ */}
-            {/* BLOC 4: Mini-défis du Budo */}
+            {/* SECTION MINI-DÉFIS DU BUDO */}
             {/* ═══════════════════════════════════════════════════════════════════ */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="bg-slate-900/50 rounded-3xl p-6 border border-rose-500/20"
+              transition={{ delay: 0.55 }}
+              className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl p-5 sm:p-6 border border-rose-500/30"
             >
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-xl font-bold text-white flex items-center gap-2">
                   🔥 Mini-défis du Budo
                 </h2>
                 <div className="flex items-center gap-3">
-                  <span className="text-sm text-slate-400 bg-slate-800 px-3 py-1 rounded-full">
+                  <span className="text-sm text-slate-400 bg-slate-700 px-3 py-1 rounded-full">
                     {completedCount}/{dailyChallenges.length} complétés
                   </span>
                   <span className="text-sm font-bold text-amber-400 bg-amber-500/20 px-3 py-1 rounded-full">
@@ -810,7 +702,7 @@ export default function DojoPage() {
                 <motion.div 
                   initial={{ width: 0 }}
                   animate={{ width: `${(completedCount / dailyChallenges.length) * 100}%` }}
-                  transition={{ duration: 1, delay: 0.4 }}
+                  transition={{ duration: 1, delay: 0.6 }}
                   className="h-full bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 rounded-full"
                 />
               </div>
@@ -821,7 +713,7 @@ export default function DojoPage() {
                     key={challenge.id}
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.35 + index * 0.05 }}
+                    transition={{ delay: 0.6 + index * 0.05 }}
                     whileHover={{ scale: 1.02 }}
                     onClick={() => !challenge.completed && !processingChallenge && handleCompleteChallenge(challenge.id, challenge.virtue, challenge.xp)}
                     className={`p-4 rounded-2xl border transition-all cursor-pointer ${
@@ -869,13 +761,13 @@ export default function DojoPage() {
             </motion.div>
 
             {/* ═══════════════════════════════════════════════════════════════════ */}
-            {/* BLOC 5: Les 7 Vertus du Budo */}
+            {/* SECTION 7 VERTUS DU BUDO */}
             {/* ═══════════════════════════════════════════════════════════════════ */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="bg-slate-900/50 rounded-3xl p-6 border border-violet-500/20"
+              transition={{ delay: 0.65 }}
+              className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl p-5 sm:p-6 border border-amber-500/30"
             >
               <h2 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
                 🎭 Les 7 Vertus du Budo
@@ -892,7 +784,7 @@ export default function DojoPage() {
                       key={virtue.id}
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.45 + index * 0.05 }}
+                      transition={{ delay: 0.7 + index * 0.05 }}
                       whileHover={{ scale: 1.1, y: -5 }}
                       onClick={() => setSelectedVirtue(selectedVirtue === virtue.id ? null : virtue.id)}
                       className={`text-center p-4 rounded-2xl border cursor-pointer transition-all ${
@@ -916,7 +808,7 @@ export default function DojoPage() {
                         <motion.div 
                           initial={{ width: 0 }}
                           animate={{ width: `${progress}%` }}
-                          transition={{ duration: 1, delay: 0.5 + index * 0.1 }}
+                          transition={{ duration: 1, delay: 0.75 + index * 0.1 }}
                           className={`h-full rounded-full bg-gradient-to-r ${virtue.gradient}`}
                         />
                       </div>
@@ -971,43 +863,6 @@ export default function DojoPage() {
                   </motion.div>
                 )}
               </AnimatePresence>
-            </motion.div>
-
-            {/* ═══════════════════════════════════════════════════════════════════ */}
-            {/* BLOC 6: Derniers accomplissements */}
-            {/* ═══════════════════════════════════════════════════════════════════ */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="bg-slate-900/50 rounded-3xl p-6 border border-amber-500/20"
-            >
-              <h2 className="text-xl font-bold text-white mb-5 flex items-center gap-2">
-                <Trophy className="w-5 h-5 text-amber-400" />
-                Derniers accomplissements
-              </h2>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {[
-                  { title: 'Premier Pas', desc: 'Inscription complète', emoji: '🎉', date: 'Aujourd\'hui', color: 'from-emerald-500/20 to-green-500/20 border-emerald-500/30' },
-                  { title: 'Premiers XP', desc: '10 XP gagnés', emoji: '⭐', date: 'Aujourd\'hui', color: 'from-amber-500/20 to-yellow-500/20 border-amber-500/30' },
-                  { title: 'Curieux', desc: 'Page techniques visitée', emoji: '📚', date: 'Hier', color: 'from-blue-500/20 to-cyan-500/20 border-blue-500/30' },
-                  { title: 'Fidèle', desc: '3 jours consécutifs', emoji: '🔥', date: 'En cours', color: 'from-orange-500/20 to-red-500/20 border-orange-500/30' },
-                ].map((achievement, index) => (
-                  <motion.div
-                    key={achievement.title}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.55 + index * 0.1 }}
-                    whileHover={{ scale: 1.05 }}
-                    className={`p-5 rounded-2xl border bg-gradient-to-br ${achievement.color}`}
-                  >
-                    <div className="text-4xl mb-3">{achievement.emoji}</div>
-                    <h4 className="font-bold text-white">{achievement.title}</h4>
-                    <p className="text-sm text-slate-400 mt-1">{achievement.desc}</p>
-                    <p className="text-xs text-slate-500 mt-2">{achievement.date}</p>
-                  </motion.div>
-                ))}
-              </div>
             </motion.div>
 
           </div>
