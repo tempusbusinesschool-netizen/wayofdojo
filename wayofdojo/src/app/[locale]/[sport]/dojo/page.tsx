@@ -156,7 +156,8 @@ export default function DojoPage() {
   };
 
   // Complete a challenge (for junior mode)
-  const handleCompleteChallenge = async (challengeId: string, virtueId: string, xpReward: number) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const handleCompleteChallenge = async (challengeId: string, virtueId: string, _xpReward: number) => {
     if (completedChallenges.includes(challengeId) || processingChallenge) return;
     
     setProcessingChallenge(challengeId);

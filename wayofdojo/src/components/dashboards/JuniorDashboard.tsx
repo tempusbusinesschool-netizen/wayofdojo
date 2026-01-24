@@ -3,7 +3,7 @@
 import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Flame, CheckCircle2, Circle, Sparkles
+  Flame, CheckCircle2, Circle
 } from 'lucide-react';
 import Link from 'next/link';
 import UserDashboardBlocks from '@/components/UserDashboardBlocks';

@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ChevronRight, Lock, CheckCircle2, Play, Star, 
   Sparkles, Target, Trophy, Flame,
-  Volume2, Swords, BookOpen, Award
+  Swords, BookOpen, Award
 } from 'lucide-react';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
@@ -152,11 +152,13 @@ interface JourneyPathProps {
 export const JourneyPath: React.FC<JourneyPathProps> = ({
   userName = "",
   completedSteps = [],
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   totalPoints = 0,
   onStepClick,
   onStepComplete,
   onNavigate,
   onUserNameChange,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   isEnfantMode = true
 }) => {
   const [selectedStep, setSelectedStep] = useState<typeof JOURNEY_STEPS[0] | null>(null);
