@@ -2,10 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Lock, ChevronRight, Sparkles, Eye, X, Star, Trophy, Target, Heart, Zap, Volume2, VolumeX } from 'lucide-react';
+import { ChevronRight, Sparkles, Eye, X, Star, Trophy, Target, Heart, Zap } from 'lucide-react';
 import { useRouter, useParams } from 'next/navigation';
 import { Button } from './ui/button';
-import { Dialog, DialogContent, DialogTitle } from './ui/dialog';
 
 /**
  * ═══════════════════════════════════════════════════════════════════════════════
