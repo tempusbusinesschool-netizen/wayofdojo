@@ -404,382 +404,389 @@ export default function DojoPage() {
           />
         )}
 
-        {/* JUNIOR MODE: Jeune Samouraï - Original content */}
+        {/* JUNIOR MODE: Jeune Samouraï - Layout en blocs */}
         {isJeuneSamourai && (
-          <>
-        {/* User Dashboard Blocks */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-        >
-          <UserDashboardBlocks
-            userName={user.firstName}
-            statistics={{
-              overall_progress: Math.min(100, (currentXp / 10) || 0),
-              mastered_techniques: user.gamification.completedTechniques?.length || 0,
-              practiced_techniques: Math.floor((user.gamification.completedTechniques?.length || 0) * 1.5),
-              in_progress_techniques: completedCount,
-            }}
-            currentBelt={currentBelt}
-            totalPoints={currentXp}
-            xp={currentXp}
-            level={currentLevel}
-            streak={currentStreak}
-          />
-        </motion.div>
+          <div className="space-y-6">
+            
+            {/* ═══════════════════════════════════════════════════════════════════ */}
+            {/* BLOC 1: Profil utilisateur + Stats rapides */}
+            {/* ═══════════════════════════════════════════════════════════════════ */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <UserDashboardBlocks
+                userName={user.firstName}
+                statistics={{
+                  overall_progress: Math.min(100, (currentXp / 10) || 0),
+                  mastered_techniques: user.gamification.completedTechniques?.length || 0,
+                  practiced_techniques: Math.floor((user.gamification.completedTechniques?.length || 0) * 1.5),
+                  in_progress_techniques: completedCount,
+                }}
+                currentBelt={currentBelt}
+                totalPoints={currentXp}
+                xp={currentXp}
+                level={currentLevel}
+                streak={currentStreak}
+              />
+            </motion.div>
 
-        {/* Weekly Stats Banner */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="mt-6"
-        >
-          <div className={`rounded-2xl p-4 border ${
-            isJeuneSamourai 
-              ? 'bg-gradient-to-r from-amber-600/20 to-orange-600/20 border-amber-500/30'
-              : 'bg-gradient-to-r from-violet-600/20 to-purple-600/20 border-violet-500/30'
-          }`}>
-            <div className="flex items-center justify-between mb-3">
-              <h3 className="text-white font-bold flex items-center gap-2">
-                <TrendingUp className="w-5 h-5 text-emerald-400" />
-                Cette semaine
-              </h3>
-              <span className="text-xs text-slate-400">Du 13 au 19 Jan</span>
-            </div>
-            <div className="grid grid-cols-4 gap-3">
-              <div className="text-center">
-                <motion.div 
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: 0.2, type: "spring" }}
-                  className="text-2xl font-black text-cyan-400"
-                >
-                  {weeklyStats.trainings}
-                </motion.div>
-                <p className="text-xs text-slate-400">Entraînements</p>
+            {/* ═══════════════════════════════════════════════════════════════════ */}
+            {/* BLOC 2: Actions rapides - Grande grille colorée */}
+            {/* ═══════════════════════════════════════════════════════════════════ */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="bg-slate-900/50 rounded-3xl p-6 border border-amber-500/20"
+            >
+              <h2 className="text-xl font-bold text-white mb-5 flex items-center gap-2">
+                🎯 Que veux-tu faire aujourd&apos;hui ?
+              </h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                {quickActions.map((action, i) => (
+                  <Link key={action.label} href={action.href}>
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.15 + i * 0.05 }}
+                      whileHover={{ scale: 1.05, y: -5 }}
+                      whileTap={{ scale: 0.98 }}
+                      className={`bg-gradient-to-br ${action.color} rounded-2xl p-5 shadow-xl ${action.shadow} cursor-pointer relative overflow-hidden group`}
+                    >
+                      <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors" />
+                      <motion.div 
+                        className="text-4xl mb-3"
+                        animate={{ rotate: [0, 10, -10, 0] }}
+                        transition={{ duration: 2, repeat: Infinity, delay: i * 0.5 }}
+                      >
+                        {action.emoji}
+                      </motion.div>
+                      <h3 className="text-lg font-bold text-white">{action.label}</h3>
+                      <p className="text-xs text-white/70 mt-1">{action.description}</p>
+                    </motion.div>
+                  </Link>
+                ))}
               </div>
-              <div className="text-center">
-                <motion.div 
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: 0.3, type: "spring" }}
-                  className="text-2xl font-black text-emerald-400"
-                >
-                  {weeklyStats.techniques}
-                </motion.div>
-                <p className="text-xs text-slate-400">Techniques</p>
-              </div>
-              <div className="text-center">
-                <motion.div 
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: 0.4, type: "spring" }}
-                  className="text-2xl font-black text-amber-400"
-                >
-                  +{weeklyStats.xpGained}
-                </motion.div>
-                <p className="text-xs text-slate-400">XP gagnés</p>
-              </div>
-              <div className="text-center">
-                <motion.div 
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ delay: 0.5, type: "spring" }}
-                  className="text-2xl font-black text-orange-400 flex items-center justify-center gap-1"
-                >
-                  <Flame className="w-5 h-5" />
-                  {weeklyStats.streakDays}
-                </motion.div>
-                <p className="text-xs text-slate-400">Jours de suite</p>
-              </div>
-            </div>
-          </div>
-        </motion.div>
+            </motion.div>
 
-        {/* Quick Actions Grid */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="mt-8"
-        >
-          <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-            {isJeuneSamourai ? '🎯 Que veux-tu faire ?' : '⚡ Actions rapides'}
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-            {quickActions.map((action, i) => (
-              <Link key={action.label} href={action.href}>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 + i * 0.1 }}
-                  whileHover={{ scale: 1.05, y: -5 }}
-                  whileTap={{ scale: 0.98 }}
-                  className={`bg-gradient-to-br ${action.color} rounded-2xl p-5 shadow-xl ${action.shadow} cursor-pointer relative overflow-hidden group`}
-                >
-                  <div className="absolute inset-0 bg-white/0 group-hover:bg-white/10 transition-colors" />
-                  <motion.div 
-                    className="text-4xl mb-3"
-                    animate={{ rotate: [0, 10, -10, 0] }}
-                    transition={{ duration: 2, repeat: Infinity, delay: i * 0.5 }}
-                  >
-                    {action.emoji}
-                  </motion.div>
-                  <h3 className="text-lg font-bold text-white">{action.label}</h3>
-                  <p className="text-xs text-white/70 mt-1">{action.description}</p>
-                </motion.div>
-              </Link>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Daily Challenge Widget - Dynamic */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-          className="mt-8"
-        >
-          <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-            🎯 Défi du jour
-          </h2>
-          <DailyChallengeWidget locale={locale} sport={sport} />
-        </motion.div>
-
-        {/* Quick Daily Challenges - Vertus */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.45 }}
-          className="mt-8"
-        >
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold text-white flex items-center gap-2">
-              🔥 Mini-défis
-            </h2>
-            <div className="flex items-center gap-3">
-              <span className="text-sm text-slate-400">
-                {completedCount}/{dailyChallenges.length} complétés
-              </span>
-              <span className="text-sm font-bold text-amber-400">
-                +{totalXpToday} XP
-              </span>
-            </div>
-          </div>
-          
-          {/* Progress bar for challenges */}
-          <div className="h-2 bg-slate-700 rounded-full mb-4 overflow-hidden">
-            <motion.div 
-              initial={{ width: 0 }}
-              animate={{ width: `${(completedCount / dailyChallenges.length) * 100}%` }}
-              transition={{ duration: 1, delay: 0.5 }}
-              className="h-full bg-gradient-to-r from-amber-500 to-orange-500 rounded-full"
-            />
-          </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {dailyChallenges.map((challenge, index) => (
+            {/* ═══════════════════════════════════════════════════════════════════ */}
+            {/* BLOC 3: Deux colonnes - Défi du jour + Stats semaine */}
+            {/* ═══════════════════════════════════════════════════════════════════ */}
+            <div className="grid lg:grid-cols-2 gap-6">
+              
+              {/* Colonne gauche: Défi du jour */}
               <motion.div
-                key={challenge.id}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.5 + index * 0.05 }}
-                whileHover={{ scale: 1.02 }}
-                onClick={() => !challenge.completed && handleCompleteChallenge(challenge.id, challenge.virtue, challenge.xp)}
-                className={`p-4 rounded-2xl border transition-all cursor-pointer ${
-                  challenge.completed
-                    ? 'bg-emerald-500/20 border-emerald-500/50'
-                    : isJeuneSamourai 
-                      ? 'bg-amber-900/30 border-amber-700/50 hover:border-amber-500/50' 
-                      : 'bg-slate-800/50 border-slate-700 hover:border-violet-500/50'
-                }`}
+                transition={{ delay: 0.2 }}
+                className="bg-slate-900/50 rounded-3xl p-6 border border-emerald-500/20"
               >
-                <div className="flex items-start gap-3">
-                  <div className="mt-1">
-                    {challenge.completed ? (
-                      <motion.div
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        transition={{ type: "spring" }}
-                      >
-                        <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-                      </motion.div>
-                    ) : (
-                      <Circle className="w-5 h-5 text-slate-500" />
-                    )}
+                <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                  🎯 Défi du jour
+                </h2>
+                <DailyChallengeWidget locale={locale} sport={sport} />
+              </motion.div>
+
+              {/* Colonne droite: Stats de la semaine */}
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 }}
+                className="bg-slate-900/50 rounded-3xl p-6 border border-cyan-500/20"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                    <TrendingUp className="w-5 h-5 text-cyan-400" />
+                    Cette semaine
+                  </h2>
+                  <span className="text-xs text-slate-400 bg-slate-800 px-3 py-1 rounded-full">
+                    Du 13 au 19 Jan
+                  </span>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-2xl p-4 text-center border border-cyan-500/30">
+                    <motion.div 
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ delay: 0.3, type: "spring" }}
+                      className="text-4xl font-black text-cyan-400"
+                    >
+                      {weeklyStats.trainings}
+                    </motion.div>
+                    <p className="text-sm text-slate-300 mt-1">Entraînements</p>
                   </div>
-                  <div className="flex-1">
-                    <h3 className={`font-bold ${challenge.completed ? 'text-emerald-400' : 'text-white'}`}>
-                      {challenge.title}
-                    </h3>
-                    <p className="text-sm text-slate-400">{challenge.desc}</p>
-                    <div className="flex items-center gap-2 mt-2">
-                      <span className={`text-xs px-2 py-0.5 rounded-full ${
-                        VIRTUES_GAMIFICATION[challenge.virtue]?.bgColor || 'bg-slate-700'
-                      } ${VIRTUES_GAMIFICATION[challenge.virtue]?.borderColor || 'border-slate-600'} border`}>
-                        {VIRTUES_GAMIFICATION[challenge.virtue]?.emoji} {VIRTUES_GAMIFICATION[challenge.virtue]?.name}
-                      </span>
-                    </div>
+                  
+                  <div className="bg-gradient-to-br from-emerald-500/20 to-green-500/20 rounded-2xl p-4 text-center border border-emerald-500/30">
+                    <motion.div 
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ delay: 0.35, type: "spring" }}
+                      className="text-4xl font-black text-emerald-400"
+                    >
+                      {weeklyStats.techniques}
+                    </motion.div>
+                    <p className="text-sm text-slate-300 mt-1">Techniques</p>
                   </div>
-                  <div className={`text-lg font-black ${challenge.completed ? 'text-emerald-400' : 'text-amber-400'}`}>
-                    {challenge.completed ? '✓' : `+${challenge.xp}`}
+                  
+                  <div className="bg-gradient-to-br from-amber-500/20 to-orange-500/20 rounded-2xl p-4 text-center border border-amber-500/30">
+                    <motion.div 
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ delay: 0.4, type: "spring" }}
+                      className="text-4xl font-black text-amber-400"
+                    >
+                      +{weeklyStats.xpGained}
+                    </motion.div>
+                    <p className="text-sm text-slate-300 mt-1">XP gagnés</p>
+                  </div>
+                  
+                  <div className="bg-gradient-to-br from-orange-500/20 to-red-500/20 rounded-2xl p-4 text-center border border-orange-500/30">
+                    <motion.div 
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ delay: 0.45, type: "spring" }}
+                      className="text-4xl font-black text-orange-400 flex items-center justify-center gap-1"
+                    >
+                      <Flame className="w-6 h-6" />
+                      {weeklyStats.streakDays}
+                    </motion.div>
+                    <p className="text-sm text-slate-300 mt-1">Jours de suite</p>
                   </div>
                 </div>
               </motion.div>
-            ))}
-          </div>
-        </motion.div>
+            </div>
 
-        {/* 7 Virtues of Budo - Enhanced with progress */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6 }}
-          className="mt-8"
-        >
-          <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-            🎭 Les 7 Vertus du Budo
-            <span className="text-sm font-normal text-slate-400 ml-2">
-              Clique pour voir les détails
-            </span>
-          </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-3">
-            {Object.values(VIRTUES_GAMIFICATION).map((virtue, index) => {
-              const progress = virtueProgress[virtue.id] || 0;
-              return (
-                <motion.div
-                  key={virtue.id}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.7 + index * 0.05 }}
-                  whileHover={{ scale: 1.1, y: -5 }}
-                  onClick={() => setSelectedVirtue(selectedVirtue === virtue.id ? null : virtue.id)}
-                  className={`text-center p-3 rounded-xl border cursor-pointer transition-all ${
-                    selectedVirtue === virtue.id
-                      ? `bg-gradient-to-br ${virtue.gradient} border-white/30`
-                      : isJeuneSamourai 
-                        ? 'bg-amber-900/30 border-amber-700/50 hover:border-amber-500/50' 
-                        : 'bg-slate-800/50 border-slate-700 hover:border-violet-500/50'
-                  }`}
-                >
-                  <motion.div 
-                    className="text-3xl mb-1"
-                    animate={{ rotate: selectedVirtue === virtue.id ? [0, 10, -10, 0] : 0 }}
-                    transition={{ duration: 0.5 }}
+            {/* ═══════════════════════════════════════════════════════════════════ */}
+            {/* BLOC 4: Mini-défis du Budo */}
+            {/* ═══════════════════════════════════════════════════════════════════ */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="bg-slate-900/50 rounded-3xl p-6 border border-rose-500/20"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                  🔥 Mini-défis du Budo
+                </h2>
+                <div className="flex items-center gap-3">
+                  <span className="text-sm text-slate-400 bg-slate-800 px-3 py-1 rounded-full">
+                    {completedCount}/{dailyChallenges.length} complétés
+                  </span>
+                  <span className="text-sm font-bold text-amber-400 bg-amber-500/20 px-3 py-1 rounded-full">
+                    +{totalXpToday} XP
+                  </span>
+                </div>
+              </div>
+              
+              {/* Progress bar */}
+              <div className="h-3 bg-slate-700 rounded-full mb-5 overflow-hidden">
+                <motion.div 
+                  initial={{ width: 0 }}
+                  animate={{ width: `${(completedCount / dailyChallenges.length) * 100}%` }}
+                  transition={{ duration: 1, delay: 0.4 }}
+                  className="h-full bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 rounded-full"
+                />
+              </div>
+
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {dailyChallenges.map((challenge, index) => (
+                  <motion.div
+                    key={challenge.id}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.35 + index * 0.05 }}
+                    whileHover={{ scale: 1.02 }}
+                    onClick={() => !challenge.completed && !processingChallenge && handleCompleteChallenge(challenge.id, challenge.virtue, challenge.xp)}
+                    className={`p-4 rounded-2xl border transition-all cursor-pointer ${
+                      challenge.completed
+                        ? 'bg-emerald-500/20 border-emerald-500/50'
+                        : processingChallenge === challenge.id
+                          ? 'bg-amber-500/20 border-amber-500/50 animate-pulse'
+                          : 'bg-slate-800/50 border-slate-700 hover:border-amber-500/50 hover:bg-amber-900/20'
+                    }`}
                   >
-                    {virtue.emoji}
-                  </motion.div>
-                  <p className={`text-xs font-bold ${selectedVirtue === virtue.id ? 'text-white' : 'text-white'}`}>
-                    {virtue.name}
-                  </p>
-                  <p className={`text-[10px] ${selectedVirtue === virtue.id ? 'text-white/80' : 'text-slate-400'}`}>
-                    {virtue.kanji}
-                  </p>
-                  
-                  {/* Mini progress bar */}
-                  <div className="mt-2 h-1 bg-slate-700 rounded-full overflow-hidden">
-                    <motion.div 
-                      initial={{ width: 0 }}
-                      animate={{ width: `${progress}%` }}
-                      transition={{ duration: 1, delay: 0.8 + index * 0.1 }}
-                      className={`h-full rounded-full bg-gradient-to-r ${virtue.gradient}`}
-                    />
-                  </div>
-                  <p className={`text-[10px] mt-1 ${selectedVirtue === virtue.id ? 'text-white' : 'text-slate-500'}`}>
-                    {progress}%
-                  </p>
-                </motion.div>
-              );
-            })}
-          </div>
-
-          {/* Expanded Virtue Details */}
-          <AnimatePresence>
-            {selectedVirtue && VIRTUES_GAMIFICATION[selectedVirtue] && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                className="overflow-hidden mt-4"
-              >
-                <div className={`p-5 rounded-2xl border bg-gradient-to-br ${VIRTUES_GAMIFICATION[selectedVirtue].gradient}/20 ${VIRTUES_GAMIFICATION[selectedVirtue].borderColor}`}>
-                  <div className="flex items-start gap-4">
-                    <div className="text-5xl">
-                      {VIRTUES_GAMIFICATION[selectedVirtue].animal.evolutions[0].emoji}
+                    <div className="flex items-start gap-3">
+                      <div className="mt-1">
+                        {challenge.completed ? (
+                          <motion.div
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            transition={{ type: "spring" }}
+                          >
+                            <CheckCircle2 className="w-6 h-6 text-emerald-400" />
+                          </motion.div>
+                        ) : (
+                          <Circle className="w-6 h-6 text-slate-500" />
+                        )}
+                      </div>
+                      <div className="flex-1">
+                        <h3 className={`font-bold ${challenge.completed ? 'text-emerald-400' : 'text-white'}`}>
+                          {challenge.title}
+                        </h3>
+                        <p className="text-sm text-slate-400">{challenge.desc}</p>
+                        <div className="mt-2">
+                          <span className={`text-xs px-2 py-1 rounded-full ${
+                            VIRTUES_GAMIFICATION[challenge.virtue]?.bgColor || 'bg-slate-700'
+                          } ${VIRTUES_GAMIFICATION[challenge.virtue]?.borderColor || 'border-slate-600'} border`}>
+                            {VIRTUES_GAMIFICATION[challenge.virtue]?.emoji} {VIRTUES_GAMIFICATION[challenge.virtue]?.name}
+                          </span>
+                        </div>
+                      </div>
+                      <div className={`text-xl font-black ${challenge.completed ? 'text-emerald-400' : 'text-amber-400'}`}>
+                        {challenge.completed ? '✓' : `+${challenge.xp}`}
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                        {VIRTUES_GAMIFICATION[selectedVirtue].name}
-                        <span className="text-sm font-normal text-slate-400">
-                          ({VIRTUES_GAMIFICATION[selectedVirtue].kanji} - {VIRTUES_GAMIFICATION[selectedVirtue].romaji})
-                        </span>
-                      </h3>
-                      <p className="text-slate-300 text-sm mt-1">
-                        {VIRTUES_GAMIFICATION[selectedVirtue].messages[1]}
-                      </p>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* ═══════════════════════════════════════════════════════════════════ */}
+            {/* BLOC 5: Les 7 Vertus du Budo */}
+            {/* ═══════════════════════════════════════════════════════════════════ */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="bg-slate-900/50 rounded-3xl p-6 border border-violet-500/20"
+            >
+              <h2 className="text-xl font-bold text-white mb-2 flex items-center gap-2">
+                🎭 Les 7 Vertus du Budo
+              </h2>
+              <p className="text-sm text-slate-400 mb-5">
+                Clique sur une vertu pour en apprendre plus
+              </p>
+              
+              <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-3">
+                {Object.values(VIRTUES_GAMIFICATION).map((virtue, index) => {
+                  const progress = virtueProgress[virtue.id] || 0;
+                  return (
+                    <motion.div
+                      key={virtue.id}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.45 + index * 0.05 }}
+                      whileHover={{ scale: 1.1, y: -5 }}
+                      onClick={() => setSelectedVirtue(selectedVirtue === virtue.id ? null : virtue.id)}
+                      className={`text-center p-4 rounded-2xl border cursor-pointer transition-all ${
+                        selectedVirtue === virtue.id
+                          ? `bg-gradient-to-br ${virtue.gradient} border-white/30 shadow-lg`
+                          : 'bg-slate-800/50 border-slate-700 hover:border-violet-500/50'
+                      }`}
+                    >
+                      <motion.div 
+                        className="text-4xl mb-2"
+                        animate={{ rotate: selectedVirtue === virtue.id ? [0, 10, -10, 0] : 0 }}
+                        transition={{ duration: 0.5 }}
+                      >
+                        {virtue.emoji}
+                      </motion.div>
+                      <p className="text-sm font-bold text-white">{virtue.name}</p>
+                      <p className="text-xs text-slate-400">{virtue.kanji}</p>
                       
-                      {/* Daily challenges for this virtue */}
-                      <div className="mt-4">
-                        <p className="text-sm font-semibold text-white mb-2">Défis disponibles :</p>
-                        <div className="flex flex-wrap gap-2">
-                          {VIRTUES_GAMIFICATION[selectedVirtue].dailyChallenges.slice(0, 3).map((challenge) => (
-                            <span 
-                              key={challenge.id}
-                              className="text-xs px-3 py-1.5 bg-white/10 rounded-full text-white"
-                            >
-                              {challenge.emoji} {challenge.name} (+{challenge.xp} XP)
+                      {/* Progress bar */}
+                      <div className="mt-3 h-1.5 bg-slate-700 rounded-full overflow-hidden">
+                        <motion.div 
+                          initial={{ width: 0 }}
+                          animate={{ width: `${progress}%` }}
+                          transition={{ duration: 1, delay: 0.5 + index * 0.1 }}
+                          className={`h-full rounded-full bg-gradient-to-r ${virtue.gradient}`}
+                        />
+                      </div>
+                      <p className="text-xs text-slate-500 mt-1">{progress}%</p>
+                    </motion.div>
+                  );
+                })}
+              </div>
+
+              {/* Expanded Virtue Details */}
+              <AnimatePresence>
+                {selectedVirtue && VIRTUES_GAMIFICATION[selectedVirtue] && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    className="overflow-hidden mt-5"
+                  >
+                    <div className={`p-5 rounded-2xl border bg-gradient-to-br ${VIRTUES_GAMIFICATION[selectedVirtue].gradient}/20 ${VIRTUES_GAMIFICATION[selectedVirtue].borderColor}`}>
+                      <div className="flex items-start gap-4">
+                        <div className="text-6xl">
+                          {VIRTUES_GAMIFICATION[selectedVirtue].animal.evolutions[0].emoji}
+                        </div>
+                        <div className="flex-1">
+                          <h3 className="text-xl font-bold text-white flex items-center gap-2">
+                            {VIRTUES_GAMIFICATION[selectedVirtue].name}
+                            <span className="text-sm font-normal text-slate-400">
+                              ({VIRTUES_GAMIFICATION[selectedVirtue].kanji} - {VIRTUES_GAMIFICATION[selectedVirtue].romaji})
                             </span>
-                          ))}
+                          </h3>
+                          <p className="text-slate-300 mt-2">
+                            {VIRTUES_GAMIFICATION[selectedVirtue].messages[1]}
+                          </p>
+                          
+                          {/* Daily challenges for this virtue */}
+                          <div className="mt-4">
+                            <p className="text-sm font-semibold text-white mb-2">Défis disponibles :</p>
+                            <div className="flex flex-wrap gap-2">
+                              {VIRTUES_GAMIFICATION[selectedVirtue].dailyChallenges.slice(0, 3).map((challenge) => (
+                                <span 
+                                  key={challenge.id}
+                                  className="text-xs px-3 py-1.5 bg-white/10 rounded-full text-white"
+                                >
+                                  {challenge.emoji} {challenge.name} (+{challenge.xp} XP)
+                                </span>
+                              ))}
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
 
-        {/* Recent Achievements */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
-          className="mt-8"
-        >
-          <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
-            <Trophy className="w-5 h-5 text-amber-400" />
-            Derniers accomplissements
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            {[
-              { title: 'Premier Pas', desc: 'Inscription complète', emoji: '🎉', date: 'Aujourd\'hui' },
-              { title: 'Premiers XP', desc: '10 XP gagnés', emoji: '⭐', date: 'Aujourd\'hui' },
-              { title: 'Curieux', desc: 'Page techniques visitée', emoji: '📚', date: 'Hier' },
-              { title: 'Fidèle', desc: '3 jours consécutifs', emoji: '🔥', date: 'En cours' },
-            ].map((achievement, index) => (
-              <motion.div
-                key={achievement.title}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.9 + index * 0.1 }}
-                whileHover={{ scale: 1.05 }}
-                className={`p-4 rounded-xl border ${
-                  isJeuneSamourai 
-                    ? 'bg-amber-900/20 border-amber-700/30' 
-                    : 'bg-slate-800/30 border-slate-700/50'
-                }`}
-              >
-                <div className="text-3xl mb-2">{achievement.emoji}</div>
-                <h4 className="font-bold text-white text-sm">{achievement.title}</h4>
-                <p className="text-xs text-slate-400">{achievement.desc}</p>
-                <p className="text-[10px] text-slate-500 mt-1">{achievement.date}</p>
-              </motion.div>
-            ))}
+            {/* ═══════════════════════════════════════════════════════════════════ */}
+            {/* BLOC 6: Derniers accomplissements */}
+            {/* ═══════════════════════════════════════════════════════════════════ */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="bg-slate-900/50 rounded-3xl p-6 border border-amber-500/20"
+            >
+              <h2 className="text-xl font-bold text-white mb-5 flex items-center gap-2">
+                <Trophy className="w-5 h-5 text-amber-400" />
+                Derniers accomplissements
+              </h2>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {[
+                  { title: 'Premier Pas', desc: 'Inscription complète', emoji: '🎉', date: 'Aujourd\'hui', color: 'from-emerald-500/20 to-green-500/20 border-emerald-500/30' },
+                  { title: 'Premiers XP', desc: '10 XP gagnés', emoji: '⭐', date: 'Aujourd\'hui', color: 'from-amber-500/20 to-yellow-500/20 border-amber-500/30' },
+                  { title: 'Curieux', desc: 'Page techniques visitée', emoji: '📚', date: 'Hier', color: 'from-blue-500/20 to-cyan-500/20 border-blue-500/30' },
+                  { title: 'Fidèle', desc: '3 jours consécutifs', emoji: '🔥', date: 'En cours', color: 'from-orange-500/20 to-red-500/20 border-orange-500/30' },
+                ].map((achievement, index) => (
+                  <motion.div
+                    key={achievement.title}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.55 + index * 0.1 }}
+                    whileHover={{ scale: 1.05 }}
+                    className={`p-5 rounded-2xl border bg-gradient-to-br ${achievement.color}`}
+                  >
+                    <div className="text-4xl mb-3">{achievement.emoji}</div>
+                    <h4 className="font-bold text-white">{achievement.title}</h4>
+                    <p className="text-sm text-slate-400 mt-1">{achievement.desc}</p>
+                    <p className="text-xs text-slate-500 mt-2">{achievement.date}</p>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
           </div>
-        </motion.div>
-          </>
         )}
       </main>
 
