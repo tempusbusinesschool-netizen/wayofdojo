@@ -226,55 +226,6 @@ export default function DojoPage() {
     nextGrade: '5e KYU',
   };
 
-  // Quick actions
-  const quickActions = [
-    { 
-      icon: BookOpen, 
-      label: 'Techniques', 
-      href: `/${locale}/${sport}/techniques`,
-      color: 'from-amber-500 to-orange-600',
-      shadow: 'shadow-amber-500/30',
-      emoji: '📚',
-      description: '64 techniques'
-    },
-    { 
-      icon: Swords, 
-      label: 'Mouvements', 
-      href: `/${locale}/${sport}/mouvements`,
-      color: 'from-rose-500 to-pink-600',
-      shadow: 'shadow-rose-500/30',
-      emoji: '⚔️',
-      description: 'Armes & Mouvements'
-    },
-    { 
-      icon: Target, 
-      label: 'Progression', 
-      href: `/${locale}/${sport}/progression`,
-      color: 'from-emerald-500 to-green-600',
-      shadow: 'shadow-emerald-500/30',
-      emoji: '🎯',
-      description: 'Ton parcours'
-    },
-    { 
-      icon: Calendar, 
-      label: 'Stages', 
-      href: `/${locale}/${sport}/stages`,
-      color: 'from-cyan-500 to-blue-600',
-      shadow: 'shadow-cyan-500/30',
-      emoji: '📅',
-      description: '6 stages'
-    },
-    { 
-      icon: Award, 
-      label: 'Badges', 
-      href: `/${locale}/${sport}/badges`,
-      color: 'from-violet-500 to-purple-600',
-      shadow: 'shadow-violet-500/30',
-      emoji: '🏆',
-      description: `${user.gamification.badges?.length || 0} obtenus`
-    },
-  ];
-
   // Daily challenges from virtues (select a few from each virtue)
   const dailyChallenges = [
     // Respect
