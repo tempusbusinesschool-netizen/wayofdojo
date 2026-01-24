@@ -11,6 +11,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { X, Volume2, VolumeX, ArrowUp } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
+import { useGameSounds } from '@/services/gameSoundService';
 
 interface ParcoursduSouffleProps {
   userName?: string;
@@ -28,6 +29,7 @@ const BREATH_CONFIG = {
 
 const ParcoursduSouffle: React.FC<ParcoursduSouffleProps> = ({ userName = '', onComplete, onExit, tanakaSpeak }) => {
   const { speak } = useTanakaVoice();
+  const { play, playSuccess, playCombo } = useGameSounds();
   const [voiceEnabled, setVoiceEnabled] = useState(true);
   
   const [gameState, setGameState] = useState<'intro' | 'playing' | 'success'>('intro');
@@ -80,11 +82,12 @@ const ParcoursduSouffle: React.FC<ParcoursduSouffleProps> = ({ userName = '', on
       const finalScore = score + (perfectBreaths * 10);
       const kiEarned = 20 + Math.floor(finalScore / 20);
       
+      playSuccess('high');
       speakTanaka(`Bravo ${userName} ! Tu maîtrises le souffle !`);
       
       setTimeout(() => onComplete(finalScore, kiEarned), 2500);
     }
-  }, [position, gameState, score, perfectBreaths, userName, speakTanaka, onComplete]);
+  }, [position, gameState, score, perfectBreaths, userName, speakTanaka, onComplete, playSuccess]);
 
   const handleBreathInput = useCallback((action: 'inhale' | 'exhale') => {
     if (gameState !== 'playing') return;
@@ -97,14 +100,17 @@ const ParcoursduSouffle: React.FC<ParcoursduSouffleProps> = ({ userName = '', on
       setCombo(prev => prev + 1);
       setPosition(prev => Math.min(100, prev + 2 + combo * 0.3));
       setScore(prev => prev + 5 * (combo + 1));
+      play('breathing');
       
       if (combo > 0 && combo % 5 === 0) {
         setPerfectBreaths(prev => prev + 1);
+        playCombo(combo);
         speakTanaka("Bien joué !");
       }
     } else {
       setCombo(0);
       setPosition(prev => Math.max(0, prev - 1));
+      play('fail');
     }
     
     setTimeout(() => setBreathPhase('idle'), 500);
@@ -135,6 +141,7 @@ const ParcoursduSouffle: React.FC<ParcoursduSouffleProps> = ({ userName = '', on
     setCombo(0);
     setPerfectBreaths(0);
     setBreathPhase('idle');
+    play('start');
     speakTanaka("Inspire avec la flèche du haut, expire avec celle du bas.");
   };
 
