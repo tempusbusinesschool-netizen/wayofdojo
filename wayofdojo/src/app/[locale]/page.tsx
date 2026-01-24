@@ -312,17 +312,6 @@ export default function HomePage() {
               <span className="text-emerald-300 text-xs md:text-sm font-bold">🎯 APP INTERACTIVE ! POSE TES QUESTIONS À TANAKA !</span>
             </motion.div>
 
-            {/* Badge L'Aïkido prolongé */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 px-4 py-2 rounded-full mb-6"
-            >
-              <Sparkles className="w-4 h-4 text-amber-400" />
-              <span className="text-amber-300 text-sm font-medium">Way Of Dojo, l&apos;Aïkido, prolongé au-delà du dojo !</span>
-            </motion.div>
-
             {/* Titre principal - Descendu pour harmonie */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-3 leading-tight mt-4">
               Deviens un vrai{' '}
