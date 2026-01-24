@@ -11,6 +11,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { X, Volume2, VolumeX, Heart, Wind } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
+import { useGameSounds } from '@/services/gameSoundService';
 
 interface MessagerDuKiProps {
   userName?: string;
@@ -21,6 +22,7 @@ interface MessagerDuKiProps {
 
 const MessagerDuKi: React.FC<MessagerDuKiProps> = ({ userName = '', onComplete, onExit, tanakaSpeak }) => {
   const { speak } = useTanakaVoice();
+  const { play, playSuccess } = useGameSounds();
   const [voiceEnabled, setVoiceEnabled] = useState(true);
   
   const [gameState, setGameState] = useState<'intro' | 'playing' | 'success' | 'fail'>('intro');
@@ -85,10 +87,11 @@ const MessagerDuKi: React.FC<MessagerDuKiProps> = ({ userName = '', onComplete, 
       const finalScore = score + Math.floor(balance);
       const kiEarned = 15 + Math.floor(finalScore / 30);
       
+      playSuccess('high');
       speakTanaka(`Bravo ${userName} ! Tu as traversé le dojo avec calme !`);
       setTimeout(() => onComplete(finalScore, kiEarned), 2500);
     }
-  }, [position.y, gameState, score, balance, userName, speakTanaka, onComplete]);
+  }, [position.y, gameState, score, balance, userName, speakTanaka, onComplete, playSuccess]);
 
   // Keyboard controls
   useEffect(() => {
@@ -151,6 +154,7 @@ const MessagerDuKi: React.FC<MessagerDuKiProps> = ({ userName = '', onComplete, 
     setBalance(100);
     setPosition({ x: 50, y: 80 });
     setSpeed(0);
+    play('start');
     speakTanaka("Utilise les flèches pour te déplacer. Appuie sur espace pour respirer.");
   };
 

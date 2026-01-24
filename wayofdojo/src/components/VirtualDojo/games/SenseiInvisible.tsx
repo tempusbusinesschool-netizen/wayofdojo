@@ -11,6 +11,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { X, Volume2, VolumeX, Eye, EyeOff } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
+import { useGameSounds } from '@/services/gameSoundService';
 
 const INSTRUCTIONS = [
   { id: 'forward', text: 'Avance', action: 'ArrowUp', emoji: '⬆️' },
@@ -29,6 +30,7 @@ interface SenseiInvisibleProps {
 
 const SenseiInvisible: React.FC<SenseiInvisibleProps> = ({ userName = '', onComplete, onExit, tanakaSpeak }) => {
   const { speak } = useTanakaVoice();
+  const { play, playSuccess, playCombo } = useGameSounds();
   const [soundEnabled, setSoundEnabled] = useState(true);
   
   const [gameState, setGameState] = useState<'intro' | 'playing' | 'waiting' | 'finished'>('intro');
@@ -50,6 +52,7 @@ const SenseiInvisible: React.FC<SenseiInvisibleProps> = ({ userName = '', onComp
     setScore(0);
     setRound(0);
     setStreak(0);
+    play('start');
     speakTanaka("Ferme les yeux et écoute mes instructions.");
     setTimeout(() => nextInstruction(), 2000);
   };
@@ -84,6 +87,7 @@ const SenseiInvisible: React.FC<SenseiInvisibleProps> = ({ userName = '', onComp
         setScore(prev => prev + 20 + (streak * 5));
         setStreak(prev => prev + 1);
         setLastResult('correct');
+        playCombo(streak + 1);
         
         if (streak > 0 && streak % 3 === 0) {
           speakTanaka("Bien joué !");
@@ -91,6 +95,7 @@ const SenseiInvisible: React.FC<SenseiInvisibleProps> = ({ userName = '', onComp
       } else {
         setStreak(0);
         setLastResult('wrong');
+        play('fail');
       }
       
       setTimeout(() => {
@@ -113,8 +118,10 @@ const SenseiInvisible: React.FC<SenseiInvisibleProps> = ({ userName = '', onComp
     const kiEarned = 25 + Math.floor(finalScore / 30);
     
     if (score >= 150) {
+      playSuccess('high');
       speakTanaka(`Bravo ${userName} ! Ton écoute est excellente !`);
     } else {
+      play('end');
       speakTanaka("Continue à pratiquer l'écoute !");
     }
     
