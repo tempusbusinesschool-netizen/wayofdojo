@@ -2,9 +2,20 @@
 
 ## 📋 Document de Référence
 
-**Version:** 1.1  
+**Version:** 1.2  
 **Date de création:** 19 Janvier 2025  
-**Dernière mise à jour:** 21 Janvier 2025
+**Dernière mise à jour:** 24 Janvier 2025
+
+---
+
+## 📝 CHANGELOG RÉCENT
+
+### 24 Janvier 2025 - Refactoring & Migration JourneyPath
+- ✅ **Refactoring dojo/page.tsx** : Séparé en `JuniorDashboard.tsx` et `AdultDashboard.tsx`
+- ✅ **Intégration JourneyPath** : Parcours guidé en 6 étapes migré depuis aikido@game
+- ✅ **8 blocs de navigation** : Restaurés avec style aikido@game
+- ✅ **7 Vertus avec barres de progression** : Section complète et interactive
+- ✅ **Testing** : 100% des tests frontend passés
 
 ---
 
