@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Swords, LogIn, UserPlus, LogOut, User, Sparkles, Lock, Menu, X } from 'lucide-react';
+import { Swords, LogIn, UserPlus, LogOut, User, Lock, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import MaitreTanaka from '@/components/MaitreTanaka';
 import VisitorStepsBlocks from '@/components/VisitorStepsBlocks';
