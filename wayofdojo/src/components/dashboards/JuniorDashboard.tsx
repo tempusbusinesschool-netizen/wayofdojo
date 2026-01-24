@@ -575,7 +575,7 @@ export const JuniorDashboard: React.FC<JuniorDashboardProps> = ({
                       </span>
                     </h3>
                     <p className="text-slate-300 mt-2">
-                      {VIRTUES_GAMIFICATION[selectedVirtue].messages?.[1] || VIRTUES_GAMIFICATION[selectedVirtue].description}
+                      {VIRTUES_GAMIFICATION[selectedVirtue].messages?.[1]}
                     </p>
                     
                     {/* Daily challenges for this virtue */}
