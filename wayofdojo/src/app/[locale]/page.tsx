@@ -400,10 +400,7 @@ export default function HomePage() {
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3">
               <TanakaAnimatedLogo size="sm" />
-              <div>
-                <p className="text-amber-400 font-bold">Way of Dojo</p>
-                <p className="text-slate-500 text-xs">L&apos;Aïkido, prolongé au-delà du dojo !</p>
-              </div>
+              <p className="text-amber-400 font-bold">Way of Dojo</p>
             </div>
             
             <div className="flex flex-wrap items-center justify-center gap-4 text-slate-500 text-sm">
