@@ -9,8 +9,6 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Dialog, DialogContent, DialogTitle, DialogDescription } from '@/components/ui/dialog';
-import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import { Button } from '@/components/ui/button';
 import { 
   Gamepad2, Wind, Target, Brain, 
@@ -406,12 +404,23 @@ const VirtualDojo: React.FC<VirtualDojoProps> = ({
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-5xl max-h-[90vh] bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-2 border-amber-500/30 p-0 overflow-hidden" data-testid="virtual-dojo-dialog">
-        <VisuallyHidden>
-          <DialogTitle>Dojo Virtuel</DialogTitle>
-          <DialogDescription>10 mini-jeux éducatifs guidés par Maître Tanaka</DialogDescription>
-        </VisuallyHidden>
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+          onClick={(e) => e.target === e.currentTarget && onClose()}
+          data-testid="virtual-dojo-overlay"
+        >
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="w-full max-w-5xl max-h-[90vh] bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border-2 border-amber-500/30 rounded-2xl overflow-hidden flex flex-col"
+            data-testid="virtual-dojo-dialog"
+          >
 
         {/* Header */}
         <div className="bg-gradient-to-r from-amber-900/80 to-orange-900/80 p-4 border-b border-amber-500/30">
@@ -579,31 +588,41 @@ const VirtualDojo: React.FC<VirtualDojoProps> = ({
             </div>
           )}
         </div>
-      </DialogContent>
+          </motion.div>
 
-      {/* Reset confirmation */}
-      <AnimatePresence>
-        {showResetConfirm && (
-          <Dialog open={showResetConfirm} onOpenChange={setShowResetConfirm}>
-            <DialogContent className="sm:max-w-md bg-slate-900 border-amber-500/30">
-              <div className="text-center py-4">
-                <span className="text-5xl block mb-4">🔄</span>
-                <h3 className="text-xl font-bold text-white mb-3">Recommencer le parcours ?</h3>
-                <p className="text-slate-300 text-sm mb-6">Ta progression sera remise à zéro.</p>
-                <div className="flex justify-center gap-3">
-                  <Button onClick={() => setShowResetConfirm(false)} variant="outline" className="text-white border-slate-600">
-                    Non, je continue
-                  </Button>
-                  <Button onClick={handleResetProgress} className="bg-gradient-to-r from-amber-500 to-orange-600">
-                    Oui, je recommence
-                  </Button>
+          {/* Reset confirmation modal */}
+          {showResetConfirm && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[60] flex items-center justify-center p-4 bg-black/60"
+              onClick={(e) => e.target === e.currentTarget && setShowResetConfirm(false)}
+            >
+              <motion.div 
+                initial={{ scale: 0.9 }}
+                animate={{ scale: 1 }}
+                className="bg-slate-900 border border-amber-500/30 rounded-2xl p-6 max-w-md"
+              >
+                <div className="text-center py-4">
+                  <span className="text-5xl block mb-4">🔄</span>
+                  <h3 className="text-xl font-bold text-white mb-3">Recommencer le parcours ?</h3>
+                  <p className="text-slate-300 text-sm mb-6">Ta progression sera remise à zéro.</p>
+                  <div className="flex justify-center gap-3">
+                    <Button onClick={() => setShowResetConfirm(false)} variant="outline" className="text-white border-slate-600">
+                      Non, je continue
+                    </Button>
+                    <Button onClick={handleResetProgress} className="bg-gradient-to-r from-amber-500 to-orange-600">
+                      Oui, je recommence
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            </DialogContent>
-          </Dialog>
-        )}
-      </AnimatePresence>
-    </Dialog>
+              </motion.div>
+            </motion.div>
+          )}
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 
