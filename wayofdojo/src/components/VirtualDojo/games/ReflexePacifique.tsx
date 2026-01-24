@@ -93,7 +93,7 @@ const ReflexePacifique: React.FC<ReflexePacifiqueProps> = ({ userName = '', onCo
   const speakTanaka = useCallback((message: string) => {
     if (tanakaSpeak) tanakaSpeak(message);
     if (soundEnabled) speak(message);
-  }, [voiceEnabled, speak, tanakaSpeak]);
+  }, [soundEnabled, speak, tanakaSpeak]);
 
   const startGame = () => {
     setGameState('playing');
