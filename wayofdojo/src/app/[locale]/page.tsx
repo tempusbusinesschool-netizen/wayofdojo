@@ -111,10 +111,7 @@ export default function HomePage() {
               className="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-opacity group"
             >
               <TanakaAnimatedLogo size="md" />
-              <div className="text-left">
-                <p className="text-xs text-amber-400 font-medium group-hover:text-amber-300 transition-colors">Way of Dojo</p>
-                <p className="text-xs text-white font-bold group-hover:text-slate-200 transition-colors hidden sm:block">L&apos;Aïkido, prolongé au-delà du dojo !</p>
-              </div>
+              <p className="text-sm text-amber-400 font-bold group-hover:text-amber-300 transition-colors">Way of Dojo</p>
             </Link>
 
             {/* Navigation Desktop */}
