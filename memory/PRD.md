@@ -10,12 +10,27 @@
 
 ## 📝 CHANGELOG RÉCENT
 
-### 24 Janvier 2025 - Refactoring & Migration JourneyPath
+### 24 Janvier 2025 - Dojo Virtuel Migré (10 mini-jeux)
+- ✅ **Dojo Virtuel complet** : 10 mini-jeux migrés depuis aikido@game
+  - Le Messager du Ki (gestion stress)
+  - Parcours du Souffle (respiration)
+  - Le Sensei Invisible (écoute)
+  - Réflexe Pacifique (intelligence émotionnelle)
+  - Gardien de l'Espace (Ma-ai)
+  - Miroir d'Harmonie (synchronisation)
+  - Chemin de l'Équilibre (posture)
+  - Memory du Sensei (mémoire)
+  - Rythme du Dojo (tempo)
+  - Quête des 7 Vertus (valeurs Budo)
+- ✅ **Système de progression** : Ki, XP, niveaux, déverrouillage
+- ✅ **Hook useTanakaVoice** : Intégration TTS prête
+- ✅ **Testing** : 100% des tests frontend passés
+
+### 24 Janvier 2025 (avant) - Refactoring & Migration JourneyPath
 - ✅ **Refactoring dojo/page.tsx** : Séparé en `JuniorDashboard.tsx` et `AdultDashboard.tsx`
 - ✅ **Intégration JourneyPath** : Parcours guidé en 6 étapes migré depuis aikido@game
 - ✅ **8 blocs de navigation** : Restaurés avec style aikido@game
 - ✅ **7 Vertus avec barres de progression** : Section complète et interactive
-- ✅ **Testing** : 100% des tests frontend passés
 
 ---
 
