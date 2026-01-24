@@ -394,7 +394,7 @@ export default function DojoPage() {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8">
+      <main className="container mx-auto px-4 py-6">
         {/* ADULT MODE: Samouraï Confirmé - Voyage Musashi */}
         {!isJeuneSamourai && (
           <AdultJourneyWidget
@@ -404,12 +404,12 @@ export default function DojoPage() {
           />
         )}
 
-        {/* JUNIOR MODE: Jeune Samouraï - Layout en blocs */}
+        {/* JUNIOR MODE: Jeune Samouraï - Layout en 8 blocs numérotés style aikido@game */}
         {isJeuneSamourai && (
           <div className="space-y-6">
             
             {/* ═══════════════════════════════════════════════════════════════════ */}
-            {/* BLOC 1: Profil utilisateur + Stats rapides */}
+            {/* BLOC PROFIL - Style carte principale */}
             {/* ═══════════════════════════════════════════════════════════════════ */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -432,22 +432,246 @@ export default function DojoPage() {
             </motion.div>
 
             {/* ═══════════════════════════════════════════════════════════════════ */}
-            {/* BLOC 2: Actions rapides - Grande grille colorée */}
+            {/* 8 BLOCS NUMÉROTÉS - Style aikido@game */}
+            {/* ═══════════════════════════════════════════════════════════════════ */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+              
+              {/* BLOC 1 - Techniques */}
+              <Link href={`/${locale}/${sport}/techniques`}>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.1 }}
+                  whileHover={{ scale: 1.03, y: -5 }}
+                  className="relative group rounded-2xl p-4 sm:p-5 min-h-[160px] sm:min-h-[180px] overflow-hidden cursor-pointer
+                    bg-gradient-to-br from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/40
+                    border-2 border-white/20 hover:border-white/50"
+                >
+                  {/* Numéro */}
+                  <div className="absolute top-2 left-2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center">
+                    <span className="text-xl sm:text-2xl font-black text-white">1</span>
+                  </div>
+                  {/* Contenu */}
+                  <div className="mt-10 sm:mt-12">
+                    <span className="text-4xl sm:text-5xl">🥋</span>
+                    <h3 className="font-black text-white text-lg sm:text-xl mt-2">Techniques</h3>
+                    <p className="text-white/80 text-xs sm:text-sm">206+ techniques</p>
+                  </div>
+                  {/* Effet brillance */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                </motion.div>
+              </Link>
+
+              {/* BLOC 2 - Défis du jour */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.15 }}
+                whileHover={{ scale: 1.03, y: -5 }}
+                className="relative group rounded-2xl p-4 sm:p-5 min-h-[160px] sm:min-h-[180px] overflow-hidden cursor-pointer
+                  bg-gradient-to-br from-pink-500 to-rose-600 shadow-lg shadow-pink-500/40
+                  border-2 border-white/20 hover:border-white/50"
+              >
+                {/* Numéro */}
+                <div className="absolute top-2 left-2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center">
+                  <span className="text-xl sm:text-2xl font-black text-white">2</span>
+                </div>
+                {/* Contenu */}
+                <div className="mt-10 sm:mt-12">
+                  <span className="text-4xl sm:text-5xl">🎯</span>
+                  <h3 className="font-black text-white text-lg sm:text-xl mt-2">Défis du jour</h3>
+                  <p className="text-white/80 text-xs sm:text-sm">{completedCount}/6 complétés</p>
+                  <div className="flex gap-1 mt-2">
+                    {dailyChallenges.slice(0, 3).map((c, i) => (
+                      <span key={i} className={`w-3 h-3 rounded-full ${c.completed ? 'bg-white' : 'bg-white/30'}`} />
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* BLOC 3 - Les 7 Vertus */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2 }}
+                whileHover={{ scale: 1.03, y: -5 }}
+                onClick={() => setSelectedVirtue(selectedVirtue ? null : 'respect')}
+                className="relative group rounded-2xl p-4 sm:p-5 min-h-[160px] sm:min-h-[180px] overflow-hidden cursor-pointer
+                  bg-gradient-to-br from-amber-500 to-orange-600 shadow-lg shadow-amber-500/40
+                  border-2 border-white/20 hover:border-white/50"
+              >
+                {/* Numéro */}
+                <div className="absolute top-2 left-2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center">
+                  <span className="text-xl sm:text-2xl font-black text-white">3</span>
+                </div>
+                {/* Contenu */}
+                <div className="mt-10 sm:mt-12">
+                  <span className="text-4xl sm:text-5xl">☯️</span>
+                  <h3 className="font-black text-white text-lg sm:text-xl mt-2">7 Vertus</h3>
+                  <div className="flex gap-1 mt-2">
+                    {Object.values(VIRTUES_GAMIFICATION).slice(0, 5).map((v, i) => (
+                      <span key={i} className="text-lg">{v.emoji}</span>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* BLOC 4 - Mouvements */}
+              <Link href={`/${locale}/${sport}/mouvements`}>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.25 }}
+                  whileHover={{ scale: 1.03, y: -5 }}
+                  className="relative group rounded-2xl p-4 sm:p-5 min-h-[160px] sm:min-h-[180px] overflow-hidden cursor-pointer
+                    bg-gradient-to-br from-violet-500 to-purple-600 shadow-lg shadow-violet-500/40
+                    border-2 border-white/20 hover:border-white/50"
+                >
+                  {/* Numéro */}
+                  <div className="absolute top-2 left-2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center">
+                    <span className="text-xl sm:text-2xl font-black text-white">4</span>
+                  </div>
+                  {/* Contenu */}
+                  <div className="mt-10 sm:mt-12">
+                    <span className="text-4xl sm:text-5xl">⚔️</span>
+                    <h3 className="font-black text-white text-lg sm:text-xl mt-2">Mouvements</h3>
+                    <p className="text-white/80 text-xs sm:text-sm">Armes & Ukemi</p>
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                </motion.div>
+              </Link>
+
+              {/* BLOC 5 - Ceintures */}
+              <Link href={`/${locale}/${sport}/progression`}>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.3 }}
+                  whileHover={{ scale: 1.03, y: -5 }}
+                  className="relative group rounded-2xl p-4 sm:p-5 min-h-[160px] sm:min-h-[180px] overflow-hidden cursor-pointer
+                    bg-gradient-to-br from-slate-500 to-slate-700 shadow-lg shadow-slate-500/40
+                    border-2 border-white/20 hover:border-white/50"
+                >
+                  {/* Numéro */}
+                  <div className="absolute top-2 left-2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center">
+                    <span className="text-xl sm:text-2xl font-black text-white">5</span>
+                  </div>
+                  {/* Contenu */}
+                  <div className="mt-10 sm:mt-12">
+                    <span className="text-4xl sm:text-5xl">🎖️</span>
+                    <h3 className="font-black text-white text-lg sm:text-xl mt-2">Ceintures</h3>
+                    <div className="flex gap-1 mt-2">
+                      {['bg-white', 'bg-yellow-400', 'bg-orange-500', 'bg-green-500', 'bg-blue-500', 'bg-amber-700', 'bg-slate-900'].map((c, i) => (
+                        <span key={i} className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full ${c} border border-white/30`} />
+                      ))}
+                    </div>
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                </motion.div>
+              </Link>
+
+              {/* BLOC 6 - Stages */}
+              <Link href={`/${locale}/${sport}/stages`}>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.35 }}
+                  whileHover={{ scale: 1.03, y: -5 }}
+                  className="relative group rounded-2xl p-4 sm:p-5 min-h-[160px] sm:min-h-[180px] overflow-hidden cursor-pointer
+                    bg-gradient-to-br from-emerald-500 to-teal-600 shadow-lg shadow-emerald-500/40
+                    border-2 border-white/20 hover:border-white/50"
+                >
+                  {/* Numéro */}
+                  <div className="absolute top-2 left-2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center">
+                    <span className="text-xl sm:text-2xl font-black text-white">6</span>
+                  </div>
+                  {/* Contenu */}
+                  <div className="mt-10 sm:mt-12">
+                    <span className="text-4xl sm:text-5xl">📅</span>
+                    <h3 className="font-black text-white text-lg sm:text-xl mt-2">Stages</h3>
+                    <p className="text-white/80 text-xs sm:text-sm">6 stages à venir</p>
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                </motion.div>
+              </Link>
+
+              {/* BLOC 7 - Badges & Trophées */}
+              <Link href={`/${locale}/${sport}/badges`}>
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.4 }}
+                  whileHover={{ scale: 1.03, y: -5 }}
+                  className="relative group rounded-2xl p-4 sm:p-5 min-h-[160px] sm:min-h-[180px] overflow-hidden cursor-pointer
+                    bg-gradient-to-br from-yellow-500 to-amber-600 shadow-lg shadow-yellow-500/40
+                    border-2 border-white/20 hover:border-white/50"
+                >
+                  {/* Numéro */}
+                  <div className="absolute top-2 left-2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center">
+                    <span className="text-xl sm:text-2xl font-black text-white">7</span>
+                  </div>
+                  {/* Contenu */}
+                  <div className="mt-10 sm:mt-12">
+                    <span className="text-4xl sm:text-5xl">🏆</span>
+                    <h3 className="font-black text-white text-lg sm:text-xl mt-2">Trophées</h3>
+                    <p className="text-white/80 text-xs sm:text-sm">{user.gamification.badges?.length || 0} badges</p>
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+                </motion.div>
+              </Link>
+
+              {/* BLOC 8 - Stats de la semaine */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.45 }}
+                whileHover={{ scale: 1.03, y: -5 }}
+                className="relative group rounded-2xl p-4 sm:p-5 min-h-[160px] sm:min-h-[180px] overflow-hidden
+                  bg-gradient-to-br from-rose-500 to-pink-600 shadow-lg shadow-rose-500/40
+                  border-2 border-white/20"
+              >
+                {/* Numéro */}
+                <div className="absolute top-2 left-2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/30 backdrop-blur-sm flex items-center justify-center">
+                  <span className="text-xl sm:text-2xl font-black text-white">8</span>
+                </div>
+                {/* Contenu */}
+                <div className="mt-10 sm:mt-12">
+                  <span className="text-4xl sm:text-5xl">📊</span>
+                  <h3 className="font-black text-white text-lg sm:text-xl mt-2">Cette semaine</h3>
+                  <div className="grid grid-cols-2 gap-2 mt-2">
+                    <div className="text-center">
+                      <p className="text-xl font-black text-white">{weeklyStats.trainings}</p>
+                      <p className="text-white/70 text-[10px]">Entraîn.</p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-xl font-black text-white flex items-center justify-center gap-1">
+                        <Flame className="w-4 h-4" />{currentStreak}
+                      </p>
+                      <p className="text-white/70 text-[10px]">Jours</p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* ═══════════════════════════════════════════════════════════════════ */}
+            {/* SECTION DÉFIS DU JOUR - Détaillée */}
             {/* ═══════════════════════════════════════════════════════════════════ */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="bg-slate-900/50 rounded-3xl p-6 border border-amber-500/20"
+              transition={{ delay: 0.5 }}
+              className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl p-5 sm:p-6 border border-pink-500/30"
             >
-              <h2 className="text-xl font-bold text-white mb-5 flex items-center gap-2">
-                🎯 Que veux-tu faire aujourd&apos;hui ?
-              </h2>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                {quickActions.map((action, i) => (
-                  <Link key={action.label} href={action.href}>
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                  🎯 Défi du jour
+                </h2>
+                <span className="text-sm text-slate-400 bg-slate-700 px-3 py-1 rounded-full">
+                  +{totalXpToday} XP gagnés
+                </span>
+              </div>
+              <DailyChallengeWidget locale={locale} sport={sport} />
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.15 + i * 0.05 }}
                       whileHover={{ scale: 1.05, y: -5 }}
