@@ -11,6 +11,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { X, Volume2, VolumeX } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
+import { useGameSounds } from '@/services/gameSoundService';
 
 interface CheminEquilibreProps {
   userName?: string;
@@ -21,6 +22,7 @@ interface CheminEquilibreProps {
 
 const CheminEquilibre: React.FC<CheminEquilibreProps> = ({ userName = '', onComplete, onExit, tanakaSpeak }) => {
   const { speak } = useTanakaVoice();
+  const { play, playSuccess } = useGameSounds();
   const [voiceEnabled, setVoiceEnabled] = useState(true);
   
   const [gameState, setGameState] = useState<'intro' | 'playing' | 'success' | 'fail'>('intro');
@@ -127,6 +129,7 @@ const CheminEquilibre: React.FC<CheminEquilibreProps> = ({ userName = '', onComp
     setBalance(50);
     setPosition(0);
     setWindForce(0);
+    play('start');
     speakTanaka("Trouve ton centre. Le vent va essayer de te déséquilibrer !");
   };
 
@@ -134,14 +137,16 @@ const CheminEquilibre: React.FC<CheminEquilibreProps> = ({ userName = '', onComp
     if (gameState === 'success') {
       const finalScore = score + 50;
       const kiEarned = 20 + Math.floor(finalScore / 30);
+      playSuccess('high');
       speakTanaka(`Bravo ${userName} ! Tu as trouvé ton centre !`);
       setTimeout(() => onComplete(finalScore, kiEarned), 2500);
     } else if (gameState === 'fail') {
       const kiEarned = 5;
+      play('fail');
       speakTanaka("Tu as perdu l'équilibre. Réessaie !");
       setTimeout(() => onComplete(Math.floor(score / 2), kiEarned), 2500);
     }
-  }, [gameState, score, userName, speakTanaka, onComplete]);
+  }, [gameState, score, userName, speakTanaka, onComplete, playSuccess, play]);
 
   const getBalanceColor = () => {
     const deviation = Math.abs(balance - 50);

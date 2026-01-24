@@ -11,6 +11,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { X, Volume2, VolumeX } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
+import { useGameSounds } from '@/services/gameSoundService';
 
 interface GardienEspaceProps {
   userName?: string;
@@ -21,6 +22,7 @@ interface GardienEspaceProps {
 
 const GardienEspace: React.FC<GardienEspaceProps> = ({ userName = '', onComplete, onExit, tanakaSpeak }) => {
   const { speak } = useTanakaVoice();
+  const { play, playSuccess, playCombo } = useGameSounds();
   const [voiceEnabled, setVoiceEnabled] = useState(true);
   
   const [gameState, setGameState] = useState<'intro' | 'playing' | 'success'>('intro');
@@ -72,6 +74,7 @@ const GardienEspace: React.FC<GardienEspaceProps> = ({ userName = '', onComplete
         setPerfectZone(prev => prev + 1);
         
         if (combo > 0 && combo % 10 === 0) {
+          playCombo(combo);
           speakTanaka("Bien joué !");
         }
       } else {
@@ -127,6 +130,7 @@ const GardienEspace: React.FC<GardienEspaceProps> = ({ userName = '', onComplete
     setTimeLeft(60);
     setPlayerPos(50);
     setTargetPos(30);
+    play('start');
     speakTanaka("Maintiens la bonne distance avec ton partenaire. Ni trop près, ni trop loin !");
   };
 
@@ -135,6 +139,7 @@ const GardienEspace: React.FC<GardienEspaceProps> = ({ userName = '', onComplete
     const finalScore = score + (perfectZone * 2);
     const kiEarned = 20 + Math.floor(finalScore / 50);
     
+    playSuccess('high');
     speakTanaka(`Bravo ${userName} ! Tu maîtrises le Ma-ai !`);
     setTimeout(() => onComplete(finalScore, kiEarned), 2500);
   };
