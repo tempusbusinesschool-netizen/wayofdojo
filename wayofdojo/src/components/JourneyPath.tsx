@@ -707,10 +707,12 @@ export const JourneyPath: React.FC<JourneyPathProps> = ({
       {showStepTransition && transitionStep && (
         <StepTransition
           isVisible={showStepTransition}
-          xpGained={transitionStep.xpReward}
           stepNumber={transitionStep.id}
-          message={`${transitionStep.title} débloqué !`}
-          type="step_complete"
+          stepTitle={transitionStep.title}
+          stepEmoji={transitionStep.emoji}
+          userName={displayName}
+          actionType="step_complete"
+          xpEarned={transitionStep.xpReward}
           onComplete={() => setShowStepTransition(false)}
         />
       )}
