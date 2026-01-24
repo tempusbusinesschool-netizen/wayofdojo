@@ -115,10 +115,6 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
   const isEnfant = mode === 'enfant';
   const [previewBlock, setPreviewBlock] = useState<number | null>(null);
   const [tanakaAnimating, setTanakaAnimating] = useState(false);
-  const router = useRouter();
-  const params = useParams();
-  const locale = params?.locale as string || 'fr';
-  const sport = 'aikido';
 
   // Animation de Tanaka
   useEffect(() => {
