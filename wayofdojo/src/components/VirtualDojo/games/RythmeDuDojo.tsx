@@ -11,6 +11,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { X, Volume2, VolumeX } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
+import { useGameSounds } from '@/services/gameSoundService';
 
 interface RythmeDuDojoProps {
   userName?: string;
@@ -24,6 +25,7 @@ const TOTAL_ROUNDS = 3;
 
 const RythmeDuDojo: React.FC<RythmeDuDojoProps> = ({ userName = '', onComplete, onExit, tanakaSpeak }) => {
   const { speak } = useTanakaVoice();
+  const { play, playSuccess, playCombo } = useGameSounds();
   const [voiceEnabled, setVoiceEnabled] = useState(true);
   
   const [gameState, setGameState] = useState<'intro' | 'playing' | 'finished'>('intro');
@@ -93,12 +95,14 @@ const RythmeDuDojo: React.FC<RythmeDuDojoProps> = ({ userName = '', onComplete, 
     if (playerHit) return; // Already hit this beat
     
     setPlayerHit(true);
+    play('click');
     
     if (targetBeat) {
       // Perfect hit
       setScore(prev => prev + 20 * (combo + 1));
       setCombo(prev => prev + 1);
       setLastResult('perfect');
+      playCombo(combo + 1);
       
       if (combo > 0 && combo % 4 === 0) {
         speakTanaka("Bien joué !");
@@ -111,6 +115,7 @@ const RythmeDuDojo: React.FC<RythmeDuDojoProps> = ({ userName = '', onComplete, 
       // Miss
       setCombo(0);
       setLastResult('miss');
+      play('fail');
     }
     
     setTimeout(() => setLastResult(null), 200);
@@ -123,6 +128,7 @@ const RythmeDuDojo: React.FC<RythmeDuDojoProps> = ({ userName = '', onComplete, 
     setBeatIndex(0);
     setCombo(0);
     setBpm(80);
+    play('start');
     speakTanaka("Tape en rythme sur les temps forts !");
   };
 
@@ -132,8 +138,10 @@ const RythmeDuDojo: React.FC<RythmeDuDojoProps> = ({ userName = '', onComplete, 
     const kiEarned = 20 + Math.floor(finalScore / 40);
     
     if (score >= 300) {
+      playSuccess('high');
       speakTanaka(`Bravo ${userName} ! Tu as le rythme du dojo !`);
     } else {
+      play('end');
       speakTanaka("Continue à t'entraîner au rythme !");
     }
     
