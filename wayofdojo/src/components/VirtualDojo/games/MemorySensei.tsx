@@ -12,6 +12,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { X, Volume2, VolumeX, Clock } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
+import { useGameSounds } from '@/services/gameSoundService';
 
 // Cartes du jeu (techniques d'Aïkido)
 const TECHNIQUE_CARDS = [
@@ -49,6 +50,7 @@ interface MemorySenseiProps {
 
 const MemorySensei: React.FC<MemorySenseiProps> = ({ userName = '', onComplete, onExit, tanakaSpeak }) => {
   const { speak } = useTanakaVoice();
+  const { play, playSuccess, playCombo } = useGameSounds();
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [gameState, setGameState] = useState<'intro' | 'playing' | 'success' | 'fail'>('intro');
   const [cards, setCards] = useState<Card[]>([]);
@@ -86,6 +88,7 @@ const MemorySensei: React.FC<MemorySenseiProps> = ({ userName = '', onComplete, 
     setMatchedPairs([]);
     setFlippedCards([]);
     initializeCards();
+    play('start');
     tanakaVoice("Trouve les paires : image et nom japonais.");
   };
 
@@ -111,6 +114,7 @@ const MemorySensei: React.FC<MemorySenseiProps> = ({ userName = '', onComplete, 
     if (flippedCards.includes(cardId)) return;
     if (matchedPairs.some(pair => cards[cardId].pairId === pair)) return;
 
+    play('click');
     const newFlipped = [...flippedCards, cardId];
     setFlippedCards(newFlipped);
 
@@ -131,6 +135,7 @@ const MemorySensei: React.FC<MemorySenseiProps> = ({ userName = '', onComplete, 
         setFlippedCards([]);
         setScore(s => s + (50 * (combo + 1)));
         setCombo(c => c + 1);
+        playCombo(combo + 1);
 
         if (combo > 0 && combo % 2 === 0) {
           tanakaVoice("Bien joué !");
@@ -141,6 +146,7 @@ const MemorySensei: React.FC<MemorySenseiProps> = ({ userName = '', onComplete, 
         }
       }, 500);
     } else {
+      play('fail');
       setTimeout(() => {
         setFlippedCards([]);
         setCombo(0);
@@ -154,8 +160,10 @@ const MemorySensei: React.FC<MemorySenseiProps> = ({ userName = '', onComplete, 
     const kiEarned = success ? 15 + Math.floor(finalScore / 50) : 5;
     
     if (success) {
+      playSuccess('high');
       tanakaVoice(`Bravo ${userName} ! Tu as trouvé toutes les paires !`);
     } else {
+      play('end');
       tanakaVoice("Le temps est écoulé. Essaie encore !");
     }
     
