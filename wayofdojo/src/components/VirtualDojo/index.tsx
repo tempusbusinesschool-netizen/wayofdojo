@@ -540,7 +540,7 @@ const VirtualDojo: React.FC<VirtualDojoProps> = ({
               {DOJO_GAMES.map((game, index) => {
                 const unlocked = isGameUnlocked(game);
                 const completed = completedGames.includes(game.id);
-                const Icon = game.icon;
+                // Icon available via game.icon but using emoji for consistency
                 
                 return (
                   <motion.button

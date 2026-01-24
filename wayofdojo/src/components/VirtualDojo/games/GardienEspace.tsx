@@ -9,7 +9,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { X, Volume2, VolumeX, Target } from 'lucide-react';
+import { X, Volume2, VolumeX } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 
 interface GardienEspaceProps {
