@@ -567,7 +567,7 @@ export const JourneyPath: React.FC<JourneyPathProps> = ({
         {JOURNEY_STEPS.map((step, index) => {
           const unlocked = isStepUnlocked(step);
           const completed = isStepCompleted(step.id);
-          const StepIcon = step.icon;
+          // Note: step.icon is available but we use emoji for visual consistency
 
           return (
             <motion.div
