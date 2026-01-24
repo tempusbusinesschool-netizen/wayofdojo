@@ -539,21 +539,29 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
         ))}
       </div>
 
-      {/* Dialogue de prévisualisation */}
+      {/* Dialogue de prévisualisation (Modal personnalisé) */}
       <AnimatePresence>
         {previewBlock && (
-          <Dialog open={!!previewBlock} onOpenChange={() => setPreviewBlock(null)}>
-            <DialogContent className="max-w-md bg-slate-900 border-slate-700 p-0 overflow-hidden">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+            onClick={() => setPreviewBlock(null)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
+              className="w-full max-w-md bg-slate-900 border border-slate-700 rounded-2xl overflow-hidden shadow-2xl"
+            >
               {(() => {
                 const block = blocks.find(b => b.id === previewBlock);
                 if (!block) return null;
                 
                 return (
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                  >
+                  <>
                     {/* Header du dialogue */}
                     <div className={`bg-gradient-to-br ${block.gradient} p-4 sm:p-5`}>
                       <div className="flex items-center justify-between">
@@ -562,10 +570,10 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
                             <span className="text-xl font-black text-white">{block.id}</span>
                           </div>
                           <div>
-                            <DialogTitle className="text-white font-bold text-lg flex items-center gap-2">
+                            <h3 className="text-white font-bold text-lg flex items-center gap-2">
                               <span className="text-2xl">{block.emoji}</span>
                               {block.title}
-                            </DialogTitle>
+                            </h3>
                             <p className="text-white/70 text-sm">{block.subtitle}</p>
                           </div>
                         </div>
@@ -596,11 +604,11 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
                         </p>
                       </div>
                     </div>
-                  </motion.div>
+                  </>
                 );
               })()}
-            </DialogContent>
-          </Dialog>
+            </motion.div>
+          </motion.div>
         )}
       </AnimatePresence>
 
