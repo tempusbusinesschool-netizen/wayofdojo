@@ -260,7 +260,6 @@ export const AikidoWireframe: React.FC<AikidoWireframeProps> = ({
   className = '',
 }) => {
   const [currentFrame, setCurrentFrame] = useState(0);
-  const controls = useAnimation();
   const frames = MOVEMENT_KEYFRAMES[movement] || MOVEMENT_KEYFRAMES.idle;
   
   useEffect(() => {
@@ -283,11 +282,6 @@ export const AikidoWireframe: React.FC<AikidoWireframeProps> = ({
   }, [frames.length, loop, speed, movement]);
 
   const frame = frames[currentFrame] || frames[0];
-  const scale = size / 200;
-
-  const interpolate = (start: number, end: number, progress: number) => {
-    return start + (end - start) * progress;
-  };
 
   return (
     <div className={`relative ${className}`} style={{ width: size, height: size }}>
