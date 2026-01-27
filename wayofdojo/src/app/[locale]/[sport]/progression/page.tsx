@@ -100,7 +100,7 @@ export default function ProgressionPage() {
 
   const currentBelt = getBeltByKey(user.grade);
   const nextBelt = getNextBelt(currentBelt);
-  const isJeuneSamourai = user.profile === 'jeune_samourai';
+  const _isJeuneSamourai = user.profile === 'jeune_samourai';
   const completedTechniques = user.gamification.completedTechniques || [];
 
   // Calculate progress for each grade
