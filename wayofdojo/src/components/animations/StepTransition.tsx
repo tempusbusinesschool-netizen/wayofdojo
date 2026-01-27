@@ -208,9 +208,10 @@ const StepTransition: React.FC<StepTransitionProps> = ({
   }, [isVisible, onComplete]);
 
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       {isVisible && (
         <motion.div
+          key="step-transition-overlay"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
