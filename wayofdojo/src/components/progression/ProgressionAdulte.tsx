@@ -429,8 +429,8 @@ const GradeNode: React.FC<{
                   Compétences évaluées
                 </h4>
                 <ul className="grid grid-cols-1 sm:grid-cols-2 gap-1">
-                  {grade.competences.map((comp, idx) => (
-                    <li key={idx} className="text-sm text-slate-400 flex items-start gap-2">
+                  {grade.competences.map((comp) => (
+                    <li key={comp} className="text-sm text-slate-400 flex items-start gap-2">
                       <Star className="w-3 h-3 text-amber-400 mt-1 flex-shrink-0" />
                       {comp}
                     </li>
