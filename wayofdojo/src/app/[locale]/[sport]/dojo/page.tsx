@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { JuniorDashboard } from '@/components/dashboards/JuniorDashboard';
 import { AdultDashboard } from '@/components/dashboards/AdultDashboard';
+import TanakaAnimatedLogo from '@/components/animations/TanakaAnimatedLogo';
 import MaitreTanaka from '@/components/MaitreTanaka';
 import { aikidoConfig } from '@/config/sports/aikido.config';
 import apiService from '@/services/api.service';
