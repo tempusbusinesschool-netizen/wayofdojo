@@ -123,6 +123,7 @@ export const AdultTutorialBlocks: React.FC<AdultTutorialBlocksProps> = ({
   onBlockComplete,
   completedBlocks = []
 }) => {
+  const router = useRouter();
   const [previewBlock, setPreviewBlock] = useState<number | null>(null);
   const [tanakaAnimating, setTanakaAnimating] = useState(false);
 
@@ -138,7 +139,10 @@ export const AdultTutorialBlocks: React.FC<AdultTutorialBlocksProps> = ({
     if (onBlockComplete && !completedBlocks.includes(blockId)) {
       onBlockComplete(blockId);
     }
-    if (onNavigate) {
+    // Navigation vers la page
+    if (destination.startsWith('/')) {
+      router.push(destination);
+    } else if (onNavigate) {
       onNavigate(destination);
     }
   };
