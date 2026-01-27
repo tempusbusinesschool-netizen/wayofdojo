@@ -5,8 +5,8 @@ import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  ChevronLeft, Star, Target, Trophy, TrendingUp,
-  Award, CheckCircle2, Lock, Sparkles, Users,
+  ChevronLeft, Star, Target, Trophy,
+  CheckCircle2, Lock, Sparkles, Users,
   ChevronRight, ChevronDown, BookOpen, Flame, 
   Clock, Swords, Shield, Info
 } from 'lucide-react';
