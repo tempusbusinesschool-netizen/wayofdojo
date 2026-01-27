@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Trophy, Star, Lock, Sparkles, Medal, Award, Crown, Target } from 'lucide-react';
+import { ArrowLeft, Trophy, Star, Lock, Sparkles, Medal, Award, Crown, Target, Users } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 
