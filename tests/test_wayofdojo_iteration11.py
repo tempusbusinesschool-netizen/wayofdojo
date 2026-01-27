@@ -11,7 +11,7 @@ import pytest
 import requests
 import os
 
-BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://dojo-forensic.preview.emergentagent.com')
+BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://dojomigration.preview.emergentagent.com')
 
 # Test credentials
 TEST_EMAIL = "testninja2@ninja.com"
