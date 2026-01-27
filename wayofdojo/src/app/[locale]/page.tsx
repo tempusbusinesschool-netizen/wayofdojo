@@ -359,7 +359,7 @@ export default function HomePage() {
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <TanakaAnimatedLogo size="sm" />
+              <SimpleLogo size="sm" />
               <p className="text-amber-400 font-bold">Way of Dojo</p>
             </div>
             
