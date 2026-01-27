@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useRouter } from 'next/navigation';
 import { 
   Sparkles, Eye, X, ChevronRight, Play,
   User, Target, Compass, BookOpen, Award, 
