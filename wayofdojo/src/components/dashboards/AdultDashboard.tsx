@@ -30,7 +30,7 @@ export const AdultDashboard: React.FC<AdultDashboardProps> = ({
 }) => {
   // Charger les blocs complétés depuis localStorage
   const [completedBlocks, setCompletedBlocks] = useState<number[]>([]);
-  const [showTutorial, setShowTutorial] = useState(true);
+  const [_showTutorial, setShowTutorial] = useState(true);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
