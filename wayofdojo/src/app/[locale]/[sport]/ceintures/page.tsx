@@ -419,7 +419,7 @@ export default function CeinturesPage() {
             <span className="text-amber-400 font-bold">2e Kyu (Bleue)</span>
           </div>
           <div className="flex gap-1">
-            {GRADES.map((grade, idx) => (
+            {GRADES.map((grade) => (
               <div 
                 key={grade.id}
                 className={`h-3 flex-1 rounded-sm first:rounded-l-full last:rounded-r-full transition-all ${
