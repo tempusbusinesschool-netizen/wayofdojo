@@ -327,6 +327,8 @@ export default function DojoPage() {
             xp={currentXp}
             completedMissions={adultCompletedMissions}
             onMissionComplete={handleAdultMissionComplete}
+            userName={user.firstName}
+            currentGrade={currentGrade?.displayName || '2e Kyu'}
           />
         )}
 
