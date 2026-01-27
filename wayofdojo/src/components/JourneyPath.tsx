@@ -244,12 +244,16 @@ export const JourneyPath: React.FC<JourneyPathProps> = ({
       setTransitionStep(selectedStep);
       setShowStepTransition(true);
       
-      // Après la transition, marquer comme complété et naviguer
-      setTimeout(() => {
-        if (onStepComplete) onStepComplete(selectedStep.id);
+      // IMPORTANT: Timeout de sécurité pour garantir que l'animation se termine
+      // même si onComplete ne se déclenche pas correctement
+      const safetyTimeout = setTimeout(() => {
         setShowStepTransition(false);
+        if (onStepComplete) onStepComplete(selectedStep.id);
         if (onNavigate) onNavigate(target);
-      }, 2500);
+      }, 3000); // 3s = légèrement plus que la durée de l'animation (2.5s)
+      
+      // Stocker le timeout pour pouvoir l'annuler si onComplete se déclenche normalement
+      return () => clearTimeout(safetyTimeout);
     } else {
       if (onNavigate) onNavigate(target);
     }
