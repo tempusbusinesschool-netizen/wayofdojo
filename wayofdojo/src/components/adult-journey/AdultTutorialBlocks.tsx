@@ -238,7 +238,7 @@ export const AdultTutorialBlocks: React.FC<AdultTutorialBlocksProps> = ({
       gradient: 'from-pink-600 to-rose-700',
       shadowColor: 'shadow-pink-500/30',
       icon: Target,
-      destination: 'defis',
+      destination: '/fr/aikido/dojo-virtuel',
       previewContent: (
         <div className="space-y-2">
           {CHALLENGES.map((challenge, i) => (
@@ -274,7 +274,7 @@ export const AdultTutorialBlocks: React.FC<AdultTutorialBlocksProps> = ({
       gradient: 'from-amber-600 to-orange-700',
       shadowColor: 'shadow-amber-500/30',
       icon: Compass,
-      destination: 'vertus',
+      destination: '/fr/aikido/vertus',
       previewContent: (
         <div className="space-y-3">
           <div className="grid grid-cols-2 gap-2">
@@ -308,7 +308,7 @@ export const AdultTutorialBlocks: React.FC<AdultTutorialBlocksProps> = ({
       gradient: 'from-cyan-600 to-blue-700',
       shadowColor: 'shadow-cyan-500/30',
       icon: BookOpen,
-      destination: 'techniques',
+      destination: '/fr/aikido/techniques-liste',
       previewContent: (
         <div className="space-y-2">
           {TECHNIQUES.map((tech, i) => (
@@ -343,7 +343,7 @@ export const AdultTutorialBlocks: React.FC<AdultTutorialBlocksProps> = ({
       gradient: 'from-slate-600 to-slate-800',
       shadowColor: 'shadow-slate-500/30',
       icon: Award,
-      destination: 'progression',
+      destination: '/fr/aikido/ceintures',
       previewContent: (
         <div className="space-y-1.5">
           {BELTS.map((belt, i) => (
@@ -371,7 +371,7 @@ export const AdultTutorialBlocks: React.FC<AdultTutorialBlocksProps> = ({
       gradient: 'from-amber-700 to-yellow-700',
       shadowColor: 'shadow-amber-600/30',
       icon: Scroll,
-      destination: 'histoire',
+      destination: '/fr/aikido/histoire',
       previewContent: (
         <div className="space-y-3">
           <div className="flex items-center gap-3 bg-amber-600/30 rounded-xl p-3">
@@ -407,7 +407,7 @@ export const AdultTutorialBlocks: React.FC<AdultTutorialBlocksProps> = ({
       gradient: 'from-yellow-600 to-amber-700',
       shadowColor: 'shadow-yellow-500/30',
       icon: Trophy,
-      destination: 'trophees',
+      destination: '/fr/aikido/trophees',
       previewContent: (
         <div className="space-y-3">
           <div className="grid grid-cols-3 gap-2">
