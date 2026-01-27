@@ -389,7 +389,6 @@ export default function HomePage() {
                   variant="breathing"
                   isActive={false}
                   showAura={true}
-                  className="opacity-90"
                 />
                 {/* Badge "Inscris-toi" */}
                 <motion.div
