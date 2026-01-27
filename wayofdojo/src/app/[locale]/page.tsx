@@ -109,8 +109,11 @@ export default function HomePage() {
               href={`/${locale}`} 
               className="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-opacity group"
             >
-              <SimpleLogo size="md" />
-              <p className="text-sm text-amber-400 font-bold group-hover:text-amber-300 transition-colors">Way of Dojo</p>
+              <TanakaLogo size="md" />
+              <div className="flex flex-col">
+                <p className="text-sm text-amber-400 font-bold group-hover:text-amber-300 transition-colors">Maître Tanaka</p>
+                <p className="text-xs text-slate-400">Way of Dojo</p>
+              </div>
             </Link>
 
             {/* Navigation Desktop */}
