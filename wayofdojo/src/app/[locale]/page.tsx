@@ -377,8 +377,11 @@ export default function HomePage() {
         <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <SimpleLogo size="sm" />
-              <p className="text-amber-400 font-bold">Way of Dojo</p>
+              <TanakaLogo size="sm" />
+              <div>
+                <p className="text-amber-400 font-bold">Maître Tanaka</p>
+                <p className="text-slate-500 text-xs">Way of Dojo</p>
+              </div>
             </div>
             
             <div className="flex flex-wrap items-center justify-center gap-4 text-slate-500 text-sm">
