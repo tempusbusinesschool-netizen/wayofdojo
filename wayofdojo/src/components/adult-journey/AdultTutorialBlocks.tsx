@@ -155,7 +155,7 @@ export const AdultTutorialBlocks: React.FC<AdultTutorialBlocksProps> = ({
       gradient: 'from-emerald-600 to-teal-700',
       shadowColor: 'shadow-emerald-500/30',
       icon: Sparkles,
-      destination: 'dashboard',
+      destination: '/fr/aikido/dojo',
       previewContent: (
         <div className="space-y-4">
           <div className="flex justify-center">
@@ -192,7 +192,7 @@ export const AdultTutorialBlocks: React.FC<AdultTutorialBlocksProps> = ({
       gradient: 'from-violet-600 to-purple-700',
       shadowColor: 'shadow-violet-500/30',
       icon: User,
-      destination: 'profil',
+      destination: '/fr/aikido/profil',
       previewContent: (
         <div className="space-y-3">
           <div className="flex items-center gap-3 bg-violet-600/30 rounded-xl p-3">
