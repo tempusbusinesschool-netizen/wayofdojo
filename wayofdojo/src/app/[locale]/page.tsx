@@ -258,19 +258,6 @@ export default function HomePage() {
       {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
       {/* HERO SECTION - Titre principal avec animation */}
       {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-      {/* MAÎTRE TANAKA FLOTTANT - Aligné avec le titre "Samouraï !" à 2mm du point d'exclamation */}
-      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
-      <MaitreTanaka 
-        isVisible={true}
-        isJeuneSamourai={true}
-        position="top-right"
-        size="large"
-        messages={[
-          "Bienvenue jeune Samouraï ! Je suis Maître Tanaka, ton guide sur la Voie de l'Aïkido.",
-          "Inscris-toi pour commencer ton aventure et découvrir les secrets des grands maîtres !",
-          "Chaque vertu t'aidera à devenir un vrai guerrier pacifique.",
-        ]}
-      />
 
       {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
       <section className="relative overflow-hidden">
