@@ -70,7 +70,7 @@ export default function HomePage() {
             animate={{ scale: [1, 1.1, 1], rotate: [0, 5, -5, 0] }}
             transition={{ duration: 1.5, repeat: Infinity }}
           >
-            <TanakaAnimatedLogo size="lg" />
+            <SimpleLogo size="lg" />
           </motion.div>
           <p className="text-white font-bold mt-4">Way of Dojo</p>
           <p className="text-slate-400 text-sm">Chargement...</p>
