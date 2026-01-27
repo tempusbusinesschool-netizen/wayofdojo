@@ -6,15 +6,11 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Swords, LogIn, UserPlus, LogOut, User, Lock, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import MaitreTanaka from '@/components/MaitreTanaka';
 import VisitorStepsBlocks from '@/components/VisitorStepsBlocks';
 import ChooseMode from '@/components/ChooseMode';
 
-// Image de Maître Tanaka pour le logo animé
-const TANAKA_IMAGE = "/images/tanaka/portrait.png";
-
-// Logo animé Tanaka (cercle orange flottant)
-const TanakaAnimatedLogo = ({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) => {
+// Logo simple (sans Tanaka - réservé aux utilisateurs connectés)
+const SimpleLogo = ({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) => {
   const sizeClasses = {
     sm: 'w-10 h-10',
     md: 'w-12 h-12',
@@ -25,21 +21,9 @@ const TanakaAnimatedLogo = ({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) => {
     <motion.div
       animate={{ y: [0, -3, 0] }}
       transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-      className={`${sizeClasses[size]} rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg shadow-amber-500/30 overflow-hidden border-2 border-amber-300/50`}
+      className={`${sizeClasses[size]} rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg shadow-amber-500/30 border-2 border-amber-300/50`}
     >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img 
-        src={TANAKA_IMAGE} 
-        alt="Maître Tanaka" 
-        className="w-full h-full object-cover"
-        onError={(e) => {
-          const target = e.target as HTMLImageElement;
-          target.style.display = 'none';
-          if (target.parentElement) {
-            target.parentElement.innerHTML = '<span class="text-white text-xl">🥋</span>';
-          }
-        }}
-      />
+      <Swords className="w-1/2 h-1/2 text-white" />
     </motion.div>
   );
 };
