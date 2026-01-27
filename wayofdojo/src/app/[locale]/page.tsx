@@ -8,9 +8,21 @@ import { Swords, LogIn, UserPlus, LogOut, User, Lock, Menu, X } from 'lucide-rea
 import { Button } from '@/components/ui/button';
 import VisitorStepsBlocks from '@/components/VisitorStepsBlocks';
 import ChooseMode from '@/components/ChooseMode';
+import TanakaAnimatedLogo from '@/components/animations/TanakaAnimatedLogo';
 
 // Image de Maître Tanaka pour le logo
 const TANAKA_IMAGE = "/images/tanaka/portrait.png";
+
+// Les 7 vertus du Budo pour l'affichage
+const BUDO_VIRTUES = [
+  { kanji: '義', romaji: 'Gi', name: 'Rectitude', color: '#3B82F6' },
+  { kanji: '勇', romaji: 'Yū', name: 'Courage', color: '#EF4444' },
+  { kanji: '仁', romaji: 'Jin', name: 'Bienveillance', color: '#EC4899' },
+  { kanji: '礼', romaji: 'Rei', name: 'Respect', color: '#F59E0B' },
+  { kanji: '誠', romaji: 'Makoto', name: 'Sincérité', color: '#06B6D4' },
+  { kanji: '名誉', romaji: 'Meiyo', name: 'Honneur', color: '#8B5CF6' },
+  { kanji: '忠義', romaji: 'Chūgi', name: 'Loyauté', color: '#10B981' },
+];
 
 // Logo Tanaka statique (sans animation flottante - réservée aux connectés)
 const TanakaLogo = ({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) => {
