@@ -188,6 +188,10 @@ const StepTransition: React.FC<StepTransitionProps> = ({
       const timer3 = setTimeout(() => {
         setStage(3);
         setShowConfetti(false);
+      }, 2000);
+      
+      // IMPORTANT: Timer de fermeture automatique - appeler onComplete après l'animation
+      const closeTimer = setTimeout(() => {
         if (onComplete) onComplete();
       }, 2500);
 
@@ -195,6 +199,7 @@ const StepTransition: React.FC<StepTransitionProps> = ({
         clearTimeout(timer1);
         clearTimeout(timer2);
         clearTimeout(timer3);
+        clearTimeout(closeTimer);
       };
     } else {
       setStage(0);
