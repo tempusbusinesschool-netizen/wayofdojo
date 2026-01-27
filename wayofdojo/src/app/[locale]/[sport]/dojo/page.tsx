@@ -272,7 +272,28 @@ export default function DojoPage() {
           : 'bg-gradient-to-r from-violet-900/90 to-purple-900/90 border-violet-500/20'
       }`}>
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-          <Link href={`/${locale}`} className="flex items-center gap-3">
+          {/* Mobile: Sphère Tanaka "Parle-moi" */}
+          <div className="md:hidden flex items-center gap-2">
+            <TanakaAnimatedLogo
+              size="sm"
+              variant="breathing"
+              isActive={true}
+              showAura={true}
+              onClick={() => {
+                // Ouvrir Maître Tanaka en modal ou scroll vers lui
+                const tanakaEl = document.querySelector('[data-testid="maitre-tanaka"]');
+                if (tanakaEl) {
+                  tanakaEl.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+            />
+            <span className={`text-sm font-bold ${isJeuneSamourai ? 'text-amber-300' : 'text-violet-300'}`}>
+              Parle-moi !
+            </span>
+          </div>
+
+          {/* Desktop: Logo classique */}
+          <Link href={`/${locale}`} className="hidden md:flex items-center gap-3">
             <motion.div 
               animate={{ rotate: [0, 5, -5, 0] }}
               transition={{ duration: 4, repeat: Infinity }}
