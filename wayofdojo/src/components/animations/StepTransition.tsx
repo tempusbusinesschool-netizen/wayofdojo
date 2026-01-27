@@ -217,6 +217,15 @@ const StepTransition: React.FC<StepTransitionProps> = ({
           transition={{ duration: 0.3 }}
           className="fixed inset-0 z-[100] flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"
         >
+          {/* Bouton de fermeture de sécurité - en haut à droite */}
+          <button
+            onClick={() => onComplete && onComplete()}
+            className="absolute top-4 right-4 z-[101] px-4 py-2 bg-white/10 hover:bg-white/20 text-white/70 hover:text-white rounded-full text-sm font-medium transition-all flex items-center gap-2"
+            aria-label="Fermer l'animation"
+          >
+            <span>Passer</span>
+            <span>→</span>
+          </button>
           {/* Background animated circles */}
           <div className="absolute inset-0 overflow-hidden">
             <motion.div
