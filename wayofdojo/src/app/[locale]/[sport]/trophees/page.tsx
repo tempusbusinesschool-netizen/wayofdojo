@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Trophy, Star, Lock, Sparkles, Medal, Award, Crown, Flame, Zap, Heart, Target, BookOpen, Users, Sword, Shield } from 'lucide-react';
+import { ArrowLeft, Trophy, Star, Lock, Sparkles, Medal, Award, Crown, Target } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 
@@ -283,7 +283,7 @@ const LEVEL_COLORS = {
 export default function TropheesPage() {
   const router = useRouter();
   const [selectedCategory, setSelectedCategory] = useState('all');
-  const [selectedTrophy, setSelectedTrophy] = useState<string | null>(null);
+  const [_selectedTrophy, setSelectedTrophy] = useState<string | null>(null);
 
   const filteredTrophies = TROPHIES.filter(t => 
     selectedCategory === 'all' || t.category === selectedCategory

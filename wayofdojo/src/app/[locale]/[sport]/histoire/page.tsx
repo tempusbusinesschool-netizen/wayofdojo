@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Calendar, Quote, Star, BookOpen, Users, ChevronRight, Globe, Heart } from 'lucide-react';
+import { ArrowLeft, Calendar, Quote, Star, BookOpen, Users, ChevronRight, Heart } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { 

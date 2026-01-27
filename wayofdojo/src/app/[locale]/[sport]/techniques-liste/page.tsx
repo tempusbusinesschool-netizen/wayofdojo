@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Search, Filter, Play, ChevronRight, BookOpen, Award, Target, Swords, Hand, Users } from 'lucide-react';
+import { ArrowLeft, Search, Filter, Play, ChevronRight, BookOpen, Award, Target } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
