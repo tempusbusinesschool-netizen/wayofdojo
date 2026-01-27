@@ -94,7 +94,7 @@ export default function HomePage() {
               href={`/${locale}`} 
               className="flex items-center gap-2 sm:gap-3 hover:opacity-80 transition-opacity group"
             >
-              <TanakaAnimatedLogo size="md" />
+              <SimpleLogo size="md" />
               <p className="text-sm text-amber-400 font-bold group-hover:text-amber-300 transition-colors">Way of Dojo</p>
             </Link>
 
