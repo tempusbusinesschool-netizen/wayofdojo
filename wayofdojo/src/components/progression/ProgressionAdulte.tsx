@@ -411,9 +411,9 @@ const GradeNode: React.FC<{
                   Techniques clés
                 </h4>
                 <div className="flex flex-wrap gap-2">
-                  {grade.techniques_cles.map((tech, _idx) => (
+                  {grade.techniques_cles.map((tech) => (
                     <span 
-                      key={_idx}
+                      key={tech}
                       className="px-2 py-1 text-xs bg-slate-700/50 text-slate-300 rounded-md border border-slate-600/50"
                     >
                       {tech}
