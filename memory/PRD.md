@@ -2,13 +2,31 @@
 
 ## 📋 Document de Référence
 
-**Version:** 1.2  
+**Version:** 1.3  
 **Date de création:** 19 Janvier 2025  
-**Dernière mise à jour:** 24 Janvier 2025
+**Dernière mise à jour:** 27 Janvier 2025
 
 ---
 
 ## 📝 CHANGELOG RÉCENT
+
+### 27 Janvier 2025 - Enrichissement du contenu (8 blocs tutoriels)
+- ✅ **Pages manquantes créées et enrichies** :
+  - `/histoire` : Histoire complète de l'Aïkido, O'Sensei, chronologie, signification des kanji (合気道)
+  - `/vertus` : Les 7 vertus du Bushido avec kanjis et explications détaillées
+  - `/profil` : Page profil utilisateur avec stats, badges, progression de ceinture
+  - `/techniques-liste` : Catalogue des 206+ techniques avec animation fil de fer
+  - `/ceintures` : Progression de grades style médiéval/parchemin (Kyu → Dan)
+  - `/trophees` : Système de badges et accomplissements
+- ✅ **Animation fil de fer Aïkido** (`AikidoWireframe.tsx`) : 
+  - Personnage animé représentant les mouvements d'Aïkido
+  - 6 animations : irimi, tenkan, shiho_nage, ikkyo, kokyu, ukemi
+  - Style SVG avec effets de lueur
+- ✅ **Données historiques complètes** (`/data/aikido/histoire.ts`) :
+  - Biographie O'Sensei, citations, figures historiques
+  - Chronologie de l'Aïkido (1883-2025)
+  - Les 7 vertus du Bushido avec applications en Aïkido
+- ✅ **Navigation 8 blocs fonctionnelle** : Tous les blocs naviguent vers leurs pages respectives
 
 ### 24 Janvier 2025 - Dojo Virtuel Migré (10 mini-jeux)
 - ✅ **Dojo Virtuel complet** : 10 mini-jeux migrés depuis aikido@game
