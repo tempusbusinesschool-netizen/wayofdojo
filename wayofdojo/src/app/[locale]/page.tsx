@@ -367,6 +367,97 @@ export default function HomePage() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+      {/* SECTION BUDO - Les 7 vertus avec Tanaka inactif */}
+      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
+      <section className="container mx-auto px-4 py-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="bg-gradient-to-br from-violet-900/30 to-purple-900/20 rounded-3xl p-6 md:p-8 border border-violet-700/30 relative overflow-hidden"
+        >
+          {/* Fond décoratif */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-amber-500/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-violet-500/5 rounded-full blur-3xl" />
+
+          <div className="relative flex flex-col lg:flex-row items-center gap-6 lg:gap-10">
+            {/* Tanaka Animation - INACTIF (pas de clic, juste visuel) */}
+            <div className="flex-shrink-0">
+              <div className="relative">
+                <TanakaAnimatedLogo
+                  size="lg"
+                  variant="breathing"
+                  isActive={false}
+                  showAura={true}
+                  className="opacity-90"
+                />
+                {/* Badge "Inscris-toi" */}
+                <motion.div
+                  animate={{ scale: [1, 1.05, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                  className="absolute -bottom-2 -right-2 bg-amber-500 text-amber-950 text-xs font-bold px-2 py-1 rounded-full shadow-lg"
+                >
+                  Inscris-toi !
+                </motion.div>
+              </div>
+            </div>
+
+            {/* Contenu Budo */}
+            <div className="flex-1 text-center lg:text-left">
+              <div className="flex items-center justify-center lg:justify-start gap-3 mb-4">
+                <h2 className="text-2xl md:text-3xl font-bold text-white">
+                  Le <span className="text-violet-400">Budo</span> 武道
+                </h2>
+                <span className="text-3xl md:text-4xl">☯️</span>
+              </div>
+              
+              <p className="text-slate-300 mb-6 max-w-xl">
+                Le <strong className="text-violet-300">Bushidō</strong> (武士道), la &quot;Voie du Guerrier&quot;, 
+                repose sur <strong className="text-amber-400">7 vertus fondamentales</strong> qui guident 
+                chaque pratiquant vers l&apos;excellence martiale et spirituelle.
+              </p>
+
+              {/* Les 7 vertus en grille */}
+              <div className="grid grid-cols-4 sm:grid-cols-7 gap-2 md:gap-3">
+                {BUDO_VIRTUES.map((virtue, idx) => (
+                  <motion.div
+                    key={virtue.romaji}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.4 + idx * 0.05 }}
+                    className="flex flex-col items-center p-2 rounded-xl bg-slate-800/50 border border-slate-700/50 hover:border-violet-500/30 transition-colors"
+                  >
+                    <span 
+                      className="text-2xl md:text-3xl font-bold"
+                      style={{ color: virtue.color }}
+                    >
+                      {virtue.kanji}
+                    </span>
+                    <span className="text-[10px] md:text-xs text-slate-400 mt-1">{virtue.romaji}</span>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* CTA */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.8 }}
+                className="mt-6"
+              >
+                <Button
+                  onClick={() => router.push(`/${locale}/aikido/register`)}
+                  className="bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white font-bold px-6"
+                >
+                  🥋 Découvrir les 7 vertus avec Tanaka
+                </Button>
+              </motion.div>
+            </div>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
       {/* 8 BLOCS DE PRÉVISUALISATION - VisitorStepsBlocks */}
       {/* ═══════════════════════════════════════════════════════════════════════════════════ */}
       <section className="container mx-auto px-4 py-6 sm:py-10">
