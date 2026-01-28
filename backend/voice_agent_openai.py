@@ -289,3 +289,89 @@ async def text_conversation(
         "assistantMessage": assistant_message,
         "sessionId": session_id
     }
+
+
+# ═══════════════════════════════════════════════════════════════════════════════════
+# TEST VOIX TANAKA - ÉCHANTILLONS
+# ═══════════════════════════════════════════════════════════════════════════════════
+
+# Phrase de test pour Maître Tanaka
+TANAKA_TEST_PHRASE = "Bienvenue, jeune samouraï ! Je suis Maître Tanaka, ton guide sur la voie de l'Aïkido. Gambatte ! Ensemble, nous allons découvrir les secrets du Budo."
+
+AVAILABLE_VOICES = [
+    {"id": "alloy", "name": "Alloy", "description": "Neutre, équilibrée"},
+    {"id": "ash", "name": "Ash", "description": "Claire, articulée"},
+    {"id": "coral", "name": "Coral", "description": "Chaleureuse, amicale"},
+    {"id": "echo", "name": "Echo", "description": "Douce, calme"},
+    {"id": "fable", "name": "Fable", "description": "Expressive, conteuse"},
+    {"id": "nova", "name": "Nova", "description": "Énergique, dynamique"},
+    {"id": "onyx", "name": "Onyx", "description": "Profonde, autoritaire", "recommended": True},
+    {"id": "sage", "name": "Sage", "description": "Sage, mesurée", "recommended": True},
+    {"id": "shimmer", "name": "Shimmer", "description": "Brillante, joyeuse"},
+]
+
+
+@voice_router_openai.get("/voices")
+async def list_voices():
+    """Liste des voix disponibles pour Tanaka"""
+    return {
+        "voices": AVAILABLE_VOICES,
+        "testPhrase": TANAKA_TEST_PHRASE,
+        "recommendation": "onyx ou sage pour un sensei",
+        "currentVoice": "onyx"
+    }
+
+
+@voice_router_openai.post("/test-voice")
+async def test_voice(
+    voice: str = Form("onyx"),
+    text: Optional[str] = Form(None),
+    speed: float = Form(0.95)
+):
+    """
+    Génère un échantillon audio avec une voix spécifique
+    Pour tester quelle voix convient le mieux à Tanaka
+    """
+    if not EMERGENT_LLM_KEY:
+        raise HTTPException(status_code=500, detail="EMERGENT_LLM_KEY non configurée")
+    
+    # Valider la voix
+    valid_voices = [v["id"] for v in AVAILABLE_VOICES]
+    if voice not in valid_voices:
+        raise HTTPException(status_code=400, detail=f"Voix invalide. Choix: {valid_voices}")
+    
+    # Utiliser la phrase de test par défaut si non fournie
+    test_text = text or TANAKA_TEST_PHRASE
+    
+    try:
+        from emergentintegrations.llm.openai import OpenAITextToSpeech
+        
+        tts = OpenAITextToSpeech(api_key=EMERGENT_LLM_KEY)
+        
+        # Générer l'audio avec la voix demandée
+        audio_bytes = await tts.generate_speech(
+            text=test_text,
+            model="tts-1",
+            voice=voice,
+            speed=speed,
+            response_format="mp3"
+        )
+        
+        audio_base64 = base64.b64encode(audio_bytes).decode('utf-8')
+        
+        voice_info = next((v for v in AVAILABLE_VOICES if v["id"] == voice), None)
+        
+        return {
+            "success": True,
+            "voice": voice,
+            "voiceName": voice_info["name"] if voice_info else voice,
+            "voiceDescription": voice_info["description"] if voice_info else "",
+            "text": test_text,
+            "speed": speed,
+            "audioBase64": audio_base64,
+            "audioFormat": "mp3"
+        }
+        
+    except Exception as e:
+        logger.error(f"Test voice error: {e}")
+        raise HTTPException(status_code=500, detail=f"Erreur de génération audio: {str(e)}")
