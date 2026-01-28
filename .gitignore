@@ -127,3 +127,5 @@ wayofdojo/node_modules/@next/swc-linux-arm64-musl/next-swc.linux-arm64-musl.node
 # Environment files
 *.env
 *.env.*
+wayofdojo/.next/cache/webpack/client-production/0.pack
+wayofdojo/.next/cache/webpack/server-production/0.pack
