@@ -167,7 +167,7 @@ export default function EspaceParentPage() {
   const [children, setChildren] = useState<Child[]>(DEMO_CHILDREN);
   const [selectedChild, setSelectedChild] = useState<string | null>(DEMO_CHILDREN[0]?.id || null);
   const [filter, setFilter] = useState<'all' | 'pending' | 'validated'>('pending');
-  const [showConfirmModal, setShowConfirmModal] = useState<{activityId: string; action: 'validate' | 'reject'} | null>(null);
+  const [_showConfirmModal, setShowConfirmModal] = useState<{activityId: string; action: 'validate' | 'reject'} | null>(null);
 
   const currentChild = children.find(c => c.id === selectedChild);
   const totalPending = children.reduce((sum, c) => sum + c.pendingValidations, 0);
