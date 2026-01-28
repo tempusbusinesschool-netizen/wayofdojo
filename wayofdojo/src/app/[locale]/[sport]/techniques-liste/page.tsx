@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Search, Filter, Play, ChevronRight, BookOpen, Award, Target, Users } from 'lucide-react';
+import { ArrowLeft, Search, Filter, Play, ChevronRight, BookOpen, Award, Target, Users, Mic } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import AikidoWireframe from '@/components/animations/AikidoWireframe';
+import TanakaVoiceSearch from '@/components/voice/TanakaVoiceSearch';
 
 // Import des données migrées
 import { UKEMI, TAI_SABAKI, KANSETSU_WAZA, KAMAE, AIKIDO_GLOBAL_STATS } from '@/data/aikido';
