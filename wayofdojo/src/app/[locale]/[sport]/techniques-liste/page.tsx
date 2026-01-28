@@ -216,6 +216,16 @@ export default function TechniquesPage() {
               data-testid="search-input"
             />
           </div>
+          {/* Bouton Parler à Tanaka */}
+          <Button 
+            onClick={() => setShowVoiceSearch(true)}
+            className="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white font-semibold"
+            data-testid="voice-search-btn"
+          >
+            <Mic className="w-4 h-4 mr-2" />
+            <span className="hidden sm:inline">Parler à Tanaka</span>
+            <span className="sm:hidden">🎤</span>
+          </Button>
           <Button variant="outline" className="border-slate-700 hover:bg-slate-800">
             <Filter className="w-4 h-4 mr-2" />
             Filtres
