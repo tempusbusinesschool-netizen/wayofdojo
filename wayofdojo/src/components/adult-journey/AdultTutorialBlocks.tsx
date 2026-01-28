@@ -587,6 +587,39 @@ export const AdultTutorialBlocks: React.FC<AdultTutorialBlocksProps> = ({
         </div>
       </div>
 
+      {/* Raccourcis rapides - Ma Progression & Espace Parent */}
+      <div className="flex flex-wrap gap-3 justify-center">
+        <Button
+          onClick={() => router.push('/fr/aikido/progression')}
+          className="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-semibold px-6 py-2.5 rounded-xl shadow-lg shadow-emerald-500/20"
+          data-testid="ma-progression-btn"
+        >
+          <TrendingUp className="w-5 h-5 mr-2" />
+          Ma Progression
+          <ChevronRight className="w-4 h-4 ml-1" />
+        </Button>
+        
+        <Button
+          onClick={() => router.push('/fr/aikido/espace-parent')}
+          variant="outline"
+          className="border-purple-500/50 hover:bg-purple-500/10 text-purple-300 hover:text-purple-200 font-semibold px-6 py-2.5 rounded-xl"
+          data-testid="espace-parent-btn"
+        >
+          <Users className="w-5 h-5 mr-2" />
+          Espace Parent
+        </Button>
+        
+        <Button
+          onClick={() => router.push('/fr/aikido/ceintures')}
+          variant="outline"
+          className="border-amber-500/50 hover:bg-amber-500/10 text-amber-300 hover:text-amber-200 font-semibold px-6 py-2.5 rounded-xl"
+          data-testid="ceintures-btn"
+        >
+          <Award className="w-5 h-5 mr-2" />
+          Les Ceintures
+        </Button>
+      </div>
+
       {/* Grille des 8 blocs */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
         {blocks.map((block, index) => {
