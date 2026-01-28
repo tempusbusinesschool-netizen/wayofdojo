@@ -2,13 +2,33 @@
 
 ## 📋 Document de Référence
 
-**Version:** 1.3  
+**Version:** 1.4  
 **Date de création:** 19 Janvier 2025  
-**Dernière mise à jour:** 27 Janvier 2025
+**Dernière mise à jour:** 28 Janvier 2025
 
 ---
 
 ## 📝 CHANGELOG RÉCENT
+
+### 28 Janvier 2025 - Migration complète AIKIDO@GAME (P0)
+- ✅ **Migration des données techniques** :
+  - `suwariwaza.ts` : 10 techniques à genoux (Suwariwaza)
+  - `atemi.ts` : 9 techniques de frappe (Atemi)
+  - `hanmi-handachi.ts` : 8 techniques semi-debout (Hanmi Handachi)
+  - `kokyu-waza.ts` : 6 techniques de respiration (Kokyu Waza)
+  - `passages-de-grades.ts` : Programme complet 6e Kyu → 4e Dan
+- ✅ **Définition complète du Budo** ajoutée dans `histoire.ts` :
+  - Étymologie (武道 = arrêter les armes)
+  - Principes fondamentaux (Shin Gi Tai, Mushin, Zanshin, etc.)
+  - Les disciplines du Budo (Aïkido, Judo, Kendo, etc.)
+  - Citations des maîtres
+- ✅ **Page techniques-liste enrichie** :
+  - Intégration de toutes les données migrées
+  - 175 techniques affichées avec vraies statistiques
+  - Filtres par catégorie (12 catégories)
+  - Recherche par nom, kanji, traduction
+  - Cards avec description, points clés, erreurs communes
+- ✅ **Index centralisé** mis à jour avec tous les exports
 
 ### 27 Janvier 2025 - Enrichissement du contenu (8 blocs tutoriels)
 - ✅ **Pages manquantes créées et enrichies** :
