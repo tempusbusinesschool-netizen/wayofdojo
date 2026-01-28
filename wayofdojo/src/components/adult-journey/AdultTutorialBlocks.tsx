@@ -123,11 +123,14 @@ export const AdultTutorialBlocks: React.FC<AdultTutorialBlocksProps> = ({
   xp = 0,
   onNavigate,
   onBlockComplete,
-  completedBlocks = []
+  completedBlocks = [],
+  isNewUser = true,
+  hasConfiguredVoice = false
 }) => {
   const router = useRouter();
   const [previewBlock, setPreviewBlock] = useState<number | null>(null);
   const [tanakaAnimating, setTanakaAnimating] = useState(false);
+  const [showVoiceBanner, setShowVoiceBanner] = useState(!hasConfiguredVoice);
 
   useEffect(() => {
     const interval = setInterval(() => {
