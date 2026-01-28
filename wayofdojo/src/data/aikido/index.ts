@@ -14,7 +14,7 @@
 export * from './types';
 
 // =============================================================================
-// MOUVEMENTS
+// MOUVEMENTS - UKEMI (CHUTES)
 // =============================================================================
 export { 
   UKEMI, 
@@ -23,6 +23,9 @@ export {
   getUkemiByCategorie 
 } from './mouvements/ukemi';
 
+// =============================================================================
+// MOUVEMENTS - KANSETSU WAZA (TECHNIQUES ARTICULAIRES)
+// =============================================================================
 export { 
   KANSETSU_WAZA, 
   KANSETSU_WAZA_STATS, 
@@ -30,6 +33,9 @@ export {
   getKansetsuByCategorie 
 } from './mouvements/kansetsu-waza';
 
+// =============================================================================
+// MOUVEMENTS - TAI SABAKI (DÉPLACEMENTS)
+// =============================================================================
 export { 
   TAI_SABAKI, 
   TAI_SABAKI_STATS, 
@@ -38,7 +44,58 @@ export {
 } from './mouvements/tai-sabaki';
 
 // =============================================================================
-// ARMES
+// MOUVEMENTS - KAMAE (POSTURES)
+// =============================================================================
+export {
+  KAMAE,
+  KAMAE_STATS,
+  getKamaeById,
+  getKamaeByNiveau,
+  getKamaeByCategorie,
+} from './mouvements/kamae';
+
+// =============================================================================
+// MOUVEMENTS - SUWARIWAZA (TECHNIQUES À GENOUX) - NOUVEAU
+// =============================================================================
+export {
+  SUWARIWAZA,
+  SUWARIWAZA_STATS,
+  getSuwariwazaByNiveau,
+  getSuwariwazaByCategorie,
+} from './mouvements/suwariwaza';
+
+// =============================================================================
+// MOUVEMENTS - ATEMI (TECHNIQUES DE FRAPPE) - NOUVEAU
+// =============================================================================
+export {
+  ATEMI,
+  ATEMI_STATS,
+  getAtemiByNiveau,
+  getAtemiByCategorie,
+} from './mouvements/atemi';
+
+// =============================================================================
+// MOUVEMENTS - HANMI HANDACHI (SEMI-DEBOUT) - NOUVEAU
+// =============================================================================
+export {
+  HANMI_HANDACHI,
+  HANMI_HANDACHI_STATS,
+  getHanmiHandachiByNiveau,
+  getHanmiHandachiByCategorie,
+} from './mouvements/hanmi-handachi';
+
+// =============================================================================
+// MOUVEMENTS - KOKYU WAZA (TECHNIQUES DE RESPIRATION) - NOUVEAU
+// =============================================================================
+export {
+  KOKYU_WAZA,
+  KOKYU_WAZA_STATS,
+  getKokyuWazaByNiveau,
+  getKokyuWazaByCategorie,
+} from './mouvements/kokyu-waza';
+
+// =============================================================================
+// ARMES - JO (BÂTON)
 // =============================================================================
 export { 
   TECHNIQUES_JO, 
@@ -48,6 +105,9 @@ export {
   default as Jo 
 } from './armes/jo';
 
+// =============================================================================
+// ARMES - TANTO (COUTEAU)
+// =============================================================================
 export { 
   TECHNIQUES_TANTO, 
   TANTO_STATISTICS, 
@@ -56,6 +116,9 @@ export {
   default as Tanto 
 } from './armes/tanto';
 
+// =============================================================================
+// ARMES - BOKKEN (SABRE)
+// =============================================================================
 export { 
   TECHNIQUES_BOKKEN, 
   BOKKEN_STATISTICS, 
@@ -78,11 +141,35 @@ export {
 } from './grades/dan';
 
 // =============================================================================
+// PASSAGES DE GRADES (PROGRAMME COMPLET) - NOUVEAU
+// =============================================================================
+export {
+  PASSAGES_DE_GRADES,
+  getProgrammeGrade,
+  getGradesKyu,
+  getGradesDan,
+  getNombreTechniquesGrade,
+  GRADES_STATISTICS,
+} from './grades/passages-de-grades';
+
+export type {
+  ElementProgramme,
+  CategorieProgramme,
+  TechniqueRequise,
+  ProgrammeGrade,
+} from './grades/passages-de-grades';
+
+// =============================================================================
 // STATISTIQUES GLOBALES
 // =============================================================================
 import { UKEMI } from './mouvements/ukemi';
 import { KANSETSU_WAZA } from './mouvements/kansetsu-waza';
 import { TAI_SABAKI } from './mouvements/tai-sabaki';
+import { KAMAE } from './mouvements/kamae';
+import { SUWARIWAZA } from './mouvements/suwariwaza';
+import { ATEMI } from './mouvements/atemi';
+import { HANMI_HANDACHI } from './mouvements/hanmi-handachi';
+import { KOKYU_WAZA } from './mouvements/kokyu-waza';
 import { TECHNIQUES_JO } from './armes/jo';
 import { TECHNIQUES_TANTO } from './armes/tanto';
 import { TECHNIQUES_BOKKEN } from './armes/bokken';
@@ -93,7 +180,13 @@ export const AIKIDO_GLOBAL_STATS = {
     ukemi: UKEMI.length,
     kansetsu_waza: KANSETSU_WAZA.length,
     tai_sabaki: TAI_SABAKI.length,
-    total: UKEMI.length + KANSETSU_WAZA.length + TAI_SABAKI.length,
+    kamae: KAMAE.length,
+    suwariwaza: SUWARIWAZA.length,
+    atemi: ATEMI.length,
+    hanmi_handachi: HANMI_HANDACHI.length,
+    kokyu_waza: KOKYU_WAZA.length,
+    total: UKEMI.length + KANSETSU_WAZA.length + TAI_SABAKI.length + KAMAE.length + 
+           SUWARIWAZA.length + ATEMI.length + HANMI_HANDACHI.length + KOKYU_WAZA.length,
   },
   armes: {
     jo: TECHNIQUES_JO.length,
@@ -106,6 +199,11 @@ export const AIKIDO_GLOBAL_STATS = {
     UKEMI.length + 
     KANSETSU_WAZA.length + 
     TAI_SABAKI.length + 
+    KAMAE.length +
+    SUWARIWAZA.length +
+    ATEMI.length +
+    HANMI_HANDACHI.length +
+    KOKYU_WAZA.length +
     TECHNIQUES_JO.length + 
     TECHNIQUES_TANTO.length + 
     TECHNIQUES_BOKKEN.length +
