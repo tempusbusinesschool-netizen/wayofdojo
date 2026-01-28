@@ -40,7 +40,7 @@ export default function TestVoixTanakaPage() {
   const router = useRouter();
   const audioRef = useRef<HTMLAudioElement | null>(null);
   
-  const [selectedVoice, setSelectedVoice] = useState<string | null>(null);
+  const [_selectedVoice, setSelectedVoice] = useState<string | null>(null);
   const [playingVoice, setPlayingVoice] = useState<string | null>(null);
   const [loadingVoice, setLoadingVoice] = useState<string | null>(null);
   const [audioCache, setAudioCache] = useState<Record<string, string>>({});
