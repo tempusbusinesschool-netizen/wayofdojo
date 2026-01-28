@@ -232,6 +232,41 @@ export default function TechniquesPage() {
           </Button>
         </div>
 
+        {/* Filtres actifs */}
+        {(gradeFilter || searchQuery) && (
+          <motion.div 
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            className="flex flex-wrap gap-2 items-center"
+          >
+            <span className="text-slate-500 text-sm">Filtres actifs :</span>
+            {gradeFilter && (
+              <button
+                onClick={() => setGradeFilter(null)}
+                className="px-3 py-1 bg-amber-500/20 text-amber-400 rounded-full text-sm flex items-center gap-1 hover:bg-amber-500/30 transition-colors"
+              >
+                Grade: {formatGrade(gradeFilter)}
+                <span className="ml-1">×</span>
+              </button>
+            )}
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm flex items-center gap-1 hover:bg-blue-500/30 transition-colors"
+              >
+                Recherche: "{searchQuery.substring(0, 20)}"
+                <span className="ml-1">×</span>
+              </button>
+            )}
+            <button
+              onClick={() => { setGradeFilter(null); setSearchQuery(''); setSelectedCategory('all'); }}
+              className="px-3 py-1 bg-slate-700 text-slate-400 rounded-full text-sm hover:bg-slate-600 transition-colors"
+            >
+              Tout effacer
+            </button>
+          </motion.div>
+        )}
+
         {/* Catégories */}
         <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
           {categoriesWithCount.map((cat) => (
