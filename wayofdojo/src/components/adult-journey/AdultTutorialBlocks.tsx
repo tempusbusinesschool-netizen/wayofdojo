@@ -124,7 +124,7 @@ export const AdultTutorialBlocks: React.FC<AdultTutorialBlocksProps> = ({
   onNavigate,
   onBlockComplete,
   completedBlocks = [],
-  isNewUser = true,
+  isNewUser: _isNewUser = true,
   hasConfiguredVoice = false
 }) => {
   const router = useRouter();
