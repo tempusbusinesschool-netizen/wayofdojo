@@ -595,6 +595,32 @@ export default function TechniquesPage() {
           </div>
         </div>
       </div>
+
+      {/* Modal Recherche Vocale Tanaka */}
+      <AnimatePresence>
+        {showVoiceSearch && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+            onClick={() => setShowVoiceSearch(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              onClick={(e) => e.stopPropagation()}
+              className="w-full max-w-lg"
+            >
+              <TanakaVoiceSearch
+                onSearchResult={handleVoiceSearchResult}
+                onClose={() => setShowVoiceSearch(false)}
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
