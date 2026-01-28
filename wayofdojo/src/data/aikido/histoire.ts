@@ -328,6 +328,122 @@ export const AIKIDO_MEANING = {
 };
 
 // ═══════════════════════════════════════════════════════════════════════════════
+// LE BUDO — LA VOIE DU GUERRIER
+// ═══════════════════════════════════════════════════════════════════════════════
+
+export const BUDO_DEFINITION = {
+  kanji: '武道',
+  reading: 'Budō',
+  literalMeaning: 'La Voie du Guerrier',
+  breakdown: [
+    {
+      kanji: '武',
+      reading: 'Bu',
+      meaning: 'Martial, Guerrier',
+      explanation: "Le caractère 武 (Bu) est composé de 止 (arrêter) et 戈 (lance/arme). Sa signification profonde est donc 'arrêter les armes' ou 'mettre fin au conflit' — l'essence même du vrai guerrier.",
+    },
+    {
+      kanji: '道',
+      reading: 'Dō',
+      meaning: 'Voie, Chemin',
+      explanation: "Le 道 (Dō) représente un chemin de vie, une quête d'amélioration continue. Ce n'est pas simplement une technique, mais une philosophie de vie.",
+    },
+  ],
+  fullDefinition: `Le **Budō** (武道) est l'ensemble des arts martiaux japonais modernes pratiqués comme voie de développement personnel.
+
+Contrairement au **Bujutsu** (武術 — techniques de guerre) qui visait l'efficacité au combat, le Budō transforme l'entraînement martial en chemin d'évolution spirituelle et morale.
+
+Le paradoxe fondamental du Budō réside dans son étymologie : le caractère 武 (Bu/martial) contient les symboles "arrêter" et "lance". **Le vrai guerrier est celui qui met fin aux conflits, pas celui qui les provoque.**
+
+O'Sensei Morihei Ueshiba disait : *"Le Budō n'est pas de vaincre l'adversaire par la force. C'est l'art de maintenir la paix du monde."*`,
+
+  principles: [
+    {
+      name: 'Shin Gi Tai',
+      kanji: '心技体',
+      meaning: 'Esprit, Technique, Corps',
+      description: "L'unité des trois éléments fondamentaux. Sans l'un, les deux autres sont incomplets.",
+    },
+    {
+      name: 'Bunbu Ryōdō',
+      kanji: '文武両道',
+      meaning: 'La double voie des lettres et des armes',
+      description: "Le guerrier accompli cultive autant son esprit (文) que ses compétences martiales (武).",
+    },
+    {
+      name: 'Fudōshin',
+      kanji: '不動心',
+      meaning: 'Esprit immuable',
+      description: "Un esprit stable et imperturbable, qui ne se laisse pas troubler par les émotions.",
+    },
+    {
+      name: 'Mushin',
+      kanji: '無心',
+      meaning: 'Non-esprit / Esprit vide',
+      description: "L'état de conscience sans pensées parasites, où l'action devient spontanée et naturelle.",
+    },
+    {
+      name: 'Zanshin',
+      kanji: '残心',
+      meaning: 'Esprit qui demeure',
+      description: "La vigilance maintenue après l'action. Ne jamais relâcher son attention.",
+    },
+  ],
+
+  disciplines: [
+    { name: 'Aïkido', kanji: '合気道', meaning: 'Voie de l\'harmonie avec l\'énergie' },
+    { name: 'Judo', kanji: '柔道', meaning: 'Voie de la souplesse' },
+    { name: 'Kendo', kanji: '剣道', meaning: 'Voie du sabre' },
+    { name: 'Karate-dō', kanji: '空手道', meaning: 'Voie de la main vide' },
+    { name: 'Kyūdō', kanji: '弓道', meaning: 'Voie de l\'arc' },
+    { name: 'Iaidō', kanji: '居合道', meaning: 'Voie de l\'unité de l\'être' },
+  ],
+
+  bushido: {
+    kanji: '武士道',
+    reading: 'Bushidō',
+    meaning: 'La Voie du Guerrier (code des samouraïs)',
+    description: `Le **Bushidō** est le code moral et éthique des samouraïs, formalisé durant l'ère Edo (1603-1868).
+
+Il définit les **7 vertus fondamentales** que tout guerrier doit cultiver :
+- **Gi** (義) — Rectitude
+- **Yū** (勇) — Courage  
+- **Jin** (仁) — Bienveillance
+- **Rei** (礼) — Respect
+- **Makoto** (誠) — Sincérité
+- **Meiyo** (名誉) — Honneur
+- **Chūgi** (忠義) — Loyauté
+
+Ces vertus ne sont pas de simples concepts — elles sont des guides de vie quotidienne. Le samouraï devait incarner ces valeurs en chaque instant, que ce soit sur le champ de bataille ou dans la vie civile.
+
+Aujourd'hui, le Bushidō continue d'inspirer la pratique des arts martiaux et offre un cadre éthique universel pour le développement personnel.`,
+  },
+
+  quotes: [
+    {
+      author: "O'Sensei Morihei Ueshiba",
+      japanese: "武道の根本は愛である",
+      french: "Le fondement du Budō est l'amour.",
+    },
+    {
+      author: "Jigoro Kano (Fondateur du Judo)",
+      japanese: "精力善用、自他共栄",
+      french: "Utiliser au mieux son énergie, prospérité mutuelle.",
+    },
+    {
+      author: "Gichin Funakoshi (Père du Karaté moderne)",
+      japanese: "空手に先手なし",
+      french: "En karaté, il n'y a pas de première attaque.",
+    },
+    {
+      author: "Miyamoto Musashi",
+      japanese: "千日の稽古を鍛とし、万日の稽古を練とす",
+      french: "Mille jours d'entraînement pour forger, dix mille jours pour polir.",
+    },
+  ],
+};
+
+// ═══════════════════════════════════════════════════════════════════════════════
 // LES 7 VERTUS DU BUSHIDO
 // ═══════════════════════════════════════════════════════════════════════════════
 
