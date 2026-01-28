@@ -71,6 +71,8 @@ export default function TechniquesPage() {
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTechnique, setSelectedTechnique] = useState<string | null>(null);
+  const [showVoiceSearch, setShowVoiceSearch] = useState(false);
+  const [gradeFilter, setGradeFilter] = useState<string | null>(null);
 
   // Combiner toutes les techniques
   const allTechniques = useMemo(() => {
