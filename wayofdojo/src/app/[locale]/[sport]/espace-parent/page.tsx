@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowLeft, Users, Check, X, Clock, Award, Shield, 
-  AlertCircle, Bell, Calendar, TrendingUp, Star, Eye,
-  CheckCircle, XCircle, MessageSquare, BarChart3
+  Bell, Calendar, TrendingUp, Star,
+  CheckCircle, XCircle, BarChart3
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
