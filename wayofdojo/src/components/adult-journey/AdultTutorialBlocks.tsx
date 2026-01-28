@@ -35,6 +35,8 @@ interface AdultTutorialBlocksProps {
   onNavigate?: (destination: string) => void;
   onBlockComplete?: (blockId: number) => void;
   completedBlocks?: number[];
+  isNewUser?: boolean;
+  hasConfiguredVoice?: boolean;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
