@@ -106,14 +106,33 @@ export default function TechniquesPage() {
   const filteredTechniques = useMemo(() => {
     return allTechniques.filter(tech => {
       const matchesCategory = selectedCategory === 'all' || tech.category === selectedCategory;
+      const matchesGrade = !gradeFilter || tech.grade === gradeFilter;
       const matchesSearch = 
         tech.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         tech.fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
         tech.meaning.toLowerCase().includes(searchQuery.toLowerCase()) ||
         tech.kanji.includes(searchQuery);
-      return matchesCategory && matchesSearch;
+      return matchesCategory && matchesSearch && matchesGrade;
     });
-  }, [allTechniques, selectedCategory, searchQuery]);
+  }, [allTechniques, selectedCategory, searchQuery, gradeFilter]);
+
+  // Handler pour la recherche vocale
+  const handleVoiceSearchResult = useCallback((query: string, filters: { grade?: string; category?: string; keyword?: string }) => {
+    if (filters.grade) {
+      setGradeFilter(filters.grade);
+    }
+    if (filters.category) {
+      setSelectedCategory(filters.category);
+    }
+    if (filters.keyword) {
+      setSearchQuery(filters.keyword);
+    } else if (query) {
+      // Utiliser la requête brute si pas de mot-clé extrait
+      setSearchQuery(query.substring(0, 50));
+    }
+    // Fermer le modal après la recherche
+    setTimeout(() => setShowVoiceSearch(false), 1500);
+  }, []);
 
   const selectedTechData = allTechniques.find(t => t.id === selectedTechnique);
   const categoryInfo = CATEGORIES.find(c => c.id === selectedTechData?.category);
