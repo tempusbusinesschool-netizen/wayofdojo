@@ -6,7 +6,8 @@ import { useRouter } from 'next/navigation';
 import { 
   Sparkles, Eye, X, ChevronRight, Play,
   User, Target, Compass, BookOpen, Award, 
-  Scroll, Trophy, Star, Flame, Shield, Mic, Volume2
+  Scroll, Trophy, Star, Flame, Shield, Mic, Volume2,
+  TrendingUp, Users
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
