@@ -711,7 +711,11 @@ export const JourneyPath: React.FC<JourneyPathProps> = ({
                 {/* Message de Tanaka */}
                 <div className="bg-amber-500/20 rounded-xl p-4 border border-amber-500/30">
                   <div className="flex items-start gap-3">
-                    <span className="text-3xl">{TANAKA_AVATAR}</span>
+                    <img 
+                      src={TANAKA_IMAGE} 
+                      alt="Maître Tanaka" 
+                      className="w-10 h-10 rounded-full object-cover border-2 border-amber-500/50 flex-shrink-0"
+                    />
                     <div>
                       <p className="text-amber-400 font-bold text-sm mb-1">Maître Tanaka dit :</p>
                       <p className="text-white text-sm italic">&quot;{selectedStep.tanakaMessage}&quot;</p>
