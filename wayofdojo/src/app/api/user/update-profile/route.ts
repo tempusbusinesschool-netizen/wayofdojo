@@ -1,12 +1,10 @@
-'use server';
-
-import { NextRequest, NextResponse } from 'next/server';
-import { MongoClient, ObjectId } from 'mongodb';
-
 /**
  * API pour mettre à jour le profil utilisateur (prénom)
  * Utilisé quand Tanaka demande le prénom lors de l'introduction
  */
+
+import { NextRequest, NextResponse } from 'next/server';
+import { MongoClient, ObjectId } from 'mongodb';
 
 const MONGO_URI = process.env.MONGO_URL || 'mongodb://localhost:27017/wayofdojo';
 
