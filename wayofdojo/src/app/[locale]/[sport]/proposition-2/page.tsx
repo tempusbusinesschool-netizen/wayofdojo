@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowLeft, Star, Flame, ChevronDown, Play } from 'lucide-react';
+import { ArrowLeft, Star, Flame, ChevronDown, Play, BookOpen } from 'lucide-react';
 import { SpiralConnector } from '@/components/animations/SpiralConnector';
 
 /**
