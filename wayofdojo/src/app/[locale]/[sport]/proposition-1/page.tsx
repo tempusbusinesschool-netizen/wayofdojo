@@ -55,15 +55,15 @@ export default function Proposition1Page() {
       </div>
 
       {/* Cercle Principal */}
-      <div className="relative max-w-4xl mx-auto" style={{ height: '500px' }}>
+      <div className="relative max-w-5xl mx-auto" style={{ height: '550px' }}>
         {/* Centre - Tanaka */}
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
         >
-          <div className="w-32 h-32 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-2xl shadow-amber-500/50 border-4 border-amber-400/50">
-            <img src="/images/tanaka/portrait.png" alt="Tanaka" className="w-28 h-28 rounded-full object-cover" />
+          <div className="w-28 h-28 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center shadow-2xl shadow-amber-500/50 border-4 border-amber-400/50">
+            <img src="/images/tanaka/portrait.png" alt="Tanaka" className="w-24 h-24 rounded-full object-cover" />
           </div>
           <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 text-center">
             <p className="text-amber-400 font-bold text-sm">Maître Tanaka</p>
@@ -73,8 +73,8 @@ export default function Proposition1Page() {
 
         {/* Blocs en cercle */}
         {blocks.map((block, index) => {
-          const radius = 200;
-          const angleRad = (block.angle * Math.PI) / 180;
+          const radius = 220;
+          const angleRad = ((block.angle - 90) * Math.PI) / 180; // -90 pour commencer en haut
           const x = Math.cos(angleRad) * radius;
           const y = Math.sin(angleRad) * radius;
 
@@ -86,7 +86,9 @@ export default function Proposition1Page() {
               transition={{ delay: index * 0.1 }}
               className="absolute left-1/2 top-1/2 cursor-pointer group"
               style={{
-                transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`
+                marginLeft: x,
+                marginTop: y,
+                transform: 'translate(-50%, -50%)'
               }}
             >
               {/* Ligne de connexion vers le centre */}
