@@ -517,9 +517,13 @@ export const JourneyPath: React.FC<JourneyPathProps> = ({
               <motion.div
                 animate={{ y: [0, -5, 0] }}
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                className="text-8xl"
+                className="flex justify-center"
               >
-                {TANAKA_AVATAR}
+                <img 
+                  src={TANAKA_IMAGE} 
+                  alt="Maître Tanaka" 
+                  className="w-24 h-24 rounded-full object-cover border-4 border-amber-500/50 shadow-xl"
+                />
               </motion.div>
               <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-amber-500 text-slate-900 px-3 py-1 rounded-full font-bold text-xs whitespace-nowrap shadow-lg">
                 Maître Tanaka
