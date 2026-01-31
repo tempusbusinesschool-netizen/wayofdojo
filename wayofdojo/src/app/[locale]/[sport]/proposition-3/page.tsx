@@ -2,8 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowLeft, BookOpen, Gamepad2, Trophy, Star, Shield, Award, BarChart3, Flame, ChevronRight, Lock } from 'lucide-react';
-import { SpiralConnector } from '@/components/animations/SpiralConnector';
+import { ArrowLeft, Star, Flame, Lock } from 'lucide-react';
 
 /**
  * PROPOSITION 3: Layout CARTE DU MONDE / AVENTURE
