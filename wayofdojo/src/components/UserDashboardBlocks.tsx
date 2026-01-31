@@ -83,7 +83,8 @@ export const UserDashboardBlocks: React.FC<UserDashboardBlocksProps> = ({
         
         <div className="relative p-6">
           
-          {/* Header - Bienvenue + Ceinture + Progression */}
+          {/* Header - Ceinture + Progression */}
+          {/* ⚠️ VERROUILLÉ: Le bloc "Bienvenue, [Prénom] 🥷" a été supprimé définitivement */}
           <div className="flex flex-col lg:flex-row items-center gap-6 mb-6">
             
             {/* Avatar + Ceinture */}
@@ -98,10 +99,6 @@ export const UserDashboardBlocks: React.FC<UserDashboardBlocksProps> = ({
               </div>
               
               <div>
-                <p className="text-slate-400 text-sm">Bienvenue,</p>
-                <h1 className="text-2xl md:text-3xl font-black text-white">
-                  {userName} <span className="text-2xl">🥷</span>
-                </h1>
                 <p className="text-emerald-400 font-semibold text-sm flex items-center gap-1">
                   <span className={`w-2 h-2 rounded-full ${currentBelt?.bgColor || 'bg-white'}`}></span>
                   {currentBelt?.name || 'Ceinture Blanche'}
