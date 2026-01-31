@@ -82,6 +82,7 @@ export const JuniorDashboard: React.FC<JuniorDashboardProps> = ({
   locale,
   sport,
   currentXp,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   currentLevel,
   currentStreak,
   currentBelt,
