@@ -34,12 +34,19 @@ export async function POST(request: NextRequest) {
     const db = client.db();
     
     // Find user by token (stored in sessions or decode JWT)
-    // For simplicity, we'll decode the token payload (base64)
+    // For simplicity, we'll decode the token payload (base64url)
     let userId: string;
     try {
-      const payload = JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString());
+      const base64Payload = token.split('.')[1];
+      // Handle base64url encoding (replace - with + and _ with /)
+      const base64 = base64Payload.replace(/-/g, '+').replace(/_/g, '/');
+      // Add padding if needed
+      const padded = base64.padEnd(base64.length + (4 - base64.length % 4) % 4, '=');
+      const payload = JSON.parse(Buffer.from(padded, 'base64').toString('utf-8'));
       userId = payload.userId || payload.sub || payload.id;
-    } catch {
+      console.log('Decoded userId:', userId);
+    } catch (e) {
+      console.error('Token decode error:', e);
       return NextResponse.json({ success: false, error: 'Token invalide' }, { status: 401 });
     }
     
