@@ -8,6 +8,7 @@ import {
 import Link from 'next/link';
 import DailyChallengeWidget from '@/components/DailyChallengeWidget';
 import JourneyPath from '@/components/JourneyPath';
+import { SpiralDivider } from '@/components/animations/SpiralConnector';
 import { VIRTUES_GAMIFICATION } from '@/constants/virtuesGamification';
 
 // ⚠️ IMAGE OFFICIELLE DE TANAKA - VERROUILLÉE - NE JAMAIS CHANGER
@@ -20,6 +21,7 @@ const TANAKA_IMAGE = "/images/tanaka/portrait.png";
  * 
  * Layout: BENTO GRID (Style iOS Widgets)
  * Grille asymétrique moderne avec cartes de tailles variées
+ * Animations spirales entre les sections
  */
 
 interface User {
