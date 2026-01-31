@@ -62,6 +62,7 @@ interface JuniorDashboardProps {
   processingChallenge: string | null;
   onCompleteChallenge: (challengeId: string, virtueId: string, xpReward: number) => void;
   onNavigate: (path: string) => void;
+  onUserNameChange?: (firstName: string) => void;
 }
 
 // Défis quotidiens par vertu
