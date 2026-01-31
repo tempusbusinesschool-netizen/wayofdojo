@@ -396,6 +396,7 @@ export default function DojoPage() {
             processingChallenge={processingChallenge}
             onCompleteChallenge={handleCompleteChallenge}
             onNavigate={handleNavigate}
+            onUserNameChange={handleUserNameChange}
           />
         )}
       </main>
