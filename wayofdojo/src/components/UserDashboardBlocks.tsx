@@ -37,9 +37,11 @@ interface UserDashboardBlocksProps {
 /**
  * UserDashboardBlocks - Présentation en cartes flottantes pour utilisateur connecté
  * Version améliorée avec design unifié et navigation vers les sections
+ * ⚠️ VERROUILLÉ: Le bloc "Bienvenue, [Prénom] 🥷" a été supprimé définitivement
  */
 export const UserDashboardBlocks: React.FC<UserDashboardBlocksProps> = ({ 
-  userName = "Samouraï",
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  userName = "Samouraï", // Conservé pour compatibilité mais non affiché
   statistics = {},
   currentBelt = {},
   totalPoints = 0,
