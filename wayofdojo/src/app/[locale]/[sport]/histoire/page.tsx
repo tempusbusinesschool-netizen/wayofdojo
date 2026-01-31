@@ -104,8 +104,13 @@ export default function HistoirePage() {
           transition={{ delay: 0.2 }}
         >
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-2xl">
-              🧙‍♂️
+            <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-amber-500/50">
+              {/* Image officielle de Tanaka - VERROUILLÉE */}
+              <img 
+                src="/images/tanaka/portrait.png" 
+                alt="Maître Tanaka" 
+                className="w-full h-full object-cover"
+              />
             </div>
             <div>
               <h2 className="text-2xl font-bold">O'Sensei — Le Fondateur</h2>
