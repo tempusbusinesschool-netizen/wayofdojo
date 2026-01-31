@@ -144,7 +144,7 @@ export default function Proposition6Page() {
 
             {/* Scroll horizontal */}
             <div className="flex gap-4 overflow-x-auto pb-4 -mx-4 px-4 scrollbar-hide">
-              {category.items.map((item, itemIndex) => (
+              {category.items.map((item) => (
                 <motion.div
                   key={item.title}
                   whileHover={{ scale: 1.05, y: -5 }}
