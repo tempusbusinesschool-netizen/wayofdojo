@@ -167,8 +167,13 @@ export default function AnimationsDemoPage() {
         {/* Section 3: TanakaAnimatedLogo */}
         <section className="space-y-6">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center">
-              🧙‍♂️
+            <div className="w-10 h-10 rounded-xl overflow-hidden border-2 border-amber-500/50">
+              {/* Image officielle de Tanaka - VERROUILLÉE */}
+              <img 
+                src="/images/tanaka/portrait.png" 
+                alt="Maître Tanaka" 
+                className="w-full h-full object-cover"
+              />
             </div>
             <div>
               <h2 className="text-2xl font-bold text-white">TanakaAnimatedLogo</h2>
