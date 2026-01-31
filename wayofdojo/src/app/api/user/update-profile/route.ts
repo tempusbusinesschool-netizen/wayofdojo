@@ -6,7 +6,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { MongoClient, ObjectId } from 'mongodb';
 
-const MONGO_URI = process.env.MONGO_URL || 'mongodb://localhost:27017/wayofdojo';
+const MONGO_URI = process.env.MONGODB_URI || process.env.MONGO_URL || 'mongodb://localhost:27017/wayofdojo';
+const DB_NAME = 'wayofdojo';
 
 export async function POST(request: NextRequest) {
   let client: MongoClient | null = null;
