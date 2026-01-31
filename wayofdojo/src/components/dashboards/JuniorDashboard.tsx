@@ -87,6 +87,7 @@ export const JuniorDashboard: React.FC<JuniorDashboardProps> = ({
   processingChallenge,
   onCompleteChallenge,
   onNavigate,
+  onUserNameChange,
 }) => {
   // État pour les vertus sélectionnées
   const [selectedVirtue, setSelectedVirtue] = useState<string | null>(null);
