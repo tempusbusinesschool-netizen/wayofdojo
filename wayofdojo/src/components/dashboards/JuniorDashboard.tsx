@@ -386,6 +386,125 @@ export const JuniorDashboard: React.FC<JuniorDashboardProps> = ({
           </motion.div>
         </Link>
 
+        {/* ═══════════════════════════════════════════════════════════════════ */}
+        {/* BLOC DÉFI DU JOUR */}
+        {/* ═══════════════════════════════════════════════════════════════════ */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6 }}
+          className="col-span-4 md:col-span-3 row-span-2 bg-gradient-to-br from-pink-600 via-rose-600 to-pink-700 rounded-3xl p-4 md:p-5 cursor-pointer group relative overflow-hidden"
+          data-testid="bento-defi-jour"
+        >
+          <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl" />
+          <div className="relative z-10">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-lg md:text-xl font-bold text-white flex items-center gap-2">
+                🎯 Défi du jour
+              </h3>
+              <span className="text-xs bg-white/20 px-2 py-1 rounded-full text-white">+{totalXpToday} XP</span>
+            </div>
+            <div className="bg-white/10 rounded-xl p-3 mb-3">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-yellow-500/30 flex items-center justify-center">
+                  <span className="text-xl">✅</span>
+                </div>
+                <div className="flex-1">
+                  <p className="text-white font-bold text-sm">Excellence</p>
+                  <p className="text-pink-200/70 text-xs">Atteins la maîtrise sur 1 mouvement</p>
+                </div>
+                <div className="text-right">
+                  <span className="text-yellow-300 font-bold text-sm">2x XP</span>
+                  <p className="text-pink-200/60 text-xs">🔥 {currentStreak}j</p>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center justify-between text-xs">
+              <span className="text-pink-200/70">Progression: 0/1</span>
+              <span className="text-white bg-white/20 px-2 py-1 rounded-full">+40 XP</span>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* ═══════════════════════════════════════════════════════════════════ */}
+        {/* BLOC MINI-DÉFIS DU BUDO */}
+        {/* ═══════════════════════════════════════════════════════════════════ */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.65 }}
+          className="col-span-4 md:col-span-3 row-span-2 bg-gradient-to-br from-red-600 via-orange-600 to-red-700 rounded-3xl p-4 md:p-5 cursor-pointer relative overflow-hidden"
+          data-testid="bento-mini-defis"
+        >
+          <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl" />
+          <div className="relative z-10">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-lg md:text-xl font-bold text-white flex items-center gap-2">
+                🔥 Mini-défis
+              </h3>
+              <span className="text-xs bg-white/20 px-2 py-1 rounded-full text-white">{completedCount}/6</span>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              {[
+                { emoji: '🙇', name: 'Salut Parfait', xp: 10 },
+                { emoji: '🌪️', name: 'Maître Chutes', xp: 15 },
+                { emoji: '👂', name: 'Oreilles', xp: 10 },
+                { emoji: '🧹', name: 'Tatami', xp: 15 },
+              ].map((defi, idx) => (
+                <div key={idx} className="bg-white/10 rounded-lg p-2 flex items-center gap-2">
+                  <span className="text-lg">{defi.emoji}</span>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-white text-xs font-medium truncate">{defi.name}</p>
+                  </div>
+                  <span className="text-yellow-300 text-xs">+{defi.xp}</span>
+                </div>
+              ))}
+            </div>
+            <p className="text-orange-200/60 text-xs mt-2 text-center">+2 défis supplémentaires</p>
+          </div>
+        </motion.div>
+
+        {/* ═══════════════════════════════════════════════════════════════════ */}
+        {/* BLOC LES 7 VERTUS DU BUDO */}
+        {/* ═══════════════════════════════════════════════════════════════════ */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7 }}
+          className="col-span-4 md:col-span-6 row-span-2 bg-gradient-to-br from-violet-600 via-purple-600 to-indigo-700 rounded-3xl p-4 md:p-5 cursor-pointer relative overflow-hidden"
+          data-testid="bento-7-vertus"
+        >
+          <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full blur-3xl" />
+          <div className="relative z-10">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg md:text-xl font-bold text-white flex items-center gap-2">
+                🎭 Les 7 Vertus du Budo
+              </h3>
+              <span className="text-xs text-purple-200/70">Clique pour découvrir</span>
+            </div>
+            <div className="grid grid-cols-7 gap-2 md:gap-3">
+              {[
+                { emoji: '🙏', name: 'Respect', kanji: '礼' },
+                { emoji: '💪', name: 'Courage', kanji: '勇' },
+                { emoji: '🧘', name: 'Maîtrise', kanji: '克' },
+                { emoji: '🌱', name: 'Humilité', kanji: '謙' },
+                { emoji: '💝', name: 'Bienveillance', kanji: '仁' },
+                { emoji: '👁️', name: 'Attention', kanji: '注' },
+                { emoji: '⚖️', name: 'Responsabilité', kanji: '責' },
+              ].map((vertu, idx) => (
+                <div key={idx} className="bg-white/10 rounded-xl p-2 md:p-3 text-center hover:bg-white/20 transition-colors">
+                  <span className="text-xl md:text-2xl">{vertu.emoji}</span>
+                  <p className="text-white text-[10px] md:text-xs font-medium mt-1 hidden md:block">{vertu.name}</p>
+                  <p className="text-purple-300 text-lg md:text-xl font-bold">{vertu.kanji}</p>
+                  <div className="h-1 bg-white/20 rounded-full mt-1 overflow-hidden">
+                    <div className="h-full bg-white/60 rounded-full" style={{ width: '0%' }} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </motion.div>
+
       </div>
 
       {/* ═══════════════════════════════════════════════════════════════════ */}
