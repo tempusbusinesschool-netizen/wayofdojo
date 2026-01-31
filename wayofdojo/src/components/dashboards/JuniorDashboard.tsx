@@ -156,6 +156,7 @@ export const JuniorDashboard: React.FC<JuniorDashboardProps> = ({
         totalPoints={currentXp}
         onStepComplete={handleStepComplete}
         onNavigate={handleJourneyNavigate}
+        onUserNameChange={onUserNameChange}
         isEnfantMode={true}
       />
 
