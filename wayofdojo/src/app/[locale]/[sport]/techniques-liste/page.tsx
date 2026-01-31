@@ -204,6 +204,54 @@ export default function TechniquesPage() {
           </div>
         </motion.div>
 
+        {/* ═══════════════════════════════════════════════════════════════════ */}
+        {/* SECTION EXPLICATIVE - MOUVEMENT vs TECHNIQUE */}
+        {/* ═══════════════════════════════════════════════════════════════════ */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="bg-gradient-to-br from-amber-900/20 via-orange-900/20 to-amber-900/20 rounded-3xl p-6 border border-amber-500/30"
+        >
+          <div className="flex items-start gap-4">
+            {/* Image de Tanaka - VERROUILLÉE */}
+            <img 
+              src="/images/tanaka/portrait.png" 
+              alt="Maître Tanaka" 
+              className="w-16 h-16 rounded-2xl object-cover border-2 border-amber-500/50 flex-shrink-0"
+            />
+            <div className="flex-1">
+              <h2 className="text-lg font-bold text-amber-400 mb-2 flex items-center gap-2">
+                <BookOpen className="w-5 h-5" />
+                Comprendre les Mouvements et Techniques
+              </h2>
+              <div className="space-y-3 text-sm text-slate-300">
+                <div className="flex items-start gap-3">
+                  <span className="text-2xl">🔄</span>
+                  <div>
+                    <span className="font-bold text-white">Mouvement (Sabaki)</span>
+                    <p className="text-slate-400">Le mouvement est la base. C&apos;est le déplacement du corps : entrer (irimi), tourner (tenkan), pivoter (kaiten). Sans mouvement correct, pas de technique efficace.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-2xl">🎯</span>
+                  <div>
+                    <span className="font-bold text-white">Technique (Waza)</span>
+                    <p className="text-slate-400">La technique combine les mouvements avec une intention : contrôler (osae waza), projeter (nage waza), ou immobiliser (katame waza). Elle transforme l&apos;énergie de l&apos;attaquant.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <span className="text-2xl">⚡</span>
+                  <div>
+                    <span className="font-bold text-white">L&apos;Aïki</span>
+                    <p className="text-slate-400">L&apos;harmonie entre mouvement et technique. On ne s&apos;oppose pas à la force, on la guide. &quot;L&apos;Aïkido n&apos;est pas l&apos;art de la bataille mais l&apos;art de la paix.&quot; — O&apos;Sensei</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
         {/* Barre de recherche */}
         <div className="flex gap-3">
           <div className="relative flex-1">
