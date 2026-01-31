@@ -206,6 +206,34 @@ export default function DojoPage() {
     router.push(path);
   };
 
+  // Handler pour mettre à jour le prénom de l'utilisateur (quand Tanaka demande le prénom)
+  const handleUserNameChange = async (firstName: string) => {
+    try {
+      const token = localStorage.getItem('wayofdojo_token');
+      if (!token) return;
+
+      const response = await fetch('/api/user/update-profile', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ firstName })
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        // Mettre à jour l'utilisateur local
+        const updatedUser = { ...user!, firstName };
+        setUser(updatedUser);
+        localStorage.setItem('wayofdojo_user', JSON.stringify(updatedUser));
+        console.log('Prénom mis à jour:', firstName);
+      }
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour du prénom:', error);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 flex items-center justify-center">
