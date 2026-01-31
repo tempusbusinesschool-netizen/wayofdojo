@@ -154,7 +154,7 @@ export default function Proposition6Page() {
                   <h4 className="text-white font-bold mt-3">{item.title}</h4>
                   <p className="text-white/70 text-sm">{item.subtitle}</p>
                   
-                  {item.progress !== undefined && (
+                  {'progress' in item && item.progress !== undefined && (
                     <div className="mt-3">
                       <div className="bg-white/20 rounded-full h-1.5 overflow-hidden">
                         <div 
