@@ -10,14 +10,14 @@ import { ArrowLeft, Star, Flame } from 'lucide-react';
  */
 export default function Proposition1Page() {
   const blocks = [
-    { id: 1, title: 'Techniques', subtitle: '206+ mouvements', icon: BookOpen, color: 'from-cyan-500 to-blue-600', emoji: '📚', angle: 0 },
-    { id: 2, title: 'Dojo Virtuel', subtitle: 'Jeux & Validations', icon: Gamepad2, color: 'from-purple-500 to-pink-600', emoji: '🎮', angle: 45 },
-    { id: 3, title: 'Ma Pratique', subtitle: 'Mon carnet', icon: BookOpen, color: 'from-orange-500 to-red-600', emoji: '🥋', angle: 90 },
-    { id: 4, title: 'Progression', subtitle: 'Ceintures', icon: Star, color: 'from-yellow-500 to-amber-600', emoji: '🌟', angle: 135 },
-    { id: 5, title: '7 Vertus', subtitle: 'Qualités Ninja', icon: Shield, color: 'from-indigo-500 to-purple-600', emoji: '☯️', angle: 180 },
-    { id: 6, title: 'Ceintures', subtitle: 'Monte de grade', icon: Award, color: 'from-emerald-500 to-teal-600', emoji: '🎖️', angle: 225 },
-    { id: 7, title: 'Trophées', subtitle: '2 badges', icon: Trophy, color: 'from-amber-500 to-orange-600', emoji: '🏆', angle: 270 },
-    { id: 8, title: 'Stats', subtitle: 'Cette semaine', icon: BarChart3, color: 'from-blue-500 to-cyan-600', emoji: '📊', angle: 315 },
+    { id: 1, title: 'Techniques', subtitle: '206+ mouvements', color: 'from-cyan-500 to-blue-600', emoji: '📚', angle: 0 },
+    { id: 2, title: 'Dojo Virtuel', subtitle: 'Jeux & Validations', color: 'from-purple-500 to-pink-600', emoji: '🎮', angle: 45 },
+    { id: 3, title: 'Ma Pratique', subtitle: 'Mon carnet', color: 'from-orange-500 to-red-600', emoji: '🥋', angle: 90 },
+    { id: 4, title: 'Progression', subtitle: 'Ceintures', color: 'from-yellow-500 to-amber-600', emoji: '🌟', angle: 135 },
+    { id: 5, title: '7 Vertus', subtitle: 'Qualités Ninja', color: 'from-indigo-500 to-purple-600', emoji: '☯️', angle: 180 },
+    { id: 6, title: 'Ceintures', subtitle: 'Monte de grade', color: 'from-emerald-500 to-teal-600', emoji: '🎖️', angle: 225 },
+    { id: 7, title: 'Trophées', subtitle: '2 badges', color: 'from-amber-500 to-orange-600', emoji: '🏆', angle: 270 },
+    { id: 8, title: 'Stats', subtitle: 'Cette semaine', color: 'from-blue-500 to-cyan-600', emoji: '📊', angle: 315 },
   ];
 
   return (
