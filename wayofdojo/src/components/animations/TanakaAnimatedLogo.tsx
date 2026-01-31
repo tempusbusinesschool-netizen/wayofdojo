@@ -213,19 +213,23 @@ export function TanakaAnimatedLogo({
           />
         )}
 
-        {/* Tanaka emoji/icon */}
+        {/* Tanaka image - VERROUILLÉE */}
         <motion.div
-          className={`absolute inset-0 flex items-center justify-center ${config.text}`}
+          className="absolute inset-0 flex items-center justify-center overflow-hidden rounded-full"
           animate={
             isHovered
               ? {
-                  scale: [1, 1.2, 1],
+                  scale: [1, 1.1, 1],
                   transition: { duration: 0.3 },
                 }
               : {}
           }
         >
-          🧙‍♂️
+          <img 
+            src="/images/tanaka/portrait.png" 
+            alt="Maître Tanaka" 
+            className="w-full h-full object-cover"
+          />
         </motion.div>
 
         {/* Shine effect */}
