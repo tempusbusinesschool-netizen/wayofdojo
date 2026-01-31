@@ -539,7 +539,13 @@ export const JourneyPath: React.FC<JourneyPathProps> = ({
             className="mt-5 bg-gradient-to-r from-amber-500/30 via-orange-500/30 to-amber-500/30 backdrop-blur-sm rounded-2xl p-4 border-2 border-amber-400/50"
           >
             <div className="flex items-start gap-4">
-              <div className="text-4xl flex-shrink-0">{TANAKA_AVATAR}</div>
+              <div className="flex-shrink-0">
+                <img 
+                  src={TANAKA_IMAGE} 
+                  alt="Maître Tanaka" 
+                  className="w-12 h-12 rounded-full object-cover border-2 border-amber-500/50"
+                />
+              </div>
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
                   <span className="text-amber-300 font-bold">Maître Tanaka</span>
