@@ -158,8 +158,13 @@ export const VisitorStepsBlocks: React.FC<VisitorStepsBlocksProps> = ({
               transition={{ duration: 2, repeat: Infinity }}
               className="relative"
             >
-              <div className="w-24 h-24 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-5xl shadow-xl">
-                🧙‍♂️
+              <div className="w-24 h-24 rounded-full overflow-hidden shadow-xl border-4 border-amber-500/50">
+                {/* Image officielle de Tanaka - VERROUILLÉE */}
+                <img 
+                  src="/images/tanaka/portrait.png" 
+                  alt="Maître Tanaka" 
+                  className="w-full h-full object-cover"
+                />
               </div>
               <motion.div
                 animate={{ scale: [1, 1.2, 1] }}
