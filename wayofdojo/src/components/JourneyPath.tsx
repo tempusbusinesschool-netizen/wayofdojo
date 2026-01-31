@@ -27,7 +27,9 @@ import StepTransition from './animations/StepTransition';
  * 6   Mes Trophées    🏆       Deviens une Légende !
  */
 
-// Image de Maître Tanaka (emoji en fallback)
+// Image officielle de Maître Tanaka (VERROUILLÉE - NE JAMAIS CHANGER)
+const TANAKA_IMAGE = "/images/tanaka/portrait.png";
+// Emoji fallback pour les petites icônes
 const TANAKA_AVATAR = "🧙‍♂️";
 
 // ═══════════════════════════════════════════════════════════════════════════════
