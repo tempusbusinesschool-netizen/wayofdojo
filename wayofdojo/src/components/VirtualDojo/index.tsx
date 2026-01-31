@@ -29,7 +29,8 @@ import MemorySensei from './games/MemorySensei';
 import RythmeDuDojo from './games/RythmeDuDojo';
 import QueteVertus from './games/QueteVertus';
 
-const TANAKA_IMAGE = "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=200&h=200&fit=crop&crop=face";
+// ⚠️ IMAGE OFFICIELLE DE TANAKA - VERROUILLÉE - NE JAMAIS CHANGER
+const TANAKA_IMAGE = "/images/tanaka/portrait.png";
 
 /**
  * Configuration des 10 mini-jeux
