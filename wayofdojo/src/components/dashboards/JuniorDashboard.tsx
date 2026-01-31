@@ -3,21 +3,23 @@
 import { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Flame, CheckCircle2, Circle
+  Flame, CheckCircle2, Circle, Star, Volume2, Play, ChevronRight
 } from 'lucide-react';
 import Link from 'next/link';
-import UserDashboardBlocks from '@/components/UserDashboardBlocks';
 import DailyChallengeWidget from '@/components/DailyChallengeWidget';
 import JourneyPath from '@/components/JourneyPath';
 import { VIRTUES_GAMIFICATION } from '@/constants/virtuesGamification';
+
+// ⚠️ IMAGE OFFICIELLE DE TANAKA - VERROUILLÉE - NE JAMAIS CHANGER
+const TANAKA_IMAGE = "/images/tanaka/portrait.png";
 
 /**
  * ═══════════════════════════════════════════════════════════════════════════════
  * JuniorDashboard - Dashboard pour les "Jeune Samouraï" (enfants < 14 ans)
  * ═══════════════════════════════════════════════════════════════════════════════
  * 
- * Migré depuis aikido@game - Structure en 6 étapes guidées avec JourneyPath
- * Intègre le parcours interactif de Maître Tanaka
+ * Layout: BENTO GRID (Style iOS Widgets)
+ * Grille asymétrique moderne avec cartes de tailles variées
  */
 
 interface User {
