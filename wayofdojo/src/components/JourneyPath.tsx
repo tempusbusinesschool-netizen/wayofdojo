@@ -27,10 +27,31 @@ import StepTransition from './animations/StepTransition';
  * 6   Mes Trophées    🏆       Deviens une Légende !
  */
 
-// Image officielle de Maître Tanaka (VERROUILLÉE - NE JAMAIS CHANGER)
+// ═══════════════════════════════════════════════════════════════════════════════
+// IMAGE OFFICIELLE DE MAÎTRE TANAKA - VERROUILLÉE
+// ═══════════════════════════════════════════════════════════════════════════════
+// ⚠️ NE JAMAIS CHANGER CETTE IMAGE - TOUJOURS UTILISER /images/tanaka/portrait.png
 const TANAKA_IMAGE = "/images/tanaka/portrait.png";
-// Emoji fallback pour les petites icônes
-const TANAKA_AVATAR = "🧙‍♂️";
+
+// Composant réutilisable pour l'avatar de Tanaka
+const TanakaAvatar: React.FC<{ size?: 'sm' | 'md' | 'lg' | 'xl'; className?: string }> = ({ 
+  size = 'md', 
+  className = '' 
+}) => {
+  const sizeClasses = {
+    sm: 'w-8 h-8',
+    md: 'w-12 h-12',
+    lg: 'w-16 h-16',
+    xl: 'w-24 h-24'
+  };
+  return (
+    <img 
+      src={TANAKA_IMAGE} 
+      alt="Maître Tanaka" 
+      className={`${sizeClasses[size]} rounded-full object-cover border-2 border-amber-500/50 ${className}`}
+    />
+  );
+};
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // 6 ÉTAPES DU PARCOURS INTERACTIF
