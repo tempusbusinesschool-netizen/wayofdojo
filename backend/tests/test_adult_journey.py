@@ -7,7 +7,7 @@ import pytest
 import requests
 import os
 
-BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://dojo-progress-2.preview.emergentagent.com')
+BASE_URL = os.environ.get('REACT_APP_BACKEND_URL', 'https://aikidoguide.preview.emergentagent.com')
 
 class TestAdultJourneyAPI:
     """Tests for /api/gamification/adult-journey endpoints"""
