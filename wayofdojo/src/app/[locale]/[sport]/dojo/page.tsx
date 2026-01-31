@@ -212,7 +212,7 @@ export default function DojoPage() {
       const token = localStorage.getItem('wayofdojo_token');
       if (!token) return;
 
-      const response = await fetch('/api/user/update-profile', {
+      const response = await fetch('/next-api/user/update-profile', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
