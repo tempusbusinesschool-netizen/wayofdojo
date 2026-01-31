@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowLeft, Star, Flame, ChevronRight, Play, Volume2, ArrowRight } from 'lucide-react';
+import { ArrowLeft, Star, Flame, Play, Volume2, ArrowRight } from 'lucide-react';
 
 /**
  * PROPOSITION 6: HORIZONTAL SECTIONS (Style Netflix/Spotify)

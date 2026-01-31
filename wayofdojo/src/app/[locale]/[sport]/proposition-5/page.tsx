@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowLeft, Star, Flame, ChevronRight, Menu, Home, BookOpen, Gamepad2, Trophy, Settings, User } from 'lucide-react';
+import { ArrowLeft, Star, Flame, ChevronRight, Home, BookOpen, Gamepad2, Trophy, Settings } from 'lucide-react';
 import { useState } from 'react';
 
 /**
