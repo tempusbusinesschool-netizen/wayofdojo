@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
     // Connect to MongoDB
     client = new MongoClient(MONGO_URI);
     await client.connect();
-    const db = client.db();
+    const db = client.db(DB_NAME);
     
     // Find user by token (stored in sessions or decode JWT)
     // For simplicity, we'll decode the token payload (base64url)
