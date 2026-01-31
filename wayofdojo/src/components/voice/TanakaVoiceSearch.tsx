@@ -267,9 +267,14 @@ export const TanakaVoiceSearch: React.FC<TanakaVoiceSearchProps> = ({
           <motion.div
             animate={{ rotate: isListening ? [0, 10, -10, 0] : 0 }}
             transition={{ duration: 0.5, repeat: isListening ? Infinity : 0 }}
-            className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center"
+            className="w-12 h-12 rounded-full overflow-hidden border-2 border-white/30"
           >
-            <span className="text-2xl">🧙‍♂️</span>
+            {/* Image officielle de Tanaka - VERROUILLÉE */}
+            <img 
+              src="/images/tanaka/portrait.png" 
+              alt="Maître Tanaka" 
+              className="w-full h-full object-cover"
+            />
           </motion.div>
           <div>
             <h3 className="font-bold text-white text-lg">Maître Tanaka</h3>
