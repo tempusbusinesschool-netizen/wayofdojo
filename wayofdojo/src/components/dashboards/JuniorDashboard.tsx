@@ -116,7 +116,8 @@ export const JuniorDashboard: React.FC<JuniorDashboardProps> = ({
   // Progression des vertus
   const virtueProgress = user.gamification.virtuesProgress || {};
 
-  // Statistiques de la semaine
+  // Statistiques de la semaine (utilisé dans la section défis)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const weeklyStats = {
     trainings: 3,
     techniques: completedCount,
