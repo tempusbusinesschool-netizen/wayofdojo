@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { ArrowLeft, BookOpen, Gamepad2, Trophy, Star, Shield, Award, BarChart3, Flame, ChevronDown, Play } from 'lucide-react';
+import { ArrowLeft, Star, Flame, ChevronDown, Play } from 'lucide-react';
 import { SpiralConnector } from '@/components/animations/SpiralConnector';
 
 /**
