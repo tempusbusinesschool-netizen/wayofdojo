@@ -286,7 +286,7 @@ export const JourneyPath: React.FC<JourneyPathProps> = ({
               exit={{ scale: 0.9, y: 20 }}
               className="w-full max-w-lg bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 border border-amber-500/50 rounded-3xl overflow-hidden shadow-2xl"
             >
-              {/* Header avec Tanaka */}
+              {/* Header avec Tanaka - Image officielle VERROUILLÉE */}
               <div className="relative bg-gradient-to-r from-amber-600/30 via-orange-600/30 to-amber-600/30 p-6 text-center">
                 <motion.div
                   animate={{
@@ -294,9 +294,13 @@ export const JourneyPath: React.FC<JourneyPathProps> = ({
                     rotate: tanakaAnimating ? [0, -5, 5, 0] : 0,
                   }}
                   transition={{ duration: 0.5, repeat: tanakaAnimating ? 3 : 0 }}
-                  className="text-7xl mb-2"
+                  className="mb-2 flex justify-center"
                 >
-                  {TANAKA_AVATAR}
+                  <img 
+                    src={TANAKA_IMAGE} 
+                    alt="Maître Tanaka" 
+                    className="w-24 h-24 rounded-full object-cover border-4 border-amber-500/50 shadow-lg"
+                  />
                 </motion.div>
                 <h2 className="text-2xl font-bold text-amber-400">Maître Tanaka</h2>
                 <p className="text-amber-200/70 text-sm">Ton guide sur la Voie de l&apos;Aïkido</p>
