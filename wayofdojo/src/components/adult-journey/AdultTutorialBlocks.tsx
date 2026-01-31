@@ -173,9 +173,14 @@ export const AdultTutorialBlocks: React.FC<AdultTutorialBlocksProps> = ({
             <motion.div
               animate={{ y: tanakaAnimating ? [-3, 3, -3] : 0 }}
               transition={{ duration: 2, repeat: Infinity }}
-              className="w-20 h-20 rounded-full bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-4xl shadow-xl"
+              className="w-20 h-20 rounded-full overflow-hidden shadow-xl border-4 border-amber-500/50"
             >
-              🧙‍♂️
+              {/* Image officielle de Tanaka - VERROUILLÉE */}
+              <img 
+                src="/images/tanaka/portrait.png" 
+                alt="Maître Tanaka" 
+                className="w-full h-full object-cover"
+              />
             </motion.div>
           </div>
           <div className="bg-white/10 rounded-xl p-4 text-center">
