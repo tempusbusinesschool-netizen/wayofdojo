@@ -300,8 +300,60 @@ export const TechniqueDetailCard: React.FC<TechniqueDetailCardProps> = ({
                 </div>
               )}
 
-              {/* Bouton vidéo */}
-              {technique.video?.placeholder && (
+              {/* Liens vidéo YouTube */}
+              {videoLinks ? (
+                <div className="space-y-3">
+                  <p className="text-red-400 text-sm font-bold flex items-center gap-2">
+                    <Youtube className="w-4 h-4" /> Tutoriels vidéo
+                  </p>
+                  <a
+                    href={videoLinks.primary.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 p-3 bg-red-600/20 hover:bg-red-600/30 rounded-xl border border-red-500/30 transition-colors group"
+                  >
+                    <div className="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center">
+                      <Play className="w-5 h-5 text-white" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-white truncate">
+                        {videoLinks.primary.title}
+                      </p>
+                      <p className="text-xs text-slate-400">
+                        {videoLinks.primary.channel}
+                        {videoLinks.primary.duration && ` • ${videoLinks.primary.duration}`}
+                        {videoLinks.primary.language === 'en' && ' • 🇬🇧'}
+                        {videoLinks.primary.language === 'fr' && ' • 🇫🇷'}
+                        {videoLinks.primary.language === 'jp' && ' • 🇯🇵'}
+                      </p>
+                      {videoLinks.primary.description && (
+                        <p className="text-xs text-slate-500 mt-1">{videoLinks.primary.description}</p>
+                      )}
+                    </div>
+                    <ExternalLink className="w-5 h-5 text-slate-400 group-hover:text-white transition-colors" />
+                  </a>
+                  
+                  {videoLinks.alternatives && videoLinks.alternatives.length > 0 && (
+                    <div className="space-y-2">
+                      <p className="text-xs text-slate-500">Vidéos alternatives :</p>
+                      {videoLinks.alternatives.map((alt, idx) => (
+                        <a
+                          key={idx}
+                          href={alt.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 p-2 bg-slate-700/50 hover:bg-slate-700 rounded-lg transition-colors text-sm text-slate-300 hover:text-white"
+                        >
+                          <Play className="w-4 h-4 text-slate-400" />
+                          <span className="truncate flex-1">{alt.title}</span>
+                          <span className="text-xs text-slate-500">{alt.channel}</span>
+                          <ExternalLink className="w-4 h-4 text-slate-500" />
+                        </a>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : technique.video?.placeholder && (
                 <button 
                   className="w-full py-3 bg-gradient-to-r from-amber-600 to-orange-600 rounded-xl text-white font-medium flex items-center justify-center gap-2 opacity-50 cursor-not-allowed"
                   disabled
