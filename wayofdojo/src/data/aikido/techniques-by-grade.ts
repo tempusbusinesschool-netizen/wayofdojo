@@ -100,6 +100,13 @@ export const CATEGORIES_MOUVEMENTS: Record<string, { label: string; emoji: strin
   'oyo_waza': { label: 'Oyo Waza (Applications)', emoji: '✨', color: 'from-amber-500 to-yellow-500' },
   'aiki_jutsu': { label: 'Aiki no Jutsu', emoji: '🌀', color: 'from-cyan-600 to-blue-600' },
   'pedagogie': { label: 'Pédagogie', emoji: '📖', color: 'from-emerald-600 to-green-600' },
+  'programme_complet': { label: 'Programme complet', emoji: '📋', color: 'from-slate-600 to-slate-700' },
+  'buki_waza': { label: 'Buki Waza (Armes)', emoji: '⚔️', color: 'from-amber-600 to-orange-600' },
+  'ken_tai_jo': { label: 'Ken Tai Jo', emoji: '🗡️', color: 'from-slate-600 to-amber-600' },
+  'attaques_combinees': { label: 'Attaques combinées', emoji: '💥', color: 'from-red-600 to-orange-600' },
+  'takemusu': { label: 'Takemusu Aiki', emoji: '🌟', color: 'from-amber-500 to-yellow-400' },
+  'ki_no_nagare': { label: 'Ki no Nagare', emoji: '🌊', color: 'from-cyan-500 to-blue-500' },
+  'kuden': { label: 'Kuden (Enseignement oral)', emoji: '📜', color: 'from-purple-600 to-indigo-600' },
 };
 
 /**
