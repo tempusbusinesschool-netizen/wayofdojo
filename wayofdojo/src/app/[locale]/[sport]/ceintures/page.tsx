@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button';
 import { TanakaWelcome, TANAKA_MESSAGES } from '@/components/TanakaWelcome';
 import { getGradesKyu, getGradesDan, type ProgrammeGrade } from '@/data/aikido/grades/passages-de-grades';
 import { getQuizByGrade } from '@/data/aikido/grades/quiz-grades';
-import { getMouvementsByGradeGrouped, CATEGORIES_MOUVEMENTS } from '@/data/aikido/techniques-by-grade';
+import { getMouvementsByGradeGrouped, getAllMouvementsGrouped, getTotalMouvements, CATEGORIES_MOUVEMENTS } from '@/data/aikido/techniques-by-grade';
 import QuizModal from '@/components/quiz/QuizModal';
 import { TechniqueDetailCard } from '@/components/techniques/TechniqueDetailCard';
 
