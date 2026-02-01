@@ -411,7 +411,7 @@ const GradeCard: React.FC<{
                       </h4>
                       <div className="flex items-center gap-3">
                         <span className="text-sm font-bold text-white bg-purple-600 px-3 py-1.5 rounded-full shadow-md">
-                          {totalTechniques} techniques
+                          {totalAllTechniques} techniques
                         </span>
                         <div className={`w-8 h-8 rounded-full bg-purple-500/30 flex items-center justify-center transition-transform ${showTechniquesDetail ? 'rotate-180' : ''}`}>
                           <ChevronDown className="w-5 h-5 text-purple-300" />
@@ -434,7 +434,7 @@ const GradeCard: React.FC<{
                           className="overflow-hidden"
                         >
                           <div className="mt-4 space-y-4">
-                            {Object.entries(techniquesByCategory).map(([category, techniques]) => {
+                            {Object.entries(allTechniquesByCategory).map(([category, techniques]) => {
                               const catInfo = CATEGORIES_MOUVEMENTS[category] || {
                                 label: category,
                                 emoji: '📚',
