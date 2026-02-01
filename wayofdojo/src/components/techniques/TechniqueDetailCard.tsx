@@ -4,10 +4,11 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ChevronDown, ChevronUp, Info, AlertTriangle, 
-  CheckCircle2, XCircle, Play, BookOpen
+  CheckCircle2, XCircle, Play, BookOpen, ExternalLink, Youtube
 } from 'lucide-react';
 import type { Mouvement } from '@/data/aikido/types';
 import { CATEGORIES_MOUVEMENTS } from '@/data/aikido/techniques-by-grade';
+import { getVideoLinks, type TechniqueVideos } from '@/data/aikido/video-links';
 
 interface TechniqueDetailCardProps {
   technique: Mouvement;
