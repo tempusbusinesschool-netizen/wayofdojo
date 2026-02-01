@@ -59,15 +59,11 @@ export const TanakaWelcome: React.FC<TanakaWelcomeProps> = ({
     }
   }, [sectionId, showOnce]);
 
-  // Auto-fermeture
-  useEffect(() => {
-    if (autoClose && isVisible) {
-      const timer = setTimeout(() => {
-        handleClose();
-      }, autoClose * 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [autoClose, isVisible]);
+  // Fonction de fermeture
+  const handleClose = useCallback(() => {
+    setIsVisible(false);
+    onClose?.();
+  }, [onClose]);
 
   // Animation confetti pour "C'est parti !"
   const triggerConfetti = useCallback(() => {
@@ -104,6 +100,7 @@ export const TanakaWelcome: React.FC<TanakaWelcomeProps> = ({
     }, 300);
   }, []);
 
+  // Fermeture avec confetti
   const handleCloseWithConfetti = useCallback(() => {
     triggerConfetti();
     // Petit délai pour voir le confetti avant la fermeture
@@ -112,10 +109,15 @@ export const TanakaWelcome: React.FC<TanakaWelcomeProps> = ({
     }, 200);
   }, [triggerConfetti, handleClose]);
 
-  const handleClose = () => {
-    setIsVisible(false);
-    onClose?.();
-  };
+  // Auto-fermeture
+  useEffect(() => {
+    if (autoClose && isVisible) {
+      const timer = setTimeout(() => {
+        handleClose();
+      }, autoClose * 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [autoClose, isVisible, handleClose]);
 
   if (hasBeenShown && showOnce) return null;
 
