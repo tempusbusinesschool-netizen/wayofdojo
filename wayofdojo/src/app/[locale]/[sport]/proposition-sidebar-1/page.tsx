@@ -37,7 +37,7 @@ const virtues = [
 ];
 
 export default function PropositionSidebar1() {
-  const [hoveredMenu, setHoveredMenu] = useState<number | null>(null);
+  const [_hoveredMenu, setHoveredMenu] = useState<number | null>(null);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex">

@@ -38,7 +38,7 @@ const progressSteps = [
 
 export default function PropositionSidebar2() {
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [activeSection, setActiveSection] = useState(0);
+  const [_activeSection, setActiveSection] = useState(0);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100 flex">
