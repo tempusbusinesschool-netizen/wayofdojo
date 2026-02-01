@@ -1,215 +1,141 @@
 {
-  "metadata": {
-    "project_name": "WayofDojo Admin Redesign",
-    "version": "1.0.0",
-    "last_updated": "2023-10-27",
-    "author": "E1 Design Agent",
-    "description": "Design guidelines for the WayofDojo Admin Space redesign, focusing on ergonomics, hierarchy, and dark mode aesthetics."
-  },
   "design_system": {
-    "theme": {
-      "mode": "dark",
-      "strategy": "class-based",
-      "primary_palette": "slate-amber-violet"
-    },
-    "colors": {
-      "background": {
-        "app": "bg-slate-950",
-        "sidebar": "bg-slate-900/95 border-r border-slate-800",
-        "card": "bg-slate-900 border border-slate-800",
-        "card_hover": "hover:border-slate-700 transition-colors duration-200",
-        "input": "bg-slate-950 border-slate-800 focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
-      },
-      "text": {
-        "primary": "text-slate-50",
-        "secondary": "text-slate-400",
-        "muted": "text-slate-500",
-        "accent": "text-amber-500",
-        "brand": "text-violet-400"
-      },
-      "status": {
-        "success": "text-emerald-400 bg-emerald-400/10 border-emerald-400/20",
-        "warning": "text-amber-400 bg-amber-400/10 border-amber-400/20",
-        "error": "text-red-400 bg-red-400/10 border-red-400/20",
-        "info": "text-blue-400 bg-blue-400/10 border-blue-400/20"
-      },
-      "gradients": {
-        "brand_glow": "bg-gradient-to-br from-violet-600/20 via-transparent to-transparent",
-        "active_item": "bg-gradient-to-r from-amber-500/10 to-transparent border-l-2 border-amber-500"
-      }
+    "identity": {
+      "name": "WayofDojo - The Digital Dojo",
+      "archetype": "The Performance Pro (Dark Mode Variant)",
+      "vibe": "Disciplined, Mystical, High-Tech, Gamified",
+      "principles": [
+        "Fusion: Ancient Tradition x Cyberpunk Progression",
+        "Emotion: The journey from white belt to black belt is a hero's journey",
+        "Contrast: Dark void backgrounds vs. Neon energy of knowledge",
+        "Density: Information-rich but scannable (like a fighter jet HUD)"
+      ]
     },
     "typography": {
-      "font_family": {
-        "sans": "Inter, system-ui, sans-serif",
-        "mono": "JetBrains Mono, monospace"
+      "headings": {
+        "family": "Barlow Condensed, sans-serif",
+        "weights": ["700", "900"],
+        "usage": "Section titles, Rank names, Achievement unlocks",
+        "style": "uppercase tracking-wider"
       },
-      "hierarchy": {
-        "h1": "text-3xl font-bold tracking-tight text-slate-50",
-        "h2": "text-xl font-semibold tracking-tight text-slate-100",
-        "h3": "text-lg font-medium text-slate-200",
-        "body": "text-sm text-slate-400 leading-relaxed",
-        "label": "text-xs font-semibold uppercase tracking-wider text-slate-500",
-        "stat_value": "text-2xl font-bold text-slate-50 tracking-tight"
+      "body": {
+        "family": "Inter, sans-serif",
+        "weights": ["400", "500"],
+        "usage": "Technique descriptions, instructions, UI labels"
+      },
+      "mono": {
+        "family": "JetBrains Mono, monospace",
+        "usage": "XP values, Stats, Technical codes"
+      },
+      "google_fonts_import": "https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;700&display=swap"
+    },
+    "colors": {
+      "palette": {
+        "background": {
+          "void": "#020617", 
+          "surface": "#0f172a",
+          "surface_highlight": "#1e293b"
+        },
+        "primary": {
+          "cyan": "#06b6d4",
+          "cyan_glow": "0 0 20px rgba(6, 182, 212, 0.5)"
+        },
+        "secondary": {
+          "amber": "#f59e0b",
+          "amber_glow": "0 0 20px rgba(245, 158, 11, 0.5)"
+        },
+        "accent": {
+          "violet": "#8b5cf6",
+          "danger": "#ef4444"
+        },
+        "text": {
+          "primary": "#f8fafc",
+          "muted": "#94a3b8",
+          "dim": "#475569"
+        }
+      },
+      "usage_rules": {
+        "gradients": "Use subtle linear gradients for surfaces (e.g., slate-900 to slate-950). NO full-screen rainbow gradients.",
+        "glows": "Use box-shadow for 'energy' effects on active elements.",
+        "borders": "1px solid borders with low opacity (white/10) are mandatory for all cards."
       }
     },
-    "spacing": {
-      "container_padding": "p-6 md:p-8 lg:p-10",
-      "card_padding": "p-6",
-      "section_gap": "gap-8",
-      "item_gap": "gap-4"
+    "visual_enhancers": {
+      "textures": {
+        "japanese_paper": "url('https://images.unsplash.com/photo-1646910862975-4870af1e1ec3?crop=entropy&cs=srgb&fm=jpg&q=85')",
+        "noise": "url('data:image/svg+xml;base64,...') (Use a standard noise SVG pattern)"
+      },
+      "effects": {
+        "glassmorphism": "backdrop-blur-xl bg-slate-900/70 border border-white/10",
+        "neon_border": "border border-cyan-500/50 shadow-[0_0_15px_rgba(6,182,212,0.3)]",
+        "locked_state": "grayscale opacity-50 filter blur-[1px]"
+      }
     },
-    "radius": {
-      "card": "rounded-xl",
-      "button": "rounded-lg",
-      "input": "rounded-md"
+    "layout_strategies": {
+      "grid_system": "Bento Grid for dashboards, Constellation Layout for technique trees.",
+      "spacing": "Generous padding (p-6, p-8) inside containers. Tight gaps (gap-2, gap-4) between related data points.",
+      "container": "Max-width 1400px for the main library view."
     },
-    "shadows": {
-      "card": "shadow-sm shadow-black/20",
-      "dropdown": "shadow-xl shadow-black/40 border border-slate-800",
-      "glow": "shadow-[0_0_15px_rgba(245,158,11,0.15)]"
-    }
-  },
-  "layout_strategy": {
-    "structure": "sidebar_layout",
-    "grid_system": {
-      "dashboard": "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6",
-      "detail_view": "grid grid-cols-1 lg:grid-cols-3 gap-8"
-    },
-    "sidebar": {
-      "width": "w-64",
-      "collapsed_width": "w-16",
-      "behavior": "fixed h-screen left-0 top-0 z-40 hidden lg:block",
-      "mobile_trigger": "lg:hidden fixed top-4 left-4 z-50"
-    },
-    "main_content": {
-      "margin": "lg:ml-64",
-      "max_width": "max-w-7xl mx-auto"
+    "motion": {
+      "transitions": "transition-all duration-300 ease-out",
+      "hover_effects": "transform -translate-y-1 scale-[1.02]",
+      "entrance": "staggered fade-in-up for list items"
     }
   },
   "components": {
-    "sidebar": {
-      "name": "AdminSidebar",
-      "description": "Vertical navigation sidebar replacing horizontal tabs.",
-      "elements": [
-        {
-          "name": "LogoArea",
-          "style": "h-16 flex items-center px-6 border-b border-slate-800",
-          "content": "WayofDojo Brand (Text + Icon)"
-        },
-        {
-          "name": "NavMenu",
-          "style": "flex-1 py-6 space-y-1 px-3",
-          "item_style": "flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors",
-          "active_state": "bg-slate-800 text-amber-500",
-          "inactive_state": "text-slate-400 hover:text-slate-100 hover:bg-slate-800/50"
-        },
-        {
-          "name": "UserProfile",
-          "style": "p-4 border-t border-slate-800 mt-auto",
-          "content": "Avatar + Name + Role (Admin)"
-        }
-      ]
+    "TechniqueCard": {
+      "description": "A card representing a single technique. Shows name, category icon, and mastery status.",
+      "style": "Glassmorphic surface, neon border on hover. 'Locked' state if not yet accessible.",
+      "interactions": "Click to open details modal. Hover to see quick stats (XP value)."
     },
-    "dashboard_widgets": {
-      "name": "DashboardWidgets",
-      "description": "Modular widgets for the main dashboard view.",
-      "types": [
-        {
-          "type": "StatCard",
-          "layout": "flex flex-col justify-between p-6 bg-slate-900 border border-slate-800 rounded-xl",
-          "content": "Icon (top-right), Label (top-left), Value (center/bottom), Trend (bottom-right)",
-          "visuals": "Subtle gradient glow based on metric type (e.g., Amber for Users, Violet for XP)"
-        },
-        {
-          "type": "ChartWidget",
-          "layout": "col-span-2 p-6 bg-slate-900 border border-slate-800 rounded-xl",
-          "content": "Header with Date Range Picker, Recharts AreaChart/BarChart",
-          "style": "Minimalist axes, custom tooltips (dark bg)"
-        },
-        {
-          "type": "ActivityFeed",
-          "layout": "col-span-1 row-span-2 p-0 bg-slate-900 border border-slate-800 rounded-xl overflow-hidden",
-          "content": "List of recent actions. Each item: Avatar + Action Text + Time",
-          "style": "Divide-y divide-slate-800"
-        }
-      ]
+    "ProgressionBar": {
+      "description": "Visual indicator of progress towards the next belt/rank.",
+      "style": "Slim, glowing bar. Segmented by belt requirements.",
+      "animation": "Fill animation on page load."
     },
-    "data_table": {
-      "name": "AdminDataTable",
-      "description": "High-density table for Users and Dojos.",
-      "features": [
-        "Sticky Header (bg-slate-900/95 backdrop-blur)",
-        "Row Hover (bg-slate-800/30)",
-        "Bulk Actions Bar (appears when rows selected)",
-        "Pagination (bottom right)",
-        "Filter Popover (Shadcn Popover)"
-      ],
-      "style": "w-full text-sm text-left",
-      "header_cell": "h-10 px-4 text-xs font-medium text-slate-500 uppercase tracking-wider border-b border-slate-800",
-      "body_cell": "p-4 border-b border-slate-800/50 align-middle"
+    "FilterConsole": {
+      "description": "Cyberpunk-style toggle switches for filtering techniques (Nage, Osae, Weapons).",
+      "style": "Pill-shaped toggles, active state glows with primary color."
     },
-    "page_header": {
-      "name": "PageHeader",
-      "description": "Standard header for every admin page.",
-      "layout": "flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8",
-      "elements": [
-        "Title (H1)",
-        "Breadcrumbs (optional)",
-        "Primary Action Button (bg-amber-500 hover:bg-amber-600 text-slate-950 font-semibold)"
-      ]
+    "MasteryBadge": {
+      "description": "Hexagonal badge indicating proficiency level.",
+      "style": "Metallic gradient (Bronze, Silver, Gold) with inner glow."
     }
   },
   "assets": {
-    "icons": {
-      "library": "lucide-react",
-      "style": "stroke-[1.5px] w-5 h-5",
-      "mapping": {
-        "dashboard": "LayoutDashboard",
-        "users": "Users",
-        "dojos": "Tent",
-        "directory": "Map",
-        "settings": "Settings",
-        "logout": "LogOut",
-        "search": "Search",
-        "filter": "Filter",
-        "add": "Plus",
-        "edit": "Pencil",
-        "delete": "Trash2"
+    "images": [
+      {
+        "category": "texture",
+        "url": "https://images.unsplash.com/photo-1646910862975-4870af1e1ec3?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "description": "Dark Japanese paper texture for background overlay"
+      },
+      {
+        "category": "hero",
+        "url": "https://images.unsplash.com/photo-1749214358403-f6eeba9ae251?crop=entropy&cs=srgb&fm=jpg&q=85",
+        "description": "Martial arts silhouette for section headers or empty states"
       }
-    },
-    "images": {
-      "placeholders": {
-        "user_avatar": "https://ui.shadcn.com/avatars/01.png",
-        "dojo_cover": "https://images.unsplash.com/photo-1584515502149-667e307a5260?auto=format&fit=crop&w=800&q=80"
-      }
-    }
-  },
-  "universal_guidelines": {
-    "accessibility": {
-      "contrast": "Ensure text-slate-400 or lighter on slate-900 backgrounds.",
-      "focus_states": "Visible focus rings (ring-2 ring-amber-500/50) on all interactive elements.",
-      "aria_labels": "Required for icon-only buttons."
-    },
-    "testing": {
-      "attribute": "data-testid",
-      "format": "kebab-case (e.g., 'user-table-row-1', 'sidebar-nav-dashboard')"
-    },
-    "motion": {
-      "micro_interactions": "Button press scale (active:scale-95), Link hover color fade (duration-200).",
-      "page_transition": "Fade in (opacity-0 to opacity-100 duration-300).",
-      "reduced_motion": "Respect prefers-reduced-motion media query."
-    },
-    "implementation_notes": {
-      "do_not_touch": "Public homepage, Auth pages.",
-      "tech_stack": "React, Tailwind CSS, Shadcn UI (customized).",
-      "file_structure": "Keep components in /src/components/admin/..."
-    }
+    ],
+    "icons": "Use Lucide React icons. Map categories to icons: 'Circle' for Ukemi, 'Wind' for Tai Sabaki, 'Hand' for Nage, 'Shield' for Osae, 'Sword' for Weapons."
   },
   "instructions_to_main_agent": {
-    "step_1": "Create the layout shell (Sidebar + Main Content Area).",
-    "step_2": "Implement the Dashboard view with mock data widgets.",
-    "step_3": "Build the Data Table component for Users/Dojos.",
-    "step_4": "Apply the 'WayofDojo' dark theme variables to Shadcn components.",
-    "step_5": "Ensure all interactive elements have data-testid attributes."
+    "step_1": "Setup the global theme variables in Tailwind config if not present (add custom colors).",
+    "step_2": "Create the 'TechniqueLibrary' container component. Use the 'Japanese Paper' texture as a subtle background blend.",
+    "step_3": "Implement the 'FilterConsole' at the top. It should feel like a spaceship control panel.",
+    "step_4": "Build the 'TechniqueGrid'. Use a responsive grid (grid-cols-1 md:grid-cols-3 lg:grid-cols-4).",
+    "step_5": "Create the 'TechniqueCard' component. Ensure it handles 'locked', 'available', and 'mastered' states visually.",
+    "step_6": "Add the 'GamificationLayer': XP progress bars, floating '+XP' text on interaction (using Sonner or Framer Motion).",
+    "step_7": "Ensure all text is legible against the dark background. Use 'text-slate-300' for body and 'text-white' for headings."
+  },
+  "universal_guidelines": {
+    "do_not": [
+      "Do NOT use default scrollbars. Custom thin scrollbars only.",
+      "Do NOT use pure black (#000000). Use Slate-950 (#020617).",
+      "Do NOT make the UI look like a spreadsheet. It must feel like a game interface."
+    ],
+    "must_do": [
+      "MUST use 'data-testid' for all interactive elements.",
+      "MUST ensure mobile responsiveness (stack grids to 1 column).",
+      "MUST use 'backdrop-blur' for overlays to maintain context."
+    ]
   }
 }
