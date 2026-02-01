@@ -37,7 +37,7 @@ export const TECHNIQUES_SHODAN: Mouvement[] = [
     ],
     applications: ['Self-défense contre saisie arrière'],
     video: { url: null, thumbnail: null, duree: null, format: 'mp4', placeholder: '/videos/shodan/ushiro_ryote_ikkyo.mp4' },
-    animation: { type: 'video', frames: [null], placeholder: '/animations/shodan/' }
+    animation: { phases: 1, images: [null], placeholder: '/animations/shodan/' }
   },
   {
     id: 'ushiro_ryokata_dori_sankyo',
@@ -59,7 +59,7 @@ export const TECHNIQUES_SHODAN: Mouvement[] = [
       'Appliquer sankyo trop brutalement'
     ],
     video: { url: null, thumbnail: null, duree: null, format: 'mp4', placeholder: '/videos/shodan/ushiro_ryokata_sankyo.mp4' },
-    animation: { type: 'video', frames: [null], placeholder: '/animations/shodan/' }
+    animation: { phases: 1, images: [null], placeholder: '/animations/shodan/' }
   },
   
   // ═══════════════════════════════════════════════════════════════
@@ -85,7 +85,7 @@ export const TECHNIQUES_SHODAN: Mouvement[] = [
       'Perdre sa propre stabilité'
     ],
     video: { url: null, thumbnail: null, duree: null, format: 'mp4', placeholder: '/videos/shodan/kaeshi_ikkyo.mp4' },
-    animation: { type: 'video', frames: [null], placeholder: '/animations/shodan/' }
+    animation: { phases: 1, images: [null], placeholder: '/animations/shodan/' }
   },
   {
     id: 'kaeshi_waza_shiho_nage',
@@ -107,7 +107,7 @@ export const TECHNIQUES_SHODAN: Mouvement[] = [
       'Manque de décision dans l\'action'
     ],
     video: { url: null, thumbnail: null, duree: null, format: 'mp4', placeholder: '/videos/shodan/kaeshi_shiho_nage.mp4' },
-    animation: { type: 'video', frames: [null], placeholder: '/animations/shodan/' }
+    animation: { phases: 1, images: [null], placeholder: '/animations/shodan/' }
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -133,7 +133,7 @@ export const TECHNIQUES_SHODAN: Mouvement[] = [
       'Perte du centre de Uke pendant la transition'
     ],
     video: { url: null, thumbnail: null, duree: null, format: 'mp4', placeholder: '/videos/shodan/henka_ikkyo_nikkyo.mp4' },
-    animation: { type: 'video', frames: [null], placeholder: '/animations/shodan/' }
+    animation: { phases: 1, images: [null], placeholder: '/animations/shodan/' }
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -161,7 +161,7 @@ export const TECHNIQUES_SHODAN: Mouvement[] = [
       'Panique et perte de centre'
     ],
     video: { url: null, thumbnail: null, duree: null, format: 'mp4', placeholder: '/videos/shodan/futari_dori.mp4' },
-    animation: { type: 'video', frames: [null], placeholder: '/animations/shodan/' }
+    animation: { phases: 1, images: [null], placeholder: '/animations/shodan/' }
   },
 
   // ═══════════════════════════════════════════════════════════════
@@ -187,7 +187,7 @@ export const TECHNIQUES_SHODAN: Mouvement[] = [
       'Projeter sans désarmer'
     ],
     video: { url: null, thumbnail: null, duree: null, format: 'mp4', placeholder: '/videos/shodan/tanto_dori_tsuki.mp4' },
-    animation: { type: 'video', frames: [null], placeholder: '/animations/shodan/' }
+    animation: { phases: 1, images: [null], placeholder: '/animations/shodan/' }
   }
 ];
 
@@ -215,7 +215,7 @@ export const TECHNIQUES_NIDAN: Mouvement[] = [
       'Essoufflement par manque d\'efficience'
     ],
     video: { url: null, thumbnail: null, duree: null, format: 'mp4', placeholder: '/videos/nidan/jiyu_waza_3.mp4' },
-    animation: { type: 'video', frames: [null], placeholder: '/animations/nidan/' }
+    animation: { phases: 1, images: [null], placeholder: '/animations/nidan/' }
   },
   {
     id: 'tachi_dori_shomen',
@@ -237,7 +237,7 @@ export const TECHNIQUES_NIDAN: Mouvement[] = [
       'Négliger le zanshin après désarmement'
     ],
     video: { url: null, thumbnail: null, duree: null, format: 'mp4', placeholder: '/videos/nidan/tachi_dori.mp4' },
-    animation: { type: 'video', frames: [null], placeholder: '/animations/nidan/' }
+    animation: { phases: 1, images: [null], placeholder: '/animations/nidan/' }
   },
   {
     id: 'jo_dori_tsuki',
@@ -259,7 +259,7 @@ export const TECHNIQUES_NIDAN: Mouvement[] = [
       'Perdre le contrôle du centre'
     ],
     video: { url: null, thumbnail: null, duree: null, format: 'mp4', placeholder: '/videos/nidan/jo_dori.mp4' },
-    animation: { type: 'video', frames: [null], placeholder: '/animations/nidan/' }
+    animation: { phases: 1, images: [null], placeholder: '/animations/nidan/' }
   },
   {
     id: 'ken_tai_jo',
@@ -281,7 +281,7 @@ export const TECHNIQUES_NIDAN: Mouvement[] = [
       'Blocages au lieu de redirections'
     ],
     video: { url: null, thumbnail: null, duree: null, format: 'mp4', placeholder: '/videos/nidan/ken_tai_jo.mp4' },
-    animation: { type: 'video', frames: [null], placeholder: '/animations/nidan/' }
+    animation: { phases: 1, images: [null], placeholder: '/animations/nidan/' }
   }
 ];
 
@@ -309,7 +309,7 @@ export const TECHNIQUES_SANDAN: Mouvement[] = [
       'Fatigue mentale avant physique'
     ],
     video: { url: null, thumbnail: null, duree: null, format: 'mp4', placeholder: '/videos/sandan/jiyu_waza_4.mp4' },
-    animation: { type: 'video', frames: [null], placeholder: '/animations/sandan/' }
+    animation: { phases: 1, images: [null], placeholder: '/animations/sandan/' }
   },
   {
     id: 'oyo_waza',
@@ -331,7 +331,7 @@ export const TECHNIQUES_SANDAN: Mouvement[] = [
       'Perdre l\'efficacité martiale'
     ],
     video: { url: null, thumbnail: null, duree: null, format: 'mp4', placeholder: '/videos/sandan/oyo_waza.mp4' },
-    animation: { type: 'video', frames: [null], placeholder: '/animations/sandan/' }
+    animation: { phases: 1, images: [null], placeholder: '/animations/sandan/' }
   },
   {
     id: 'koshi_nage_variations',
@@ -353,7 +353,7 @@ export const TECHNIQUES_SANDAN: Mouvement[] = [
       'Projection dangereuse pour Uke'
     ],
     video: { url: null, thumbnail: null, duree: null, format: 'mp4', placeholder: '/videos/sandan/koshi_nage.mp4' },
-    animation: { type: 'video', frames: [null], placeholder: '/animations/sandan/' }
+    animation: { phases: 1, images: [null], placeholder: '/animations/sandan/' }
   }
 ];
 
@@ -381,7 +381,7 @@ export const TECHNIQUES_YONDAN: Mouvement[] = [
       'Techniques mystiques sans fondement martial'
     ],
     video: { url: null, thumbnail: null, duree: null, format: 'mp4', placeholder: '/videos/yondan/aiki_jutsu.mp4' },
-    animation: { type: 'video', frames: [null], placeholder: '/animations/yondan/' }
+    animation: { phases: 1, images: [null], placeholder: '/animations/yondan/' }
   },
   {
     id: 'enseignement_pedagogie',
@@ -403,7 +403,7 @@ export const TECHNIQUES_YONDAN: Mouvement[] = [
       'Manque de patience'
     ],
     video: { url: null, thumbnail: null, duree: null, format: 'mp4', placeholder: '/videos/yondan/pedagogie.mp4' },
-    animation: { type: 'video', frames: [null], placeholder: '/animations/yondan/' }
+    animation: { phases: 1, images: [null], placeholder: '/animations/yondan/' }
   }
 ];
 
