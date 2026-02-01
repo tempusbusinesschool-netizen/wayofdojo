@@ -36,6 +36,7 @@ const GradeCard: React.FC<{
   hasQuiz: boolean;
 }> = ({ grade, isExpanded, onToggle, isUnlocked, isCurrent, onStartQuiz, hasQuiz }) => {
   const [showTechniquesDetail, setShowTechniquesDetail] = useState(false);
+  const [expandedProgrammeTech, setExpandedProgrammeTech] = useState<string | null>(null);
   
   // Récupérer les techniques/mouvements pour ce grade
   const techniquesByCategory = useMemo(() => {
