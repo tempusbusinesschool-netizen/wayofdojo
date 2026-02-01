@@ -49,6 +49,15 @@ export default function DojoVirtuelPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-950 via-orange-950 to-amber-950">
+      {/* Message d'accueil Tanaka */}
+      <TanakaWelcome
+        sectionId="dojo-virtuel"
+        sectionTitle={TANAKA_MESSAGES['dojo-virtuel'].title}
+        message={TANAKA_MESSAGES['dojo-virtuel'].message}
+        emoji={TANAKA_MESSAGES['dojo-virtuel'].emoji}
+        variant="full"
+      />
+
       {/* Header */}
       <header className="sticky top-0 z-50 backdrop-blur-md bg-gradient-to-r from-amber-900/90 to-orange-900/90 border-b border-amber-500/20">
         <div className="container mx-auto px-4 py-3 flex items-center justify-between">
