@@ -200,7 +200,7 @@ const GradeCard: React.FC<{
                 {/* TECHNIQUES REQUISES (avec détails et vidéos) */}
                 {/* ═══════════════════════════════════════════════════════════════ */}
                 {totalTechniques > 0 && (
-                  <div>
+                  <div className="bg-gradient-to-br from-purple-900/40 to-violet-900/30 rounded-2xl p-4 border-2 border-purple-500/50 shadow-lg shadow-purple-500/10">
                     <div 
                       className="flex items-center justify-between cursor-pointer"
                       onClick={(e) => {
@@ -208,20 +208,27 @@ const GradeCard: React.FC<{
                         setShowTechniquesDetail(!showTechniquesDetail);
                       }}
                     >
-                      <h4 className="text-sm font-bold text-purple-400 uppercase tracking-wider flex items-center gap-2">
-                        <Sword className="w-4 h-4" /> Techniques requises
+                      <h4 className="text-base font-bold text-purple-300 uppercase tracking-wider flex items-center gap-2">
+                        <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-violet-600 rounded-lg flex items-center justify-center">
+                          <Sword className="w-4 h-4 text-white" />
+                        </div>
+                        Techniques requises
                       </h4>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs text-slate-400 bg-slate-700 px-2 py-1 rounded-full">
+                      <div className="flex items-center gap-3">
+                        <span className="text-sm font-bold text-white bg-purple-600 px-3 py-1.5 rounded-full shadow-md">
                           {totalTechniques} techniques
                         </span>
-                        {showTechniquesDetail ? (
-                          <ChevronUp className="w-4 h-4 text-purple-400" />
-                        ) : (
-                          <ChevronDown className="w-4 h-4 text-purple-400" />
-                        )}
+                        <div className={`w-8 h-8 rounded-full bg-purple-500/30 flex items-center justify-center transition-transform ${showTechniquesDetail ? 'rotate-180' : ''}`}>
+                          <ChevronDown className="w-5 h-5 text-purple-300" />
+                        </div>
                       </div>
                     </div>
+                    
+                    {!showTechniquesDetail && (
+                      <p className="text-xs text-purple-300/70 mt-2 pl-10">
+                        Cliquez pour voir les détails et vidéos tutoriels
+                      </p>
+                    )}
 
                     <AnimatePresence>
                       {showTechniquesDetail && (
