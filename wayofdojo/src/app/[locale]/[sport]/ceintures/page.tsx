@@ -50,7 +50,7 @@ const GradeCard: React.FC<{
   
   const totalAllTechniques = getTotalMouvements();
   
-  const totalTechniques = useMemo(() => {
+  const _totalTechniques = useMemo(() => {
     return Object.values(techniquesByCategory).flat().length;
   }, [techniquesByCategory]);
 
