@@ -1,15 +1,12 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { 
-  Flame, CheckCircle2, Circle, Star, Volume2, Play, ChevronRight
+  Flame, Star, Volume2, Play, ChevronRight
 } from 'lucide-react';
 import Link from 'next/link';
-import DailyChallengeWidget from '@/components/DailyChallengeWidget';
 import JourneyPath from '@/components/JourneyPath';
-import { SpiralDivider } from '@/components/animations/SpiralConnector';
-import { VIRTUES_GAMIFICATION } from '@/constants/virtuesGamification';
 
 // ⚠️ IMAGE OFFICIELLE DE TANAKA - VERROUILLÉE - NE JAMAIS CHANGER
 const TANAKA_IMAGE = "/images/tanaka/portrait.png";
