@@ -16,10 +16,10 @@ import QuizModal from '@/components/quiz/QuizModal';
 
 /**
  * ═══════════════════════════════════════════════════════════════════════════════
- * PAGE LES CEINTURES — PROGRAMME OFFICIEL FFAAA
+ * PAGE LES CEINTURES — PROGRAMME DE PROGRESSION
  * ═══════════════════════════════════════════════════════════════════════════════
  * 
- * ⚠️ DONNÉES VERROUILLÉES - Programme officiel de la FFAAA
+ * ⚠️ DONNÉES VERROUILLÉES - Programme officiel de progression
  * Source: /app/wayofdojo/src/data/aikido/grades/passages-de-grades.ts
  */
 
