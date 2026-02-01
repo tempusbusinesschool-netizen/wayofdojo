@@ -88,10 +88,22 @@ export const CATEGORIES_MOUVEMENTS: Record<string, { label: string; emoji: strin
   // Exercices
   'exercice_base': { label: 'Exercices de base', emoji: '📚', color: 'from-slate-500 to-gray-500' },
   
-  // Armes
+  // Armes - Base
   'jo': { label: 'Jo (Bâton)', emoji: '🪵', color: 'from-amber-600 to-yellow-500' },
   'tanto': { label: 'Tanto (Couteau)', emoji: '🗡️', color: 'from-slate-500 to-zinc-500' },
   'bokken': { label: 'Bokken (Sabre)', emoji: '⚔️', color: 'from-slate-600 to-gray-500' },
+  
+  // Jo - Catégories détaillées
+  'jo_suburi': { label: 'Jo Suburi (Mouvements solo)', emoji: '🪵', color: 'from-amber-500 to-yellow-500' },
+  'jo_kata': { label: 'Jo Kata (Formes)', emoji: '📜', color: 'from-amber-600 to-orange-500' },
+  'jo_kumijo': { label: 'Kumi Jo (Travail à deux)', emoji: '🤝', color: 'from-amber-700 to-red-500' },
+  'jo_techniques': { label: 'Techniques au Jo', emoji: '🪵', color: 'from-amber-600 to-yellow-600' },
+  
+  // Bokken - Catégories détaillées  
+  'bokken_suburi': { label: 'Ken Suburi (Coupes solo)', emoji: '⚔️', color: 'from-slate-500 to-gray-500' },
+  'bokken_kata': { label: 'Ken Kata (Formes)', emoji: '📜', color: 'from-slate-600 to-zinc-600' },
+  'bokken_kumitachi': { label: 'Kumi Tachi (Travail à deux)', emoji: '🤝', color: 'from-slate-700 to-gray-700' },
+  'bokken_techniques': { label: 'Techniques au Bokken', emoji: '⚔️', color: 'from-slate-600 to-gray-600' },
   
   // Catégories Dan
   'ushiro_waza': { label: 'Ushiro Waza (Techniques arrière)', emoji: '🔄', color: 'from-indigo-600 to-purple-600' },
