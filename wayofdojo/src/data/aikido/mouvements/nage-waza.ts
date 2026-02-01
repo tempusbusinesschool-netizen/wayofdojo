@@ -6,7 +6,7 @@
  * Bibliothèque complète des projections en Aïkido
  */
 
-import type { Mouvement, NiveauGrade } from '../types';
+import type { Mouvement } from '../types';
 
 // =============================================================================
 // SHIHO NAGE - PROJECTION DANS LES 4 DIRECTIONS
