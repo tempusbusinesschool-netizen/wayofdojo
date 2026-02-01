@@ -392,9 +392,9 @@ const GradeCard: React.FC<{
                 )}
 
                 {/* ═══════════════════════════════════════════════════════════════ */}
-                {/* BIBLIOTHÈQUE DE TECHNIQUES */}
+                {/* BIBLIOTHÈQUE DE TECHNIQUES - TOUTES LES TECHNIQUES */}
                 {/* ═══════════════════════════════════════════════════════════════ */}
-                {totalTechniques > 0 && (
+                {totalAllTechniques > 0 && (
                   <div className="bg-gradient-to-br from-purple-900/40 to-violet-900/30 rounded-2xl p-4 border-2 border-purple-500/50 shadow-lg shadow-purple-500/10">
                     <div 
                       className="flex items-center justify-between cursor-pointer"
