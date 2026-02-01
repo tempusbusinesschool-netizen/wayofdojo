@@ -456,7 +456,7 @@ export default function CeinturesPage() {
           )}
         </AnimatePresence>
 
-        {/* Note FFAAA */}
+        {/* Note */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -464,7 +464,7 @@ export default function CeinturesPage() {
           className="bg-slate-900/50 rounded-xl p-4 border border-slate-800 text-center"
         >
           <p className="text-xs text-slate-500">
-            Programme basé sur les directives de la <strong className="text-slate-400">Fédération Française d&apos;Aïkido et de Budo (FFAAA)</strong>.
+            Programme officiel de progression en Aïkido.
             Les durées et contenus peuvent varier selon les dojos et enseignants.
           </p>
         </motion.div>
