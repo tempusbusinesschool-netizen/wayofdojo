@@ -15,30 +15,26 @@
 - ✅ **Sidebar gauche** :
   - Fiche personnage (avatar avec niveau, nom, grade, barre XP animée)
   - Stats compactes (Série, Badges, Techniques)
-  - **Section NOTIFICATIONS** avec badges dynamiques :
-    - Quêtes disponibles avec XP à gagner
-    - Badges débloqués à réclamer
-    - Série de jours active
+  - **Section NOTIFICATIONS** avec badges dynamiques
   - Barres de progression des 4 premières Vertus du Budo
   - Liste des Quêtes Actives (défis) avec XP et expansion
   - Bouton "CONTINUER" qui toggle le JourneyPath
-- ✅ **Zone principale** :
-  - Hero Maître Tanaka avec portrait, citation et bouton "Écouter"
-  - Cartes d'action (Dojo Virtuel, Techniques, Trophées) avec navigation
-  - Les 7 Vertus du Budo en grille colorée avec kanji et niveaux
-  - Quick Stats footer (Grade, Vertus, Quêtes, Niveau)
 - ✅ **Messages d'accueil Tanaka** (composant TanakaWelcome.tsx) :
   - Modal personnalisé à l'ouverture de chaque section
-  - Messages prédéfinis pour : Techniques, Trophées, Vertus, Ceintures, Profil, Histoire
-  - 3 variants : full (modal), banner (bandeau), compact (encart)
-  - sessionStorage pour ne montrer qu'une fois par session
-  - **Animation confetti dorées** sur "C'est parti !" (#FFD700, #FFA500, #FF8C00)
-- ✅ **Page Ceintures refaite** avec programme officiel FFAAA (⚠️ DONNÉES VERROUILLÉES) :
-  - 6 grades Kyu (6e au 1er) avec kanji japonais
-  - 4 grades Dan (Shodan au Yondan) avec toggle
-  - Contenu détaillé : Objectifs, Mouvements requis, Techniques requises, Critères d'évaluation
+  - **Animation confetti dorées** sur "C'est parti !"
+- ✅ **Page Ceintures** avec programme officiel FFAAA (⚠️ VERROUILLÉ) :
+  - 6 grades Kyu + 4 grades Dan avec détails complets
   - Source : `/data/aikido/grades/passages-de-grades.ts`
-- ✅ **Tests** : 100% passés (voir `/app/test_reports/iteration_19.json`)
+- ✅ **Système de Quiz** pour validation des connaissances :
+  - 6 quiz (6e Kyu → 1er Kyu), 10 questions chacun
+  - 5 catégories : Vocabulaire, Histoire, Étiquette, Techniques, Philosophie
+  - Score minimal variable : 70% (6e Kyu) → 85% (1er Kyu)
+  - Questions mélangées aléatoirement
+  - Feedback Tanaka avec explication après chaque réponse
+  - Confetti sur réussite
+  - Bouton "Tester mes connaissances" sur chaque grade Kyu
+  - Source : `/data/aikido/grades/quiz-grades.ts`
+- ✅ **Tests** : 100% passés (voir `/app/test_reports/iteration_20.json`)
 
 ### 1 Février 2025 (avant) - BENTO GRID Dashboard Junior (Remplacé)
 - ✅ Layout Bento Grid implémenté puis remplacé par SIDEBAR RPG
