@@ -11,6 +11,7 @@ import {
   AIKIDO_TIMELINE, 
   AIKIDO_MEANING 
 } from '@/data/aikido/histoire';
+import { TanakaWelcome, TANAKA_MESSAGES } from '@/components/TanakaWelcome';
 
 /**
  * ═══════════════════════════════════════════════════════════════════════════════
@@ -26,6 +27,15 @@ export default function HistoirePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white">
+      {/* Message d'accueil Tanaka */}
+      <TanakaWelcome
+        sectionId="histoire"
+        sectionTitle={TANAKA_MESSAGES['histoire'].title}
+        message={TANAKA_MESSAGES['histoire'].message}
+        emoji={TANAKA_MESSAGES['histoire'].emoji}
+        variant="full"
+      />
+
       {/* Header */}
       <div className="sticky top-0 z-50 bg-slate-950/90 backdrop-blur-md border-b border-slate-800">
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center gap-4">
