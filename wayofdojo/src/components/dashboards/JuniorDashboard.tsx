@@ -4,7 +4,7 @@ import { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Flame, Medal, Scroll, Castle, Sparkles, Compass,
-  ChevronDown, Volume2, Play, Trophy
+  ChevronDown, Volume2, Play, Trophy, Bell, Gift
 } from 'lucide-react';
 import Link from 'next/link';
 import JourneyPath from '@/components/JourneyPath';
