@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { Button } from '@/components/ui/button';
-import type { QuizGrade, QuizQuestion } from '@/data/aikido/grades/quiz-grades';
+import type { QuizGrade } from '@/data/aikido/grades/quiz-grades';
 
 // ⚠️ IMAGE OFFICIELLE DE TANAKA - VERROUILLÉE
 const TANAKA_IMAGE = "/images/tanaka/portrait.png";
