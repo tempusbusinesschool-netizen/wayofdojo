@@ -255,7 +255,7 @@ export const TanakaWelcome: React.FC<TanakaWelcomeProps> = ({
                   <Volume2 className="w-4 h-4" /> Écouter
                 </button>
                 <button
-                  onClick={handleClose}
+                  onClick={handleCloseWithConfetti}
                   className="flex-1 py-3 bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 rounded-xl text-white font-bold transition-colors"
                 >
                   C&apos;est parti ! 🚀
