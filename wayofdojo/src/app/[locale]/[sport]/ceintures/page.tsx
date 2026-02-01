@@ -63,9 +63,8 @@ const GradeCard: React.FC<{
 
       {/* Carte principale */}
       <div 
-        onClick={onToggle}
         className={`
-          relative cursor-pointer overflow-hidden rounded-2xl border-2 transition-all duration-300
+          relative overflow-hidden rounded-2xl border-2 transition-all duration-300
           ${isCurrent 
             ? 'border-amber-500 shadow-lg shadow-amber-500/20 bg-gradient-to-br from-slate-800 to-amber-900/30' 
             : !isUnlocked 
@@ -74,8 +73,11 @@ const GradeCard: React.FC<{
           }
         `}
       >
-        {/* Header */}
-        <div className="p-4 sm:p-5">
+        {/* Header cliquable */}
+        <div 
+          onClick={onToggle}
+          className="p-4 sm:p-5 cursor-pointer"
+        >
           <div className="flex items-center gap-4">
             {/* Ceinture visuelle */}
             <div 
