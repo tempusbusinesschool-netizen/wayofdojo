@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import AikidoWireframe from '@/components/animations/AikidoWireframe';
 import TanakaVoiceSearch from '@/components/voice/TanakaVoiceSearch';
+import { TanakaWelcome, TANAKA_MESSAGES } from '@/components/TanakaWelcome';
 
 // Import des données migrées
 import { UKEMI, TAI_SABAKI, KANSETSU_WAZA, KAMAE, AIKIDO_GLOBAL_STATS } from '@/data/aikido';
