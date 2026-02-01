@@ -323,7 +323,7 @@ export default function CeinturesPage() {
             <h1 className="text-xl font-bold flex items-center gap-2">
               🎖️ Les Ceintures
             </h1>
-            <p className="text-sm text-slate-400">Programme officiel FFAAA</p>
+            <p className="text-sm text-slate-400">Programme de progression</p>
           </div>
           <div className="flex items-center gap-2">
             <Scroll className="w-5 h-5 text-amber-500" />
