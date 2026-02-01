@@ -86,6 +86,20 @@ export const CATEGORIES_MOUVEMENTS: Record<string, { label: string; emoji: strin
   'jo': { label: 'Jo (Bâton)', emoji: '🪵', color: 'from-amber-600 to-yellow-500' },
   'tanto': { label: 'Tanto (Couteau)', emoji: '🗡️', color: 'from-slate-500 to-zinc-500' },
   'bokken': { label: 'Bokken (Sabre)', emoji: '⚔️', color: 'from-slate-600 to-gray-500' },
+  
+  // Catégories Dan
+  'ushiro_waza': { label: 'Ushiro Waza (Techniques arrière)', emoji: '🔄', color: 'from-indigo-600 to-purple-600' },
+  'kaeshi_waza': { label: 'Kaeshi Waza (Contre-techniques)', emoji: '↩️', color: 'from-rose-600 to-pink-600' },
+  'henka_waza': { label: 'Henka Waza (Variations)', emoji: '🔀', color: 'from-violet-600 to-purple-600' },
+  'randori': { label: 'Randori (Combat libre)', emoji: '⚡', color: 'from-amber-600 to-red-600' },
+  'tanto_dori': { label: 'Tanto Dori (Défense couteau)', emoji: '🗡️', color: 'from-red-700 to-rose-700' },
+  'tachi_dori': { label: 'Tachi Dori (Défense sabre)', emoji: '⚔️', color: 'from-slate-700 to-zinc-700' },
+  'jo_dori': { label: 'Jo Dori (Défense bâton)', emoji: '🪵', color: 'from-amber-700 to-orange-700' },
+  'armes_avancees': { label: 'Armes avancées', emoji: '🎯', color: 'from-slate-600 to-slate-700' },
+  'nage_waza_avance': { label: 'Projections avancées', emoji: '🌪️', color: 'from-rose-600 to-red-600' },
+  'oyo_waza': { label: 'Oyo Waza (Applications)', emoji: '✨', color: 'from-amber-500 to-yellow-500' },
+  'aiki_jutsu': { label: 'Aiki no Jutsu', emoji: '🌀', color: 'from-cyan-600 to-blue-600' },
+  'pedagogie': { label: 'Pédagogie', emoji: '📖', color: 'from-emerald-600 to-green-600' },
 };
 
 /**
