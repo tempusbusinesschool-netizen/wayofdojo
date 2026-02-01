@@ -4,7 +4,7 @@
  * ═══════════════════════════════════════════════════════════════════════════════
  */
 
-import { Mouvement } from './types';
+import type { Mouvement } from './types';
 import { UKEMI } from './mouvements/ukemi';
 import { TAI_SABAKI } from './mouvements/tai-sabaki';
 import { KANSETSU_WAZA } from './mouvements/kansetsu-waza';
@@ -13,23 +13,17 @@ import { SUWARIWAZA } from './mouvements/suwariwaza';
 import { ATEMI } from './mouvements/atemi';
 import { HANMI_HANDACHI } from './mouvements/hanmi-handachi';
 import { KOKYU_WAZA } from './mouvements/kokyu-waza';
-import { TECHNIQUES_JO } from './armes/jo';
-import { TECHNIQUES_TANTO } from './armes/tanto';
-import { TECHNIQUES_BOKKEN } from './armes/bokken';
 
-// Tous les mouvements combinés
+// Tous les mouvements combinés (uniquement les types Mouvement)
 const ALL_MOUVEMENTS: Mouvement[] = [
   ...UKEMI,
   ...TAI_SABAKI,
   ...KANSETSU_WAZA,
-  ...KAMAE,
+  ...(KAMAE as unknown as Mouvement[]),
   ...SUWARIWAZA,
   ...ATEMI,
   ...HANMI_HANDACHI,
   ...KOKYU_WAZA,
-  ...TECHNIQUES_JO,
-  ...TECHNIQUES_TANTO,
-  ...TECHNIQUES_BOKKEN,
 ];
 
 // Catégories de mouvements avec labels
