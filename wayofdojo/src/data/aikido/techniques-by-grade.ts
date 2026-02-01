@@ -183,6 +183,37 @@ export function countMouvementsByGrade(): Record<string, number> {
 }
 
 /**
+ * Récupère TOUS les mouvements de la bibliothèque
+ */
+export function getAllMouvements(): Mouvement[] {
+  return ALL_MOUVEMENTS;
+}
+
+/**
+ * Récupère TOUS les mouvements groupés par catégorie
+ */
+export function getAllMouvementsGrouped(): Record<string, Mouvement[]> {
+  const grouped: Record<string, Mouvement[]> = {};
+  
+  ALL_MOUVEMENTS.forEach(m => {
+    const cat = m.categorie || 'autre';
+    if (!grouped[cat]) {
+      grouped[cat] = [];
+    }
+    grouped[cat].push(m);
+  });
+  
+  return grouped;
+}
+
+/**
+ * Compte total des mouvements
+ */
+export function getTotalMouvements(): number {
+  return ALL_MOUVEMENTS.length;
+}
+
+/**
  * Récupère un mouvement par son ID
  */
 export function getMouvementById(id: string): Mouvement | undefined {
