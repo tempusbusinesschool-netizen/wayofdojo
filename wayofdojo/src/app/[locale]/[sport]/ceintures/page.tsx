@@ -38,10 +38,17 @@ const GradeCard: React.FC<{
   const [showTechniquesDetail, setShowTechniquesDetail] = useState(false);
   const [expandedProgrammeTech, setExpandedProgrammeTech] = useState<string | null>(null);
   
-  // Récupérer les techniques/mouvements pour ce grade
+  // Récupérer les techniques/mouvements pour ce grade (filtrées)
   const techniquesByCategory = useMemo(() => {
     return getMouvementsByGradeGrouped(grade.id);
   }, [grade.id]);
+  
+  // BIBLIOTHÈQUE COMPLÈTE - TOUTES les techniques
+  const allTechniquesByCategory = useMemo(() => {
+    return getAllMouvementsGrouped();
+  }, []);
+  
+  const totalAllTechniques = getTotalMouvements();
   
   const totalTechniques = useMemo(() => {
     return Object.values(techniquesByCategory).flat().length;
