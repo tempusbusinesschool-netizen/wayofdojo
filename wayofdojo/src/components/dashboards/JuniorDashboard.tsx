@@ -86,10 +86,8 @@ export const JuniorDashboard: React.FC<JuniorDashboardProps> = ({
   currentStreak,
   currentBelt,
   completedChallenges,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _processingChallenge,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _onCompleteChallenge,
+  processingChallenge: _processingChallenge,
+  onCompleteChallenge: _onCompleteChallenge,
   onNavigate,
   onUserNameChange,
 }) => {
