@@ -196,64 +196,11 @@ const GradeCard: React.FC<{
                   </div>
                 )}
 
-                {/* Techniques requises */}
-                {grade.techniques_requises && grade.techniques_requises.length > 0 && (
-                  <div>
-                    <h4 className="text-sm font-bold text-purple-400 uppercase tracking-wider mb-3 flex items-center gap-2">
-                      <Sword className="w-4 h-4" /> Techniques requises
-                    </h4>
-                    <div className="space-y-3">
-                      {grade.techniques_requises.map((attaque, idx) => (
-                        <div key={idx} className="bg-slate-800/50 rounded-xl p-3 border border-slate-700/50">
-                          <div className="flex items-center justify-between mb-2">
-                            <h5 className="text-sm font-semibold text-white">
-                              {attaque.attaque}
-                            </h5>
-                            {attaque.attaque_jp && (
-                              <span className="text-xs text-purple-400">{attaque.attaque_jp}</span>
-                            )}
-                          </div>
-                          {attaque.description && (
-                            <p className="text-xs text-slate-400 mb-2">{attaque.description}</p>
-                          )}
-                          <div className="flex flex-wrap gap-2">
-                            {attaque.techniques.map((tech, techIdx) => (
-                              <span 
-                                key={techIdx}
-                                className="text-xs px-2 py-1 rounded-lg bg-purple-500/20 text-purple-300 border border-purple-500/30"
-                              >
-                                {tech.nom}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* Critères d'évaluation */}
-                {grade.criteres_evaluation && grade.criteres_evaluation.length > 0 && (
-                  <div>
-                    <h4 className="text-sm font-bold text-emerald-400 uppercase tracking-wider mb-3 flex items-center gap-2">
-                      <Award className="w-4 h-4" /> Critères d&apos;évaluation
-                    </h4>
-                    <ul className="space-y-2">
-                      {grade.criteres_evaluation.map((critere, idx) => (
-                        <li key={idx} className="flex items-start gap-2 text-sm text-slate-300">
-                          <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
-                          {critere}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-
                 {/* ═══════════════════════════════════════════════════════════════ */}
-                {/* SECTION TECHNIQUES DÉTAILLÉES */}
+                {/* TECHNIQUES REQUISES (avec détails et vidéos) */}
                 {/* ═══════════════════════════════════════════════════════════════ */}
                 {totalTechniques > 0 && (
-                  <div className="border-t border-slate-700/50 pt-5">
+                  <div>
                     <div 
                       className="flex items-center justify-between cursor-pointer"
                       onClick={(e) => {
@@ -261,17 +208,17 @@ const GradeCard: React.FC<{
                         setShowTechniquesDetail(!showTechniquesDetail);
                       }}
                     >
-                      <h4 className="text-sm font-bold text-rose-400 uppercase tracking-wider flex items-center gap-2">
-                        <Eye className="w-4 h-4" /> Voir les techniques en détail
+                      <h4 className="text-sm font-bold text-purple-400 uppercase tracking-wider flex items-center gap-2">
+                        <Sword className="w-4 h-4" /> Techniques requises
                       </h4>
                       <div className="flex items-center gap-2">
                         <span className="text-xs text-slate-400 bg-slate-700 px-2 py-1 rounded-full">
                           {totalTechniques} techniques
                         </span>
                         {showTechniquesDetail ? (
-                          <ChevronUp className="w-4 h-4 text-rose-400" />
+                          <ChevronUp className="w-4 h-4 text-purple-400" />
                         ) : (
-                          <ChevronDown className="w-4 h-4 text-rose-400" />
+                          <ChevronDown className="w-4 h-4 text-purple-400" />
                         )}
                       </div>
                     </div>
@@ -317,6 +264,23 @@ const GradeCard: React.FC<{
                         </motion.div>
                       )}
                     </AnimatePresence>
+                  </div>
+                )}
+
+                {/* Critères d'évaluation */}
+                {grade.criteres_evaluation && grade.criteres_evaluation.length > 0 && (
+                  <div>
+                    <h4 className="text-sm font-bold text-emerald-400 uppercase tracking-wider mb-3 flex items-center gap-2">
+                      <Award className="w-4 h-4" /> Critères d&apos;évaluation
+                    </h4>
+                    <ul className="space-y-2">
+                      {grade.criteres_evaluation.map((critere, idx) => (
+                        <li key={idx} className="flex items-start gap-2 text-sm text-slate-300">
+                          <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                          {critere}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 )}
 
