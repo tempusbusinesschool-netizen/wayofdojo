@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Award, Clock, Target, ChevronDown, BookOpen, Scroll, Sword, Shield, Star, Lock } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+import { TanakaWelcome, TANAKA_MESSAGES } from '@/components/TanakaWelcome';
 
 /**
  * ═══════════════════════════════════════════════════════════════════════════════
