@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import MaitreTanaka from '@/components/MaitreTanaka';
+import { TanakaWelcome, TANAKA_MESSAGES } from '@/components/TanakaWelcome';
 import TECHNIQUES_BY_KYU, { KYU_ORDER, getTechniquesByKyu, TOTAL_TECHNIQUES } from '@/constants/techniquesByKyu';
 
 // Configuration des ceintures
