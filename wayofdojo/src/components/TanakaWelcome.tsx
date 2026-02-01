@@ -69,6 +69,49 @@ export const TanakaWelcome: React.FC<TanakaWelcomeProps> = ({
     }
   }, [autoClose, isVisible]);
 
+  // Animation confetti pour "C'est parti !"
+  const triggerConfetti = useCallback(() => {
+    // Confetti dorés style samouraï
+    const colors = ['#FFD700', '#FFA500', '#FF8C00', '#FF6347', '#FFE4B5'];
+    
+    // Premier burst
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
+      colors: colors,
+    });
+
+    // Second burst avec delay
+    setTimeout(() => {
+      confetti({
+        particleCount: 50,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 },
+        colors: colors,
+      });
+    }, 150);
+
+    setTimeout(() => {
+      confetti({
+        particleCount: 50,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 },
+        colors: colors,
+      });
+    }, 300);
+  }, []);
+
+  const handleCloseWithConfetti = useCallback(() => {
+    triggerConfetti();
+    // Petit délai pour voir le confetti avant la fermeture
+    setTimeout(() => {
+      handleClose();
+    }, 200);
+  }, [triggerConfetti, handleClose]);
+
   const handleClose = () => {
     setIsVisible(false);
     onClose?.();
