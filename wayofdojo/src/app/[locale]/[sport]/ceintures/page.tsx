@@ -4,13 +4,13 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowLeft, Award, Clock, Target, ChevronDown, ChevronUp, 
-  BookOpen, Sword, Shield, Star, Lock, CheckCircle2, 
+  Sword, Shield, Star, Lock, CheckCircle2, 
   Play, Users, Scroll
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { TanakaWelcome, TANAKA_MESSAGES } from '@/components/TanakaWelcome';
-import { PASSAGES_DE_GRADES, getGradesKyu, getGradesDan, type ProgrammeGrade } from '@/data/aikido/grades/passages-de-grades';
+import { getGradesKyu, getGradesDan, type ProgrammeGrade } from '@/data/aikido/grades/passages-de-grades';
 
 /**
  * ═══════════════════════════════════════════════════════════════════════════════
