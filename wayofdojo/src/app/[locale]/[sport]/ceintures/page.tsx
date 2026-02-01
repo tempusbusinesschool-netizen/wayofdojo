@@ -405,6 +405,8 @@ export default function CeinturesPage() {
                 onToggle={() => toggleGrade(grade.id)}
                 isUnlocked={unlockedGrades.includes(grade.id) || idx === 0}
                 isCurrent={currentUserGrade === grade.id}
+                hasQuiz={!!getQuizByGrade(grade.id)}
+                onStartQuiz={() => setSelectedQuizGrade(grade.id)}
               />
             ))}
           </div>
