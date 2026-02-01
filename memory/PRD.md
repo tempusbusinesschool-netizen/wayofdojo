@@ -2,13 +2,33 @@
 
 ## 📋 Document de Référence
 
-**Version:** 1.4  
+**Version:** 1.5  
 **Date de création:** 19 Janvier 2025  
-**Dernière mise à jour:** 28 Janvier 2025
+**Dernière mise à jour:** 1 Février 2025
 
 ---
 
 ## 📝 CHANGELOG RÉCENT
+
+### 1 Février 2025 - BENTO GRID Dashboard Junior (P0) ✅
+- ✅ **Layout Bento Grid implémenté** :
+  - Dashboard junior refactoré avec layout style iOS widgets
+  - Grille CSS responsive (4 colonnes mobile, 6 colonnes desktop)
+  - Toutes les cartes avec data-testid pour tests automatisés
+- ✅ **Cartes intégrées dans le Bento Grid** :
+  - Maître Tanaka (portrait officiel `/images/tanaka/portrait.png`)
+  - Stats (XP Total, Jours série, Grade avec emoji animal)
+  - Techniques (206+ mouvements, barre de progression)
+  - Dojo Virtuel (11 mini-jeux, bouton "Jouer")
+  - Ma Pratique, Progression, 7 Vertus, Ceintures, Trophées
+  - Défi du jour (Excellence, multiplicateur XP)
+  - Mini-défis du Budo (6 défis avec virtus associées)
+  - Les 7 Vertus du Budo (kanji 礼勇克謙仁注責)
+- ✅ **Corrections de bugs** :
+  - Suppression du code orphelin hors fonction composant
+  - Nettoyage des imports non utilisés
+  - Compilation réussie sans erreurs
+- ✅ **Tests** : 100% des tests frontend passés (voir `/app/test_reports/iteration_16.json`)
 
 ### 28 Janvier 2025 - Migration complète AIKIDO@GAME (P0)
 - ✅ **Migration des données techniques** :
