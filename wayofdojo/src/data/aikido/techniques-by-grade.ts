@@ -17,8 +17,9 @@ import { ALL_TECHNIQUES_DAN } from './mouvements/dan-techniques';
 import { ALL_NAGE_WAZA } from './mouvements/nage-waza';
 import { ALL_OSAE_WAZA } from './mouvements/osae-waza';
 import { ALL_ARMES_MOUVEMENTS } from './mouvements/armes-mouvements';
+import TECHNIQUES_COMPLEMENTAIRES from './mouvements/techniques-complementaires';
 
-// Tous les mouvements combinés (Kyu + Dan + Projections + Immobilisations + Armes)
+// Tous les mouvements combinés (Kyu + Dan + Projections + Immobilisations + Armes + Complémentaires)
 const ALL_MOUVEMENTS: Mouvement[] = [
   ...UKEMI,
   ...TAI_SABAKI,
@@ -32,6 +33,7 @@ const ALL_MOUVEMENTS: Mouvement[] = [
   ...ALL_NAGE_WAZA,
   ...ALL_OSAE_WAZA,
   ...ALL_ARMES_MOUVEMENTS,
+  ...TECHNIQUES_COMPLEMENTAIRES,
 ];
 
 // Catégories de mouvements avec labels
