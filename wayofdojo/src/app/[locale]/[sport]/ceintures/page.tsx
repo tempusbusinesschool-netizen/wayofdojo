@@ -347,7 +347,7 @@ export default function CeinturesPage() {
               <Shield className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-amber-300">Programme Officiel FFAAA</h2>
+              <h2 className="text-lg font-bold text-amber-300">Programme de Progression</h2>
               <p className="text-sm text-slate-300 mt-1">
                 Le système de grades en Aïkido comprend 6 grades Kyu (débutant à avancé) 
                 et des grades Dan (ceinture noire). Chaque passage requiert un temps minimum 
