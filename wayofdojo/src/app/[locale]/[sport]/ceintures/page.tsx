@@ -293,7 +293,7 @@ const GradeCard: React.FC<{
                     
                     {!showTechniquesDetail && (
                       <p className="text-xs text-purple-300/70 mt-2 pl-10">
-                        Cliquez pour voir les détails pédagogiques et vidéos tutoriels
+                        Cliquez pour explorer toutes les techniques avec explications détaillées et vidéos
                       </p>
                     )}
 
