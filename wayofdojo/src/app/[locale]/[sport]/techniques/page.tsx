@@ -101,6 +101,15 @@ export default function TechniquesPage() {
 
   return (
     <div className="min-h-screen bg-slate-950">
+      {/* Message d'accueil Tanaka */}
+      <TanakaWelcome
+        sectionId="techniques"
+        sectionTitle={TANAKA_MESSAGES['techniques'].title}
+        message={TANAKA_MESSAGES['techniques'].message}
+        emoji={TANAKA_MESSAGES['techniques'].emoji}
+        variant="full"
+      />
+
       {/* Header */}
       <header className="sticky top-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-4 py-3">
