@@ -30,7 +30,9 @@ const GradeCard: React.FC<{
   onToggle: () => void;
   isUnlocked: boolean;
   isCurrent: boolean;
-}> = ({ grade, isExpanded, onToggle, isUnlocked, isCurrent }) => {
+  onStartQuiz: () => void;
+  hasQuiz: boolean;
+}> = ({ grade, isExpanded, onToggle, isUnlocked, isCurrent, onStartQuiz, hasQuiz }) => {
 
   return (
     <motion.div
