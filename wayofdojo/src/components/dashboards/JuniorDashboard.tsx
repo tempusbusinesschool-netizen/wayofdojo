@@ -93,9 +93,6 @@ export const JuniorDashboard: React.FC<JuniorDashboardProps> = ({
   onNavigate,
   onUserNameChange,
 }) => {
-  // État pour les vertus sélectionnées
-  const [selectedVirtue, setSelectedVirtue] = useState<string | null>(null);
-  
   // Étapes du parcours complétées (stockées dans localStorage côté client)
   const [journeyCompletedSteps, setJourneyCompletedSteps] = useState<number[]>(() => {
     if (typeof window !== 'undefined') {
@@ -113,18 +110,6 @@ export const JuniorDashboard: React.FC<JuniorDashboardProps> = ({
 
   const completedCount = dailyChallenges.filter(c => c.completed).length;
   const totalXpToday = dailyChallenges.filter(c => c.completed).reduce((sum, c) => sum + c.xp, 0);
-  
-  // Progression des vertus
-  const virtueProgress = user.gamification.virtuesProgress || {};
-
-  // Statistiques de la semaine (utilisé dans la section défis)
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const weeklyStats = {
-    trainings: 3,
-    techniques: completedCount,
-    xpGained: currentXp,
-    streakDays: currentStreak,
-  };
 
   // Gérer la complétion d'une étape du parcours
   const handleStepComplete = useCallback((stepId: number) => {
