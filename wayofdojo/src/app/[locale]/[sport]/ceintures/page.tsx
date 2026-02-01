@@ -15,6 +15,7 @@ import { getQuizByGrade } from '@/data/aikido/grades/quiz-grades';
 import { getMouvementsByGradeGrouped, getAllMouvementsGrouped, getTotalMouvements, CATEGORIES_MOUVEMENTS } from '@/data/aikido/techniques-by-grade';
 import QuizModal from '@/components/quiz/QuizModal';
 import { TechniqueDetailCard } from '@/components/techniques/TechniqueDetailCard';
+import { TechniqueLibrary } from '@/components/techniques/TechniqueLibrary';
 
 /**
  * ═══════════════════════════════════════════════════════════════════════════════
