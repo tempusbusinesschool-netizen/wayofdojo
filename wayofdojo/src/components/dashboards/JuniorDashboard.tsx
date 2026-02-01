@@ -243,6 +243,73 @@ export const JuniorDashboard: React.FC<JuniorDashboardProps> = ({
           </div>
         </div>
 
+        {/* Notifications */}
+        <div className="px-4 lg:px-5 py-3 border-b border-purple-500/30">
+          <div className="flex items-center justify-between">
+            <h3 className="text-xs font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+              <Bell className="w-3.5 h-3.5" /> Notifications
+            </h3>
+            <span className="text-[10px] text-emerald-400 bg-emerald-500/20 px-2 py-0.5 rounded-full">
+              {6 - completedCount} nouvelles
+            </span>
+          </div>
+          <div className="mt-2 space-y-1.5">
+            {/* Notification: Nouvelles quêtes */}
+            {completedCount < 6 && (
+              <motion.div 
+                initial={{ x: -10, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                className="flex items-center gap-2 p-2 bg-emerald-500/10 border border-emerald-500/30 rounded-lg cursor-pointer hover:bg-emerald-500/20 transition-colors"
+                data-testid="notif-quests"
+              >
+                <div className="w-7 h-7 bg-emerald-500/20 rounded-lg flex items-center justify-center">
+                  <Compass className="w-4 h-4 text-emerald-400" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-white text-xs font-medium truncate">{6 - completedCount} quêtes disponibles</p>
+                  <p className="text-emerald-400/70 text-[10px]">+{85 - (completedCount * 14)} XP à gagner</p>
+                </div>
+              </motion.div>
+            )}
+            {/* Notification: Récompense à réclamer */}
+            {badgesCount > 0 && (
+              <motion.div 
+                initial={{ x: -10, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: 0.1 }}
+                className="flex items-center gap-2 p-2 bg-amber-500/10 border border-amber-500/30 rounded-lg cursor-pointer hover:bg-amber-500/20 transition-colors"
+                data-testid="notif-reward"
+              >
+                <div className="w-7 h-7 bg-amber-500/20 rounded-lg flex items-center justify-center">
+                  <Gift className="w-4 h-4 text-amber-400" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-white text-xs font-medium truncate">Nouveau badge débloqué !</p>
+                  <p className="text-amber-400/70 text-[10px]">Réclamer ta récompense</p>
+                </div>
+              </motion.div>
+            )}
+            {/* Notification: Streak */}
+            {currentStreak >= 3 && (
+              <motion.div 
+                initial={{ x: -10, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: 0.2 }}
+                className="flex items-center gap-2 p-2 bg-orange-500/10 border border-orange-500/30 rounded-lg cursor-pointer hover:bg-orange-500/20 transition-colors"
+                data-testid="notif-streak"
+              >
+                <div className="w-7 h-7 bg-orange-500/20 rounded-lg flex items-center justify-center">
+                  <Flame className="w-4 h-4 text-orange-400" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-white text-xs font-medium truncate">🔥 Série de {currentStreak} jours !</p>
+                  <p className="text-orange-400/70 text-[10px]">Continue comme ça !</p>
+                </div>
+              </motion.div>
+            )}
+          </div>
+        </div>
+
         {/* Skills / Vertus */}
         <div className="p-4 lg:p-5 border-b border-purple-500/30">
           <h3 className="text-xs lg:text-sm font-bold text-purple-300 uppercase tracking-wider mb-3 flex items-center gap-2">
