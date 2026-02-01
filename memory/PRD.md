@@ -15,6 +15,10 @@
 - ✅ **Sidebar gauche** :
   - Fiche personnage (avatar avec niveau, nom, grade, barre XP animée)
   - Stats compactes (Série, Badges, Techniques)
+  - **NOUVEAU: Section NOTIFICATIONS** avec badges dynamiques :
+    - Quêtes disponibles avec XP à gagner
+    - Badges débloqués à réclamer
+    - Série de jours active
   - Barres de progression des 4 premières Vertus du Budo
   - Liste des Quêtes Actives (défis) avec XP et expansion
   - Bouton "CONTINUER" qui toggle le JourneyPath
@@ -23,7 +27,13 @@
   - Cartes d'action (Dojo Virtuel, Techniques, Trophées) avec navigation
   - Les 7 Vertus du Budo en grille colorée avec kanji et niveaux
   - Quick Stats footer (Grade, Vertus, Quêtes, Niveau)
-- ✅ **Tests** : 100% des tests frontend passés (voir `/app/test_reports/iteration_17.json`)
+- ✅ **Messages d'accueil Tanaka** (nouveau composant TanakaWelcome.tsx) :
+  - Modal personnalisé à l'ouverture de chaque section
+  - Messages prédéfinis pour : Techniques, Trophées, Vertus, Ceintures, Profil, Histoire, Carnet, Stages
+  - 3 variants : full (modal), banner (bandeau), compact (encart)
+  - sessionStorage pour ne montrer qu'une fois par session
+  - Boutons "Écouter" et "C'est parti !"
+- ✅ **Tests** : 100% des tests frontend passés (voir `/app/test_reports/iteration_18.json`)
 
 ### 1 Février 2025 (avant) - BENTO GRID Dashboard Junior (Remplacé)
 - ✅ Layout Bento Grid implémenté puis remplacé par SIDEBAR RPG
