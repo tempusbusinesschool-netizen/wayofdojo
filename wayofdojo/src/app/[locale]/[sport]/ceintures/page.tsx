@@ -250,6 +250,23 @@ const GradeCard: React.FC<{
                     )}
                   </div>
                 )}
+
+                {/* Bouton Quiz */}
+                {hasQuiz && (
+                  <div className="pt-2">
+                    <Button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onStartQuiz();
+                      }}
+                      className="w-full bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-700 hover:to-blue-700 text-white"
+                      data-testid={`quiz-button-${grade.id}`}
+                    >
+                      <BookOpen className="w-4 h-4 mr-2" />
+                      Tester mes connaissances 📝
+                    </Button>
+                  </div>
+                )}
               </div>
             </motion.div>
           )}
@@ -263,6 +280,7 @@ export default function CeinturesPage() {
   const router = useRouter();
   const [expandedGrade, setExpandedGrade] = useState<string | null>(null);
   const [showDan, setShowDan] = useState(false);
+  const [selectedQuizGrade, setSelectedQuizGrade] = useState<string | null>(null);
 
   // Simuler le grade actuel de l'utilisateur (à remplacer par les vraies données)
   const currentUserGrade = '6e_kyu';
@@ -274,6 +292,9 @@ export default function CeinturesPage() {
 
   const gradesKyu = getGradesKyu();
   const gradesDan = getGradesDan();
+
+  // Quiz du grade sélectionné
+  const selectedQuiz = selectedQuizGrade ? getQuizByGrade(selectedQuizGrade) : null;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white">
