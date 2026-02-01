@@ -469,6 +469,18 @@ export default function CeinturesPage() {
           </p>
         </motion.div>
       </div>
+
+      {/* Modal Quiz */}
+      {selectedQuiz && (
+        <QuizModal
+          quiz={selectedQuiz}
+          isOpen={!!selectedQuizGrade}
+          onClose={() => setSelectedQuizGrade(null)}
+          onComplete={(score, passed) => {
+            console.log(`Quiz terminé: ${score}% - ${passed ? 'Réussi' : 'Échoué'}`);
+          }}
+        />
+      )}
     </div>
   );
 }
