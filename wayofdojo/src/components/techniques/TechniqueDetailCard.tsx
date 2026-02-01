@@ -36,7 +36,10 @@ export const TechniqueDetailCard: React.FC<TechniqueDetailCardProps> = ({
       <motion.div
         whileHover={{ scale: 1.02 }}
         className="bg-slate-800/50 rounded-xl p-3 border border-slate-700/50 hover:border-slate-600 transition-all cursor-pointer"
-        onClick={() => setIsExpanded(!isExpanded)}
+        onClick={(e) => {
+          e.stopPropagation();
+          setIsExpanded(!isExpanded);
+        }}
         data-testid={`technique-${technique.id}`}
       >
         <div className="flex items-center gap-3">
