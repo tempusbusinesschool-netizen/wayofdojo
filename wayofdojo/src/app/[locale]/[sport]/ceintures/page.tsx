@@ -247,6 +247,77 @@ const GradeCard: React.FC<{
                   </div>
                 )}
 
+                {/* ═══════════════════════════════════════════════════════════════ */}
+                {/* SECTION TECHNIQUES DÉTAILLÉES */}
+                {/* ═══════════════════════════════════════════════════════════════ */}
+                {totalTechniques > 0 && (
+                  <div className="border-t border-slate-700/50 pt-5">
+                    <div 
+                      className="flex items-center justify-between cursor-pointer"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setShowTechniquesDetail(!showTechniquesDetail);
+                      }}
+                    >
+                      <h4 className="text-sm font-bold text-rose-400 uppercase tracking-wider flex items-center gap-2">
+                        <Eye className="w-4 h-4" /> Voir les techniques en détail
+                      </h4>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs text-slate-400 bg-slate-700 px-2 py-1 rounded-full">
+                          {totalTechniques} techniques
+                        </span>
+                        {showTechniquesDetail ? (
+                          <ChevronUp className="w-4 h-4 text-rose-400" />
+                        ) : (
+                          <ChevronDown className="w-4 h-4 text-rose-400" />
+                        )}
+                      </div>
+                    </div>
+
+                    <AnimatePresence>
+                      {showTechniquesDetail && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: 'auto', opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          className="overflow-hidden"
+                        >
+                          <div className="mt-4 space-y-4">
+                            {Object.entries(techniquesByCategory).map(([category, techniques]) => {
+                              const catInfo = CATEGORIES_MOUVEMENTS[category] || {
+                                label: category,
+                                emoji: '📚',
+                                color: 'from-slate-500 to-slate-600'
+                              };
+                              
+                              return (
+                                <div key={category} className="bg-slate-900/50 rounded-xl p-4 border border-slate-700/50">
+                                  <h5 className={`text-sm font-bold text-white mb-3 flex items-center gap-2`}>
+                                    <span className="text-lg">{catInfo.emoji}</span>
+                                    {catInfo.label}
+                                    <span className="text-xs text-slate-500 font-normal">
+                                      ({techniques.length})
+                                    </span>
+                                  </h5>
+                                  <div className="space-y-2">
+                                    {techniques.map((technique) => (
+                                      <TechniqueDetailCard 
+                                        key={technique.id} 
+                                        technique={technique} 
+                                        compact={true}
+                                      />
+                                    ))}
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                )}
+
                 {/* Bouton vidéo */}
                 {grade.video_complete && (
                   <div className="pt-2">
