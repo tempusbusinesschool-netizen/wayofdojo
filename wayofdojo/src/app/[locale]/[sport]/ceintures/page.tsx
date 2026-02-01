@@ -339,21 +339,6 @@ const GradeCard: React.FC<{
                       )}
                     </AnimatePresence>
                   </div>
-                )} 
-                                        key={technique.id} 
-                                        technique={technique} 
-                                        compact={true}
-                                      />
-                                    ))}
-                                  </div>
-                                </div>
-                              );
-                            })}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
                 )}
 
                 {/* Critères d'évaluation */}
