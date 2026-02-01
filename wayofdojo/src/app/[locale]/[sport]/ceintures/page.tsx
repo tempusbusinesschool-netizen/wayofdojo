@@ -374,6 +374,15 @@ export default function CeinturesPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white">
+      {/* Message d'accueil Tanaka */}
+      <TanakaWelcome
+        sectionId="ceintures"
+        sectionTitle={TANAKA_MESSAGES['ceintures'].title}
+        message={TANAKA_MESSAGES['ceintures'].message}
+        emoji={TANAKA_MESSAGES['ceintures'].emoji}
+        variant="full"
+      />
+
       {/* Header */}
       <div className="sticky top-0 z-50 bg-slate-950/90 backdrop-blur-md border-b border-slate-800">
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center gap-4">
