@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { ArrowLeft, User, Award, Calendar, Clock, TrendingUp, Settings, LogOut, Edit3, Star, Target, Flame, Trophy, ChevronRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
+import { TanakaWelcome, TANAKA_MESSAGES } from '@/components/TanakaWelcome';
 
 /**
  * ═══════════════════════════════════════════════════════════════════════════════
