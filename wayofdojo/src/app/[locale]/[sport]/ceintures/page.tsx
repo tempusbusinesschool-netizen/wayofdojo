@@ -234,28 +234,148 @@ const GradeCard: React.FC<{
                             <p className="text-xs text-slate-400 mb-3 ml-6">{attaque.description}</p>
                           )}
                           
-                          {/* Liste des techniques */}
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 ml-6">
-                            {attaque.techniques.map((tech, techIdx) => (
-                              <div 
-                                key={techIdx}
-                                className={`flex items-center gap-2 px-3 py-2 rounded-lg ${
-                                  tech.obligatoire 
-                                    ? 'bg-rose-500/20 border border-rose-500/30' 
-                                    : 'bg-slate-700/50 border border-slate-600/30'
-                                }`}
-                              >
-                                <CheckCircle2 className={`w-4 h-4 shrink-0 ${
-                                  tech.obligatoire ? 'text-rose-400' : 'text-slate-500'
-                                }`} />
-                                <div className="flex-1 min-w-0">
-                                  <span className="text-sm font-medium text-white">{tech.nom}</span>
-                                  {tech.description && (
-                                    <p className="text-xs text-slate-400 truncate">{tech.description}</p>
-                                  )}
+                          {/* Liste des techniques - cliquables avec détails */}
+                          <div className="space-y-2 ml-6">
+                            {attaque.techniques.map((tech, techIdx) => {
+                              const techKey = `${grade.id}-${idx}-${techIdx}`;
+                              const isExpanded = expandedProgrammeTech === techKey;
+                              
+                              return (
+                                <div key={techIdx}>
+                                  <div 
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      setExpandedProgrammeTech(isExpanded ? null : techKey);
+                                    }}
+                                    className={`flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer transition-all ${
+                                      tech.obligatoire 
+                                        ? 'bg-rose-500/20 border border-rose-500/30 hover:bg-rose-500/30' 
+                                        : 'bg-slate-700/50 border border-slate-600/30 hover:bg-slate-700'
+                                    }`}
+                                  >
+                                    <CheckCircle2 className={`w-4 h-4 shrink-0 ${
+                                      tech.obligatoire ? 'text-rose-400' : 'text-slate-500'
+                                    }`} />
+                                    <div className="flex-1 min-w-0">
+                                      <span className="text-sm font-medium text-white">{tech.nom}</span>
+                                      {tech.description && (
+                                        <p className="text-xs text-slate-400">{tech.description}</p>
+                                      )}
+                                    </div>
+                                    <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                                  </div>
+                                  
+                                  {/* Détails de la technique */}
+                                  <AnimatePresence>
+                                    {isExpanded && (
+                                      <motion.div
+                                        initial={{ height: 0, opacity: 0 }}
+                                        animate={{ height: 'auto', opacity: 1 }}
+                                        exit={{ height: 0, opacity: 0 }}
+                                        className="overflow-hidden"
+                                      >
+                                        <div className="mt-2 p-3 bg-slate-800/80 rounded-lg border border-slate-600/50 space-y-3">
+                                          {/* Points clés */}
+                                          <div>
+                                            <p className="text-xs font-bold text-emerald-400 mb-1">Points clés :</p>
+                                            <ul className="space-y-1">
+                                              {tech.nom.includes('Ikkyo') && (
+                                                <>
+                                                  <li className="flex items-start gap-2 text-xs text-slate-300">
+                                                    <CheckCircle2 className="w-3 h-3 text-emerald-500 shrink-0 mt-0.5" />
+                                                    Contrôle du coude ET du poignet simultanément
+                                                  </li>
+                                                  <li className="flex items-start gap-2 text-xs text-slate-300">
+                                                    <CheckCircle2 className="w-3 h-3 text-emerald-500 shrink-0 mt-0.5" />
+                                                    Couper vers le bas avec le poids du corps
+                                                  </li>
+                                                  <li className="flex items-start gap-2 text-xs text-slate-300">
+                                                    <CheckCircle2 className="w-3 h-3 text-emerald-500 shrink-0 mt-0.5" />
+                                                    Garder le bras de Uke tendu
+                                                  </li>
+                                                </>
+                                              )}
+                                              {tech.nom.includes('Shiho Nage') && (
+                                                <>
+                                                  <li className="flex items-start gap-2 text-xs text-slate-300">
+                                                    <CheckCircle2 className="w-3 h-3 text-emerald-500 shrink-0 mt-0.5" />
+                                                    Amener la main de Uke vers son épaule opposée
+                                                  </li>
+                                                  <li className="flex items-start gap-2 text-xs text-slate-300">
+                                                    <CheckCircle2 className="w-3 h-3 text-emerald-500 shrink-0 mt-0.5" />
+                                                    Rotation des hanches pour projeter
+                                                  </li>
+                                                  <li className="flex items-start gap-2 text-xs text-slate-300">
+                                                    <CheckCircle2 className="w-3 h-3 text-emerald-500 shrink-0 mt-0.5" />
+                                                    Couper vers le bas, pas vers l&apos;arrière
+                                                  </li>
+                                                </>
+                                              )}
+                                              {tech.nom.includes('Irimi Nage') && (
+                                                <>
+                                                  <li className="flex items-start gap-2 text-xs text-slate-300">
+                                                    <CheckCircle2 className="w-3 h-3 text-emerald-500 shrink-0 mt-0.5" />
+                                                    Entrer profondément (irimi) dans l&apos;espace de Uke
+                                                  </li>
+                                                  <li className="flex items-start gap-2 text-xs text-slate-300">
+                                                    <CheckCircle2 className="w-3 h-3 text-emerald-500 shrink-0 mt-0.5" />
+                                                    Contrôle de la nuque/tête, pas de la gorge
+                                                  </li>
+                                                  <li className="flex items-start gap-2 text-xs text-slate-300">
+                                                    <CheckCircle2 className="w-3 h-3 text-emerald-500 shrink-0 mt-0.5" />
+                                                    Projection circulaire, pas linéaire
+                                                  </li>
+                                                </>
+                                              )}
+                                              {tech.nom.includes('Kokyu') && (
+                                                <>
+                                                  <li className="flex items-start gap-2 text-xs text-slate-300">
+                                                    <CheckCircle2 className="w-3 h-3 text-emerald-500 shrink-0 mt-0.5" />
+                                                    Utiliser la respiration, pas la force musculaire
+                                                  </li>
+                                                  <li className="flex items-start gap-2 text-xs text-slate-300">
+                                                    <CheckCircle2 className="w-3 h-3 text-emerald-500 shrink-0 mt-0.5" />
+                                                    Extension du Ki depuis le centre (hara)
+                                                  </li>
+                                                  <li className="flex items-start gap-2 text-xs text-slate-300">
+                                                    <CheckCircle2 className="w-3 h-3 text-emerald-500 shrink-0 mt-0.5" />
+                                                    Mouvement fluide et continu
+                                                  </li>
+                                                </>
+                                              )}
+                                              {!tech.nom.includes('Ikkyo') && !tech.nom.includes('Shiho Nage') && !tech.nom.includes('Irimi Nage') && !tech.nom.includes('Kokyu') && (
+                                                <li className="flex items-start gap-2 text-xs text-slate-300">
+                                                  <CheckCircle2 className="w-3 h-3 text-emerald-500 shrink-0 mt-0.5" />
+                                                  Maintenir le centre et la connexion avec Uke
+                                                </li>
+                                              )}
+                                            </ul>
+                                          </div>
+                                          
+                                          {/* Variantes */}
+                                          <div className="flex items-center gap-2 text-xs">
+                                            <span className="text-slate-500">Variantes :</span>
+                                            {tech.nom.includes('Omote') ? (
+                                              <span className="px-2 py-0.5 bg-blue-500/20 text-blue-300 rounded">
+                                                Version Omote (entrée directe)
+                                              </span>
+                                            ) : tech.nom.includes('Ura') ? (
+                                              <span className="px-2 py-0.5 bg-purple-500/20 text-purple-300 rounded">
+                                                Version Ura (avec pivot)
+                                              </span>
+                                            ) : (
+                                              <span className="px-2 py-0.5 bg-slate-500/20 text-slate-300 rounded">
+                                                Forme de base
+                                              </span>
+                                            )}
+                                          </div>
+                                        </div>
+                                      </motion.div>
+                                    )}
+                                  </AnimatePresence>
                                 </div>
-                              </div>
-                            ))}
+                              );
+                            })}
                           </div>
                         </div>
                       ))}
