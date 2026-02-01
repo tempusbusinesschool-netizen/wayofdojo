@@ -511,53 +511,7 @@ export const JuniorDashboard: React.FC<JuniorDashboardProps> = ({
   );
 };
 
-      {/* ═══════════════════════════════════════════════════════════════════ */}
-      {/* SECTION DÉFIS DU JOUR */}
-      {/* ═══════════════════════════════════════════════════════════════════ */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
-        className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl p-5 sm:p-6 border border-pink-500/30"
-      >
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-bold text-white flex items-center gap-2">
-            🎯 Défi du jour
-          </h2>
-          <span className="text-sm text-slate-400 bg-slate-700 px-3 py-1 rounded-full">
-            +{totalXpToday} XP gagnés
-          </span>
-        </div>
-        <DailyChallengeWidget locale={locale} sport={sport} />
-      </motion.div>
-
-      {/* ═══════════════════════════════════════════════════════════════════ */}
-      {/* SPIRALE DE TRANSITION */}
-      {/* ═══════════════════════════════════════════════════════════════════ */}
-      <SpiralDivider color="emerald" />
-
-      {/* ═══════════════════════════════════════════════════════════════════ */}
-      {/* SECTION MINI-DÉFIS DU BUDO */}
-      {/* ═══════════════════════════════════════════════════════════════════ */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.55 }}
-        className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl p-5 sm:p-6 border border-rose-500/30"
-      >
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-bold text-white flex items-center gap-2">
-            🔥 Mini-défis du Budo
-          </h2>
-          <div className="flex items-center gap-3">
-            <span className="text-sm text-slate-400 bg-slate-700 px-3 py-1 rounded-full">
-              {completedCount}/{dailyChallenges.length} complétés
-            </span>
-            <span className="text-sm font-bold text-amber-400 bg-amber-500/20 px-3 py-1 rounded-full">
-              +{totalXpToday} XP
-            </span>
-          </div>
-        </div>
+export default JuniorDashboard;
         
         {/* Progress bar */}
         <div className="h-3 bg-slate-700 rounded-full mb-5 overflow-hidden">
