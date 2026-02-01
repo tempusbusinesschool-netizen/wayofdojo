@@ -197,7 +197,74 @@ const GradeCard: React.FC<{
                 )}
 
                 {/* ═══════════════════════════════════════════════════════════════ */}
-                {/* TECHNIQUES REQUISES (avec détails et vidéos) */}
+                {/* PROGRAMME TECHNIQUE PAR ATTAQUE (Ikkyo, Shiho Nage, etc.) */}
+                {/* ═══════════════════════════════════════════════════════════════ */}
+                {grade.techniques_requises && grade.techniques_requises.length > 0 && (
+                  <div className="bg-gradient-to-br from-rose-900/40 to-pink-900/30 rounded-2xl p-4 border-2 border-rose-500/50 shadow-lg shadow-rose-500/10">
+                    <h4 className="text-base font-bold text-rose-300 uppercase tracking-wider flex items-center gap-2 mb-4">
+                      <div className="w-8 h-8 bg-gradient-to-br from-rose-500 to-pink-600 rounded-lg flex items-center justify-center">
+                        <BookOpen className="w-4 h-4 text-white" />
+                      </div>
+                      Programme technique par attaque
+                      <span className="text-xs font-normal text-rose-300/70 ml-2">
+                        ({grade.techniques_requises.reduce((acc, att) => acc + att.techniques.length, 0)} techniques)
+                      </span>
+                    </h4>
+                    
+                    <div className="space-y-4">
+                      {grade.techniques_requises.map((attaque, idx) => (
+                        <div key={idx} className="bg-slate-900/60 rounded-xl p-4 border border-slate-700/50">
+                          {/* En-tête de l'attaque */}
+                          <div className="flex items-center justify-between mb-3">
+                            <div>
+                              <h5 className="text-sm font-bold text-white flex items-center gap-2">
+                                <Target className="w-4 h-4 text-rose-400" />
+                                {attaque.attaque}
+                              </h5>
+                              {attaque.attaque_jp && (
+                                <span className="text-xs text-rose-400 ml-6">{attaque.attaque_jp}</span>
+                              )}
+                            </div>
+                            <span className="text-xs bg-rose-500/20 text-rose-300 px-2 py-1 rounded-full">
+                              {attaque.techniques.length} technique{attaque.techniques.length > 1 ? 's' : ''}
+                            </span>
+                          </div>
+                          
+                          {attaque.description && (
+                            <p className="text-xs text-slate-400 mb-3 ml-6">{attaque.description}</p>
+                          )}
+                          
+                          {/* Liste des techniques */}
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 ml-6">
+                            {attaque.techniques.map((tech, techIdx) => (
+                              <div 
+                                key={techIdx}
+                                className={`flex items-center gap-2 px-3 py-2 rounded-lg ${
+                                  tech.obligatoire 
+                                    ? 'bg-rose-500/20 border border-rose-500/30' 
+                                    : 'bg-slate-700/50 border border-slate-600/30'
+                                }`}
+                              >
+                                <CheckCircle2 className={`w-4 h-4 shrink-0 ${
+                                  tech.obligatoire ? 'text-rose-400' : 'text-slate-500'
+                                }`} />
+                                <div className="flex-1 min-w-0">
+                                  <span className="text-sm font-medium text-white">{tech.nom}</span>
+                                  {tech.description && (
+                                    <p className="text-xs text-slate-400 truncate">{tech.description}</p>
+                                  )}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* ═══════════════════════════════════════════════════════════════ */}
+                {/* TECHNIQUES DÉTAILLÉES (mouvements avec vidéos) */}
                 {/* ═══════════════════════════════════════════════════════════════ */}
                 {totalTechniques > 0 && (
                   <div className="bg-gradient-to-br from-purple-900/40 to-violet-900/30 rounded-2xl p-4 border-2 border-purple-500/50 shadow-lg shadow-purple-500/10">
@@ -212,11 +279,11 @@ const GradeCard: React.FC<{
                         <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-violet-600 rounded-lg flex items-center justify-center">
                           <Sword className="w-4 h-4 text-white" />
                         </div>
-                        Techniques requises
+                        Mouvements détaillés
                       </h4>
                       <div className="flex items-center gap-3">
                         <span className="text-sm font-bold text-white bg-purple-600 px-3 py-1.5 rounded-full shadow-md">
-                          {totalTechniques} techniques
+                          {totalTechniques} mouvements
                         </span>
                         <div className={`w-8 h-8 rounded-full bg-purple-500/30 flex items-center justify-center transition-transform ${showTechniquesDetail ? 'rotate-180' : ''}`}>
                           <ChevronDown className="w-5 h-5 text-purple-300" />
@@ -226,7 +293,7 @@ const GradeCard: React.FC<{
                     
                     {!showTechniquesDetail && (
                       <p className="text-xs text-purple-300/70 mt-2 pl-10">
-                        Cliquez pour voir les détails et vidéos tutoriels
+                        Cliquez pour voir les détails pédagogiques et vidéos tutoriels
                       </p>
                     )}
 
@@ -258,6 +325,21 @@ const GradeCard: React.FC<{
                                   <div className="space-y-2">
                                     {techniques.map((technique) => (
                                       <TechniqueDetailCard 
+                                        key={technique.id} 
+                                        technique={technique} 
+                                        compact={true}
+                                      />
+                                    ))}
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                )} 
                                         key={technique.id} 
                                         technique={technique} 
                                         compact={true}
