@@ -15,7 +15,7 @@
 - ✅ **Sidebar gauche** :
   - Fiche personnage (avatar avec niveau, nom, grade, barre XP animée)
   - Stats compactes (Série, Badges, Techniques)
-  - **NOUVEAU: Section NOTIFICATIONS** avec badges dynamiques :
+  - **Section NOTIFICATIONS** avec badges dynamiques :
     - Quêtes disponibles avec XP à gagner
     - Badges débloqués à réclamer
     - Série de jours active
@@ -27,13 +27,18 @@
   - Cartes d'action (Dojo Virtuel, Techniques, Trophées) avec navigation
   - Les 7 Vertus du Budo en grille colorée avec kanji et niveaux
   - Quick Stats footer (Grade, Vertus, Quêtes, Niveau)
-- ✅ **Messages d'accueil Tanaka** (nouveau composant TanakaWelcome.tsx) :
+- ✅ **Messages d'accueil Tanaka** (composant TanakaWelcome.tsx) :
   - Modal personnalisé à l'ouverture de chaque section
-  - Messages prédéfinis pour : Techniques, Trophées, Vertus, Ceintures, Profil, Histoire, Carnet, Stages
+  - Messages prédéfinis pour : Techniques, Trophées, Vertus, Ceintures, Profil, Histoire
   - 3 variants : full (modal), banner (bandeau), compact (encart)
   - sessionStorage pour ne montrer qu'une fois par session
-  - Boutons "Écouter" et "C'est parti !"
-- ✅ **Tests** : 100% des tests frontend passés (voir `/app/test_reports/iteration_18.json`)
+  - **Animation confetti dorées** sur "C'est parti !" (#FFD700, #FFA500, #FF8C00)
+- ✅ **Page Ceintures refaite** avec programme officiel FFAAA (⚠️ DONNÉES VERROUILLÉES) :
+  - 6 grades Kyu (6e au 1er) avec kanji japonais
+  - 4 grades Dan (Shodan au Yondan) avec toggle
+  - Contenu détaillé : Objectifs, Mouvements requis, Techniques requises, Critères d'évaluation
+  - Source : `/data/aikido/grades/passages-de-grades.ts`
+- ✅ **Tests** : 100% passés (voir `/app/test_reports/iteration_19.json`)
 
 ### 1 Février 2025 (avant) - BENTO GRID Dashboard Junior (Remplacé)
 - ✅ Layout Bento Grid implémenté puis remplacé par SIDEBAR RPG
