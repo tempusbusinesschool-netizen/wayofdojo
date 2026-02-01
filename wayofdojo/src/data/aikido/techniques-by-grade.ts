@@ -14,8 +14,13 @@ import { ATEMI } from './mouvements/atemi';
 import { HANMI_HANDACHI } from './mouvements/hanmi-handachi';
 import { KOKYU_WAZA } from './mouvements/kokyu-waza';
 import { ALL_TECHNIQUES_DAN } from './mouvements/dan-techniques';
+import { ALL_NAGE_WAZA } from './mouvements/nage-waza';
+import { ALL_OSAE_WAZA } from './mouvements/osae-waza';
+import { JO_TECHNIQUES } from './armes/jo';
+import { BOKKEN_TECHNIQUES } from './armes/bokken';
+import { TANTO_TECHNIQUES } from './armes/tanto';
 
-// Tous les mouvements combinés (Kyu + Dan)
+// Tous les mouvements combinés (Kyu + Dan + Armes)
 const ALL_MOUVEMENTS: Mouvement[] = [
   ...UKEMI,
   ...TAI_SABAKI,
@@ -26,6 +31,11 @@ const ALL_MOUVEMENTS: Mouvement[] = [
   ...HANMI_HANDACHI,
   ...KOKYU_WAZA,
   ...ALL_TECHNIQUES_DAN,
+  ...ALL_NAGE_WAZA,
+  ...ALL_OSAE_WAZA,
+  ...(JO_TECHNIQUES as unknown as Mouvement[]),
+  ...(BOKKEN_TECHNIQUES as unknown as Mouvement[]),
+  ...(TANTO_TECHNIQUES as unknown as Mouvement[]),
 ];
 
 // Catégories de mouvements avec labels
