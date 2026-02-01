@@ -2,13 +2,32 @@
 
 ## 📋 Document de Référence
 
-**Version:** 1.6  
+**Version:** 1.7  
 **Date de création:** 19 Janvier 2025  
-**Dernière mise à jour:** 1 Février 2025
+**Dernière mise à jour:** Décembre 2025
 
 ---
 
 ## 📝 CHANGELOG RÉCENT
+
+### Décembre 2025 - Détails Techniques & Liens Vidéo YouTube (P0) ✅
+- ✅ **Affichage détaillé des techniques par grade** sur `/ceintures` :
+  - Section "VOIR LES TECHNIQUES EN DÉTAIL" avec 18+ techniques pour 6e Kyu
+  - Techniques groupées par catégorie (Chutes de base, Déplacements, Postures, etc.)
+  - Expansion individuelle de chaque technique avec description, points clés, erreurs à éviter
+  - Bug fix : propagation d'événement onClick corrigée pour permettre l'expansion
+- ✅ **Intégration de liens vidéo YouTube externes** :
+  - Nouveau fichier `/data/aikido/video-links.ts` avec tutoriels de qualité
+  - Liens pour : Mae Ukemi, Ushiro Ukemi, Yoko Ukemi, Zenpo Kaiten Ukemi
+  - Liens pour : Irimi, Tenkan, Irimi Tenkan, Ai Hanmi, Gyaku Hanmi, Seiza
+  - Icône YouTube rouge affichée à côté des techniques avec vidéos disponibles
+  - Vidéos principales + alternatives affichées dans les cartes développées
+  - Ouverture sécurisée dans nouvel onglet (target="_blank", rel="noopener noreferrer")
+- ✅ **Mapping complet des catégories** dans `techniques-by-grade.ts` :
+  - 30+ catégories avec labels français, emojis et couleurs
+  - Support pour ukemi, tai sabaki, kamae, kokyu waza, atemi, suwariwaza, hanmi handachi, armes
+- ✅ **Tests** : 100% passés (voir `/app/test_reports/iteration_21.json`)
+- ✅ **Suppression branding FFAAA** comme demandé par l'utilisateur
 
 ### 1 Février 2025 - SIDEBAR RPG / GAMING Layout (P0) ✅
 - ✅ **Nouveau layout implémenté** : Style jeu vidéo RPG avec sidebar gauche
