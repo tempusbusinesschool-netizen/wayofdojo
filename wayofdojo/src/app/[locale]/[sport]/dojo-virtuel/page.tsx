@@ -7,6 +7,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Swords, ArrowLeft } from 'lucide-react';
 import VirtualDojo from '@/components/VirtualDojo';
+import { TanakaWelcome, TANAKA_MESSAGES } from '@/components/TanakaWelcome';
 
 export default function DojoVirtuelPage() {
   const router = useRouter();
