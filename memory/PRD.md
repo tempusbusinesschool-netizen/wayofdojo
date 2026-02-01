@@ -2,7 +2,7 @@
 
 ## 📋 Document de Référence
 
-**Version:** 1.5  
+**Version:** 1.6  
 **Date de création:** 19 Janvier 2025  
 **Dernière mise à jour:** 1 Février 2025
 
@@ -10,25 +10,25 @@
 
 ## 📝 CHANGELOG RÉCENT
 
-### 1 Février 2025 - BENTO GRID Dashboard Junior (P0) ✅
-- ✅ **Layout Bento Grid implémenté** :
-  - Dashboard junior refactoré avec layout style iOS widgets
-  - Grille CSS responsive (4 colonnes mobile, 6 colonnes desktop)
-  - Toutes les cartes avec data-testid pour tests automatisés
-- ✅ **Cartes intégrées dans le Bento Grid** :
-  - Maître Tanaka (portrait officiel `/images/tanaka/portrait.png`)
-  - Stats (XP Total, Jours série, Grade avec emoji animal)
-  - Techniques (206+ mouvements, barre de progression)
-  - Dojo Virtuel (11 mini-jeux, bouton "Jouer")
-  - Ma Pratique, Progression, 7 Vertus, Ceintures, Trophées
-  - Défi du jour (Excellence, multiplicateur XP)
-  - Mini-défis du Budo (6 défis avec virtus associées)
-  - Les 7 Vertus du Budo (kanji 礼勇克謙仁注責)
-- ✅ **Corrections de bugs** :
-  - Suppression du code orphelin hors fonction composant
-  - Nettoyage des imports non utilisés
-  - Compilation réussie sans erreurs
-- ✅ **Tests** : 100% des tests frontend passés (voir `/app/test_reports/iteration_16.json`)
+### 1 Février 2025 - SIDEBAR RPG / GAMING Layout (P0) ✅
+- ✅ **Nouveau layout implémenté** : Style jeu vidéo RPG avec sidebar gauche
+- ✅ **Sidebar gauche** :
+  - Fiche personnage (avatar avec niveau, nom, grade, barre XP animée)
+  - Stats compactes (Série, Badges, Techniques)
+  - Barres de progression des 4 premières Vertus du Budo
+  - Liste des Quêtes Actives (défis) avec XP et expansion
+  - Bouton "CONTINUER" qui toggle le JourneyPath
+- ✅ **Zone principale** :
+  - Hero Maître Tanaka avec portrait, citation et bouton "Écouter"
+  - Cartes d'action (Dojo Virtuel, Techniques, Trophées) avec navigation
+  - Les 7 Vertus du Budo en grille colorée avec kanji et niveaux
+  - Quick Stats footer (Grade, Vertus, Quêtes, Niveau)
+- ✅ **Tests** : 100% des tests frontend passés (voir `/app/test_reports/iteration_17.json`)
+
+### 1 Février 2025 (avant) - BENTO GRID Dashboard Junior (Remplacé)
+- ✅ Layout Bento Grid implémenté puis remplacé par SIDEBAR RPG
+- ✅ Corrections de bugs de compilation
+- ✅ Tests 100% passés (voir `/app/test_reports/iteration_16.json`)
 
 ### 28 Janvier 2025 - Migration complète AIKIDO@GAME (P0)
 - ✅ **Migration des données techniques** :
