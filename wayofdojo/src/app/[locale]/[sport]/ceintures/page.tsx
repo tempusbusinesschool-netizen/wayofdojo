@@ -1,18 +1,20 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowLeft, Award, Clock, Target, ChevronDown, ChevronUp, 
   Sword, Shield, Star, Lock, CheckCircle2, 
-  Play, Users, Scroll, BookOpen
+  Play, Users, Scroll, BookOpen, Eye
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { TanakaWelcome, TANAKA_MESSAGES } from '@/components/TanakaWelcome';
 import { getGradesKyu, getGradesDan, type ProgrammeGrade } from '@/data/aikido/grades/passages-de-grades';
 import { getQuizByGrade } from '@/data/aikido/grades/quiz-grades';
+import { getMouvementsByGradeGrouped, CATEGORIES_MOUVEMENTS } from '@/data/aikido/techniques-by-grade';
 import QuizModal from '@/components/quiz/QuizModal';
+import { TechniqueDetailCard } from '@/components/techniques/TechniqueDetailCard';
 
 /**
  * ═══════════════════════════════════════════════════════════════════════════════
