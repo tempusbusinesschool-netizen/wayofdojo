@@ -3,13 +3,12 @@
 import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Circle, Wind, Hand, Shield, Sword, Target, Zap, Lock, CheckCircle2,
-  Star, Trophy, BookOpen, ChevronDown, Eye, Play, Filter, Search,
+  Circle, Wind, Hand, Shield, Sword, Target, Zap, CheckCircle2,
+  Trophy, BookOpen, ChevronDown, Filter, Search,
   Sparkles, Award, TrendingUp
 } from 'lucide-react';
 import type { Mouvement } from '@/data/aikido/types';
 import { CATEGORIES_MOUVEMENTS } from '@/data/aikido/techniques-by-grade';
-import { TechniqueDetailCard } from './TechniqueDetailCard';
 
 interface TechniqueLibraryProps {
   techniques: Record<string, Mouvement[]>;
@@ -62,7 +61,6 @@ const FILTER_GROUPS = [
 export const TechniqueLibrary: React.FC<TechniqueLibraryProps> = ({
   techniques,
   totalCount,
-  userGrade = '6e_kyu',
   masteredTechniques = []
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);

@@ -4,7 +4,7 @@ import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowLeft, Award, Clock, Target, ChevronDown, ChevronUp, 
-  Sword, Shield, Star, Lock, CheckCircle2, 
+  Shield, Star, Lock, CheckCircle2, 
   Play, Users, Scroll, BookOpen
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -12,9 +12,8 @@ import { Button } from '@/components/ui/button';
 import { TanakaWelcome, TANAKA_MESSAGES } from '@/components/TanakaWelcome';
 import { getGradesKyu, getGradesDan, type ProgrammeGrade } from '@/data/aikido/grades/passages-de-grades';
 import { getQuizByGrade } from '@/data/aikido/grades/quiz-grades';
-import { getMouvementsByGradeGrouped, getAllMouvementsGrouped, getTotalMouvements, CATEGORIES_MOUVEMENTS } from '@/data/aikido/techniques-by-grade';
+import { getMouvementsByGradeGrouped, getAllMouvementsGrouped, getTotalMouvements } from '@/data/aikido/techniques-by-grade';
 import QuizModal from '@/components/quiz/QuizModal';
-import { TechniqueDetailCard } from '@/components/techniques/TechniqueDetailCard';
 import { TechniqueLibrary } from '@/components/techniques/TechniqueLibrary';
 
 /**
@@ -36,7 +35,6 @@ const GradeCard: React.FC<{
   onStartQuiz: () => void;
   hasQuiz: boolean;
 }> = ({ grade, isExpanded, onToggle, isUnlocked, isCurrent, onStartQuiz, hasQuiz }) => {
-  const [showTechniquesDetail, setShowTechniquesDetail] = useState(false);
   const [expandedProgrammeTech, setExpandedProgrammeTech] = useState<string | null>(null);
   
   // Récupérer les techniques/mouvements pour ce grade (filtrées)

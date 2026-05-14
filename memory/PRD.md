@@ -10,6 +10,19 @@
 
 ## 📝 CHANGELOG RÉCENT
 
+### Décembre 2025 - Correctifs Mobile + Build Production (P0) ✅
+- ✅ **Dashboard Junior responsive mobile** (`JuniorDashboard.tsx`) :
+  - Layout `flex` modifié en `flex-col lg:flex-row` (sidebar empilée au-dessus sur mobile, à gauche sur desktop ≥1024px)
+  - Sidebar : `w-72 lg:w-80 shrink-0` → `w-full lg:w-72 xl:w-80 lg:shrink-0`
+  - Bordure adaptée : `border-r` → `border-b lg:border-b-0 lg:border-r`
+  - Résultat : plus de débordement horizontal sur smartphone (390px), contenu principal entièrement visible
+- ✅ **Build production débloqué** :
+  - Suppression des imports inutilisés dans `ceintures/page.tsx` (Sword, CATEGORIES_MOUVEMENTS, TechniqueDetailCard, showTechniquesDetail)
+  - Suppression des imports inutilisés dans `TechniqueLibrary.tsx` (Lock, Star, Eye, Play, TechniqueDetailCard, userGrade)
+  - `yarn build` passe sans erreur ESLint
+- ✅ **Vérifié 0px de scroll horizontal** sur viewport 390px sur les pages : `/dojo`, `/techniques`, `/profil`, `/trophees`, `/histoire`, `/ceintures`
+- ✅ **Desktop préservé** : sidebar à gauche, layout intact sur ≥1024px
+
 ### Décembre 2025 - Détails Techniques & Liens Vidéo YouTube (P0) ✅
 - ✅ **Affichage détaillé des techniques par grade** sur `/ceintures` :
   - Section "VOIR LES TECHNIQUES EN DÉTAIL" avec 18+ techniques pour 6e Kyu

@@ -162,7 +162,7 @@ export const JuniorDashboard: React.FC<JuniorDashboardProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 flex" data-testid="junior-dashboard">
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 flex flex-col lg:flex-row" data-testid="junior-dashboard">
       
       {/* ═══════════════════════════════════════════════════════════════════ */}
       {/* SIDEBAR GAUCHE - Style RPG Gaming */}
@@ -170,7 +170,7 @@ export const JuniorDashboard: React.FC<JuniorDashboardProps> = ({
       <motion.aside
         initial={{ x: -100, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
-        className="w-72 lg:w-80 bg-gradient-to-b from-slate-900/95 to-purple-900/95 backdrop-blur-xl border-r border-purple-500/30 flex flex-col shrink-0"
+        className="w-full lg:w-72 xl:w-80 bg-gradient-to-b from-slate-900/95 to-purple-900/95 backdrop-blur-xl border-b lg:border-b-0 lg:border-r border-purple-500/30 flex flex-col lg:shrink-0"
         data-testid="sidebar-rpg"
       >
         {/* Character Card */}
