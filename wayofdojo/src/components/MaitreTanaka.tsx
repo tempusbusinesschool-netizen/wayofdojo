@@ -54,9 +54,13 @@ export const MaitreTanaka: React.FC<MaitreTanakaProps> = ({
     ? 'fixed top-[140px] right-[95px] md:top-[150px] md:right-[100px] lg:top-[160px] lg:right-[105px]' 
     : 'fixed bottom-6 right-6';
   
-  // Size classes - large is 30% bigger
-  const sizeClasses = size === 'large' ? 'w-[104px] h-[104px]' : 'w-20 h-20';
-  const innerSizeClasses = size === 'large' ? 'inset-[10px]' : 'inset-2';
+  // Size classes - large is 30% bigger ; smaller on mobile
+  const sizeClasses = size === 'large' 
+    ? 'w-[72px] h-[72px] sm:w-[104px] sm:h-[104px]' 
+    : 'w-14 h-14 sm:w-20 sm:h-20';
+  const innerSizeClasses = size === 'large' 
+    ? 'inset-[6px] sm:inset-[10px]' 
+    : 'inset-1.5 sm:inset-2';
   
   const [isOpen, setIsOpen] = useState(false);
   const [isRecording, setIsRecording] = useState(false);

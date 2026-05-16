@@ -422,7 +422,7 @@ export const JuniorDashboard: React.FC<JuniorDashboardProps> = ({
       {/* ═══════════════════════════════════════════════════════════════════ */}
       {/* CONTENU PRINCIPAL */}
       {/* ═══════════════════════════════════════════════════════════════════ */}
-      <main className="flex-1 p-4 lg:p-6 xl:p-8 overflow-auto">
+      <main className="flex-1 p-4 lg:p-6 xl:p-8 pb-24 lg:pb-8 overflow-auto">
         
         {/* Journey Path Toggle */}
         {showJourneyPath && (
