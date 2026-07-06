@@ -2,8 +2,9 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Shield, Heart, Flame, Star, ChevronRight, BookOpen, Check } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { ArrowLeft, Shield, Heart, Flame, Star, ChevronRight, BookOpen, Check, HelpCircle } from 'lucide-react';
+import { useRouter, useParams } from 'next/navigation';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { BUSHIDO_VIRTUES } from '@/data/aikido/histoire';
 import { TanakaWelcome, TANAKA_MESSAGES } from '@/components/TanakaWelcome';
@@ -16,6 +17,8 @@ import { TanakaWelcome, TANAKA_MESSAGES } from '@/components/TanakaWelcome';
 
 export default function VertusPage() {
   const router = useRouter();
+  const params = useParams();
+  const locale = (params?.locale as string) || 'fr';
   const [selectedVirtue, setSelectedVirtue] = useState<string | null>(null);
   const [completedVirtues, setCompletedVirtues] = useState<string[]>([]);
 
@@ -42,21 +45,29 @@ export default function VertusPage() {
 
       {/* Header */}
       <div className="sticky top-0 z-50 bg-slate-950/90 backdrop-blur-md border-b border-slate-800">
-        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center gap-4">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => router.back()}
-            className="hover:bg-slate-800"
-          >
-            <ArrowLeft className="w-5 h-5" />
-          </Button>
-          <div>
-            <h1 className="text-xl font-bold flex items-center gap-2">
-              ☯️ Les 7 Vertus du Bushido
-            </h1>
-            <p className="text-sm text-slate-400">Le code d'honneur des guerriers</p>
+        <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => router.back()}
+              className="hover:bg-slate-800"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </Button>
+            <div>
+              <h1 className="text-xl font-bold flex items-center gap-2">
+                ☯️ Les 7 Vertus du Bushido
+              </h1>
+              <p className="text-sm text-slate-400">Le code d'honneur des guerriers</p>
+            </div>
           </div>
+          <Link href={`/${locale}/aikido/guide`}>
+            <Button variant="ghost" size="sm" className="text-amber-300 hover:text-amber-200" data-testid="header-guide-link" title="Guide & Questions">
+              <HelpCircle className="w-4 h-4 sm:mr-1" />
+              <span className="hidden sm:inline">Guide</span>
+            </Button>
+          </Link>
         </div>
       </div>
 

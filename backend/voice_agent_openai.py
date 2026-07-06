@@ -341,6 +341,32 @@ async def list_voices():
     }
 
 
+@voice_router_openai.post("/tts")
+async def text_to_speech(
+    text: str = Form(...)
+):
+    """
+    Simple TTS endpoint - génère un audio pour un texte donné
+    Utilise la voix ElevenLabs "Adam" (même voix que Maître Tanaka)
+    """
+    if not ELEVENLABS_API_KEY:
+        raise HTTPException(status_code=500, detail="ELEVENLABS_API_KEY manquante")
+    
+    try:
+        audio_bytes = await generate_speech_with_tts(text)
+        audio_base64 = base64.b64encode(audio_bytes).decode('utf-8')
+        
+        return {
+            "success": True,
+            "text": text,
+            "audioBase64": audio_base64,
+            "audioFormat": "mp3"
+        }
+    except Exception as e:
+        logger.error(f"TTS error: {e}")
+        raise HTTPException(status_code=500, detail=f"Erreur TTS: {str(e)}")
+
+
 @voice_router_openai.post("/test-voice")
 async def test_voice(
     voice: str = Form("onyx"),

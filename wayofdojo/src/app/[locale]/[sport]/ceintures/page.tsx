@@ -5,9 +5,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   ArrowLeft, Award, Clock, Target, ChevronDown, ChevronUp, 
   Shield, Star, Lock, CheckCircle2, 
-  Play, Users, Scroll, BookOpen
+  Play, Users, Scroll, BookOpen, HelpCircle
 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { TanakaWelcome, TANAKA_MESSAGES } from '@/components/TanakaWelcome';
 import { getGradesKyu, getGradesDan, type ProgrammeGrade } from '@/data/aikido/grades/passages-de-grades';
@@ -464,6 +465,8 @@ const GradeCard: React.FC<{
 
 export default function CeinturesPage() {
   const router = useRouter();
+  const params = useParams();
+  const locale = params.locale as string;
   const [expandedGrade, setExpandedGrade] = useState<string | null>(null);
   const [showDan, setShowDan] = useState(false);
   const [selectedQuizGrade, setSelectedQuizGrade] = useState<string | null>(null);
@@ -513,9 +516,15 @@ export default function CeinturesPage() {
           </div>
           <div className="flex items-center gap-2">
             <Scroll className="w-5 h-5 text-amber-500" />
-            <span className="text-sm text-amber-400 font-medium">
+            <span className="text-sm text-amber-400 font-medium hidden sm:inline">
               {gradesKyu.length + gradesDan.length} grades
             </span>
+            <Link href={`/${locale}/aikido/guide`} className="ml-2">
+              <Button variant="ghost" size="sm" className="text-amber-300 hover:text-amber-200" data-testid="header-guide-link" title="Guide & Questions">
+                <HelpCircle className="w-4 h-4 sm:mr-1" />
+                <span className="hidden sm:inline">Guide</span>
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

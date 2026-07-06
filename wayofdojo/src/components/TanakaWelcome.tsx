@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Volume2 } from 'lucide-react';
+import { X, Volume2, Loader2 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 // ⚠️ IMAGE OFFICIELLE DE TANAKA - VERROUILLÉE - NE JAMAIS CHANGER
@@ -40,6 +40,9 @@ export const TanakaWelcome: React.FC<TanakaWelcomeProps> = ({
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [hasBeenShown, setHasBeenShown] = useState(false);
+  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
+  const [isLoadingAudio, setIsLoadingAudio] = useState(false);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   // Vérifier si le message a déjà été affiché
   useEffect(() => {
@@ -108,6 +111,69 @@ export const TanakaWelcome: React.FC<TanakaWelcomeProps> = ({
       handleClose();
     }, 200);
   }, [triggerConfetti, handleClose]);
+
+  // Lecture audio du message via TTS ElevenLabs
+  const handlePlayAudio = useCallback(async () => {
+    // Si déjà en lecture, arrêter
+    if (isPlayingAudio && audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      setIsPlayingAudio(false);
+      return;
+    }
+
+    setIsLoadingAudio(true);
+    try {
+      // Appeler l'API TTS
+      const formData = new FormData();
+      formData.append('text', message);
+
+      const response = await fetch('/api/voice-agent/tts', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Erreur TTS');
+      }
+
+      const data = await response.json();
+      
+      if (data.audioBase64) {
+        // Créer et jouer l'audio
+        const audioBlob = new Blob(
+          [Uint8Array.from(atob(data.audioBase64), c => c.charCodeAt(0))],
+          { type: 'audio/mp3' }
+        );
+        const audioUrl = URL.createObjectURL(audioBlob);
+        
+        if (audioRef.current) {
+          audioRef.current.pause();
+        }
+        
+        const audio = new Audio(audioUrl);
+        audioRef.current = audio;
+        
+        audio.onended = () => {
+          setIsPlayingAudio(false);
+          URL.revokeObjectURL(audioUrl);
+        };
+        
+        audio.onerror = () => {
+          setIsPlayingAudio(false);
+          URL.revokeObjectURL(audioUrl);
+        };
+        
+        setIsPlayingAudio(true);
+        await audio.play();
+      }
+    } catch (error) {
+      console.error('Erreur lecture audio Tanaka:', error);
+      setIsPlayingAudio(false);
+    } finally {
+      setIsLoadingAudio(false);
+    }
+  }, [message, isPlayingAudio]);
 
   // Auto-fermeture
   useEffect(() => {
@@ -252,9 +318,17 @@ export const TanakaWelcome: React.FC<TanakaWelcomeProps> = ({
               {/* Actions */}
               <div className="flex gap-3 mt-5 w-full">
                 <button
-                  className="flex-1 py-3 bg-white/10 hover:bg-white/20 rounded-xl text-white font-medium flex items-center justify-center gap-2 transition-colors"
+                  onClick={handlePlayAudio}
+                  disabled={isLoadingAudio}
+                  className="flex-1 py-3 bg-white/10 hover:bg-white/20 disabled:opacity-50 rounded-xl text-white font-medium flex items-center justify-center gap-2 transition-colors"
+                  data-testid="tanaka-listen-btn"
                 >
-                  <Volume2 className="w-4 h-4" /> Écouter
+                  {isLoadingAudio ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    <Volume2 className={`w-4 h-4 ${isPlayingAudio ? 'animate-pulse text-amber-400' : ''}`} />
+                  )}
+                  {isLoadingAudio ? 'Chargement...' : isPlayingAudio ? 'Arrêter' : 'Écouter'}
                 </button>
                 <button
                   onClick={handleCloseWithConfetti}

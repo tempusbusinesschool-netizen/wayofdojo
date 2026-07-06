@@ -2,13 +2,26 @@
 
 ## 📋 Document de Référence
 
-**Version:** 1.7  
+**Version:** 1.8  
 **Date de création:** 19 Janvier 2025  
-**Dernière mise à jour:** Décembre 2025
+**Dernière mise à jour:** 6 Juillet 2026
 
 ---
 
 ## 📝 CHANGELOG RÉCENT
+
+### 6 Juillet 2026 - Bug Fix Dojo Virtuel (P0) ✅
+- ✅ **Bug corrigé** : Fermeture du bloc "Dojo Virtuel" redirige maintenant vers `/dojo`
+  - Problème : Cliquer sur la croix (X) affichait un bloc intermédiaire au lieu de quitter
+  - Solution : `handleCloseDojo()` utilise `router.push()` pour naviguer vers `/dojo`
+  - Fichier modifié : `/app/wayofdojo/src/app/[locale]/[sport]/dojo-virtuel/page.tsx`
+- ✅ **Corrections ESLint** pour permettre le build :
+  - `dojo-virtuel/page.tsx` : Suppression de `setDojoOpen` inutilisé
+  - `trophees/page.tsx` : Suppression de `HelpCircle`, `useParams`, `Link` inutilisés
+  - `ceintures/page.tsx` : Ajout de `useParams` et extraction de `locale`
+  - `BushidoPuzzle.tsx` : Renommage `options` → `_options`
+  - `TempoSensei.tsx` : Suppression de `useEffect` inutilisé
+- ✅ **Build production** : Réussi sans erreur
 
 ### Décembre 2025 - Correctifs Mobile + Build Production (P0) ✅
 - ✅ **Dashboard Junior responsive mobile** (`JuniorDashboard.tsx`) :

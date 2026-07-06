@@ -2,8 +2,9 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, User, Award, Calendar, Clock, TrendingUp, Settings, LogOut, Edit3, Star, Target, Flame, Trophy, ChevronRight } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { ArrowLeft, User, Award, Calendar, Clock, TrendingUp, Settings, LogOut, Edit3, Star, Target, Flame, Trophy, ChevronRight, HelpCircle } from 'lucide-react';
+import { useRouter, useParams } from 'next/navigation';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { TanakaWelcome, TANAKA_MESSAGES } from '@/components/TanakaWelcome';
 
@@ -61,6 +62,8 @@ const BELTS = [
 
 export default function ProfilPage() {
   const router = useRouter();
+  const params = useParams();
+  const locale = (params?.locale as string) || 'fr';
   const [activeTab, setActiveTab] = useState<'overview' | 'stats' | 'badges'>('overview');
   const user = MOCK_USER;
 
@@ -97,9 +100,17 @@ export default function ProfilPage() {
               <p className="text-sm text-slate-400">Ceinture & statistiques</p>
             </div>
           </div>
-          <Button variant="ghost" size="icon" className="hover:bg-slate-800">
-            <Settings className="w-5 h-5" />
-          </Button>
+          <div className="flex items-center gap-2">
+            <Link href={`/${locale}/aikido/guide`}>
+              <Button variant="ghost" size="sm" className="text-amber-300 hover:text-amber-200" data-testid="header-guide-link" title="Guide & Questions">
+                <HelpCircle className="w-4 h-4 sm:mr-1" />
+                <span className="hidden sm:inline">Guide</span>
+              </Button>
+            </Link>
+            <Button variant="ghost" size="icon" className="hover:bg-slate-800">
+              <Settings className="w-5 h-5" />
+            </Button>
+          </div>
         </div>
       </div>
 

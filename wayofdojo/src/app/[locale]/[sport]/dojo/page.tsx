@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { 
-  Swords, LogOut, Settings, MessageCircle, Shield, Sparkles
+  Swords, LogOut, Settings, MessageCircle, Shield, Sparkles, HelpCircle
 } from 'lucide-react';
 import { JuniorDashboard } from '@/components/dashboards/JuniorDashboard';
 import { AdultDashboard } from '@/components/dashboards/AdultDashboard';
@@ -351,6 +351,18 @@ export default function DojoPage() {
                 </Button>
               </Link>
             )}
+            <Link href={`/${locale}/aikido/guide`}>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-amber-300 hover:text-amber-200 hover:bg-white/10"
+                data-testid="header-guide-link"
+                title="Guide & Questions"
+              >
+                <HelpCircle className="w-4 h-4 sm:mr-1" />
+                <span className="hidden sm:inline">Guide</span>
+              </Button>
+            </Link>
             <Button variant="ghost" size="sm" className="text-white/70 hover:text-white hover:bg-white/10">
               <MessageCircle className="w-4 h-4" />
             </Button>

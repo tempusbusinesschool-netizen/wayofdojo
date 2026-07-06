@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { 
-  ArrowLeft, Home, BookOpen, Swords, 
+  ArrowLeft, Home, BookOpen, Swords, HelpCircle,
   Target, Activity, Shield, Wind,
   ChevronDown, ChevronUp, Play, Info,
   Loader2, Sparkles, Filter
@@ -655,6 +655,12 @@ export default function MouvementsPage() {
               <Button variant="ghost" size="sm" className="text-slate-400 hover:text-white">
                 <Home className="w-4 h-4 mr-2" />
                 Mon Dojo
+              </Button>
+            </Link>
+            <Link href={`/${locale}/aikido/guide`}>
+              <Button variant="ghost" size="sm" className="text-amber-300 hover:text-amber-200" data-testid="header-guide-link" title="Guide & Questions">
+                <HelpCircle className="w-4 h-4 sm:mr-1" />
+                <span className="hidden sm:inline">Guide</span>
               </Button>
             </Link>
           </div>

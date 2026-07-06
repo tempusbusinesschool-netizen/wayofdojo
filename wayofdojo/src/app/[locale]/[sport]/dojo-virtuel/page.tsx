@@ -5,7 +5,7 @@ import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Swords, ArrowLeft } from 'lucide-react';
+import { Swords, ArrowLeft, HelpCircle } from 'lucide-react';
 import VirtualDojo from '@/components/VirtualDojo';
 import { TanakaWelcome, TANAKA_MESSAGES } from '@/components/TanakaWelcome';
 
@@ -17,7 +17,7 @@ export default function DojoVirtuelPage() {
 
   const [user, setUser] = useState<{ firstName: string; gamification: { level: number; xp: number } } | null>(null);
   const [loading, setLoading] = useState(true);
-  const [dojoOpen, setDojoOpen] = useState(true);
+  const [dojoOpen] = useState(true);
 
   useEffect(() => {
     const storedUser = localStorage.getItem('wayofdojo_user');
@@ -31,6 +31,11 @@ export default function DojoVirtuelPage() {
 
   const handleGameComplete = (gameId: string, score: number, ki: number) => {
     console.log(`Game ${gameId} completed: ${score} points, ${ki} Ki`);
+  };
+
+  // Fermer le dojo et retourner à la page précédente
+  const handleCloseDojo = () => {
+    router.push(`/${locale}/${sport}/dojo`);
   };
 
   if (loading) {
@@ -78,40 +83,23 @@ export default function DojoVirtuelPage() {
               </div>
             </div>
           </div>
+          <Link href={`/${locale}/aikido/guide`}>
+            <Button variant="ghost" size="sm" className="text-amber-300 hover:text-amber-200" data-testid="header-guide-link" title="Guide & Questions">
+              <HelpCircle className="w-4 h-4 sm:mr-1" />
+              <span className="hidden sm:inline">Guide</span>
+            </Button>
+          </Link>
         </div>
       </header>
 
       <main className="container mx-auto px-4 py-6">
-        {/* Info card when dialog is closed */}
-        {!dojoOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-2xl mx-auto"
-          >
-            <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl p-8 border border-amber-500/30 text-center">
-              <span className="text-6xl block mb-4">🏯</span>
-              <h1 className="text-3xl font-bold text-white mb-4">Dojo Virtuel</h1>
-              <p className="text-slate-300 mb-6">
-                Entraîne-toi avec 10 mini-jeux éducatifs guidés par Maître Tanaka. 
-                Développe ta concentration, ta respiration et les valeurs du Budo !
-              </p>
-              <Button 
-                onClick={() => setDojoOpen(true)}
-                className="bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold px-8 py-3"
-                data-testid="open-dojo-btn"
-              >
-                🎮 Ouvrir le Dojo Virtuel
-              </Button>
-            </div>
-          </motion.div>
-        )}
+        {/* Le VirtualDojo s'ouvre automatiquement - la fermeture redirige vers /dojo */}
       </main>
 
       {/* Virtual Dojo Dialog */}
       <VirtualDojo
         isOpen={dojoOpen}
-        onClose={() => setDojoOpen(false)}
+        onClose={handleCloseDojo}
         userName={user.firstName}
         userLevel={user.gamification?.level || 0}
         userKi={user.gamification?.xp || 0}
