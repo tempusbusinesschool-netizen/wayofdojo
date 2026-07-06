@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Flame, Medal, Scroll, Castle, Sparkles, Compass,
@@ -160,6 +160,31 @@ export const JuniorDashboard: React.FC<JuniorDashboardProps> = ({
       onCompleteChallenge(challenge.id, challenge.virtue, challenge.xp);
     }
   };
+
+  // Lecture du message vocal de Maître Tanaka
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const [isPlayingTanaka, setIsPlayingTanaka] = useState(false);
+  const handleListenTanaka = useCallback(() => {
+    try {
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.currentTime = 0;
+      }
+      // Voix ElevenLabs "Adam" pré-enregistrée - même voix que le chat Tanaka
+      const audio = new Audio('/audio/tanaka/welcome.mp3');
+      audioRef.current = audio;
+      audio.onended = () => setIsPlayingTanaka(false);
+      audio.onerror = () => setIsPlayingTanaka(false);
+      setIsPlayingTanaka(true);
+      audio.play().catch((err) => {
+        console.error('Tanaka audio playback error:', err);
+        setIsPlayingTanaka(false);
+      });
+    } catch (err) {
+      console.error('Tanaka audio error:', err);
+      setIsPlayingTanaka(false);
+    }
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-950 via-purple-950 to-slate-950 flex flex-col lg:flex-row" data-testid="junior-dashboard">
@@ -470,10 +495,13 @@ export const JuniorDashboard: React.FC<JuniorDashboardProps> = ({
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="mt-3 lg:mt-4 px-5 lg:px-6 py-2 lg:py-3 bg-white/20 hover:bg-white/30 backdrop-blur-sm rounded-xl text-white font-medium flex items-center gap-2 transition-colors mx-auto lg:mx-0"
+                onClick={handleListenTanaka}
+                disabled={isPlayingTanaka}
+                className="mt-3 lg:mt-4 px-5 lg:px-6 py-2 lg:py-3 bg-white/20 hover:bg-white/30 disabled:opacity-70 disabled:cursor-wait backdrop-blur-sm rounded-xl text-white font-medium flex items-center gap-2 transition-colors mx-auto lg:mx-0"
                 data-testid="listen-tanaka"
               >
-                <Volume2 className="w-4 h-4 lg:w-5 lg:h-5" /> Écouter le message
+                <Volume2 className={`w-4 h-4 lg:w-5 lg:h-5 ${isPlayingTanaka ? 'animate-pulse' : ''}`} />
+                {isPlayingTanaka ? 'Lecture en cours…' : 'Écouter le message'}
               </motion.button>
             </div>
           </div>
