@@ -288,6 +288,13 @@ export default function DojoPage() {
             locale={locale}
             sport={sport}
             onLogout={handleLogout}
+            userName={user.firstName}
+            xp={currentXp}
+            maxXp={400}
+            currentGrade={currentGrade?.displayName || '6e Kyu'}
+            streak={currentStreak}
+            badgesCount={badgesCount}
+            techniquesCount={techniquesCount}
           />
         </div>
 
