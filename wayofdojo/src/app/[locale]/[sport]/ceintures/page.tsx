@@ -61,7 +61,7 @@ const GradeAccordion: React.FC<{
         className="w-full p-4 flex items-center gap-4 hover:bg-slate-800/30 transition-colors rounded-xl"
       >
         {/* Image de ceinture */}
-        <div className="w-14 h-14 relative shrink-0">
+        <div className="w-14 h-14 relative shrink-0 bg-[#06101f] rounded-lg">
           <Image
             src={beltImage}
             alt={`Ceinture ${grade.ceinture}`}
@@ -264,7 +264,7 @@ export default function CeinturesPage() {
                     </div>
                     
                     {/* Image ceinture */}
-                    <div className="w-28 h-28 relative shrink-0">
+                    <div className="w-28 h-28 relative shrink-0 bg-[#06101f] rounded-xl">
                       <Image
                         src={BELT_IMAGES[currentGrade.id]}
                         alt={`Ceinture ${currentGrade.ceinture}`}
@@ -317,7 +317,7 @@ export default function CeinturesPage() {
                       </div>
                     </div>
                     
-                    <div className="w-24 h-24 relative shrink-0">
+                    <div className="w-24 h-24 relative shrink-0 bg-[#06101f] rounded-xl">
                       <Image
                         src={BELT_IMAGES[nextGrade.id]}
                         alt={`Ceinture ${nextGrade.ceinture}`}
@@ -388,7 +388,7 @@ export default function CeinturesPage() {
                     return (
                       <React.Fragment key={grade.id}>
                         <div className="flex flex-col items-center shrink-0">
-                          <div className={`relative w-14 h-14 ${isFuture ? 'opacity-40' : ''}`}>
+                          <div className={`relative w-14 h-14 bg-[#0d1628] rounded-lg ${isFuture ? 'opacity-40' : ''}`}>
                             {isActive && (
                               <div className="absolute -inset-1 bg-orange-500/30 rounded-full blur-md"></div>
                             )}
