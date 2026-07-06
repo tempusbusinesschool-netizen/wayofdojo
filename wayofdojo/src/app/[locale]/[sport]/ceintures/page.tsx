@@ -28,46 +28,55 @@ const TABS = [
   { id: 'comprendre', label: 'Comprendre les grades' },
 ];
 
-// Mapping des grades vers les images de ceintures (fond transparent)
+// Mapping des grades vers les images de ceintures (fond bleu marine intégré)
 const BELT_IMAGES: Record<string, { image: string; name: string }> = {
-  '6e_kyu': { image: '/images/belts/6e-kyu-white.png', name: 'blanche' },
-  '5e_kyu': { image: '/images/belts/5e-kyu-yellow.png', name: 'jaune' },
-  '4e_kyu': { image: '/images/belts/4e-kyu-orange.png', name: 'orange' },
-  '3e_kyu': { image: '/images/belts/3e-kyu-green.png', name: 'verte' },
-  '2e_kyu': { image: '/images/belts/2e-kyu-blue.png', name: 'bleue' },
-  '1er_kyu': { image: '/images/belts/1er-kyu-brown.png', name: 'marron' },
-  '1er_dan': { image: '/images/belts/1er-dan-black.png', name: 'noire' },
-  '2e_dan': { image: '/images/belts/1er-dan-black.png', name: 'noire' },
-  '3e_dan': { image: '/images/belts/1er-dan-black.png', name: 'noire' },
-  '4e_dan': { image: '/images/belts/1er-dan-black.png', name: 'noire' },
+  '6e_kyu': { image: '/images/belts/6e-kyu-white.png?v=2', name: 'blanche' },
+  '5e_kyu': { image: '/images/belts/5e-kyu-yellow.png?v=2', name: 'jaune' },
+  '4e_kyu': { image: '/images/belts/4e-kyu-orange.png?v=2', name: 'orange' },
+  '3e_kyu': { image: '/images/belts/3e-kyu-green.png?v=2', name: 'verte' },
+  '2e_kyu': { image: '/images/belts/2e-kyu-blue.png?v=2', name: 'bleue' },
+  '1er_kyu': { image: '/images/belts/1er-kyu-brown.png?v=2', name: 'marron' },
+  '1er_dan': { image: '/images/belts/1er-dan-black.png?v=2', name: 'noire' },
+  '2e_dan': { image: '/images/belts/1er-dan-black.png?v=2', name: 'noire' },
+  '3e_dan': { image: '/images/belts/1er-dan-black.png?v=2', name: 'noire' },
+  '4e_dan': { image: '/images/belts/1er-dan-black.png?v=2', name: 'noire' },
 };
 
 // Composant d'image de ceinture avec fond de la couleur de page
 const BeltImage = ({ gradeId, isActive = false, size = 'md' }: { gradeId: string; isActive?: boolean; size?: 'sm' | 'md' | 'lg' }) => {
   const beltInfo = BELT_IMAGES[gradeId] || BELT_IMAGES['6e_kyu'];
-  const sizeClasses = {
-    sm: 'w-16 h-16',
-    md: 'w-20 h-20',
-    lg: 'w-24 h-24'
+  const sizes = {
+    sm: 64,
+    md: 80,
+    lg: 96
   };
+  const imgSize = sizes[size];
   
   return (
-    <div className={`${sizeClasses[size]} relative flex items-center justify-center`}>
+    <div 
+      className={`relative flex items-center justify-center rounded-xl ${isActive ? 'ring-2 ring-orange-500' : ''}`}
+      style={{ 
+        width: imgSize, 
+        height: imgSize, 
+        backgroundColor: '#0d1628'
+      }}
+    >
       {/* Glow effect for active belt */}
       {isActive && (
-        <div className="absolute inset-0 rounded-full bg-orange-500/40 blur-xl" />
+        <div className="absolute inset-0 bg-orange-500/20 rounded-xl" />
       )}
-      {/* Background with page color to fill transparent areas */}
-      <div 
-        className={`absolute inset-0 rounded-full bg-[#06101f] ${isActive ? 'ring-2 ring-orange-500' : ''}`}
-      />
-      {/* Belt image */}
-      <Image
+      {/* Belt image with inline style for background */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
         src={beltInfo.image}
         alt={`Ceinture ${beltInfo.name}`}
-        width={size === 'lg' ? 80 : size === 'md' ? 64 : 48}
-        height={size === 'lg' ? 80 : size === 'md' ? 64 : 48}
+        width={imgSize}
+        height={imgSize}
         className="relative z-10 object-contain"
+        style={{ 
+          backgroundColor: '#0d1628',
+          borderRadius: '12px'
+        }}
       />
     </div>
   );
