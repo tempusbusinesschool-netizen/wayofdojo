@@ -83,7 +83,7 @@ const BeltImage = ({ gradeId, isActive = false, size = 'md' }: { gradeId: string
   );
 };
 
-// Accordéon pour les grades
+// Accordéon pour les grades avec détails complets
 const GradeAccordion: React.FC<{
   grade: ProgrammeGrade;
   isExpanded: boolean;
@@ -112,8 +112,11 @@ const GradeAccordion: React.FC<{
       <AnimatePresence>
         {isExpanded && (
           <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
-            <div className="px-4 pb-4 pt-2 border-t border-slate-800 space-y-4">
+            <div className="px-4 pb-4 pt-2 border-t border-slate-800 space-y-6">
+              {/* Description */}
               <p className="text-slate-300 text-sm">{grade.description}</p>
+              
+              {/* Stats */}
               <div className="grid grid-cols-2 gap-3">
                 <div className="bg-slate-800/50 rounded-lg p-3">
                   <p className="text-xs text-slate-500 mb-1">Durée indicative</p>
@@ -124,14 +127,101 @@ const GradeAccordion: React.FC<{
                   <p className="text-white font-medium">{grade.heures_minimales}h</p>
                 </div>
               </div>
+
+              {/* Objectifs */}
               {grade.objectifs && grade.objectifs.length > 0 && (
                 <div>
-                  <p className="text-xs text-amber-400 font-bold uppercase mb-2">Objectifs</p>
+                  <p className="text-xs text-amber-400 font-bold uppercase mb-2 flex items-center gap-2">
+                    <Target className="w-4 h-4" /> Objectifs
+                  </p>
                   <ul className="space-y-1">
-                    {grade.objectifs.slice(0, 4).map((obj, idx) => (
+                    {grade.objectifs.map((obj, idx) => (
                       <li key={idx} className="flex items-start gap-2 text-sm text-slate-300">
                         <CheckCircle2 className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
                         {obj}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {/* Mouvements requis */}
+              {grade.mouvements_requis && grade.mouvements_requis.length > 0 && (
+                <div>
+                  <p className="text-xs text-cyan-400 font-bold uppercase mb-3 flex items-center gap-2">
+                    <BookOpen className="w-4 h-4" /> Mouvements requis
+                  </p>
+                  <div className="space-y-4">
+                    {grade.mouvements_requis.map((categorie, idx) => (
+                      <div key={idx} className="bg-slate-800/30 rounded-lg p-3">
+                        <p className="text-sm font-semibold text-cyan-300 mb-2">{categorie.categorie}</p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                          {categorie.elements.map((elem, elemIdx) => (
+                            <div key={elemIdx} className="flex items-start gap-2 text-sm">
+                              <span className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${elem.obligatoire ? 'bg-orange-500' : 'bg-slate-600'}`}></span>
+                              <div>
+                                <span className="text-white font-medium">{elem.nom}</span>
+                                {elem.description && (
+                                  <span className="text-slate-400 text-xs block">{elem.description}</span>
+                                )}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Techniques requises */}
+              {grade.techniques_requises && grade.techniques_requises.length > 0 && (
+                <div>
+                  <p className="text-xs text-emerald-400 font-bold uppercase mb-3 flex items-center gap-2">
+                    <Target className="w-4 h-4" /> Techniques requises par attaque
+                  </p>
+                  <div className="space-y-4">
+                    {grade.techniques_requises.map((attaque, idx) => (
+                      <div key={idx} className="bg-slate-800/30 rounded-lg p-3">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="text-sm font-semibold text-emerald-300">{attaque.attaque}</span>
+                          {attaque.attaque_jp && (
+                            <span className="text-xs text-amber-400 font-medium">{attaque.attaque_jp}</span>
+                          )}
+                        </div>
+                        {attaque.description && (
+                          <p className="text-xs text-slate-400 mb-2">{attaque.description}</p>
+                        )}
+                        <div className="flex flex-wrap gap-2">
+                          {attaque.techniques.map((tech, techIdx) => (
+                            <div 
+                              key={techIdx} 
+                              className={`px-2 py-1 rounded text-xs ${tech.obligatoire ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-slate-700/50 text-slate-400'}`}
+                            >
+                              {tech.nom}
+                              {tech.description && (
+                                <span className="text-[10px] text-slate-400 ml-1">({tech.description})</span>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Critères d'évaluation */}
+              {grade.criteres_evaluation && grade.criteres_evaluation.length > 0 && (
+                <div>
+                  <p className="text-xs text-purple-400 font-bold uppercase mb-2 flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4" /> Critères d&apos;évaluation
+                  </p>
+                  <ul className="space-y-1">
+                    {grade.criteres_evaluation.map((critere, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-sm text-slate-300">
+                        <span className="w-1.5 h-1.5 rounded-full bg-purple-500 mt-2 shrink-0"></span>
+                        {critere}
                       </li>
                     ))}
                   </ul>
