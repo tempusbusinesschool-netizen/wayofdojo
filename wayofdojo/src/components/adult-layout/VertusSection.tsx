@@ -7,16 +7,8 @@ import { ChevronRight } from 'lucide-react';
 
 /**
  * ═══════════════════════════════════════════════════════════════════════════════
- * VertusSection - Les 7 vertus du Budo selon le visuel de référence EXACT
- * 
- * Couleurs selon le modèle fourni :
- * - Respect : Rouge (Torii gate)
- * - Courage : Orange (Montagne)
- * - Honnêteté : Jaune (Fleur de cerisier)
- * - Humilité : Vert (Bambou)
- * - Contrôle : Cyan (Vagues)
- * - Amitié : Bleu clair (Deux personnages)
- * - Persévérance : Violet (Montagne avec nuage)
+ * VertusSection - Les 7 vertus du Budo avec icônes EXACTES du visuel de référence
+ * Style: Icônes en outline noir sur fonds colorés
  * ═══════════════════════════════════════════════════════════════════════════════
  */
 
@@ -25,56 +17,100 @@ interface VertusSectionProps {
   sport: string;
 }
 
-// Icônes SVG pour chaque vertu
+// Icône Torii Gate pour Respect
 const ToriiIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
-    <path d="M4 4h16v2H4V4zm-2 4h20v2h-2v10h-2V10h-4v10h-4V10H6v10H4V10H2V8z"/>
+  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-10 h-10">
+    {/* Piliers verticaux */}
+    <line x1="12" y1="16" x2="12" y2="40" />
+    <line x1="36" y1="16" x2="36" y2="40" />
+    {/* Barre horizontale basse */}
+    <line x1="8" y1="24" x2="40" y2="24" />
+    {/* Barre horizontale haute avec courbe */}
+    <path d="M6 16 Q24 12 42 16" />
+    {/* Petits pieds */}
+    <line x1="8" y1="40" x2="16" y2="40" />
+    <line x1="32" y1="40" x2="40" y2="40" />
   </svg>
 );
 
-const MountainIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
-    <path d="M12 2L2 22h20L12 2zm0 4l7 14H5l7-14z"/>
+// Icône Montagne avec soleil pour Courage
+const MountainSunIcon = () => (
+  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-10 h-10">
+    {/* Montagne */}
+    <path d="M8 38 L24 14 L40 38 Z" />
+    {/* Rayons de soleil derrière */}
+    <line x1="24" y1="8" x2="24" y2="12" />
+    <line x1="16" y1="10" x2="18" y2="13" />
+    <line x1="32" y1="10" x2="30" y2="13" />
+    <line x1="12" y1="14" x2="15" y2="16" />
+    <line x1="36" y1="14" x2="33" y2="16" />
   </svg>
 );
 
-const FlowerIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
-    <path d="M12 2a4 4 0 0 0-4 4c0 1.1.45 2.1 1.17 2.83L12 12l2.83-3.17A4 4 0 0 0 16 6a4 4 0 0 0-4-4z"/>
-    <path d="M5.17 8.83A4 4 0 0 0 2 12a4 4 0 0 0 4 4c1.1 0 2.1-.45 2.83-1.17L12 12l-3.17-2.83A4 4 0 0 0 6 8a4 4 0 0 0-.83.83z"/>
-    <path d="M18.83 8.83A4 4 0 0 1 22 12a4 4 0 0 1-4 4c-1.1 0-2.1-.45-2.83-1.17L12 12l3.17-2.83c.73-.72 1.73-1.17 2.83-1.17z"/>
-    <path d="M12 22a4 4 0 0 0 4-4c0-1.1-.45-2.1-1.17-2.83L12 12l-2.83 3.17A4 4 0 0 0 8 18a4 4 0 0 0 4 4z"/>
-    <circle cx="12" cy="12" r="2"/>
+// Icône Fleur de cerisier pour Honnêteté
+const CherryBlossomIcon = () => (
+  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-10 h-10">
+    {/* 4 pétales */}
+    <path d="M24 8 C28 12 28 18 24 22 C20 18 20 12 24 8" />
+    <path d="M24 40 C28 36 28 30 24 26 C20 30 20 36 24 40" />
+    <path d="M8 24 C12 28 18 28 22 24 C18 20 12 20 8 24" />
+    <path d="M40 24 C36 28 30 28 26 24 C30 20 36 20 40 24" />
+    {/* Centre */}
+    <circle cx="24" cy="24" r="3" />
   </svg>
 );
 
+// Icône Bambou pour Humilité
 const BambooIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
-    <path d="M7 2v2h2V2H7zm0 4v6h2V6H7zm0 8v6h2v-6H7zm8-12v2h2V2h-2zm0 4v6h2V6h-2zm0 8v6h2v-6h-2z"/>
-    <path d="M6 4h4v2H6V4zm0 8h4v2H6v-2zm8-8h4v2h-4V4zm0 8h4v2h-4v-2z" opacity="0.5"/>
+  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-10 h-10">
+    {/* Tige principale */}
+    <line x1="24" y1="8" x2="24" y2="40" />
+    {/* Noeuds */}
+    <line x1="20" y1="14" x2="28" y2="14" />
+    <line x1="20" y1="24" x2="28" y2="24" />
+    <line x1="20" y1="34" x2="28" y2="34" />
+    {/* Feuilles */}
+    <path d="M28 12 C34 10 38 14 36 18" />
+    <path d="M20 22 C14 20 10 24 12 28" />
+    <path d="M28 32 C34 30 38 34 36 38" />
   </svg>
 );
 
-const WavesIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
-    <path d="M2 12c2-2 4-2 6 0s4 2 6 0 4-2 6 0v3c-2-2-4-2-6 0s-4 2-6 0-4-2-6 0v-3z"/>
-    <path d="M2 17c2-2 4-2 6 0s4 2 6 0 4-2 6 0v3c-2-2-4-2-6 0s-4 2-6 0-4-2-6 0v-3z" opacity="0.5"/>
+// Icône Vague pour Contrôle de soi
+const WaveIcon = () => (
+  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-10 h-10">
+    {/* Vague principale */}
+    <path d="M4 28 C10 20 16 20 22 28 C28 36 34 36 44 28" />
+    {/* Petite vague en dessous */}
+    <path d="M8 34 C12 30 16 30 20 34 C24 38 28 38 36 34" />
+    {/* Éclaboussure */}
+    <path d="M22 24 C24 22 26 22 28 24" />
   </svg>
 );
 
+// Icône Deux figures pour Amitié
 const FriendsIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
-    <circle cx="9" cy="7" r="3"/>
-    <circle cx="15" cy="7" r="3"/>
-    <path d="M9 12c-3 0-6 1.5-6 4v2h12v-2c0-2.5-3-4-6-4z"/>
-    <path d="M15 12c-.5 0-1 .05-1.5.14C14.5 13.1 15 14.5 15 16v2h6v-2c0-2.5-3-4-6-4z"/>
+  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-10 h-10">
+    {/* Première personne */}
+    <circle cx="16" cy="14" r="5" />
+    <path d="M8 38 L8 28 C8 24 12 22 16 22 C20 22 24 24 24 28 L24 38" />
+    {/* Deuxième personne */}
+    <circle cx="32" cy="14" r="5" />
+    <path d="M24 38 L24 28 C24 24 28 22 32 22 C36 22 40 24 40 28 L40 38" />
   </svg>
 );
 
+// Icône Montagne avec étoile pour Persévérance
 const PerseveranceIcon = () => (
-  <svg viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
-    <path d="M12 2L2 22h20L12 2zm0 4l7 14H5l7-14z"/>
-    <ellipse cx="12" cy="6" rx="6" ry="2" opacity="0.4"/>
+  <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-10 h-10">
+    {/* Chaîne de montagnes */}
+    <path d="M4 40 L14 24 L20 32 L24 12 L28 32 L34 24 L44 40 Z" />
+    {/* Étoile au sommet */}
+    <circle cx="24" cy="8" r="2" fill="currentColor" />
+    {/* Petits rayons */}
+    <line x1="24" y1="4" x2="24" y2="2" />
+    <line x1="20" y1="6" x2="18" y2="4" />
+    <line x1="28" y1="6" x2="30" y2="4" />
   </svg>
 );
 
@@ -89,13 +125,13 @@ const VERTUS = [
     id: 'courage', 
     name: 'Courage', 
     bgColor: 'bg-orange-500',
-    Icon: MountainIcon 
+    Icon: MountainSunIcon 
   },
   { 
     id: 'honnetete', 
     name: 'Honnêteté', 
     bgColor: 'bg-yellow-400',
-    Icon: FlowerIcon 
+    Icon: CherryBlossomIcon 
   },
   { 
     id: 'humilite', 
@@ -107,7 +143,7 @@ const VERTUS = [
     id: 'controle', 
     name: 'Contrôle de soi', 
     bgColor: 'bg-cyan-500',
-    Icon: WavesIcon 
+    Icon: WaveIcon 
   },
   { 
     id: 'amitie', 
@@ -118,7 +154,7 @@ const VERTUS = [
   { 
     id: 'perseverance', 
     name: 'Persévérance', 
-    bgColor: 'bg-purple-500',
+    bgColor: 'bg-purple-600',
     Icon: PerseveranceIcon 
   },
 ];
@@ -140,7 +176,7 @@ export const VertusSection: React.FC<VertusSectionProps> = ({
         </Link>
       </div>
 
-      <div className="grid grid-cols-7 gap-2">
+      <div className="grid grid-cols-7 gap-3">
         {VERTUS.map((vertu, index) => {
           const IconComponent = vertu.Icon;
           return (
@@ -149,23 +185,25 @@ export const VertusSection: React.FC<VertusSectionProps> = ({
               initial={{ opacity: 0, scale: 0.8, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               transition={{ delay: index * 0.06, type: 'spring', stiffness: 200 }}
-              whileHover={{ scale: 1.08, y: -4 }}
+              whileHover={{ scale: 1.05, y: -4 }}
               whileTap={{ scale: 0.95 }}
             >
               <Link href={`/${locale}/${sport}/vertus`}>
                 <div 
                   className={`
-                    aspect-square rounded-xl ${vertu.bgColor} 
-                    p-2 flex flex-col items-center justify-center text-center 
+                    aspect-square rounded-2xl ${vertu.bgColor} 
+                    p-3 flex flex-col items-center justify-center text-center 
                     transition-all duration-200 
                     shadow-lg hover:shadow-xl
                   `}
                   data-testid={`vertu-${vertu.id}`}
                 >
-                  <div className="text-white mb-1">
+                  {/* Icône en noir/outline */}
+                  <div className="text-black/80 mb-2">
                     <IconComponent />
                   </div>
-                  <span className="text-[8px] lg:text-[10px] text-white font-medium leading-tight">
+                  {/* Nom de la vertu */}
+                  <span className="text-[9px] lg:text-[11px] text-white font-semibold leading-tight drop-shadow-md">
                     {vertu.name}
                   </span>
                 </div>
