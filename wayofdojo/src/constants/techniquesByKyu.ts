@@ -237,12 +237,32 @@ export const TECHNIQUES_BY_KYU: Record<string, KyuProgram> = {
         ]
       },
       {
-        name: "Buki Waza (Armes)",
+        name: "Jo (Bâton)",
+        icon: "🪵",
+        techniques: [
+          { id: "jo_suburi", name: "Jo Suburi", description: "Frappes de base au bâton", difficulty: 3 },
+          { id: "jo_awase", name: "Jo Awase", description: "Travail en duo au Jo", difficulty: 3 },
+          { id: "jo_kata", name: "Jo Kata", description: "Formes codifiées au Jo", difficulty: 4 },
+          { id: "jo_dori", name: "Jo Dori", description: "Désarmement du Jo", difficulty: 4 },
+        ]
+      },
+      {
+        name: "Bokken (Sabre)",
         icon: "⚔️",
         techniques: [
-          { id: "jo_suburi", name: "Jo Suburi", description: "Frappes au bâton", difficulty: 3 },
-          { id: "bokken_suburi", name: "Bokken Suburi", description: "Frappes au sabre", difficulty: 3 },
-          { id: "tanto_dori", name: "Tanto Dori", description: "Défense contre couteau", difficulty: 4 },
+          { id: "bokken_suburi", name: "Bokken Suburi", description: "Frappes de base au sabre", difficulty: 3 },
+          { id: "bokken_awase", name: "Bokken Awase", description: "Travail en duo au Bokken", difficulty: 3 },
+          { id: "ken_tai_jo", name: "Ken Tai Jo", description: "Sabre contre bâton", difficulty: 4 },
+          { id: "kumitachi", name: "Kumitachi", description: "Combat codifié au sabre", difficulty: 4 },
+        ]
+      },
+      {
+        name: "Tanto (Couteau)",
+        icon: "🗡️",
+        techniques: [
+          { id: "tanto_dori", name: "Tanto Dori", description: "Désarmement de couteau", difficulty: 4 },
+          { id: "tanto_tsuki", name: "Tanto Tsuki Kotegaeshi", description: "Contre attaque piquée", difficulty: 4 },
+          { id: "tanto_yokomen", name: "Tanto Yokomen Iriminage", description: "Contre frappe latérale", difficulty: 4 },
         ]
       },
       {

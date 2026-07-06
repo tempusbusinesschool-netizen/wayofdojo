@@ -81,7 +81,7 @@ const TECHNIQUE_IMAGES: Record<string, string> = {
   // ═══════════════════════════════════════════════════════════════
   'ikkyo_omote': '/images/techniques/ikkyo-omote.png',
   'ikkyo_ura': '/images/techniques/ikkyo-ura.png',
-  'suwari_ikkyo': '/images/techniques/immobilisation-ikkyo.png',
+  'suwari_ikkyo': '/images/techniques/suwari-waza-ikkyo.png',
   'ushiro_ryote_ikkyo': '/images/techniques/immobilisation-ikkyo.png',
   
   // ═══════════════════════════════════════════════════════════════
@@ -152,6 +152,53 @@ const TECHNIQUE_IMAGES: Record<string, string> = {
   // SHIKKO
   // ═══════════════════════════════════════════════════════════════
   'shikko': '/images/techniques/shikko.png',
+  
+  // ═══════════════════════════════════════════════════════════════
+  // SUWARI WAZA (Techniques à genoux)
+  // ═══════════════════════════════════════════════════════════════
+  'suwari_waza_ikkyo': '/images/techniques/suwari-waza-ikkyo.png',
+  'suwari_waza_nikyo': '/images/techniques/suwari-waza-nikkyo.png',
+  'suwari_waza_irimi': '/images/techniques/suwari-waza-irimi-nage.png',
+  
+  // ═══════════════════════════════════════════════════════════════
+  // PROJECTIONS AVANCÉES
+  // ═══════════════════════════════════════════════════════════════
+  'tenchi_nage': '/images/techniques/tenchi-nage.png',
+  'koshi_nage': '/images/techniques/koshi-nage.png',
+  'aiki_otoshi': '/images/techniques/aiki-otoshi.png',
+  'sumi_otoshi': '/images/techniques/sumi-otoshi.png',
+  
+  // ═══════════════════════════════════════════════════════════════
+  // ARMES (Bukiwaza)
+  // ═══════════════════════════════════════════════════════════════
+  // Jo (Bâton)
+  'jo_suburi': '/images/techniques/jo-suburi.png',
+  'jo_awase': '/images/techniques/jo-suburi.png',
+  'jo_kata': '/images/techniques/jo-suburi.png',
+  'jo_dori': '/images/techniques/jo-suburi.png',
+  
+  // Bokken (Sabre)
+  'bokken_suburi': '/images/techniques/bokken-suburi.png',
+  'bokken_awase': '/images/techniques/bokken-suburi.png',
+  'ken_tai_jo': '/images/techniques/bokken-suburi.png',
+  'kumitachi': '/images/techniques/bokken-suburi.png',
+  
+  // Tanto (Couteau)
+  'tanto_dori': '/images/techniques/tanto-dori.png',
+  'tanto_tsuki': '/images/techniques/tanto-dori.png',
+  'tanto_yokomen': '/images/techniques/tanto-dori.png',
+  
+  // ═══════════════════════════════════════════════════════════════
+  // TRAVAIL LIBRE
+  // ═══════════════════════════════════════════════════════════════
+  'jiyu_waza': '/images/techniques/jiyu-waza.png',
+  'randori': '/images/techniques/jiyu-waza-2.png',
+  
+  // ═══════════════════════════════════════════════════════════════
+  // AUTRES
+  // ═══════════════════════════════════════════════════════════════
+  'ushiro_kubi_shime': '/images/techniques/ushiro-kubi-shime.png',
+  'tsuki': '/images/techniques/tsuki.png',
 };
 
 // Configuration des ceintures
@@ -180,6 +227,16 @@ const CATEGORY_LABELS: Record<string, { label: string; description: string }> = 
   'Techniques de base': { label: 'Techniques de base', description: 'Les immobilisations et projections' },
   'Postures': { label: 'Postures', description: 'Les positions fondamentales' },
   'Atemi': { label: 'Attaques — Frappes', description: 'Les frappes et attaques' },
+  'Buki Waza (Armes)': { label: 'Buki Waza — Armes', description: 'Techniques avec Jo, Bokken et Tanto' },
+  'Jo (Bâton)': { label: 'Jo — Bâton', description: 'Techniques au bâton de 128 cm' },
+  'Bokken (Sabre)': { label: 'Bokken — Sabre', description: 'Techniques au sabre en bois' },
+  'Tanto (Couteau)': { label: 'Tanto — Couteau', description: 'Défenses contre couteau' },
+  'Ushiro Waza (Attaques arrière)': { label: 'Ushiro Waza — Attaques arrière', description: 'Défenses contre attaques par derrière' },
+  'Hanmi Handachi': { label: 'Hanmi Handachi', description: 'Techniques avec Tori à genoux' },
+  'Kokyu Nage': { label: 'Kokyu Nage — Projections respiratoires', description: 'Projections utilisant le souffle' },
+  'Kaiten Nage': { label: 'Kaiten Nage — Projections rotatives', description: 'Projections en rotation' },
+  'Techniques avancées': { label: 'Techniques avancées', description: 'Techniques de niveau supérieur' },
+  'Jiyu Waza': { label: 'Jiyu Waza — Travail libre', description: 'Applications libres' },
 };
 
 export default function TechniquesPage() {
