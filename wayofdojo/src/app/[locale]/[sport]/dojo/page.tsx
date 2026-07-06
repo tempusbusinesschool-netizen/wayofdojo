@@ -15,6 +15,10 @@ import MaitreTanaka from '@/components/MaitreTanaka';
 import { aikidoConfig } from '@/config/sports/aikido.config';
 import apiService from '@/services/api.service';
 
+// Nouveaux composants pour le mode adulte
+import { AdultSidebar } from '@/components/adult-layout/AdultSidebar';
+import { AdultHeader } from '@/components/adult-layout/AdultHeader';
+
 /**
  * ═══════════════════════════════════════════════════════════════════════════════
  * DojoPage - Page principale du dojo pour les utilisateurs connectés
@@ -269,12 +273,88 @@ export default function DojoPage() {
   const currentXp = gamificationData?.xp.total ?? user.gamification.xp ?? 0;
   const currentLevel = gamificationData?.level ?? user.gamification.level ?? 1;
   const currentStreak = gamificationData?.streak.current ?? user.gamification.streak ?? 0;
+  const badgesCount = gamificationData?.badges.unlocked ?? user.gamification.badges?.length ?? 0;
+  const techniquesCount = user.gamification.completedTechniques?.length ?? 0;
 
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // RENDU MODE ADULTE - Avec Sidebar + Header + Layout 3 colonnes
+  // ═══════════════════════════════════════════════════════════════════════════════
+  if (!isJeuneSamourai) {
+    return (
+      <div className="min-h-screen bg-[#06101f]">
+        {/* Sidebar (desktop uniquement) */}
+        <div className="hidden lg:block">
+          <AdultSidebar 
+            locale={locale}
+            sport={sport}
+            onLogout={handleLogout}
+          />
+        </div>
+
+        {/* Header */}
+        <AdultHeader
+          locale={locale}
+          sport={sport}
+          userName={user.firstName}
+          notificationCount={3}
+          showMenuButton={true}
+        />
+
+        {/* Contenu principal avec marge pour la sidebar */}
+        <div className="lg:ml-[280px] pt-[68px]">
+          <AdultDashboard
+            xp={currentXp}
+            completedMissions={adultCompletedMissions}
+            onMissionComplete={handleAdultMissionComplete}
+            userName={user.firstName}
+            currentGrade={currentGrade?.displayName || '6e Kyu'}
+            streak={currentStreak}
+            badgesCount={badgesCount}
+            techniquesCount={techniquesCount}
+            locale={locale}
+            sport={sport}
+          />
+        </div>
+
+        {/* Maître Tanaka - Bouton flottant */}
+        <MaitreTanaka 
+          isJeuneSamourai={false}
+          messages={[
+            `Bienvenue ${user.firstName}, tu comptes ${user.gamification.xp} XP.`,
+            "La voie du Budo est un chemin de toute une vie.",
+            "Chaque technique polit un peu plus le caractère.",
+            "L'humilité et la persévérance sont tes meilleurs alliés.",
+            "Interroge-moi sur une technique ou une notion du Budo.",
+            `Ta constance de ${user.gamification.streak || 0} jours est remarquable.`,
+          ]}
+        />
+
+        {/* XP Animation Overlay */}
+        <AnimatePresence>
+          {showXpAnimation && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.5, y: 0 }}
+              animate={{ opacity: 1, scale: 1, y: -50 }}
+              exit={{ opacity: 0, y: -100 }}
+              className="fixed top-1/2 left-1/2 transform -translate-x-1/2 z-50"
+            >
+              <div className="text-4xl font-black text-amber-400 flex items-center gap-2">
+                <Sparkles className="w-8 h-8" />
+                +{xpGained} XP
+                <Sparkles className="w-8 h-8" />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    );
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════════
+  // RENDU MODE ENFANT - Layout traditionnel avec header
+  // ═══════════════════════════════════════════════════════════════════════════════
   return (
-    <div className={`min-h-screen ${isJeuneSamourai 
-      ? 'bg-gradient-to-br from-amber-950 via-orange-950 to-amber-950' 
-      : 'bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950'
-    }`}>
+    <div className="min-h-screen bg-gradient-to-br from-amber-950 via-orange-950 to-amber-950">
       {/* XP Animation Overlay */}
       <AnimatePresence>
         {showXpAnimation && (
@@ -383,53 +463,33 @@ export default function DojoPage() {
       </header>
 
       <main className="container mx-auto px-4 py-6">
-        {/* ADULT MODE: Samouraï Confirmé */}
-        {!isJeuneSamourai && (
-          <AdultDashboard
-            xp={currentXp}
-            completedMissions={adultCompletedMissions}
-            onMissionComplete={handleAdultMissionComplete}
-            userName={user.firstName}
-            currentGrade={currentGrade?.displayName || '2e Kyu'}
-          />
-        )}
-
         {/* JUNIOR MODE: Jeune Samouraï */}
-        {isJeuneSamourai && (
-          <JuniorDashboard
-            user={user}
-            locale={locale}
-            sport={sport}
-            currentXp={currentXp}
-            currentLevel={currentLevel}
-            currentStreak={currentStreak}
-            currentBelt={currentBelt}
-            completedChallenges={completedChallenges}
-            processingChallenge={processingChallenge}
-            onCompleteChallenge={handleCompleteChallenge}
-            onNavigate={handleNavigate}
-            onUserNameChange={handleUserNameChange}
-          />
-        )}
+        <JuniorDashboard
+          user={user}
+          locale={locale}
+          sport={sport}
+          currentXp={currentXp}
+          currentLevel={currentLevel}
+          currentStreak={currentStreak}
+          currentBelt={currentBelt}
+          completedChallenges={completedChallenges}
+          processingChallenge={processingChallenge}
+          onCompleteChallenge={handleCompleteChallenge}
+          onNavigate={handleNavigate}
+          onUserNameChange={handleUserNameChange}
+        />
       </main>
 
-      {/* Maître Tanaka - Bouton flottant disponible pour tous les profils */}
+      {/* Maître Tanaka - Bouton flottant */}
       <MaitreTanaka 
-        isJeuneSamourai={isJeuneSamourai}
-        messages={isJeuneSamourai ? [
+        isJeuneSamourai={true}
+        messages={[
           `Super ${user.firstName} ! Tu as ${user.gamification.xp} XP ! 🌟`,
           "Continue comme ça, tu progresses bien !",
           "N'oublie pas tes défis du jour !",
           "Le respect est la première vertu du Samouraï.",
           "Entraîne-toi dur et tu deviendras Maître !",
           `Tu as une série de ${user.gamification.streak || 0} jours ! 🔥`,
-        ] : [
-          `Bienvenue ${user.firstName}, tu comptes ${user.gamification.xp} XP.`,
-          "La voie du Budo est un chemin de toute une vie.",
-          "Chaque technique polit un peu plus le caractère.",
-          "L'humilité et la persévérance sont tes meilleurs alliés.",
-          "Interroge-moi sur une technique ou une notion du Budo.",
-          `Ta constance de ${user.gamification.streak || 0} jours est remarquable.`,
         ]}
       />
     </div>
