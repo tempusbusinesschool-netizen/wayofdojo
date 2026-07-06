@@ -28,33 +28,47 @@ const TABS = [
   { id: 'comprendre', label: 'Comprendre les grades' },
 ];
 
-const BELT_COLORS: Record<string, string> = {
-  '6e_kyu': '#FFFFFF',
-  '5e_kyu': '#EAB308',
-  '4e_kyu': '#F97316',
-  '3e_kyu': '#22C55E',
-  '2e_kyu': '#3B82F6',
-  '1er_kyu': '#92400E',
-  '1er_dan': '#1F2937',
-  '2e_dan': '#1F2937',
-  '3e_dan': '#1F2937',
-  '4e_dan': '#1F2937',
+// Mapping des grades vers les images de ceintures (fond transparent)
+const BELT_IMAGES: Record<string, { image: string; name: string }> = {
+  '6e_kyu': { image: '/images/belts/6e-kyu-white.png', name: 'blanche' },
+  '5e_kyu': { image: '/images/belts/5e-kyu-yellow.png', name: 'jaune' },
+  '4e_kyu': { image: '/images/belts/4e-kyu-orange.png', name: 'orange' },
+  '3e_kyu': { image: '/images/belts/3e-kyu-green.png', name: 'verte' },
+  '2e_kyu': { image: '/images/belts/2e-kyu-blue.png', name: 'bleue' },
+  '1er_kyu': { image: '/images/belts/1er-kyu-brown.png', name: 'marron' },
+  '1er_dan': { image: '/images/belts/1er-dan-black.png', name: 'noire' },
+  '2e_dan': { image: '/images/belts/1er-dan-black.png', name: 'noire' },
+  '3e_dan': { image: '/images/belts/1er-dan-black.png', name: 'noire' },
+  '4e_dan': { image: '/images/belts/1er-dan-black.png', name: 'noire' },
 };
 
-// Indicateur coloré simple pour les cartes
-const BeltColorBox = ({ color, isActive = false }: { color: string; isActive?: boolean }) => {
-  const isWhite = color === '#FFFFFF';
+// Composant d'image de ceinture avec fond de la couleur de page
+const BeltImage = ({ gradeId, isActive = false, size = 'md' }: { gradeId: string; isActive?: boolean; size?: 'sm' | 'md' | 'lg' }) => {
+  const beltInfo = BELT_IMAGES[gradeId] || BELT_IMAGES['6e_kyu'];
+  const sizeClasses = {
+    sm: 'w-16 h-16',
+    md: 'w-20 h-20',
+    lg: 'w-24 h-24'
+  };
+  
   return (
-    <div 
-      className={`w-16 h-16 rounded-xl flex items-center justify-center shadow-lg ${isActive ? 'ring-2 ring-orange-500' : ''}`}
-      style={{ 
-        background: isWhite 
-          ? 'linear-gradient(135deg, #fff 0%, #e5e5e5 100%)' 
-          : `linear-gradient(135deg, ${color} 0%, ${color}dd 100%)`,
-        border: isWhite ? '2px solid #d1d5db' : 'none'
-      }}
-    >
-      <span className="text-2xl">🥋</span>
+    <div className={`${sizeClasses[size]} relative flex items-center justify-center`}>
+      {/* Glow effect for active belt */}
+      {isActive && (
+        <div className="absolute inset-0 rounded-full bg-orange-500/40 blur-xl" />
+      )}
+      {/* Background with page color to fill transparent areas */}
+      <div 
+        className={`absolute inset-0 rounded-full bg-[#06101f] ${isActive ? 'ring-2 ring-orange-500' : ''}`}
+      />
+      {/* Belt image */}
+      <Image
+        src={beltInfo.image}
+        alt={`Ceinture ${beltInfo.name}`}
+        width={size === 'lg' ? 80 : size === 'md' ? 64 : 48}
+        height={size === 'lg' ? 80 : size === 'md' ? 64 : 48}
+        className="relative z-10 object-contain"
+      />
     </div>
   );
 };
@@ -66,12 +80,10 @@ const GradeAccordion: React.FC<{
   onToggle: () => void;
   isCurrent: boolean;
 }> = ({ grade, isExpanded, onToggle, isCurrent }) => {
-  const beltColor = BELT_COLORS[grade.id] || '#1F2937';
-  
   return (
     <div className={`bg-[#0d1628] rounded-xl border transition-all ${isCurrent ? 'border-orange-500/50' : 'border-slate-800'}`}>
       <button onClick={onToggle} className="w-full p-4 flex items-center gap-4 hover:bg-slate-800/30 transition-colors rounded-xl">
-        <BeltColorBox color={beltColor} isActive={isCurrent} />
+        <BeltImage gradeId={grade.id} isActive={isCurrent} size="md" />
         <div className="flex-1 text-left">
           <div className="flex items-center gap-2 mb-1">
             <span className="text-xl font-bold text-amber-300">{grade.nom_japonais}</span>
@@ -209,7 +221,7 @@ export default function CeinturesPage() {
                         <div className="flex items-center gap-2 text-sm text-slate-400"><Target className="w-4 h-4" />{currentGrade.heures_minimales}h minimum</div>
                       </div>
                     </div>
-                    <BeltColorBox color={BELT_COLORS[currentGrade.id]} isActive={true} />
+                    <BeltImage gradeId={currentUserGrade} isActive={true} size="lg" />
                   </div>
                   <div className="mt-4 pt-4 border-t border-slate-800">
                     <div className="flex justify-between text-xs text-slate-500 mb-1"><span>0 / 15 techniques maîtrisées</span><span>0%</span></div>
@@ -234,7 +246,7 @@ export default function CeinturesPage() {
                         <div className="flex items-center gap-2 text-sm text-slate-400"><Target className="w-4 h-4" />{nextGrade.heures_minimales}h minimum</div>
                       </div>
                     </div>
-                    <BeltColorBox color={BELT_COLORS[nextGrade.id]} />
+                    <BeltImage gradeId={nextGrade.id} size="lg" />
                   </div>
                 </motion.div>
 
@@ -254,12 +266,16 @@ export default function CeinturesPage() {
                 </motion.div>
               </div>
 
-              {/* CHEMIN EN AÏKIDO - Image exacte fournie */}
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="bg-[#0d1628] rounded-2xl p-5 border border-slate-800">
-                <p className="text-xs text-slate-500 uppercase tracking-wider mb-4">VOTRE CHEMIN EN AÏKIDO</p>
-                <div className="relative rounded-xl overflow-hidden">
-                  <Image src="/images/belts/ceintures-progression.png" alt="Progression des ceintures" width={1200} height={300} className="w-full h-auto" priority />
-                </div>
+              {/* MA PROGRESSION DE CEINTURE - Image exacte comme sur le dojo */}
+              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="relative rounded-2xl overflow-hidden">
+                <Image 
+                  src="/images/belts/ceintures-progression.png" 
+                  alt="Ma progression de ceinture" 
+                  width={1200} 
+                  height={400} 
+                  className="w-full h-auto rounded-2xl" 
+                  priority 
+                />
               </motion.div>
 
               {/* Stats */}
