@@ -513,15 +513,15 @@ const VirtualDojo: React.FC<VirtualDojoProps> = ({
       
       if (completedCount === 0) {
         setTanakaMessage(
-          `Bienvenue dans le Dojo Virtuel, ${displayName} ! 🎮\n\n` +
-          `Ici, vous allez apprendre en jouant ! Chaque jeu est un petit défi.\n\n` +
-          `Prenez votre temps et amusez-vous bien !`
+          `Bienvenue dans le Dojo Virtuel, ${displayName}.\n\n` +
+          `Cet espace propose des exercices interactifs pour approfondir votre pratique.\n\n` +
+          `Choisissez un module et progressez à votre rythme.`
         );
       } else {
         setTanakaMessage(
-          `Vous revoilà, ${displayName} ! 🌟\n\n` +
-          `Vous avez déjà terminé ${completedCount} jeu${completedCount > 1 ? 'x' : ''}.\n\n` +
-          `Continuez comme ça !`
+          `Content de vous revoir, ${displayName}.\n\n` +
+          `Vous avez complété ${completedCount} exercice${completedCount > 1 ? 's' : ''}.\n\n` +
+          `Votre persévérance est remarquable.`
         );
       }
       setIsTanakaSpeaking(true);
@@ -595,7 +595,7 @@ const VirtualDojo: React.FC<VirtualDojoProps> = ({
     setTotalKi(0);
     localStorage.removeItem('aikido_dojo_progress');
     setShowResetConfirm(false);
-    setTanakaMessage('Tu recommences le parcours. Amuse-toi bien !');
+    setTanakaMessage('Votre progression a été réinitialisée. Reprenez votre entraînement.');
     setIsTanakaSpeaking(true);
     setTimeout(() => setIsTanakaSpeaking(false), 3000);
   };
@@ -747,7 +747,7 @@ const VirtualDojo: React.FC<VirtualDojoProps> = ({
 
               <Button onClick={() => startGame(selectedGame)} className={`w-full bg-gradient-to-r ${selectedGame.color} hover:opacity-90 text-white font-bold py-4 text-lg`} data-testid="start-game-btn">
                 <Play className="w-5 h-5 mr-2" />
-                Commencer le jeu !
+                Commencer l'exercice
               </Button>
             </motion.div>
           ) : (
