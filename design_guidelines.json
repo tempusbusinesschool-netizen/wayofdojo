@@ -1,121 +1,100 @@
 {
-  "project_context": {
-    "name": "WayofDojo Redesign",
-    "domain": "SaaS gamified learning platform for Aikido",
+  "theme_and_archetype": {
+    "archetype": "1 (Organic & Earthy) mixed with 6 (Vibrant Play)",
     "theme": "Light",
-    "archetype": "Archetype 1: Organic & Earthy (Base) + Archetype 6: Vibrant Play (Kids Accent)",
-    "rationale": "Resolves the unclear audience split by using a highly visual, interactive split-screen strategy on the homepage and explicit tabs on auth, while keeping the overall aesthetic approachable, clear, and deeply thematic."
+    "description": "A modern, Japanese-inspired aesthetic ('Ma' minimalism) blended with Duolingo-style gamification. It balances the serene discipline of an Aikido dojo (warm woods, paper textures, generous whitespace) with engaging, vibrant gamification elements (streaks, XP, quests) to cater to both children and adults.",
+    "rationale": "Patients/students need calm and focus to learn, but kids need vivid rewards to stay engaged. The dual-mode design uses a unified earthy palette with scalable UI density."
   },
-  "design_system": {
-    "colors": {
-      "background_base": "#FDFBF7",
-      "surface_glass": "rgba(255, 255, 255, 0.8)",
-      "surface_solid": "#FFFFFF",
-      "text_primary": "#1C1917",
-      "text_secondary": "#57534E",
-      "primary_kids": "#E63946",
-      "primary_adults": "#0F172A",
-      "accent_gold": "#F4A261",
-      "accent_bamboo": "#2A9D8F",
-      "border": "#E7E5E4"
+  "typography": {
+    "primary_font": "Outfit",
+    "secondary_font": "DM Sans",
+    "usage": {
+      "headings": "Outfit, font-bold, tracking-tight. (e.g., text-4xl to text-6xl for main heroes). NEVER use Inter for headings.",
+      "body": "DM Sans, leading-relaxed. Highly legible, geometric but approachable.",
+      "labels_badges": "Outfit, uppercase, tracking-[0.2em], text-xs font-bold."
     },
-    "typography": {
-      "font_heading": "Outfit",
-      "font_body": "Manrope",
-      "h1": "text-4xl md:text-5xl lg:text-6xl tracking-tight font-bold",
-      "h2": "text-2xl md:text-3xl lg:text-4xl tracking-tight font-semibold",
-      "h3": "text-xl md:text-2xl font-medium",
-      "body": "text-base leading-relaxed",
-      "overline": "text-xs tracking-[0.2em] uppercase font-bold text-stone-500"
-    },
-    "spacing": {
-      "container": "max-w-7xl mx-auto px-6 lg:px-12",
-      "section": "py-24 lg:py-32",
-      "card_padding": "p-8 lg:p-12"
-    },
-    "surfaces": {
-      "glass_header": "backdrop-blur-xl bg-white/70 border-b border-stone-200/50 saturate-150",
-      "bento_card": "bg-white rounded-2xl border border-stone-200 shadow-sm hover:shadow-md transition-shadow",
-      "kids_card": "bg-white rounded-3xl border-2 border-stone-200 shadow-[0_8px_0_0_rgba(230,57,70,0.1)]",
-      "adults_card": "bg-white rounded-xl border border-stone-200 shadow-sm"
+    "hierarchy": {
+      "h1": "text-4xl md:text-5xl lg:text-6xl text-stone-900",
+      "h2": "text-2xl md:text-3xl text-stone-900",
+      "h3": "text-xl font-semibold text-stone-800",
+      "body_main": "text-base text-stone-700",
+      "body_small": "text-sm text-stone-500"
     }
   },
-  "media": {
-    "master_tanaka": {
-      "url": "/images/tanaka/portrait.png",
-      "description": "Official virtual mentor image. MANDATORY. Use in features preview and guide."
+  "color_palette": {
+    "backgrounds": {
+      "page": "#F7F5F0",
+      "card": "#FFFFFF",
+      "card_hover": "#F0EBE1"
     },
-    "dojo_hero_bg": {
-      "url": "https://images.unsplash.com/photo-1669612803668-2b2a770f9890",
-      "description": "Traditional dojo interior. Use as the left-pane background in Auth pages with a dark overlay."
+    "text": {
+      "primary": "#1C1917",
+      "secondary": "#57534E",
+      "inverse": "#FFFFFF"
     },
-    "adult_dojo": {
-      "url": "https://images.pexels.com/photos/8038507/pexels-photo-8038507.jpeg",
-      "description": "Adult martial artist. Use for the Samourai Confirme section."
+    "brand_and_accents": {
+      "primary_crimson": "#D32F2F",
+      "primary_crimson_hover": "#B71C1C",
+      "gamification_gold": "#F59E0B",
+      "success_bamboo": "#2E7D32",
+      "border_subtle": "#E7E5E4"
+    },
+    "rules": "Avoid large flat areas of pure white where possible; use the Washi paper/sand hex (#F7F5F0) to reduce eye strain. Use Crimson strictly for primary actions, alerts, and Dojo branding. Use Gold exclusively for streaks, Ki points, and level-ups."
+  },
+  "spacing_and_layout": {
+    "container_padding": "p-4 md:p-8 lg:p-12",
+    "bento_gap": "gap-4 md:gap-6 lg:gap-8",
+    "border_radius": "rounded-2xl for main cards, rounded-full for badges/pills",
+    "grid_modes": {
+      "adults": "Mode B (Control Room): Dense grid (grid-cols-1 md:grid-cols-3 lg:grid-cols-4), tight gaps (gap-4). Focus on metrics, technique lists, and efficiency.",
+      "kids": "Mode A (Tetris/Quest Path): Linear or asymmetrical grid (grid-cols-1 md:grid-cols-8), wide gaps (gap-8). Focus on the 'Quest Journey', large mascot illustrations, and single-focus tasks."
     }
   },
-  "pages": {
-    "homepage": {
-      "path": "/fr",
-      "strategy": "Interactive Split-Screen Layout for audience segmentation.",
-      "sections": [
-        {
-          "name": "Navigation",
-          "details": "Sticky Glassmorphism header. Left: Logo. Center: Accueil, Guide, Le Dojo. Right: Connexion (Text), Inscription (Button Primary). testid: 'main-nav'"
-        },
-        {
-          "name": "Hero Split",
-          "details": "Desktop: flex row with 2 children taking flex-1. Hovering expands flex-[1.5]. Mobile: flex-col. Left side: 'Jeune Samouraï (6-14 ans)', vibrant red CTA, playful bounce animations. Right side: 'Samouraï Confirmé (Adultes)', deep indigo CTA, zen fade-in. This solves the unclear profile choice immediately. testid: 'hero-split-section'"
-        },
-        {
-          "name": "Features Bento",
-          "details": "Mode A 'Tetris' Grid. Wide gaps (gap-8). 'Le Dojo Virtuel' (col-span-8), '214+ Techniques' (col-span-4), 'Maître Tanaka' overlap (col-span-full md:col-span-6). Focus on gamified UI elements inside the cards (progress rings, badges). testid: 'features-bento'"
-        },
-        {
-          "name": "Footer",
-          "details": "Massive contrast. Dark mode (bg-[#0F172A]). Large heading 'Prêt pour le premier Dan ?' testid: 'footer-main'"
-        }
-      ]
-    },
-    "auth": {
-      "path": "/fr/aikido/login & /fr/aikido/register",
-      "strategy": "Side-by-side Auth layout with explicit tabs for profile context.",
-      "sections": [
-        {
-          "name": "Visual Pane (Left)",
-          "details": "Hidden on mobile (hidden lg:block). Full height dojo_hero_bg with gradient overlay (bg-black/50). White text: 'Le chemin de la maîtrise commence ici.' testid: 'auth-visual'"
-        },
-        {
-          "name": "Form Pane (Right)",
-          "details": "Flex center. Top of form: Shadcn Tabs [Jeune Samouraï | Samouraï Confirmé] to explicitly set user context. Form inputs (Email Parent/Adulte, Mot de passe). Solid CTA button matching the tab's primary color. testid: 'auth-form-tabs'"
-        }
-      ]
-    },
-    "guide": {
-      "path": "/fr/aikido/guide",
-      "strategy": "Editorial layout for deep readability.",
-      "sections": [
-        {
-          "name": "Editorial Marquee",
-          "details": "react-fast-marquee. Text: 'LES 7 VERTUS DU BUDO • COURAGE • POLITESSE • SINCÉRITÉ • HONNEUR • MODESTIE • RESPECT • CONTRÔLE DE SOI'. Pale sand bg, slow speed. testid: 'virtues-marquee'"
-        },
-        {
-          "name": "Header",
-          "details": "Centered, 'Le Guide du Dojo'. Subtitle: 'Ressources pour le Jeune Samouraï et l'Adulte.' testid: 'guide-header'"
-        },
-        {
-          "name": "FAQ Accordion",
-          "details": "Shadcn Accordion mapped in a max-w-3xl container. Categories separated by clear headers. Generous p-6 padding inside items. testid: 'guide-accordion'"
-        }
-      ]
-    }
+  "components_strategy": {
+    "cards": "Neumorphic/Tactile variant. Flat white background (#FFFFFF) with a delicate 1px border (border-stone-200) and a very soft ambient shadow (shadow-sm). On hover: slightly lift (-translate-y-1) and increase shadow (shadow-md).",
+    "header": "Glassmorphism (Crystal variant). backdrop-blur-xl bg-[#F7F5F0]/80, sticky top, z-50. Must contain Logo, Streak Counter (Gold Flame), Ki Points, and Profile toggle.",
+    "sidebar": "Standard desktop sidebar, hidden on mobile (replaced by bottom nav or hamburger). Clean, left-aligned links with Lucide icons.",
+    "buttons": "Primary: bg-[#D32F2F] text-white hover:bg-[#B71C1C] rounded-xl. Secondary: bg-white text-stone-900 border-2 border-stone-200 hover:border-stone-300.",
+    "gamification_widgets": "Use thick, rounded progress bars (h-4 rounded-full bg-stone-200, fill with #F59E0B). Display streaks prominently."
   },
-  "components_instructions": {
-    "buttons": "Shadcn Button heavily customized. Adult: Sharp edges (rounded-md), Indigo. Kids: Pill shape (rounded-full), Red, soft chunky shadow.",
-    "tabs": "Shadcn Tabs used prominently on Auth to separate Parent/Kid flow from Adult flow.",
-    "accordion": "Shadcn Accordion for Guide page. Remove default borders, use custom soft shadow on open state."
+  "interactive_elements": {
+    "hover_states": "All clickable elements must change background or text color on hover. Example: hover:bg-stone-100 hover:text-crimson.",
+    "animations": "Use Framer Motion for page transitions (fade in, slight upward translate). Stagger list items (Techniques, Virtues). Add a subtle 'pulse' animation to the active Quest or Daily Streak if in danger of breaking.",
+    "testing_attributes": "CRITICAL: All interactive elements must have a 'data-testid' attribute (e.g., data-testid='nav-link-dojo', data-testid='quest-card-start', data-testid='mode-toggle', data-testid='master-tanaka-chat')."
   },
-  "testing_requirements": {
-    "rules": "All interactive elements MUST have data-testid attributes (e.g., data-testid='kid-profile-select', data-testid='login-submit-button')."
-  }
+  "media_and_assets": {
+    "images": {
+      "master_tanaka": {
+        "url": "/images/tanaka/portrait.png",
+        "description": "Official avatar of Master Tanaka. Use in a floating chat widget or as a mentor providing daily quests/advice.",
+        "usage": "floating_mentor, quest_giver"
+      },
+      "dojo_background": {
+        "url": "https://images.pexels.com/photos/8038507/pexels-photo-8038507.jpeg",
+        "description": "Traditional dojo interior with tatami and martial artist.",
+        "usage": "hero_background, virtual_dojo_hub_cover"
+      },
+      "bamboo_texture": {
+        "url": "https://images.pexels.com/photos/36165506/pexels-photo-36165506.jpeg",
+        "description": "Woven bamboo texture.",
+        "usage": "subtle_section_background, card_accents (with low opacity)"
+      }
+    },
+    "icons": "Use 'lucide-react'. Recommended: Swords (Dojo), Flame (Streak), Map (Quests), Target (Techniques), Medal (Belts), Scroll (Virtues)."
+  },
+  "page_specific_guidelines": {
+    "dashboard_dojo": "Include a prominent 'Mode Toggle' (Jeune Samouraï vs Confirmé). Kids Mode: large central quest path, Master Tanaka giving instructions, big 'Play Next Game' CTA. Adult Mode: Bento grid of recent techniques, training stats, upcoming belt requirements.",
+    "techniques": "Cardless or dense list layout for adults with advanced filtering (tags: Ikkyo, Nikyo, etc.). For kids, show locked/unlocked visual states (grayed out vs vibrant).",
+    "virtual_dojo": "The 21 mini-games should be presented like a level map or a vibrant grid of arcade cabinets/dojo rooms.",
+    "belts": "Use vertical timeline (The Path). Crimson for active belt, Gold for next goal. Show XP required."
+  },
+  "instructions_to_main_agent": [
+    "Ensure all generated components are in standard Next.js React (.js/.jsx) syntax, heavily utilizing Tailwind CSS.",
+    "Create the Dashboard UI with a state variable `isKidsMode` (boolean). Render the 'Quest Path' (Mode A) when true, and 'Bento Grid' (Mode B) when false.",
+    "Integrate Shadcn UI components but heavily customize them. Strip away the default 'Vercel' look (e.g., replace default gray borders with our Washi/Stone palette).",
+    "Implement the 'Master Tanaka' feature as a sticky, absolute, or floating element that provides context-aware help or daily quests.",
+    "NEVER use placeholder text for image URLs. ONLY use the provided URLs in the media_and_assets section.",
+    "Strictly follow the color palette. Do not use generic tailwind blue/teal unless necessary for specific alerts.",
+    "Add data-testid to EVERY button, link, and major interactive card."
+  ]
 }
