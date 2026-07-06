@@ -29,22 +29,58 @@ const TECHNIQUE_IMAGES: Record<string, string> = {
   'mae_ukemi_debout': '/images/techniques/mae-ukemi.png',
   'ushiro_ukemi': '/images/techniques/ushiro-ukemi.png',
   'yoko_ukemi': '/images/techniques/yoko-ukemi.png',
-  // Tai Sabaki
-  'irimi': '/images/techniques/tai-sabaki.png',
-  'tenkan': '/images/techniques/tai-sabaki.png',
-  'irimi_tenkan': '/images/techniques/tai-sabaki.png',
-  // Ikkyo
+  
+  // Tai Sabaki (Déplacements)
+  'irimi': '/images/techniques/irimi.png',
+  'tenkan': '/images/techniques/tenkan.png',
+  'irimi_tenkan': '/images/techniques/irimi-tenkan.png',
+  
+  // Ikkyo (1ère technique)
   'ikkyo_omote': '/images/techniques/ikkyo-omote.png',
   'ikkyo_ura': '/images/techniques/ikkyo-ura.png',
+  'suwari_ikkyo': '/images/techniques/ikkyo-omote.png',
+  'ushiro_ryote_ikkyo': '/images/techniques/ikkyo-ura.png',
+  
+  // Nikkyo (2e technique)
+  'nikyo_omote': '/images/techniques/nikkyo-omote.png',
+  'nikyo_ura': '/images/techniques/nikkyo-ura.png',
+  'suwari_nikyo': '/images/techniques/nikkyo-omote.png',
+  
+  // Sankyo (3e technique)
+  'sankyo_omote': '/images/techniques/sankyo-omote.png',
+  'sankyo_ura': '/images/techniques/sankyo-ura.png',
+  
+  // Yonkyo (4e technique)
+  'yonkyo_omote': '/images/techniques/yonkyo-omote.png',
+  'yonkyo_ura': '/images/techniques/yonkyo-ura.png',
+  
+  // Gokyo (5e technique)
+  'gokyo': '/images/techniques/gokkyo-omote.png',
+  
   // Shiho Nage
   'shiho_nage_omote': '/images/techniques/shiho-nage.png',
-  'shiho_nage_ura': '/images/techniques/shiho-nage.png',
+  'shiho_nage_ura': '/images/techniques/shiho-nage-ura.png',
+  'ushiro_ryote_shiho': '/images/techniques/shiho-nage-ura.png',
+  'hanmi_shiho': '/images/techniques/shiho-nage.png',
+  
   // Irimi Nage
   'irimi_nage': '/images/techniques/irimi-nage.png',
+  'suwari_irimi': '/images/techniques/irimi-nage-ura.png',
+  'hanmi_irimi': '/images/techniques/irimi-nage-ura.png',
+  
+  // Kote Gaeshi
+  'kote_gaeshi': '/images/techniques/kote-gaeshi.png',
+  
+  // Kaiten Nage
+  'kaiten_nage_uchi': '/images/techniques/kaiten-nage-ura.png',
+  'kaiten_nage_soto': '/images/techniques/kaiten-nage-ura.png',
+  'hanmi_kaiten': '/images/techniques/kaiten-nage-ura.png',
+  
   // Kokyu
   'kokyu_ho': '/images/techniques/kokyu-ho.png',
-  'kokyu_nage_1': '/images/techniques/kokyu-ho.png',
-  'kokyu_nage_2': '/images/techniques/kokyu-ho.png',
+  'kokyu_nage_1': '/images/techniques/kokyu-nage-ura.png',
+  'kokyu_nage_2': '/images/techniques/kokyu-nage-ura.png',
+  
   // Shikko
   'shikko': '/images/techniques/shikko.png',
 };
