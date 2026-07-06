@@ -241,6 +241,11 @@ export const TECHNIQUES_BY_KYU: Record<string, KyuProgram> = {
         icon: "🪵",
         techniques: [
           { id: "jo_suburi", name: "Jo Suburi", description: "Frappes de base au bâton", difficulty: 3 },
+          { id: "jo_jodan_uchi", name: "Jo Jodan Uchi", description: "Frappe haute au Jo", difficulty: 3 },
+          { id: "jo_chudan_uchi", name: "Jo Chudan Uchi", description: "Frappe moyenne au Jo", difficulty: 3 },
+          { id: "jo_gedan_uchi", name: "Jo Gedan Uchi", description: "Frappe basse au Jo", difficulty: 3 },
+          { id: "jo_mae_tsuki", name: "Jo Mae Tsuki", description: "Pique avant au Jo", difficulty: 3 },
+          { id: "jo_yokomen_uchi", name: "Jo Yokomen Uchi", description: "Frappe latérale au Jo", difficulty: 3 },
           { id: "jo_awase", name: "Jo Awase", description: "Travail en duo au Jo", difficulty: 3 },
           { id: "jo_kata", name: "Jo Kata", description: "Formes codifiées au Jo", difficulty: 4 },
           { id: "jo_dori", name: "Jo Dori", description: "Désarmement du Jo", difficulty: 4 },
@@ -251,6 +256,11 @@ export const TECHNIQUES_BY_KYU: Record<string, KyuProgram> = {
         icon: "⚔️",
         techniques: [
           { id: "bokken_suburi", name: "Bokken Suburi", description: "Frappes de base au sabre", difficulty: 3 },
+          { id: "bokken_jodan_uchi", name: "Bokken Jodan Uchi", description: "Frappe haute au Bokken", difficulty: 3 },
+          { id: "bokken_chudan_uchi", name: "Bokken Chudan Uchi", description: "Frappe moyenne au Bokken", difficulty: 3 },
+          { id: "bokken_gedan_uchi", name: "Bokken Gedan Uchi", description: "Frappe basse au Bokken", difficulty: 3 },
+          { id: "bokken_mae_tsuki", name: "Bokken Mae Tsuki", description: "Pique avant au Bokken", difficulty: 3 },
+          { id: "bokken_yokomen_uchi", name: "Bokken Yokomen Uchi", description: "Frappe latérale au Bokken", difficulty: 3 },
           { id: "bokken_awase", name: "Bokken Awase", description: "Travail en duo au Bokken", difficulty: 3 },
           { id: "ken_tai_jo", name: "Ken Tai Jo", description: "Sabre contre bâton", difficulty: 4 },
           { id: "kumitachi", name: "Kumitachi", description: "Combat codifié au sabre", difficulty: 4 },

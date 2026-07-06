@@ -173,12 +173,23 @@ const TECHNIQUE_IMAGES: Record<string, string> = {
   // ═══════════════════════════════════════════════════════════════
   // Jo (Bâton)
   'jo_suburi': '/images/techniques/jo-suburi.png',
+  'jo_jodan_uchi': '/images/techniques/jo-jodan-uchi.png',
+  'jo_chudan_uchi': '/images/techniques/jo-jodan-uchi.png',
+  'jo_gedan_uchi': '/images/techniques/jo-gedan-uchi.png',
+  'jo_mae_tsuki': '/images/techniques/jo-mae-tsuki.png',
+  'jo_yokomen_uchi': '/images/techniques/jo-yokomen-uchi.png',
+  'jo_jodan_tsuki': '/images/techniques/jo-jodan-tsuki.png',
   'jo_awase': '/images/techniques/jo-suburi.png',
   'jo_kata': '/images/techniques/jo-suburi.png',
   'jo_dori': '/images/techniques/jo-suburi.png',
   
   // Bokken (Sabre)
   'bokken_suburi': '/images/techniques/bokken-suburi.png',
+  'bokken_jodan_uchi': '/images/techniques/bokken-jodan-uchi.png',
+  'bokken_chudan_uchi': '/images/techniques/bokken-chudan-uchi.png',
+  'bokken_gedan_uchi': '/images/techniques/bokken-gedan-uchi.png',
+  'bokken_mae_tsuki': '/images/techniques/bokken-mae-tsuki.png',
+  'bokken_yokomen_uchi': '/images/techniques/bokken-yokomen-uchi.png',
   'bokken_awase': '/images/techniques/bokken-suburi.png',
   'ken_tai_jo': '/images/techniques/bokken-suburi.png',
   'kumitachi': '/images/techniques/bokken-suburi.png',
