@@ -5,14 +5,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { 
-  BookOpen, Search, ChevronDown, Star, Eye,
-  Home, HelpCircle, CheckCircle2, BookMarked, Sparkles
+  BookOpen, Search, ChevronDown, Star, Eye, X, Play,
+  Home, HelpCircle, CheckCircle2, BookMarked, Sparkles, Award
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import MaitreTanaka from '@/components/MaitreTanaka';
 import { AdultSidebar } from '@/components/adult-layout/AdultSidebar';
 import { AdultHeader } from '@/components/adult-layout/AdultHeader';
-import TECHNIQUES_BY_KYU, { KYU_ORDER, getTechniquesByKyu } from '@/constants/techniquesByKyu';
+import TECHNIQUES_BY_KYU, { KYU_ORDER, getTechniquesByKyu, ExtendedTechnique } from '@/constants/techniquesByKyu';
 
 /**
  * ═══════════════════════════════════════════════════════════════════════════════
@@ -65,6 +65,16 @@ export default function TechniquesPage() {
   const [masteryLevels, setMasteryLevels] = useState<Record<string, string>>(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('wayofdojo_mastery');
+      return saved ? JSON.parse(saved) : {};
+    }
+    return {};
+  });
+  
+  // État pour la technique sélectionnée (modal de détail)
+  const [selectedTechnique, setSelectedTechnique] = useState<ExtendedTechnique | null>(null);
+  const [favorites, setFavorites] = useState<Record<string, boolean>>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('wayofdojo_favorites');
       return saved ? JSON.parse(saved) : {};
     }
     return {};
@@ -143,6 +153,25 @@ export default function TechniquesPage() {
     const level = masteryLevels[techniqueId] || 'not_started';
     const config = MASTERY_LEVELS.find(l => l.id === level);
     return config;
+  };
+
+  // Toggle favori
+  const toggleFavorite = (techniqueId: string) => {
+    const newFavorites = { ...favorites, [techniqueId]: !favorites[techniqueId] };
+    setFavorites(newFavorites);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('wayofdojo_favorites', JSON.stringify(newFavorites));
+    }
+  };
+
+  // Ouvrir le détail d'une technique
+  const openTechniqueDetail = (technique: ExtendedTechnique) => {
+    setSelectedTechnique(technique);
+  };
+
+  // Fermer le modal
+  const closeTechniqueDetail = () => {
+    setSelectedTechnique(null);
   };
 
   return (
@@ -386,7 +415,8 @@ export default function TechniquesPage() {
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ delay: 0.35 + index * 0.05 }}
-                      className="bg-gradient-to-br from-orange-500/10 to-amber-500/5 rounded-xl p-4 border border-orange-500/30 hover:border-orange-500/50 transition-all"
+                      onClick={() => openTechniqueDetail(technique)}
+                      className="bg-gradient-to-br from-orange-500/10 to-amber-500/5 rounded-xl p-4 border border-orange-500/30 hover:border-orange-500/50 transition-all cursor-pointer hover:scale-[1.02]"
                     >
                       <h4 className="font-bold text-white mb-1">{technique.name}</h4>
                       <p className="text-slate-400 text-sm mb-2">{technique.description}</p>
@@ -456,19 +486,22 @@ export default function TechniquesPage() {
                               <div
                                 key={technique.id}
                                 className={`
-                                  relative p-4 rounded-xl border transition-all hover:scale-[1.01]
+                                  relative p-4 rounded-xl border transition-all hover:scale-[1.02] cursor-pointer
                                   ${mastery === 'mastered' 
                                     ? 'bg-emerald-500/10 border-emerald-500/30' 
-                                    : 'bg-slate-800/50 border-slate-700 hover:border-slate-600'
+                                    : 'bg-slate-800/50 border-slate-700 hover:border-cyan-500/50'
                                   }
                                 `}
                               >
-                                {/* Nom et description */}
-                                <h5 className="font-bold text-white mb-1">{technique.name}</h5>
-                                <p className="text-slate-400 text-xs mb-3">{technique.description}</p>
-                                
-                                {/* Catégorie + Kyu */}
-                                <p className="text-slate-500 text-[10px] mb-3">{category.name} · {currentKyuData.name}</p>
+                                {/* Zone cliquable principale */}
+                                <div onClick={() => openTechniqueDetail(technique)}>
+                                  {/* Nom et description */}
+                                  <h5 className="font-bold text-white mb-1">{technique.name}</h5>
+                                  <p className="text-slate-400 text-xs mb-3">{technique.description}</p>
+                                  
+                                  {/* Catégorie + Kyu */}
+                                  <p className="text-slate-500 text-[10px] mb-3">{category.name} · {currentKyuData.name}</p>
+                                </div>
                                 
                                 {/* Badge statut + Actions */}
                                 <div className="flex items-center justify-between">
@@ -478,22 +511,30 @@ export default function TechniquesPage() {
                                   
                                   <div className="flex gap-1">
                                     {/* Bouton favori */}
-                                    <button className="p-1.5 rounded-lg hover:bg-slate-700 text-slate-500 hover:text-amber-400 transition-colors">
-                                      <Star className="w-4 h-4" />
+                                    <button 
+                                      onClick={(e) => { e.stopPropagation(); toggleFavorite(technique.id); }}
+                                      className={`p-1.5 rounded-lg hover:bg-slate-700 transition-colors ${
+                                        favorites[technique.id] ? 'text-amber-400' : 'text-slate-500 hover:text-amber-400'
+                                      }`}
+                                    >
+                                      <Star className={`w-4 h-4 ${favorites[technique.id] ? 'fill-amber-400' : ''}`} />
                                     </button>
                                     {/* Bouton voir */}
-                                    <button className="p-1.5 rounded-lg hover:bg-slate-700 text-slate-500 hover:text-cyan-400 transition-colors">
+                                    <button 
+                                      onClick={() => openTechniqueDetail(technique)}
+                                      className="p-1.5 rounded-lg hover:bg-slate-700 text-slate-500 hover:text-cyan-400 transition-colors"
+                                    >
                                       <Eye className="w-4 h-4" />
                                     </button>
                                   </div>
                                 </div>
 
-                                {/* Boutons de changement de maîtrise (au survol) */}
+                                {/* Boutons de changement de maîtrise */}
                                 <div className="mt-3 pt-3 border-t border-slate-700 flex gap-1">
                                   {MASTERY_LEVELS.filter(l => l.id !== 'all').map((level) => (
                                     <button
                                       key={level.id}
-                                      onClick={() => handleMasteryChange(technique.id, level.id)}
+                                      onClick={(e) => { e.stopPropagation(); handleMasteryChange(technique.id, level.id); }}
                                       className={`
                                         flex-1 py-1.5 rounded text-[10px] font-medium transition-all
                                         ${mastery === level.id
@@ -544,6 +585,166 @@ export default function TechniquesPage() {
           "Les techniques sont le cœur de l'Aïkido. Pratique chaque jour !",
         ]}
       />
+
+      {/* ═══════════════════════════════════════════════════════════════
+          MODAL DÉTAIL TECHNIQUE
+          ═══════════════════════════════════════════════════════════════ */}
+      <AnimatePresence>
+        {selectedTechnique && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+            onClick={closeTechniqueDetail}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              className="bg-[#0d1628] rounded-2xl border border-slate-700 w-full max-w-2xl max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Header du modal */}
+              <div className="relative p-6 border-b border-slate-700">
+                <button
+                  onClick={closeTechniqueDetail}
+                  className="absolute top-4 right-4 p-2 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white transition-colors"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+                
+                <div className="flex items-start gap-4">
+                  <div className="w-16 h-16 rounded-xl bg-cyan-500/20 flex items-center justify-center">
+                    <BookOpen className="w-8 h-8 text-cyan-400" />
+                  </div>
+                  <div className="flex-1">
+                    <h2 className="text-2xl font-bold text-white mb-1">{selectedTechnique.name}</h2>
+                    <p className="text-slate-400">{selectedTechnique.description}</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Corps du modal */}
+              <div className="p-6 space-y-6">
+                {/* Informations générales */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="bg-slate-800/50 rounded-xl p-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Award className="w-4 h-4 text-cyan-400" />
+                      <span className="text-slate-400 text-sm">Catégorie</span>
+                    </div>
+                    <p className="text-white font-medium">{selectedTechnique.category}</p>
+                  </div>
+                  <div className="bg-slate-800/50 rounded-xl p-4">
+                    <div className="flex items-center gap-2 mb-2">
+                      <BookMarked className="w-4 h-4 text-amber-400" />
+                      <span className="text-slate-400 text-sm">Niveau</span>
+                    </div>
+                    <p className="text-white font-medium">{selectedTechnique.kyu} - {selectedTechnique.belt}</p>
+                  </div>
+                </div>
+
+                {/* Statut actuel */}
+                <div>
+                  <h3 className="text-white font-semibold mb-3">Mon statut</h3>
+                  <div className="flex gap-2">
+                    {MASTERY_LEVELS.filter(l => l.id !== 'all').map((level) => {
+                      const currentLevel = masteryLevels[selectedTechnique.id] || 'not_started';
+                      const isActive = currentLevel === level.id;
+                      
+                      return (
+                        <button
+                          key={level.id}
+                          onClick={() => handleMasteryChange(selectedTechnique.id, level.id)}
+                          className={`
+                            flex-1 py-3 px-4 rounded-xl text-sm font-medium transition-all border
+                            ${isActive
+                              ? `${level.activeBg} text-white border-transparent`
+                              : `bg-slate-800 ${level.color} border-slate-700 hover:border-slate-600`
+                            }
+                          `}
+                        >
+                          {level.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Description détaillée */}
+                <div>
+                  <h3 className="text-white font-semibold mb-3">Description</h3>
+                  <div className="bg-slate-800/50 rounded-xl p-4">
+                    <p className="text-slate-300 leading-relaxed">
+                      {selectedTechnique.description}
+                      {selectedTechnique.type && (
+                        <span className="block mt-2 text-sm text-slate-400">
+                          Type: <span className="text-cyan-400">{selectedTechnique.type}</span>
+                        </span>
+                      )}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Points clés (simulé) */}
+                <div>
+                  <h3 className="text-white font-semibold mb-3">Points clés</h3>
+                  <ul className="space-y-2">
+                    <li className="flex items-start gap-2 text-slate-300">
+                      <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>Maintenir une posture stable et centrée</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-slate-300">
+                      <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>Respirer calmement tout au long du mouvement</span>
+                    </li>
+                    <li className="flex items-start gap-2 text-slate-300">
+                      <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>Garder le regard dirigé vers l&apos;avant</span>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Vidéo placeholder */}
+                <div>
+                  <h3 className="text-white font-semibold mb-3">Vidéo démonstration</h3>
+                  <div className="bg-slate-800/50 rounded-xl p-8 flex flex-col items-center justify-center border border-dashed border-slate-600">
+                    <div className="w-16 h-16 rounded-full bg-cyan-500/20 flex items-center justify-center mb-4">
+                      <Play className="w-8 h-8 text-cyan-400" />
+                    </div>
+                    <p className="text-slate-400 text-sm text-center">
+                      Vidéo de démonstration à venir
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Footer du modal */}
+              <div className="p-6 border-t border-slate-700 flex items-center justify-between">
+                <button
+                  onClick={() => toggleFavorite(selectedTechnique.id)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-colors ${
+                    favorites[selectedTechnique.id]
+                      ? 'bg-amber-500/20 text-amber-400'
+                      : 'bg-slate-800 text-slate-400 hover:text-amber-400'
+                  }`}
+                >
+                  <Star className={`w-5 h-5 ${favorites[selectedTechnique.id] ? 'fill-amber-400' : ''}`} />
+                  {favorites[selectedTechnique.id] ? 'Dans mes favoris' : 'Ajouter aux favoris'}
+                </button>
+                
+                <Button
+                  onClick={closeTechniqueDetail}
+                  className="bg-cyan-600 hover:bg-cyan-500 text-white"
+                >
+                  Fermer
+                </Button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
