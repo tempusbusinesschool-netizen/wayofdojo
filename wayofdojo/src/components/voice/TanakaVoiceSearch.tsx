@@ -30,13 +30,13 @@ interface VoiceSearchFilters {
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || '';
 
-// Phrases de Tanaka pour différentes situations
+// Phrases de Tanaka pour différentes situations (version adulte)
 const TANAKA_PHRASES = {
-  listening: "Je t'écoute, jeune samouraï...",
-  processing: "Laisse-moi réfléchir...",
-  error: "Pardonne-moi, je n'ai pas bien compris. Peux-tu répéter ?",
-  noResults: "Je ne trouve pas de technique correspondant à ta demande.",
-  greeting: "Que souhaites-tu apprendre aujourd'hui ?",
+  listening: "Je vous écoute...",
+  processing: "Laissez-moi réfléchir...",
+  error: "Pardonnez-moi, je n'ai pas bien compris. Pouvez-vous répéter ?",
+  noResults: "Je ne trouve pas de technique correspondant à votre demande.",
+  greeting: "Que souhaitez-vous apprendre aujourd'hui ?",
 };
 
 export const TanakaVoiceSearch: React.FC<TanakaVoiceSearchProps> = ({
@@ -56,17 +56,38 @@ export const TanakaVoiceSearch: React.FC<TanakaVoiceSearchProps> = ({
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
 
+  // Fonction pour arrêter l'audio et le stream
+  const stopAllAudio = useCallback(() => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach(track => track.stop());
+      streamRef.current = null;
+    }
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
+      mediaRecorderRef.current.stop();
+    }
+    setIsPlaying(false);
+    setIsListening(false);
+  }, []);
+
   // Cleanup on unmount
   useEffect(() => {
     return () => {
-      if (streamRef.current) {
-        streamRef.current.getTracks().forEach(track => track.stop());
-      }
-      if (audioRef.current) {
-        audioRef.current.pause();
-      }
+      stopAllAudio();
     };
-  }, []);
+  }, [stopAllAudio]);
+
+  // Gestionnaire de fermeture qui arrête l'audio
+  const handleClose = useCallback(() => {
+    stopAllAudio();
+    if (onClose) {
+      onClose();
+    }
+  }, [onClose, stopAllAudio]);
 
   // Parse la commande vocale pour extraire les filtres
   const parseVoiceCommand = useCallback((text: string): VoiceSearchFilters => {
@@ -285,8 +306,9 @@ export const TanakaVoiceSearch: React.FC<TanakaVoiceSearchProps> = ({
         </div>
         {onClose && (
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="p-2 rounded-full bg-white/20 hover:bg-white/30 transition-colors"
+            data-testid="tanaka-close-button"
           >
             <X className="w-5 h-5 text-white" />
           </button>

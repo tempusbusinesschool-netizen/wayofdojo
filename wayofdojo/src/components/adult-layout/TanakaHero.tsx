@@ -94,7 +94,7 @@ export const TanakaHero: React.FC<TanakaHeroProps> = ({
           >
             &quot;La vraie victoire est la victoire sur soi-même.
             <br />
-            Continue ton chemin, jeune Samouraï !&quot;
+            Continuez votre chemin vers la maîtrise.&quot;
           </motion.p>
 
           <motion.div

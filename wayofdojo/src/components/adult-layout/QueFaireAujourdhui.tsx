@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 
@@ -27,7 +28,8 @@ export const QueFaireAujourdhui: React.FC<QueFaireAujourdhuiProps> = ({
       description: 'Entraîne-toi avec Maître Tanaka et progresse pas à pas.',
       href: `/${locale}/${sport}/dojo-virtuel`,
       gradient: 'from-violet-600/90 to-purple-800/90',
-      bgImage: 'linear-gradient(135deg, #5b21b6 0%, #3b0764 100%)',
+      bgImage: '/images/backgrounds/dojo-virtuel-sunset.png',
+      hasCustomImage: true,
     },
     {
       id: 'technique-jour',
@@ -36,6 +38,7 @@ export const QueFaireAujourdhui: React.FC<QueFaireAujourdhuiProps> = ({
       href: `/${locale}/${sport}/techniques`,
       gradient: 'from-amber-700/90 to-orange-900/90',
       bgImage: 'linear-gradient(135deg, #92400e 0%, #451a03 100%)',
+      hasCustomImage: false,
     },
     {
       id: 'defi-jour',
@@ -44,6 +47,7 @@ export const QueFaireAujourdhui: React.FC<QueFaireAujourdhuiProps> = ({
       href: `/${locale}/${sport}/dojo`,
       gradient: 'from-orange-500/90 to-amber-700/90',
       bgImage: 'linear-gradient(135deg, #c2410c 0%, #78350f 100%)',
+      hasCustomImage: false,
     },
   ];
 
@@ -62,21 +66,33 @@ export const QueFaireAujourdhui: React.FC<QueFaireAujourdhuiProps> = ({
             <Link href={card.href}>
               <div 
                 className="group relative overflow-hidden rounded-2xl h-[180px] transition-all hover:scale-[1.02] hover:shadow-xl"
-                style={{ background: card.bgImage }}
+                style={!card.hasCustomImage ? { background: card.bgImage } : undefined}
                 data-testid={`card-${card.id}`}
               >
-                {/* Illustration/Icon en haut */}
-                <div className="absolute top-4 left-4 right-4 h-[80px] bg-white/5 rounded-xl flex items-center justify-center">
-                  {card.id === 'dojo-virtuel' && (
-                    <div className="text-5xl opacity-80">🥋</div>
-                  )}
-                  {card.id === 'technique-jour' && (
-                    <div className="text-5xl opacity-80">📚</div>
-                  )}
-                  {card.id === 'defi-jour' && (
-                    <div className="text-5xl opacity-80">🎯</div>
-                  )}
-                </div>
+                {/* Image de fond pour le dojo virtuel */}
+                {card.hasCustomImage && (
+                  <>
+                    <Image 
+                      src={card.bgImage} 
+                      alt={card.title} 
+                      fill 
+                      className="object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+                  </>
+                )}
+                
+                {/* Illustration/Icon en haut (seulement pour les cartes sans image custom) */}
+                {!card.hasCustomImage && (
+                  <div className="absolute top-4 left-4 right-4 h-[80px] bg-white/5 rounded-xl flex items-center justify-center">
+                    {card.id === 'technique-jour' && (
+                      <div className="text-5xl opacity-80">📚</div>
+                    )}
+                    {card.id === 'defi-jour' && (
+                      <div className="text-5xl opacity-80">🎯</div>
+                    )}
+                  </div>
+                )}
                 
                 {/* Contenu texte */}
                 <div className="absolute bottom-0 left-0 right-0 p-4">

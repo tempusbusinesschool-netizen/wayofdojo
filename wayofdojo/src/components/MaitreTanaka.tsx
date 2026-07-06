@@ -83,7 +83,7 @@ export const MaitreTanaka: React.FC<MaitreTanakaProps> = ({
     if (isOpen && !sessionId) {
       setSessionId(`tanaka_${Date.now()}`);
       
-      const welcomeText = "Bienvenue dans mon dojo virtuel, jeune samouraï ! 🥋 Je suis Maître Tanaka. Appuie sur le microphone pour me parler.";
+      const welcomeText = "Bienvenue dans mon dojo virtuel ! 🥋 Je suis Maître Tanaka. Appuyez sur le microphone pour me parler.";
       setConversation([{
         role: 'master',
         text: welcomeText,
@@ -190,7 +190,7 @@ export const MaitreTanaka: React.FC<MaitreTanakaProps> = ({
         ...prev,
         { 
           role: 'master', 
-          text: "Pardonne-moi, jeune samouraï, mes vieilles oreilles fatiguent. Peux-tu répéter ?", 
+          text: "Pardonnez-moi, mes vieilles oreilles fatiguent. Pouvez-vous répéter ?", 
           audio: null 
         }
       ]);
@@ -282,7 +282,7 @@ export const MaitreTanaka: React.FC<MaitreTanakaProps> = ({
         ...prev,
         { 
           role: 'master', 
-          text: "Pardonne-moi, jeune samouraï, je n'ai pas bien compris. Peux-tu reformuler ?", 
+          text: "Pardonnez-moi, je n'ai pas bien compris. Pouvez-vous reformuler ?", 
           audio: null 
         }
       ]);
