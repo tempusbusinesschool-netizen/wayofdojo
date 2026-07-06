@@ -401,20 +401,25 @@ export default function DojoPage() {
         )}
       </main>
 
-      {/* Maître Tanaka - Only for Junior mode */}
-      {isJeuneSamourai && (
-        <MaitreTanaka 
-          isJeuneSamourai={isJeuneSamourai}
-          messages={[
-            `Super ${user.firstName} ! Tu as ${user.gamification.xp} XP ! 🌟`,
-            "Continue comme ça, tu progresses bien !",
-            "N'oublie pas tes défis du jour !",
-            "Le respect est la première vertu du Samouraï.",
-            "Entraîne-toi dur et tu deviendras Maître !",
-            `Tu as une série de ${user.gamification.streak || 0} jours ! 🔥`,
-          ]}
-        />
-      )}
+      {/* Maître Tanaka - Bouton flottant disponible pour tous les profils */}
+      <MaitreTanaka 
+        isJeuneSamourai={isJeuneSamourai}
+        messages={isJeuneSamourai ? [
+          `Super ${user.firstName} ! Tu as ${user.gamification.xp} XP ! 🌟`,
+          "Continue comme ça, tu progresses bien !",
+          "N'oublie pas tes défis du jour !",
+          "Le respect est la première vertu du Samouraï.",
+          "Entraîne-toi dur et tu deviendras Maître !",
+          `Tu as une série de ${user.gamification.streak || 0} jours ! 🔥`,
+        ] : [
+          `Bienvenue ${user.firstName}, tu comptes ${user.gamification.xp} XP.`,
+          "La voie du Budo est un chemin de toute une vie.",
+          "Chaque technique polit un peu plus le caractère.",
+          "L'humilité et la persévérance sont tes meilleurs alliés.",
+          "Interroge-moi sur une technique ou une notion du Budo.",
+          `Ta constance de ${user.gamification.streak || 0} jours est remarquable.`,
+        ]}
+      />
     </div>
   );
 }
