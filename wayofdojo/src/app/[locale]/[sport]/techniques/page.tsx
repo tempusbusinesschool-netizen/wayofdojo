@@ -1,46 +1,67 @@
 'use client';
 
 import React, { useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
-import { useParams, useRouter } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { 
-  BookOpen, ChevronLeft, ChevronRight,
-  Swords, Search,
-  ArrowLeft, Home, HelpCircle
+  BookOpen, Search, ChevronDown, Star, Eye,
+  Home, HelpCircle, CheckCircle2, BookMarked, Sparkles
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import MaitreTanaka from '@/components/MaitreTanaka';
-import { TanakaWelcome, TANAKA_MESSAGES } from '@/components/TanakaWelcome';
-import TECHNIQUES_BY_KYU, { KYU_ORDER, getTechniquesByKyu, TOTAL_TECHNIQUES } from '@/constants/techniquesByKyu';
+import { AdultSidebar } from '@/components/adult-layout/AdultSidebar';
+import { AdultHeader } from '@/components/adult-layout/AdultHeader';
+import TECHNIQUES_BY_KYU, { KYU_ORDER, getTechniquesByKyu } from '@/constants/techniquesByKyu';
 
-// Configuration des ceintures
-const BELT_CONFIG: Record<string, { label: string; emoji: string; gradient: string; textColor: string }> = {
-  '6e_kyu': { label: 'Blanche', emoji: '⚪', gradient: 'from-gray-200 to-gray-400', textColor: 'text-slate-800' },
-  '5e_kyu': { label: 'Jaune', emoji: '🟡', gradient: 'from-yellow-400 to-amber-500', textColor: 'text-slate-900' },
-  '4e_kyu': { label: 'Orange', emoji: '🟠', gradient: 'from-orange-400 to-orange-600', textColor: 'text-white' },
-  '3e_kyu': { label: 'Verte', emoji: '🟢', gradient: 'from-green-500 to-emerald-600', textColor: 'text-white' },
-  '2e_kyu': { label: 'Bleue', emoji: '🔵', gradient: 'from-blue-500 to-blue-700', textColor: 'text-white' },
-  '1er_kyu': { label: 'Marron', emoji: '🟤', gradient: 'from-amber-700 to-amber-900', textColor: 'text-white' },
+/**
+ * ═══════════════════════════════════════════════════════════════════════════════
+ * Page Techniques Adulte - Refonte UX complète
+ * Shell adulte avec sidebar, fond bleu nuit, accent cyan
+ * ═══════════════════════════════════════════════════════════════════════════════
+ */
+
+// Configuration des ceintures avec couleurs
+const BELT_CONFIG: Record<string, { label: string; color: string; bgClass: string; borderClass: string }> = {
+  '6e_kyu': { label: '6e Kyu', color: '#FFFFFF', bgClass: 'bg-white', borderClass: 'border-gray-300' },
+  '5e_kyu': { label: '5e Kyu', color: '#EAB308', bgClass: 'bg-yellow-500', borderClass: 'border-yellow-500' },
+  '4e_kyu': { label: '4e Kyu', color: '#F97316', bgClass: 'bg-orange-500', borderClass: 'border-orange-500' },
+  '3e_kyu': { label: '3e Kyu', color: '#22C55E', bgClass: 'bg-green-500', borderClass: 'border-green-500' },
+  '2e_kyu': { label: '2e Kyu', color: '#3B82F6', bgClass: 'bg-blue-500', borderClass: 'border-blue-500' },
+  '1er_kyu': { label: '1er Kyu', color: '#92400E', bgClass: 'bg-amber-700', borderClass: 'border-amber-700' },
 };
 
 // Niveaux de maîtrise
 const MASTERY_LEVELS = [
-  { id: 'not_started', label: 'À découvrir', emoji: '⭕', color: 'text-slate-400', bg: 'bg-slate-700/50' },
-  { id: 'learning', label: "J'apprends", emoji: '📖', color: 'text-amber-400', bg: 'bg-amber-500/20' },
-  { id: 'practiced', label: 'Je pratique', emoji: '🥋', color: 'text-cyan-400', bg: 'bg-cyan-500/20' },
-  { id: 'mastered', label: 'Maîtrisé !', emoji: '⭐', color: 'text-emerald-400', bg: 'bg-emerald-500/20' }
+  { id: 'all', label: 'Tous', color: 'text-white', bg: 'bg-slate-700', activeBg: 'bg-cyan-600' },
+  { id: 'not_started', label: 'À découvrir', color: 'text-slate-400', bg: 'bg-slate-800', activeBg: 'bg-slate-600' },
+  { id: 'learning', label: "J'apprends", color: 'text-amber-400', bg: 'bg-slate-800', activeBg: 'bg-amber-600' },
+  { id: 'practiced', label: 'Je pratique', color: 'text-cyan-400', bg: 'bg-slate-800', activeBg: 'bg-cyan-600' },
+  { id: 'mastered', label: 'Maîtrisé', color: 'text-emerald-400', bg: 'bg-slate-800', activeBg: 'bg-emerald-600' }
 ];
+
+// Icône de ceinture SVG
+const BeltIcon = ({ color, size = 40 }: { color: string; size?: number }) => (
+  <svg viewBox="0 0 70 90" width={size} height={size * 1.28} className="drop-shadow-md">
+    <ellipse cx="35" cy="45" rx="32" ry="42" fill="#0c1929" stroke="#1e3a5f" strokeWidth="1.5" />
+    <path d="M 22 25 C 22 18, 35 14, 35 14 C 35 14, 48 18, 48 25 L 46 34 C 40 31, 30 31, 24 34 Z" fill={color} stroke={color === '#FFFFFF' ? '#D1D5DB' : 'rgba(0,0,0,0.3)'} strokeWidth="1" />
+    <rect x="29" y="32" width="12" height="10" rx="2" fill={color} stroke={color === '#FFFFFF' ? '#D1D5DB' : 'rgba(0,0,0,0.3)'} strokeWidth="1" />
+    <path d="M 24 42 L 18 68 C 17 72, 20 75, 24 75 L 32 75 C 35 75, 35 72, 34 68 L 29 42 Z" fill={color} stroke={color === '#FFFFFF' ? '#D1D5DB' : 'rgba(0,0,0,0.3)'} strokeWidth="1" />
+    <path d="M 41 42 L 36 68 C 35 72, 35 75, 38 75 L 46 75 C 50 75, 53 72, 52 68 L 46 42 Z" fill={color} stroke={color === '#FFFFFF' ? '#D1D5DB' : 'rgba(0,0,0,0.3)'} strokeWidth="1" />
+  </svg>
+);
 
 export default function TechniquesPage() {
   const params = useParams();
-  const router = useRouter();
   const locale = params.locale as string || 'fr';
   const sport = params.sport as string || 'aikido';
   
-  const [selectedKyu, setSelectedKyu] = useState<string>('6e_kyu');
+  // État - par défaut sur la ceinture de l'utilisateur (simulé 6e_kyu pour l'instant)
+  const userCurrentKyu = '6e_kyu'; // TODO: récupérer depuis le profil utilisateur
+  const [selectedKyu, setSelectedKyu] = useState<string>(userCurrentKyu);
   const [searchQuery, setSearchQuery] = useState('');
-  const [masteryFilter, setMasteryFilter] = useState<string | null>(null);
+  const [masteryFilter, setMasteryFilter] = useState<string>('all');
+  const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({});
   const [masteryLevels, setMasteryLevels] = useState<Record<string, string>>(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('wayofdojo_mastery');
@@ -49,7 +70,7 @@ export default function TechniquesPage() {
     return {};
   });
 
-  // Récupérer les techniques du kyu sélectionné
+  // Données
   const currentKyuData = TECHNIQUES_BY_KYU[selectedKyu];
   const techniques = useMemo(() => getTechniquesByKyu(selectedKyu), [selectedKyu]);
   const beltConfig = BELT_CONFIG[selectedKyu];
@@ -67,7 +88,7 @@ export default function TechniquesPage() {
       );
     }
     
-    if (masteryFilter) {
+    if (masteryFilter && masteryFilter !== 'all') {
       filtered = filtered.filter(t => 
         (masteryLevels[t.id] || 'not_started') === masteryFilter
       );
@@ -82,7 +103,14 @@ export default function TechniquesPage() {
     const mastered = techniques.filter(t => masteryLevels[t.id] === 'mastered').length;
     const practiced = techniques.filter(t => masteryLevels[t.id] === 'practiced').length;
     const learning = techniques.filter(t => masteryLevels[t.id] === 'learning').length;
-    return { total, mastered, practiced, learning, percent: total > 0 ? Math.round((mastered / total) * 100) : 0 };
+    return { total, mastered, practiced, learning };
+  }, [techniques, masteryLevels]);
+
+  // Techniques à travailler (non maîtrisées, max 3)
+  const techniquesToWork = useMemo(() => {
+    return techniques
+      .filter(t => masteryLevels[t.id] !== 'mastered')
+      .slice(0, 3);
   }, [techniques, masteryLevels]);
 
   // Changer la maîtrise
@@ -94,296 +122,426 @@ export default function TechniquesPage() {
     }
   };
 
-  // Navigation entre les kyus
-  const currentKyuIndex = KYU_ORDER.indexOf(selectedKyu);
-  const canGoPrev = currentKyuIndex > 0;
-  const canGoNext = currentKyuIndex < KYU_ORDER.length - 1;
+  // Toggle catégorie
+  const toggleCategory = (categoryName: string) => {
+    setExpandedCategories(prev => ({
+      ...prev,
+      [categoryName]: !prev[categoryName]
+    }));
+  };
+
+  // Logout handler
+  const handleLogout = () => {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('wayofdojo_token');
+      window.location.href = `/${locale}`;
+    }
+  };
+
+  // Obtenir le badge de statut
+  const getMasteryBadge = (techniqueId: string) => {
+    const level = masteryLevels[techniqueId] || 'not_started';
+    const config = MASTERY_LEVELS.find(l => l.id === level);
+    return config;
+  };
 
   return (
-    <div className="min-h-screen bg-slate-950">
-      {/* Message d'accueil Tanaka */}
-      <TanakaWelcome
-        sectionId="techniques"
-        sectionTitle={TANAKA_MESSAGES['techniques'].title}
-        message={TANAKA_MESSAGES['techniques'].message}
-        emoji={TANAKA_MESSAGES['techniques'].emoji}
-        variant="full"
-      />
-
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-slate-900/95 backdrop-blur-lg border-b border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 py-3">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => router.back()}
-                className="text-slate-400 hover:text-white"
-              >
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Retour
-              </Button>
-              <div className="h-6 w-px bg-slate-700" />
-              <div className="flex items-center gap-2">
-                <BookOpen className="w-5 h-5 text-cyan-400" />
-                <h1 className="text-lg font-bold text-white">Techniques</h1>
-              </div>
-            </div>
-            <Link href={`/${locale}/${sport}/dojo`}>
-              <Button variant="ghost" size="sm" className="text-slate-400 hover:text-white">
-                <Home className="w-4 h-4 mr-2" />
-                Mon Dojo
-              </Button>
-            </Link>
-            <Link href={`/${locale}/aikido/guide`}>
-              <Button variant="ghost" size="sm" className="text-amber-300 hover:text-amber-200" data-testid="header-guide-link" title="Guide & Questions">
-                <HelpCircle className="w-4 h-4 sm:mr-1" />
-                <span className="hidden sm:inline">Guide</span>
-              </Button>
-            </Link>
-          </div>
-        </div>
-      </header>
-
-      <div className="max-w-7xl mx-auto px-4 py-6">
-        {/* Stats globales */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-6 bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-6 border border-slate-700"
-        >
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div>
-              <h2 className="text-2xl font-bold text-white mb-2">
-                📚 Bibliothèque des Techniques
-              </h2>
-              <p className="text-slate-400">
-                {TOTAL_TECHNIQUES} techniques à découvrir • Du 6e Kyu au 1er Kyu
-              </p>
-            </div>
-            <div className="flex items-center gap-4">
-              <div className="text-center">
-                <p className="text-3xl font-bold text-emerald-400">{Object.values(masteryLevels).filter(l => l === 'mastered').length}</p>
-                <p className="text-slate-400 text-xs">Maîtrisées</p>
-              </div>
-              <div className="text-center">
-                <p className="text-3xl font-bold text-cyan-400">{Object.values(masteryLevels).filter(l => l === 'practiced').length}</p>
-                <p className="text-slate-400 text-xs">Pratiquées</p>
-              </div>
-              <div className="text-center">
-                <p className="text-3xl font-bold text-amber-400">{Object.values(masteryLevels).filter(l => l === 'learning').length}</p>
-                <p className="text-slate-400 text-xs">En cours</p>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Sélecteur de Kyu */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="mb-6"
-        >
-          <div className="flex items-center justify-between mb-4">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => canGoPrev && setSelectedKyu(KYU_ORDER[currentKyuIndex - 1])}
-              disabled={!canGoPrev}
-              className="text-slate-400 hover:text-white disabled:opacity-30"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </Button>
-            
-            <div className={`flex-1 mx-4 bg-gradient-to-r ${beltConfig.gradient} rounded-2xl p-4 text-center`}>
-              <div className="flex items-center justify-center gap-3">
-                <span className="text-4xl">{beltConfig.emoji}</span>
-                <div>
-                  <h3 className={`text-xl font-bold ${beltConfig.textColor}`}>
-                    {currentKyuData.name} - {currentKyuData.belt}
-                  </h3>
-                  <p className={`text-sm ${beltConfig.textColor} opacity-80`}>
-                    {currentKyuData.description}
-                  </p>
-                </div>
-              </div>
-              
-              {/* Barre de progression */}
-              <div className="mt-3">
-                <div className="h-2 bg-black/20 rounded-full overflow-hidden">
-                  <motion.div 
-                    initial={{ width: 0 }}
-                    animate={{ width: `${stats.percent}%` }}
-                    className="h-full bg-white/80 rounded-full"
-                  />
-                </div>
-                <p className={`text-xs mt-1 ${beltConfig.textColor} opacity-70`}>
-                  {stats.mastered}/{stats.total} maîtrisées ({stats.percent}%)
-                </p>
-              </div>
-            </div>
-            
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => canGoNext && setSelectedKyu(KYU_ORDER[currentKyuIndex + 1])}
-              disabled={!canGoNext}
-              className="text-slate-400 hover:text-white disabled:opacity-30"
-            >
-              <ChevronRight className="w-5 h-5" />
-            </Button>
-          </div>
-          
-          {/* Navigation rapide des Kyus */}
-          <div className="flex justify-center gap-2">
-            {KYU_ORDER.map((kyu) => (
-              <button
-                key={kyu}
-                onClick={() => setSelectedKyu(kyu)}
-                className={`w-10 h-10 rounded-full flex items-center justify-center text-lg transition-all ${
-                  selectedKyu === kyu 
-                    ? 'scale-110 ring-2 ring-white ring-offset-2 ring-offset-slate-950' 
-                    : 'opacity-50 hover:opacity-100'
-                }`}
-              >
-                {BELT_CONFIG[kyu].emoji}
-              </button>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Barre de recherche et filtres */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="mb-6 flex flex-col sm:flex-row gap-3"
-        >
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
-            <input
-              type="text"
-              placeholder="Rechercher une technique..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500"
-            />
-          </div>
-          
-          <div className="flex gap-2">
-            {MASTERY_LEVELS.map((level) => (
-              <button
-                key={level.id}
-                onClick={() => setMasteryFilter(masteryFilter === level.id ? null : level.id)}
-                className={`px-3 py-2 rounded-xl text-sm flex items-center gap-1 transition-all ${
-                  masteryFilter === level.id
-                    ? `${level.bg} ${level.color} ring-2 ring-white/30`
-                    : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
-                }`}
-              >
-                <span>{level.emoji}</span>
-                <span className="hidden sm:inline">{level.label}</span>
-              </button>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* Liste des techniques par catégorie */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="space-y-6"
-        >
-          {currentKyuData.categories.map((category, catIndex) => {
-            const categoryTechniques = filteredTechniques.filter(t => t.category === category.name);
-            if (categoryTechniques.length === 0) return null;
-            
-            return (
-              <div key={category.name} className="bg-slate-800/50 rounded-2xl p-4 border border-slate-700">
-                <h4 className="flex items-center gap-2 text-lg font-bold text-white mb-4">
-                  <span className="text-2xl">{category.icon}</span>
-                  {category.name}
-                  <span className="ml-auto text-sm text-slate-400">
-                    {categoryTechniques.filter(t => masteryLevels[t.id] === 'mastered').length}/{categoryTechniques.length}
-                  </span>
-                </h4>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                  {categoryTechniques.map((technique, techIndex) => {
-                    const mastery = masteryLevels[technique.id] || 'not_started';
-                    const masteryConfig = MASTERY_LEVELS.find(l => l.id === mastery)!;
-                    
-                    return (
-                      <motion.div
-                        key={technique.id}
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: catIndex * 0.05 + techIndex * 0.02 }}
-                        className={`relative p-4 rounded-xl border transition-all hover:scale-[1.02] ${masteryConfig.bg} ${
-                          mastery === 'mastered' 
-                            ? 'border-emerald-500/50' 
-                            : 'border-slate-600 hover:border-slate-500'
-                        }`}
-                      >
-                        {/* Badge de maîtrise */}
-                        <div className="absolute -top-2 -right-2 bg-slate-900 rounded-full p-1">
-                          <span className="text-lg">{masteryConfig.emoji}</span>
-                        </div>
-                        
-                        <h5 className="font-bold text-white mb-1">{technique.name}</h5>
-                        <p className="text-slate-400 text-xs mb-3">{technique.description}</p>
-                        
-                        {/* Boutons de maîtrise */}
-                        <div className="flex gap-1">
-                          {MASTERY_LEVELS.map((level) => (
-                            <button
-                              key={level.id}
-                              onClick={() => handleMasteryChange(technique.id, level.id)}
-                              className={`flex-1 py-1 rounded text-xs transition-all ${
-                                mastery === level.id
-                                  ? `${level.bg} ${level.color}`
-                                  : 'bg-slate-700/50 text-slate-500 hover:bg-slate-700'
-                              }`}
-                              title={level.label}
-                            >
-                              {level.emoji}
-                            </button>
-                          ))}
-                        </div>
-                      </motion.div>
-                    );
-                  })}
-                </div>
-              </div>
-            );
-          })}
-        </motion.div>
-
-        {/* Message si aucune technique */}
-        {filteredTechniques.length === 0 && (
-          <div className="text-center py-12">
-            <Swords className="w-16 h-16 text-slate-600 mx-auto mb-4" />
-            <p className="text-slate-400">Aucune technique trouvée</p>
-            <Button
-              variant="ghost"
-              onClick={() => { setSearchQuery(''); setMasteryFilter(null); }}
-              className="mt-4 text-cyan-400"
-            >
-              Réinitialiser les filtres
-            </Button>
-          </div>
-        )}
+    <div className="min-h-screen bg-[#06101f]">
+      {/* Sidebar */}
+      <div className="hidden lg:block">
+        <AdultSidebar 
+          locale={locale}
+          sport={sport}
+          onLogout={handleLogout}
+        />
       </div>
 
-      {/* Maître Tanaka */}
+      {/* Header */}
+      <AdultHeader
+        locale={locale}
+        sport={sport}
+        userName="Pratiquant"
+        notificationCount={0}
+        showMenuButton={true}
+      />
+
+      {/* Contenu principal */}
+      <div className="lg:ml-[260px] pt-[60px]">
+        <div className="p-4 lg:p-6 max-w-6xl">
+          
+          {/* ═══════════════════════════════════════════════════════════════
+              1. HEADER DE PAGE
+              ═══════════════════════════════════════════════════════════════ */}
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <div className="flex items-center gap-3 mb-1">
+                <BookOpen className="w-6 h-6 text-cyan-400" />
+                <h1 className="text-2xl font-bold text-white">Techniques</h1>
+              </div>
+              <p className="text-slate-400 text-sm">Bibliothèque des techniques d&apos;Aïkido</p>
+            </div>
+            <div className="flex gap-2">
+              <Link href={`/${locale}/${sport}/dojo`}>
+                <Button variant="outline" size="sm" className="border-slate-700 text-slate-300 hover:bg-slate-800">
+                  <Home className="w-4 h-4 mr-2" />
+                  Mon Dojo
+                </Button>
+              </Link>
+              <Link href={`/${locale}/${sport}/guide`}>
+                <Button variant="outline" size="sm" className="border-slate-700 text-slate-300 hover:bg-slate-800">
+                  <HelpCircle className="w-4 h-4 mr-2" />
+                  Guide
+                </Button>
+              </Link>
+            </div>
+          </div>
+
+          {/* ═══════════════════════════════════════════════════════════════
+              2. CARTE MON GRADE ACTUEL
+              ═══════════════════════════════════════════════════════════════ */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-[#0d1628] rounded-2xl p-6 border border-slate-800 mb-6"
+          >
+            <div className="flex items-center gap-6 mb-6">
+              {/* Illustration ceinture */}
+              <div className="shrink-0">
+                <BeltIcon color={beltConfig.color} size={60} />
+              </div>
+              
+              {/* Infos grade */}
+              <div className="flex-1">
+                <h2 className="text-xl font-bold text-white mb-1">
+                  {currentKyuData.name} — {currentKyuData.belt}
+                </h2>
+                <p className="text-slate-400 text-sm mb-3">{currentKyuData.description}</p>
+                
+                {/* Barre de progression */}
+                <div className="flex items-center gap-3">
+                  <div className="flex-1 h-2 bg-slate-800 rounded-full overflow-hidden">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: `${stats.total > 0 ? (stats.mastered / stats.total) * 100 : 0}%` }}
+                      className="h-full bg-gradient-to-r from-cyan-500 to-cyan-400 rounded-full"
+                    />
+                  </div>
+                  <span className="text-cyan-400 font-semibold text-sm whitespace-nowrap">
+                    {stats.mastered} / {stats.total} maîtrisées
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Sélecteur horizontal de ceintures */}
+            <div className="flex items-center justify-center gap-2 pt-4 border-t border-slate-800">
+              {KYU_ORDER.map((kyu) => {
+                const config = BELT_CONFIG[kyu];
+                const isActive = selectedKyu === kyu;
+                const isUserKyu = kyu === userCurrentKyu;
+                
+                return (
+                  <button
+                    key={kyu}
+                    onClick={() => setSelectedKyu(kyu)}
+                    className={`
+                      relative px-4 py-2 rounded-xl text-sm font-medium transition-all
+                      ${isActive 
+                        ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/30' 
+                        : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white'
+                      }
+                    `}
+                  >
+                    {config.label}
+                    {isUserKyu && !isActive && (
+                      <span className="absolute -top-1 -right-1 w-2 h-2 bg-orange-500 rounded-full"></span>
+                    )}
+                  </button>
+                );
+              })}
+            </div>
+          </motion.div>
+
+          {/* ═══════════════════════════════════════════════════════════════
+              3. STATISTIQUES
+              ═══════════════════════════════════════════════════════════════ */}
+          <div className="grid grid-cols-3 gap-4 mb-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="bg-[#0d1628] rounded-xl p-4 border border-slate-800"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-emerald-500/20 flex items-center justify-center">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                </div>
+                <div>
+                  <p className="text-2xl font-bold text-emerald-400">{stats.mastered}</p>
+                  <p className="text-slate-400 text-xs">Maîtrisées</p>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15 }}
+              className="bg-[#0d1628] rounded-xl p-4 border border-slate-800"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-cyan-500/20 flex items-center justify-center">
+                  <BookMarked className="w-5 h-5 text-cyan-400" />
+                </div>
+                <div>
+                  <p className="text-2xl font-bold text-cyan-400">{stats.practiced}</p>
+                  <p className="text-slate-400 text-xs">Pratiquées</p>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="bg-[#0d1628] rounded-xl p-4 border border-slate-800"
+            >
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center">
+                  <Sparkles className="w-5 h-5 text-amber-400" />
+                </div>
+                <div>
+                  <p className="text-2xl font-bold text-amber-400">{stats.learning}</p>
+                  <p className="text-slate-400 text-xs">En cours</p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* ═══════════════════════════════════════════════════════════════
+              4. RECHERCHE ET FILTRES
+              ═══════════════════════════════════════════════════════════════ */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.25 }}
+            className="mb-6"
+          >
+            {/* Barre de recherche */}
+            <div className="relative mb-4">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
+              <input
+                type="text"
+                placeholder="Rechercher une technique..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full pl-12 pr-4 py-3 bg-[#0d1628] border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:border-transparent"
+              />
+            </div>
+
+            {/* Filtres pastilles */}
+            <div className="flex flex-wrap gap-2">
+              {MASTERY_LEVELS.map((level) => (
+                <button
+                  key={level.id}
+                  onClick={() => setMasteryFilter(level.id)}
+                  className={`
+                    px-4 py-2 rounded-full text-sm font-medium transition-all border
+                    ${masteryFilter === level.id
+                      ? `${level.activeBg} text-white border-transparent`
+                      : `${level.bg} ${level.color} border-slate-700 hover:border-slate-600`
+                    }
+                  `}
+                >
+                  {level.label}
+                </button>
+              ))}
+            </div>
+          </motion.div>
+
+          {/* ═══════════════════════════════════════════════════════════════
+              5. BLOC PRIORITAIRE "À TRAVAILLER MAINTENANT"
+              ═══════════════════════════════════════════════════════════════ */}
+          {techniquesToWork.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+              className="mb-6"
+            >
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 rounded-lg bg-orange-500/20 flex items-center justify-center">
+                  <Star className="w-4 h-4 text-orange-400" />
+                </div>
+                <h3 className="text-lg font-semibold text-white">À travailler maintenant</h3>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {techniquesToWork.map((technique, index) => {
+                  const masteryBadge = getMasteryBadge(technique.id);
+                  
+                  return (
+                    <motion.div
+                      key={technique.id}
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.35 + index * 0.05 }}
+                      className="bg-gradient-to-br from-orange-500/10 to-amber-500/5 rounded-xl p-4 border border-orange-500/30 hover:border-orange-500/50 transition-all"
+                    >
+                      <h4 className="font-bold text-white mb-1">{technique.name}</h4>
+                      <p className="text-slate-400 text-sm mb-2">{technique.description}</p>
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs text-slate-500">{technique.category}</span>
+                        <span className={`text-xs px-2 py-1 rounded ${masteryBadge?.bg} ${masteryBadge?.color}`}>
+                          {masteryBadge?.label}
+                        </span>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </motion.div>
+          )}
+
+          {/* ═══════════════════════════════════════════════════════════════
+              6. BIBLIOTHÈQUE PAR CATÉGORIES (ACCORDÉONS)
+              ═══════════════════════════════════════════════════════════════ */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="space-y-3"
+          >
+            {currentKyuData.categories.map((category) => {
+              const categoryTechniques = filteredTechniques.filter(t => t.category === category.name);
+              const masteredCount = categoryTechniques.filter(t => masteryLevels[t.id] === 'mastered').length;
+              const isExpanded = expandedCategories[category.name] ?? false;
+              
+              if (categoryTechniques.length === 0 && masteryFilter !== 'all') return null;
+              
+              return (
+                <div key={category.name} className="bg-[#0d1628] rounded-xl border border-slate-800 overflow-hidden">
+                  {/* Header accordéon */}
+                  <button
+                    onClick={() => toggleCategory(category.name)}
+                    className="w-full flex items-center justify-between p-4 hover:bg-slate-800/50 transition-colors"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="text-2xl">{category.icon}</span>
+                      <div className="text-left">
+                        <h4 className="font-semibold text-white">{category.name}</h4>
+                        <p className="text-slate-500 text-xs">
+                          {masteredCount} / {categoryTechniques.length} maîtrisées
+                        </p>
+                      </div>
+                    </div>
+                    <ChevronDown className={`w-5 h-5 text-slate-400 transition-transform ${isExpanded ? 'rotate-180' : ''}`} />
+                  </button>
+
+                  {/* Contenu accordéon */}
+                  <AnimatePresence>
+                    {isExpanded && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="p-4 pt-0 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                          {categoryTechniques.map((technique) => {
+                            const mastery = masteryLevels[technique.id] || 'not_started';
+                            const masteryConfig = MASTERY_LEVELS.find(l => l.id === mastery);
+                            
+                            return (
+                              <div
+                                key={technique.id}
+                                className={`
+                                  relative p-4 rounded-xl border transition-all hover:scale-[1.01]
+                                  ${mastery === 'mastered' 
+                                    ? 'bg-emerald-500/10 border-emerald-500/30' 
+                                    : 'bg-slate-800/50 border-slate-700 hover:border-slate-600'
+                                  }
+                                `}
+                              >
+                                {/* Nom et description */}
+                                <h5 className="font-bold text-white mb-1">{technique.name}</h5>
+                                <p className="text-slate-400 text-xs mb-3">{technique.description}</p>
+                                
+                                {/* Catégorie + Kyu */}
+                                <p className="text-slate-500 text-[10px] mb-3">{category.name} · {currentKyuData.name}</p>
+                                
+                                {/* Badge statut + Actions */}
+                                <div className="flex items-center justify-between">
+                                  <span className={`text-xs px-2 py-1 rounded ${masteryConfig?.bg} ${masteryConfig?.color}`}>
+                                    {masteryConfig?.label}
+                                  </span>
+                                  
+                                  <div className="flex gap-1">
+                                    {/* Bouton favori */}
+                                    <button className="p-1.5 rounded-lg hover:bg-slate-700 text-slate-500 hover:text-amber-400 transition-colors">
+                                      <Star className="w-4 h-4" />
+                                    </button>
+                                    {/* Bouton voir */}
+                                    <button className="p-1.5 rounded-lg hover:bg-slate-700 text-slate-500 hover:text-cyan-400 transition-colors">
+                                      <Eye className="w-4 h-4" />
+                                    </button>
+                                  </div>
+                                </div>
+
+                                {/* Boutons de changement de maîtrise (au survol) */}
+                                <div className="mt-3 pt-3 border-t border-slate-700 flex gap-1">
+                                  {MASTERY_LEVELS.filter(l => l.id !== 'all').map((level) => (
+                                    <button
+                                      key={level.id}
+                                      onClick={() => handleMasteryChange(technique.id, level.id)}
+                                      className={`
+                                        flex-1 py-1.5 rounded text-[10px] font-medium transition-all
+                                        ${mastery === level.id
+                                          ? `${level.activeBg} text-white`
+                                          : 'bg-slate-700/50 text-slate-500 hover:bg-slate-700 hover:text-white'
+                                        }
+                                      `}
+                                      title={level.label}
+                                    >
+                                      {level.label.split(' ')[0]}
+                                    </button>
+                                  ))}
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
+          </motion.div>
+
+          {/* Message si aucune technique */}
+          {filteredTechniques.length === 0 && (
+            <div className="text-center py-12 bg-[#0d1628] rounded-xl border border-slate-800">
+              <BookOpen className="w-16 h-16 text-slate-600 mx-auto mb-4" />
+              <p className="text-slate-400 mb-4">Aucune technique trouvée</p>
+              <Button
+                variant="ghost"
+                onClick={() => { setSearchQuery(''); setMasteryFilter('all'); }}
+                className="text-cyan-400"
+              >
+                Réinitialiser les filtres
+              </Button>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Widget Tanaka */}
       <MaitreTanaka 
         isVisible={true}
         messages={[
+          "Commence par les chutes : elles sont la base d'une pratique sereine.",
           "Les techniques sont le cœur de l'Aïkido. Pratique chaque jour !",
-          "N'oublie pas : la répétition est la mère de la maîtrise.",
         ]}
       />
     </div>
