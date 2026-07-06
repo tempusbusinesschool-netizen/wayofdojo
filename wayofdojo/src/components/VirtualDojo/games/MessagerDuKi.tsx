@@ -8,7 +8,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Butvotre } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { X, Volume2, VolumeX, Heart, Wind } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 import { useGameSounds } from '@/services/gameSoundService';
@@ -180,10 +180,10 @@ const MessagerDuKi: React.FC<MessagerDuKiProps> = ({ userName = '', onComplete, 
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <butvotre onClick={() => setVoiceEnabled(!voiceEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+          <button onClick={() => setVoiceEnabled(!voiceEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
             {voiceEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}
           </button>
-          <butvotre onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+          <button onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
             <X className="w-4 h-4 text-white" />
           </button>
         </div>
@@ -198,7 +198,7 @@ const MessagerDuKi: React.FC<MessagerDuKiProps> = ({ userName = '', onComplete, 
             Traverse le dojo jusqu'à la sortie. Évite d'aller trop vite sinon tu perdras l'équilibre. 
             Appuie sur ESPACE pour respirer et restaurer votre calme.
           </p>
-          <Butvotre onClick={startGame} className="bg-gradient-to-r from-cyan-500 to-blue-600" data-testid="start-messager-btn">
+          <Button onClick={startGame} className="bg-gradient-to-r from-cyan-500 to-blue-600" data-testid="start-messager-btn">
             Commencer
           </Button>
         </motion.div>
@@ -299,7 +299,7 @@ const MessagerDuKi: React.FC<MessagerDuKiProps> = ({ userName = '', onComplete, 
           <h2 className="text-2xl font-bold text-amber-400 mb-2">Vous avez perdu l'équilibre !</h2>
           <p className="text-white text-xl mb-4">Score : {Math.floor(score / 2)} points</p>
           <p className="text-slate-400">N'oublie pas de respirer pour rester calme.</p>
-          <Butvotre onClick={startGame} className="mt-4 bg-gradient-to-r from-cyan-500 to-blue-600">
+          <Button onClick={startGame} className="mt-4 bg-gradient-to-r from-cyan-500 to-blue-600">
             Réessayer
           </Button>
         </motion.div>

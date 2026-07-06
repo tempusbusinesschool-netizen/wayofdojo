@@ -8,7 +8,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Butvotre } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { X, Volume2, VolumeX } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 import { useGameSounds } from '@/services/gameSoundService';
@@ -167,10 +167,10 @@ const CheminEquilibre: React.FC<CheminEquilibreProps> = ({ userName = '', onComp
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <butvotre onClick={() => setVoiceEnabled(!voiceEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+          <button onClick={() => setVoiceEnabled(!voiceEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
             {voiceEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}
           </button>
-          <butvotre onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+          <button onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
             <X className="w-4 h-4 text-white" />
           </button>
         </div>
@@ -185,7 +185,7 @@ const CheminEquilibre: React.FC<CheminEquilibreProps> = ({ userName = '', onComp
             Traverse le chemin en gardant votre équilibre. Le vent essaiera de vous faire tomber. 
             Utilise ⬅️➡️ pour vous pencher et ESPACE pour stabiliser votre centre.
           </p>
-          <Butvotre onClick={startGame} className="bg-gradient-to-r from-yellow-500 to-amber-600" data-testid="start-equilibre-btn">
+          <Button onClick={startGame} className="bg-gradient-to-r from-yellow-500 to-amber-600" data-testid="start-equilibre-btn">
             Commencer
           </Button>
         </motion.div>

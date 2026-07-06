@@ -7,7 +7,7 @@
 
 import React, { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Butvotre } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { X, Volume2, VolumeX } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 import { useGameSounds } from '@/services/gameSoundService';
@@ -97,8 +97,8 @@ const CeintureChallenge: React.FC<Props> = ({ userName = '', onComplete, onExit,
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center gap-4"><span className="text-3xl">🎗️</span><div><h3 className="text-white font-bold">Ceinture Challenge</h3><p className="text-slate-400 text-sm">Réflexes ceintures</p></div></div>
         <div className="flex items-center gap-3">
-          <butvotre onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">{soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}</button>
-          <butvotre onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600"><X className="w-4 h-4 text-white" /></button>
+          <button onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">{soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}</button>
+          <button onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600"><X className="w-4 h-4 text-white" /></button>
         </div>
       </div>
 
@@ -107,7 +107,7 @@ const CeintureChallenge: React.FC<Props> = ({ userName = '', onComplete, onExit,
           <span className="text-6xl block mb-4">🎗️</span>
           <h2 className="text-2xl font-bold text-white mb-4">Ceinture Challenge</h2>
           <p className="text-slate-300 mb-6 max-w-md mx-auto">Des ceintures apparaissent sur la grille. Tape uniquement celle demandée ! 30 secondes.</p>
-          <Butvotre onClick={start} className="bg-gradient-to-r from-amber-500 to-orange-600" data-testid="start-ceinture-btn">Commencer</Button>
+          <Button onClick={start} className="bg-gradient-to-r from-amber-500 to-orange-600" data-testid="start-ceinture-btn">Commencer</Button>
         </motion.div>
       )}
 
@@ -129,7 +129,7 @@ const CeintureChallenge: React.FC<Props> = ({ userName = '', onComplete, onExit,
                 <div key={slot} className="aspect-square bg-slate-800 rounded-xl border border-slate-700 relative overflow-hidden flex items-center justify-center">
                   <AnimatePresence>
                     {mole && belt && (
-                      <motion.butvotre key={mole.id} initial={{ scale: 0, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0, opacity: 0 }} onClick={() => hit(mole)}
+                      <motion.button key={mole.id} initial={{ scale: 0, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0, opacity: 0 }} onClick={() => hit(mole)}
                         className={`w-3/4 h-3/4 rounded-full bg-gradient-to-br ${belt.color} shadow-lg flex items-center justify-center border-2 border-white/40 cursor-pointer`}
                         data-testid={`mole-${slot}`}>
                         <span className="text-slate-900 font-bold text-xs">{belt.label}</span>

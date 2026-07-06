@@ -8,7 +8,7 @@
 
 import React, { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Butvotre } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { X, Volume2, VolumeX } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 import { useGameSounds } from '@/services/gameSoundService';
@@ -168,10 +168,10 @@ const ReflexePacifique: React.FC<ReflexePacifiqueProps> = ({ userName = '', onCo
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <butvotre onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+          <button onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
             {soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}
           </button>
-          <butvotre onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+          <button onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
             <X className="w-4 h-4 text-white" />
           </button>
         </div>
@@ -186,7 +186,7 @@ const ReflexePacifique: React.FC<ReflexePacifiqueProps> = ({ userName = '', onCo
             Face à des situations de la vie au dojo, choisis la réponse la plus sage. 
             L'Aïkido nous apprend à résoudre les conflits avec intelligence et bienveillance.
           </p>
-          <Butvotre onClick={startGame} className="bg-gradient-to-r from-amber-500 to-orange-600" data-testid="start-reflexe-btn">
+          <Button onClick={startGame} className="bg-gradient-to-r from-amber-500 to-orange-600" data-testid="start-reflexe-btn">
             Commencer
           </Button>
         </motion.div>
@@ -263,7 +263,7 @@ const ReflexePacifique: React.FC<ReflexePacifiqueProps> = ({ userName = '', onCo
               <div className="bg-slate-900 rounded-xl p-4 mb-4">
                 <p className="text-slate-300 italic">💭 {feedback}</p>
               </div>
-              <Butvotre onClick={nextScenario} className="w-full bg-gradient-to-r from-amber-500 to-orange-600">
+              <Button onClick={nextScenario} className="w-full bg-gradient-to-r from-amber-500 to-orange-600">
                 {currentIndex + 1 >= SCENARIOS.length ? 'Voir le résultat' : 'Situation suivante'}
               </Button>
             </motion.div>

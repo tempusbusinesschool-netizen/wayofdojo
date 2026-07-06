@@ -7,7 +7,7 @@
 
 import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Butvotre } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { X, Volume2, VolumeX } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 import { useGameSounds } from '@/services/gameSoundService';
@@ -85,8 +85,8 @@ const BushidoPuzzle: React.FC<Props> = ({ userName = '', onComplete, onExit, tan
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center gap-4"><span className="text-3xl">🛡️</span><div><h3 className="text-white font-bold">Bushido Puzzle</h3><p className="text-slate-400 text-sm">Énigmes des vertus</p></div></div>
         <div className="flex items-center gap-3">
-          <butvotre onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">{soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}</button>
-          <butvotre onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600"><X className="w-4 h-4 text-white" /></button>
+          <button onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">{soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}</button>
+          <button onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600"><X className="w-4 h-4 text-white" /></button>
         </div>
       </div>
 
@@ -95,7 +95,7 @@ const BushidoPuzzle: React.FC<Props> = ({ userName = '', onComplete, onExit, tan
           <span className="text-6xl block mb-4">🛡️</span>
           <h2 className="text-2xl font-bold text-white mb-4">Bushido Puzzle</h2>
           <p className="text-slate-300 mb-6 max-w-md mx-auto">5 énigmes pour découvrir les 7 vertus du Budo. Choisis la bonne réponse !</p>
-          <Butvotre onClick={start} className="bg-gradient-to-r from-slate-500 to-slate-700" data-testid="start-bushido-btn">Commencer</Button>
+          <Button onClick={start} className="bg-gradient-to-r from-slate-500 to-slate-700" data-testid="start-bushido-btn">Commencer</Button>
         </motion.div>
       )}
 
@@ -113,7 +113,7 @@ const BushidoPuzzle: React.FC<Props> = ({ userName = '', onComplete, onExit, tan
               const isSel = selected === v.name;
               const showRes = state === 'feedback';
               return (
-                <motion.butvotre key={v.name} whileHover={{ scale: 1.02 }} onClick={() => state === 'playing' && choose(v.name)} disabled={state === 'feedback'}
+                <motion.button key={v.name} whileHover={{ scale: 1.02 }} onClick={() => state === 'playing' && choose(v.name)} disabled={state === 'feedback'}
                   className={`p-4 rounded-xl text-left transition-all ${showRes ? (isSel ? (v.name === current.name ? 'bg-emerald-600 border-2 border-emerald-400' : 'bg-red-600/50 border-2 border-red-400') : v.name === current.name ? 'bg-emerald-600/30 border border-emerald-500/50' : 'bg-slate-700/50') : 'bg-slate-700 hover:bg-slate-600'}`}
                   data-testid={`bushido-choice-${v.name.split(' ')[0]}`}>
                   <div className="text-white font-bold text-lg">{v.name}</div>
@@ -124,7 +124,7 @@ const BushidoPuzzle: React.FC<Props> = ({ userName = '', onComplete, onExit, tan
           </div>
           {state === 'feedback' && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4">
-              <Butvotre onClick={next} className="w-full bg-gradient-to-r from-slate-500 to-slate-700">{idx + 1 >= order.length ? 'Voir le résultat' : 'Énigme suivante'}</Button>
+              <Button onClick={next} className="w-full bg-gradient-to-r from-slate-500 to-slate-700">{idx + 1 >= order.length ? 'Voir le résultat' : 'Énigme suivante'}</Button>
             </motion.div>
           )}
         </div>

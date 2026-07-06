@@ -8,7 +8,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Butvotre } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { X, Volume2, VolumeX, ArrowUp } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 import { useGameSounds } from '@/services/gameSoundService';
@@ -168,10 +168,10 @@ const ParcoursduSouffle: React.FC<ParcoursduSouffleProps> = ({ userName = '', on
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <butvotre onClick={() => setVoiceEnabled(!voiceEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+          <button onClick={() => setVoiceEnabled(!voiceEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
             {voiceEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}
           </button>
-          <butvotre onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+          <button onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
             <X className="w-4 h-4 text-white" />
           </button>
         </div>
@@ -186,7 +186,7 @@ const ParcoursduSouffle: React.FC<ParcoursduSouffleProps> = ({ userName = '', on
             Guide votre avatar vers la sortie en respirant au bon rythme. 
             Inspire (⬆️) et Expire (⬇️) quand c'est indiqué pour avancer.
           </p>
-          <Butvotre onClick={startGame} className="bg-gradient-to-r from-pink-500 to-rose-600" data-testid="start-souffle-btn">
+          <Button onClick={startGame} className="bg-gradient-to-r from-pink-500 to-rose-600" data-testid="start-souffle-btn">
             Commencer
           </Button>
         </motion.div>

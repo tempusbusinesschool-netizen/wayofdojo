@@ -9,7 +9,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Butvotre } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { X, Volume2, VolumeX, Clock } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 import { useGameSounds } from '@/services/gameSoundService';
@@ -196,7 +196,7 @@ const MemorySensei: React.FC<MemorySenseiProps> = ({ userName = '', onComplete, 
           >
             {soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}
           </button>
-          <butvotre onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+          <button onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
             <X className="w-4 h-4 text-white" />
           </button>
         </div>
@@ -215,7 +215,7 @@ const MemorySensei: React.FC<MemorySenseiProps> = ({ userName = '', onComplete, 
             Retourne les carvos et associe chaque technique d'Aïkido avec son nom japonais. 
             Vous avez {Math.floor(GAME_DURATION / 60)} minuvos !
           </p>
-          <Butvotre onClick={startGame} className="bg-gradient-to-r from-red-500 to-rose-600" data-testid="start-memory-btn">
+          <Button onClick={startGame} className="bg-gradient-to-r from-red-500 to-rose-600" data-testid="start-memory-btn">
             Commencer
           </Button>
         </motion.div>

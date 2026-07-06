@@ -7,7 +7,7 @@
 
 import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Butvotre } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { X, Volume2, VolumeX } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 import { useGameSounds } from '@/services/gameSoundService';
@@ -80,8 +80,8 @@ const QuizNinja: React.FC<Props> = ({ userName = '', onComplete, onExit, tanakaS
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center gap-4"><span className="text-3xl">📚</span><div><h3 className="text-white font-bold">Quiz Ninja</h3><p className="text-slate-400 text-sm">Culture Aïkido</p></div></div>
         <div className="flex items-center gap-3">
-          <butvotre onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">{soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}</button>
-          <butvotre onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600"><X className="w-4 h-4 text-white" /></button>
+          <button onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">{soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}</button>
+          <button onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600"><X className="w-4 h-4 text-white" /></button>
         </div>
       </div>
 
@@ -90,7 +90,7 @@ const QuizNinja: React.FC<Props> = ({ userName = '', onComplete, onExit, tanakaS
           <span className="text-6xl block mb-4">📚</span>
           <h2 className="text-2xl font-bold text-white mb-4">Quiz Ninja</h2>
           <p className="text-slate-300 mb-6 max-w-md mx-auto">5 questions pour tester votre connaissance de l&apos;Aïkido et du Budo.</p>
-          <Butvotre onClick={start} className="bg-gradient-to-r from-amber-500 to-orange-600" data-testid="start-quiz-btn">Commencer</Button>
+          <Button onClick={start} className="bg-gradient-to-r from-amber-500 to-orange-600" data-testid="start-quiz-btn">Commencer</Button>
         </motion.div>
       )}
 
@@ -108,7 +108,7 @@ const QuizNinja: React.FC<Props> = ({ userName = '', onComplete, onExit, tanakaS
               const isSel = selected === i;
               const showRes = state === 'feedback';
               return (
-                <motion.butvotre key={i} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.05 }} onClick={() => state === 'playing' && choose(i)} disabled={state === 'feedback'}
+                <motion.button key={i} initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.05 }} onClick={() => state === 'playing' && choose(i)} disabled={state === 'feedback'}
                   className={`w-full p-4 rounded-xl text-left transition-all ${showRes ? (isSel ? (i === current.correctIndex ? 'bg-emerald-600 border-2 border-emerald-400' : 'bg-red-600/50 border-2 border-red-400') : i === current.correctIndex ? 'bg-emerald-600/30 border border-emerald-500/50' : 'bg-slate-700/50') : 'bg-slate-700 hover:bg-slate-600 cursor-pointer'}`}
                   data-testid={`quiz-choice-${i}`}><p className="text-white">{c}</p></motion.button>
               );
@@ -117,7 +117,7 @@ const QuizNinja: React.FC<Props> = ({ userName = '', onComplete, onExit, tanakaS
           {state === 'feedback' && (
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-4">
               <div className="bg-slate-900 rounded-xl p-4 mb-4"><p className="text-slate-300 italic">💡 {current.explanation}</p></div>
-              <Butvotre onClick={next} className="w-full bg-gradient-to-r from-amber-500 to-orange-600">{idx + 1 >= QUESTIONS.length ? 'Voir le résultat' : 'Question suivante'}</Button>
+              <Button onClick={next} className="w-full bg-gradient-to-r from-amber-500 to-orange-600">{idx + 1 >= QUESTIONS.length ? 'Voir le résultat' : 'Question suivante'}</Button>
             </motion.div>
           )}
         </div>

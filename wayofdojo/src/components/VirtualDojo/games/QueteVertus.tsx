@@ -8,7 +8,7 @@
 
 import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Butvotre } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { X, Volume2, VolumeX, CheckCircle2 } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 import { useGameSounds } from '@/services/gameSoundService';
@@ -204,10 +204,10 @@ const QueteVertus: React.FC<QueteVertusProps> = ({ userName = '', onComplete, on
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <butvotre onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+          <button onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
             {soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}
           </button>
-          <butvotre onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+          <button onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
             <X className="w-4 h-4 text-white" />
           </button>
         </div>
@@ -232,7 +232,7 @@ const QueteVertus: React.FC<QueteVertusProps> = ({ userName = '', onComplete, on
             ))}
           </div>
           
-          <Butvotre onClick={startGame} className="bg-gradient-to-r from-slate-600 to-slate-800" data-testid="start-quete-btn">
+          <Button onClick={startGame} className="bg-gradient-to-r from-slate-600 to-slate-800" data-testid="start-quete-btn">
             Commencer la quête
           </Button>
         </motion.div>
@@ -325,7 +325,7 @@ const QueteVertus: React.FC<QueteVertusProps> = ({ userName = '', onComplete, on
               <div className="bg-slate-900 rounded-xl p-3 mb-4">
                 <p className="text-slate-300 text-sm italic">💭 {feedback}</p>
               </div>
-              <Butvotre onClick={nextVirtue} className="w-full bg-gradient-to-r from-slate-600 to-slate-800">
+              <Button onClick={nextVirtue} className="w-full bg-gradient-to-r from-slate-600 to-slate-800">
                 {currentIndex + 1 >= VIRTUES.length ? 'Terminer la quête' : 'Vertu suivante'}
               </Button>
             </motion.div>

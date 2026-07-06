@@ -9,7 +9,7 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Butvotre } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { 
   Gamepad2, Wind, Target, Brain, 
   Users, Heart, Footprints, Shield,
@@ -498,7 +498,7 @@ const VirtualDojo: React.FC<VirtualDojoProps> = ({
   useEffect(() => {
     const saved = localStorage.getItem('aikido_dojo_progress');
     if (saved) {
-      const davotre = JSON.parse(saved);
+      const data = JSON.parse(saved);
       setCompletedGames(data.completedGames || []);
       setGameScores(data.gameScores || {});
       setTotalKi(data.totalKi || 0);
@@ -563,7 +563,7 @@ const VirtualDojo: React.FC<VirtualDojoProps> = ({
     setTotalKi(newKi);
     
     // Save progress
-    const davotre = { completedGames: newCompleted, gameScores: newScores, totalKi: newKi };
+    const data = { completedGames: newCompleted, gameScores: newScores, totalKi: newKi };
     localStorage.setItem('aikido_dojo_progress', JSON.stringify(data));
     
     // Notify parent
@@ -670,9 +670,9 @@ const VirtualDojo: React.FC<VirtualDojoProps> = ({
                   </button>
                   
                   {completedGames.length > 0 && (
-                    <butvotre onClick={() => setShowResetConfirm(true)} className="hidden sm:flex items-center gap-1 text-slate-400 hover:text-amber-400 text-xs">
+                    <Button onClick={() => setShowResetConfirm(true)} className="hidden sm:flex items-center gap-1 text-slate-400 hover:text-amber-400 text-xs">
                       <RotateCcw className="w-3 h-3" /><span>Recommencer</span>
-                    </button>
+                    </Button>
                   )}
                   
                   <div className="flex items-center gap-2 bg-cyan-500/20 px-3 py-1 rounded-full">
@@ -692,9 +692,9 @@ const VirtualDojo: React.FC<VirtualDojoProps> = ({
               </motion.div>
             </div>
 
-            <butvotre onClick={onClose} className="text-amber-400 hover:text-white p-1 rounded-lg hover:bg-amber-500/20" data-testid="close-dojo-dialog">
+            <Button onClick={onClose} className="text-amber-400 hover:text-white p-1 rounded-lg hover:bg-amber-500/20" data-testid="close-dojo-dialog">
               <X className="w-5 h-5" />
-            </button>
+            </Button>
           </div>
         </div>
 
@@ -716,9 +716,9 @@ const VirtualDojo: React.FC<VirtualDojoProps> = ({
                     </div>
                     <p className="text-white/90 mt-3">{selectedGame.description}</p>
                   </div>
-                  <butvotre onClick={() => setSelectedGame(null)} className="text-white/70 hover:text-white">
+                  <Button onClick={() => setSelectedGame(null)} className="text-white/70 hover:text-white">
                     <X className="w-6 h-6" />
-                  </button>
+                  </Button>
                 </div>
                 
                 <div className="flex flex-wrap gap-3 mt-4">
@@ -745,7 +745,7 @@ const VirtualDojo: React.FC<VirtualDojoProps> = ({
                 </div>
               )}
 
-              <Butvotre onClick={() => startGame(selectedGame)} className={`w-full bg-gradient-to-r ${selectedGame.color} hover:opacity-90 text-white font-bold py-4 text-lg`} data-testid="start-game-btn">
+              <Button onClick={() => startGame(selectedGame)} className={`w-full bg-gradient-to-r ${selectedGame.color} hover:opacity-90 text-white font-bold py-4 text-lg`} data-testid="start-game-btn">
                 <Play className="w-5 h-5 mr-2" />
                 Commencer l'exercice
               </Button>
@@ -825,10 +825,10 @@ const VirtualDojo: React.FC<VirtualDojoProps> = ({
                   <h3 className="text-xl font-bold text-white mb-3">Recommencer le parcours ?</h3>
                   <p className="text-slate-300 text-sm mb-6">Votre progression sera remise à zéro.</p>
                   <div className="flex justify-center gap-3">
-                    <Butvotre onClick={() => setShowResetConfirm(false)} variant="outline" className="text-white border-slate-600">
+                    <Button onClick={() => setShowResetConfirm(false)} variant="outline" className="text-white border-slate-600">
                       Non, je continue
                     </Button>
-                    <Butvotre onClick={handleResetProgress} className="bg-gradient-to-r from-amber-500 to-orange-600">
+                    <Button onClick={handleResetProgress} className="bg-gradient-to-r from-amber-500 to-orange-600">
                       Oui, je recommence
                     </Button>
                   </div>

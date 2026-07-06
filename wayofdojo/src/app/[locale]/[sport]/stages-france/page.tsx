@@ -1,12 +1,11 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useParams } from 'next/navigation';
-import Link from 'next/link';
 import { 
   Calendar, MapPin, User, Clock, ExternalLink, Search, 
-  Filter, ChevronDown, RefreshCw, Star, Euro, Users
+  RefreshCw, Star, Euro, Users
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { AdultSidebar } from '@/components/adult-layout/AdultSidebar';
@@ -216,7 +215,7 @@ export default function StagesFrancePage() {
   const locale = (params?.locale as string) || 'fr';
   const sport = (params?.sport as string) || 'aikido';
   
-  const [stages, setStages] = useState<Stage[]>(STAGES_DATA);
+  const [stages, _setStages] = useState<Stage[]>(STAGES_DATA);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedRegion, setSelectedRegion] = useState('Toutes les régions');
   const [selectedFederation, setSelectedFederation] = useState('Toutes');

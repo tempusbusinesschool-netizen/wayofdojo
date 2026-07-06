@@ -7,7 +7,7 @@
 
 import React, { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Butvotre } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { X, Volume2, VolumeX, ArrowLeft, ArrowRight } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 import { useGameSounds } from '@/services/gameSoundService';
@@ -87,8 +87,8 @@ const CourseNinja: React.FC<Props> = ({ userName = '', onComplete, onExit, tanak
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center gap-4"><span className="text-3xl">🏃</span><div><h3 className="text-white font-bold">Course Ninja</h3><p className="text-slate-400 text-sm">Esquive les obstacles</p></div></div>
         <div className="flex items-center gap-3">
-          <butvotre onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">{soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}</button>
-          <butvotre onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600"><X className="w-4 h-4 text-white" /></button>
+          <button onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">{soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}</button>
+          <button onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600"><X className="w-4 h-4 text-white" /></button>
         </div>
       </div>
 
@@ -97,7 +97,7 @@ const CourseNinja: React.FC<Props> = ({ userName = '', onComplete, onExit, tanak
           <span className="text-6xl block mb-4">🏃</span>
           <h2 className="text-2xl font-bold text-white mb-4">Course Ninja</h2>
           <p className="text-slate-300 mb-6 max-w-md mx-auto">Utilisez les flèches ← → ou les boutons pour changer de voie et esquiver les obstacles.</p>
-          <Butvotre onClick={start} className="bg-gradient-to-r from-cyan-500 to-blue-600" data-testid="start-course-btn">Commencer</Button>
+          <Button onClick={start} className="bg-gradient-to-r from-cyan-500 to-blue-600" data-testid="start-course-btn">Commencer</Button>
         </motion.div>
       )}
 
@@ -125,8 +125,8 @@ const CourseNinja: React.FC<Props> = ({ userName = '', onComplete, onExit, tanak
             </AnimatePresence>
           </div>
           <div className="grid grid-cols-2 gap-3 mt-4 md:hidden">
-            <Butvotre onClick={() => setLane((l) => Math.max(0, l - 1) as Lane)} className="bg-slate-700 py-4"><ArrowLeft className="w-6 h-6" /></Button>
-            <Butvotre onClick={() => setLane((l) => Math.min(2, l + 1) as Lane)} className="bg-slate-700 py-4"><ArrowRight className="w-6 h-6" /></Button>
+            <Button onClick={() => setLane((l) => Math.max(0, l - 1) as Lane)} className="bg-slate-700 py-4"><ArrowLeft className="w-6 h-6" /></Button>
+            <Button onClick={() => setLane((l) => Math.min(2, l + 1) as Lane)} className="bg-slate-700 py-4"><ArrowRight className="w-6 h-6" /></Button>
           </div>
         </div>
       )}

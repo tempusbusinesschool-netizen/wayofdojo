@@ -8,7 +8,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Butvotre } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { X, Volume2, VolumeX } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 import { useGameSounds } from '@/services/gameSoundService';
@@ -212,10 +212,10 @@ const MiroirHarmonie: React.FC<MiroirHarmonieProps> = ({ userName = '', onComple
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <butvotre onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+          <button onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
             {soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}
           </button>
-          <butvotre onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+          <button onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
             <X className="w-4 h-4 text-white" />
           </button>
         </div>
@@ -230,7 +230,7 @@ const MiroirHarmonie: React.FC<MiroirHarmonieProps> = ({ userName = '', onComple
             Observe les mouvements de Maître Tanaka, puis reproduis-les dans le même ordre. 
             Utilisez les flèches ou ZQSD + Espace pour le salut.
           </p>
-          <Butvotre onClick={startGame} className="bg-gradient-to-r from-indigo-500 to-blue-600" data-testid="start-miroir-btn">
+          <Button onClick={startGame} className="bg-gradient-to-r from-indigo-500 to-blue-600" data-testid="start-miroir-btn">
             Commencer
           </Button>
         </motion.div>

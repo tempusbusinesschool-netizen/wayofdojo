@@ -7,7 +7,7 @@
 
 import React, { useState, useCallback, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Butvotre } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { X, Volume2, VolumeX } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 import { useGameSounds } from '@/services/gameSoundService';
@@ -79,8 +79,8 @@ const HaraFocus: React.FC<Props> = ({ userName = '', onComplete, onExit, tanakaS
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center gap-4"><span className="text-3xl">🎯</span><div><h3 className="text-white font-bold">Hara Focus</h3><p className="text-slate-400 text-sm">Concentration du centre</p></div></div>
         <div className="flex items-center gap-3">
-          <butvotre onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">{soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}</button>
-          <butvotre onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600"><X className="w-4 h-4 text-white" /></button>
+          <button onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">{soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}</button>
+          <button onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600"><X className="w-4 h-4 text-white" /></button>
         </div>
       </div>
 
@@ -89,7 +89,7 @@ const HaraFocus: React.FC<Props> = ({ userName = '', onComplete, onExit, tanakaS
           <span className="text-6xl block mb-4">🎯</span>
           <h2 className="text-2xl font-bold text-white mb-4">Hara Focus</h2>
           <p className="text-slate-300 mb-6 max-w-md mx-auto">Gardez votre curseur ou votre doigt sur le point d&apos;énergie. Il bouge touvos les 2,5 secondes.</p>
-          <Butvotre onClick={start} className="bg-gradient-to-r from-cyan-500 to-blue-600" data-testid="start-hara-btn">Commencer</Button>
+          <Button onClick={start} className="bg-gradient-to-r from-cyan-500 to-blue-600" data-testid="start-hara-btn">Commencer</Button>
         </motion.div>
       )}
 

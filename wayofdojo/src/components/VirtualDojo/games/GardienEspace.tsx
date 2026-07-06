@@ -8,7 +8,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Butvotre } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { X, Volume2, VolumeX } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 import { useGameSounds } from '@/services/gameSoundService';
@@ -170,10 +170,10 @@ const GardienEspace: React.FC<GardienEspaceProps> = ({ userName = '', onComplete
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <butvotre onClick={() => setVoiceEnabled(!voiceEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+          <button onClick={() => setVoiceEnabled(!voiceEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
             {voiceEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}
           </button>
-          <butvotre onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+          <button onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
             <X className="w-4 h-4 text-white" />
           </button>
         </div>
@@ -189,7 +189,7 @@ const GardienEspace: React.FC<GardienEspaceProps> = ({ userName = '', onComplete
             Ni trop près (danger), ni trop loin (tu ne peux pas agir). 
             Utilise ⬅️➡️ pour ajuster votre position.
           </p>
-          <Butvotre onClick={startGame} className="bg-gradient-to-r from-emerald-500 to-teal-600" data-testid="start-gardien-btn">
+          <Button onClick={startGame} className="bg-gradient-to-r from-emerald-500 to-teal-600" data-testid="start-gardien-btn">
             Commencer
           </Button>
         </motion.div>

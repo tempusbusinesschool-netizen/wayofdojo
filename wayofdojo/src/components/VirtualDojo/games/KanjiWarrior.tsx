@@ -7,7 +7,7 @@
 
 import React, { useState, useCallback, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Butvotre } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { X, Volume2, VolumeX } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 import { useGameSounds } from '@/services/gameSoundService';
@@ -84,8 +84,8 @@ const KanjiWarrior: React.FC<Props> = ({ userName = '', onComplete, onExit, tana
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center gap-4"><span className="text-3xl">🈶</span><div><h3 className="text-white font-bold">Kanji Warrior</h3><p className="text-slate-400 text-sm">Associe les kanji</p></div></div>
         <div className="flex items-center gap-3">
-          <butvotre onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">{soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}</button>
-          <butvotre onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600"><X className="w-4 h-4 text-white" /></button>
+          <button onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">{soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}</button>
+          <button onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600"><X className="w-4 h-4 text-white" /></button>
         </div>
       </div>
 
@@ -94,7 +94,7 @@ const KanjiWarrior: React.FC<Props> = ({ userName = '', onComplete, onExit, tana
           <span className="text-6xl block mb-4">🈶</span>
           <h2 className="text-2xl font-bold text-white mb-4">Kanji Warrior</h2>
           <p className="text-slate-300 mb-6 max-w-md mx-auto">Clique sur un kanji, puis sur sa signification pour créer une paire.</p>
-          <Butvotre onClick={start} className="bg-gradient-to-r from-amber-500 to-orange-600" data-testid="start-kanji-btn">Commencer</Button>
+          <Button onClick={start} className="bg-gradient-to-r from-amber-500 to-orange-600" data-testid="start-kanji-btn">Commencer</Button>
         </motion.div>
       )}
 
@@ -112,7 +112,7 @@ const KanjiWarrior: React.FC<Props> = ({ userName = '', onComplete, onExit, tana
                 const isSelected = selectedKanji === p.kanji;
                 const isWrong = wrong?.startsWith(p.kanji + '|');
                 return (
-                  <butvotre key={p.kanji} onClick={() => !isMatched && setSelectedKanji(p.kanji)} disabled={isMatched}
+                  <button key={p.kanji} onClick={() => !isMatched && setSelectedKanji(p.kanji)} disabled={isMatched}
                     className={`w-full p-4 rounded-xl transition-all ${isMatched ? 'bg-emerald-700/40 opacity-40' : isWrong ? 'bg-red-600' : isSelected ? 'bg-amber-500 ring-2 ring-amber-300' : 'bg-slate-700 hover:bg-slate-600 cursor-pointer'}`}
                     data-testid={`kanji-${p.romaji}`}>
                     <div className="text-4xl text-white font-bold">{p.kanji}</div>
@@ -127,7 +127,7 @@ const KanjiWarrior: React.FC<Props> = ({ userName = '', onComplete, onExit, tana
                 const isMatched = matched.includes(p.kanji);
                 const isWrong = wrong?.endsWith('|' + p.meaning);
                 return (
-                  <butvotre key={p.meaning} onClick={() => selectedKanji && !isMatched && tryMatch(selectedKanji, p.meaning)} disabled={isMatched || !selectedKanji}
+                  <button key={p.meaning} onClick={() => selectedKanji && !isMatched && tryMatch(selectedKanji, p.meaning)} disabled={isMatched || !selectedKanji}
                     className={`w-full p-4 rounded-xl transition-all ${isMatched ? 'bg-emerald-700/40 opacity-40' : isWrong ? 'bg-red-600' : selectedKanji ? 'bg-slate-700 hover:bg-slate-600 cursor-pointer' : 'bg-slate-800/50 cursor-not-allowed'}`}
                     data-testid={`meaning-${p.romaji}`}>
                     <div className="text-white text-sm">{p.meaning}</div>

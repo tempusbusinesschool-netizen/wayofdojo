@@ -7,7 +7,7 @@
 
 import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Butvotre } from '@/components/ui/button';
+import { Button } from '@/components/ui/button';
 import { X, Volume2, VolumeX } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 import { useGameSounds } from '@/services/gameSoundService';
@@ -93,8 +93,8 @@ const TempoSensei: React.FC<Props> = ({ userName = '', onComplete, onExit, tanak
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center gap-4"><span className="text-3xl">🎵</span><div><h3 className="text-white font-bold">Tempo Sensei</h3><p className="text-slate-400 text-sm">Simon des techniques</p></div></div>
         <div className="flex items-center gap-3">
-          <butvotre onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">{soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}</button>
-          <butvotre onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600"><X className="w-4 h-4 text-white" /></button>
+          <button onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">{soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}</button>
+          <button onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600"><X className="w-4 h-4 text-white" /></button>
         </div>
       </div>
 
@@ -103,7 +103,7 @@ const TempoSensei: React.FC<Props> = ({ userName = '', onComplete, onExit, tanak
           <span className="text-6xl block mb-4">🎵</span>
           <h2 className="text-2xl font-bold text-white mb-4">Tempo Sensei</h2>
           <p className="text-slate-300 mb-6 max-w-md mx-auto">Le Sensei enchaîne des techniques. Regardez bien la séquence puis reproduis-la !</p>
-          <Butvotre onClick={start} className="bg-gradient-to-r from-violet-500 to-purple-600" data-testid="start-tempo-btn">Commencer</Button>
+          <Button onClick={start} className="bg-gradient-to-r from-violet-500 to-purple-600" data-testid="start-tempo-btn">Commencer</Button>
         </motion.div>
       )}
 
@@ -115,7 +115,7 @@ const TempoSensei: React.FC<Props> = ({ userName = '', onComplete, onExit, tanak
           </div>
           <div className="grid grid-cols-2 gap-4 max-w-md mx-auto">
             {MOVES.map((m) => (
-              <motion.butvotre key={m.id} onClick={() => handleTap(m.id)} disabled={state !== 'playing'}
+              <motion.button key={m.id} onClick={() => handleTap(m.id)} disabled={state !== 'playing'}
                 animate={{ scale: flashing === m.id ? 1.15 : 1, opacity: flashing === m.id ? 1 : 0.85 }}
                 className={`aspect-square rounded-2xl bg-gradient-to-br ${m.color} shadow-lg text-white text-3xl flex flex-col items-center justify-center gap-1 ${state === 'playing' ? 'hover:scale-105 cursor-pointer' : 'cursor-not-allowed'}`}
                 data-testid={`tempo-btn-${m.id}`}>
