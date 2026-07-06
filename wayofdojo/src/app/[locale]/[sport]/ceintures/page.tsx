@@ -17,7 +17,7 @@ import { getGradesKyu, getGradesDan, type ProgrammeGrade } from '@/data/aikido/g
 /**
  * ═══════════════════════════════════════════════════════════════════════════════
  * PAGE CEINTURES — REFONTE UX/UI MODE ADULTE
- * Design exact selon le visuel de référence fourni
+ * Utilise les icônes SVG de ceintures (style identique à l'image de référence)
  * ═══════════════════════════════════════════════════════════════════════════════
  */
 
@@ -29,19 +29,72 @@ const TABS = [
   { id: 'comprendre', label: 'Comprendre les grades' },
 ];
 
-// Mapping des images de ceintures
-const BELT_IMAGES: Record<string, string> = {
-  '6e_kyu': '/images/belts/white-6kyu.png',
-  '5e_kyu': '/images/belts/yellow-5kyu.png',
-  '4e_kyu': '/images/belts/orange-4kyu.png',
-  '3e_kyu': '/images/belts/green-3kyu.png',
-  '2e_kyu': '/images/belts/blue-2kyu.png',
-  '1er_kyu': '/images/belts/brown-1kyu.png',
-  '1er_dan': '/images/belts/black-dan.png',
-  '2e_dan': '/images/belts/black-dan.png',
-  '3e_dan': '/images/belts/black-dan.png',
-  '4e_dan': '/images/belts/black-dan.png',
+// Couleurs des ceintures
+const BELT_COLORS: Record<string, string> = {
+  '6e_kyu': '#FFFFFF',
+  '5e_kyu': '#EAB308',
+  '4e_kyu': '#F97316',
+  '3e_kyu': '#22C55E',
+  '2e_kyu': '#3B82F6',
+  '1er_kyu': '#92400E',
+  '1er_dan': '#1F2937',
+  '2e_dan': '#1F2937',
+  '3e_dan': '#1F2937',
+  '4e_dan': '#1F2937',
 };
+
+// Icône SVG de ceinture style kimono (identique à l'image de référence)
+const BeltIcon = ({ color, size = 50, isActive = false, isFuture = false }: { 
+  color: string; 
+  size?: number; 
+  isActive?: boolean;
+  isFuture?: boolean;
+}) => (
+  <svg viewBox="0 0 70 90" width={size} height={size * 1.28} className={`drop-shadow-md ${isFuture ? 'opacity-40' : ''}`}>
+    {/* Fond ovale sombre */}
+    <ellipse 
+      cx="35" cy="45" rx="32" ry="42" 
+      fill="#0c1929" 
+      stroke={isActive ? '#F97316' : '#1e3a5f'} 
+      strokeWidth={isActive ? 3 : 1.5} 
+    />
+    
+    {/* Partie haute de la ceinture */}
+    <path 
+      d="M 22 25 C 22 18, 35 14, 35 14 C 35 14, 48 18, 48 25 L 46 34 C 40 31, 30 31, 24 34 Z" 
+      fill={color} 
+      stroke={color === '#FFFFFF' ? '#D1D5DB' : 'rgba(0,0,0,0.3)'} 
+      strokeWidth="1" 
+    />
+    
+    {/* Noeud central */}
+    <rect 
+      x="29" y="32" width="12" height="10" rx="2" 
+      fill={color} 
+      stroke={color === '#FFFFFF' ? '#D1D5DB' : 'rgba(0,0,0,0.3)'} 
+      strokeWidth="1" 
+    />
+    
+    {/* Pan gauche */}
+    <path 
+      d="M 24 42 L 18 68 C 17 72, 20 75, 24 75 L 32 75 C 35 75, 35 72, 34 68 L 29 42 Z" 
+      fill={color} 
+      stroke={color === '#FFFFFF' ? '#D1D5DB' : 'rgba(0,0,0,0.3)'} 
+      strokeWidth="1" 
+    />
+    
+    {/* Pan droit */}
+    <path 
+      d="M 41 42 L 36 68 C 35 72, 35 75, 38 75 L 46 75 C 50 75, 53 72, 52 68 L 46 42 Z" 
+      fill={color} 
+      stroke={color === '#FFFFFF' ? '#D1D5DB' : 'rgba(0,0,0,0.3)'} 
+      strokeWidth="1" 
+    />
+    
+    {/* Reflet */}
+    <ellipse cx="35" cy="37" rx="4" ry="2" fill="rgba(255,255,255,0.2)" />
+  </svg>
+);
 
 // Composant Accordéon de Grade
 const GradeAccordion: React.FC<{
@@ -50,7 +103,7 @@ const GradeAccordion: React.FC<{
   onToggle: () => void;
   isCurrent: boolean;
 }> = ({ grade, isExpanded, onToggle, isCurrent }) => {
-  const beltImage = BELT_IMAGES[grade.id] || '/images/belts/black-dan.png';
+  const beltColor = BELT_COLORS[grade.id] || '#1F2937';
   
   return (
     <div className={`bg-[#0d1628] rounded-xl border transition-all ${
@@ -60,15 +113,8 @@ const GradeAccordion: React.FC<{
         onClick={onToggle}
         className="w-full p-4 flex items-center gap-4 hover:bg-slate-800/30 transition-colors rounded-xl"
       >
-        {/* Image de ceinture */}
-        <div className="w-14 h-14 relative shrink-0 bg-[#06101f] rounded-lg">
-          <Image
-            src={beltImage}
-            alt={`Ceinture ${grade.ceinture}`}
-            fill
-            className="object-contain"
-          />
-        </div>
+        {/* Icône ceinture SVG */}
+        <BeltIcon color={beltColor} size={45} isActive={isCurrent} />
 
         {/* Kanji + Info */}
         <div className="flex-1 text-left">
@@ -183,9 +229,7 @@ export default function CeinturesPage() {
       <div className="lg:ml-[260px] pt-[60px]">
         <div className="p-4 lg:p-6">
 
-          {/* ═══════════════════════════════════════════════════════════════
-              HEADER DE PAGE + ONGLETS
-              ═══════════════════════════════════════════════════════════════ */}
+          {/* HEADER DE PAGE + ONGLETS */}
           <div className="flex items-center justify-between mb-4">
             <div>
               <h1 className="text-2xl font-bold text-white">Les ceintures</h1>
@@ -218,9 +262,7 @@ export default function CeinturesPage() {
             ))}
           </div>
 
-          {/* ═══════════════════════════════════════════════════════════════
-              ONGLET MON PARCOURS
-              ═══════════════════════════════════════════════════════════════ */}
+          {/* ONGLET MON PARCOURS */}
           {activeTab === 'parcours' && (
             <div className="space-y-6">
               {/* Cartes Grade actuel + Prochain grade + Tanaka */}
@@ -235,7 +277,6 @@ export default function CeinturesPage() {
                   <p className="text-xs text-slate-500 uppercase tracking-wider mb-3">VOTRE GRADE ACTUEL</p>
                   
                   <div className="flex items-start gap-4">
-                    {/* Kanji + Nom */}
                     <div className="flex-1">
                       <div className="flex items-baseline gap-2 mb-1">
                         <span className="text-4xl font-bold text-amber-300">{currentGrade.nom_japonais}</span>
@@ -250,7 +291,6 @@ export default function CeinturesPage() {
                       <p className="text-amber-400 text-sm mb-1">{currentGrade.niveau} —</p>
                       <p className="text-slate-400 text-sm">{currentGrade.description.slice(0, 100)}.</p>
                       
-                      {/* Durées */}
                       <div className="flex gap-4 mt-4">
                         <div className="flex items-center gap-2 text-sm text-slate-400">
                           <Clock className="w-4 h-4" />
@@ -263,14 +303,9 @@ export default function CeinturesPage() {
                       </div>
                     </div>
                     
-                    {/* Image ceinture */}
-                    <div className="w-28 h-28 relative shrink-0 bg-[#06101f] rounded-xl">
-                      <Image
-                        src={BELT_IMAGES[currentGrade.id]}
-                        alt={`Ceinture ${currentGrade.ceinture}`}
-                        fill
-                        className="object-contain"
-                      />
+                    {/* Icône ceinture SVG */}
+                    <div className="shrink-0">
+                      <BeltIcon color={BELT_COLORS[currentGrade.id]} size={70} isActive={true} />
                     </div>
                   </div>
 
@@ -317,13 +352,8 @@ export default function CeinturesPage() {
                       </div>
                     </div>
                     
-                    <div className="w-24 h-24 relative shrink-0 bg-[#06101f] rounded-xl">
-                      <Image
-                        src={BELT_IMAGES[nextGrade.id]}
-                        alt={`Ceinture ${nextGrade.ceinture}`}
-                        fill
-                        className="object-contain"
-                      />
+                    <div className="shrink-0">
+                      <BeltIcon color={BELT_COLORS[nextGrade.id]} size={60} />
                     </div>
                   </div>
                 </motion.div>
@@ -346,7 +376,6 @@ export default function CeinturesPage() {
                     </p>
                   </div>
 
-                  {/* Image Tanaka */}
                   <div className="flex justify-center">
                     <div className="w-32 h-32 rounded-xl overflow-hidden bg-slate-800 relative">
                       <Image
@@ -368,9 +397,7 @@ export default function CeinturesPage() {
                 </motion.div>
               </div>
 
-              {/* ═══════════════════════════════════════════════════════════════
-                  VOTRE CHEMIN EN AÏKIDO (Timeline)
-                  ═══════════════════════════════════════════════════════════════ */}
+              {/* VOTRE CHEMIN EN AÏKIDO (Timeline avec SVG) */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -384,19 +411,20 @@ export default function CeinturesPage() {
                     const isActive = grade.id === currentUserGrade;
                     const isPast = index < currentGradeIndex;
                     const isFuture = index > currentGradeIndex;
+                    const beltColor = BELT_COLORS[grade.id] || '#1F2937';
                     
                     return (
                       <React.Fragment key={grade.id}>
                         <div className="flex flex-col items-center shrink-0">
-                          <div className={`relative w-14 h-14 bg-[#0d1628] rounded-lg ${isFuture ? 'opacity-40' : ''}`}>
+                          <div className="relative">
                             {isActive && (
                               <div className="absolute -inset-1 bg-orange-500/30 rounded-full blur-md"></div>
                             )}
-                            <Image
-                              src={BELT_IMAGES[grade.id] || '/images/belts/black-dan.png'}
-                              alt={grade.nom}
-                              fill
-                              className="object-contain"
+                            <BeltIcon 
+                              color={beltColor} 
+                              size={isActive ? 50 : 40} 
+                              isActive={isActive}
+                              isFuture={isFuture}
                             />
                           </div>
                           <span className={`text-[10px] mt-1 font-medium whitespace-nowrap ${
@@ -420,9 +448,7 @@ export default function CeinturesPage() {
                 </div>
               </motion.div>
 
-              {/* ═══════════════════════════════════════════════════════════════
-                  STATS (avec fonds japonais)
-                  ═══════════════════════════════════════════════════════════════ */}
+              {/* STATS avec fonds japonais */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
@@ -487,9 +513,7 @@ export default function CeinturesPage() {
             </div>
           )}
 
-          {/* ═══════════════════════════════════════════════════════════════
-              ONGLET GRADES KYU
-              ═══════════════════════════════════════════════════════════════ */}
+          {/* ONGLET GRADES KYU */}
           {activeTab === 'kyu' && (
             <motion.div
               initial={{ opacity: 0 }}
@@ -509,9 +533,7 @@ export default function CeinturesPage() {
             </motion.div>
           )}
 
-          {/* ═══════════════════════════════════════════════════════════════
-              ONGLET GRADES DAN
-              ═══════════════════════════════════════════════════════════════ */}
+          {/* ONGLET GRADES DAN */}
           {activeTab === 'dan' && (
             <motion.div
               initial={{ opacity: 0 }}
@@ -531,9 +553,7 @@ export default function CeinturesPage() {
             </motion.div>
           )}
 
-          {/* ═══════════════════════════════════════════════════════════════
-              ONGLET COMPRENDRE LES GRADES
-              ═══════════════════════════════════════════════════════════════ */}
+          {/* ONGLET COMPRENDRE LES GRADES */}
           {activeTab === 'comprendre' && (
             <motion.div
               initial={{ opacity: 0 }}
