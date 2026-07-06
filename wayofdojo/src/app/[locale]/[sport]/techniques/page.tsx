@@ -49,14 +49,14 @@ const TECHNIQUE_IMAGES: Record<string, string> = {
   'shikko': '/images/techniques/shikko.png',
 };
 
-// Configuration des ceintures avec couleurs
-const BELT_CONFIG: Record<string, { label: string; color: string; bgClass: string; borderClass: string }> = {
-  '6e_kyu': { label: '6e Kyu', color: '#FFFFFF', bgClass: 'bg-white', borderClass: 'border-gray-300' },
-  '5e_kyu': { label: '5e Kyu', color: '#EAB308', bgClass: 'bg-yellow-500', borderClass: 'border-yellow-500' },
-  '4e_kyu': { label: '4e Kyu', color: '#F97316', bgClass: 'bg-orange-500', borderClass: 'border-orange-500' },
-  '3e_kyu': { label: '3e Kyu', color: '#22C55E', bgClass: 'bg-green-500', borderClass: 'border-green-500' },
-  '2e_kyu': { label: '2e Kyu', color: '#3B82F6', bgClass: 'bg-blue-500', borderClass: 'border-blue-500' },
-  '1er_kyu': { label: '1er Kyu', color: '#92400E', bgClass: 'bg-amber-700', borderClass: 'border-amber-700' },
+// Configuration des ceintures avec couleurs et images
+const BELT_CONFIG: Record<string, { label: string; color: string; bgClass: string; borderClass: string; image: string }> = {
+  '6e_kyu': { label: '6e Kyu', color: '#FFFFFF', bgClass: 'bg-white', borderClass: 'border-gray-300', image: '/images/belts/6e-kyu-white.png' },
+  '5e_kyu': { label: '5e Kyu', color: '#EAB308', bgClass: 'bg-yellow-500', borderClass: 'border-yellow-500', image: '/images/belts/5e-kyu-yellow.png' },
+  '4e_kyu': { label: '4e Kyu', color: '#F97316', bgClass: 'bg-orange-500', borderClass: 'border-orange-500', image: '/images/belts/4e-kyu-orange.png' },
+  '3e_kyu': { label: '3e Kyu', color: '#22C55E', bgClass: 'bg-green-500', borderClass: 'border-green-500', image: '/images/belts/3e-kyu-green.png' },
+  '2e_kyu': { label: '2e Kyu', color: '#3B82F6', bgClass: 'bg-blue-500', borderClass: 'border-blue-500', image: '/images/belts/2e-kyu-blue.png' },
+  '1er_kyu': { label: '1er Kyu', color: '#92400E', bgClass: 'bg-amber-700', borderClass: 'border-amber-700', image: '/images/belts/1er-kyu-brown.png' },
 };
 
 // Niveaux de maîtrise
@@ -68,15 +68,17 @@ const MASTERY_LEVELS = [
   { id: 'mastered', label: 'Maîtrisé', color: 'text-emerald-400', bg: 'bg-slate-800', activeBg: 'bg-emerald-600' }
 ];
 
-// Icône de ceinture SVG
-const BeltIcon = ({ color, size = 40 }: { color: string; size?: number }) => (
-  <svg viewBox="0 0 70 90" width={size} height={size * 1.28} className="drop-shadow-md">
-    <ellipse cx="35" cy="45" rx="32" ry="42" fill="#0c1929" stroke="#1e3a5f" strokeWidth="1.5" />
-    <path d="M 22 25 C 22 18, 35 14, 35 14 C 35 14, 48 18, 48 25 L 46 34 C 40 31, 30 31, 24 34 Z" fill={color} stroke={color === '#FFFFFF' ? '#D1D5DB' : 'rgba(0,0,0,0.3)'} strokeWidth="1" />
-    <rect x="29" y="32" width="12" height="10" rx="2" fill={color} stroke={color === '#FFFFFF' ? '#D1D5DB' : 'rgba(0,0,0,0.3)'} strokeWidth="1" />
-    <path d="M 24 42 L 18 68 C 17 72, 20 75, 24 75 L 32 75 C 35 75, 35 72, 34 68 L 29 42 Z" fill={color} stroke={color === '#FFFFFF' ? '#D1D5DB' : 'rgba(0,0,0,0.3)'} strokeWidth="1" />
-    <path d="M 41 42 L 36 68 C 35 72, 35 75, 38 75 L 46 75 C 50 75, 53 72, 52 68 L 46 42 Z" fill={color} stroke={color === '#FFFFFF' ? '#D1D5DB' : 'rgba(0,0,0,0.3)'} strokeWidth="1" />
-  </svg>
+// Composant image de ceinture
+const BeltImage = ({ src, size = 60 }: { src: string; size?: number }) => (
+  <div className="relative" style={{ width: size, height: size * 1.2 }}>
+    <Image 
+      src={src} 
+      alt="Ceinture" 
+      fill 
+      className="object-contain drop-shadow-lg"
+      style={{ background: 'transparent' }}
+    />
+  </div>
 );
 
 export default function TechniquesPage() {
@@ -264,7 +266,7 @@ export default function TechniquesPage() {
             <div className="flex items-center gap-6 mb-6">
               {/* Illustration ceinture */}
               <div className="shrink-0">
-                <BeltIcon color={beltConfig.color} size={60} />
+                <BeltImage src={beltConfig.image} size={70} />
               </div>
               
               {/* Infos grade */}
@@ -290,8 +292,8 @@ export default function TechniquesPage() {
               </div>
             </div>
 
-            {/* Sélecteur horizontal de ceintures */}
-            <div className="flex items-center justify-center gap-2 pt-4 border-t border-slate-800">
+            {/* Sélecteur horizontal de ceintures avec images */}
+            <div className="flex items-center justify-center gap-3 pt-4 border-t border-slate-800">
               {KYU_ORDER.map((kyu) => {
                 const config = BELT_CONFIG[kyu];
                 const isActive = selectedKyu === kyu;
@@ -302,14 +304,24 @@ export default function TechniquesPage() {
                     key={kyu}
                     onClick={() => setSelectedKyu(kyu)}
                     className={`
-                      relative px-4 py-2 rounded-xl text-sm font-medium transition-all
+                      relative flex flex-col items-center gap-1 p-2 rounded-xl transition-all
                       ${isActive 
-                        ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/30' 
-                        : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-white'
+                        ? 'bg-slate-700/80 ring-2 ring-cyan-500 shadow-lg shadow-cyan-500/20' 
+                        : 'bg-slate-800/50 hover:bg-slate-700/60'
                       }
                     `}
                   >
-                    {config.label}
+                    <div className="relative w-10 h-12">
+                      <Image 
+                        src={config.image} 
+                        alt={config.label} 
+                        fill 
+                        className="object-contain"
+                      />
+                    </div>
+                    <span className={`text-xs font-medium ${isActive ? 'text-cyan-400' : 'text-slate-400'}`}>
+                      {config.label}
+                    </span>
                     {isUserKyu && !isActive && (
                       <span className="absolute -top-1 -right-1 w-2 h-2 bg-orange-500 rounded-full"></span>
                     )}

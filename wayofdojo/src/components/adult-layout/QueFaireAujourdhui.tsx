@@ -46,8 +46,8 @@ export const QueFaireAujourdhui: React.FC<QueFaireAujourdhuiProps> = ({
       description: 'Réussir 10 chutes arrière parfaites.',
       href: `/${locale}/${sport}/dojo`,
       gradient: 'from-orange-500/90 to-amber-700/90',
-      bgImage: 'linear-gradient(135deg, #c2410c 0%, #78350f 100%)',
-      hasCustomImage: false,
+      bgImage: '/images/backgrounds/defi-torii-fuji.png',
+      hasCustomImage: true,
     },
   ];
 
