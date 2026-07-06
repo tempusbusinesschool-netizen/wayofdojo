@@ -39,13 +39,12 @@ interface MaitreTanakaProps {
 export const MaitreTanaka: React.FC<MaitreTanakaProps> = ({ 
   childContext = null, 
   isVisible = true,
-  isJeuneSamourai = true,
+  isJeuneSamourai: _isJeuneSamourai = true,
   messages = [],
   position = 'bottom-right',
   size = 'normal'
 }) => {
-  // Use isJeuneSamourai for styling decisions  
-  const buttonLabel = isJeuneSamourai ? "Parle-moi !" : "Assistance";
+  const buttonLabel = "Parle-moi !";
   // Store messages for potential random display
   const tipsMessages = messages.length > 0 ? messages : ["Bienvenue !"];
   
