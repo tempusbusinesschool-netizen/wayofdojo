@@ -1,13 +1,13 @@
 /**
  * 🕊️ ORIGAMI MASTER - Pliage de la Grue
- * Suis l'ordre des étapes pour plier ton origami
+ * Suis l'ordre des étapes pour plier votre origami
  */
 
 'use client';
 
 import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
+import { Butvotre } from '@/components/ui/button';
 import { X, Volume2, VolumeX, Check } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 import { useGameSounds } from '@/services/gameSoundService';
@@ -19,7 +19,7 @@ const STEPS = [
   { id: 4, label: 'Rabattre les côtés', icon: '📐', desc: 'Vers le centre' },
   { id: 5, label: 'Plier la pointe', icon: '📎', desc: 'Vers le haut' },
   { id: 6, label: 'Ouvrir les ailes', icon: '🦋', desc: 'Séparer les couches' },
-  { id: 7, label: 'Terminer la grue', icon: '🕊️', desc: 'Ta grue est prête !' },
+  { id: 7, label: 'Terminer la grue', icon: '🕊️', desc: 'Votre grue est prête !' },
 ];
 
 function shuffle<T>(arr: T[]): T[] { return [...arr].sort(() => Math.random() - 0.5); }
@@ -75,8 +75,8 @@ const OrigamiMaster: React.FC<Props> = ({ userName = '', onComplete, onExit, tan
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center gap-4"><span className="text-3xl">🕊️</span><div><h3 className="text-white font-bold">Origami Master</h3><p className="text-slate-400 text-sm">Pliage de la grue</p></div></div>
         <div className="flex items-center gap-3">
-          <button onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">{soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}</button>
-          <button onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600"><X className="w-4 h-4 text-white" /></button>
+          <butvotre onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">{soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}</button>
+          <butvotre onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600"><X className="w-4 h-4 text-white" /></button>
         </div>
       </div>
 
@@ -85,7 +85,7 @@ const OrigamiMaster: React.FC<Props> = ({ userName = '', onComplete, onExit, tan
           <span className="text-6xl block mb-4">🕊️</span>
           <h2 className="text-2xl font-bold text-white mb-4">Origami Master</h2>
           <p className="text-slate-300 mb-6 max-w-md mx-auto">Clique sur les 7 étapes dans le bon ordre pour plier une grue en papier.</p>
-          <Button onClick={start} className="bg-gradient-to-r from-emerald-500 to-teal-600" data-testid="start-origami-btn">Commencer</Button>
+          <Butvotre onClick={start} className="bg-gradient-to-r from-emerald-500 to-teal-600" data-testid="start-origami-btn">Commencer</Button>
         </motion.div>
       )}
 
@@ -105,7 +105,7 @@ const OrigamiMaster: React.FC<Props> = ({ userName = '', onComplete, onExit, tan
               const isDone = done.includes(s.id);
               const isWrong = wrong === s.id;
               return (
-                <motion.button key={s.id} whileHover={!isDone ? { scale: 1.03 } : {}} onClick={() => !isDone && tryStep(s.id)} disabled={isDone}
+                <motion.butvotre key={s.id} whileHover={!isDone ? { scale: 1.03 } : {}} onClick={() => !isDone && tryStep(s.id)} disabled={isDone}
                   className={`p-4 rounded-xl transition-all text-center ${isDone ? 'bg-emerald-700/40 opacity-40 cursor-not-allowed' : isWrong ? 'bg-red-600' : 'bg-slate-700 hover:bg-slate-600 cursor-pointer'}`}
                   data-testid={`origami-step-${s.id}`}>
                   <div className="text-4xl mb-2">{s.icon}</div>

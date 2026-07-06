@@ -8,7 +8,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
+import { Butvotre } from '@/components/ui/button';
 import { X, Volume2, VolumeX } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 import { useGameSounds } from '@/services/gameSoundService';
@@ -179,10 +179,10 @@ const MiroirHarmonie: React.FC<MiroirHarmonieProps> = ({ userName = '', onComple
     
     if (success) {
       playSuccess('high');
-      tanakaVoice(`Bravo ${userName} ! Tu bouges comme un vrai miroir !`);
+      tanakaVoice(`Bravo ${userName} ! Vous bougez comme un vrai miroir !`);
     } else {
       play('end');
-      tanakaVoice("Continue à t'entraîner, tu progresseras !");
+      tanakaVoice("Continuez à t'entraîner, tu progresseras !");
     }
     
     setTimeout(() => onComplete(finalScore, kiEarned), 2500);
@@ -212,10 +212,10 @@ const MiroirHarmonie: React.FC<MiroirHarmonieProps> = ({ userName = '', onComple
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <button onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+          <butvotre onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
             {soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}
           </button>
-          <button onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+          <butvotre onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
             <X className="w-4 h-4 text-white" />
           </button>
         </div>
@@ -228,9 +228,9 @@ const MiroirHarmonie: React.FC<MiroirHarmonieProps> = ({ userName = '', onComple
           <h2 className="text-2xl font-bold text-white mb-4">Miroir d'Harmonie</h2>
           <p className="text-slate-300 mb-6 max-w-md mx-auto">
             Observe les mouvements de Maître Tanaka, puis reproduis-les dans le même ordre. 
-            Utilise les flèches ou ZQSD + Espace pour le salut.
+            Utilisez les flèches ou ZQSD + Espace pour le salut.
           </p>
-          <Button onClick={startGame} className="bg-gradient-to-r from-indigo-500 to-blue-600" data-testid="start-miroir-btn">
+          <Butvotre onClick={startGame} className="bg-gradient-to-r from-indigo-500 to-blue-600" data-testid="start-miroir-btn">
             Commencer
           </Button>
         </motion.div>
@@ -269,7 +269,7 @@ const MiroirHarmonie: React.FC<MiroirHarmonieProps> = ({ userName = '', onComple
 
             {/* Player */}
             <div className="text-center">
-              <p className="text-cyan-400 font-bold mb-2">{userName || 'Toi'}</p>
+              <p className="text-cyan-400 font-bold mb-2">{userName || 'Vous'}</p>
               <motion.div
                 animate={{ 
                   scale: playerPose !== 'neutral' ? 1.1 : 1,
@@ -292,7 +292,7 @@ const MiroirHarmonie: React.FC<MiroirHarmonieProps> = ({ userName = '', onComple
             {gameState === 'playing' && (
               <div>
                 <p className="text-cyan-300 text-lg mb-3">
-                  🎮 C'est à toi ! ({playerSequence.length}/{sequence.length})
+                  🎮 C'est à vous ! ({playerSequence.length}/{sequence.length})
                 </p>
                 <div className="flex justify-center gap-2">
                   {MOVEMENTS.map(m => (
@@ -315,7 +315,7 @@ const MiroirHarmonie: React.FC<MiroirHarmonieProps> = ({ userName = '', onComple
             {score > 200 ? 'Parfait !' : 'Bien joué !'}
           </h2>
           <p className="text-amber-400 text-xl mb-4">Score : {score} points</p>
-          <p className="text-slate-400">Tu as complété {round} round{round > 1 ? 's' : ''} !</p>
+          <p className="text-slate-400">Vous avez complété {round} round{round > 1 ? 's' : ''} !</p>
         </motion.div>
       )}
     </div>

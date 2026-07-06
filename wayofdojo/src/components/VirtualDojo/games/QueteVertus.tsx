@@ -8,7 +8,7 @@
 
 import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
+import { Butvotre } from '@/components/ui/button';
 import { X, Volume2, VolumeX, CheckCircle2 } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 import { useGameSounds } from '@/services/gameSoundService';
@@ -40,10 +40,10 @@ const VIRTUES: Virtue[] = [
     name: 'Courage',
     kanji: '勇',
     emoji: '🦁',
-    question: "Tu as peur de tomber pendant une technique. Que fait un vrai courageux ?",
+    question: "Vous avez peur de tomber pendant une technique. Que fait un vrai courageux ?",
     answers: [
       { id: 'a', text: "Il refuse de faire la technique", isCorrect: false, feedback: "Éviter sa peur ne la fait pas disparaître." },
-      { id: 'b', text: "Il reconnaît sa peur et demande de l'aide pour progresser", isCorrect: true, feedback: "Bravo ! Le vrai courage, c'est affronter ses peurs avec humilité et demander de l'aide." },
+      { id: 'b', text: "Il reconnaît sa peur et demande de l'aide pour progresser", isCorrect: true, feedback: "Félicitations ! Le vrai courage, c'est affronter ses peurs avec humilité et demander de l'aide." },
       { id: 'c', text: "Il fonce sans réfléchir", isCorrect: false, feedback: "C'est de l'imprudence, pas du courage !" }
     ]
   },
@@ -56,7 +56,7 @@ const VIRTUES: Virtue[] = [
     answers: [
       { id: 'a', text: "En la faisant une seule fois parfaitement", isCorrect: false, feedback: "Une fois ne suffit pas. La maîtrise demande de la répétition." },
       { id: 'b', text: "En la pratiquant des milliers de fois jusqu'à ce qu'elle devienne naturelle", isCorrect: true, feedback: "Exactement ! Comme dit le proverbe : 'Pratique dix mille fois, et la technique devient naturelle.'" },
-      { id: 'c', text: "En regardant des vidéos", isCorrect: false, feedback: "Regarder aide, mais rien ne remplace la pratique." }
+      { id: 'c', text: "En regardant des vidéos", isCorrect: false, feedback: "Regardezr aide, mais rien ne remplace la pratique." }
     ]
   },
   {
@@ -64,11 +64,11 @@ const VIRTUES: Virtue[] = [
     name: 'Humilité',
     kanji: '謙遜',
     emoji: '🌱',
-    question: "Un débutant te demande de l'aide. Que fais-tu ?",
+    question: "Un débutant vous demande de l'aide. Que fais-tu ?",
     answers: [
       { id: 'a', text: "Tu lui montres que tu es meilleur", isCorrect: false, feedback: "Ce n'est pas de l'humilité, c'est de l'orgueil." },
-      { id: 'b', text: "Tu l'aides avec patience, en te rappelant que tu étais débutant aussi", isCorrect: true, feedback: "Parfait ! L'humilité nous rappelle que nous avons tous été débutants et que nous avons tous encore à apprendre." },
-      { id: 'c', text: "Tu l'ignores car ce n'est pas ton rôle", isCorrect: false, feedback: "Aider les autres fait partie de l'esprit du dojo." }
+      { id: 'b', text: "Tu l'aides avec patience, en vous rappelant que tu étais débutant aussi", isCorrect: true, feedback: "Parfait ! L'humilité nous rappelle que nous avons tous été débutants et que nous avons tous encore à apprendre." },
+      { id: 'c', text: "Tu l'ignores car ce n'est pas votre rôle", isCorrect: false, feedback: "Aider les autres fait partie de l'esprit du dojo." }
     ]
   },
   {
@@ -76,9 +76,9 @@ const VIRTUES: Virtue[] = [
     name: 'Bienveillance',
     kanji: '仁',
     emoji: '💗',
-    question: "Ton partenaire d'entraînement fait mal une technique. Que fais-tu ?",
+    question: "Votre partenaire d'entraînement fait mal une technique. Que fais-tu ?",
     answers: [
-      { id: 'a', text: "Tu te moques de lui", isCorrect: false, feedback: "Se moquer blesse et ne fait progresser personne." },
+      { id: 'a', text: "Tu vous moques de lui", isCorrect: false, feedback: "Se moquer blesse et ne fait progresser personne." },
       { id: 'b', text: "Tu l'encourages et lui proposes de recommencer ensemble", isCorrect: true, feedback: "Magnifique ! La bienveillance crée un environnement où chacun peut progresser sans crainte." },
       { id: 'c', text: "Tu changes de partenaire", isCorrect: false, feedback: "Abandonner quelqu'un n'est pas bienveillant." }
     ]
@@ -90,8 +90,8 @@ const VIRTUES: Virtue[] = [
     emoji: '👁️',
     question: "Pendant le cours, le sensei explique. Que fais-tu ?",
     answers: [
-      { id: 'a', text: "Tu parles avec ton voisin", isCorrect: false, feedback: "Parler pendant une explication manque de respect et tu rates des informations importantes." },
-      { id: 'b', text: "Tu écoutes et observes attentivement chaque détail", isCorrect: true, feedback: "Excellent ! L'attention totale est la clé de l'apprentissage. Un bon aikidoka observe tout." },
+      { id: 'a', text: "Tu parles avec votre voisin", isCorrect: false, feedback: "Parler pendant une explication manque de respect et tu ravos des informations importantes." },
+      { id: 'b', text: "Tu écouvos et observes attentivement chaque détail", isCorrect: true, feedback: "Excellent ! L'attention totale est la clé de l'apprentissage. Un bon aikidoka observe tout." },
       { id: 'c', text: "Tu penses à autre chose", isCorrect: false, feedback: "L'esprit absent rate beaucoup d'informations précieuses." }
     ]
   },
@@ -181,10 +181,10 @@ const QueteVertus: React.FC<QueteVertusProps> = ({ userName = '', onComplete, on
     
     if (collectedVirtues.length >= 6) {
       playSuccess('high');
-      speakTanaka(`Bravo ${userName} ! Tu as collecté presque toutes les vertus !`);
+      speakTanaka(`Bravo ${userName} ! Vous avez collecté presque touvos les vertus !`);
     } else {
       play('end');
-      speakTanaka("Tu progresses sur le chemin des vertus !");
+      speakTanaka("Vous progressez sur le chemin des vertus !");
     }
     
     setTimeout(() => onComplete(finalScore, kiEarned), 2500);
@@ -204,10 +204,10 @@ const QueteVertus: React.FC<QueteVertusProps> = ({ userName = '', onComplete, on
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <button onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+          <butvotre onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
             {soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}
           </button>
-          <button onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+          <butvotre onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
             <X className="w-4 h-4 text-white" />
           </button>
         </div>
@@ -232,7 +232,7 @@ const QueteVertus: React.FC<QueteVertusProps> = ({ userName = '', onComplete, on
             ))}
           </div>
           
-          <Button onClick={startGame} className="bg-gradient-to-r from-slate-600 to-slate-800" data-testid="start-quete-btn">
+          <Butvotre onClick={startGame} className="bg-gradient-to-r from-slate-600 to-slate-800" data-testid="start-quete-btn">
             Commencer la quête
           </Button>
         </motion.div>
@@ -325,7 +325,7 @@ const QueteVertus: React.FC<QueteVertusProps> = ({ userName = '', onComplete, on
               <div className="bg-slate-900 rounded-xl p-3 mb-4">
                 <p className="text-slate-300 text-sm italic">💭 {feedback}</p>
               </div>
-              <Button onClick={nextVirtue} className="w-full bg-gradient-to-r from-slate-600 to-slate-800">
+              <Butvotre onClick={nextVirtue} className="w-full bg-gradient-to-r from-slate-600 to-slate-800">
                 {currentIndex + 1 >= VIRTUES.length ? 'Terminer la quête' : 'Vertu suivante'}
               </Button>
             </motion.div>

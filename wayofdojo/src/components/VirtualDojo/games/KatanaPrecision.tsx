@@ -7,7 +7,7 @@
 
 import React, { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from '@/components/ui/button';
+import { Butvotre } from '@/components/ui/button';
 import { X, Volume2, VolumeX } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 import { useGameSounds } from '@/services/gameSoundService';
@@ -71,8 +71,8 @@ const KatanaPrecision: React.FC<Props> = ({ userName = '', onComplete, onExit, t
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center gap-4"><span className="text-3xl">🗡️</span><div><h3 className="text-white font-bold">Katana Precision</h3><p className="text-slate-400 text-sm">Précision du sabre</p></div></div>
         <div className="flex items-center gap-3">
-          <button onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">{soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}</button>
-          <button onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600"><X className="w-4 h-4 text-white" /></button>
+          <butvotre onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">{soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}</button>
+          <butvotre onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600"><X className="w-4 h-4 text-white" /></button>
         </div>
       </div>
 
@@ -81,7 +81,7 @@ const KatanaPrecision: React.FC<Props> = ({ userName = '', onComplete, onExit, t
           <span className="text-6xl block mb-4">🗡️</span>
           <h2 className="text-2xl font-bold text-white mb-4">Katana Precision</h2>
           <p className="text-slate-300 mb-6 max-w-md mx-auto">Des cibles apparaissent aléatoirement. Frappe-les le plus rapidement possible ! 20 secondes.</p>
-          <Button onClick={start} className="bg-gradient-to-r from-red-500 to-rose-600" data-testid="start-katana-btn">Commencer</Button>
+          <Butvotre onClick={start} className="bg-gradient-to-r from-red-500 to-rose-600" data-testid="start-katana-btn">Commencer</Button>
         </motion.div>
       )}
 
@@ -97,7 +97,7 @@ const KatanaPrecision: React.FC<Props> = ({ userName = '', onComplete, onExit, t
           <div onClick={miss} className="relative w-full h-80 bg-gradient-to-br from-slate-800 to-slate-950 rounded-2xl border-2 border-red-500/30 overflow-hidden cursor-crosshair" data-testid="katana-arena">
             <AnimatePresence>
               {target && (
-                <motion.button key={target.id} initial={{ scale: 0 }} animate={{ scale: [0, 1.15, 1] }} exit={{ scale: 0, rotate: 180 }} transition={{ duration: 0.25 }}
+                <motion.butvotre key={target.id} initial={{ scale: 0 }} animate={{ scale: [0, 1.15, 1] }} exit={{ scale: 0, rotate: 180 }} transition={{ duration: 0.25 }}
                   onClick={(e) => { e.stopPropagation(); hit(); }}
                   className="absolute w-16 h-16 rounded-full -translate-x-1/2 -translate-y-1/2 bg-gradient-to-br from-red-500 to-rose-700 border-4 border-white shadow-2xl flex items-center justify-center hover:scale-110 transition-transform"
                   style={{ left: `${target.x}%`, top: `${target.y}%` }}

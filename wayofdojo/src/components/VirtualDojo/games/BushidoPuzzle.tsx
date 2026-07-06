@@ -7,19 +7,19 @@
 
 import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
+import { Butvotre } from '@/components/ui/button';
 import { X, Volume2, VolumeX } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 import { useGameSounds } from '@/services/gameSoundService';
 
 const VIRTUES = [
-  { name: 'Gi 義', label: 'Rectitude / Justice', clue: 'La vertu qui te fait toujours agir selon ce qui est juste, même quand personne ne regarde.' },
-  { name: 'Yū 勇', label: 'Courage', clue: 'La force intérieure qui te permet d\'affronter tes peurs et de faire ce qui doit être fait.' },
+  { name: 'Gi 義', label: 'Rectitude / Justice', clue: 'La vertu qui vous fait toujours agir selon ce qui est juste, même quand personne ne regarde.' },
+  { name: 'Yū 勇', label: 'Courage', clue: 'La force intérieure qui vous permet d\'affronter vos peurs et de faire ce qui doit être fait.' },
   { name: 'Jin 仁', label: 'Bienveillance', clue: 'La compassion envers autrui, aider ceux qui en ont besoin sans rien attendre en retour.' },
   { name: 'Rei 礼', label: 'Respect', clue: 'Se manifeste par le salut, la politesse et la considération envers chaque personne.' },
   { name: 'Makoto 誠', label: 'Sincérité', clue: 'Être authentique, honnête, dire ce que tu penses et penser ce que tu dis.' },
-  { name: 'Meiyo 名誉', label: 'Honneur', clue: 'Le sens moral qui te pousse à protéger la valeur de ta parole et de tes actions.' },
-  { name: 'Chūgi 忠義', label: 'Loyauté', clue: 'La fidélité envers tes maîtres, tes amis et tes engagements.' },
+  { name: 'Meiyo 名誉', label: 'Honneur', clue: 'Le sens moral qui vous pousse à protéger la valeur de votre parole et de vos actions.' },
+  { name: 'Chūgi 忠義', label: 'Loyauté', clue: 'La fidélité envers vos maîtres, vos amis et vos engagements.' },
 ];
 
 function shuffle<T>(arr: T[]): T[] { return [...arr].sort(() => Math.random() - 0.5); }
@@ -72,8 +72,8 @@ const BushidoPuzzle: React.FC<Props> = ({ userName = '', onComplete, onExit, tan
     if (idx + 1 >= order.length) {
       setState('finished');
       const kiEarned = 25 + correct * 5;
-      if (correct >= 4) { playSuccess('high'); speakT(`Bravo ${userName} ! Tu connais bien les vertus !`); }
-      else { play('end'); speakT("Continue à explorer le Bushido !"); }
+      if (correct >= 4) { playSuccess('high'); speakT(`Bravo ${userName} ! Vous connaissez bien les vertus !`); }
+      else { play('end'); speakT("Continuez à explorer le Bushido !"); }
       setTimeout(() => onComplete(score, kiEarned), 2500);
     } else {
       setSelected(null); setIdx((i) => i + 1); setState('playing');
@@ -85,8 +85,8 @@ const BushidoPuzzle: React.FC<Props> = ({ userName = '', onComplete, onExit, tan
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center gap-4"><span className="text-3xl">🛡️</span><div><h3 className="text-white font-bold">Bushido Puzzle</h3><p className="text-slate-400 text-sm">Énigmes des vertus</p></div></div>
         <div className="flex items-center gap-3">
-          <button onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">{soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}</button>
-          <button onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600"><X className="w-4 h-4 text-white" /></button>
+          <butvotre onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">{soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}</button>
+          <butvotre onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600"><X className="w-4 h-4 text-white" /></button>
         </div>
       </div>
 
@@ -95,7 +95,7 @@ const BushidoPuzzle: React.FC<Props> = ({ userName = '', onComplete, onExit, tan
           <span className="text-6xl block mb-4">🛡️</span>
           <h2 className="text-2xl font-bold text-white mb-4">Bushido Puzzle</h2>
           <p className="text-slate-300 mb-6 max-w-md mx-auto">5 énigmes pour découvrir les 7 vertus du Budo. Choisis la bonne réponse !</p>
-          <Button onClick={start} className="bg-gradient-to-r from-slate-500 to-slate-700" data-testid="start-bushido-btn">Commencer</Button>
+          <Butvotre onClick={start} className="bg-gradient-to-r from-slate-500 to-slate-700" data-testid="start-bushido-btn">Commencer</Button>
         </motion.div>
       )}
 
@@ -113,7 +113,7 @@ const BushidoPuzzle: React.FC<Props> = ({ userName = '', onComplete, onExit, tan
               const isSel = selected === v.name;
               const showRes = state === 'feedback';
               return (
-                <motion.button key={v.name} whileHover={{ scale: 1.02 }} onClick={() => state === 'playing' && choose(v.name)} disabled={state === 'feedback'}
+                <motion.butvotre key={v.name} whileHover={{ scale: 1.02 }} onClick={() => state === 'playing' && choose(v.name)} disabled={state === 'feedback'}
                   className={`p-4 rounded-xl text-left transition-all ${showRes ? (isSel ? (v.name === current.name ? 'bg-emerald-600 border-2 border-emerald-400' : 'bg-red-600/50 border-2 border-red-400') : v.name === current.name ? 'bg-emerald-600/30 border border-emerald-500/50' : 'bg-slate-700/50') : 'bg-slate-700 hover:bg-slate-600'}`}
                   data-testid={`bushido-choice-${v.name.split(' ')[0]}`}>
                   <div className="text-white font-bold text-lg">{v.name}</div>
@@ -124,7 +124,7 @@ const BushidoPuzzle: React.FC<Props> = ({ userName = '', onComplete, onExit, tan
           </div>
           {state === 'feedback' && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4">
-              <Button onClick={next} className="w-full bg-gradient-to-r from-slate-500 to-slate-700">{idx + 1 >= order.length ? 'Voir le résultat' : 'Énigme suivante'}</Button>
+              <Butvotre onClick={next} className="w-full bg-gradient-to-r from-slate-500 to-slate-700">{idx + 1 >= order.length ? 'Voir le résultat' : 'Énigme suivante'}</Button>
             </motion.div>
           )}
         </div>

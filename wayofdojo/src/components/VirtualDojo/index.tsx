@@ -9,7 +9,7 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from '@/components/ui/button';
+import { Butvotre } from '@/components/ui/button';
 import { 
   Gamepad2, Wind, Target, Brain, 
   Users, Heart, Footprints, Shield,
@@ -97,7 +97,7 @@ const DOJO_GAMES = [
     duration: '3-5 min',
     skills: ['Écoute', 'Attention', 'Confiance'],
     description: 'Ferme les yeux et suis les instructions de Maître Tanaka.',
-    tanakaIntro: "Fermez les yeux et faites confiance à vos autres sens.",
+    tanakaIntro: "Fermez les yeux et faivos confiance à vos autres sens.",
     xpReward: 30,
     kiReward: 25,
     unlockLevel: 0,
@@ -187,7 +187,7 @@ const DOJO_GAMES = [
     duration: '3-5 min',
     skills: ['Mémoire', 'Concentration', 'Observation'],
     description: 'Associe les techniques d\'Aïkido avec leurs noms japonais.',
-    tanakaIntro: "Un bon aikidoka connaît les noms de toutes les techniques !",
+    tanakaIntro: "Un bon aikidoka connaît les noms de touvos les techniques !",
     xpReward: 20,
     kiReward: 15,
     unlockLevel: 0,
@@ -223,7 +223,7 @@ const DOJO_GAMES = [
     duration: '5-8 min',
     skills: ['Éthique', 'Réflexion', 'Valeurs'],
     description: 'Collecte les 7 vertus du Budo en résolvant des énigmes morales.',
-    tanakaIntro: "Le Budo repose sur 7 vertus. Découvrez-les toutes !",
+    tanakaIntro: "Le Budo repose sur 7 vertus. Découvrez-les touvos !",
     xpReward: 50,
     kiReward: 40,
     unlockLevel: 0,
@@ -498,7 +498,7 @@ const VirtualDojo: React.FC<VirtualDojoProps> = ({
   useEffect(() => {
     const saved = localStorage.getItem('aikido_dojo_progress');
     if (saved) {
-      const data = JSON.parse(saved);
+      const davotre = JSON.parse(saved);
       setCompletedGames(data.completedGames || []);
       setGameScores(data.gameScores || {});
       setTotalKi(data.totalKi || 0);
@@ -563,7 +563,7 @@ const VirtualDojo: React.FC<VirtualDojoProps> = ({
     setTotalKi(newKi);
     
     // Save progress
-    const data = { completedGames: newCompleted, gameScores: newScores, totalKi: newKi };
+    const davotre = { completedGames: newCompleted, gameScores: newScores, totalKi: newKi };
     localStorage.setItem('aikido_dojo_progress', JSON.stringify(data));
     
     // Notify parent
@@ -670,7 +670,7 @@ const VirtualDojo: React.FC<VirtualDojoProps> = ({
                   </button>
                   
                   {completedGames.length > 0 && (
-                    <button onClick={() => setShowResetConfirm(true)} className="hidden sm:flex items-center gap-1 text-slate-400 hover:text-amber-400 text-xs">
+                    <butvotre onClick={() => setShowResetConfirm(true)} className="hidden sm:flex items-center gap-1 text-slate-400 hover:text-amber-400 text-xs">
                       <RotateCcw className="w-3 h-3" /><span>Recommencer</span>
                     </button>
                   )}
@@ -692,7 +692,7 @@ const VirtualDojo: React.FC<VirtualDojoProps> = ({
               </motion.div>
             </div>
 
-            <button onClick={onClose} className="text-amber-400 hover:text-white p-1 rounded-lg hover:bg-amber-500/20" data-testid="close-dojo-dialog">
+            <butvotre onClick={onClose} className="text-amber-400 hover:text-white p-1 rounded-lg hover:bg-amber-500/20" data-testid="close-dojo-dialog">
               <X className="w-5 h-5" />
             </button>
           </div>
@@ -716,7 +716,7 @@ const VirtualDojo: React.FC<VirtualDojoProps> = ({
                     </div>
                     <p className="text-white/90 mt-3">{selectedGame.description}</p>
                   </div>
-                  <button onClick={() => setSelectedGame(null)} className="text-white/70 hover:text-white">
+                  <butvotre onClick={() => setSelectedGame(null)} className="text-white/70 hover:text-white">
                     <X className="w-6 h-6" />
                   </button>
                 </div>
@@ -745,7 +745,7 @@ const VirtualDojo: React.FC<VirtualDojoProps> = ({
                 </div>
               )}
 
-              <Button onClick={() => startGame(selectedGame)} className={`w-full bg-gradient-to-r ${selectedGame.color} hover:opacity-90 text-white font-bold py-4 text-lg`} data-testid="start-game-btn">
+              <Butvotre onClick={() => startGame(selectedGame)} className={`w-full bg-gradient-to-r ${selectedGame.color} hover:opacity-90 text-white font-bold py-4 text-lg`} data-testid="start-game-btn">
                 <Play className="w-5 h-5 mr-2" />
                 Commencer l'exercice
               </Button>
@@ -825,10 +825,10 @@ const VirtualDojo: React.FC<VirtualDojoProps> = ({
                   <h3 className="text-xl font-bold text-white mb-3">Recommencer le parcours ?</h3>
                   <p className="text-slate-300 text-sm mb-6">Votre progression sera remise à zéro.</p>
                   <div className="flex justify-center gap-3">
-                    <Button onClick={() => setShowResetConfirm(false)} variant="outline" className="text-white border-slate-600">
+                    <Butvotre onClick={() => setShowResetConfirm(false)} variant="outline" className="text-white border-slate-600">
                       Non, je continue
                     </Button>
-                    <Button onClick={handleResetProgress} className="bg-gradient-to-r from-amber-500 to-orange-600">
+                    <Butvotre onClick={handleResetProgress} className="bg-gradient-to-r from-amber-500 to-orange-600">
                       Oui, je recommence
                     </Button>
                   </div>

@@ -8,7 +8,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
+import { Butvotre } from '@/components/ui/button';
 import { X, Volume2, VolumeX } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 import { useGameSounds } from '@/services/gameSoundService';
@@ -130,7 +130,7 @@ const CheminEquilibre: React.FC<CheminEquilibreProps> = ({ userName = '', onComp
     setPosition(0);
     setWindForce(0);
     play('start');
-    speakTanaka("Trouve ton centre. Le vent va essayer de te déséquilibrer !");
+    speakTanaka("Trouvez votre centre. Le vent va essayer de vous déséquilibrer !");
   };
 
   useEffect(() => {
@@ -138,12 +138,12 @@ const CheminEquilibre: React.FC<CheminEquilibreProps> = ({ userName = '', onComp
       const finalScore = score + 50;
       const kiEarned = 20 + Math.floor(finalScore / 30);
       playSuccess('high');
-      speakTanaka(`Bravo ${userName} ! Tu as trouvé ton centre !`);
+      speakTanaka(`Bravo ${userName} ! Vous avez trouvé votre centre !`);
       setTimeout(() => onComplete(finalScore, kiEarned), 2500);
     } else if (gameState === 'fail') {
       const kiEarned = 5;
       play('fail');
-      speakTanaka("Tu as perdu l'équilibre. Réessaie !");
+      speakTanaka("Vous avez perdu l'équilibre. Réessayez !");
       setTimeout(() => onComplete(Math.floor(score / 2), kiEarned), 2500);
     }
   }, [gameState, score, userName, speakTanaka, onComplete, playSuccess, play]);
@@ -163,14 +163,14 @@ const CheminEquilibre: React.FC<CheminEquilibreProps> = ({ userName = '', onComp
           <span className="text-3xl">⚖️</span>
           <div>
             <h3 className="text-white font-bold">Chemin de l'Équilibre</h3>
-            <p className="text-slate-400 text-sm">Trouve ton centre</p>
+            <p className="text-slate-400 text-sm">Trouvez votre centre</p>
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <button onClick={() => setVoiceEnabled(!voiceEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+          <butvotre onClick={() => setVoiceEnabled(!voiceEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
             {voiceEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}
           </button>
-          <button onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+          <butvotre onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
             <X className="w-4 h-4 text-white" />
           </button>
         </div>
@@ -182,10 +182,10 @@ const CheminEquilibre: React.FC<CheminEquilibreProps> = ({ userName = '', onComp
           <span className="text-6xl block mb-4">⚖️</span>
           <h2 className="text-2xl font-bold text-white mb-4">Chemin de l'Équilibre</h2>
           <p className="text-slate-300 mb-6 max-w-md mx-auto">
-            Traverse le chemin en gardant ton équilibre. Le vent essaiera de te faire tomber. 
-            Utilise ⬅️➡️ pour te pencher et ESPACE pour stabiliser ton centre.
+            Traverse le chemin en gardant votre équilibre. Le vent essaiera de vous faire tomber. 
+            Utilise ⬅️➡️ pour vous pencher et ESPACE pour stabiliser votre centre.
           </p>
-          <Button onClick={startGame} className="bg-gradient-to-r from-yellow-500 to-amber-600" data-testid="start-equilibre-btn">
+          <Butvotre onClick={startGame} className="bg-gradient-to-r from-yellow-500 to-amber-600" data-testid="start-equilibre-btn">
             Commencer
           </Button>
         </motion.div>
@@ -285,7 +285,7 @@ const CheminEquilibre: React.FC<CheminEquilibreProps> = ({ userName = '', onComp
           <span className="text-6xl block mb-4">🎉</span>
           <h2 className="text-2xl font-bold text-emerald-400 mb-2">Félicitations !</h2>
           <p className="text-white text-xl mb-4">Score : {score + 50} points</p>
-          <p className="text-slate-400">Tu as trouvé ton centre !</p>
+          <p className="text-slate-400">Vous avez trouvé votre centre !</p>
         </motion.div>
       )}
 
@@ -295,7 +295,7 @@ const CheminEquilibre: React.FC<CheminEquilibreProps> = ({ userName = '', onComp
           <span className="text-6xl block mb-4">💫</span>
           <h2 className="text-2xl font-bold text-amber-400 mb-2">Perdu l'équilibre !</h2>
           <p className="text-white text-xl mb-4">Score : {Math.floor(score / 2)} points</p>
-          <p className="text-slate-400">Tu étais à {Math.floor(position)}% du chemin.</p>
+          <p className="text-slate-400">Vous étiez à {Math.floor(position)}% du chemin.</p>
         </motion.div>
       )}
     </div>

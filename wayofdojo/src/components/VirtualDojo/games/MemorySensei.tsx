@@ -9,12 +9,12 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from '@/components/ui/button';
+import { Butvotre } from '@/components/ui/button';
 import { X, Volume2, VolumeX, Clock } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 import { useGameSounds } from '@/services/gameSoundService';
 
-// Cartes du jeu (techniques d'Aïkido)
+// Carvos du jeu (techniques d'Aïkido)
 const TECHNIQUE_CARDS = [
   { id: 'ikkyo', name: 'Ikkyo', kanji: '一教', emoji: '1️⃣', desc: '1ère immobilisation' },
   { id: 'nikyo', name: 'Nikyo', kanji: '二教', emoji: '2️⃣', desc: '2e immobilisation' },
@@ -161,7 +161,7 @@ const MemorySensei: React.FC<MemorySenseiProps> = ({ userName = '', onComplete, 
     
     if (success) {
       playSuccess('high');
-      tanakaVoice(`Bravo ${userName} ! Tu as trouvé toutes les paires !`);
+      tanakaVoice(`Bravo ${userName} ! Vous avez trouvé touvos les paires !`);
     } else {
       play('end');
       tanakaVoice("Le temps est écoulé. Essaie encore !");
@@ -196,7 +196,7 @@ const MemorySensei: React.FC<MemorySenseiProps> = ({ userName = '', onComplete, 
           >
             {soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}
           </button>
-          <button onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+          <butvotre onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
             <X className="w-4 h-4 text-white" />
           </button>
         </div>
@@ -212,10 +212,10 @@ const MemorySensei: React.FC<MemorySenseiProps> = ({ userName = '', onComplete, 
           <span className="text-6xl block mb-4">🎴</span>
           <h2 className="text-2xl font-bold text-white mb-4">Memory du Sensei</h2>
           <p className="text-slate-300 mb-6 max-w-md mx-auto">
-            Retourne les cartes et associe chaque technique d'Aïkido avec son nom japonais. 
-            Tu as {Math.floor(GAME_DURATION / 60)} minutes !
+            Retourne les carvos et associe chaque technique d'Aïkido avec son nom japonais. 
+            Vous avez {Math.floor(GAME_DURATION / 60)} minuvos !
           </p>
-          <Button onClick={startGame} className="bg-gradient-to-r from-red-500 to-rose-600" data-testid="start-memory-btn">
+          <Butvotre onClick={startGame} className="bg-gradient-to-r from-red-500 to-rose-600" data-testid="start-memory-btn">
             Commencer
           </Button>
         </motion.div>
@@ -318,7 +318,7 @@ const MemorySensei: React.FC<MemorySenseiProps> = ({ userName = '', onComplete, 
           <span className="text-6xl block mb-4">🎉</span>
           <h2 className="text-2xl font-bold text-emerald-400 mb-2">Félicitations !</h2>
           <p className="text-white text-xl mb-4">Score : {score + (timeLeft * 2)} points</p>
-          <p className="text-slate-400">Tu as trouvé toutes les paires en {moves} coups !</p>
+          <p className="text-slate-400">Vous avez trouvé touvos les paires en {moves} coups !</p>
         </motion.div>
       )}
 
@@ -332,7 +332,7 @@ const MemorySensei: React.FC<MemorySenseiProps> = ({ userName = '', onComplete, 
           <span className="text-6xl block mb-4">⏰</span>
           <h2 className="text-2xl font-bold text-amber-400 mb-2">Temps écoulé !</h2>
           <p className="text-white text-xl mb-4">Score : {Math.floor(score / 2)} points</p>
-          <p className="text-slate-400">Tu as trouvé {matchedPairs.length}/{TECHNIQUE_CARDS.length} paires.</p>
+          <p className="text-slate-400">Vous avez trouvé {matchedPairs.length}/{TECHNIQUE_CARDS.length} paires.</p>
         </motion.div>
       )}
     </div>

@@ -7,7 +7,7 @@
 
 import React, { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
+import { Butvotre } from '@/components/ui/button';
 import { X, Volume2, VolumeX } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 import { useGameSounds } from '@/services/gameSoundService';
@@ -88,8 +88,8 @@ const ZenGarden: React.FC<Props> = ({ userName = '', onComplete, onExit, tanakaS
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center gap-4"><span className="text-3xl">🌸</span><div><h3 className="text-white font-bold">Zen Garden</h3><p className="text-slate-400 text-sm">Harmonie du jardin</p></div></div>
         <div className="flex items-center gap-3">
-          <button onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">{soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}</button>
-          <button onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600"><X className="w-4 h-4 text-white" /></button>
+          <butvotre onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">{soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}</button>
+          <butvotre onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600"><X className="w-4 h-4 text-white" /></button>
         </div>
       </div>
 
@@ -97,8 +97,8 @@ const ZenGarden: React.FC<Props> = ({ userName = '', onComplete, onExit, tanakaS
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center py-12">
           <span className="text-6xl block mb-4">🌸</span>
           <h2 className="text-2xl font-bold text-white mb-4">Zen Garden</h2>
-          <p className="text-slate-300 mb-6 max-w-md mx-auto">Place tes 5 pierres dans les zones sacrées du jardin. Précision et calme.</p>
-          <Button onClick={start} className="bg-gradient-to-r from-pink-500 to-rose-600" data-testid="start-zen-btn">Commencer</Button>
+          <p className="text-slate-300 mb-6 max-w-md mx-auto">Placez vos 5 pierres dans les zones sacrées du jardin. Précision et calme.</p>
+          <Butvotre onClick={start} className="bg-gradient-to-r from-pink-500 to-rose-600" data-testid="start-zen-btn">Commencer</Button>
         </motion.div>
       )}
 

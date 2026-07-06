@@ -8,7 +8,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
+import { Butvotre } from '@/components/ui/button';
 import { X, Volume2, VolumeX, Eye, EyeOff } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 import { useGameSounds } from '@/services/gameSoundService';
@@ -119,10 +119,10 @@ const SenseiInvisible: React.FC<SenseiInvisibleProps> = ({ userName = '', onComp
     
     if (score >= 150) {
       playSuccess('high');
-      speakTanaka(`Bravo ${userName} ! Ton écoute est excellente !`);
+      speakTanaka(`Bravo ${userName} ! Votre écoute est excellente !`);
     } else {
       play('end');
-      speakTanaka("Continue à pratiquer l'écoute !");
+      speakTanaka("Continuez à pratiquer l'écoute !");
     }
     
     setTimeout(() => onComplete(finalScore, kiEarned), 2500);
@@ -140,10 +140,10 @@ const SenseiInvisible: React.FC<SenseiInvisibleProps> = ({ userName = '', onComp
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <button onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+          <butvotre onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
             {soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}
           </button>
-          <button onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+          <butvotre onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
             <X className="w-4 h-4 text-white" />
           </button>
         </div>
@@ -156,14 +156,14 @@ const SenseiInvisible: React.FC<SenseiInvisibleProps> = ({ userName = '', onComp
           <h2 className="text-2xl font-bold text-white mb-4">Le Sensei Invisible</h2>
           <p className="text-slate-300 mb-6 max-w-md mx-auto">
             Ferme les yeux et écoute les instructions de Maître Tanaka. 
-            Utilise les flèches pour suivre ses ordres. Le son doit être activé !
+            Utilisez les flèches pour suivre ses ordres. Le son doit être activé !
           </p>
           <div className="mb-6 p-4 bg-amber-500/20 rounded-xl">
             <p className="text-amber-300 text-sm">
               ⬆️ Avance • ⬇️ Recule • ⬅️ Gauche • ➡️ Droite • ESPACE Salue
             </p>
           </div>
-          <Button onClick={startGame} className="bg-gradient-to-r from-purple-500 to-violet-600" data-testid="start-sensei-btn">
+          <Butvotre onClick={startGame} className="bg-gradient-to-r from-purple-500 to-violet-600" data-testid="start-sensei-btn">
             Commencer
           </Button>
         </motion.div>
@@ -245,7 +245,7 @@ const SenseiInvisible: React.FC<SenseiInvisibleProps> = ({ userName = '', onComp
             {score >= 150 ? 'Excellente écoute !' : 'Bien joué !'}
           </h2>
           <p className="text-amber-400 text-xl mb-4">Score : {score} points</p>
-          <p className="text-slate-400">Tu as complété {totalRounds} instructions !</p>
+          <p className="text-slate-400">Vous avez complété {totalRounds} instructions !</p>
         </motion.div>
       )}
     </div>

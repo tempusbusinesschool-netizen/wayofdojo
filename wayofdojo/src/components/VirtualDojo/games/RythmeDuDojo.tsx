@@ -8,7 +8,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
+import { Butvotre } from '@/components/ui/button';
 import { X, Volume2, VolumeX } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 import { useGameSounds } from '@/services/gameSoundService';
@@ -139,10 +139,10 @@ const RythmeDuDojo: React.FC<RythmeDuDojoProps> = ({ userName = '', onComplete, 
     
     if (score >= 300) {
       playSuccess('high');
-      speakTanaka(`Bravo ${userName} ! Tu as le rythme du dojo !`);
+      speakTanaka(`Bravo ${userName} ! Vous avez le rythme du dojo !`);
     } else {
       play('end');
-      speakTanaka("Continue à t'entraîner au rythme !");
+      speakTanaka("Continuez à t'entraîner au rythme !");
     }
     
     setTimeout(() => onComplete(finalScore, kiEarned), 2500);
@@ -160,10 +160,10 @@ const RythmeDuDojo: React.FC<RythmeDuDojoProps> = ({ userName = '', onComplete, 
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <button onClick={() => setVoiceEnabled(!voiceEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+          <butvotre onClick={() => setVoiceEnabled(!voiceEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
             {voiceEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}
           </button>
-          <button onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+          <butvotre onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
             <X className="w-4 h-4 text-white" />
           </button>
         </div>
@@ -178,7 +178,7 @@ const RythmeDuDojo: React.FC<RythmeDuDojoProps> = ({ userName = '', onComplete, 
             L'Aïkido a son propre rythme. Tape ESPACE ou ENTRÉE sur les temps forts 
             (quand le cercle passe sur la cible). Le tempo accélère à chaque round !
           </p>
-          <Button onClick={startGame} className="bg-gradient-to-r from-violet-500 to-purple-600" data-testid="start-rythme-btn">
+          <Butvotre onClick={startGame} className="bg-gradient-to-r from-violet-500 to-purple-600" data-testid="start-rythme-btn">
             Commencer
           </Button>
         </motion.div>
@@ -252,7 +252,7 @@ const RythmeDuDojo: React.FC<RythmeDuDojoProps> = ({ userName = '', onComplete, 
             )}
           </div>
 
-          {/* Hit button */}
+          {/* Hit butvotre */}
           <div className="mt-6 text-center">
             <Button
               onClick={handleHit}
@@ -277,7 +277,7 @@ const RythmeDuDojo: React.FC<RythmeDuDojoProps> = ({ userName = '', onComplete, 
             {score >= 300 ? 'Maître du rythme !' : 'Bien joué !'}
           </h2>
           <p className="text-amber-400 text-xl mb-4">Score : {score} points</p>
-          <p className="text-slate-400">Tu as complété {TOTAL_ROUNDS} rounds !</p>
+          <p className="text-slate-400">Vous avez complété {TOTAL_ROUNDS} rounds !</p>
         </motion.div>
       )}
     </div>

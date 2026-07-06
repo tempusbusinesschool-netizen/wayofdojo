@@ -8,7 +8,7 @@
 
 import React, { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Button } from '@/components/ui/button';
+import { Butvotre } from '@/components/ui/button';
 import { X, Volume2, VolumeX } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 import { useGameSounds } from '@/services/gameSoundService';
@@ -23,17 +23,17 @@ interface Scenario {
 const SCENARIOS: Scenario[] = [
   {
     id: 's1',
-    situation: "Un camarade te bouscule dans le couloir du dojo.",
+    situation: "Un camarade vous bouscule dans le couloir du dojo.",
     emoji: '😤',
     choices: [
       { id: 'a', text: 'Je le bouscule aussi', isWise: false, feedback: "La violence appelle la violence. Ce n'est pas la voie de l'Aïkido." },
-      { id: 'b', text: 'Je reste calme et lui demande s\'il va bien', isWise: true, feedback: "Excellent ! Tu transformes le conflit en occasion de montrer ta bienveillance." },
-      { id: 'c', text: 'Je l\'ignore complètement', isWise: false, feedback: "Ignorer peut éviter le conflit, mais tu rates une occasion de connexion." }
+      { id: 'b', text: 'Je reste calme et lui demande s\'il va bien', isWise: true, feedback: "Excellent ! Vous transformez le conflit en occasion de montrer votre bienveillance." },
+      { id: 'c', text: 'Je l\'ignore complètement', isWise: false, feedback: "Ignorer peut éviter le conflit, mais tu ravos une occasion de connexion." }
     ]
   },
   {
     id: 's2',
-    situation: "Tu rates une technique devant tout le groupe.",
+    situation: "Vous ratez une technique devant tout le groupe.",
     emoji: '😰',
     choices: [
       { id: 'a', text: 'Je suis nul, j\'abandonne', isWise: false, feedback: "L'échec fait partie de l'apprentissage. Chaque maître a d'abord été un débutant." },
@@ -47,23 +47,23 @@ const SCENARIOS: Scenario[] = [
     emoji: '🤔',
     choices: [
       { id: 'a', text: 'Ce n\'est pas mon problème', isWise: false, feedback: "L'entraide fait partie des valeurs du dojo." },
-      { id: 'b', text: 'Je vais vers lui pour l\'aider', isWise: true, feedback: "Magnifique ! Tu incarnes la bienveillance du Budo." },
-      { id: 'c', text: 'J\'attends que le sensei s\'en occupe', isWise: false, feedback: "C'est une réponse passive. Tu peux prendre l'initiative !" }
+      { id: 'b', text: 'Je vais vers lui pour l\'aider', isWise: true, feedback: "Magnifique ! Vous incarnez la bienveillance du Budo." },
+      { id: 'c', text: 'J\'attends que le sensei s\'en occupe', isWise: false, feedback: "C'est une réponse passive. Vous pouvez prendre l'initiative !" }
     ]
   },
   {
     id: 's4',
-    situation: "Ton partenaire d'entraînement fait une technique trop fort.",
+    situation: "Votre partenaire d'entraînement fait une technique trop fort.",
     emoji: '😣',
     choices: [
       { id: 'a', text: 'Je lui fais pareil pour qu\'il comprenne', isWise: false, feedback: "Répondre par la force crée un cercle vicieux." },
-      { id: 'b', text: 'Je lui explique calmement que c\'est trop fort', isWise: true, feedback: "Excellente communication ! Tu exprimes tes limites avec respect." },
+      { id: 'b', text: 'Je lui explique calmement que c\'est trop fort', isWise: true, feedback: "Excellente communication ! Vous exprimez vos limivos avec respect." },
       { id: 'c', text: 'Je change de partenaire sans rien dire', isWise: false, feedback: "Fuir le problème ne le résout pas." }
     ]
   },
   {
     id: 's5',
-    situation: "Tu as peur de faire une chute arrière.",
+    situation: "Vous avez peur de faire une chute arrière.",
     emoji: '😨',
     choices: [
       { id: 'a', text: 'Je refuse de la faire', isWise: false, feedback: "Éviter ses peurs les renforce. Il faut les affronter progressivement." },
@@ -145,10 +145,10 @@ const ReflexePacifique: React.FC<ReflexePacifiqueProps> = ({ userName = '', onCo
     
     if (wiseChoices >= 4) {
       playSuccess('high');
-      speakTanaka(`Bravo ${userName} ! Tu as un cœur de vrai Budoka !`);
+      speakTanaka(`Bravo ${userName} ! Vous avez un cœur de vrai Budoka !`);
     } else {
       play('end');
-      speakTanaka("Tu progresses. Continue à réfléchir avec sagesse !");
+      speakTanaka("Vous progressez. Continuez à réfléchir avec sagesse !");
     }
     
     setTimeout(() => onComplete(finalScore, kiEarned), 2500);
@@ -168,10 +168,10 @@ const ReflexePacifique: React.FC<ReflexePacifiqueProps> = ({ userName = '', onCo
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <button onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+          <butvotre onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
             {soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}
           </button>
-          <button onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+          <butvotre onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
             <X className="w-4 h-4 text-white" />
           </button>
         </div>
@@ -186,7 +186,7 @@ const ReflexePacifique: React.FC<ReflexePacifiqueProps> = ({ userName = '', onCo
             Face à des situations de la vie au dojo, choisis la réponse la plus sage. 
             L'Aïkido nous apprend à résoudre les conflits avec intelligence et bienveillance.
           </p>
-          <Button onClick={startGame} className="bg-gradient-to-r from-amber-500 to-orange-600" data-testid="start-reflexe-btn">
+          <Butvotre onClick={startGame} className="bg-gradient-to-r from-amber-500 to-orange-600" data-testid="start-reflexe-btn">
             Commencer
           </Button>
         </motion.div>
@@ -263,7 +263,7 @@ const ReflexePacifique: React.FC<ReflexePacifiqueProps> = ({ userName = '', onCo
               <div className="bg-slate-900 rounded-xl p-4 mb-4">
                 <p className="text-slate-300 italic">💭 {feedback}</p>
               </div>
-              <Button onClick={nextScenario} className="w-full bg-gradient-to-r from-amber-500 to-orange-600">
+              <Butvotre onClick={nextScenario} className="w-full bg-gradient-to-r from-amber-500 to-orange-600">
                 {currentIndex + 1 >= SCENARIOS.length ? 'Voir le résultat' : 'Situation suivante'}
               </Button>
             </motion.div>

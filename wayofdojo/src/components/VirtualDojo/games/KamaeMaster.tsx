@@ -7,7 +7,7 @@
 
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
+import { Butvotre } from '@/components/ui/button';
 import { X, Volume2, VolumeX } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 import { useGameSounds } from '@/services/gameSoundService';
@@ -79,8 +79,8 @@ const KamaeMaster: React.FC<Props> = ({ userName = '', onComplete, onExit, tanak
       <div className="flex justify-between items-center mb-4">
         <div className="flex items-center gap-4"><span className="text-3xl">⚔️</span><div><h3 className="text-white font-bold">Kamae Master</h3><p className="text-slate-400 text-sm">Timing du garde</p></div></div>
         <div className="flex items-center gap-3">
-          <button onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">{soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}</button>
-          <button onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600"><X className="w-4 h-4 text-white" /></button>
+          <butvotre onClick={() => setSoundEnabled(!soundEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">{soundEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}</button>
+          <butvotre onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600"><X className="w-4 h-4 text-white" /></button>
         </div>
       </div>
 
@@ -89,7 +89,7 @@ const KamaeMaster: React.FC<Props> = ({ userName = '', onComplete, onExit, tanak
           <span className="text-6xl block mb-4">⚔️</span>
           <h2 className="text-2xl font-bold text-white mb-4">Kamae Master</h2>
           <p className="text-slate-300 mb-6 max-w-md mx-auto">Clique quand le curseur passe dans la zone verte. Zone dorée = timing parfait !</p>
-          <Button onClick={start} className="bg-gradient-to-r from-red-500 to-orange-600" data-testid="start-kamae-btn">Commencer</Button>
+          <Butvotre onClick={start} className="bg-gradient-to-r from-red-500 to-orange-600" data-testid="start-kamae-btn">Commencer</Button>
         </motion.div>
       )}
 
@@ -104,7 +104,7 @@ const KamaeMaster: React.FC<Props> = ({ userName = '', onComplete, onExit, tanak
             <div className="absolute top-0 h-full bg-amber-400/60" style={{ left: `${perfectLow}%`, width: `${perfectHigh - perfectLow}%` }} />
             <div className="absolute top-0 h-full w-1 bg-white shadow-lg" style={{ left: `${pos}%` }} />
           </div>
-          <Button onClick={handleClick} className="w-full bg-gradient-to-r from-red-500 to-orange-600 text-xl py-6" data-testid="kamae-strike-btn">⚔️ FRAPPE !</Button>
+          <Butvotre onClick={handleClick} className="w-full bg-gradient-to-r from-red-500 to-orange-600 text-xl py-6" data-testid="kamae-strike-btn">⚔️ FRAPPE !</Button>
         </div>
       )}
 

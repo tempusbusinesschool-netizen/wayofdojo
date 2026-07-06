@@ -1,14 +1,14 @@
 /**
  * 🌊 LE MESSAGER DU KI - Gestion du stress
  * 
- * Traverse le dojo en gardant ton équilibre
+ * Traverse le dojo en gardant votre équilibre
  */
 
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
+import { Butvotre } from '@/components/ui/button';
 import { X, Volume2, VolumeX, Heart, Wind } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 import { useGameSounds } from '@/services/gameSoundService';
@@ -88,7 +88,7 @@ const MessagerDuKi: React.FC<MessagerDuKiProps> = ({ userName = '', onComplete, 
       const kiEarned = 15 + Math.floor(finalScore / 30);
       
       playSuccess('high');
-      speakTanaka(`Bravo ${userName} ! Tu as traversé le dojo avec calme !`);
+      speakTanaka(`Bravo ${userName} ! Vous avez traversé le dojo avec calme !`);
       setTimeout(() => onComplete(finalScore, kiEarned), 2500);
     }
   }, [position.y, gameState, score, balance, userName, speakTanaka, onComplete, playSuccess]);
@@ -155,7 +155,7 @@ const MessagerDuKi: React.FC<MessagerDuKiProps> = ({ userName = '', onComplete, 
     setPosition({ x: 50, y: 80 });
     setSpeed(0);
     play('start');
-    speakTanaka("Utilise les flèches pour te déplacer. Appuie sur espace pour respirer.");
+    speakTanaka("Utilisez les flèches pour vous déplacer. Appuie sur espace pour respirer.");
   };
 
   const getObstacleEmoji = (type: string) => {
@@ -176,14 +176,14 @@ const MessagerDuKi: React.FC<MessagerDuKiProps> = ({ userName = '', onComplete, 
           <span className="text-3xl">🌊</span>
           <div>
             <h3 className="text-white font-bold">Le Messager du Ki</h3>
-            <p className="text-slate-400 text-sm">Garde ton équilibre</p>
+            <p className="text-slate-400 text-sm">Gardez votre équilibre</p>
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <button onClick={() => setVoiceEnabled(!voiceEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+          <butvotre onClick={() => setVoiceEnabled(!voiceEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
             {voiceEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}
           </button>
-          <button onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+          <butvotre onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
             <X className="w-4 h-4 text-white" />
           </button>
         </div>
@@ -196,9 +196,9 @@ const MessagerDuKi: React.FC<MessagerDuKiProps> = ({ userName = '', onComplete, 
           <h2 className="text-2xl font-bold text-white mb-4">Le Messager du Ki</h2>
           <p className="text-slate-300 mb-6 max-w-md mx-auto">
             Traverse le dojo jusqu'à la sortie. Évite d'aller trop vite sinon tu perdras l'équilibre. 
-            Appuie sur ESPACE pour respirer et restaurer ton calme.
+            Appuie sur ESPACE pour respirer et restaurer votre calme.
           </p>
-          <Button onClick={startGame} className="bg-gradient-to-r from-cyan-500 to-blue-600" data-testid="start-messager-btn">
+          <Butvotre onClick={startGame} className="bg-gradient-to-r from-cyan-500 to-blue-600" data-testid="start-messager-btn">
             Commencer
           </Button>
         </motion.div>
@@ -288,7 +288,7 @@ const MessagerDuKi: React.FC<MessagerDuKiProps> = ({ userName = '', onComplete, 
           <span className="text-6xl block mb-4">🎉</span>
           <h2 className="text-2xl font-bold text-emerald-400 mb-2">Félicitations !</h2>
           <p className="text-white text-xl mb-4">Score : {score + Math.floor(balance)} points</p>
-          <p className="text-slate-400">Tu as traversé le dojo avec calme !</p>
+          <p className="text-slate-400">Vous avez traversé le dojo avec calme !</p>
         </motion.div>
       )}
 
@@ -296,10 +296,10 @@ const MessagerDuKi: React.FC<MessagerDuKiProps> = ({ userName = '', onComplete, 
       {gameState === 'fail' && (
         <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-12">
           <span className="text-6xl block mb-4">💫</span>
-          <h2 className="text-2xl font-bold text-amber-400 mb-2">Tu as perdu l'équilibre !</h2>
+          <h2 className="text-2xl font-bold text-amber-400 mb-2">Vous avez perdu l'équilibre !</h2>
           <p className="text-white text-xl mb-4">Score : {Math.floor(score / 2)} points</p>
           <p className="text-slate-400">N'oublie pas de respirer pour rester calme.</p>
-          <Button onClick={startGame} className="mt-4 bg-gradient-to-r from-cyan-500 to-blue-600">
+          <Butvotre onClick={startGame} className="mt-4 bg-gradient-to-r from-cyan-500 to-blue-600">
             Réessayer
           </Button>
         </motion.div>

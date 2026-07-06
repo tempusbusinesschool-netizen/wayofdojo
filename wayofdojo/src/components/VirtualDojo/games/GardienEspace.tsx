@@ -8,7 +8,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
+import { Butvotre } from '@/components/ui/button';
 import { X, Volume2, VolumeX } from 'lucide-react';
 import { useTanakaVoice } from '@/hooks/useTanakaVoice';
 import { useGameSounds } from '@/services/gameSoundService';
@@ -131,7 +131,7 @@ const GardienEspace: React.FC<GardienEspaceProps> = ({ userName = '', onComplete
     setPlayerPos(50);
     setTargetPos(30);
     play('start');
-    speakTanaka("Maintiens la bonne distance avec ton partenaire. Ni trop près, ni trop loin !");
+    speakTanaka("Maintiens la bonne distance avec votre partenaire. Ni trop près, ni trop loin !");
   };
 
   const endGame = () => {
@@ -140,7 +140,7 @@ const GardienEspace: React.FC<GardienEspaceProps> = ({ userName = '', onComplete
     const kiEarned = 20 + Math.floor(finalScore / 50);
     
     playSuccess('high');
-    speakTanaka(`Bravo ${userName} ! Tu maîtrises le Ma-ai !`);
+    speakTanaka(`Bravo ${userName} ! Vous maîtrisez le Ma-ai !`);
     setTimeout(() => onComplete(finalScore, kiEarned), 2500);
   };
 
@@ -170,10 +170,10 @@ const GardienEspace: React.FC<GardienEspaceProps> = ({ userName = '', onComplete
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <button onClick={() => setVoiceEnabled(!voiceEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+          <butvotre onClick={() => setVoiceEnabled(!voiceEnabled)} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
             {voiceEnabled ? <Volume2 className="w-4 h-4 text-white" /> : <VolumeX className="w-4 h-4 text-red-400" />}
           </button>
-          <button onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
+          <butvotre onClick={onExit} className="p-2 rounded-lg bg-slate-700 hover:bg-slate-600">
             <X className="w-4 h-4 text-white" />
           </button>
         </div>
@@ -185,11 +185,11 @@ const GardienEspace: React.FC<GardienEspaceProps> = ({ userName = '', onComplete
           <span className="text-6xl block mb-4">🎯</span>
           <h2 className="text-2xl font-bold text-white mb-4">Gardien de l'Espace</h2>
           <p className="text-slate-300 mb-6 max-w-md mx-auto">
-            Le Ma-ai est la distance parfaite entre toi et ton partenaire. 
+            Le Ma-ai est la distance parfaite entre vous et votre partenaire. 
             Ni trop près (danger), ni trop loin (tu ne peux pas agir). 
-            Utilise ⬅️➡️ pour ajuster ta position.
+            Utilise ⬅️➡️ pour ajuster votre position.
           </p>
-          <Button onClick={startGame} className="bg-gradient-to-r from-emerald-500 to-teal-600" data-testid="start-gardien-btn">
+          <Butvotre onClick={startGame} className="bg-gradient-to-r from-emerald-500 to-teal-600" data-testid="start-gardien-btn">
             Commencer
           </Button>
         </motion.div>
@@ -237,7 +237,7 @@ const GardienEspace: React.FC<GardienEspaceProps> = ({ userName = '', onComplete
               className="absolute bottom-4 transform -translate-x-1/2"
             >
               <span className="text-4xl">🧑‍🎓</span>
-              <p className="text-xs text-center text-cyan-400">Toi</p>
+              <p className="text-xs text-center text-cyan-400">Vous</p>
             </motion.div>
 
             {/* Distance line */}
@@ -256,7 +256,7 @@ const GardienEspace: React.FC<GardienEspaceProps> = ({ userName = '', onComplete
 
           {/* Controls hint */}
           <div className="text-center text-slate-400 text-sm">
-            ⬅️ ➡️ ou A/D pour te déplacer
+            ⬅️ ➡️ ou A/D pour vous déplacer
           </div>
         </div>
       )}
@@ -265,7 +265,7 @@ const GardienEspace: React.FC<GardienEspaceProps> = ({ userName = '', onComplete
       {gameState === 'success' && (
         <motion.div initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} className="text-center py-12">
           <span className="text-6xl block mb-4">🎯</span>
-          <h2 className="text-2xl font-bold text-emerald-400 mb-2">Bravo !</h2>
+          <h2 className="text-2xl font-bold text-emerald-400 mb-2">Félicitations !</h2>
           <p className="text-white text-xl mb-4">Score : {score + (perfectZone * 2)} points</p>
           <p className="text-slate-400">{perfectZone} moments en distance parfaite !</p>
         </motion.div>
