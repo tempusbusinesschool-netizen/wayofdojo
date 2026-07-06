@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { 
   Sparkles, Eye, X, ChevronRight, Play,
   User, Target, Compass, BookOpen, Award, 
-  Scroll, Trophy, Star, Flame, Shield, Mic, Volume2,
+  Scroll, Trophy, Star, Flame, Shield,
   TrendingUp, Users
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -37,7 +37,6 @@ interface AdultTutorialBlocksProps {
   onBlockComplete?: (blockId: number) => void;
   completedBlocks?: number[];
   isNewUser?: boolean;
-  hasConfiguredVoice?: boolean;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -126,12 +125,10 @@ export const AdultTutorialBlocks: React.FC<AdultTutorialBlocksProps> = ({
   onBlockComplete,
   completedBlocks = [],
   isNewUser: _isNewUser = true,
-  hasConfiguredVoice = false
 }) => {
   const router = useRouter();
   const [previewBlock, setPreviewBlock] = useState<number | null>(null);
   const [tanakaAnimating, setTanakaAnimating] = useState(false);
-  const [showVoiceBanner, setShowVoiceBanner] = useState(!hasConfiguredVoice);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -458,95 +455,6 @@ export const AdultTutorialBlocks: React.FC<AdultTutorialBlocksProps> = ({
 
   return (
     <div className="space-y-6" data-testid="adult-tutorial-blocks">
-      {/* Bannière Configuration Voix Tanaka - Pour les nouveaux utilisateurs */}
-      <AnimatePresence>
-        {showVoiceBanner && (
-          <motion.div
-            initial={{ opacity: 0, y: -20, height: 0 }}
-            animate={{ opacity: 1, y: 0, height: 'auto' }}
-            exit={{ opacity: 0, y: -20, height: 0 }}
-            className="relative overflow-hidden"
-          >
-            <div className="bg-gradient-to-r from-amber-600/90 via-orange-600/90 to-amber-600/90 rounded-2xl p-5 border-2 border-amber-400/50 shadow-xl shadow-amber-500/20">
-              {/* Bouton fermer */}
-              <button
-                onClick={() => setShowVoiceBanner(false)}
-                className="absolute top-3 right-3 p-1 rounded-full bg-white/20 hover:bg-white/30 transition-colors"
-              >
-                <X className="w-4 h-4 text-white" />
-              </button>
-
-              <div className="flex flex-col md:flex-row items-center gap-4">
-                {/* Icône animée */}
-                <motion.div
-                  animate={{ 
-                    scale: [1, 1.1, 1],
-                    rotate: [0, 5, -5, 0]
-                  }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className="w-16 h-16 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-lg flex-shrink-0"
-                >
-                  <Mic className="w-8 h-8 text-white" />
-                </motion.div>
-
-                {/* Texte */}
-                <div className="flex-1 text-center md:text-left">
-                  <h3 className="text-white font-bold text-lg flex items-center justify-center md:justify-start gap-2">
-                    <Volume2 className="w-5 h-5" />
-                    Choisissez la voix de Maître Tanaka
-                  </h3>
-                  <p className="text-amber-100 text-sm mt-1">
-                    Votre sensei virtuel peut vous parler ! Écoutez les différentes voix 
-                    et choisissez celle qui vous convient le mieux.
-                  </p>
-                </div>
-
-                {/* Bouton */}
-                <Button
-                  onClick={() => router.push('/fr/aikido/test-voix-tanaka')}
-                  className="bg-white hover:bg-amber-50 text-amber-700 font-bold px-6 py-2 rounded-xl shadow-lg hover:shadow-xl transition-all flex-shrink-0"
-                  data-testid="configure-voice-btn"
-                >
-                  <Play className="w-4 h-4 mr-2" />
-                  Tester les voix
-                </Button>
-              </div>
-
-              {/* Badge nouveau */}
-              <div className="absolute -top-1 -left-1">
-                <span className="px-3 py-1 bg-emerald-500 text-white text-xs font-bold rounded-full shadow-lg animate-pulse">
-                  ✨ NOUVEAU
-                </span>
-              </div>
-
-              {/* Effet de particules */}
-              <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                {[...Array(5)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    className="absolute w-2 h-2 rounded-full bg-white/30"
-                    initial={{ 
-                      x: Math.random() * 100 + '%', 
-                      y: '100%',
-                      opacity: 0 
-                    }}
-                    animate={{ 
-                      y: '-20%',
-                      opacity: [0, 1, 0]
-                    }}
-                    transition={{ 
-                      duration: 3,
-                      delay: i * 0.5,
-                      repeat: Infinity 
-                    }}
-                  />
-                ))}
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       {/* Titre */}
       <div className="text-center">
         <h2 className="text-xl sm:text-2xl font-bold text-white mb-1 flex items-center justify-center gap-2">

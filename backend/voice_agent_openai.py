@@ -168,12 +168,13 @@ async def generate_speech_with_tts(text: str) -> bytes:
         
         tts = OpenAITextToSpeech(api_key=EMERGENT_LLM_KEY)
         
-        # Generate speech - use onyx voice for Tanaka (deep male voice)
+        # Generate speech - use "fable" voice for a wise, elderly sage feel (storyteller quality)
+        # tts-1-hd for higher fidelity, slower speed to convey wisdom and gravitas
         audio_bytes = await tts.generate_speech(
             text=text,
-            model="tts-1",
-            voice="onyx",
-            speed=0.95,  # Slightly slower for wisdom
+            model="tts-1-hd",
+            voice="fable",
+            speed=0.85,  # Slower - conveys the wisdom of an elderly sensei
             response_format="mp3"
         )
         
