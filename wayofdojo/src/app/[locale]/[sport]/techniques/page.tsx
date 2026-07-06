@@ -22,6 +22,33 @@ import TECHNIQUES_BY_KYU, { KYU_ORDER, getTechniquesByKyu, ExtendedTechnique } f
  * ═══════════════════════════════════════════════════════════════════════════════
  */
 
+// Mapping des images de techniques
+const TECHNIQUE_IMAGES: Record<string, string> = {
+  // Ukemi (Chutes)
+  'mae_ukemi': '/images/techniques/mae-ukemi.png',
+  'mae_ukemi_debout': '/images/techniques/mae-ukemi.png',
+  'ushiro_ukemi': '/images/techniques/ushiro-ukemi.png',
+  'yoko_ukemi': '/images/techniques/yoko-ukemi.png',
+  // Tai Sabaki
+  'irimi': '/images/techniques/tai-sabaki.png',
+  'tenkan': '/images/techniques/tai-sabaki.png',
+  'irimi_tenkan': '/images/techniques/tai-sabaki.png',
+  // Ikkyo
+  'ikkyo_omote': '/images/techniques/ikkyo-omote.png',
+  'ikkyo_ura': '/images/techniques/ikkyo-ura.png',
+  // Shiho Nage
+  'shiho_nage_omote': '/images/techniques/shiho-nage.png',
+  'shiho_nage_ura': '/images/techniques/shiho-nage.png',
+  // Irimi Nage
+  'irimi_nage': '/images/techniques/irimi-nage.png',
+  // Kokyu
+  'kokyu_ho': '/images/techniques/kokyu-ho.png',
+  'kokyu_nage_1': '/images/techniques/kokyu-ho.png',
+  'kokyu_nage_2': '/images/techniques/kokyu-ho.png',
+  // Shikko
+  'shikko': '/images/techniques/shikko.png',
+};
+
 // Configuration des ceintures avec couleurs
 const BELT_CONFIG: Record<string, { label: string; color: string; bgClass: string; borderClass: string }> = {
   '6e_kyu': { label: '6e Kyu', color: '#FFFFFF', bgClass: 'bg-white', borderClass: 'border-gray-300' },
@@ -710,11 +737,11 @@ export default function TechniquesPage() {
                 {/* Image de démonstration */}
                 <div>
                   <h3 className="text-white font-semibold mb-3">Illustration</h3>
-                  {selectedTechnique.id.includes('ikkyo') ? (
-                    <div className="relative rounded-xl overflow-hidden">
+                  {TECHNIQUE_IMAGES[selectedTechnique.id] ? (
+                    <div className="relative rounded-xl overflow-hidden bg-[#06101f]">
                       <Image 
-                        src="/images/techniques/ikkyo.png" 
-                        alt="Ikkyo - Animation pédagogique" 
+                        src={TECHNIQUE_IMAGES[selectedTechnique.id]} 
+                        alt={`${selectedTechnique.name} - Illustration`}
                         width={800}
                         height={600}
                         className="w-full h-auto rounded-xl"

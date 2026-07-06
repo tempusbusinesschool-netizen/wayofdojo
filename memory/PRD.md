@@ -1,93 +1,109 @@
-# WayofDojo — Product Requirements Document
+# WayofDojo.com - Product Requirements Document
 
-## 1. Vision
-WayofDojo est une plateforme SaaS gamifiée d'apprentissage de l'Aïkido, combinant un système de progression par ceintures, un assistant vocal IA (Maître Tanaka), et des mini-jeux interactifs.
+## Overview
+WayofDojo is an interactive guided journey platform for Aikido practitioners featuring a gamified learning experience with two distinct modes: "Jeune Samouraï" (children) and "Samouraï Confirmé" (adults).
 
-## 2. Architecture Technique
-- **Frontend**: Next.js 14 (App Router), React, Tailwind CSS, Framer Motion
+## Core Architecture
+- **Frontend**: Next.js 14 App Router with React, Tailwind CSS, Framer Motion
 - **Backend**: FastAPI (Python)
-- **Base de données**: MongoDB
-- **Intégrations**: ElevenLabs TTS, OpenAI Whisper/GPT
+- **Database**: MongoDB
+- **Voice AI**: ElevenLabs TTS + OpenAI Whisper (Emergent LLM Key)
 
-## 3. Modes Utilisateurs
-- **Mode Enfant (Petit Ninja)**: Tutoiement, design coloré
-- **Mode Adulte (Samouraï Confirmé)**: Vouvoiement, design premium sombre
+## Key Features Implemented
 
-## 4. Structure des Pages (Mode Adulte)
+### Adult Mode Dashboard (`/fr/aikido/dojo`)
+- ✅ 3-column layout: Sidebar, Main Content, Notifications
+- ✅ Dark/premium aesthetic (Navy background #06101f)
+- ✅ AdultSidebar with user profile and navigation
+- ✅ AdultHeader with notifications
+- ✅ TanakaHero with "vouvoiement" formal tone
+- ✅ MaProgression belt timeline component
+- ✅ QueFaireAujourdhui daily actions section
+- ✅ VertusSection with Japanese Kanji (義勇仁礼誠名誉忠義)
+
+### Techniques Library (`/fr/aikido/techniques`)
+- ✅ Technique cards by Kyu level (6e Kyu to 1er Kyu)
+- ✅ Category accordion system
+- ✅ Mastery tracking (À découvrir, J'apprends, Je pratique, Maîtrisé)
+- ✅ Detailed technique modal with illustrations
+- ✅ 11 technique illustrations integrated:
+  - Mae Ukemi, Ushiro Ukemi, Yoko Ukemi
+  - Ikkyo, Ikkyo Omote, Ikkyo Ura
+  - Irimi Nage, Shiho Nage, Kokyu Ho
+  - Tai Sabaki, Shikko
+
+### Belt Progression (`/fr/aikido/ceintures`)
+- ✅ Belt images with #06101f background blending
+- ✅ 3 landscape images at bottom section
+- ✅ Responsive 3-column layout
+
+### Virtual Dojo (`/fr/aikido/dojo-virtuel`)
+- ✅ Maître Tanaka AI assistant
+- ✅ Adult-appropriate tone ("vouvoiement")
+- ✅ Audio stops on modal close
+- ✅ Voice interaction with OpenAI Whisper
+
+## Technical Specifications
+
+### Environment Variables
+- `REACT_APP_BACKEND_URL`: Frontend API endpoint
+- `MONGO_URL`: MongoDB connection string
+- `DB_NAME`: Database name
+
+### File Structure
 ```
-/fr/aikido/
-├── dojo           # Dashboard principal adulte
-├── techniques     # Bibliothèque des techniques
-├── ceintures      # Progression des grades
-└── dojo-virtuel   # Mini-jeux interactifs
+/app/wayofdojo/
+├── src/
+│   ├── app/[locale]/[sport]/
+│   │   ├── dojo/page.tsx
+│   │   ├── techniques/page.tsx
+│   │   ├── ceintures/page.tsx
+│   │   └── dojo-virtuel/page.tsx
+│   ├── components/
+│   │   ├── adult-layout/
+│   │   │   ├── AdultSidebar.tsx
+│   │   │   ├── AdultHeader.tsx
+│   │   │   ├── VertusSection.tsx
+│   │   │   ├── TanakaHero.tsx
+│   │   │   ├── MaProgression.tsx
+│   │   │   └── QueFaireAujourdhui.tsx
+│   │   └── ...
+│   └── constants/
+│       └── techniquesByKyu.ts
+└── public/images/techniques/
+    ├── mae-ukemi.png
+    ├── ushiro-ukemi.png
+    ├── yoko-ukemi.png
+    ├── ikkyo.png
+    ├── ikkyo-omote.png
+    ├── ikkyo-ura.png
+    ├── irimi-nage.png
+    ├── shiho-nage.png
+    ├── kokyu-ho.png
+    ├── tai-sabaki.png
+    └── shikko.png
 ```
 
-## 5. Fonctionnalités Complétées
+## Test Credentials
+- **Admin**: admin@wayofdojo.com / admin123
+- **Adulte**: adulte@wayofdojo.fr / 123456
+- **Enfant**: enfant@wayofdojo.fr / 123456
 
-### 5.1 Refonte UX/UI Mode Adulte (Juillet 2026)
-- ✅ Layout 3 colonnes (Sidebar, Central, Notifications)
-- ✅ Design premium sombre (#06101f)
-- ✅ Sidebar avec profil utilisateur intégré
-- ✅ Section "Ma progression de ceinture" avec image ceintures-progression.png
-- ✅ Section "Les 7 vertus du Budo"
-- ✅ Cartes "Que faire aujourd'hui" avec images personnalisées
+## Known Issues
+- P2: Auth desync between Next.js API and FastAPI (some users can't login via Next.js API)
+- Legacy SEO architecture needs update
+- Minor ESLint warnings
 
-### 5.2 Page Techniques
-- ✅ Grille de techniques par catégorie
-- ✅ Modales de détail avec descriptions
-- ✅ Image pédagogique Ikkyo intégrée
-- ✅ Remplacement vidéo par images
+## Completed Work (July 6, 2026)
+- ✅ Integrated 11 technique illustrations from user-provided ZIP file
+- ✅ Updated VertusSection with Japanese Kanji typography
+- ✅ Fixed belt images background blending
+- ✅ Updated Maître Tanaka to formal "vouvoiement" tone
+- ✅ Audio stops on modal close
 
-### 5.3 Page Ceintures
-- ✅ Onglets (Mon parcours, Grades Kyu, Grades Dan, Comprendre)
-- ✅ Images de ceintures individuelles avec fond #06101f
-- ✅ 7 images générées (blanc, jaune, orange, vert, bleu, marron, noir)
-- ✅ 3 images de fond personnalisées en bas de page
-
-### 5.4 Textes Tanaka Mode Adulte
-- ✅ Vouvoiement dans tous les messages
-- ✅ "Votre Sensei personnel" au lieu de "Ton Sensei personnel"
-- ✅ Messages Dojo Virtuel avec vouvoiement
-- ✅ System prompt backend modifié
-- ✅ TANAKA_MESSAGES_ADULT créé
-
-## 6. Assets Images
-```
-/public/images/
-├── belts/
-│   ├── ceintures-progression.png   # Image principale progression
-│   ├── 6e-kyu-white.png           # Ceinture blanche
-│   ├── 5e-kyu-yellow.png          # Ceinture jaune
-│   ├── 4e-kyu-orange.png          # Ceinture orange
-│   ├── 3e-kyu-green.png           # Ceinture verte
-│   ├── 2e-kyu-blue.png            # Ceinture bleue
-│   ├── 1er-kyu-brown.png          # Ceinture marron
-│   └── 1er-dan-black.png          # Ceinture noire
-├── ceintures/
-│   ├── castle-sunset.png          # Château japonais
-│   ├── fuji-sunset.png            # Mont Fuji
-│   └── street-sunset.png          # Rue traditionnelle
-├── backgrounds/
-│   └── dojo-virtuel-sunset.png    # Fond carte Dojo Virtuel
-└── techniques/
-    └── ikkyo.png                  # Animation pédagogique Ikkyo
-```
-
-## 7. Illustrations Techniques à Ajouter
-58 techniques nécessitent encore une illustration pédagogique :
-- Ukemi (5) : Mae, Ushiro, Yoko, Mae Debout, Tobu
-- Tai Sabaki (3) : Irimi, Tenkan, Irimi Tenkan
-- Techniques de base (7) : Nikyo, Sankyo, Yonkyo, Gokyo
-- Projections (10) : Shiho Nage, Irimi Nage, Kote Gaeshi, etc.
-- Saisies (8) : Katate Dori, Ryote Dori, etc.
-- Attaques (7) : Shomen Uchi, Yokomen Uchi, etc.
-- Et autres catégories...
-
-## 8. Backlog
-- P2: Correction désync auth Next.js vs FastAPI
-- P3: SEO avancé (sitemap, robots.txt, JSON-LD)
-- P3: Nettoyage fichiers temporaires /proposition-*
-- P3: Configuration supervisor standardisée
-
-## 9. Credentials Test
-Voir /app/memory/test_credentials.md
+## Backlog
+- P1: Responsive design verification (tablet/mobile)
+- P2: Integrate remaining 47 technique illustrations (blocked - waiting for user files)
+- P3: Advanced SEO (sitemap, robots.txt, JSON-LD)
+- P3: Clean up temporary files (/proposition-*)
+- P4: ESLint pass and supervisor standardization
