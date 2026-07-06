@@ -1,7 +1,7 @@
 """
 🥋 Maître Tanaka - Agent Vocal Conversationnel
-OpenAI Whisper (STT) + GPT-4o (LLM) + OpenAI TTS
-Utilise Emergent LLM Key via emergentintegrations library
+OpenAI Whisper (STT) + GPT-4o (LLM) + ElevenLabs "Adam" TTS (same voice as pre-recorded phrases)
+Utilise Emergent LLM Key pour Whisper+GPT et ELEVENLABS_API_KEY pour la voix
 """
 
 import os
@@ -21,6 +21,9 @@ logger = logging.getLogger(__name__)
 
 # Configuration
 EMERGENT_LLM_KEY = os.environ.get('EMERGENT_LLM_KEY')
+ELEVENLABS_API_KEY = os.environ.get('ELEVENLABS_API_KEY')
+# Voice ID "Adam" - deep male voice - MUST match generate_tanaka_phrases.py for consistency
+TANAKA_VOICE_ID = "pNInz6obpgDQGcFmaJgB"
 
 # Router - prefix /api/voice-agent pour le routing K8s
 voice_router_openai = APIRouter(prefix="/api/voice-agent", tags=["Voice Agent OpenAI"])
@@ -162,24 +165,39 @@ async def generate_response_with_gpt(
 
 
 async def generate_speech_with_tts(text: str) -> bytes:
-    """Generate speech using OpenAI TTS via emergentintegrations"""
+    """
+    Generate speech using ElevenLabs 'Adam' voice — the SAME voice used to
+    generate the pre-recorded MP3 phrases (welcome.mp3, etc.), ensuring the
+    user hears a consistent 'wise old sage' voice across the whole app.
+    """
+    if not ELEVENLABS_API_KEY:
+        raise HTTPException(status_code=500, detail="ELEVENLABS_API_KEY missing")
     try:
-        from emergentintegrations.llm.openai import OpenAITextToSpeech
-        
-        tts = OpenAITextToSpeech(api_key=EMERGENT_LLM_KEY)
-        
-        # Generate speech - use "fable" voice for a wise, elderly sage feel (storyteller quality)
-        # tts-1-hd for higher fidelity, slower speed to convey wisdom and gravitas
-        audio_bytes = await tts.generate_speech(
+        from elevenlabs import ElevenLabs
+
+        client = ElevenLabs(api_key=ELEVENLABS_API_KEY)
+        audio_generator = client.text_to_speech.convert(
             text=text,
-            model="tts-1-hd",
-            voice="fable",
-            speed=0.85,  # Slower - conveys the wisdom of an elderly sensei
-            response_format="mp3"
+            voice_id=TANAKA_VOICE_ID,
+            model_id="eleven_multilingual_v2",
+            output_format="mp3_44100_128",
+            voice_settings={
+                "stability": 0.6,
+                "similarity_boost": 0.8,
+                "style": 0.3,
+                "use_speaker_boost": True,
+            },
         )
-        
+
+        audio_bytes = b""
+        for chunk in audio_generator:
+            if chunk:
+                audio_bytes += chunk
+
         return audio_bytes
-            
+
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"TTS error: {e}")
         raise HTTPException(status_code=500, detail=f"Erreur de synthèse vocale: {str(e)}")
@@ -195,7 +213,7 @@ async def get_status():
     return {
         "status": "online",
         "service": "Maître Tanaka Voice Agent (OpenAI)",
-        "capabilities": ["whisper-stt", "gpt-4o-chat", "openai-tts"],
+        "capabilities": ["whisper-stt", "gpt-4o-chat", "elevenlabs-tts-adam"],
         "version": "2.0.0",
         "key_configured": bool(EMERGENT_LLM_KEY)
     }
