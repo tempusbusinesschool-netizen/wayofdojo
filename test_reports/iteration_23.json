@@ -1,0 +1,47 @@
+{
+  "summary": "Frontend UI testing of Tanaka vouvoiement changes for adult mode. Logged in as admin@wayofdojo.com and verified textual changes on /fr/aikido/dojo and /fr/aikido/dojo-virtuel pages. Most changes are correctly applied but there is a critical bug: the TanakaWelcome intro overlay on /fr/aikido/dojo-virtuel still displays CHILD (tutoiement) messages for the admin user because the mode-detection logic in dojo-virtuel/page.tsx does not recognize this user as adult.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [
+      {
+        "component": "TanakaWelcome (intro overlay on /fr/aikido/dojo-virtuel)",
+        "issue": "Admin user (samouraï_confirme) still sees CHILD tutoiement message: 'Bienvenue dans le Dojo Virtuel ! Ici, tu vas t'entraîner de façon ludique ... Amuse-toi bien, jeune Samouraï !'. Also displays 'Ton guide sur la Voie' (hardcoded).",
+        "selector": "TanakaWelcome overlay before the Dojo modal",
+        "priority": "HIGH"
+      },
+      {
+        "component": "TanakaWelcome.tsx",
+        "issue": "Line 309: 'Ton guide sur la Voie' is hardcoded in tutoiement with no adult-mode variant. Shows for adult users too.",
+        "selector": "p.text-amber-200/70",
+        "priority": "MEDIUM"
+      }
+    ],
+    "integration_issues": [
+      {
+        "flow": "Adult mode detection on /fr/aikido/dojo-virtuel",
+        "issue": "In /app/wayofdojo/src/app/[locale]/[sport]/dojo-virtuel/page.tsx, isAdultMode = user?.mode === 'adult' || user?.mode === 'samurai' || localStorage.wayofdojo_mode === 'adult'. Admin user object contains { profile: 'samourai_confirme', role: 'super_admin' } but NO 'mode' field, and localStorage 'wayofdojo_mode' is null. As a result, isAdultMode is false and TANAKA_MESSAGES (child) is used instead of TANAKA_MESSAGES_ADULT. Fix: base detection on user.profile ('samourai_confirme' or 'samourai_debutant') or on user.role.",
+        "affected_selectors": ["TanakaWelcome full-variant overlay"]
+      }
+    ],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [
+    "Fix adult-mode detection in /app/wayofdojo/src/app/[locale]/[sport]/dojo-virtuel/page.tsx to correctly identify adult users based on user.profile (e.g., 'samourai_confirme', 'samourai_debutant') or role, not user.mode which is not present on the user object.",
+    "Update hardcoded string 'Ton guide sur la Voie' (TanakaWelcome.tsx line 309) to switch to 'Votre guide sur la Voie' when the component is rendered in adult mode (pass a variant/tone prop, or centralize adult vs junior copy).",
+    "Consider adding a top-level context/hook (e.g., useIsAdultMode) so every page/component uses the same detection logic instead of duplicating conditionals."
+  ],
+  "critical_code_review_comments": [
+    "Adult/junior mode detection is duplicated and inconsistent across pages. Extract to a helper such as isAdultMode(user) reading from user.profile/role, then reuse everywhere TANAKA_MESSAGES is chosen.",
+    "SSR error observed in backend logs: 'ReferenceError: localStorage is not defined at .../dojo-virtuel/page.js'. localStorage reads happen inside useEffect but a synchronous read for isAdultMode may also occur during render on the server. Guard with typeof window !== 'undefined'.",
+    "TanakaWelcome exports two large message dictionaries (TANAKA_MESSAGES and TANAKA_MESSAGES_ADULT) side by side; consider unifying them into a single object keyed by tone to avoid drift."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A", "frontend": "70%"},
+  "test_credentials": "admin@wayofdojo.com / admin123 (super_admin, profile=samourai_confirme)",
+  "seed_data_creation": "None",
+  "retest_needed": true,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Login URL is /fr/aikido/login (NOT /fr/login which 404s). After login, admin lands on /fr/aikido/dojo. Verified: (a) Hero on /fr/aikido/dojo shows 'Votre Sensei personnel' and quote 'Continuez votre chemin vers la maîtrise' — PASS. (b) Sidebar under Maître Tanaka shows 'Votre Sensei personnel' — PASS. (c) Inside the VirtualDojo modal on /fr/aikido/dojo-virtuel, welcome message correctly says 'vous allez apprendre en jouant' and 'Prenez votre temps et amusez-vous bien !' — PASS. FAILURE: The TanakaWelcome full-page overlay that appears BEFORE the modal on /fr/aikido/dojo-virtuel still uses the CHILD version (contains 'tu vas t'entraîner', 'Amuse-toi bien, jeune Samouraï !', 'Ton guide sur la Voie') because dojo-virtuel/page.tsx checks user.mode which does not exist on admin user (profile=samourai_confirme, no mode field, localStorage wayofdojo_mode=null). Backend logs show recurring SSR error 'localStorage is not defined' on the same page — likely needs a typeof window guard.",
+  "rca of the issue": "Root cause: In /app/wayofdojo/src/app/[locale]/[sport]/dojo-virtuel/page.tsx line ~40, isAdultMode is computed as `user?.mode === 'adult' || user?.mode === 'samurai' || localStorage.getItem('wayofdojo_mode') === 'adult'`. The admin user returned by /api/auth/me contains fields {role: 'super_admin', profile: 'samourai_confirme', ...} but NO 'mode' field, and localStorage 'wayofdojo_mode' is never set for admin. Therefore isAdultMode is false → TANAKA_MESSAGES (child copy with 'tu', 'jeune Samouraï') is passed to <TanakaWelcome>. Reproduction: 1) Login admin@wayofdojo.com/admin123 at /fr/aikido/login. 2) Navigate to /fr/aikido/dojo-virtuel. 3) Observe overlay text contains tutoiement and 'jeune Samouraï'. Mitigation: replace mode detection with a helper based on user.profile (samourai_confirme/samourai_debutant) or user.role. Also fix hardcoded 'Ton guide sur la Voie' in TanakaWelcome.tsx to be tone-aware."
+}

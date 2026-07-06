@@ -74,7 +74,7 @@ export const TanakaHero: React.FC<TanakaHeroProps> = ({
             className="flex items-center gap-2 mb-2"
           >
             <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-            <span className="text-yellow-200/90 text-sm font-medium">Ton Sensei personnel</span>
+            <span className="text-yellow-200/90 text-sm font-medium">Votre Sensei personnel</span>
           </motion.div>
           
           <motion.h2

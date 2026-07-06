@@ -406,4 +406,63 @@ export const TANAKA_MESSAGES = {
   },
 };
 
+// Messages de Tanaka pour le mode ADULTE (vouvoiement, ton respectueux)
+export const TANAKA_MESSAGES_ADULT = {
+  'dojo-virtuel': {
+    title: 'Dojo Virtuel',
+    emoji: '🎮',
+    message: "Bienvenue dans le Dojo Virtuel ! Ici, vous allez vous entraîner de façon ludique avec 11 mini-jeux conçus pour développer vos réflexes, votre concentration et votre connaissance du Budo. Bon entraînement !"
+  },
+  'techniques': {
+    title: 'Techniques',
+    emoji: '📚',
+    message: "Voici la bibliothèque des techniques ! Plus de 200 mouvements vous attendent. Chaque technique est un pas de plus vers la maîtrise. Prenez votre temps pour les étudier, la patience est une vertu du Budo."
+  },
+  'techniques-liste': {
+    title: 'Liste des Techniques',
+    emoji: '📖',
+    message: "Vous trouverez ici toutes les techniques classées par catégorie. Du plus simple au plus complexe, chaque mouvement a son importance. Rappelez-vous : la répétition est la mère de l'apprentissage !"
+  },
+  'trophees': {
+    title: 'Trophées',
+    emoji: '🏆',
+    message: "Voici votre vitrine de récompenses ! Chaque badge représente un accomplissement sur votre chemin. Continuez à vous entraîner et collectionnez-les tous. La persévérance mène à la victoire !"
+  },
+  'vertus': {
+    title: 'Les 7 Vertus du Budo',
+    emoji: '🎭',
+    message: "Les 7 Vertus du Budo sont le cœur de notre pratique. Respect, Courage, Maîtrise, Humilité, Bienveillance, Attention et Responsabilité. Cultivez-les chaque jour, et vous deviendrez un vrai guerrier de la paix."
+  },
+  'ceintures': {
+    title: 'Ceintures',
+    emoji: '🥋',
+    message: "La progression par les ceintures symbolise votre évolution. Du blanc au noir, chaque grade marque une étape importante. Mais rappelez-vous : le vrai grade est dans le cœur, pas autour de la taille !"
+  },
+  'profil': {
+    title: 'Mon Profil',
+    emoji: '👤',
+    message: "Voici votre espace personnel ! Vous pouvez y voir votre progression, vos statistiques et personnaliser votre parcours. Un bon pratiquant connaît ses forces et travaille sur ses faiblesses."
+  },
+  'progression': {
+    title: 'Ma Progression',
+    emoji: '📈',
+    message: "Observez votre évolution ! Chaque entraînement compte, chaque effort vous rapproche de votre objectif. La progression n'est pas toujours linéaire, mais ne vous découragez jamais."
+  },
+  'histoire': {
+    title: 'Histoire de l\'Aïkido',
+    emoji: '📜',
+    message: "Découvrez les origines de notre art ! Connaître l'histoire, c'est comprendre l'essence de ce que nous pratiquons. O'Sensei Ueshiba nous a légué un trésor, préservons-le avec respect."
+  },
+  'carnet': {
+    title: 'Carnet de Dojo',
+    emoji: '📓',
+    message: "Votre carnet personnel ! Notez vos entraînements, vos réflexions et vos objectifs. Un pratiquant qui écrit est un pratiquant qui progresse. La mémoire est fugace, l'encre est éternelle."
+  },
+  'stages': {
+    title: 'Stages',
+    emoji: '🏕️',
+    message: "Les stages sont des moments privilégiés d'apprentissage intensif. Rencontrez d'autres pratiquants, découvrez de nouveaux maîtres. Chaque stage est une aventure qui vous transformera !"
+  },
+};
+
 export default TanakaWelcome;

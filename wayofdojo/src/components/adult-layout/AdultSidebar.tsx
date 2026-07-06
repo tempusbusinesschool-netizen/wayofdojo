@@ -193,7 +193,7 @@ export const AdultSidebar: React.FC<AdultSidebarProps> = ({
             </div>
             <div>
               <h4 className="text-white font-semibold text-sm">Maître Tanaka</h4>
-              <p className="text-orange-400 text-xs">Ton Sensei personnel</p>
+              <p className="text-orange-400 text-xs">Votre Sensei personnel</p>
             </div>
           </div>
           <p className="text-slate-400 text-xs italic mb-2">

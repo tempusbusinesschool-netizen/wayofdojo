@@ -60,8 +60,8 @@ const DOJO_GAMES = [
     ageRange: '5-14 ans',
     duration: '3-5 min',
     skills: ['Calme', 'Patience', 'Anticipation'],
-    description: 'Traverse le dojo virtuel sans perdre ton équilibre.',
-    tanakaIntro: "Le Ki est l'énergie qui nous anime. Traverse le dojo en gardant ton calme !",
+    description: 'Traversez le dojo virtuel sans perdre votre équilibre.',
+    tanakaIntro: "Le Ki est l'énergie qui nous anime. Traversez le dojo en gardant votre calme !",
     xpReward: 20,
     kiReward: 15,
     unlockLevel: 0,
@@ -78,7 +78,7 @@ const DOJO_GAMES = [
     ageRange: '5-14 ans',
     duration: '2-4 min',
     skills: ['Respiration', 'Concentration', 'Calme'],
-    description: 'Ton avatar avance uniquement si tu respires au bon rythme.',
+    description: 'Votre avatar avance uniquement si vous respirez au bon rythme.',
     tanakaIntro: "La respiration est la clé de tout. Inspire par le nez, expire par la bouche.",
     xpReward: 25,
     kiReward: 20,
@@ -97,7 +97,7 @@ const DOJO_GAMES = [
     duration: '3-5 min',
     skills: ['Écoute', 'Attention', 'Confiance'],
     description: 'Ferme les yeux et suis les instructions de Maître Tanaka.',
-    tanakaIntro: "Ferme les yeux et fais confiance à tes autres sens.",
+    tanakaIntro: "Fermez les yeux et faites confiance à vos autres sens.",
     xpReward: 30,
     kiReward: 25,
     unlockLevel: 0,
@@ -168,8 +168,8 @@ const DOJO_GAMES = [
     ageRange: '5-14 ans',
     duration: '3-5 min',
     skills: ['Équilibre', 'Posture', 'Centre'],
-    description: 'Garde ton avatar en équilibre sur un chemin étroit.',
-    tanakaIntro: "Le Hara est ton centre. Trouve-le et reste stable !",
+    description: 'Gardez votre avatar en équilibre sur un chemin étroit.',
+    tanakaIntro: "Le Hara est votre centre. Trouvez-le et restez stable !",
     xpReward: 25,
     kiReward: 20,
     unlockLevel: 0,
@@ -243,8 +243,8 @@ const DOJO_GAMES = [
     ageRange: '6-14 ans',
     duration: '3-5 min',
     skills: ['Culture', 'Mémoire', 'Apprentissage'],
-    description: 'Teste tes connaissances sur l\'Aïkido et le Budo !',
-    tanakaIntro: "Voyons si tu connais bien la voie de l'harmonie !",
+    description: 'Testez vos connaissances sur l\'Aïkido et le Budo !',
+    tanakaIntro: "Voyons si vous connaissez bien la voie de l'harmonie !",
     xpReward: 25,
     kiReward: 20,
     unlockLevel: 0,
@@ -279,7 +279,7 @@ const DOJO_GAMES = [
     ageRange: '5-14 ans',
     duration: '2-4 min',
     skills: ['Calme', 'Patience', 'Créativité'],
-    description: 'Crée ton propre jardin zen en traçant des motifs.',
+    description: 'Créez votre propre jardin zen en traçant des motifs.',
     tanakaIntro: "Le jardin zen apaise l'esprit. Trace avec soin !",
     xpReward: 20,
     kiReward: 15,
@@ -315,8 +315,8 @@ const DOJO_GAMES = [
     ageRange: '6-14 ans',
     duration: '2-4 min',
     skills: ['Centre', 'Respiration', 'Concentration'],
-    description: 'Concentre ton énergie dans ton Hara (centre).',
-    tanakaIntro: "Le Hara est ton centre de puissance. Trouve-le !",
+    description: 'Concentrez votre énergie dans votre Hara (centre).',
+    tanakaIntro: "Le Hara est votre centre de puissance. Trouvez-le !",
     xpReward: 25,
     kiReward: 20,
     unlockLevel: 0,
@@ -387,7 +387,7 @@ const DOJO_GAMES = [
     ageRange: '6-14 ans',
     duration: '4-6 min',
     skills: ['Techniques', 'Mémoire', 'Progression'],
-    description: 'Prouve que tu mérites ta prochaine ceinture !',
+    description: 'Prouvez que vous méritez votre prochaine ceinture !',
     tanakaIntro: "Chaque ceinture représente un pas sur la voie !",
     xpReward: 35,
     kiReward: 30,
@@ -508,20 +508,20 @@ const VirtualDojo: React.FC<VirtualDojoProps> = ({
   // Welcome message
   useEffect(() => {
     if (isOpen && !selectedGame) {
-      const displayName = userName || 'jeune ninja';
+      const displayName = userName || 'pratiquant';
       const completedCount = completedGames.length;
       
       if (completedCount === 0) {
         setTanakaMessage(
           `Bienvenue dans le Dojo Virtuel, ${displayName} ! 🎮\n\n` +
-          `Ici, tu vas apprendre en jouant ! Chaque jeu est un petit défi.\n\n` +
-          `Prends ton temps et amuse-toi bien !`
+          `Ici, vous allez apprendre en jouant ! Chaque jeu est un petit défi.\n\n` +
+          `Prenez votre temps et amusez-vous bien !`
         );
       } else {
         setTanakaMessage(
-          `Te revoilà, ${displayName} ! 🌟\n\n` +
-          `Tu as déjà terminé ${completedCount} jeu${completedCount > 1 ? 'x' : ''}.\n\n` +
-          `Continue comme ça !`
+          `Vous revoilà, ${displayName} ! 🌟\n\n` +
+          `Vous avez déjà terminé ${completedCount} jeu${completedCount > 1 ? 'x' : ''}.\n\n` +
+          `Continuez comme ça !`
         );
       }
       setIsTanakaSpeaking(true);
@@ -572,7 +572,7 @@ const VirtualDojo: React.FC<VirtualDojoProps> = ({
     }
     
     const game = DOJO_GAMES.find(g => g.id === gameId);
-    setTanakaMessage(`Bravo ${userName || 'ninja'} ! 🎉 Tu as terminé "${game?.name}" avec ${score} points ! +${kiEarned} Ki !`);
+    setTanakaMessage(`Bravo ${userName || 'pratiquant'} ! 🎉 Vous avez terminé "${game?.name}" avec ${score} points ! +${kiEarned} Ki !`);
     setIsTanakaSpeaking(true);
     setTimeout(() => setIsTanakaSpeaking(false), 4000);
     
@@ -823,7 +823,7 @@ const VirtualDojo: React.FC<VirtualDojoProps> = ({
                 <div className="text-center py-4">
                   <span className="text-5xl block mb-4">🔄</span>
                   <h3 className="text-xl font-bold text-white mb-3">Recommencer le parcours ?</h3>
-                  <p className="text-slate-300 text-sm mb-6">Ta progression sera remise à zéro.</p>
+                  <p className="text-slate-300 text-sm mb-6">Votre progression sera remise à zéro.</p>
                   <div className="flex justify-center gap-3">
                     <Button onClick={() => setShowResetConfirm(false)} variant="outline" className="text-white border-slate-600">
                       Non, je continue

@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Swords, ArrowLeft, HelpCircle } from 'lucide-react';
 import VirtualDojo from '@/components/VirtualDojo';
-import { TanakaWelcome, TANAKA_MESSAGES } from '@/components/TanakaWelcome';
+import { TanakaWelcome, TANAKA_MESSAGES, TANAKA_MESSAGES_ADULT } from '@/components/TanakaWelcome';
 
 export default function DojoVirtuelPage() {
   const router = useRouter();
@@ -15,7 +15,7 @@ export default function DojoVirtuelPage() {
   const locale = params.locale as string;
   const sport = params.sport as string;
 
-  const [user, setUser] = useState<{ firstName: string; gamification: { level: number; xp: number } } | null>(null);
+  const [user, setUser] = useState<{ firstName: string; gamification: { level: number; xp: number }; mode?: string } | null>(null);
   const [loading, setLoading] = useState(true);
   const [dojoOpen] = useState(true);
 
@@ -38,6 +38,10 @@ export default function DojoVirtuelPage() {
     router.push(`/${locale}/${sport}/dojo`);
   };
 
+  // Utiliser les messages adultes si le mode est "adult" ou "samurai"
+  const isAdultMode = user?.mode === 'adult' || user?.mode === 'samurai' || localStorage.getItem('wayofdojo_mode') === 'adult';
+  const messages = isAdultMode ? TANAKA_MESSAGES_ADULT : TANAKA_MESSAGES;
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-amber-950 via-orange-950 to-amber-950 flex items-center justify-center">
@@ -57,9 +61,9 @@ export default function DojoVirtuelPage() {
       {/* Message d'accueil Tanaka */}
       <TanakaWelcome
         sectionId="dojo-virtuel"
-        sectionTitle={TANAKA_MESSAGES['dojo-virtuel'].title}
-        message={TANAKA_MESSAGES['dojo-virtuel'].message}
-        emoji={TANAKA_MESSAGES['dojo-virtuel'].emoji}
+        sectionTitle={messages['dojo-virtuel'].title}
+        message={messages['dojo-virtuel'].message}
+        emoji={messages['dojo-virtuel'].emoji}
         variant="full"
       />
 
