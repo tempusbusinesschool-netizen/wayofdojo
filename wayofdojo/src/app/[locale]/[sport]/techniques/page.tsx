@@ -32,39 +32,125 @@ import TECHNIQUES_BY_KYU, { KYU_ORDER, getTechniquesByKyu, ExtendedTechnique } f
 
 // Mapping des images de techniques
 const TECHNIQUE_IMAGES: Record<string, string> = {
+  // ═══════════════════════════════════════════════════════════════
+  // UKEMI (Chutes)
+  // ═══════════════════════════════════════════════════════════════
   'mae_ukemi': '/images/techniques/mae-ukemi.png',
   'mae_ukemi_debout': '/images/techniques/mae-ukemi.png',
   'ushiro_ukemi': '/images/techniques/ushiro-ukemi.png',
   'yoko_ukemi': '/images/techniques/yoko-ukemi.png',
+  
+  // ═══════════════════════════════════════════════════════════════
+  // TAI SABAKI (Déplacements)
+  // ═══════════════════════════════════════════════════════════════
   'irimi': '/images/techniques/irimi.png',
   'tenkan': '/images/techniques/tenkan.png',
   'irimi_tenkan': '/images/techniques/irimi-tenkan.png',
+  
+  // ═══════════════════════════════════════════════════════════════
+  // KAMAE (Postures)
+  // ═══════════════════════════════════════════════════════════════
+  'ai_hanmi': '/images/techniques/hanmi-no-kamae.png',
+  'gyaku_hanmi': '/images/techniques/hanmi-no-kamae.png',
+  'seiza': '/images/techniques/seiza.png',
+  'kamae': '/images/techniques/kamae.png',
+  'hanmi_kamae': '/images/techniques/hanmi-no-kamae.png',
+  
+  // ═══════════════════════════════════════════════════════════════
+  // ATEMI (Attaques/Frappes)
+  // ═══════════════════════════════════════════════════════════════
+  'shomen_uchi': '/images/techniques/shomen-uchi.png',
+  'yokomen_uchi': '/images/techniques/yokomen-uchi.png',
+  'chudan_tsuki': '/images/techniques/chudan-tsuki.png',
+  'jodan_tsuki': '/images/techniques/jodan-tsuki.png',
+  'mae_geri': '/images/techniques/mae-geri.png',
+  
+  // ═══════════════════════════════════════════════════════════════
+  // SAISIES (Grabs)
+  // ═══════════════════════════════════════════════════════════════
+  'katate_dori': '/images/techniques/katate-dori.png',
+  'ai_hanmi_katate_dori': '/images/techniques/ai-hanmi-katate-dori.png',
+  'gyaku_hanmi_katate_dori': '/images/techniques/gyaku-hanmi-katate-dori.png',
+  'ryote_dori': '/images/techniques/ryote-dori.png',
+  'kata_dori': '/images/techniques/kata-dori.png',
+  'mune_dori': '/images/techniques/mune-dori.png',
+  'ushiro_ryote_dori': '/images/techniques/ushiro-ryote-dori.png',
+  
+  // ═══════════════════════════════════════════════════════════════
+  // IKKYO (1ère technique)
+  // ═══════════════════════════════════════════════════════════════
   'ikkyo_omote': '/images/techniques/ikkyo-omote.png',
   'ikkyo_ura': '/images/techniques/ikkyo-ura.png',
-  'suwari_ikkyo': '/images/techniques/ikkyo-omote.png',
-  'ushiro_ryote_ikkyo': '/images/techniques/ikkyo-ura.png',
+  'suwari_ikkyo': '/images/techniques/immobilisation-ikkyo.png',
+  'ushiro_ryote_ikkyo': '/images/techniques/immobilisation-ikkyo.png',
+  
+  // ═══════════════════════════════════════════════════════════════
+  // NIKKYO (2e technique)
+  // ═══════════════════════════════════════════════════════════════
   'nikyo_omote': '/images/techniques/nikkyo-omote.png',
   'nikyo_ura': '/images/techniques/nikkyo-ura.png',
   'suwari_nikyo': '/images/techniques/nikkyo-omote.png',
+  
+  // ═══════════════════════════════════════════════════════════════
+  // SANKYO (3e technique)
+  // ═══════════════════════════════════════════════════════════════
   'sankyo_omote': '/images/techniques/sankyo-omote.png',
   'sankyo_ura': '/images/techniques/sankyo-ura.png',
+  'suwari_sankyo': '/images/techniques/immobilisation-sankyo.png',
+  
+  // ═══════════════════════════════════════════════════════════════
+  // YONKYO (4e technique)
+  // ═══════════════════════════════════════════════════════════════
   'yonkyo_omote': '/images/techniques/yonkyo-omote.png',
   'yonkyo_ura': '/images/techniques/yonkyo-ura.png',
+  'suwari_yonkyo': '/images/techniques/immobilisation-yonkyo.png',
+  
+  // ═══════════════════════════════════════════════════════════════
+  // GOKYO (5e technique)
+  // ═══════════════════════════════════════════════════════════════
   'gokyo': '/images/techniques/gokkyo-omote.png',
+  'gokyo_omote': '/images/techniques/gokkyo-omote.png',
+  'gokyo_ura': '/images/techniques/gokkyo-ura.png',
+  'suwari_gokyo': '/images/techniques/immobilisation-gokkyo.png',
+  
+  // ═══════════════════════════════════════════════════════════════
+  // SHIHO NAGE
+  // ═══════════════════════════════════════════════════════════════
   'shiho_nage_omote': '/images/techniques/shiho-nage.png',
   'shiho_nage_ura': '/images/techniques/shiho-nage-ura.png',
   'ushiro_ryote_shiho': '/images/techniques/shiho-nage-ura.png',
   'hanmi_shiho': '/images/techniques/shiho-nage.png',
+  
+  // ═══════════════════════════════════════════════════════════════
+  // IRIMI NAGE
+  // ═══════════════════════════════════════════════════════════════
   'irimi_nage': '/images/techniques/irimi-nage.png',
   'suwari_irimi': '/images/techniques/irimi-nage-ura.png',
   'hanmi_irimi': '/images/techniques/irimi-nage-ura.png',
+  
+  // ═══════════════════════════════════════════════════════════════
+  // KOTE GAESHI
+  // ═══════════════════════════════════════════════════════════════
   'kote_gaeshi': '/images/techniques/kote-gaeshi.png',
+  'kote_gaeshi_ura': '/images/techniques/kote-gaeshi-ura.png',
+  
+  // ═══════════════════════════════════════════════════════════════
+  // KAITEN NAGE
+  // ═══════════════════════════════════════════════════════════════
   'kaiten_nage_uchi': '/images/techniques/kaiten-nage-ura.png',
   'kaiten_nage_soto': '/images/techniques/kaiten-nage-ura.png',
   'hanmi_kaiten': '/images/techniques/kaiten-nage-ura.png',
+  
+  // ═══════════════════════════════════════════════════════════════
+  // KOKYU
+  // ═══════════════════════════════════════════════════════════════
   'kokyu_ho': '/images/techniques/kokyu-ho.png',
   'kokyu_nage_1': '/images/techniques/kokyu-nage-ura.png',
   'kokyu_nage_2': '/images/techniques/kokyu-nage-ura.png',
+  
+  // ═══════════════════════════════════════════════════════════════
+  // SHIKKO
+  // ═══════════════════════════════════════════════════════════════
   'shikko': '/images/techniques/shikko.png',
 };
 
