@@ -13,11 +13,11 @@ import { Button } from '@/components/ui/button';
 import { 
   Gamepad2, Wind, Target, Brain, 
   Users, Heart, Footprints, Shield,
-  Trophy, Lock, Play, X, Volume2, VolumeX, RotateCcw, Eye, Ear
+  Trophy, Lock, Play, X, Volume2, VolumeX, RotateCcw, Eye, Ear, Award
 } from 'lucide-react';
 import { playTanakaPhrase } from '@/services/tanakaVoiceService';
 
-// Import des mini-jeux
+// Import des mini-jeux originaux
 import MessagerDuKi from './games/MessagerDuKi';
 import ParcoursduSouffle from './games/ParcoursduSouffle';
 import SenseiInvisible from './games/SenseiInvisible';
@@ -28,6 +28,19 @@ import CheminEquilibre from './games/CheminEquilibre';
 import MemorySensei from './games/MemorySensei';
 import RythmeDuDojo from './games/RythmeDuDojo';
 import QueteVertus from './games/QueteVertus';
+
+// Import des 10 nouveaux mini-jeux
+import QuizNinja from './games/QuizNinja';
+import KanjiWarrior from './games/KanjiWarrior';
+import ZenGarden from './games/ZenGarden';
+import KatanaPrecision from './games/KatanaPrecision';
+import HaraFocus from './games/HaraFocus';
+import CourseNinja from './games/CourseNinja';
+import OrigamiMaster from './games/OrigamiMaster';
+import KamaeMaster from './games/KamaeMaster';
+import CeintureChallenge from './games/CeintureChallenge';
+import BushidoPuzzle from './games/BushidoPuzzle';
+import TempoSensei from './games/TempoSensei';
 
 // ⚠️ IMAGE OFFICIELLE DE TANAKA - VERROUILLÉE - NE JAMAIS CHANGER
 const TANAKA_IMAGE = "/images/tanaka/portrait.png";
@@ -69,7 +82,7 @@ const DOJO_GAMES = [
     tanakaIntro: "La respiration est la clé de tout. Inspire par le nez, expire par la bouche.",
     xpReward: 25,
     kiReward: 20,
-    unlockLevel: 1,
+    unlockLevel: 0,
     component: ParcoursduSouffle
   },
   {
@@ -87,7 +100,7 @@ const DOJO_GAMES = [
     tanakaIntro: "Ferme les yeux et fais confiance à tes autres sens.",
     xpReward: 30,
     kiReward: 25,
-    unlockLevel: 2,
+    unlockLevel: 0,
     component: SenseiInvisible
   },
   {
@@ -105,7 +118,7 @@ const DOJO_GAMES = [
     tanakaIntro: "L'Aïkido nous apprend à ne pas réagir avec colère. Réfléchis avant de répondre.",
     xpReward: 35,
     kiReward: 30,
-    unlockLevel: 3,
+    unlockLevel: 0,
     component: ReflexePacifique
   },
   {
@@ -123,7 +136,7 @@ const DOJO_GAMES = [
     tanakaIntro: "Le Ma-ai est l'espace parfait. Ni trop près, ni trop loin !",
     xpReward: 25,
     kiReward: 20,
-    unlockLevel: 2,
+    unlockLevel: 0,
     component: GardienEspace
   },
   {
@@ -159,7 +172,7 @@ const DOJO_GAMES = [
     tanakaIntro: "Le Hara est ton centre. Trouve-le et reste stable !",
     xpReward: 25,
     kiReward: 20,
-    unlockLevel: 1,
+    unlockLevel: 0,
     component: CheminEquilibre
   },
   {
@@ -177,7 +190,7 @@ const DOJO_GAMES = [
     tanakaIntro: "Un bon aikidoka connaît les noms de toutes les techniques !",
     xpReward: 20,
     kiReward: 15,
-    unlockLevel: 1,
+    unlockLevel: 0,
     component: MemorySensei
   },
   {
@@ -195,7 +208,7 @@ const DOJO_GAMES = [
     tanakaIntro: "L'Aïkido a son propre rythme. Sens-le et suis-le !",
     xpReward: 25,
     kiReward: 20,
-    unlockLevel: 2,
+    unlockLevel: 0,
     component: RythmeDuDojo
   },
   {
@@ -213,8 +226,209 @@ const DOJO_GAMES = [
     tanakaIntro: "Le Budo repose sur 7 vertus. Découvre-les toutes !",
     xpReward: 50,
     kiReward: 40,
-    unlockLevel: 4,
+    unlockLevel: 0,
     component: QueteVertus
+  },
+  // ═══════════════════════════════════════════════════════════════
+  // 10 NOUVEAUX MINI-JEUX
+  // ═══════════════════════════════════════════════════════════════
+  {
+    id: 'quiz_ninja',
+    name: 'Quiz Ninja',
+    subtitle: 'Culture Aïkido',
+    icon: Brain,
+    color: 'from-fuchsia-500 to-pink-600',
+    shadowColor: 'shadow-fuchsia-500/40',
+    emoji: '📚',
+    ageRange: '6-14 ans',
+    duration: '3-5 min',
+    skills: ['Culture', 'Mémoire', 'Apprentissage'],
+    description: 'Teste tes connaissances sur l\'Aïkido et le Budo !',
+    tanakaIntro: "Voyons si tu connais bien la voie de l'harmonie !",
+    xpReward: 25,
+    kiReward: 20,
+    unlockLevel: 0,
+    component: QuizNinja
+  },
+  {
+    id: 'kanji_warrior',
+    name: 'Kanji Warrior',
+    subtitle: 'Écriture japonaise',
+    icon: Target,
+    color: 'from-rose-500 to-red-600',
+    shadowColor: 'shadow-rose-500/40',
+    emoji: '🈴',
+    ageRange: '7-14 ans',
+    duration: '3-5 min',
+    skills: ['Kanji', 'Mémoire', 'Culture'],
+    description: 'Apprends les kanjis des techniques d\'Aïkido.',
+    tanakaIntro: "Les kanjis sont la clé pour comprendre le Budo !",
+    xpReward: 30,
+    kiReward: 25,
+    unlockLevel: 0,
+    component: KanjiWarrior
+  },
+  {
+    id: 'zen_garden',
+    name: 'Jardin Zen',
+    subtitle: 'Méditation active',
+    icon: Heart,
+    color: 'from-lime-500 to-green-600',
+    shadowColor: 'shadow-lime-500/40',
+    emoji: '🪨',
+    ageRange: '5-14 ans',
+    duration: '2-4 min',
+    skills: ['Calme', 'Patience', 'Créativité'],
+    description: 'Crée ton propre jardin zen en traçant des motifs.',
+    tanakaIntro: "Le jardin zen apaise l'esprit. Trace avec soin !",
+    xpReward: 20,
+    kiReward: 15,
+    unlockLevel: 0,
+    component: ZenGarden
+  },
+  {
+    id: 'katana_precision',
+    name: 'Précision du Katana',
+    subtitle: 'Coordination œil-main',
+    icon: Target,
+    color: 'from-zinc-500 to-slate-700',
+    shadowColor: 'shadow-zinc-500/40',
+    emoji: '⚔️',
+    ageRange: '7-14 ans',
+    duration: '3-5 min',
+    skills: ['Précision', 'Timing', 'Concentration'],
+    description: 'Coupe les cibles au bon moment avec précision.',
+    tanakaIntro: "Un samouraï frappe avec précision, jamais au hasard !",
+    xpReward: 30,
+    kiReward: 25,
+    unlockLevel: 0,
+    component: KatanaPrecision
+  },
+  {
+    id: 'hara_focus',
+    name: 'Focus du Hara',
+    subtitle: 'Centre & énergie',
+    icon: Heart,
+    color: 'from-orange-500 to-amber-600',
+    shadowColor: 'shadow-orange-500/40',
+    emoji: '🔥',
+    ageRange: '6-14 ans',
+    duration: '2-4 min',
+    skills: ['Centre', 'Respiration', 'Concentration'],
+    description: 'Concentre ton énergie dans ton Hara (centre).',
+    tanakaIntro: "Le Hara est ton centre de puissance. Trouve-le !",
+    xpReward: 25,
+    kiReward: 20,
+    unlockLevel: 0,
+    component: HaraFocus
+  },
+  {
+    id: 'course_ninja',
+    name: 'Course du Ninja',
+    subtitle: 'Réflexes & vitesse',
+    icon: Footprints,
+    color: 'from-sky-500 to-blue-600',
+    shadowColor: 'shadow-sky-500/40',
+    emoji: '🏃',
+    ageRange: '6-14 ans',
+    duration: '2-4 min',
+    skills: ['Réflexes', 'Vitesse', 'Agilité'],
+    description: 'Esquive les obstacles et cours comme un ninja !',
+    tanakaIntro: "Un ninja est rapide et agile. Montre-moi !",
+    xpReward: 25,
+    kiReward: 20,
+    unlockLevel: 0,
+    component: CourseNinja
+  },
+  {
+    id: 'origami_master',
+    name: 'Maître Origami',
+    subtitle: 'Patience & précision',
+    icon: Users,
+    color: 'from-teal-500 to-cyan-600',
+    shadowColor: 'shadow-teal-500/40',
+    emoji: '🦢',
+    ageRange: '5-12 ans',
+    duration: '3-5 min',
+    skills: ['Patience', 'Précision', 'Créativité'],
+    description: 'Plie le papier pour créer des formes traditionnelles.',
+    tanakaIntro: "L'origami développe la patience et la précision !",
+    xpReward: 20,
+    kiReward: 15,
+    unlockLevel: 0,
+    component: OrigamiMaster
+  },
+  {
+    id: 'kamae_master',
+    name: 'Maître des Postures',
+    subtitle: 'Kamae & stabilité',
+    icon: Shield,
+    color: 'from-indigo-600 to-violet-700',
+    shadowColor: 'shadow-indigo-500/40',
+    emoji: '🧘',
+    ageRange: '6-14 ans',
+    duration: '3-5 min',
+    skills: ['Posture', 'Stabilité', 'Équilibre'],
+    description: 'Maintiens les bonnes postures (kamae) d\'Aïkido.',
+    tanakaIntro: "Une bonne posture est la base de toute technique !",
+    xpReward: 25,
+    kiReward: 20,
+    unlockLevel: 0,
+    component: KamaeMaster
+  },
+  {
+    id: 'ceinture_challenge',
+    name: 'Défi Ceinture',
+    subtitle: 'Progression',
+    icon: Award,
+    color: 'from-yellow-500 to-orange-500',
+    shadowColor: 'shadow-yellow-500/40',
+    emoji: '🥋',
+    ageRange: '6-14 ans',
+    duration: '4-6 min',
+    skills: ['Techniques', 'Mémoire', 'Progression'],
+    description: 'Prouve que tu mérites ta prochaine ceinture !',
+    tanakaIntro: "Chaque ceinture représente un pas sur la voie !",
+    xpReward: 35,
+    kiReward: 30,
+    unlockLevel: 0,
+    component: CeintureChallenge
+  },
+  {
+    id: 'bushido_puzzle',
+    name: 'Puzzle Bushido',
+    subtitle: 'Énigmes morales',
+    icon: Brain,
+    color: 'from-stone-500 to-stone-700',
+    shadowColor: 'shadow-stone-500/40',
+    emoji: '🧩',
+    ageRange: '7-14 ans',
+    duration: '4-6 min',
+    skills: ['Réflexion', 'Éthique', 'Sagesse'],
+    description: 'Résous des énigmes basées sur les principes du Bushido.',
+    tanakaIntro: "La sagesse se développe par la réflexion !",
+    xpReward: 30,
+    kiReward: 25,
+    unlockLevel: 0,
+    component: BushidoPuzzle
+  },
+  {
+    id: 'tempo_sensei',
+    name: 'Tempo Sensei',
+    subtitle: 'Simon des techniques',
+    icon: Gamepad2,
+    color: 'from-purple-600 to-fuchsia-700',
+    shadowColor: 'shadow-purple-500/40',
+    emoji: '🎵',
+    ageRange: '6-14 ans',
+    duration: '3-5 min',
+    skills: ['Mémoire', 'Séquence', 'Timing'],
+    description: 'Reproduis la séquence de mouvements du Sensei.',
+    tanakaIntro: "Observe bien et reproduis la séquence !",
+    xpReward: 30,
+    kiReward: 25,
+    unlockLevel: 0,
+    component: TempoSensei
   }
 ];
 
