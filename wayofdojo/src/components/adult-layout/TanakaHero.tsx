@@ -9,6 +9,7 @@ import Image from 'next/image';
 /**
  * ═══════════════════════════════════════════════════════════════════════════════
  * TanakaHero - Bannière Hero avec paysage japonais selon le visuel de référence
+ * Utilise l'image fournie par l'utilisateur (dojo japonais coucher de soleil)
  * ═══════════════════════════════════════════════════════════════════════════════
  */
 
@@ -29,31 +30,17 @@ export const TanakaHero: React.FC<TanakaHeroProps> = ({
       className="relative overflow-hidden rounded-2xl h-[220px]"
       data-testid="tanaka-hero"
     >
-      {/* Background avec paysage japonais coucher de soleil */}
+      {/* Background avec l'image fournie par l'utilisateur */}
       <div className="absolute inset-0">
-        {/* Gradient base */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#1a0a2e] via-[#2d1810] to-[#4a2000]" />
-        
-        {/* Soleil couchant */}
-        <div className="absolute right-1/4 top-1/3 w-24 h-24 bg-gradient-to-b from-orange-400 via-orange-500 to-red-500 rounded-full blur-sm opacity-90" />
-        
-        {/* Silhouettes de montagnes */}
-        <svg className="absolute bottom-0 w-full h-32 opacity-60" viewBox="0 0 1200 120" preserveAspectRatio="none">
-          <path d="M0,120 L100,70 L250,90 L400,50 L550,80 L700,40 L850,70 L1000,30 L1150,60 L1200,50 L1200,120 Z" fill="#1a0a1e"/>
-        </svg>
-        
-        {/* Torii gate silhouette (gauche) */}
-        <div className="absolute left-8 bottom-4 opacity-30">
-          <svg width="60" height="80" viewBox="0 0 60 80" fill="#1a0a1e">
-            <rect x="5" y="20" width="6" height="60"/>
-            <rect x="49" y="20" width="6" height="60"/>
-            <rect x="0" y="10" width="60" height="8"/>
-            <rect x="2" y="22" width="56" height="4"/>
-          </svg>
-        </div>
-        
-        {/* Reflet sur l'eau */}
-        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-orange-500/10 to-transparent" />
+        <Image
+          src="/images/backgrounds/japanese-sunset-dojo.jpg"
+          alt="Paysage japonais au coucher de soleil"
+          fill
+          className="object-cover"
+          priority
+        />
+        {/* Overlay gradient pour lisibilité du texte */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
       </div>
 
       {/* Contenu */}
@@ -65,7 +52,7 @@ export const TanakaHero: React.FC<TanakaHeroProps> = ({
           transition={{ delay: 0.2 }}
           className="relative shrink-0 mr-6"
         >
-          <div className="relative w-32 h-32 rounded-2xl overflow-hidden">
+          <div className="relative w-28 h-28 rounded-2xl overflow-hidden border-2 border-orange-500/50 shadow-xl shadow-orange-500/20">
             <Image
               src="/images/tanaka/portrait.png"
               alt="Maître Tanaka"
@@ -86,8 +73,8 @@ export const TanakaHero: React.FC<TanakaHeroProps> = ({
             transition={{ delay: 0.3 }}
             className="flex items-center gap-2 mb-2"
           >
-            <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-            <span className="text-green-400 text-sm font-medium">Ton Sensei personnel</span>
+            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+            <span className="text-yellow-200/90 text-sm font-medium">Ton Sensei personnel</span>
           </motion.div>
           
           <motion.h2
@@ -103,11 +90,11 @@ export const TanakaHero: React.FC<TanakaHeroProps> = ({
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="text-white/80 text-sm mb-4 max-w-md"
+            className="text-white/80 text-sm mb-4 max-w-md italic"
           >
-            "La vraie victoire est la victoire sur soi-même.
+            &quot;La vraie victoire est la victoire sur soi-même.
             <br />
-            Continue ton chemin, jeune Samouraï !"
+            Continue ton chemin, jeune Samouraï !&quot;
           </motion.p>
 
           <motion.div
