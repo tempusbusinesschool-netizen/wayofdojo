@@ -28,23 +28,37 @@ const TABS = [
   { id: 'comprendre', label: 'Comprendre les grades' },
 ];
 
-// Mapping des grades vers les images de ceintures (fond bleu marine intégré)
+// Mapping des grades vers les images de ceintures (fond #06101f intégré)
 const BELT_IMAGES: Record<string, { image: string; name: string }> = {
-  '6e_kyu': { image: '/images/belts/6e-kyu-white.png?v=2', name: 'blanche' },
-  '5e_kyu': { image: '/images/belts/5e-kyu-yellow.png?v=2', name: 'jaune' },
-  '4e_kyu': { image: '/images/belts/4e-kyu-orange.png?v=2', name: 'orange' },
-  '3e_kyu': { image: '/images/belts/3e-kyu-green.png?v=2', name: 'verte' },
-  '2e_kyu': { image: '/images/belts/2e-kyu-blue.png?v=2', name: 'bleue' },
-  '1er_kyu': { image: '/images/belts/1er-kyu-brown.png?v=2', name: 'marron' },
-  '1er_dan': { image: '/images/belts/1er-dan-black.png?v=2', name: 'noire' },
-  '2e_dan': { image: '/images/belts/1er-dan-black.png?v=2', name: 'noire' },
-  '3e_dan': { image: '/images/belts/1er-dan-black.png?v=2', name: 'noire' },
-  '4e_dan': { image: '/images/belts/1er-dan-black.png?v=2', name: 'noire' },
+  '6e_kyu': { image: '/images/belts/6e-kyu-white.png?v=5', name: 'blanche' },
+  '5e_kyu': { image: '/images/belts/5e-kyu-yellow.png?v=5', name: 'jaune' },
+  '4e_kyu': { image: '/images/belts/4e-kyu-orange.png?v=5', name: 'orange' },
+  '3e_kyu': { image: '/images/belts/3e-kyu-green.png?v=5', name: 'verte' },
+  '2e_kyu': { image: '/images/belts/2e-kyu-blue.png?v=5', name: 'bleue' },
+  '1er_kyu': { image: '/images/belts/1er-kyu-brown.png?v=5', name: 'marron' },
+  // Grades Dan
+  'shodan': { image: '/images/belts/1er-dan-black.png?v=5', name: 'noire' },
+  'nidan': { image: '/images/belts/1er-dan-black.png?v=5', name: 'noire' },
+  'sandan': { image: '/images/belts/1er-dan-black.png?v=5', name: 'noire' },
+  'yondan': { image: '/images/belts/1er-dan-black.png?v=5', name: 'noire' },
+  // Fallback IDs
+  '1er_dan': { image: '/images/belts/1er-dan-black.png?v=5', name: 'noire' },
+  '2e_dan': { image: '/images/belts/1er-dan-black.png?v=5', name: 'noire' },
+  '3e_dan': { image: '/images/belts/1er-dan-black.png?v=5', name: 'noire' },
+  '4e_dan': { image: '/images/belts/1er-dan-black.png?v=5', name: 'noire' },
 };
 
-// Composant d'image de ceinture avec fond de la couleur de page
+// Composant d'image de ceinture - fond intégré dans l'image
 const BeltImage = ({ gradeId, isActive = false, size = 'md' }: { gradeId: string; isActive?: boolean; size?: 'sm' | 'md' | 'lg' }) => {
-  const beltInfo = BELT_IMAGES[gradeId] || BELT_IMAGES['6e_kyu'];
+  // Debug: log gradeId
+  console.log('BeltImage gradeId:', gradeId, 'found in BELT_IMAGES:', !!BELT_IMAGES[gradeId]);
+  
+  // Fallback vers la ceinture noire pour les grades Dan inconnus
+  const defaultBelt = gradeId?.includes('dan') || gradeId === 'shodan' || gradeId === 'nidan' || gradeId === 'sandan' || gradeId === 'yondan'
+    ? BELT_IMAGES['shodan'] 
+    : BELT_IMAGES['6e_kyu'];
+  const beltInfo = BELT_IMAGES[gradeId] || defaultBelt;
+  
   const sizes = {
     sm: 64,
     md: 80,
@@ -54,29 +68,16 @@ const BeltImage = ({ gradeId, isActive = false, size = 'md' }: { gradeId: string
   
   return (
     <div 
-      className={`relative flex items-center justify-center rounded-xl ${isActive ? 'ring-2 ring-orange-500' : ''}`}
-      style={{ 
-        width: imgSize, 
-        height: imgSize, 
-        backgroundColor: '#0d1628'
-      }}
+      className={`relative ${isActive ? 'ring-2 ring-orange-500 rounded-xl' : ''}`}
+      style={{ width: imgSize, height: imgSize }}
     >
-      {/* Glow effect for active belt */}
-      {isActive && (
-        <div className="absolute inset-0 bg-orange-500/20 rounded-xl" />
-      )}
-      {/* Belt image with inline style for background */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={beltInfo.image}
         alt={`Ceinture ${beltInfo.name}`}
         width={imgSize}
         height={imgSize}
-        className="relative z-10 object-contain"
-        style={{ 
-          backgroundColor: '#0d1628',
-          borderRadius: '12px'
-        }}
+        className="object-contain rounded-xl"
       />
     </div>
   );
@@ -90,8 +91,8 @@ const GradeAccordion: React.FC<{
   isCurrent: boolean;
 }> = ({ grade, isExpanded, onToggle, isCurrent }) => {
   return (
-    <div className={`bg-[#0d1628] rounded-xl border transition-all ${isCurrent ? 'border-orange-500/50' : 'border-slate-800'}`}>
-      <button onClick={onToggle} className="w-full p-4 flex items-center gap-4 hover:bg-slate-800/30 transition-colors rounded-xl">
+    <div className={`bg-[#06101f] rounded-xl border transition-all ${isCurrent ? 'border-orange-500/50' : 'border-slate-800'}`}>
+      <button onClick={onToggle} className="w-full p-4 flex items-center gap-4 hover:bg-slate-800/20 transition-colors rounded-xl">
         <BeltImage gradeId={grade.id} isActive={isCurrent} size="md" />
         <div className="flex-1 text-left">
           <div className="flex items-center gap-2 mb-1">
