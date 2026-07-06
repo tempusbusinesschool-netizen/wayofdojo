@@ -8,10 +8,7 @@ import { ChevronRight, Star, Trophy, Gift } from 'lucide-react';
 /**
  * ═══════════════════════════════════════════════════════════════════════════════
  * MaProgression - Timeline des ceintures EXACT selon le visuel de référence
- * - Icônes de ceintures style kimono/gi avec noeud
- * - Grade actuel avec effet lumineux orange et bulle "Tu es ici !"
- * - Losanges entre les ceintures
- * - 3 stats en bas : XP actuelle, Prochain palier, Prochaine récompense
+ * Ceintures style kimono avec noeud dans fond ovale sombre
  * ═══════════════════════════════════════════════════════════════════════════════
  */
 
@@ -24,78 +21,101 @@ interface MaProgressionProps {
   sport: string;
 }
 
-// Couleurs des ceintures exactes selon le visuel
+// Couleurs des ceintures exactes selon le visuel de référence
 const BELTS = [
-  { grade: '6e Kyu', color: '#FFFFFF', name: 'Blanche' },  // Blanc
-  { grade: '5e Kyu', color: '#FBBF24', name: 'Jaune' },    // Jaune
-  { grade: '4e Kyu', color: '#F97316', name: 'Orange' },   // Orange
-  { grade: '3e Kyu', color: '#22C55E', name: 'Verte' },    // Vert
-  { grade: '2e Kyu', color: '#3B82F6', name: 'Bleue' },    // Bleu
-  { grade: '1er Kyu', color: '#92400E', name: 'Marron' },  // Marron
-  { grade: '1er Dan', color: '#1F2937', name: 'Noire' },   // Noir
+  { grade: '6e Kyu', color: '#FFFFFF', name: 'Blanche' },
+  { grade: '5e Kyu', color: '#EAB308', name: 'Jaune' },
+  { grade: '4e Kyu', color: '#F97316', name: 'Orange' },
+  { grade: '3e Kyu', color: '#22C55E', name: 'Verte' },
+  { grade: '2e Kyu', color: '#3B82F6', name: 'Bleue' },
+  { grade: '1er Kyu', color: '#A16207', name: 'Marron' },
+  { grade: '1er Dan', color: '#1F2937', name: 'Noire', borderColor: '#4B5563' },
 ];
 
-// Icône de ceinture style kimono/gi réaliste
-const BeltIcon = ({ color, isActive }: { color: string; isActive: boolean }) => (
-  <svg viewBox="0 0 60 80" className="w-full h-full">
-    {/* Ombre de la ceinture */}
-    <ellipse cx="30" cy="65" rx="22" ry="8" fill="rgba(0,0,0,0.3)" />
+// Icône de ceinture EXACTE selon l'image de référence
+const BeltIcon = ({ color, isActive, borderColor }: { color: string; isActive: boolean; borderColor?: string }) => (
+  <svg viewBox="0 0 80 100" className="w-full h-full drop-shadow-lg">
+    {/* Fond ovale sombre */}
+    <ellipse 
+      cx="40" 
+      cy="50" 
+      rx="35" 
+      ry="45" 
+      fill="#0f172a"
+      stroke={isActive ? '#F97316' : (borderColor || '#334155')}
+      strokeWidth={isActive ? 3 : 1.5}
+    />
     
-    {/* Corps de la ceinture (forme ovale verticale) */}
-    <ellipse cx="30" cy="40" rx="18" ry="30" fill="#1a2744" stroke={isActive ? '#F97316' : '#334155'} strokeWidth="2" />
-    
-    {/* Partie supérieure de la ceinture nouée */}
+    {/* Ceinture - partie haute (col du kimono) */}
     <path 
-      d={`M 20 25 
-          Q 20 15, 30 15 
-          Q 40 15, 40 25
-          L 38 35
-          Q 30 32, 22 35
-          Z`}
+      d="M 25 28 
+         C 25 22, 40 18, 40 18
+         C 40 18, 55 22, 55 28
+         L 52 38
+         C 46 35, 34 35, 28 38
+         Z"
       fill={color}
-      stroke={color === '#FFFFFF' ? '#E5E7EB' : 'rgba(0,0,0,0.2)'}
+      stroke={color === '#FFFFFF' ? '#D1D5DB' : 'rgba(0,0,0,0.3)'}
       strokeWidth="1"
     />
     
-    {/* Noeud central */}
-    <rect x="26" y="30" width="8" height="6" rx="1" fill={color} stroke={color === '#FFFFFF' ? '#E5E7EB' : 'rgba(0,0,0,0.2)'} strokeWidth="1" />
+    {/* Noeud central de la ceinture */}
+    <rect 
+      x="34" 
+      y="36" 
+      width="12" 
+      height="10" 
+      rx="2" 
+      fill={color}
+      stroke={color === '#FFFFFF' ? '#D1D5DB' : 'rgba(0,0,0,0.3)'}
+      strokeWidth="1"
+    />
     
     {/* Pan gauche de la ceinture */}
     <path 
-      d={`M 22 36 
-          L 18 55
-          Q 17 58, 20 58
-          L 26 58
-          Q 28 58, 27 55
-          L 26 36
-          Z`}
+      d="M 28 46
+         L 22 72
+         C 21 76, 24 78, 28 78
+         L 36 78
+         C 38 78, 38 76, 37 72
+         L 34 46
+         Z"
       fill={color}
-      stroke={color === '#FFFFFF' ? '#E5E7EB' : 'rgba(0,0,0,0.2)'}
+      stroke={color === '#FFFFFF' ? '#D1D5DB' : 'rgba(0,0,0,0.3)'}
       strokeWidth="1"
     />
     
     {/* Pan droit de la ceinture */}
     <path 
-      d={`M 34 36 
-          L 33 55
-          Q 32 58, 34 58
-          L 40 58
-          Q 43 58, 42 55
-          L 38 36
-          Z`}
+      d="M 46 46
+         L 43 72
+         C 42 76, 42 78, 44 78
+         L 52 78
+         C 56 78, 59 76, 58 72
+         L 52 46
+         Z"
       fill={color}
-      stroke={color === '#FFFFFF' ? '#E5E7EB' : 'rgba(0,0,0,0.2)'}
+      stroke={color === '#FFFFFF' ? '#D1D5DB' : 'rgba(0,0,0,0.3)'}
       strokeWidth="1"
+    />
+    
+    {/* Reflet/brillance sur le noeud */}
+    <ellipse 
+      cx="40" 
+      cy="40" 
+      rx="3" 
+      ry="2" 
+      fill="rgba(255,255,255,0.3)"
     />
   </svg>
 );
 
-// Losange entre les ceintures
+// Losange connecteur entre les ceintures
 const Diamond = ({ filled }: { filled: boolean }) => (
-  <svg viewBox="0 0 16 16" className="w-3 h-3">
+  <svg viewBox="0 0 12 12" className="w-2.5 h-2.5">
     <path 
-      d="M8 0 L16 8 L8 16 L0 8 Z" 
-      fill={filled ? '#F97316' : '#4B5563'}
+      d="M6 0 L12 6 L6 12 L0 6 Z" 
+      fill={filled ? '#F97316' : '#374151'}
     />
   </svg>
 );
@@ -114,6 +134,7 @@ export const MaProgression: React.FC<MaProgressionProps> = ({
 
   return (
     <section data-testid="ma-progression" className="space-y-4">
+      {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="text-orange-500 text-xl">🥋</span>
@@ -128,21 +149,23 @@ export const MaProgression: React.FC<MaProgressionProps> = ({
         </Link>
       </div>
 
+      {/* Conteneur principal */}
       <div className="bg-gradient-to-br from-[#0a1628] via-[#0d1e3a] to-[#1a1040] rounded-2xl p-6 relative overflow-hidden">
         {/* Background pagode japonaise subtile */}
-        <div className="absolute right-0 top-0 w-48 h-48 opacity-20">
-          <svg viewBox="0 0 100 100" fill="none" className="w-full h-full">
-            <path d="M50 10 L80 30 L75 35 L85 40 L80 45 L90 50 L50 90 L10 50 L20 45 L15 40 L25 35 L20 30 Z" 
-                  stroke="#8B5CF6" strokeWidth="1" fill="none" opacity="0.5"/>
+        <div className="absolute right-4 top-4 w-32 h-32 opacity-10">
+          <svg viewBox="0 0 100 120" fill="none" className="w-full h-full">
+            <path d="M50 0 L90 25 L85 30 L95 35 L50 60 L5 35 L15 30 L10 25 Z" stroke="#8B5CF6" strokeWidth="1"/>
+            <path d="M50 30 L80 50 L75 55 L85 60 L50 80 L15 60 L25 55 L20 50 Z" stroke="#8B5CF6" strokeWidth="1"/>
+            <path d="M50 60 L70 75 L65 80 L75 85 L50 100 L25 85 L35 80 L30 75 Z" stroke="#8B5CF6" strokeWidth="1"/>
+            <rect x="45" y="100" width="10" height="20" stroke="#8B5CF6" strokeWidth="1"/>
           </svg>
         </div>
 
-        {/* Timeline des ceintures */}
-        <div className="relative mb-8">
-          <div className="flex items-end justify-between">
+        {/* Timeline des ceintures - ALIGNÉE À GAUCHE */}
+        <div className="relative mb-8 pt-12">
+          <div className="flex items-end justify-start gap-1">
             {BELTS.map((belt, index) => {
               const isActive = belt.grade === currentGrade;
-              const _isPast = index < currentIndex;
               const isFuture = index > currentIndex;
               
               return (
@@ -150,56 +173,63 @@ export const MaProgression: React.FC<MaProgressionProps> = ({
                   <motion.div
                     initial={{ scale: 0, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: index * 0.1 }}
+                    transition={{ delay: index * 0.08 }}
                     className="flex flex-col items-center relative"
                   >
-                    {/* Bulle "Tu es ici !" pour le grade actuel */}
+                    {/* Bulle "Tu es ici !" */}
                     {isActive && (
                       <motion.div
-                        initial={{ opacity: 0, y: 10 }}
+                        initial={{ opacity: 0, y: 5 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="absolute -top-10 left-1/2 -translate-x-1/2 z-10"
+                        className="absolute -top-8 left-1/2 -translate-x-1/2 z-20"
                       >
-                        <div className="bg-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-lg whitespace-nowrap shadow-lg">
+                        <div className="bg-orange-500 text-white text-[10px] font-bold px-2 py-1 rounded-md whitespace-nowrap shadow-lg">
                           Tu es ici !
-                          <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-orange-500 rotate-45"></div>
+                          <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-orange-500 rotate-45"></div>
                         </div>
                       </motion.div>
                     )}
                     
-                    {/* Conteneur de la ceinture avec effet lumineux */}
+                    {/* Conteneur ceinture avec effet lumineux */}
                     <div className={`
-                      relative w-14 h-20 
-                      ${isActive ? 'scale-125 z-10' : isFuture ? 'opacity-50' : ''}
+                      relative w-16 h-20
+                      ${isActive ? 'z-10' : isFuture ? 'opacity-40' : ''}
                       transition-all duration-300
                     `}>
-                      {/* Effet lumineux orange pour le grade actuel */}
+                      {/* Effet lumineux orange pour grade actuel */}
                       {isActive && (
-                        <div className="absolute inset-0 -m-3">
-                          <div className="absolute inset-0 bg-orange-500/30 rounded-full blur-xl animate-pulse"></div>
-                          <div className="absolute inset-2 bg-orange-500/20 rounded-full blur-md"></div>
-                        </div>
+                        <>
+                          <div className="absolute -inset-2 bg-orange-500/40 rounded-full blur-xl animate-pulse"></div>
+                          <div className="absolute -inset-1 bg-orange-500/20 rounded-full blur-md"></div>
+                        </>
                       )}
                       
-                      <BeltIcon color={belt.color} isActive={isActive} />
+                      <BeltIcon 
+                        color={belt.color} 
+                        isActive={isActive}
+                        borderColor={(belt as typeof BELTS[number] & { borderColor?: string }).borderColor}
+                      />
                     </div>
                     
                     {/* Label du grade */}
                     <span className={`
-                      text-xs mt-3 font-medium whitespace-nowrap
-                      ${isActive ? 'text-orange-400 font-bold bg-orange-500/20 px-2 py-1 rounded-md' : 
-                        isFuture ? 'text-slate-500' : 'text-slate-400'}
+                      text-[11px] mt-1 font-medium whitespace-nowrap
+                      ${isActive 
+                        ? 'text-orange-400 font-bold bg-orange-500/20 px-2 py-0.5 rounded' 
+                        : isFuture 
+                          ? 'text-slate-600' 
+                          : 'text-slate-400'}
                     `}>
                       {belt.grade}
                     </span>
                   </motion.div>
                   
-                  {/* Losange entre les ceintures */}
+                  {/* Ligne + Losange entre les ceintures */}
                   {index < BELTS.length - 1 && (
-                    <div className="flex items-center pb-8 px-1">
-                      <div className="w-8 h-0.5 bg-slate-700"></div>
+                    <div className="flex items-center pb-6 mx-0.5">
+                      <div className="w-4 h-px bg-slate-600"></div>
                       <Diamond filled={index < currentIndex} />
-                      <div className="w-8 h-0.5 bg-slate-700"></div>
+                      <div className="w-4 h-px bg-slate-600"></div>
                     </div>
                   )}
                 </React.Fragment>
@@ -208,10 +238,10 @@ export const MaProgression: React.FC<MaProgressionProps> = ({
           </div>
         </div>
 
-        {/* Stats XP - 3 colonnes selon le visuel */}
-        <div className="grid grid-cols-3 gap-4 pt-4 border-t border-white/10">
-          {/* XP actuelle avec barre de progression */}
-          <div className="bg-slate-800/50 rounded-xl p-4">
+        {/* Stats XP - Alignées à gauche */}
+        <div className="flex flex-wrap gap-3 pt-4 border-t border-white/10">
+          {/* XP actuelle */}
+          <div className="bg-slate-800/60 rounded-xl p-4 min-w-[180px]">
             <div className="flex items-center gap-2 mb-2">
               <Star className="w-5 h-5 text-amber-400 fill-amber-400" />
               <span className="text-slate-400 text-sm">XP actuelle</span>
@@ -231,40 +261,42 @@ export const MaProgression: React.FC<MaProgressionProps> = ({
           </div>
 
           {/* Prochain palier */}
-          <div className="bg-slate-800/50 rounded-xl p-4">
+          <div className="bg-slate-800/60 rounded-xl p-4 min-w-[200px]">
             <div className="flex items-center gap-2 mb-2">
               <Trophy className="w-5 h-5 text-amber-400" />
               <span className="text-slate-400 text-sm">Prochain palier : {nextMilestone} XP</span>
             </div>
-            <div className="text-white">
+            <div className="text-white text-sm">
               Encore <span className="text-orange-400 font-bold">{xpToNextMilestone} XP</span> à gagner !
             </div>
           </div>
 
           {/* Prochaine récompense avec coffre */}
-          <div className="bg-slate-800/50 rounded-xl p-4 flex items-center justify-between">
+          <div className="bg-slate-800/60 rounded-xl p-4 flex items-center gap-4 min-w-[200px]">
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <Gift className="w-5 h-5 text-amber-400" />
                 <span className="text-slate-400 text-sm">Prochaine récompense</span>
               </div>
-              <div className="text-white">
+              <div className="text-white text-sm">
                 À <span className="text-amber-400 font-bold">{nextMilestone} XP</span>
               </div>
             </div>
             {/* Coffre au trésor */}
-            <div className="w-14 h-14 relative">
-              <svg viewBox="0 0 50 40" className="w-full h-full">
-                {/* Corps du coffre */}
-                <rect x="5" y="15" width="40" height="22" rx="3" fill="#92400E" stroke="#78350F" strokeWidth="2"/>
-                {/* Couvercle du coffre */}
-                <path d="M5 15 Q25 5 45 15" fill="#B45309" stroke="#92400E" strokeWidth="2"/>
-                {/* Serrure dorée */}
-                <rect x="20" y="20" width="10" height="8" rx="1" fill="#FBBF24"/>
-                <circle cx="25" cy="24" r="2" fill="#92400E"/>
-                {/* Éclat */}
-                <circle cx="38" cy="10" r="3" fill="#FBBF24" opacity="0.8"/>
-                <circle cx="42" cy="8" r="2" fill="#FDE68A" opacity="0.6"/>
+            <div className="w-12 h-12">
+              <svg viewBox="0 0 50 45" className="w-full h-full">
+                <defs>
+                  <linearGradient id="chestGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor="#D97706"/>
+                    <stop offset="100%" stopColor="#92400E"/>
+                  </linearGradient>
+                </defs>
+                <rect x="5" y="18" width="40" height="24" rx="3" fill="url(#chestGrad)" stroke="#78350F" strokeWidth="2"/>
+                <path d="M5 18 Q25 6 45 18" fill="#F59E0B" stroke="#D97706" strokeWidth="1"/>
+                <rect x="20" y="22" width="10" height="10" rx="2" fill="#FBBF24" stroke="#F59E0B" strokeWidth="1"/>
+                <circle cx="25" cy="27" r="2" fill="#92400E"/>
+                <circle cx="40" cy="12" r="4" fill="#FDE68A" opacity="0.9"/>
+                <circle cx="36" cy="8" r="2" fill="#FEF3C7" opacity="0.7"/>
               </svg>
             </div>
           </div>

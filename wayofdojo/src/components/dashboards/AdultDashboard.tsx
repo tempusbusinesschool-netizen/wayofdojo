@@ -13,16 +13,11 @@ import { VertusSection } from '@/components/adult-layout/VertusSection';
  * AdultDashboard - Dashboard refait selon le visuel de référence
  * ═══════════════════════════════════════════════════════════════════════════════
  * 
- * ORDRE STRICT DES SECTIONS (selon visuel) :
- * 1. Hero Maître Tanaka
- * 2. Que faire aujourd'hui ?
- * 3. Ma progression (timeline ceintures)
- * 4. Les 7 vertus du Budo
+ * LAYOUT 2 COLONNES (la sidebar principale est déjà gérée par la page parent) :
+ * - Colonne centrale (gauche) : Contenu principal ALIGNÉ À GAUCHE
+ * - Colonne notifications (droite) : 320px fixe
  * 
- * LAYOUT 3 COLONNES :
- * - Colonne profil (gauche) : 260px
- * - Colonne centrale : flexible
- * - Colonne notifications (droite) : 300px
+ * La carte Profil est intégrée DANS la sidebar principale (AdultSidebar)
  */
 
 interface AdultDashboardProps {
@@ -49,7 +44,6 @@ export const AdultDashboard: React.FC<AdultDashboardProps> = ({
   sport = 'aikido',
 }) => {
   const handleContinueProgression = () => {
-    // Navigation vers la prochaine étape ou techniques
     if (typeof window !== 'undefined') {
       window.location.href = `/${locale}/${sport}/techniques`;
     }
@@ -57,30 +51,32 @@ export const AdultDashboard: React.FC<AdultDashboardProps> = ({
 
   return (
     <div data-testid="adult-dashboard" className="min-h-screen bg-[#06101f]">
-      {/* Layout principal avec 3 colonnes sur desktop */}
-      <div className="grid grid-cols-1 lg:grid-cols-[260px_1fr_300px] gap-5 p-5">
+      {/* Layout 2 colonnes : Contenu principal + Notifications */}
+      <div className="flex gap-4 p-4">
         
         {/* ═══════════════════════════════════════════════════════════════
-            COLONNE GAUCHE : Profil
+            COLONNE GAUCHE : Profil (sticky)
             ═══════════════════════════════════════════════════════════════ */}
-        <aside className="space-y-4 order-2 lg:order-1">
-          <ProfileCard
-            userName={userName}
-            xp={xp}
-            maxXp={400}
-            streak={streak}
-            badgesCount={badgesCount}
-            techniquesCount={techniquesCount}
-            locale={locale}
-            sport={sport}
-            currentGrade={currentGrade}
-          />
+        <aside className="hidden xl:block w-[240px] shrink-0">
+          <div className="sticky top-[80px]">
+            <ProfileCard
+              userName={userName}
+              xp={xp}
+              maxXp={400}
+              streak={streak}
+              badgesCount={badgesCount}
+              techniquesCount={techniquesCount}
+              locale={locale}
+              sport={sport}
+              currentGrade={currentGrade}
+            />
+          </div>
         </aside>
 
         {/* ═══════════════════════════════════════════════════════════════
-            COLONNE CENTRALE : Contenu principal
+            COLONNE CENTRALE : Contenu principal - ALIGNÉ À GAUCHE
             ═══════════════════════════════════════════════════════════════ */}
-        <main className="space-y-6 order-1 lg:order-2">
+        <main className="flex-1 min-w-0 space-y-5">
           
           {/* 1. HERO MAÎTRE TANAKA */}
           <TanakaHero 
@@ -91,7 +87,7 @@ export const AdultDashboard: React.FC<AdultDashboardProps> = ({
           {/* 2. QUE FAIRE AUJOURD'HUI ? */}
           <QueFaireAujourdhui locale={locale} sport={sport} />
 
-          {/* 3. MA PROGRESSION (Timeline ceintures) */}
+          {/* 3. MA PROGRESSION (Timeline ceintures) - ALIGNÉ À GAUCHE */}
           <MaProgression
             xp={xp}
             maxXp={400}
@@ -106,10 +102,12 @@ export const AdultDashboard: React.FC<AdultDashboardProps> = ({
         </main>
 
         {/* ═══════════════════════════════════════════════════════════════
-            COLONNE DROITE : Notifications
+            COLONNE DROITE : Notifications (fixe à droite)
             ═══════════════════════════════════════════════════════════════ */}
-        <aside className="order-3">
-          <NotificationsColumn locale={locale} sport={sport} />
+        <aside className="hidden lg:block w-[300px] shrink-0">
+          <div className="sticky top-[80px]">
+            <NotificationsColumn locale={locale} sport={sport} />
+          </div>
         </aside>
       </div>
     </div>
