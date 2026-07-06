@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Swords, LogIn, UserPlus, LogOut, User, Lock, Menu, X } from 'lucide-react';
+import { Swords, LogIn, UserPlus, LogOut, User, Lock, Menu, X, HelpCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import VisitorStepsBlocks from '@/components/VisitorStepsBlocks';
 import ChooseMode from '@/components/ChooseMode';
@@ -145,6 +145,17 @@ export default function HomePage() {
                     <Swords className="w-4 h-4 mr-2" />
                     Mon Dojo
                   </Button>
+                  <Link href={`/${locale}/aikido/guide`}>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="text-slate-300 hover:text-amber-300 hover:bg-slate-700"
+                      data-testid="header-guide-btn-logged"
+                    >
+                      <HelpCircle className="w-4 h-4 mr-2" />
+                      Guide
+                    </Button>
+                  </Link>
                   <Button
                     variant="ghost"
                     size="sm"
@@ -157,6 +168,19 @@ export default function HomePage() {
                 </>
               ) : (
                 <>
+                  {/* Guide & Questions */}
+                  <Link href={`/${locale}/aikido/guide`}>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="text-slate-300 hover:text-amber-300 hover:bg-slate-700"
+                      data-testid="header-guide-btn"
+                    >
+                      <HelpCircle className="w-4 h-4 mr-2" />
+                      Guide & Questions
+                    </Button>
+                  </Link>
+
                   {/* Boutons d'accès */}
                   <Button
                     variant="ghost"
@@ -242,6 +266,14 @@ export default function HomePage() {
                       </Button>
                       <Button
                         variant="ghost"
+                        onClick={() => { router.push(`/${locale}/aikido/guide`); setShowMobileMenu(false); }}
+                        className="justify-start text-amber-300"
+                      >
+                        <HelpCircle className="w-4 h-4 mr-2" />
+                        Guide & Questions
+                      </Button>
+                      <Button
+                        variant="ghost"
                         onClick={() => { handleLogout(); setShowMobileMenu(false); }}
                         className="justify-start text-slate-400"
                       >
@@ -251,6 +283,14 @@ export default function HomePage() {
                     </>
                   ) : (
                     <>
+                      <Button
+                        variant="ghost"
+                        onClick={() => { router.push(`/${locale}/aikido/guide`); setShowMobileMenu(false); }}
+                        className="justify-start text-amber-300"
+                      >
+                        <HelpCircle className="w-4 h-4 mr-2" />
+                        Guide & Questions
+                      </Button>
                       <Button
                         variant="ghost"
                         onClick={() => { router.push(`/${locale}/aikido/login`); setShowMobileMenu(false); }}
@@ -487,6 +527,10 @@ export default function HomePage() {
             </div>
             
             <div className="flex flex-wrap items-center justify-center gap-4 text-slate-500 text-sm">
+              <Link href={`/${locale}/aikido/guide`} className="hover:text-amber-300 transition-colors flex items-center gap-1" data-testid="footer-guide-btn">
+                <HelpCircle className="w-4 h-4" />
+                Guide & Questions
+              </Link>
               <Link href="#" className="hover:text-white transition-colors">CGU</Link>
               <Link href="#" className="hover:text-white transition-colors">CGV</Link>
               <Link href="#" className="hover:text-white transition-colors">Mentions légales</Link>
