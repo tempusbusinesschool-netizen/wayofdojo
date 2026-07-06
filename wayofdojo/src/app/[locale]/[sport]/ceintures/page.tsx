@@ -291,7 +291,7 @@ export default function CeinturesPage() {
               {/* Stats */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="relative rounded-2xl overflow-hidden h-40">
-                  <Image src="/images/backgrounds/japanese-sunset-dojo.jpg" alt="" fill className="object-cover" />
+                  <Image src="/images/ceintures/castle-sunset.png" alt="Château japonais" fill className="object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
                   <div className="absolute bottom-0 left-0 p-5">
                     <p className="text-4xl font-bold text-white">6</p>
@@ -300,7 +300,7 @@ export default function CeinturesPage() {
                   </div>
                 </motion.div>
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45 }} className="relative rounded-2xl overflow-hidden h-40">
-                  <Image src="/images/backgrounds/japanese-sunset-dojo.jpg" alt="" fill className="object-cover" />
+                  <Image src="/images/ceintures/fuji-sunset.png" alt="Mont Fuji au coucher de soleil" fill className="object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
                   <div className="absolute bottom-0 left-0 p-5">
                     <p className="text-4xl font-bold text-white">4+</p>
@@ -309,7 +309,7 @@ export default function CeinturesPage() {
                   </div>
                 </motion.div>
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }} className="relative rounded-2xl overflow-hidden h-40">
-                  <Image src="/images/backgrounds/japanese-sunset-dojo.jpg" alt="" fill className="object-cover" />
+                  <Image src="/images/ceintures/street-sunset.png" alt="Rue japonaise traditionnelle" fill className="object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
                   <div className="absolute bottom-0 left-0 p-5">
                     <p className="text-4xl font-bold text-white">3+ <span className="text-xl">ans</span></p>
