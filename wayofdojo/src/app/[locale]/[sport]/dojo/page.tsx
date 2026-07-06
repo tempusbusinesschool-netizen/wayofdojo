@@ -301,7 +301,7 @@ export default function DojoPage() {
         />
 
         {/* Contenu principal avec marge pour la sidebar */}
-        <div className="lg:ml-[280px] pt-[68px]">
+        <div className="lg:ml-[260px] pt-[60px]">
           <AdultDashboard
             xp={currentXp}
             completedMissions={adultCompletedMissions}

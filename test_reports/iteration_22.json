@@ -1,0 +1,22 @@
+{
+  "summary": "Verified removal of 'Espace Parent' button from /fr/aikido/dojo in adult mode. Logged in as admin@wayofdojo.com (Mode Samourai Confirme). The button data-testid='espace-parent-btn' does NOT exist on the page and 'Espace Parent' text count = 0. Page loads correctly with all expected adult dashboard elements (23 data-testids present including ma-progression, card-dojo-virtuel, etc.). 'Ma Progression' text present (count=2). 'Ceintures' present in sidebar (testid not verified since AdultTutorialBlocks tutorial component was not visibly rendered on this fresh dashboard - only main dashboard sections).",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "Note: Provided credentials 'adulte@wayofdojo.fr / 123456' returned 401. Only admin@wayofdojo.com/admin123 worked (which is in adult mode - 'Mode Samourai Confirme'). Update test credentials doc if needed.",
+    "Login route is /fr/aikido/login (not /fr/login). The [sport] segment is mandatory for auth pages."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A", "frontend": "100%"},
+  "test_credentials": "admin@wayofdojo.com / admin123 (adult mode - works). adulte@wayofdojo.fr / 123456 (returns 401 - broken)",
+  "seed_data_creation": "None",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Adult dashboard at /fr/aikido/dojo uses testids: adult-sidebar, adult-header, adult-dashboard, profile-card, tanaka-hero, card-dojo-virtuel, card-technique-jour, card-defi-jour, ma-progression, vertus-section. The AdultTutorialBlocks component (which had espace-parent-btn) is not rendered on the main dashboard view for this admin user - possibly only shown for new users or on a tutorial subroute. However, verified globally by data-testid selector + text search that Espace Parent is absent."
+}

@@ -7,7 +7,7 @@ import {
   Sparkles, Eye, X, ChevronRight, Play,
   User, Target, Compass, BookOpen, Award, 
   Scroll, Trophy, Star, Flame, Shield,
-  TrendingUp, Users
+  TrendingUp
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -501,7 +501,7 @@ export const AdultTutorialBlocks: React.FC<AdultTutorialBlocksProps> = ({
         </div>
       </div>
 
-      {/* Raccourcis rapides - Ma Progression & Espace Parent */}
+      {/* Raccourcis rapides - Ma Progression & Ceintures */}
       <div className="flex flex-wrap gap-3 justify-center">
         <Button
           onClick={() => router.push('/fr/aikido/progression')}
@@ -511,16 +511,6 @@ export const AdultTutorialBlocks: React.FC<AdultTutorialBlocksProps> = ({
           <TrendingUp className="w-5 h-5 mr-2" />
           Ma Progression
           <ChevronRight className="w-4 h-4 ml-1" />
-        </Button>
-        
-        <Button
-          onClick={() => router.push('/fr/aikido/espace-parent')}
-          variant="outline"
-          className="border-purple-500/50 hover:bg-purple-500/10 text-purple-300 hover:text-purple-200 font-semibold px-6 py-2.5 rounded-xl"
-          data-testid="espace-parent-btn"
-        >
-          <Users className="w-5 h-5 mr-2" />
-          Espace Parent
         </Button>
         
         <Button
