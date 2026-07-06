@@ -15,7 +15,7 @@ export default function DojoVirtuelPage() {
   const locale = params.locale as string;
   const sport = params.sport as string;
 
-  const [user, setUser] = useState<{ firstName: string; gamification: { level: number; xp: number }; mode?: string } | null>(null);
+  const [user, setUser] = useState<{ firstName: string; gamification: { level: number; xp: number }; mode?: string; profile?: string; role?: string } | null>(null);
   const [loading, setLoading] = useState(true);
   const [dojoOpen] = useState(true);
 
@@ -38,8 +38,16 @@ export default function DojoVirtuelPage() {
     router.push(`/${locale}/${sport}/dojo`);
   };
 
-  // Utiliser les messages adultes si le mode est "adult" ou "samurai"
-  const isAdultMode = user?.mode === 'adult' || user?.mode === 'samurai' || localStorage.getItem('wayofdojo_mode') === 'adult';
+  // Utiliser les messages adultes si le profil est "samourai_confirme" ou "samourai_debutant" ou rôle admin
+  const isAdultMode = typeof window !== 'undefined' && (
+    user?.profile === 'samourai_confirme' || 
+    user?.profile === 'samourai_debutant' || 
+    user?.role === 'super_admin' ||
+    user?.role === 'admin' ||
+    user?.mode === 'adult' || 
+    user?.mode === 'samurai' || 
+    localStorage.getItem('wayofdojo_mode') === 'adult'
+  );
   const messages = isAdultMode ? TANAKA_MESSAGES_ADULT : TANAKA_MESSAGES;
 
   if (loading) {
@@ -65,6 +73,7 @@ export default function DojoVirtuelPage() {
         message={messages['dojo-virtuel'].message}
         emoji={messages['dojo-virtuel'].emoji}
         variant="full"
+        isAdultMode={isAdultMode}
       />
 
       {/* Header */}

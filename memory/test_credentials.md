@@ -1,10 +1,23 @@
-# Test Credentials - WayofDojo
+# WayofDojo - Test Credentials
 
-| Role | Email | Password |
-|---|---|---|
-| Admin | admin@wayofdojo.com | admin123 |
-| Free User (Junior) | gratuit@wayofdojo.com | gratuit123 |
-| Adult User | adulte@wayofdojo.fr | 123456 |
-| Child User (Junior) | enfant@wayofdojo.fr | 123456 |
+## Mode Adulte (Samouraï Confirmé)
+- **Email**: admin@wayofdojo.com
+- **Password**: admin123
+- **Rôle**: super_admin
+- **Profil**: samourai_confirme
 
-**Note:** Les comptes `adulte@wayofdojo.fr` et `enfant@wayofdojo.fr` existent dans le backend FastAPI mais peuvent nécessiter une création côté MongoDB/Next.js API.
+## Mode Adulte (Standard)
+- **Email**: adulte@wayofdojo.fr
+- **Password**: 123456
+- **Profil**: samourai_debutant
+
+## Mode Enfant
+- **Email**: enfant@wayofdojo.fr
+- **Password**: 123456
+- **Profil**: petit_ninja
+
+## URLs de Test
+- Dashboard Adulte: /fr/aikido/dojo
+- Techniques: /fr/aikido/techniques
+- Ceintures: /fr/aikido/ceintures
+- Dojo Virtuel: /fr/aikido/dojo-virtuel

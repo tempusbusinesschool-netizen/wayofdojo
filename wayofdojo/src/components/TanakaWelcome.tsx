@@ -26,6 +26,7 @@ interface TanakaWelcomeProps {
   autoClose?: number;          // Fermeture automatique après X secondes (optionnel)
   showOnce?: boolean;          // Afficher une seule fois par session (default: true)
   variant?: 'full' | 'compact' | 'banner'; // Style du message
+  isAdultMode?: boolean;       // Mode adulte pour le vouvoiement
 }
 
 export const TanakaWelcome: React.FC<TanakaWelcomeProps> = ({
@@ -37,6 +38,7 @@ export const TanakaWelcome: React.FC<TanakaWelcomeProps> = ({
   autoClose,
   showOnce = true,
   variant = 'full',
+  isAdultMode = false,
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [hasBeenShown, setHasBeenShown] = useState(false);
@@ -306,7 +308,7 @@ export const TanakaWelcome: React.FC<TanakaWelcomeProps> = ({
               </div>
               
               <h3 className="text-xl font-black text-amber-300 mt-4">Maître Tanaka</h3>
-              <p className="text-amber-200/70 text-sm">Ton guide sur la Voie</p>
+              <p className="text-amber-200/70 text-sm">{isAdultMode ? 'Votre guide sur la Voie' : 'Ton guide sur la Voie'}</p>
               
               {/* Message */}
               <div className="mt-4 bg-black/20 rounded-2xl p-4 border border-amber-500/20">
