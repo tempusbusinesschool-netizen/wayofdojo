@@ -4,8 +4,9 @@ import React, { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { 
-  BookOpen, Search, ChevronDown, Star, Eye, X, Play,
+  BookOpen, Search, ChevronDown, Star, Eye, X,
   Home, HelpCircle, CheckCircle2, BookMarked, Sparkles, Award
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -706,17 +707,34 @@ export default function TechniquesPage() {
                   </ul>
                 </div>
 
-                {/* Vidéo placeholder */}
+                {/* Image de démonstration */}
                 <div>
-                  <h3 className="text-white font-semibold mb-3">Vidéo démonstration</h3>
-                  <div className="bg-slate-800/50 rounded-xl p-8 flex flex-col items-center justify-center border border-dashed border-slate-600">
-                    <div className="w-16 h-16 rounded-full bg-cyan-500/20 flex items-center justify-center mb-4">
-                      <Play className="w-8 h-8 text-cyan-400" />
+                  <h3 className="text-white font-semibold mb-3">Illustration</h3>
+                  {selectedTechnique.id.includes('ikkyo') ? (
+                    <div className="relative rounded-xl overflow-hidden">
+                      <Image 
+                        src="/images/techniques/ikkyo.png" 
+                        alt="Ikkyo - Animation pédagogique" 
+                        width={800}
+                        height={600}
+                        className="w-full h-auto rounded-xl"
+                      />
                     </div>
-                    <p className="text-slate-400 text-sm text-center">
-                      Vidéo de démonstration à venir
-                    </p>
-                  </div>
+                  ) : (
+                    <div className="relative rounded-xl overflow-hidden h-48">
+                      <Image 
+                        src="/images/backgrounds/japanese-sunset-dojo.jpg" 
+                        alt="Illustration technique" 
+                        fill 
+                        className="object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                      <div className="absolute bottom-4 left-4 right-4">
+                        <p className="text-white text-sm font-medium">{selectedTechnique.name}</p>
+                        <p className="text-slate-300 text-xs">{selectedTechnique.category}</p>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
 
