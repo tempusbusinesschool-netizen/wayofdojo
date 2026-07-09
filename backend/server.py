@@ -64,6 +64,12 @@ app = FastAPI()
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
 
+# Health check endpoint for /api/health (must be defined before router inclusion)
+@api_router.get("/health")
+async def api_health_check():
+    """Health check endpoint accessible via /api/health"""
+    return {"status": "healthy", "service": "wayofdojo-backend"}
+
 # Super Admin password (for creating dojos)
 SUPER_ADMIN_PASSWORD = os.environ.get("SUPER_ADMIN_PASSWORD", "123456")
 
@@ -1039,11 +1045,12 @@ async def login_parent(data: ParentLogin):
     
     token = create_parent_token(parent)
     
-    # Récupérer les informations des enfants
+    # Récupérer les informations des enfants avec une requête batch
     children = []
-    for child_id in parent.get("children", []):
-        child = await db.users.find_one({"id": child_id}, {"_id": 0, "password_hash": 0})
-        if child:
+    children_ids = parent.get("children", [])
+    if children_ids:
+        children_cursor = db.users.find({"id": {"$in": children_ids}}, {"_id": 0, "password_hash": 0})
+        async for child in children_cursor:
             children.append({
                 "id": child["id"],
                 "first_name": child.get("first_name", ""),
@@ -1067,11 +1074,12 @@ async def login_parent(data: ParentLogin):
 @api_router.get("/parents/me")
 async def get_parent_profile(parent: dict = Depends(require_parent_auth)):
     """Récupérer le profil du parent connecté"""
-    # Récupérer les informations complètes des enfants
+    # Récupérer les informations complètes des enfants avec une requête batch
     children = []
-    for child_id in parent.get("children", []):
-        child = await db.users.find_one({"id": child_id}, {"_id": 0, "password_hash": 0})
-        if child:
+    children_ids = parent.get("children", [])
+    if children_ids:
+        children_cursor = db.users.find({"id": {"$in": children_ids}}, {"_id": 0, "password_hash": 0})
+        async for child in children_cursor:
             children.append({
                 "id": child["id"],
                 "first_name": child.get("first_name", ""),
@@ -6062,6 +6070,15 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# ═══════════════════════════════════════════════════════════════════════════════════
+# HEALTH CHECK ENDPOINT (Required for Kubernetes)
+# ═══════════════════════════════════════════════════════════════════════════════════
+
+@app.get("/health")
+async def health_check():
+    """Health check endpoint for Kubernetes liveness/readiness probes"""
+    return {"status": "healthy", "service": "wayofdojo-backend"}
 
 # Configure logging
 logging.basicConfig(
