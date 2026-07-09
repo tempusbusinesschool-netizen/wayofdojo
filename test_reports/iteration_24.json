@@ -1,0 +1,41 @@
+{
+  "summary": "Frontend UI testing of WayofDojo Adult vs Junior mode adaptation across 7 refactored pages. Tested login, dashboard theme, navigation, Approfondir menu, sub-pages, and Junior gamified layout. Most features work correctly. Only Tanaka audio stop-on-close could not be fully verified (autoplay blocked without gesture; no <audio> element in DOM after triggering).",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [
+      {
+        "component": "AdultSidebar - Approfondir menu",
+        "issue": "Menu label is 'Histoire' (short) but review request expected 'Histoire de l'Aïkido'. Minor labeling inconsistency; page h1 is correct 'Histoire de l'Aïkido'.",
+        "selector": "sidebar link under Approfondir",
+        "priority": "LOW"
+      }
+    ],
+    "integration_issues": [
+      {
+        "flow": "Tanaka audio in Dojo Virtuel",
+        "issue": "Autoplay is blocked without user gesture (console: 'NotAllowedError: play() failed because the user didn't interact with the document first'). After user gesture, no <audio> element is discoverable in DOM (likely Web Audio API or on-demand element), so we could not verify stop-on-close programmatically. Requires manual test or explicit test hook.",
+        "affected_selectors": ["<audio>", "Tanaka avatar / speaker button"]
+      }
+    ],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [
+    "Consider aligning sidebar label 'Histoire' with page title 'Histoire de l'Aïkido' for clarity (or use a shortened h1 to match).",
+    "Add a data-testid on Tanaka audio trigger and expose an <audio ref> or state (data-tanaka-playing) so audio playback/stop lifecycle can be automated in tests.",
+    "Guard localStorage reads in /app/wayofdojo/src/app/[locale]/[sport]/dojo-virtuel/page.tsx with typeof window !== 'undefined' if SSR errors from prior iteration still occur (please re-verify)."
+  ],
+  "critical_code_review_comments": [
+    "Adult/Junior mode detection appears to have been fixed for the intro Dojo modal (adult text 'Bienvenue dans le Dojo Virtuel, Admin. Cet espace propose des exercices interactifs pour approfondir votre pratique. Choisissez un module et progressez à votre rythme.' now shown). Confirm the shared helper (e.g., useUserProfile / isAdultMode) is used consistently across all TANAKA_MESSAGES call-sites.",
+    "Body background is fixed at rgb(2,8,23) globally; Junior pages then paint their own orange background on top via JuniorPageLayout wrapper. Works visually but body_bg does not reflect the effective theme -- future E2E tests should assert on the layout wrapper, not document.body.",
+    "Login API responses include 401/400 on initial page load (pre-auth). Consider swallowing these in the UI so console isn't spammed for unauthenticated users."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A", "frontend": "~95%"},
+  "test_credentials": "admin@wayofdojo.com / admin123 (adult samourai_confirme). gratuit@wayofdojo.com / gratuit123 (junior). Login URL: /fr/aikido/login.",
+  "seed_data_creation": "None",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "All 8 review items tested via Playwright on the preview URL. Results: (1) Adult login OK -- lands on /fr/aikido/dojo with dark navy theme (body bg rgb(2,8,23), gradient slate-950). (2) Adult navigation to Techniques, Ceintures, Dojo Virtuel all keep dark theme. (3) Adult sidebar Approfondir menu contains: Les 7 Vertus, Histoire, L'Hakama, Bienfaits (label 'Histoire' shorter than expected 'Histoire de l'Aïkido'). (4) Junior login OK -- lands on /fr/aikido/dojo with Junior orange/amber theme, 'Mode Jeune Samouraï' header. (5) Junior Techniques/Ceintures/Trophées all show orange gamified JuniorPageLayout. (6) '7 Vertus du Budo' interactive section confirmed on Junior dashboard (Respect/Courage/Maîtrise/Humilité/Bienveillance/Attention/Responsabilité tiles with levels). (7) Tanaka audio: autoplay blocked pre-gesture; after user click the 'Écouter' button opens Dojo modal but no <audio> element found in DOM -- cannot programmatically verify stop-on-close, needs manual/UX verification. (8) /fr/aikido/histoire-aikido, /fr/aikido/hakama, /fr/aikido/bienfaits all return 200 with correct h1 titles. IMPORTANT: The previous iteration_23 bug (adult user seeing child tutoiement in Dojo Virtuel intro overlay) appears FIXED -- modal now shows 'Bienvenue dans le Dojo Virtuel, Admin. ... progressez à votre rythme.' in vouvoiement.",
+  "rca of the issue": "N/A -- no new critical bugs. Audio verification limitation is a testability gap (no data-testid on audio, dynamic audio element), not a functional bug."
+}
