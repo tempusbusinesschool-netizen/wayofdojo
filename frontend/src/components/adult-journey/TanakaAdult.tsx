@@ -1,0 +1,125 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { MessageCircle, X } from 'lucide-react';
+import TanakaAnimatedLogo from '@/components/animations/TanakaAnimatedLogo';
+
+interface TanakaAdultProps {
+  message: string;
+  isVisible?: boolean;
+  onClose?: () => void;
+}
+
+export function TanakaAdult({ message, isVisible = true, onClose }: TanakaAdultProps) {
+  const [isMinimized, setIsMinimized] = useState(false);
+  const [displayedText, setDisplayedText] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+
+  // Typewriter effect
+  useEffect(() => {
+    if (!isVisible || isMinimized || !message) return;
+    
+    setDisplayedText('');
+    setIsTyping(true);
+    
+    const chars = message.split('');
+    let currentIndex = 0;
+    
+    const timer = setInterval(() => {
+      if (currentIndex < chars.length) {
+        const charToAdd = chars[currentIndex];
+        setDisplayedText(prev => prev + charToAdd);
+        currentIndex++;
+      } else {
+        setIsTyping(false);
+        clearInterval(timer);
+      }
+    }, 30);
+
+    return () => clearInterval(timer);
+  }, [message, isVisible, isMinimized]);
+
+  if (!isVisible) return null;
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0, y: 50, scale: 0.9 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: 50, scale: 0.9 }}
+        className="fixed bottom-6 right-6 z-50 max-w-sm hidden md:block"
+      >
+        {isMinimized ? (
+          // Minimized state - Use animated logo
+          <TanakaAnimatedLogo
+            size="md"
+            variant="breathing"
+            isActive={true}
+            showAura={true}
+            onClick={() => setIsMinimized(false)}
+          />
+        ) : (
+          // Full message
+          <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl border border-slate-700 shadow-2xl overflow-hidden">
+            {/* Header */}
+            <div className="flex items-center justify-between p-3 bg-gradient-to-r from-amber-900/30 to-orange-900/30 border-b border-slate-700">
+              <div className="flex items-center gap-3">
+                <TanakaAnimatedLogo
+                  size="sm"
+                  variant="glow"
+                  isActive={isTyping}
+                  showAura={false}
+                />
+                <div>
+                  <h4 className="text-white font-bold text-sm">Maître Tanaka</h4>
+                  <p className="text-amber-400 text-xs">先生 · Mentor</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={() => setIsMinimized(true)}
+                  className="p-2 rounded-lg hover:bg-white/10 transition-colors"
+                >
+                  <MessageCircle className="w-4 h-4 text-slate-400" />
+                </button>
+                {onClose && (
+                  <button
+                    onClick={onClose}
+                    className="p-2 rounded-lg hover:bg-white/10 transition-colors"
+                  >
+                    <X className="w-4 h-4 text-slate-400" />
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Message */}
+            <div className="p-4">
+              <p className="text-white text-sm leading-relaxed min-h-[60px]">
+                {displayedText}
+                {isTyping && (
+                  <motion.span
+                    animate={{ opacity: [1, 0] }}
+                    transition={{ duration: 0.5, repeat: Infinity }}
+                    className="inline-block w-2 h-4 bg-amber-400 ml-1"
+                  />
+                )}
+              </p>
+            </div>
+
+            {/* Footer with signature */}
+            <div className="px-4 pb-3 flex items-center justify-between">
+              <p className="text-slate-500 text-xs italic">
+                &ldquo;La sagesse est le fruit de l&apos;expérience.&rdquo;
+              </p>
+              <div className="text-amber-500/50 text-lg">道</div>
+            </div>
+          </div>
+        )}
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
+export default TanakaAdult;

@@ -1,70 +1,126 @@
-# Getting Started with Create React App
+# 🥋 WayofDojo - Plateforme de Gamification pour Arts Martiaux
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Next.js](https://img.shields.io/badge/Next.js-14-black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
+![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-green)
 
-## Available Scripts
+## 🚀 Déploiement sur Vercel
 
-In the project directory, you can run:
+### Prérequis
 
-### `npm start`
+1. **Compte Vercel** - [vercel.com](https://vercel.com)
+2. **Compte MongoDB Atlas** - [mongodb.com/atlas](https://mongodb.com/atlas)
+3. **Nom de domaine** configuré (wayofdojo.humanknowledge.fr)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 📦 Étape 1 : MongoDB Atlas (Base de données gratuite)
 
-### `npm test`
+1. Créer un compte sur [MongoDB Atlas](https://mongodb.com/atlas)
+2. Créer un **Cluster gratuit** (M0 Sandbox)
+3. Dans "Database Access" → Créer un utilisateur
+4. Dans "Network Access" → Ajouter `0.0.0.0/0` (permet l'accès depuis Vercel)
+5. Cliquer sur "Connect" → "Connect your application"
+6. Copier la chaîne de connexion :
+   ```
+   mongodb+srv://USERNAME:PASSWORD@cluster0.xxxxx.mongodb.net/wayofdojo
+   ```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 🔧 Étape 2 : Déployer sur Vercel
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Option A : Via GitHub (Recommandé)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. Pusher le code sur GitHub
+2. Sur Vercel → "New Project" → Importer depuis GitHub
+3. Configurer les variables d'environnement (voir ci-dessous)
+4. Déployer
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Option B : Via Vercel CLI
 
-### `npm run eject`
+```bash
+# Installer Vercel CLI
+npm i -g vercel
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+# Se connecter
+vercel login
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# Déployer
+cd wayofdojo
+vercel --prod
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 🔐 Étape 3 : Variables d'environnement (Vercel Dashboard)
 
-## Learn More
+Dans Vercel → Project → Settings → Environment Variables :
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+| Variable | Valeur |
+|----------|--------|
+| `MONGODB_URI` | `mongodb+srv://user:pass@cluster.mongodb.net/wayofdojo` |
+| `NEXTAUTH_URL` | `https://wayofdojo.humanknowledge.fr` |
+| `NEXTAUTH_SECRET` | `générer avec: openssl rand -base64 32` |
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## 🌐 Étape 4 : Configurer le domaine
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+1. Vercel → Project → Settings → Domains
+2. Ajouter : `wayofdojo.humanknowledge.fr`
+3. Vercel affichera les instructions DNS
 
-### Analyzing the Bundle Size
+### Configuration DNS chez O2switch :
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+| Type | Nom | Valeur |
+|------|-----|--------|
+| CNAME | wayofdojo | cname.vercel-dns.com |
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## ✅ Vérification
 
-### Advanced Configuration
+Après déploiement, tester :
+- https://wayofdojo.humanknowledge.fr (Landing)
+- https://wayofdojo.humanknowledge.fr/fr/aikido/register (Inscription)
+- https://wayofdojo.humanknowledge.fr/fr/aikido/login (Connexion)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+## 📁 Structure du projet
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```
+wayofdojo/
+├── src/
+│   ├── app/                 # Pages Next.js App Router
+│   │   ├── [locale]/        # Routes internationalisées
+│   │   └── api/             # API Routes
+│   ├── components/          # Composants React
+│   ├── config/sports/       # Configuration Aikido
+│   ├── lib/                 # Utilitaires (DB, Auth)
+│   ├── locales/             # Traductions FR/EN
+│   └── types/               # Types TypeScript
+├── public/                  # Assets statiques
+├── vercel.json              # Config Vercel
+└── package.json
+```
 
-### `npm run build` fails to minify
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 🛠️ Développement local
+
+```bash
+# Installation
+npm install
+
+# Lancer en dev
+npm run dev
+
+# Build production
+npm run build
+```
+
+---
+
+**Fait avec ❤️ pour la communauté des arts martiaux**

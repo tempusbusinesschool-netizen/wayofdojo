@@ -1,3 +1,3 @@
 #!/bin/bash
-cd /app/wayofdojo
-yarn start
+cd /app/frontend
+PORT=3000 npm run dev
