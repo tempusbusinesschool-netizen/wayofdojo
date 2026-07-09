@@ -29,16 +29,13 @@ next-env.d.ts
 /build
 dist/
 
-# Environment files
-.env
-.env.*
-*.env
-*.env.*
+# Sensitive credentials (NOT .env files - those are needed for deployment)
 *token.json*
 *credentials.json*
 credentials.json
 *.key
 .credentials
+memory/test_credentials.md
 
 # Logs and debug files
 npm-debug.log*
@@ -81,6 +78,7 @@ agenthub/agents/youtube/db
 # Build caches
 .cache/
 wayofdojo/.next/cache/
+frontend/.next/cache/
 frontend/node_modules/.cache/
 
 # Mobile development
@@ -89,15 +87,13 @@ android-sdk/
 # Binary files
 wayofdojo/node_modules/@next/swc-linux-arm64-gnu/next-swc.linux-arm64-gnu.node
 wayofdojo/node_modules/@next/swc-linux-arm64-musl/next-swc.linux-arm64-musl.node
-frontend/node_modules/.cache/default-development/0.pack
-frontend/node_modules/.cache/default-development/12.pack
-frontend/node_modules/.cache/default-development/1.pack
-frontend/node_modules/.cache/default-development/21.pack
-frontend/node_modules/.cache/default-development/6.pack
+frontend/node_modules/@next/swc-linux-arm64-gnu/next-swc.linux-arm64-gnu.node
+frontend/node_modules/@next/swc-linux-arm64-musl/next-swc.linux-arm64-musl.node
+
+# Old React app backup
+frontend_old_react/
 frontend_old_react/node_modules/.cache/default-development/0.pack
 frontend_old_react/node_modules/.cache/default-development/12.pack
 frontend_old_react/node_modules/.cache/default-development/1.pack
 frontend_old_react/node_modules/.cache/default-development/21.pack
 frontend_old_react/node_modules/.cache/default-development/6.pack
-frontend/node_modules/@next/swc-linux-arm64-gnu/next-swc.linux-arm64-gnu.node
-frontend/node_modules/@next/swc-linux-arm64-musl/next-swc.linux-arm64-musl.node
