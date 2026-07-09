@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Clock, Target, ChevronDown,
@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button';
 import { AdultSidebar } from '@/components/adult-layout/AdultSidebar';
 import { AdultHeader } from '@/components/adult-layout/AdultHeader';
 import { getGradesKyu, getGradesDan, type ProgrammeGrade } from '@/data/aikido/grades/passages-de-grades';
+import { JuniorCeinturesPage } from '@/components/junior-pages';
 
 /**
  * ═══════════════════════════════════════════════════════════════════════════════
@@ -240,6 +241,27 @@ export default function CeinturesPage() {
   const locale = params.locale as string || 'fr';
   const sport = params.sport as string || 'aikido';
 
+  // Détection du profil utilisateur
+  const [userProfile, setUserProfile] = useState<'jeune_samourai' | 'samourai_confirme' | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const userStr = localStorage.getItem('wayofdojo_user');
+      if (userStr) {
+        try {
+          const user = JSON.parse(userStr);
+          setUserProfile(user.profile || 'samourai_confirme');
+        } catch {
+          setUserProfile('samourai_confirme');
+        }
+      } else {
+        setUserProfile('samourai_confirme');
+      }
+      setIsLoading(false);
+    }
+  }, []);
+
   const [activeTab, setActiveTab] = useState<string>('parcours');
   const [expandedGrade, setExpandedGrade] = useState<string | null>(null);
 
@@ -257,6 +279,19 @@ export default function CeinturesPage() {
       window.location.href = `/${locale}`;
     }
   };
+
+  // Si profil enfant, afficher la version enfant
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#06101f] flex items-center justify-center">
+        <div className="text-white">Chargement...</div>
+      </div>
+    );
+  }
+  
+  if (userProfile === 'jeune_samourai') {
+    return <JuniorCeinturesPage />;
+  }
 
   return (
     <div className="min-h-screen bg-[#06101f]">

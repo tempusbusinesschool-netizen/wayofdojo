@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, BookOpen, Check, X } from 'lucide-react';
 import { useRouter, useParams } from 'next/navigation';
@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { AdultSidebar } from '@/components/adult-layout/AdultSidebar';
 import { AdultHeader } from '@/components/adult-layout/AdultHeader';
+import { JuniorVertusPage } from '@/components/junior-pages';
 
 /**
  * ═══════════════════════════════════════════════════════════════════════════════
@@ -105,6 +106,27 @@ export default function VertusPage() {
   const [selectedVirtue, setSelectedVirtue] = useState<typeof BUSHIDO_VIRTUES[0] | null>(null);
   const [completedVirtues, setCompletedVirtues] = useState<string[]>([]);
 
+  // Détection du profil utilisateur
+  const [userProfile, setUserProfile] = useState<'jeune_samourai' | 'samourai_confirme' | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const userStr = localStorage.getItem('wayofdojo_user');
+      if (userStr) {
+        try {
+          const user = JSON.parse(userStr);
+          setUserProfile(user.profile || 'samourai_confirme');
+        } catch {
+          setUserProfile('samourai_confirme');
+        }
+      } else {
+        setUserProfile('samourai_confirme');
+      }
+      setIsLoading(false);
+    }
+  }, []);
+
   const handleMarkComplete = (virtueId: string) => {
     setCompletedVirtues(prev => 
       prev.includes(virtueId) 
@@ -119,6 +141,19 @@ export default function VertusPage() {
       window.location.href = `/${locale}`;
     }
   };
+
+  // Si profil enfant, afficher la version enfant
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#06101f] flex items-center justify-center">
+        <div className="text-white">Chargement...</div>
+      </div>
+    );
+  }
+  
+  if (userProfile === 'jeune_samourai') {
+    return <JuniorVertusPage />;
+  }
 
   return (
     <div className="min-h-screen bg-[#06101f]">

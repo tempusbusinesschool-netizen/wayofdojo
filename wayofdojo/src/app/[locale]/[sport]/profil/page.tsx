@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, User, Award, Calendar, Clock, TrendingUp, Settings, LogOut, Edit3, Star, Target, Flame, Trophy, ChevronRight, HelpCircle } from 'lucide-react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { TanakaWelcome, TANAKA_MESSAGES } from '@/components/TanakaWelcome';
+import { JuniorProfilPage } from '@/components/junior-pages';
 
 /**
  * ═══════════════════════════════════════════════════════════════════════════════
@@ -64,11 +65,46 @@ export default function ProfilPage() {
   const router = useRouter();
   const params = useParams();
   const locale = (params?.locale as string) || 'fr';
+  const _sport = (params?.sport as string) || 'aikido';
   const [activeTab, setActiveTab] = useState<'overview' | 'stats' | 'badges'>('overview');
   const user = MOCK_USER;
 
+  // Détection du profil utilisateur
+  const [userProfile, setUserProfile] = useState<'jeune_samourai' | 'samourai_confirme' | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const userStr = localStorage.getItem('wayofdojo_user');
+      if (userStr) {
+        try {
+          const userData = JSON.parse(userStr);
+          setUserProfile(userData.profile || 'samourai_confirme');
+        } catch {
+          setUserProfile('samourai_confirme');
+        }
+      } else {
+        setUserProfile('samourai_confirme');
+      }
+      setIsLoading(false);
+    }
+  }, []);
+
   const currentBeltIndex = BELTS.findIndex(b => b.grade === user.currentGrade);
   const progressPercent = (user.xp / user.xpToNext) * 100;
+
+  // Si profil enfant, afficher la version enfant
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#06101f] flex items-center justify-center">
+        <div className="text-white">Chargement...</div>
+      </div>
+    );
+  }
+  
+  if (userProfile === 'jeune_samourai') {
+    return <JuniorProfilPage />;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white">

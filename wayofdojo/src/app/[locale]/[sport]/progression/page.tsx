@@ -15,6 +15,7 @@ import MaitreTanaka from '@/components/MaitreTanaka';
 import { AIKIDO_BELTS, getBeltByKey, getNextBelt, BELT_ORDER } from '@/constants/aikidoBelts';
 import { TECHNIQUES_BY_KYU, getTechniqueCountByKyu, KYU_ORDER } from '@/constants/techniquesByKyu';
 import GRADES_DAN from '@/data/aikido/grades/dan';
+import { JuniorProgressionPage } from '@/components/junior-pages';
 
 interface User {
   firstName: string;
@@ -97,6 +98,11 @@ export default function ProgressionPage() {
   }
 
   if (!user) return null;
+
+  // Si profil enfant, afficher la version enfant
+  if (user.profile === 'jeune_samourai') {
+    return <JuniorProgressionPage />;
+  }
 
   const currentBelt = getBeltByKey(user.grade);
   const nextBelt = getNextBelt(currentBelt);

@@ -1,12 +1,13 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Calendar, MapPin, User, BookOpen, Star } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { AdultSidebar } from '@/components/adult-layout/AdultSidebar';
 import { AdultHeader } from '@/components/adult-layout/AdultHeader';
+import { JuniorHistoirePage } from '@/components/junior-pages';
 
 /**
  * ═══════════════════════════════════════════════════════════════════════════════
@@ -92,11 +93,45 @@ export default function HistoireAikidoPage() {
   const locale = params.locale as string;
   const sport = params.sport as string;
 
+  // Détection du profil utilisateur
+  const [userProfile, setUserProfile] = useState<'jeune_samourai' | 'samourai_confirme' | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const userStr = localStorage.getItem('wayofdojo_user');
+      if (userStr) {
+        try {
+          const user = JSON.parse(userStr);
+          setUserProfile(user.profile || 'samourai_confirme');
+        } catch {
+          setUserProfile('samourai_confirme');
+        }
+      } else {
+        setUserProfile('samourai_confirme');
+      }
+      setIsLoading(false);
+    }
+  }, []);
+
   const handleLogout = () => {
     localStorage.removeItem('wayofdojo_token');
     localStorage.removeItem('wayofdojo_user');
     window.location.href = `/${locale}`;
   };
+
+  // Si profil enfant, afficher la version enfant
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#06101f] flex items-center justify-center">
+        <div className="text-white">Chargement...</div>
+      </div>
+    );
+  }
+  
+  if (userProfile === 'jeune_samourai') {
+    return <JuniorHistoirePage />;
+  }
 
   return (
     <div className="min-h-screen bg-[#06101f]">

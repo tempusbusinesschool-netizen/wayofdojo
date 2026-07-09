@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Trophy, Star, Lock, Sparkles, Medal, Award, Crown, Target, Users } from 'lucide-react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { TanakaWelcome, TANAKA_MESSAGES } from '@/components/TanakaWelcome';
+import { JuniorTropheesPage } from '@/components/junior-pages';
 
 /**
  * ═══════════════════════════════════════════════════════════════════════════════
@@ -283,8 +284,33 @@ const LEVEL_COLORS = {
 
 export default function TropheesPage() {
   const router = useRouter();
+  const params = useParams();
+  const _locale = params?.locale as string || 'fr';
+  const _sport = params?.sport as string || 'aikido';
+  
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [_selectedTrophy, setSelectedTrophy] = useState<string | null>(null);
+  
+  // Détection du profil utilisateur
+  const [userProfile, setUserProfile] = useState<'jeune_samourai' | 'samourai_confirme' | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const userStr = localStorage.getItem('wayofdojo_user');
+      if (userStr) {
+        try {
+          const user = JSON.parse(userStr);
+          setUserProfile(user.profile || 'samourai_confirme');
+        } catch {
+          setUserProfile('samourai_confirme');
+        }
+      } else {
+        setUserProfile('samourai_confirme');
+      }
+      setIsLoading(false);
+    }
+  }, []);
 
   const filteredTrophies = TROPHIES.filter(t => 
     selectedCategory === 'all' || t.category === selectedCategory
@@ -292,6 +318,19 @@ export default function TropheesPage() {
 
   const unlockedCount = TROPHIES.filter(t => t.unlocked).length;
   const totalXp = TROPHIES.filter(t => t.unlocked).reduce((acc, t) => acc + t.xp, 0);
+
+  // Si profil enfant, afficher la version enfant
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#06101f] flex items-center justify-center">
+        <div className="text-white">Chargement...</div>
+      </div>
+    );
+  }
+  
+  if (userProfile === 'jeune_samourai') {
+    return <JuniorTropheesPage />;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-white">

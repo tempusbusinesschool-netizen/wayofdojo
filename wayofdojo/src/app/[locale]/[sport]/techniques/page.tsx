@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button';
 import { AdultSidebar } from '@/components/adult-layout/AdultSidebar';
 import { AdultHeader } from '@/components/adult-layout/AdultHeader';
 import TECHNIQUES_BY_KYU, { KYU_ORDER, getTechniquesByKyu, ExtendedTechnique } from '@/constants/techniquesByKyu';
+import { JuniorTechniquesPage } from '@/components/junior-pages';
 
 /**
  * ═══════════════════════════════════════════════════════════════════════════════
@@ -255,7 +256,11 @@ export default function TechniquesPage() {
   const locale = params.locale as string || 'fr';
   const sport = params.sport as string || 'aikido';
   
-  // État utilisateur
+  // Détection du profil utilisateur
+  const [userProfile, setUserProfile] = useState<'jeune_samourai' | 'samourai_confirme' | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  
+  // État utilisateur adulte - DOIT être déclaré avant tout return conditionnel
   const userCurrentKyu = '6e_kyu';
   const [selectedKyu, setSelectedKyu] = useState<string>(userCurrentKyu);
   const [searchQuery, setSearchQuery] = useState('');
@@ -323,9 +328,41 @@ export default function TechniquesPage() {
   // Techniques à travailler (prioritaires, max 3)
   const techniquesToWork = useMemo(() => {
     return techniques
-      .filter(t => masteryLevels[t.id] !== 'mastered')
+      .filter(t => !masteryLevels[t.id] || masteryLevels[t.id] === 'learning')
       .slice(0, 3);
   }, [techniques, masteryLevels]);
+  
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const userStr = localStorage.getItem('wayofdojo_user');
+      if (userStr) {
+        try {
+          const user = JSON.parse(userStr);
+          setUserProfile(user.profile || 'samourai_confirme');
+        } catch {
+          setUserProfile('samourai_confirme');
+        }
+      } else {
+        setUserProfile('samourai_confirme');
+      }
+      setIsLoading(false);
+    }
+  }, []);
+
+  // Si profil enfant, afficher la version enfant
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#06101f] flex items-center justify-center">
+        <div className="text-white">Chargement...</div>
+      </div>
+    );
+  }
+  
+  if (userProfile === 'jeune_samourai') {
+    return <JuniorTechniquesPage />;
+  }
+  
+  // Fonctions et reste du rendu pour adulte
 
   // Handlers
   const handleMasteryChange = (techniqueId: string, level: string) => {
