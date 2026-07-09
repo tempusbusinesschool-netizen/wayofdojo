@@ -1,10 +1,10 @@
 'use client';
 
 import { useState, useCallback, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Flame, Medal, Scroll, Castle, Sparkles, Compass,
-  ChevronDown, Volume2, Play, Trophy, Bell, Gift
+  ChevronDown, Volume2, Play, Trophy, Bell, Gift, X, CheckCircle
 } from 'lucide-react';
 import Link from 'next/link';
 import JourneyPath from '@/components/JourneyPath';
@@ -77,15 +77,92 @@ const DAILY_CHALLENGES_BASE = [
   { id: 'bienveillance_aide', title: 'Bon Partenaire', emoji: '🤝', desc: 'Aider un débutant', xp: 15, virtue: 'bienveillance' },
 ];
 
-// Vertus avec niveaux
+// Vertus avec niveaux et explications enfantines
 const VIRTUES_CONFIG = [
-  { id: 'respect', name: 'Respect', kanji: '礼', color: 'bg-red-500', gradient: 'from-red-500 to-red-600' },
-  { id: 'courage', name: 'Courage', kanji: '勇', color: 'bg-orange-500', gradient: 'from-orange-500 to-orange-600' },
-  { id: 'maitrise', name: 'Maîtrise', kanji: '克', color: 'bg-yellow-500', gradient: 'from-yellow-500 to-yellow-600' },
-  { id: 'humilite', name: 'Humilité', kanji: '謙', color: 'bg-green-500', gradient: 'from-green-500 to-green-600' },
-  { id: 'bienveillance', name: 'Bienveillance', kanji: '仁', color: 'bg-blue-500', gradient: 'from-blue-500 to-blue-600' },
-  { id: 'attention', name: 'Attention', kanji: '注', color: 'bg-indigo-500', gradient: 'from-indigo-500 to-indigo-600' },
-  { id: 'responsabilite', name: 'Responsabilité', kanji: '責', color: 'bg-purple-500', gradient: 'from-purple-500 to-purple-600' },
+  { 
+    id: 'respect', 
+    name: 'Respect', 
+    kanji: '礼', 
+    color: 'bg-red-500', 
+    gradient: 'from-red-500 to-red-600',
+    emoji: '🙇',
+    childExplanation: 'Être poli et gentil avec tout le monde !',
+    childDetails: 'Le respect, c\'est comme un super-pouvoir ! Quand tu salues ton sensei, quand tu dis "merci" et "s\'il te plaît", quand tu écoutes les autres sans les interrompre... Tu montres que tu es un vrai samouraï !',
+    examples: ['Saluer en entrant dans le dojo', 'Écouter quand quelqu\'un parle', 'Dire merci à son partenaire'],
+    animal: '🦁'
+  },
+  { 
+    id: 'courage', 
+    name: 'Courage', 
+    kanji: '勇', 
+    color: 'bg-orange-500', 
+    gradient: 'from-orange-500 to-orange-600',
+    emoji: '💪',
+    childExplanation: 'Oser essayer même si on a un peu peur !',
+    childDetails: 'Le courage, ce n\'est pas de ne jamais avoir peur. C\'est d\'essayer quand même ! Quand tu fais une chute pour la première fois, quand tu essaies une technique difficile... Tu deviens plus fort à chaque fois !',
+    examples: ['Essayer une nouvelle technique', 'Faire une chute sans hésiter', 'Poser une question au sensei'],
+    animal: '🐯'
+  },
+  { 
+    id: 'maitrise', 
+    name: 'Maîtrise', 
+    kanji: '克', 
+    color: 'bg-yellow-500', 
+    gradient: 'from-yellow-500 to-yellow-600',
+    emoji: '🎯',
+    childExplanation: 'S\'entraîner encore et encore pour devenir meilleur !',
+    childDetails: 'La maîtrise, c\'est comme apprendre à faire du vélo. Au début c\'est difficile, mais si tu répètes encore et encore, un jour ça devient facile ! Les vrais samouraïs s\'entraînent tous les jours.',
+    examples: ['Répéter une technique 10 fois', 'Rester concentré pendant tout le cours', 'Ne pas abandonner quand c\'est dur'],
+    animal: '🦅'
+  },
+  { 
+    id: 'humilite', 
+    name: 'Humilité', 
+    kanji: '謙', 
+    color: 'bg-green-500', 
+    gradient: 'from-green-500 to-green-600',
+    emoji: '🌱',
+    childExplanation: 'Savoir qu\'on peut toujours apprendre des autres !',
+    childDetails: 'L\'humilité, c\'est accepter qu\'on ne sait pas tout. Même les plus grands maîtres continuent d\'apprendre ! Quand quelqu\'un te corrige, dis "merci" car il t\'aide à progresser.',
+    examples: ['Accepter les conseils du sensei', 'Féliciter un camarade qui réussit', 'Reconnaître ses erreurs'],
+    animal: '🐢'
+  },
+  { 
+    id: 'bienveillance', 
+    name: 'Bienveillance', 
+    kanji: '仁', 
+    color: 'bg-blue-500', 
+    gradient: 'from-blue-500 to-blue-600',
+    emoji: '💙',
+    childExplanation: 'Être gentil et aider les autres !',
+    childDetails: 'La bienveillance, c\'est avoir un grand cœur ! Quand tu aides un ami qui a du mal, quand tu fais attention à ne pas faire mal à ton partenaire, tu montres que tu es un samouraï au cœur d\'or.',
+    examples: ['Aider un débutant', 'Encourager un camarade', 'Prêter son matériel'],
+    animal: '🐻'
+  },
+  { 
+    id: 'attention', 
+    name: 'Attention', 
+    kanji: '注', 
+    color: 'bg-indigo-500', 
+    gradient: 'from-indigo-500 to-indigo-600',
+    emoji: '👀',
+    childExplanation: 'Bien regarder et bien écouter !',
+    childDetails: 'L\'attention, c\'est comme avoir des super-yeux et des super-oreilles ! Quand tu regardes bien ce que fait le sensei, tu apprends plus vite. Les ninjas sont toujours attentifs à tout !',
+    examples: ['Regarder le sensei montrer la technique', 'Écouter les consignes', 'Rester concentré sans bavarder'],
+    animal: '🦉'
+  },
+  { 
+    id: 'responsabilite', 
+    name: 'Responsabilité', 
+    kanji: '責', 
+    color: 'bg-purple-500', 
+    gradient: 'from-purple-500 to-purple-600',
+    emoji: '⭐',
+    childExplanation: 'Faire ce qu\'on doit faire, même tout seul !',
+    childDetails: 'La responsabilité, c\'est être digne de confiance ! Quand tu ranges ton keikogi tout seul, quand tu arrives à l\'heure, quand tu aides à ranger le tatami... Tu montres que tu es un grand samouraï !',
+    examples: ['Ranger ses affaires après le cours', 'Arriver à l\'heure', 'Prendre soin du matériel'],
+    animal: '🐺'
+  },
 ];
 
 export const JuniorDashboard: React.FC<JuniorDashboardProps> = ({
@@ -104,6 +181,7 @@ export const JuniorDashboard: React.FC<JuniorDashboardProps> = ({
 }) => {
   const [expandedQuest, setExpandedQuest] = useState<string | null>(null);
   const [showJourneyPath, setShowJourneyPath] = useState(false);
+  const [selectedVirtue, setSelectedVirtue] = useState<typeof VIRTUES_CONFIG[0] | null>(null);
   
   // Étapes du parcours complétées
   const [journeyCompletedSteps, setJourneyCompletedSteps] = useState<number[]>(() => {
@@ -568,6 +646,66 @@ export const JuniorDashboard: React.FC<JuniorDashboardProps> = ({
               />
             </motion.div>
           </Link>
+
+          {/* NOUVELLE CARTE: Les Ceintures */}
+          <Link href={`/${locale}/${sport}/ceintures`}>
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.35 }}
+              whileHover={{ y: -5, scale: 1.02 }}
+              className="bg-gradient-to-br from-emerald-500 to-teal-600 rounded-2xl p-5 lg:p-6 cursor-pointer shadow-xl shadow-emerald-500/30 group h-full relative overflow-hidden"
+              data-testid="card-ceintures"
+            >
+              {/* Décorations ceintures */}
+              <div className="absolute top-2 right-2 flex gap-1 opacity-40">
+                <div className="w-2 h-6 bg-white rounded-full" />
+                <div className="w-2 h-6 bg-yellow-300 rounded-full" />
+                <div className="w-2 h-6 bg-orange-400 rounded-full" />
+                <div className="w-2 h-6 bg-green-400 rounded-full" />
+                <div className="w-2 h-6 bg-blue-400 rounded-full" />
+              </div>
+              <Medal className="w-8 h-8 lg:w-10 lg:h-10 text-white/80 group-hover:scale-110 transition-transform" />
+              <h3 className="text-lg lg:text-xl font-bold text-white mt-3 lg:mt-4">🥋 Les Ceintures</h3>
+              <p className="text-white/70 mt-1 text-sm">Progression de grade</p>
+              <div className="flex items-center gap-2 mt-2">
+                <span className="text-2xl">🎯</span>
+                <span className="text-white/90 text-xs font-medium">Objectif : {currentBelt?.nextGrade || '5e Kyu'}</span>
+              </div>
+              <motion.div 
+                initial={{ width: 0 }}
+                whileHover={{ width: '100%' }}
+                className="h-1 bg-white/30 rounded-full mt-3"
+              />
+            </motion.div>
+          </Link>
+
+          {/* NOUVELLE CARTE: L'Histoire de l'Aïkido */}
+          <Link href={`/${locale}/${sport}/histoire-aikido`}>
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.4 }}
+              whileHover={{ y: -5, scale: 1.02 }}
+              className="bg-gradient-to-br from-rose-500 to-red-600 rounded-2xl p-5 lg:p-6 cursor-pointer shadow-xl shadow-rose-500/30 group h-full relative overflow-hidden"
+              data-testid="card-histoire"
+            >
+              {/* Kanji décoratif */}
+              <div className="absolute top-2 right-3 text-4xl font-bold text-white/10">道</div>
+              <Compass className="w-8 h-8 lg:w-10 lg:h-10 text-white/80 group-hover:scale-110 transition-transform" />
+              <h3 className="text-lg lg:text-xl font-bold text-white mt-3 lg:mt-4">📜 L'Histoire</h3>
+              <p className="text-white/70 mt-1 text-sm">O'Sensei & l'Aïkido</p>
+              <div className="flex items-center gap-2 mt-2">
+                <span className="text-2xl">🏯</span>
+                <span className="text-white/90 text-xs font-medium">Découvre les origines !</span>
+              </div>
+              <motion.div 
+                initial={{ width: 0 }}
+                whileHover={{ width: '100%' }}
+                className="h-1 bg-white/30 rounded-full mt-3"
+              />
+            </motion.div>
+          </Link>
         </div>
 
         {/* 7 Vertus Full */}
@@ -579,16 +717,18 @@ export const JuniorDashboard: React.FC<JuniorDashboardProps> = ({
           data-testid="seven-virtues"
         >
           <h3 className="text-lg lg:text-xl font-bold text-white mb-2">🎭 Les 7 Vertus du Budo</h3>
-          <p className="text-slate-400 text-xs lg:text-sm mb-4 lg:mb-5">Maîtrise ces qualités pour devenir un vrai Samouraï</p>
+          <p className="text-slate-400 text-xs lg:text-sm mb-4 lg:mb-5">Clique sur une vertu pour découvrir son secret ! 🔮</p>
           
           <div className="grid grid-cols-4 md:grid-cols-7 gap-2 lg:gap-3">
             {VIRTUES_CONFIG.map((virtue, idx) => {
               const level = virtueProgress[virtue.id] || Math.floor(Math.random() * 5);
               return (
-                <motion.div
+                <motion.button
                   key={idx}
                   whileHover={{ scale: 1.1, y: -5 }}
-                  className={`bg-gradient-to-br ${virtue.gradient} rounded-xl p-2 lg:p-3 text-center cursor-pointer shadow-lg`}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setSelectedVirtue(virtue)}
+                  className={`bg-gradient-to-br ${virtue.gradient} rounded-xl p-2 lg:p-3 text-center cursor-pointer shadow-lg hover:shadow-xl hover:shadow-${virtue.color}/30 transition-shadow`}
                   data-testid={`virtue-${virtue.id}`}
                 >
                   <span className="text-xl lg:text-3xl font-bold text-white">{virtue.kanji}</span>
@@ -600,9 +740,174 @@ export const JuniorDashboard: React.FC<JuniorDashboardProps> = ({
                     />
                   </div>
                   <p className="text-white/60 text-[8px] lg:text-[10px] mt-1">Lv.{level}</p>
-                </motion.div>
+                </motion.button>
               );
             })}
+          </div>
+        </motion.div>
+
+        {/* Modal Explication Vertu Enfantine */}
+        <AnimatePresence>
+          {selectedVirtue && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+              onClick={() => setSelectedVirtue(null)}
+            >
+              <motion.div
+                initial={{ scale: 0.8, y: 50 }}
+                animate={{ scale: 1, y: 0 }}
+                exit={{ scale: 0.8, y: 50 }}
+                onClick={(e) => e.stopPropagation()}
+                className={`bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-3xl p-6 max-w-md w-full border-2 border-${selectedVirtue.color.replace('bg-', '')}/50 shadow-2xl`}
+              >
+                {/* Header avec Kanji */}
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex items-center gap-4">
+                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${selectedVirtue.gradient} flex items-center justify-center shadow-lg`}>
+                      <span className="text-4xl font-bold text-white">{selectedVirtue.kanji}</span>
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-bold text-white">{selectedVirtue.name}</h3>
+                      <p className="text-white/60 text-sm">{selectedVirtue.emoji} {selectedVirtue.childExplanation}</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setSelectedVirtue(null)}
+                    className="p-2 rounded-full hover:bg-white/10 transition-colors"
+                  >
+                    <X className="w-5 h-5 text-white/60" />
+                  </button>
+                </div>
+
+                {/* Animal Gardien */}
+                <div className="flex items-center gap-2 mb-4 p-3 bg-white/5 rounded-xl">
+                  <span className="text-3xl">{selectedVirtue.animal}</span>
+                  <p className="text-white/80 text-sm">
+                    <span className="font-bold">Animal Gardien :</span> Cet animal représente cette vertu !
+                  </p>
+                </div>
+
+                {/* Explication */}
+                <div className="mb-5">
+                  <p className="text-white/90 text-sm leading-relaxed">
+                    {selectedVirtue.childDetails}
+                  </p>
+                </div>
+
+                {/* Exemples */}
+                <div className="mb-5">
+                  <h4 className="text-white font-bold text-sm mb-2 flex items-center gap-2">
+                    <CheckCircle className="w-4 h-4 text-green-400" />
+                    Comment pratiquer cette vertu ?
+                  </h4>
+                  <ul className="space-y-2">
+                    {selectedVirtue.examples.map((example, i) => (
+                      <li key={i} className="flex items-center gap-2 text-white/70 text-sm">
+                        <span className="text-lg">⭐</span>
+                        {example}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Bouton Fermer */}
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => setSelectedVirtue(null)}
+                  className={`w-full py-3 rounded-xl bg-gradient-to-r ${selectedVirtue.gradient} text-white font-bold text-sm shadow-lg`}
+                >
+                  J'ai compris ! 🎯
+                </motion.button>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Section Mes Trophées - Badges à collectionner */}
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ delay: 0.45 }}
+          className="bg-gradient-to-br from-amber-900/40 to-yellow-900/40 backdrop-blur-xl rounded-3xl p-5 lg:p-6 border border-amber-500/30 mb-6"
+          data-testid="trophees-section"
+        >
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h3 className="text-lg lg:text-xl font-bold text-white flex items-center gap-2">
+                🏆 Mes Trophées
+              </h3>
+              <p className="text-amber-200/70 text-xs lg:text-sm">Collectionne tous les badges de samouraï !</p>
+            </div>
+            <Link href={`/${locale}/${sport}/trophees`} className="text-amber-400 text-xs hover:text-amber-300 transition-colors">
+              Voir tout →
+            </Link>
+          </div>
+          
+          {/* Badges Grid */}
+          <div className="grid grid-cols-4 md:grid-cols-8 gap-3">
+            {/* Badges débloqués */}
+            {[
+              { id: 'premier_pas', name: 'Premier Pas', emoji: '👣', unlocked: true, desc: 'Premier cours terminé' },
+              { id: 'salut_parfait', name: 'Salut Parfait', emoji: '🙇', unlocked: true, desc: 'Maîtrise du salut' },
+              { id: 'chuteur', name: 'Maître Chuteur', emoji: '🌪️', unlocked: badgesCount >= 3, desc: '10 chutes réussies' },
+              { id: 'assidu', name: 'Assidu', emoji: '📅', unlocked: currentStreak >= 7, desc: 'Série de 7 jours' },
+              { id: 'technique_10', name: 'Apprenti', emoji: '📚', unlocked: completedTechniquesCount >= 10, desc: '10 techniques apprises' },
+              { id: 'vertueux', name: 'Vertueux', emoji: '⭐', unlocked: Object.keys(virtueProgress).length >= 3, desc: '3 vertus pratiquées' },
+              { id: 'explorateur', name: 'Explorateur', emoji: '🗺️', unlocked: false, desc: 'Visite toutes les sections' },
+              { id: 'sensei_ami', name: "Ami du Sensei", emoji: '🎭', unlocked: false, desc: 'Écoute 10 messages de Tanaka' },
+            ].map((badge) => (
+              <motion.div
+                key={badge.id}
+                whileHover={{ scale: badge.unlocked ? 1.1 : 1.02, y: badge.unlocked ? -5 : 0 }}
+                className={`relative rounded-xl p-3 text-center transition-all ${
+                  badge.unlocked 
+                    ? 'bg-gradient-to-br from-amber-500/30 to-yellow-500/30 border border-amber-400/50 cursor-pointer' 
+                    : 'bg-slate-800/50 border border-slate-700/50 opacity-50'
+                }`}
+                title={badge.desc}
+              >
+                <span className={`text-2xl lg:text-3xl ${badge.unlocked ? '' : 'grayscale'}`}>
+                  {badge.unlocked ? badge.emoji : '🔒'}
+                </span>
+                <p className={`text-[9px] lg:text-[10px] mt-1 font-medium truncate ${
+                  badge.unlocked ? 'text-amber-200' : 'text-slate-500'
+                }`}>
+                  {badge.name}
+                </p>
+                {badge.unlocked && (
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    className="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full flex items-center justify-center"
+                  >
+                    <CheckCircle className="w-3 h-3 text-white" />
+                  </motion.div>
+                )}
+              </motion.div>
+            ))}
+          </div>
+          
+          {/* Progression */}
+          <div className="mt-4 bg-slate-800/50 rounded-xl p-3">
+            <div className="flex justify-between text-xs mb-2">
+              <span className="text-slate-400">Progression des badges</span>
+              <span className="text-amber-400 font-bold">{badgesCount}/8</span>
+            </div>
+            <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
+              <motion.div 
+                initial={{ width: 0 }}
+                animate={{ width: `${(badgesCount / 8) * 100}%` }}
+                transition={{ duration: 1, ease: "easeOut" }}
+                className="h-full bg-gradient-to-r from-amber-500 to-yellow-400 rounded-full"
+              />
+            </div>
+            <p className="text-center text-slate-500 text-[10px] mt-2">
+              🎯 Continue à t'entraîner pour débloquer plus de badges !
+            </p>
           </div>
         </motion.div>
 
