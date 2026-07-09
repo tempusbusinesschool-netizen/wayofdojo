@@ -64,11 +64,23 @@ export const TanakaWelcome: React.FC<TanakaWelcomeProps> = ({
     }
   }, [sectionId, showOnce]);
 
+  // Fonction pour arrêter l'audio
+  const stopAudio = useCallback(() => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+      audioRef.current = null;
+    }
+    setIsPlayingAudio(false);
+    setIsLoadingAudio(false);
+  }, []);
+
   // Fonction de fermeture
   const handleClose = useCallback(() => {
+    stopAudio();
     setIsVisible(false);
     onClose?.();
-  }, [onClose]);
+  }, [onClose, stopAudio]);
 
   // Animation confetti pour "C'est parti !"
   const triggerConfetti = useCallback(() => {

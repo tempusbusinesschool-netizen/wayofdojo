@@ -600,6 +600,17 @@ const VirtualDojo: React.FC<VirtualDojoProps> = ({
     setTimeout(() => setIsTanakaSpeaking(false), 3000);
   };
 
+  // Fonction pour arrêter l'audio et fermer
+  const handleClose = useCallback(() => {
+    if (currentAudioRef.current) {
+      currentAudioRef.current.pause();
+      currentAudioRef.current = null;
+    }
+    setIsAudioPlaying(false);
+    setIsTanakaSpeaking(false);
+    onClose();
+  }, [onClose]);
+
   const renderGame = () => {
     if (!selectedGame || !isPlayingGame) return null;
     
@@ -627,7 +638,7 @@ const VirtualDojo: React.FC<VirtualDojoProps> = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
-          onClick={(e) => e.target === e.currentTarget && onClose()}
+          onClick={(e) => e.target === e.currentTarget && handleClose()}
           data-testid="virtual-dojo-overlay"
         >
           <motion.div 
@@ -692,7 +703,7 @@ const VirtualDojo: React.FC<VirtualDojoProps> = ({
               </motion.div>
             </div>
 
-            <Button onClick={onClose} className="text-amber-400 hover:text-white p-1 rounded-lg hover:bg-amber-500/20" data-testid="close-dojo-dialog">
+            <Button onClick={handleClose} className="text-amber-400 hover:text-white p-1 rounded-lg hover:bg-amber-500/20" data-testid="close-dojo-dialog">
               <X className="w-5 h-5" />
             </Button>
           </div>
