@@ -73,7 +73,7 @@ export default function EspaceGestionPage() {
             className="text-center mb-12"
           >
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Espace Gestion
+              Espace Gestion - TEST 2024
             </h1>
             <p className="text-slate-400 text-lg">
               Choisissez votre espace de gestion
