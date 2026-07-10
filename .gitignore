@@ -100,3 +100,5 @@ frontend_old_react/node_modules/.cache/default-development/6.pack
 .env
 .env.*
 *.env
+frontend/.next/cache/webpack/client-production/0.pack
+frontend/.next/cache/webpack/server-production/0.pack
