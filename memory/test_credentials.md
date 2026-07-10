@@ -25,6 +25,14 @@
 - **Profil**: jeune_samourai
 - **Grade**: 6e Kyu
 
+## Comptes Club (Espace Gestion)
+
+### Club Admin Test
+- **Email**: admin-test@aikido-lyon.fr
+- **Password**: club123
+- **Dojo**: Aikido Lyon Test
+- **Ville**: Lyon
+
 ## URLs de Test
 
 ### Preview (Développement)
@@ -36,6 +44,7 @@
 - Dojo Virtuel: /fr/aikido/dojo-virtuel
 - Login: /fr/aikido/login
 - Register: /fr/aikido/register
+- **Espace Gestion (Clubs)**: /fr/club-login
 
 ### Production (Vercel)
 - **Base URL**: https://www.wayofdojo.fr/fr
@@ -44,3 +53,4 @@
 ## Notes importantes
 - Les comptes preview fonctionnent uniquement sur l'environnement Emergent
 - Pour la production Vercel, il faut configurer une base MongoDB Atlas séparée avec les IPs autorisées
+- L'Espace Gestion permet aux clubs d'Aïkido de s'inscrire et gérer leur club
