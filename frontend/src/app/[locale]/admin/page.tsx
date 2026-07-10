@@ -276,8 +276,9 @@ function AdminPageContent() {
 
   const fetchDojos = async () => {
     try {
-      const response = await apiService.request('/dojos', { method: 'GET' }) as { dojos: Dojo[] };
-      setDojos(response.dojos || []);
+      const response = await fetch('/api/dojos', { method: 'GET' });
+      const data = await response.json();
+      setDojos(data.dojos || data || []);
     } catch (error) {
       console.error('Error fetching dojos:', error);
     }
@@ -321,18 +322,23 @@ function AdminPageContent() {
     }
 
     try {
-      await apiService.request('/dojos', {
+      const response = await fetch('/api/dojos', {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           dojo: formData,
           auth: { super_admin_password: '123456' }
         })
       });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.detail || 'Erreur lors de la création');
+      }
       toast.success('Dojo créé avec succès !');
       await fetchDojos();
       resetDojoForm();
-    } catch {
-      toast.error('Erreur lors de la création');
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Erreur lors de la création');
     }
   };
 
@@ -340,14 +346,19 @@ function AdminPageContent() {
     if (!window.confirm(`Supprimer le dojo "${dojoName}" ?`)) return;
 
     try {
-      await apiService.request(`/dojos/${dojoId}`, {
+      const response = await fetch(`/api/dojos/${dojoId}`, {
         method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ super_admin_password: '123456' })
       });
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.detail || 'Erreur lors de la suppression');
+      }
       toast.success('Dojo supprimé');
       setDojos(dojos.filter(d => d.id !== dojoId));
-    } catch {
-      toast.error('Erreur lors de la suppression');
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Erreur lors de la suppression');
     }
   };
 
