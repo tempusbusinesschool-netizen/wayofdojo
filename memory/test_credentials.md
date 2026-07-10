@@ -27,11 +27,19 @@
 
 ## Comptes Club (Espace Gestion)
 
-### Club Admin Test
-- **Email**: admin-test@aikido-lyon.fr
-- **Password**: club123
-- **Dojo**: Aikido Lyon Test
+### Club Admin Test (créé via API)
+- **Email**: testclub_api@test.com
+- **Password**: test123456
+- **Dojo**: Test Club API
 - **Ville**: Lyon
+- **URL Connexion**: /fr/club-login
+- **URL Dashboard**: /fr/club-dashboard
+
+### Membre de test (dans Test Club API)
+- **Nom**: Jean Dupont
+- **Email**: jean.dupont@test.com
+- **Grade**: 5e Kyu (Jaune)
+- **Cotisation**: Payée
 
 ## URLs de Test
 
