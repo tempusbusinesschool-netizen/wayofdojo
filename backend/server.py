@@ -356,9 +356,16 @@ async def get_dojo(dojo_id: str):
 class SuperAdminAuth(BaseModel):
     super_admin_password: str
 
+class DojoCreateRequest(BaseModel):
+    """Request body for creating a dojo - matches frontend format"""
+    dojo: DojoCreate
+    auth: SuperAdminAuth
+
 @api_router.post("/dojos")
-async def create_dojo(dojo: DojoCreate, auth: SuperAdminAuth):
+async def create_dojo(request: DojoCreateRequest):
     """Créer un nouveau dojo (Super Admin uniquement)"""
+    dojo = request.dojo
+    auth = request.auth
     # Verify super admin password
     if auth.super_admin_password != SUPER_ADMIN_PASSWORD:
         raise HTTPException(status_code=403, detail="Mot de passe Super Admin incorrect")
