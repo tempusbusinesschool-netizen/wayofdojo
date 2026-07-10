@@ -34,7 +34,7 @@ export default function LoginPage() {
       const data = await apiService.login(formData.email, formData.password) as {
         success: boolean;
         token: string;
-        user: Record<string, unknown>;
+        user: { role?: string } & Record<string, unknown>;
         error?: string;
       };
 
@@ -46,8 +46,20 @@ export default function LoginPage() {
       localStorage.setItem('wayofdojo_token', data.token);
       localStorage.setItem('wayofdojo_user', JSON.stringify(data.user));
 
-      // Redirect to dojo
-      router.push(`/${locale}/${sport}/dojo`);
+      // Check for redirect parameter (e.g., ?redirect=admin)
+      const urlParams = new URLSearchParams(window.location.search);
+      const redirectTo = urlParams.get('redirect');
+      
+      // Redirect based on role or redirect param
+      if (redirectTo === 'admin' && ['admin', 'super_admin'].includes(data.user.role || '')) {
+        router.push(`/${locale}/admin`);
+      } else if (['admin', 'super_admin'].includes(data.user.role || '')) {
+        // Admin users can choose where to go, default to admin
+        router.push(`/${locale}/admin`);
+      } else {
+        // Regular users go to dojo
+        router.push(`/${locale}/${sport}/dojo`);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Une erreur est survenue');
     } finally {
