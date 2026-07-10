@@ -1,0 +1,60 @@
+{
+  "summary": "Frontend testing of new 'Espace Gestion' club-login page. UI renders correctly after a missing @/components/ui/label module was created. However the club auth flow is BROKEN in the preview environment: /api/club/register and /api/club/login both return HTTP 404 ({\"detail\":\"Not Found\"}) because the Kubernetes ingress routes /api/* to the FastAPI backend (port 8001), not to Next.js (port 3000). The Next.js route handlers work when called directly on localhost:3000 but are unreachable through the public URL.",
+  "backend_issues": {
+    "critical": [
+      {
+        "endpoint": "/api/club/register",
+        "issue": "Returns 404 via public URL. The Next.js API route (/app/frontend/src/app/api/club/register/route.ts) is not reachable because ingress routes /api/* to FastAPI backend (port 8001). Direct call to localhost:3000/api/club/register works and returns 200. The FastAPI backend has no /api/club/register route.",
+        "priority": "CRITICAL"
+      },
+      {
+        "endpoint": "/api/club/login",
+        "issue": "Same infrastructure problem. Returns 404 via public URL. FastAPI backend has no /api/club/login route.",
+        "priority": "CRITICAL"
+      }
+    ],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [
+      {
+        "component": "club-login page build",
+        "issue": "Missing module '@/components/ui/label' caused the entire /fr/club-login page to fail compilation (Next.js Build Error screen). Testing agent created /app/frontend/src/components/ui/label.tsx to unblock testing.",
+        "selector": "n/a",
+        "priority": "HIGH"
+      }
+    ],
+    "integration_issues": [
+      {
+        "flow": "Club registration + login end-to-end",
+        "issue": "Register form submit and Login form submit both fail with 404 from server. Toast shows 'Erreur lors de l'inscription' / 'Erreur de connexion'. No club_token stored, no redirect to /club-dashboard. Root cause: ingress /api/* -> FastAPI backend, not Next.js.",
+        "affected_selectors": ["button:has-text('Créer mon club')", "button:has-text('Se connecter')"]
+      }
+    ],
+    "design_issues": []
+  },
+  "test_report_links": [],
+  "action_items": [
+    "CRITICAL: Move club auth endpoints to FastAPI backend. Create /app/backend/routes/club.py with POST /api/club/register and POST /api/club/login (mirroring the current Next.js route.ts logic using motor + bcrypt + PyJWT). Register the router in /app/backend/server.py so the ingress routing works. Alternatively, reconfigure the ingress to send a specific subpath (e.g., /api/nextjs/*) to Next.js — but adding to FastAPI is simpler and consistent with the existing architecture.",
+    "Verify the club-login page code review: the register response does not return a token, but the client currently handles that by switching to the Login tab (OK). Confirm the club-dashboard route (/fr/club-dashboard) actually exists — it was referenced by router.push after login but was not verified since login could not succeed.",
+    "Consider adding @radix-ui/react-label to package.json for the proper Label primitive; the interim label.tsx created uses a native <label> element which works but lacks the Radix a11y wiring.",
+    "Register/Login route.ts files use `mongoose.models.Dojo || mongoose.model(...)` inline — better to extract into /app/frontend/src/lib/models/ (or move entirely to FastAPI as recommended above)."
+  ],
+  "critical_code_review_comments": [
+    "Duplicate Dojo & ClubAdmin mongoose schema definitions in both register/route.ts and login/route.ts — DRY violation. Extract to shared model file.",
+    "JWT_SECRET falls back to hardcoded 'wayofdojo-secret-key' when NEXTAUTH_SECRET missing. Do not ship this default; fail fast if secret is missing.",
+    "handleRegister on success sets loginData.password to '' but does not auto-submit; user must manually type password. Consider retaining password or showing helper text.",
+    "No client-side email validation beyond browser type=email. Server checks existence but no format validation.",
+    "club-login/page.tsx (409 lines) is fine size-wise but form data would benefit from a schema (zod) + react-hook-form."
+  ],
+  "updated_files": [
+    "/app/frontend/src/components/ui/label.tsx (CREATED to fix Build Error)"
+  ],
+  "success_rate": {"backend": "0% (both club endpoints 404)", "frontend": "50% (page renders, forms fillable, submission fails due to API 404)"},
+  "test_credentials": "Attempted: dynamic emails like test-club-<epoch>@wayofdojo.com / club123. Nothing was persisted because registration returned 404.",
+  "seed_data_creation": "None (register API returned 404)",
+  "retest_needed": true,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Confirmed: (1) Homepage 'Espace Gestion' link exists top-right with href=/fr/club-login. (2) /fr/club-login page renders with Connexion & Inscription tabs, all form fields, and 'Retour à l'accueil' link. Screenshot taken. (3) FIX APPLIED: created /app/frontend/src/components/ui/label.tsx (was missing, caused Next.js Build Error). (4) MAJOR BLOCKER: /api/club/register and /api/club/login return 404 via the public preview URL because the Kubernetes ingress routes /api/* to the FastAPI backend on port 8001. The Next.js route handlers only respond on localhost:3000. Verified with: curl http://localhost:3000/api/club/register -> 200 success, curl https://<preview>/api/club/register -> 404 {\"detail\":\"Not Found\"} (FastAPI). Also curl https://<preview>/api/ -> 200 {\"message\":\"Aikido Practice Tracker API\"} (FastAPI root). Main agent must port the club auth endpoints to /app/backend/ (FastAPI) or reconfigure ingress. Do not retest UI until backend routes are reachable via the public URL.",
+  "rca of the issue": "Root cause: Next.js API route handlers were used for /api/club/*, but the platform's ingress config maps /api/* to FastAPI (port 8001). Reproduction: 1) Visit /fr/club-login, fill Inscription tab with valid data, click 'Créer mon club'. 2) Network tab shows POST /api/club/register -> 404 with body {\"detail\":\"Not Found\"}. Confirmed FastAPI response signature. Mitigation: Add club router to /app/backend/server.py (recommended). Sample: create /app/backend/routes/club.py using motor + bcrypt (already in requirements) + PyJWT, register with app.include_router(club.router, prefix='/api/club'). Delete or keep the Next.js route.ts files (they will be shadowed by the ingress rule)."
+}

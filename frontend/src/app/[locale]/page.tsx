@@ -204,7 +204,7 @@ export default function HomePage() {
                   <div className="w-px h-6 bg-slate-700 mx-1" />
                   
                   {/* Bouton Espace Gestion (Admin/Dojo) */}
-                  <Link href={`/${locale}/admin`}>
+                  <Link href={`/${locale}/club-login`}>
                     <Button
                       variant="ghost"
                       size="sm"
@@ -306,7 +306,7 @@ export default function HomePage() {
                         <UserPlus className="w-4 h-4 mr-2" />
                         Inscription gratuite
                       </Button>
-                      <Link href={`/${locale}/admin`}>
+                      <Link href={`/${locale}/club-login`}>
                         <Button
                           variant="ghost"
                           onClick={() => setShowMobileMenu(false)}
