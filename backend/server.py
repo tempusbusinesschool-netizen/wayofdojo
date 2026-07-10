@@ -499,6 +499,145 @@ async def dojo_login(login_data: DojoLoginRequest):
     }
 
 # ═══════════════════════════════════════════════════════════════════════════════════
+# CLUB REGISTRATION & LOGIN (Public endpoints for Aikido clubs)
+# ═══════════════════════════════════════════════════════════════════════════════════
+
+class ClubRegisterDojoInfo(BaseModel):
+    name: str = Field(..., min_length=2, max_length=100)
+    city: str = Field(..., min_length=2, max_length=100)
+    address: Optional[str] = None
+    email: Optional[EmailStr] = None
+    phone: Optional[str] = None
+    description: Optional[str] = None
+
+class ClubRegisterAdminInfo(BaseModel):
+    firstName: str = Field(..., min_length=2)
+    lastName: str = Field(..., min_length=2)
+    email: EmailStr
+    password: str = Field(..., min_length=6)
+
+class ClubRegisterRequest(BaseModel):
+    dojo: ClubRegisterDojoInfo
+    admin: ClubRegisterAdminInfo
+
+class ClubLoginRequest(BaseModel):
+    email: EmailStr
+    password: str
+
+@api_router.post("/club/register")
+async def club_register(request: ClubRegisterRequest):
+    """Inscription d'un nouveau club d'Aïkido"""
+    dojo = request.dojo
+    admin = request.admin
+    
+    # Check if admin email already exists
+    existing_admin = await db.club_admins.find_one({"email": admin.email.lower()})
+    if existing_admin:
+        raise HTTPException(status_code=400, detail="Un compte existe déjà avec cet email")
+    
+    # Check if dojo name already exists in same city
+    existing_dojo = await db.dojos.find_one({"name": dojo.name, "city": dojo.city})
+    if existing_dojo:
+        raise HTTPException(status_code=400, detail="Un dojo avec ce nom existe déjà dans cette ville")
+    
+    # Generate IDs
+    dojo_id = f"dojo_{uuid.uuid4().hex[:12]}"
+    admin_id = f"clubadmin_{uuid.uuid4().hex[:12]}"
+    
+    # Hash password
+    password_hash = bcrypt.hashpw(admin.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+    
+    # Create dojo document
+    new_dojo = {
+        "id": dojo_id,
+        "name": dojo.name,
+        "city": dojo.city,
+        "address": dojo.address or "",
+        "email": dojo.email or "",
+        "phone": dojo.phone or "",
+        "description": dojo.description or "",
+        "admin_id": admin_id,
+        "is_club": True,
+        "created_at": datetime.now(timezone.utc).isoformat()
+    }
+    
+    # Create admin document
+    new_admin = {
+        "id": admin_id,
+        "email": admin.email.lower(),
+        "password_hash": password_hash,
+        "first_name": admin.firstName,
+        "last_name": admin.lastName,
+        "dojo_id": dojo_id,
+        "role": "club_admin",
+        "created_at": datetime.now(timezone.utc).isoformat()
+    }
+    
+    await db.dojos.insert_one(new_dojo)
+    await db.club_admins.insert_one(new_admin)
+    
+    logger.info(f"New club registered: {dojo.name} in {dojo.city}, admin: {admin.email}")
+    
+    return {
+        "success": True,
+        "message": "Club créé avec succès",
+        "dojo": {
+            "id": dojo_id,
+            "name": dojo.name,
+            "city": dojo.city
+        }
+    }
+
+@api_router.post("/club/login")
+async def club_login(request: ClubLoginRequest):
+    """Connexion d'un administrateur de club"""
+    # Find admin by email
+    admin = await db.club_admins.find_one({"email": request.email.lower()}, {"_id": 0})
+    
+    if not admin:
+        raise HTTPException(status_code=401, detail="Email ou mot de passe incorrect")
+    
+    # Verify password
+    if not bcrypt.checkpw(request.password.encode('utf-8'), admin["password_hash"].encode('utf-8')):
+        raise HTTPException(status_code=401, detail="Email ou mot de passe incorrect")
+    
+    # Get dojo info
+    dojo = await db.dojos.find_one({"id": admin["dojo_id"]}, {"_id": 0, "admin_password": 0})
+    
+    if not dojo:
+        raise HTTPException(status_code=404, detail="Dojo non trouvé")
+    
+    # Generate JWT token
+    token = jwt.encode({
+        "admin_id": admin["id"],
+        "email": admin["email"],
+        "dojo_id": admin["dojo_id"],
+        "role": "club_admin",
+        "exp": datetime.now(timezone.utc) + timedelta(days=7)
+    }, JWT_SECRET, algorithm=JWT_ALGORITHM)
+    
+    logger.info(f"Club admin login: {admin['email']} for dojo {dojo['name']}")
+    
+    return {
+        "success": True,
+        "token": token,
+        "admin": {
+            "id": admin["id"],
+            "email": admin["email"],
+            "firstName": admin["first_name"],
+            "lastName": admin["last_name"]
+        },
+        "dojo": {
+            "id": dojo["id"],
+            "name": dojo["name"],
+            "city": dojo.get("city", ""),
+            "address": dojo.get("address", ""),
+            "email": dojo.get("email", ""),
+            "phone": dojo.get("phone", "")
+        }
+    }
+
+# ═══════════════════════════════════════════════════════════════════════════════════
 # DOJO MEMBERS (ADHERENTS) ENDPOINTS - RGPD COMPLIANT
 # ═══════════════════════════════════════════════════════════════════════════════════
 
