@@ -133,6 +133,28 @@ export default function ClubDashboardPage() {
     }
   }, [locale, router]);
 
+  // Refresh stats when members change
+  useEffect(() => {
+    const total = members.length;
+    const active = members.filter((m) => m.isActive).length;
+    const paid = members.filter((m) => m.subscriptionPaid).length;
+    
+    // Count new members this month
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const newThisMonth = members.filter((m) => {
+      const joinDate = new Date(m.joinDate);
+      return joinDate >= startOfMonth;
+    }).length;
+    
+    setStats({
+      totalMembers: total,
+      activeMembers: active,
+      newThisMonth: newThisMonth,
+      avgAttendance: total > 0 ? Math.round((paid / total) * 100) : 0 // Use paid % as proxy for engagement
+    });
+  }, [members]);
+
   const fetchMembers = async (dojoId: string, token: string) => {
     try {
       const response = await fetch(`/api/club/members?dojo_id=${dojoId}`, {
@@ -142,16 +164,6 @@ export default function ClubDashboardPage() {
       if (response.ok) {
         const data = await response.json();
         setMembers(data.members || []);
-        
-        // Calculate stats
-        const total = data.members?.length || 0;
-        const active = data.members?.filter((m: Member) => m.isActive).length || 0;
-        setStats({
-          totalMembers: total,
-          activeMembers: active,
-          newThisMonth: Math.floor(total * 0.1), // Placeholder
-          avgAttendance: 75 // Placeholder
-        });
       }
     } catch (error) {
       console.error('Error fetching members:', error);

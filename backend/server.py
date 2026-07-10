@@ -6414,6 +6414,34 @@ async def update_club_dojo(dojo_id: str, update: DojoUpdate, club_admin: dict = 
     return {"success": True, "dojo": updated_dojo}
 
 
+# ═══════════════════════════════════════════════════════════════════════════════════
+# ADMIN - CLUBS MANAGEMENT (Platform Admin only)
+# ═══════════════════════════════════════════════════════════════════════════════════
+
+@api_router.get("/admin/clubs")
+async def get_all_clubs(current_user: dict = Depends(get_current_user)):
+    """Get all registered clubs (Platform Admin only)"""
+    if current_user.get("role") != "admin":
+        raise HTTPException(status_code=403, detail="Accès réservé aux administrateurs")
+    
+    # Get all club admins with their dojo info
+    clubs = []
+    async for admin in db.club_admins.find({}, {"_id": 0, "password": 0}):
+        dojo = await db.dojos.find_one({"id": admin.get("dojo_id")}, {"_id": 0, "admin_password": 0})
+        members_count = await db.club_members.count_documents({"dojo_id": admin.get("dojo_id")})
+        
+        clubs.append({
+            "admin_id": admin.get("id"),
+            "admin_email": admin.get("email"),
+            "admin_name": f"{admin.get('first_name', '')} {admin.get('last_name', '')}".strip(),
+            "dojo": dojo,
+            "members_count": members_count,
+            "created_at": admin.get("created_at")
+        })
+    
+    return {"clubs": clubs, "total": len(clubs)}
+
+
 # Include the router in the main app
 app.include_router(api_router)
 

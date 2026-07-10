@@ -10,7 +10,7 @@ import {
   Plus, Trash2, MapPin, UserPlus, ChevronDown, ChevronUp,
   Mail, Eye, EyeOff, X,
   Download, CheckCircle2, RefreshCw, Filter, MoreVertical,
-  Tent
+  Tent, Building2
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -92,7 +92,21 @@ interface Member {
   belt?: string;
 }
 
-type TabType = 'dashboard' | 'users' | 'dojos' | 'annuaire' | 'settings';
+interface ClubInfo {
+  admin_id: string;
+  admin_email: string;
+  admin_name: string;
+  dojo: {
+    id: string;
+    name: string;
+    city?: string;
+    address?: string;
+  };
+  members_count: number;
+  created_at: string;
+}
+
+type TabType = 'dashboard' | 'users' | 'dojos' | 'clubs' | 'annuaire' | 'settings';
 
 // ═══════════════════════════════════════════════════════════════════════════
 // DONNÉES STATIQUES
@@ -175,6 +189,10 @@ function AdminPageContent() {
     city: '',
     admin_password: ''
   });
+
+  // États Clubs inscrits
+  const [clubs, setClubs] = useState<ClubInfo[]>([]);
+  const [clubSearchQuery, setClubSearchQuery] = useState('');
 
   // États Adhérents
   const [showAddMember, setShowAddMember] = useState<string | null>(null);
@@ -281,6 +299,21 @@ function AdminPageContent() {
       setDojos(data.dojos || data || []);
     } catch (error) {
       console.error('Error fetching dojos:', error);
+    }
+  };
+
+  const fetchClubs = async () => {
+    try {
+      const token = localStorage.getItem('wayofdojo_token');
+      const response = await fetch('/api/admin/clubs', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setClubs(data.clubs || []);
+      }
+    } catch (error) {
+      console.error('Error fetching clubs:', error);
     }
   };
 
@@ -508,7 +541,7 @@ function AdminPageContent() {
               theme={theme}
               actions={
                 <Button 
-                  onClick={() => Promise.all([loadStats(), loadUsers(), fetchDojos()])} 
+                  onClick={() => Promise.all([loadStats(), loadUsers(), fetchDojos(), fetchClubs()])} 
                   variant="outline"
                   className={cn(
                     "transition-colors",
@@ -1125,6 +1158,183 @@ function AdminPageContent() {
                           </motion.div>
                         )}
                       </AnimatePresence>
+                    </Card>
+                  </motion.div>
+                ))}
+              </div>
+            )}
+          </motion.div>
+        )}
+
+        {/* ════════════════════════════════════════════════════════════════════ */}
+        {/* TAB: CLUBS INSCRITS */}
+        {/* ════════════════════════════════════════════════════════════════════ */}
+        {activeTab === 'clubs' && (
+          <motion.div 
+            initial={{ opacity: 0 }} 
+            animate={{ opacity: 1 }} 
+            className="space-y-6"
+            data-testid="admin-clubs"
+            onAnimationStart={() => fetchClubs()}
+          >
+            <PageHeader 
+              title="Clubs Inscrits"
+              subtitle={`${clubs.length} club(s) enregistré(s) sur la plateforme`}
+              theme={theme}
+              actions={
+                <Button 
+                  onClick={fetchClubs} 
+                  variant="outline"
+                  className={cn(
+                    "transition-colors",
+                    theme === 'dark' 
+                      ? "border-slate-700 text-slate-300 hover:bg-slate-800" 
+                      : "border-slate-300 text-slate-700 hover:bg-slate-100"
+                  )}
+                >
+                  <RefreshCw className="w-4 h-4 mr-2" />
+                  Actualiser
+                </Button>
+              }
+            />
+
+            {/* Stats */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              <StatCard
+                label="Clubs Inscrits"
+                value={clubs.length}
+                icon={<Building2 className="w-5 h-5" />}
+                variant="amber"
+                theme={theme}
+              />
+              <StatCard
+                label="Total Adhérents"
+                value={clubs.reduce((acc, c) => acc + (c.members_count || 0), 0)}
+                icon={<Users className="w-5 h-5" />}
+                variant="violet"
+                theme={theme}
+              />
+              <StatCard
+                label="Moy. Adhérents/Club"
+                value={clubs.length > 0 ? Math.round(clubs.reduce((acc, c) => acc + (c.members_count || 0), 0) / clubs.length) : 0}
+                icon={<BarChart3 className="w-5 h-5" />}
+                variant="blue"
+                theme={theme}
+              />
+            </div>
+
+            {/* Search */}
+            <div className="relative max-w-md">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+              <Input
+                placeholder="Rechercher un club..."
+                value={clubSearchQuery}
+                onChange={(e) => setClubSearchQuery(e.target.value)}
+                className={cn(
+                  "pl-10",
+                  theme === 'dark' 
+                    ? "bg-slate-800/50 border-slate-700 text-white" 
+                    : "bg-white border-slate-300"
+                )}
+                data-testid="club-search-input"
+              />
+            </div>
+
+            {/* Clubs List */}
+            {clubs.length === 0 ? (
+              <Card className={cn(
+                "border",
+                theme === 'dark' ? "bg-slate-900/50 border-slate-800" : "bg-white border-slate-200"
+              )}>
+                <CardContent className="py-12 text-center">
+                  <Building2 className="w-16 h-16 mx-auto mb-4 text-slate-600 opacity-50" />
+                  <p className={theme === 'dark' ? "text-slate-400" : "text-slate-600"}>
+                    Aucun club inscrit pour le moment
+                  </p>
+                </CardContent>
+              </Card>
+            ) : (
+              <div className="grid gap-4">
+                {clubs
+                  .filter(club => {
+                    if (!clubSearchQuery) return true;
+                    const search = clubSearchQuery.toLowerCase();
+                    return (
+                      club.dojo?.name?.toLowerCase().includes(search) ||
+                      club.dojo?.city?.toLowerCase().includes(search) ||
+                      club.admin_email?.toLowerCase().includes(search) ||
+                      club.admin_name?.toLowerCase().includes(search)
+                    );
+                  })
+                  .map((club) => (
+                  <motion.div
+                    key={club.admin_id}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                  >
+                    <Card className={cn(
+                      "border transition-all hover:shadow-lg",
+                      theme === 'dark' 
+                        ? "bg-slate-900/50 border-slate-800 hover:border-amber-500/30" 
+                        : "bg-white border-slate-200 hover:border-amber-500/50"
+                    )}>
+                      <CardContent className="p-5">
+                        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                          <div className="flex items-center gap-4">
+                            <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center flex-shrink-0">
+                              <Building2 className="w-7 h-7 text-white" />
+                            </div>
+                            <div>
+                              <h3 className={cn(
+                                "text-lg font-bold",
+                                theme === 'dark' ? "text-white" : "text-slate-900"
+                              )}>
+                                {club.dojo?.name || 'Club sans nom'}
+                              </h3>
+                              {club.dojo?.city && (
+                                <p className={cn(
+                                  "text-sm flex items-center gap-1 mt-0.5",
+                                  theme === 'dark' ? "text-slate-400" : "text-slate-600"
+                                )}>
+                                  <MapPin className="w-3.5 h-3.5" />
+                                  {club.dojo.city}
+                                  {club.dojo.address && ` - ${club.dojo.address}`}
+                                </p>
+                              )}
+                              <div className="flex items-center gap-3 mt-2 text-sm">
+                                <span className={cn(
+                                  "flex items-center gap-1",
+                                  theme === 'dark' ? "text-slate-500" : "text-slate-500"
+                                )}>
+                                  <Mail className="w-3.5 h-3.5" />
+                                  {club.admin_email}
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-4">
+                            <div className="text-right">
+                              <p className="text-amber-500 font-bold text-xl">
+                                {club.members_count || 0}
+                              </p>
+                              <p className={cn(
+                                "text-xs",
+                                theme === 'dark' ? "text-slate-500" : "text-slate-600"
+                              )}>
+                                adhérent{(club.members_count || 0) > 1 ? 's' : ''}
+                              </p>
+                            </div>
+                            <Badge className={cn(
+                              "px-3 py-1",
+                              theme === 'dark' 
+                                ? "bg-emerald-500/20 text-emerald-400" 
+                                : "bg-emerald-100 text-emerald-700"
+                            )}>
+                              Actif
+                            </Badge>
+                          </div>
+                        </div>
+                      </CardContent>
                     </Card>
                   </motion.div>
                 ))}

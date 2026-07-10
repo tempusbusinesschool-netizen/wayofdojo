@@ -16,7 +16,8 @@ import {
   X,
   Shield,
   Sun,
-  Moon
+  Moon,
+  Building2
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -33,6 +34,7 @@ const navItems = [
   { id: 'dashboard', label: 'Tableau de bord', icon: LayoutDashboard },
   { id: 'users', label: 'Utilisateurs', icon: Users },
   { id: 'dojos', label: 'Dojos', icon: Tent },
+  { id: 'clubs', label: 'Clubs Inscrits', icon: Building2 },
   { id: 'annuaire', label: 'Annuaire FFAAA', icon: Map },
   { id: 'settings', label: 'Paramètres', icon: Settings },
 ];
