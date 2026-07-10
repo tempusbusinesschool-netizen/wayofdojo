@@ -1,10 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/db';
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
-
-const JWT_SECRET = process.env.NEXTAUTH_SECRET || 'wayofdojo-secret-key';
 
 // Club/Dojo Schema
 const DojoSchema = new mongoose.Schema({

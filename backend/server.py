@@ -6186,6 +6186,234 @@ async def get_child_stats_for_parent(
     }
 
 
+# ═══════════════════════════════════════════════════════════════════════════════════
+# CLUB MEMBERS MANAGEMENT (CRUD for Club Admins)
+# ═══════════════════════════════════════════════════════════════════════════════════
+
+class ClubMemberCreate(BaseModel):
+    firstName: str = Field(..., min_length=1)
+    lastName: str = Field(..., min_length=1)
+    email: EmailStr
+    phone: Optional[str] = None
+    birthDate: Optional[str] = None
+    belt: str = "6e_kyu"
+    subscriptionPaid: bool = False
+    dojoId: str
+
+class ClubMemberUpdate(BaseModel):
+    firstName: Optional[str] = None
+    lastName: Optional[str] = None
+    email: Optional[EmailStr] = None
+    phone: Optional[str] = None
+    birthDate: Optional[str] = None
+    belt: Optional[str] = None
+    subscriptionPaid: Optional[bool] = None
+    isActive: Optional[bool] = None
+
+async def verify_club_admin_token(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    """Verify club admin JWT token and return payload"""
+    if not credentials:
+        raise HTTPException(status_code=401, detail="Token d'authentification requis")
+    
+    try:
+        payload = jwt.decode(credentials.credentials, JWT_SECRET, algorithms=[JWT_ALGORITHM])
+        if payload.get("role") != "club_admin":
+            raise HTTPException(status_code=403, detail="Accès réservé aux administrateurs de club")
+        return payload
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(status_code=401, detail="Token expiré")
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=401, detail="Token invalide")
+
+@api_router.get("/club/members")
+async def get_club_members(dojo_id: str, club_admin: dict = Depends(verify_club_admin_token)):
+    """Get all members for a club (Club Admin only)"""
+    # Verify the admin owns this dojo
+    if club_admin.get("dojo_id") != dojo_id:
+        raise HTTPException(status_code=403, detail="Vous n'avez pas accès à ce dojo")
+    
+    members = await db.club_members.find(
+        {"dojo_id": dojo_id},
+        {"_id": 0}
+    ).to_list(500)
+    
+    return {"members": members}
+
+@api_router.post("/club/members")
+async def create_club_member(member: ClubMemberCreate, club_admin: dict = Depends(verify_club_admin_token)):
+    """Create a new member for a club (Club Admin only)"""
+    # Verify the admin owns this dojo
+    if club_admin.get("dojo_id") != member.dojoId:
+        raise HTTPException(status_code=403, detail="Vous n'avez pas accès à ce dojo")
+    
+    # Check if email already exists in this club
+    existing = await db.club_members.find_one({
+        "dojo_id": member.dojoId,
+        "email": member.email.lower()
+    })
+    if existing:
+        raise HTTPException(status_code=400, detail="Un membre avec cet email existe déjà dans ce club")
+    
+    new_member = {
+        "id": str(uuid.uuid4()),
+        "firstName": member.firstName,
+        "lastName": member.lastName,
+        "email": member.email.lower(),
+        "phone": member.phone or "",
+        "birthDate": member.birthDate or "",
+        "belt": member.belt,
+        "subscriptionPaid": member.subscriptionPaid,
+        "isActive": True,
+        "dojo_id": member.dojoId,
+        "joinDate": datetime.now(timezone.utc).isoformat(),
+        "created_at": datetime.now(timezone.utc).isoformat()
+    }
+    
+    await db.club_members.insert_one(new_member)
+    logger.info(f"New club member created: {member.firstName} {member.lastName} for dojo {member.dojoId}")
+    
+    return {"success": True, "member": {k: v for k, v in new_member.items() if k != "_id"}}
+
+@api_router.put("/club/members/{member_id}")
+async def update_club_member(
+    member_id: str, 
+    update: ClubMemberUpdate, 
+    club_admin: dict = Depends(verify_club_admin_token)
+):
+    """Update a club member (Club Admin only)"""
+    # Find the member
+    member = await db.club_members.find_one({"id": member_id}, {"_id": 0})
+    if not member:
+        raise HTTPException(status_code=404, detail="Membre non trouvé")
+    
+    # Verify the admin owns this dojo
+    if club_admin.get("dojo_id") != member.get("dojo_id"):
+        raise HTTPException(status_code=403, detail="Vous n'avez pas accès à ce membre")
+    
+    # Build update dict
+    update_data = {k: v for k, v in update.model_dump().items() if v is not None}
+    if not update_data:
+        raise HTTPException(status_code=400, detail="Aucune donnée à mettre à jour")
+    
+    # If email is being updated, check for duplicates
+    if "email" in update_data:
+        existing = await db.club_members.find_one({
+            "dojo_id": member["dojo_id"],
+            "email": update_data["email"].lower(),
+            "id": {"$ne": member_id}
+        })
+        if existing:
+            raise HTTPException(status_code=400, detail="Un membre avec cet email existe déjà")
+        update_data["email"] = update_data["email"].lower()
+    
+    update_data["updated_at"] = datetime.now(timezone.utc).isoformat()
+    
+    await db.club_members.update_one({"id": member_id}, {"$set": update_data})
+    
+    # Get updated member
+    updated_member = await db.club_members.find_one({"id": member_id}, {"_id": 0})
+    
+    return {"success": True, "member": updated_member}
+
+@api_router.delete("/club/members/{member_id}")
+async def delete_club_member(member_id: str, club_admin: dict = Depends(verify_club_admin_token)):
+    """Delete a club member (Club Admin only)"""
+    # Find the member
+    member = await db.club_members.find_one({"id": member_id}, {"_id": 0})
+    if not member:
+        raise HTTPException(status_code=404, detail="Membre non trouvé")
+    
+    # Verify the admin owns this dojo
+    if club_admin.get("dojo_id") != member.get("dojo_id"):
+        raise HTTPException(status_code=403, detail="Vous n'avez pas accès à ce membre")
+    
+    await db.club_members.delete_one({"id": member_id})
+    logger.info(f"Club member deleted: {member_id} from dojo {member['dojo_id']}")
+    
+    return {"success": True, "message": "Membre supprimé"}
+
+@api_router.patch("/club/members/{member_id}/toggle-subscription")
+async def toggle_member_subscription(member_id: str, club_admin: dict = Depends(verify_club_admin_token)):
+    """Toggle subscription paid status for a member (Club Admin only)"""
+    # Find the member
+    member = await db.club_members.find_one({"id": member_id}, {"_id": 0})
+    if not member:
+        raise HTTPException(status_code=404, detail="Membre non trouvé")
+    
+    # Verify the admin owns this dojo
+    if club_admin.get("dojo_id") != member.get("dojo_id"):
+        raise HTTPException(status_code=403, detail="Vous n'avez pas accès à ce membre")
+    
+    new_status = not member.get("subscriptionPaid", False)
+    await db.club_members.update_one(
+        {"id": member_id},
+        {"$set": {"subscriptionPaid": new_status, "updated_at": datetime.now(timezone.utc).isoformat()}}
+    )
+    
+    return {"success": True, "subscriptionPaid": new_status}
+
+@api_router.get("/club/stats")
+async def get_club_stats(club_admin: dict = Depends(verify_club_admin_token)):
+    """Get statistics for a club (Club Admin only)"""
+    dojo_id = club_admin.get("dojo_id")
+    
+    # Count members
+    total_members = await db.club_members.count_documents({"dojo_id": dojo_id})
+    active_members = await db.club_members.count_documents({"dojo_id": dojo_id, "isActive": True})
+    paid_members = await db.club_members.count_documents({"dojo_id": dojo_id, "subscriptionPaid": True})
+    
+    # Count by belt
+    belt_distribution = {}
+    pipeline = [
+        {"$match": {"dojo_id": dojo_id}},
+        {"$group": {"_id": "$belt", "count": {"$sum": 1}}}
+    ]
+    async for doc in db.club_members.aggregate(pipeline):
+        belt_distribution[doc["_id"]] = doc["count"]
+    
+    # Recent members (last 30 days)
+    thirty_days_ago = (datetime.now(timezone.utc) - timedelta(days=30)).isoformat()
+    new_this_month = await db.club_members.count_documents({
+        "dojo_id": dojo_id,
+        "created_at": {"$gte": thirty_days_ago}
+    })
+    
+    return {
+        "totalMembers": total_members,
+        "activeMembers": active_members,
+        "paidMembers": paid_members,
+        "unpaidMembers": total_members - paid_members,
+        "newThisMonth": new_this_month,
+        "beltDistribution": belt_distribution
+    }
+
+@api_router.put("/club/dojo/{dojo_id}")
+async def update_club_dojo(dojo_id: str, update: DojoUpdate, club_admin: dict = Depends(verify_club_admin_token)):
+    """Update dojo information (Club Admin only)"""
+    # Verify the admin owns this dojo
+    if club_admin.get("dojo_id") != dojo_id:
+        raise HTTPException(status_code=403, detail="Vous n'avez pas accès à ce dojo")
+    
+    # Find existing dojo
+    dojo = await db.dojos.find_one({"id": dojo_id}, {"_id": 0})
+    if not dojo:
+        raise HTTPException(status_code=404, detail="Dojo non trouvé")
+    
+    # Build update dict (excluding password for security)
+    update_data = {k: v for k, v in update.model_dump().items() if v is not None and k != "admin_password"}
+    if not update_data:
+        raise HTTPException(status_code=400, detail="Aucune donnée à mettre à jour")
+    
+    update_data["updated_at"] = datetime.now(timezone.utc).isoformat()
+    
+    await db.dojos.update_one({"id": dojo_id}, {"$set": update_data})
+    
+    # Get updated dojo
+    updated_dojo = await db.dojos.find_one({"id": dojo_id}, {"_id": 0, "admin_password": 0})
+    
+    return {"success": True, "dojo": updated_dojo}
+
+
 # Include the router in the main app
 app.include_router(api_router)
 
